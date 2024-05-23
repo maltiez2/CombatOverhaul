@@ -1,0 +1,176 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Mod info -->
+  <PropertyGroup>
+    <ModName>Combat Overhaul</ModName>
+    <ModType>code</ModType>
+    <GameVersion>1.19.4</GameVersion>
+    <ModVersion>0.0.0</ModVersion>
+    <ModId>combatoverhaul</ModId>
+    <Description></Description>
+    <Side>Universal</Side>
+    <RequiredOnClient>true</RequiredOnClient>
+    <RequiredOnServer>true</RequiredOnServer>
+  </PropertyGroup>
+
+  <!-- Authors -->
+  <ItemGroup>
+    <ModInfoAuthors Include="Maltiez" />
+  </ItemGroup>
+
+  <!-- Dependencies -->
+  <ItemGroup>
+    <Dependencies Include="game">
+      <Version>$(GameVersion)</Version>
+    </Dependencies>
+  </ItemGroup>
+
+  <!-- Project settings -->
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <!-- Paths -->
+  <PropertyGroup>
+    <ProjectDir>$(MSBuildProjectDirectory)</ProjectDir>
+    <OutputDir>bin\$(Configuration)\Mods</OutputDir>
+    <OutputPath>$(OutputDir)\$(ModId)</OutputPath>
+    <GameDirectory>$(VINTAGE_STORY)</GameDirectory>
+    <AssetsDir>$(ProjectDir)\resources\assets</AssetsDir>
+    <ModIconFile>$(ProjectDir)\resources\modicon.png</ModIconFile>
+    <ReleasesDir>$(ProjectDir)\Releases</ReleasesDir>
+    <ReleaseFile>$(ModId)_$(ModVersion)</ReleaseFile>
+    <ReleasePath>$(ReleasesDir)\$(ReleaseFile).zip</ReleasePath>
+    <ReleasePathDev>$(ReleasesDir)\$(ReleaseFile)_dev.zip</ReleasePathDev>
+  </PropertyGroup>
+
+  <!-- References to libraries that are being used in project -->
+  <ItemGroup>
+    <PackageReference Include="VSImGui" Version="0.0.6" />
+    <!-- Vintage Story dependencies: wont be copied into output directory -->
+    <Reference Include="OpenTK.Compute">
+      <HintPath>$(GameDirectory)\Lib\OpenTK.Compute.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="OpenTK.Core">
+      <HintPath>$(GameDirectory)\Lib\OpenTK.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="OpenTK.Graphics">
+      <HintPath>$(GameDirectory)\Lib\OpenTK.Graphics.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="OpenTK.Input">
+      <HintPath>$(GameDirectory)\Lib\OpenTK.Input.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="OpenTK.Mathematics">
+      <HintPath>$(GameDirectory)\Lib\OpenTK.Mathematics.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="OpenTK.Windowing.Common">
+      <HintPath>$(GameDirectory)\Lib\OpenTK.Windowing.Common.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="OpenTK.Windowing.Desktop">
+      <HintPath>$(GameDirectory)\Lib\OpenTK.Windowing.Desktop.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="OpenTK.Windowing.GraphicsLibraryFramework">
+      <HintPath>$(GameDirectory)\Lib\OpenTK.Windowing.GraphicsLibraryFramework.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="protobuf-net">
+      <HintPath>$(GameDirectory)/Lib/protobuf-net.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>$(GameDirectory)/Lib/0Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>$(GameDirectory)/Lib/Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <!-- Vintage Story own libraries: wont be copied into output directory -->
+    <Reference Include="VintagestoryAPI">
+      <HintPath>$(GameDirectory)/VintagestoryAPI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="VintagestoryLib">
+      <HintPath>$(GameDirectory)/VintagestoryLib.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="VSSurvivalMod">
+      <HintPath>$(GameDirectory)/Mods/VSSurvivalMod.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VSEssentials">
+      <HintPath>$(GameDirectory)/Mods/VSEssentials.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VSCreativeMod">
+      <HintPath>$(GameDirectory)/Mods/VSCreativeMod.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="resources\assets\combatoverhaul\shapes\weapons\shields\" />
+  </ItemGroup>
+
+  <!-- Creates/updates modinfo.json file in build directory -->
+  <Target Name="ModInfo">
+    <PropertyGroup>
+      <ModInfo>
+{
+  "type": "$(ModType)",
+  "name": "$(ModName)",
+  "modid": "$(ModId)",
+  "version": "$(ModVersion)",
+
+  "description": "$(Description)",
+  "authors": [ @(ModInfoAuthors->'"%(Identity)"', ', ') ],
+
+  "dependencies": {
+    @(Dependencies->'"%(Identity)": "%(Version)"', ', ')
+  },
+
+  "side" : "$(Side)",
+  "requiredOnClient": $(RequiredOnClient),
+  "requiredOnServer": $(RequiredOnServer)
+}
+      </ModInfo>
+    </PropertyGroup>
+    <Message Text="Generating modinfo.json" Importance="high" />
+    <WriteLinesToFile File="$(OutputPath)/modinfo.json" Lines="$(ModInfo)" Overwrite="true" WriteOnlyWhenDifferent="true" />
+  </Target>
+
+  <!-- Copies modicon, assets folder and native libraries if they exist into output directory -->
+  <Target Name="CopyFilesToOutput" AfterTargets="ModInfo" BeforeTargets="Build">
+    <ItemGroup>
+      <AssetsFolder Include="$(AssetsDir)\**\*.*" />
+      <ModIcon Include="$(ModIconFile)" />
+    </ItemGroup>
+    <Message Text="Clearing assets folder in build directory" Importance="high" />
+    <RemoveDir Directories="$(OutputPath)assets" />
+    <Message Text="Copying assets to build directory" Importance="high" />
+    <Copy SourceFiles="@(AssetsFolder)" DestinationFiles="@(AssetsFolder->'$(OutputPath)assets\%(RecursiveDir)%(Filename)%(Extension)')" Condition="Exists('$(AssetsDir)')" OverwriteReadOnlyFiles="true" />
+    <Copy SourceFiles="@(ModIcon)" DestinationFolder="$(OutputPath)" Condition="Exists('$(ModIconFile)')" OverwriteReadOnlyFiles="true" />
+  </Target>
+
+  <!-- Archives output directory into zip and puts it into Releases folder -->
+  <Target Name="ZipFiles" AfterTargets="Build" Condition=" '$(Configuration)' == 'Release' ">
+    <Message Text="Pachaging into '$(ReleaseFile)'" Importance="high" />
+    <MakeDir Directories="$(ReleasesDir)" />
+    <Delete Files="$(ReleasePath)" />
+    <ZipDirectory SourceDirectory="$(OutputPath)" DestinationFile="$(ReleasePath)" />
+  </Target>
+  <Target Name="ZipFilesDev" AfterTargets="Build" Condition=" '$(Configuration)' == 'Debug' ">
+    <Message Text="Pachaging into '$(ReleaseFile)'" Importance="high" />
+    <MakeDir Directories="$(ReleasesDir)" />
+    <Delete Files="$(ReleasePathDev)" />
+    <ZipDirectory SourceDirectory="$(OutputPath)" DestinationFile="$(ReleasePathDev)" />
+  </Target>
+</Project>

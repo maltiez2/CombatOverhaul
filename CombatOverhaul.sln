@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CombatOverhaul", "CombatOverhaul.csproj", "{C09B5B1A-EDBA-4167-916E-3F033D9B81F7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C09B5B1A-EDBA-4167-916E-3F033D9B81F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C09B5B1A-EDBA-4167-916E-3F033D9B81F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C09B5B1A-EDBA-4167-916E-3F033D9B81F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C09B5B1A-EDBA-4167-916E-3F033D9B81F7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E7D2666C-A2B4-44E0-BFD5-685AC889B97D}
+	EndGlobalSection
+EndGlobal
