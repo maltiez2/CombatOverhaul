@@ -1,0 +1,125 @@
+﻿{
+  "code": "arrow",
+  "class": "Item",
+  "tags": ["projectile", "arrow"],
+  "variantgroups": [
+    {
+      "code": "material",
+      "states": ["crude", "flint", "obsidian", "copper", "tinbronze", "bismuthbronze", "blackbronze", "gold", "silver", "iron", "meteoriciron", "steel", "erel", "bone"]
+    }
+  ],
+  "behaviors": [
+    {
+      "name": "GroundStorable",
+      "properties": {
+        "layout": "Stacking",
+        "placeRemoveSound": "game:sounds/block/ceramicplace",
+        "stackingModelByType": {
+          "*-crude": "combatoverhaul:ammo/pile-arrows-crude",
+          "*-erel": "combatoverhaul:ammo/pile-arrows-crude",
+          "*-bone": "combatoverhaul:ammo/pile-arrows-crude",
+          "*": "combatoverhaul:ammo/pile-arrows-fletched"
+        },
+        "modelItemsToStackSizeRatio": 4.2,
+        "stackingCapacity": 160,
+        "upSolid": true,
+        "transferQuantity": 5,
+        "bulkTransferQuantity": 25,
+        "collisionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.03125, "z2": 1},
+        "cbScaleYByLayer": 0.2
+      }
+    },
+    {
+      "name": "CombatOverhaul:Projectile",
+      "properties": {
+        "stats": {
+          "AdditionalDurabilityCostByType": {"*-erel": 2, "*-bone": 1, "*": 0},
+          "CollisionRadius": 0.02,
+          "PenetrationDistance": 0.1,
+          "DamageStatsByType": {
+            "*-crude": {"DamageType": "SlashingAttack", "Damage": 2},
+            "*-flint": {"DamageType": "SlashingAttack", "Damage": 2},
+            "*-obsidian": {"DamageType": "SlashingAttack", "Damage": 4},
+            "*-copper": {"DamageType": "SlashingAttack", "Damage": 4},
+            "*-tinbronze": {"DamageType": "SlashingAttack", "Damage": 4},
+            "*-bismuthbronze": {"DamageType": "SlashingAttack", "Damage": 4},
+            "*-blackbronze": {"DamageType": "SlashingAttack", "Damage": 4},
+            "*-iron": {"DamageType": "SlashingAttack", "Damage": 4},
+            "*-gold": {"DamageType": "SlashingAttack", "Damage": 4},
+            "*-silver": {"DamageType": "SlashingAttack", "Damage": 4},
+            "*-meteoriciron": {"DamageType": "SlashingAttack", "Damage": 4},
+            "*-steel": {"DamageType": "SlashingAttack", "Damage": 4},
+            "*-erel": {"DamageType": "PiercingAttack", "Damage": 4},
+            "*-bone": {"DamageType": "PiercingAttack", "Damage": 4}
+          },
+          "DamageTierBonusByType": {
+            "*-crude": -1,
+            "*-flint": -1,
+            "*-obsidian": -1,
+            "*-copper": -1,
+            "*-tinbronze": 0,
+            "*-bismuthbronze": 0,
+            "*-blackbronze": 0,
+            "*-iron": 1,
+            "*-gold": 1,
+            "*-silver": 1,
+            "*-meteoriciron": 2,
+            "*-steel": 3,
+            "*-erel": 0,
+            "*-bone": 0
+          },
+          "SpeedThreshold": 0.3,
+          "Knockback": 0.5,
+          "EntityCode": "combatoverhaul:arrow-{material}",
+          "HitSound": "game:sounds/player/projectilehit",
+          "DurabilityDamage": 0,
+          "DropChanceByType": {
+            "*-crude": 0.25,
+            "*-flint": 0.75,
+            "*-obsidian": 0.25,
+            "*-copper": 0.9,
+            "*-tinbronze": 0.95,
+            "*-bismuthbronze": 0.95,
+            "*-blackbronze": 0.95,
+            "*-iron": 0.98,
+            "*-gold": 0.98,
+            "*-silver": 0.98,
+            "*-meteoriciron": 0.99,
+            "*-steel": 0.995,
+            "*-erel": 0,
+            "*-bone": 0
+          }
+        }
+      }
+    }
+  ],
+  "maxstacksize": 16,
+  "storageFlags": 513,
+  "shapeByType": {
+    "*-crude": {"base": "combatoverhaul:ammo/arrows/crude"},
+    "*-flint": {"base": "combatoverhaul:ammo/arrows/stone"},
+    "*-obsidian": {"base": "combatoverhaul:ammo/arrows/stone"},
+    "*-meteoriciron": {"base": "combatoverhaul:ammo/arrows/envelop"},
+    "*-steel": {"base": "combatoverhaul:ammo/arrows/envelop"},
+    "*-iron": {"base": "combatoverhaul:ammo/arrows/envelop"},
+    "*-gold": {"base": "combatoverhaul:ammo/arrows/gold"},
+    "*-silver": {"base": "combatoverhaul:ammo/arrows/silver"},
+    "*-erel": {"base": "combatoverhaul:ammo/arrows/erel"},
+    "*-bone": {"base": "combatoverhaul:ammo/arrows/bone"},
+    "*": {"base": "combatoverhaul:ammo/arrows/insert"}
+  },
+  "texturesByType": {
+    "*-crude": {},
+    "*-erel": {},
+    "*-bone": {},
+    "*-flint": {"material": {"base": "game:block/stone/flint"}},
+    "*-obsidian": {"material": {"base": "game:block/stone/rock/obsidian1"}},
+    "*": {"material": {"base": "game:block/metal/ingot/{material}"}}
+  },
+  "creativeinventory": {"general": ["*"], "items": ["*"], "tools": ["*"], "combatoverhaul": ["*"]},
+  "guiTransform": {"rotation": {"x": -18, "y": -39, "z": -145}, "origin": {"x": 0.3, "y": -0.35, "z": 0}, "scale": 1.63},
+  "fpHandTransform": {"translation": {"x": 0.35, "y": 0, "z": 0}, "rotation": {"x": 87, "y": 90, "z": -30}, "scale": 1.14},
+  "tpHandTransform": {"translation": {"x": -1.05, "y": -0.4599, "z": -0.87}, "rotation": {"x": 0, "y": 2, "z": 3}, "scale": 0.55},
+  "groundTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": -0.03, "z": 0.5}, "scale": 2.64},
+  "attributes": {"handbook": {"groupBy": ["arrow-*"]}}
+}

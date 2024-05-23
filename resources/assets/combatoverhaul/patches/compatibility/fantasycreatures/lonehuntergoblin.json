@@ -1,0 +1,90 @@
+﻿[
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/lonehuntergoblin",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {
+        "Torso": ["UpperTorso", "Abdomen"],
+        "Head": ["Head"],
+        "Arm": ["R_upper_arm", "L_upper_arm", "R_lower_arm", "L_lower_arm"],
+        "Leg": ["L_thigh", "R_thigh", "R_feet", "L_feet"],
+        "Critical": ["Neck"],
+        "Resistant": []
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/lonehuntergoblin",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {
+        "Torso": ["UpperTorso", "Abdomen"],
+        "Head": ["Head"],
+        "Arm": ["R_upper_arm", "L_upper_arm", "R_lower_arm", "L_lower_arm"],
+        "Leg": ["L_thigh", "R_thigh", "R_feet", "L_feet"],
+        "Critical": ["Neck"],
+        "Resistant": []
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/lonehuntergoblin",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.25,
+        "CriticalDamageMultiplier": 1.5,
+        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0},
+        "ResistsForColliders": {"Torso": {"BluntAttack": 2, "SlashingAttack": 2, "PiercingAttack": 2}, "Head": {"BluntAttack": 2, "SlashingAttack": 2, "PiercingAttack": 2}}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/lonehuntergoblin",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.25,
+        "CriticalDamageMultiplier": 1.5,
+        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0},
+        "ResistsForColliders": {"Torso": {"BluntAttack": 2, "SlashingAttack": 2, "PiercingAttack": 2}, "Head": {"BluntAttack": 2, "SlashingAttack": 2, "PiercingAttack": 2}}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/lonehuntergoblin",
+    "op": "add",
+    "path": "/server/behaviors/7/aitasks/1/damageType",
+    "value": "SlashingAttack"
+  },
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/lonehuntergoblin",
+    "op": "replace",
+    "path": "/server/behaviors/7/aitasks/1/damageTierByType",
+    "value": {"*": 2}
+  }
+]

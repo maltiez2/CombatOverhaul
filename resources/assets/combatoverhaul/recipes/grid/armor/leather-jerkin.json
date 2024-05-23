@@ -1,0 +1,74 @@
+[
+	{
+		"ingredientPattern": "_L_,LKL",
+		"recipeGroup": 1,
+		"ingredients": {
+			"L": { "type": "item", "code": "game:leather-normal-plain", "quantity": 1 },
+      "K": {"type": "item", "code": "combatoverhaul:sewingkit-armor-improvised-bone", "quantity": 1, "isTool": true, "toolDurabilityCost": 1}
+		},
+		"width": 3,
+		"height": 2,
+		"name": "leather head jerkin",
+		"output": { "type": "item", "code": "armory:armor-head-jerkin-leather-vanilla"  }
+	},
+	{
+		"ingredientPattern": "LKL,LLL,LLL",
+		"recipeGroup": 1,
+		"ingredients": {
+			"L": { "type": "item", "code": "game:leather-normal-plain", "quantity": 1 },
+      "K": {"type": "item", "code": "combatoverhaul:sewingkit-armor-improvised-bone", "quantity": 1, "isTool": true, "toolDurabilityCost": 1}
+		},
+		"width": 3,
+		"height": 3,
+		"name": "leather body jerkin",
+		"output": { "type": "item", "code": "game:armor-body-jerkin-leather"  }
+	},
+	{
+		"ingredientPattern": "LLL,LKL,L_L",
+		"recipeGroup": 1,
+		"ingredients": {
+			"L": { "type": "item", "code": "game:leather-normal-plain", "quantity": 1 },
+      "K": {"type": "item", "code": "combatoverhaul:sewingkit-armor-improvised-bone", "quantity": 1, "isTool": true, "toolDurabilityCost": 1}
+		},
+		"width": 3,
+		"height": 3,
+		"name": "leather legs jerkin",
+		"output": { "type": "item", "code": "game:armor-legs-jerkin-leather"  }
+	},
+	{
+		"ingredientPattern": "_L_,LKL",
+		"recipeGroup": 0,
+		"ingredients": {
+			"L": { "type": "item", "code": "game:leather-normal-plain", "quantity": 1 },
+      "K": {"type": "item", "code": "combatoverhaul:sewingkit-armor-improvised-copper", "quantity": 1, "isTool": true, "toolDurabilityCost": 1}
+		},
+		"width": 3,
+		"height": 2,
+		"name": "leather head jerkin",
+		"output": { "type": "item", "code": "armory:armor-head-jerkin-leather-vanilla"  }
+	},
+	{
+		"ingredientPattern": "LKL,LLL,LLL",
+		"recipeGroup": 0,
+		"ingredients": {
+			"L": { "type": "item", "code": "game:leather-normal-plain", "quantity": 1 },
+      "K": {"type": "item", "code": "combatoverhaul:sewingkit-armor-improvised-copper", "quantity": 1, "isTool": true, "toolDurabilityCost": 1}
+		},
+		"width": 3,
+		"height": 3,
+		"name": "leather body jerkin",
+		"output": { "type": "item", "code": "game:armor-body-jerkin-leather"  }
+	},
+	{
+		"ingredientPattern": "LLL,LKL,L_L",
+		"recipeGroup": 0,
+		"ingredients": {
+			"L": { "type": "item", "code": "game:leather-normal-plain", "quantity": 1 },
+      "K": {"type": "item", "code": "combatoverhaul:sewingkit-armor-improvised-copper", "quantity": 1, "isTool": true, "toolDurabilityCost": 1}
+		},
+		"width": 3,
+		"height": 3,
+		"name": "leather legs jerkin",
+		"output": { "type": "item", "code": "game:armor-legs-jerkin-leather"  }
+	}
+]

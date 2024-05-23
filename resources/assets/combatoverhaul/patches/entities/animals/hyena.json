@@ -1,0 +1,147 @@
+﻿[
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hyena-adult",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:ShowStatsBehavior",
+      "entriesByType": {"*": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "8", "2", "Slashing"]]}
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hyena-adult",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {
+        "Torso": ["R back leg", "L back leg", "R front leg", "L front leg", "neck", "Body", "abdomen"],
+        "Head": ["head", "mouth"],
+        "Arm": ["L front feet", "R front feet"],
+        "Leg": ["L back feet", "R back feet"],
+        "Critical": [],
+        "Resistant": []
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hyena-adult",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {
+        "Torso": ["R back leg", "L back leg", "R front leg", "L front leg", "neck", "Body", "abdomen"],
+        "Head": ["head", "mouth"],
+        "Arm": ["L front feet", "R front feet"],
+        "Leg": ["L back feet", "R back feet"],
+        "Critical": [],
+        "Resistant": []
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hyena-baby",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {
+        "Torso": ["neck", "body"],
+        "Head": ["head", "mouth up"],
+        "Arm": ["L front leg", "L front feet", "R front leg", "R front feet"],
+        "Leg": ["L back leg", "L back feet", "R back leg", "R back feet"],
+        "Critical": [],
+        "Resistant": []
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hyena-baby",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {
+        "Torso": ["neck", "body"],
+        "Head": ["head", "mouth up"],
+        "Arm": ["L front leg", "L front feet", "R front leg", "R front feet"],
+        "Leg": ["L back leg", "L back feet", "R back leg", "R back feet"],
+        "Critical": [],
+        "Resistant": []
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hyena-adult",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 4,
+        "DefaultResists": {"BluntAttack": 4, "SlashingAttack": 2, "PiercingAttack": 0}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hyena-adult",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 4,
+        "DefaultResists": {"BluntAttack": 4, "SlashingAttack": 2, "PiercingAttack": 0}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hyena-baby",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 4,
+        "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 1, "PiercingAttack": 0}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hyena-baby",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 4,
+        "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 1, "PiercingAttack": 0}
+      }
+    }
+  },
+  {"side": "Server", "file": "game:entities/animal/mammal/hyena-adult", "op": "replace", "path": "/server/behaviors/11/aitasks/1/damageType", "value": "SlashingAttack"},
+  {"side": "Server", "file": "game:entities/animal/mammal/hyena-adult", "op": "add", "path": "/server/behaviors/11/aitasks/1/damageTier", "value": 2},
+  {"side": "Server", "file": "game:entities/animal/mammal/hyena-adult", "op": "replace", "path": "/server/behaviors/11/aitasks/1/damage", "value": 8}
+]

@@ -1,0 +1,41 @@
+﻿{
+  "code": "arrow",
+  "class": "CombatOverhaul:Projectile",
+  "tags": ["projectile", "inanimate"],
+  "variantgroups": [
+    {
+      "code": "material",
+      "states": ["crude", "flint", "obsidian", "copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "gold", "silver", "steel", "meteoriciron", "erel", "bone"]
+    }
+  ],
+  "SelectionBoxSize": {"x": 0.1, "y": 0.1},
+  "CollisionBoxSize": {"x": 0.01, "y": 0.01},
+  "client": {
+    "size": 0.55,
+    "renderer": "Shape",
+    "shapeByType": {
+      "*-crude": {"base": "combatoverhaul:ammo/arrows/crude"},
+      "*-flint": {"base": "combatoverhaul:ammo/arrows/stone"},
+      "*-obsidian": {"base": "combatoverhaul:ammo/arrows/stone"},
+      "*-meteoriciron": {"base": "combatoverhaul:ammo/arrows/envelop"},
+      "*-steel": {"base": "combatoverhaul:ammo/arrows/envelop"},
+      "*-iron": {"base": "combatoverhaul:ammo/arrows/envelop"},
+      "*-gold": {"base": "combatoverhaul:ammo/arrows/gold"},
+      "*-silver": {"base": "combatoverhaul:ammo/arrows/silver"},
+      "*-erel": {"base": "combatoverhaul:ammo/arrows/erel"},
+      "*-bone": {"base": "combatoverhaul:ammo/arrows/bone"},
+      "*": {"base": "combatoverhaul:ammo/arrows/insert"}
+    },
+    "texturesByType": {
+      "*-crude": {},
+      "*-erel": {},
+      "*-bone": {},
+      "*-flint": {"material": {"base": "game:block/stone/flint"}},
+      "*-obsidian": {"material": {"base": "game:block/stone/rock/obsidian1"}},
+      "*": {"material": {"base": "game:block/metal/ingot/{material}"}}
+    },
+    "behaviors": [{"code": "CombatOverhaul:ProjectilePhysics", "groundDragFactor": 1, "airDragFactor": 1, "gravityFactor": 1}, {"code": "interpolateposition"}]
+  },
+  "server": {"behaviors": [{"code": "CombatOverhaul:ProjectilePhysics", "groundDragFactor": 1, "airDragFactor": 1, "gravityFactor": 1}, {"code": "despawn", "minSeconds": 600}]},
+  "sounds": {}
+}

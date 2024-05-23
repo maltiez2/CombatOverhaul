@@ -1,0 +1,80 @@
+[
+	{
+		"ingredientPattern": "TLT,TKT",
+		"recipeGroup": 0,
+		"ingredients": {
+			"L": { "type": "block", "code": "game:linen-*", "quantity": 1 },
+			"T": { "type": "item", "code": "game:flaxtwine", "quantity": 1 },
+			"K": { "type": "item", "code": "combatoverhaul:sewingkit-armor-sewing-iron", "quantity": 1, "isTool": true, "toolDurabilityCost": 1 }
+		},
+		"width": 3,
+		"height": 2,
+		"name": "gambeson helmet",
+		"output": { "type": "item", "code": "game:armor-head-sewn-linen"  }
+	},
+	{
+		"ingredientPattern": "LKL,MMM,LLL",
+		"recipeGroup": 0,
+		"ingredients": {
+			"L": { "type": "block", "code": "game:linen-*", "quantity": 1 },
+			"M": { "type": "item", "code": "game:flaxtwine", "quantity": 1 },
+			"K": { "type": "item", "code": "combatoverhaul:sewingkit-armor-sewing-iron", "quantity": 1, "isTool": true, "toolDurabilityCost": 1 }
+		},
+		"width": 3,
+		"height": 3,
+		"name": "gambeson body armor",
+		"output": { "type": "item", "code": "game:armor-body-sewn-linen"  }
+	},
+	{
+		"ingredientPattern": "LTL,LKL,T_T",
+		"recipeGroup": 0,
+		"ingredients": {
+			"L": { "type": "block", "code": "game:linen-*", "quantity": 1 },
+			"T": { "type": "item", "code": "game:flaxtwine", "quantity": 1 },
+			"K": { "type": "item", "code": "combatoverhaul:sewingkit-armor-sewing-iron", "quantity": 1, "isTool": true, "toolDurabilityCost": 1 }
+		},
+		"width": 3,
+		"height": 3,
+		"name": "gambeson leg armor",
+		"output": { "type": "item", "code": "game:armor-legs-sewn-linen"  }
+	},
+	{
+		"ingredientPattern": "TLT,TKT",
+		"recipeGroup": 1,
+		"ingredients": {
+			"L": { "type": "block", "code": "game:linen-*", "quantity": 1 },
+			"T": { "type": "item", "code": "game:flaxtwine", "quantity": 1 },
+			"K": { "type": "item", "code": "combatoverhaul:sewingkit-armor-sewing-*bronze", "quantity": 1, "isTool": true, "toolDurabilityCost": 1 }
+		},
+		"width": 3,
+		"height": 2,
+		"name": "gambeson helmet",
+		"output": { "type": "item", "code": "game:armor-head-sewn-linen"  }
+	},
+	{
+		"ingredientPattern": "LKL,MMM,LLL",
+		"recipeGroup": 1,
+		"ingredients": {
+			"L": { "type": "block", "code": "game:linen-*", "quantity": 1 },
+			"M": { "type": "item", "code": "game:flaxtwine", "quantity": 1 },
+			"K": { "type": "item", "code": "combatoverhaul:sewingkit-armor-sewing-*bronze", "quantity": 1, "isTool": true, "toolDurabilityCost": 1 }
+		},
+		"width": 3,
+		"height": 3,
+		"name": "gambeson body armor",
+		"output": { "type": "item", "code": "game:armor-body-sewn-linen"  }
+	},
+	{
+		"ingredientPattern": "LTL,LKL,T_T",
+		"recipeGroup": 1,
+		"ingredients": {
+			"L": { "type": "block", "code": "game:linen-*", "quantity": 1 },
+			"T": { "type": "item", "code": "game:flaxtwine", "quantity": 1 },
+			"K": { "type": "item", "code": "combatoverhaul:sewingkit-armor-sewing-*bronze", "quantity": 1, "isTool": true, "toolDurabilityCost": 1 }
+		},
+		"width": 3,
+		"height": 3,
+		"name": "gambeson leg armor",
+		"output": { "type": "item", "code": "game:armor-legs-sewn-linen"  }
+	}
+]

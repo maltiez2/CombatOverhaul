@@ -1,0 +1,17 @@
+﻿{
+  "code": "arrow",
+  "class": "CombatOverhaul:Projectile",
+  "tags": ["projectile", "inanimate"],
+  "variantgroups": [{"code": "material", "states": ["bowtorn"]}],
+  "SelectionBoxSize": {"x": 0.1, "y": 0.1},
+  "CollisionBoxSize": {"x": 0.01, "y": 0.01},
+  "client": {
+    "size": 0.55,
+    "renderer": "Shape",
+    "shapeByType": {"*": {"base": "combatoverhaul:ammo/arrows/{material}"}},
+    "texturesByType": {"*": {}},
+    "behaviors": [{"code": "CombatOverhaul:ProjectilePhysics", "groundDragFactor": 1, "airDragFactor": 0, "gravityFactor": 1}, {"code": "interpolateposition"}]
+  },
+  "server": {"behaviors": [{"code": "CombatOverhaul:ProjectilePhysics", "groundDragFactor": 1, "airDragFactor": 0, "gravityFactor": 1}, {"code": "despawn", "minSeconds": 60}]},
+  "sounds": {}
+}

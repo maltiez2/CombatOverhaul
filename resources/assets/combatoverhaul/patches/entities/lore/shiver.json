@@ -1,0 +1,166 @@
+﻿[
+  {
+    "side": "Server",
+    "file": "game:entities/lore/shiver",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:ShowStatsBehavior",
+      "entriesByType": {
+        "*-surface": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "8", "1", "Slashing"]],
+        "*-deep": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "12", "1", "Slashing"]],
+        "*-tainted": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "16", "2", "Slashing"]],
+        "*-corrupt": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "20", "2", "Slashing"]],
+        "*-nightmare": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "20", "3", "Slashing"]],
+        "*-stilt": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "24", "4", "Slashing"]],
+        "*-deepsplit": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "30", "5", "Slashing"]],
+        "*-bellhead": [
+          ["Vulnerable to {0} damage", "Blunt"],
+          ["Bell part of this monster is resistant to damage."],
+          ["Attacks:"],
+          ["  {0} ({1} tier) of {2} damage", "35", "6", "Blunt"]
+        ],
+        "*": []
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/shiver",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*-bellhead": {
+          "Torso": ["TorsoUp", "TorsoLow"],
+          "Head": ["Head"],
+          "Arm": ["R Hand", "L Hand", "R ArmLow", "L ArmLow", "R ArmUp", "L ArmUp"],
+          "Leg": ["R Toes", "R LegLow", "R LegUp", "R Thigh", "L Toes", "L LegLow", "L LegUp", "L Thigh"],
+          "Critical": ["Neck"],
+          "Resistant": ["E1", "S1", "W1", "N1", "W2", "N2", "E2", "S2", "N3", "E3", "S3", "W3"]
+        },
+        "*": {
+          "Torso": ["TorsoUp", "TorsoLow"],
+          "Head": ["L Head2", "L Head1", "R Head2", "R Head1"],
+          "Arm": ["R Hand", "L Hand", "R ArmLow", "L ArmLow", "R ArmUp", "L ArmUp"],
+          "Leg": ["R Toes", "R LegLow", "R LegUp", "R Thigh", "L Toes", "L LegLow", "L LegUp", "L Thigh"],
+          "Critical": ["R Neck1", "R Neck2", "L Neck2", "L Neck1"],
+          "Resistant": []
+        }
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/shiver",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*-bellhead": {
+          "Torso": ["TorsoUp", "TorsoLow"],
+          "Head": ["L Head2", "L Head1", "R Head2", "R Head1"],
+          "Arm": ["R Hand", "L Hand", "R ArmLow", "L ArmLow", "R ArmUp", "L ArmUp"],
+          "Leg": ["R Toes", "R LegLow", "R LegUp", "R Thigh", "L Toes", "L LegLow", "L LegUp", "L Thigh"],
+          "Critical": ["R Neck1", "R Neck2", "L Neck2", "L Neck1"],
+          "Resistant": ["E1", "S1", "W1", "N1", "W2", "N2", "E2", "S2", "N3", "E3", "S3", "W3"]
+        },
+        "*": {
+          "Torso": ["TorsoUp", "TorsoLow"],
+          "Head": ["L Head2", "L Head1", "R Head2", "R Head1"],
+          "Arm": ["R Hand", "L Hand", "R ArmLow", "L ArmLow", "R ArmUp", "L ArmUp"],
+          "Leg": ["R Toes", "R LegLow", "R LegUp", "R Thigh", "L Toes", "L LegLow", "L LegUp", "L Thigh"],
+          "Critical": ["R Neck1", "R Neck2", "L Neck2", "L Neck1"],
+          "Resistant": []
+        }
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/shiver",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.25,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResistsByType": {
+          "*-surface": {"BluntAttack": 1, "SlashingAttack": 2, "PiercingAttack": 4},
+          "*-deep": {"BluntAttack": 1, "SlashingAttack": 3, "PiercingAttack": 5},
+          "*-tainted": {"BluntAttack": 2, "SlashingAttack": 4, "PiercingAttack": 6},
+          "*-corrupt": {"BluntAttack": 2, "SlashingAttack": 5, "PiercingAttack": 6},
+          "*-nightmare": {"BluntAttack": 3, "SlashingAttack": 6, "PiercingAttack": 7},
+          "*-stilt": {"BluntAttack": 3, "SlashingAttack": 7, "PiercingAttack": 8},
+          "*-bellhead": {"BluntAttack": 3, "SlashingAttack": 7, "PiercingAttack": 8},
+          "*-deepsplit": {"BluntAttack": 3, "SlashingAttack": 7, "PiercingAttack": 8}
+        },
+        "HitSounds": {"Resistant": {"Code": "game:sounds/held/shieldblock-metal-light"}}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/shiver",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.25,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResistsByType": {
+          "*-surface": {"BluntAttack": 1, "SlashingAttack": 2, "PiercingAttack": 4},
+          "*-deep": {"BluntAttack": 1, "SlashingAttack": 3, "PiercingAttack": 5},
+          "*-tainted": {"BluntAttack": 2, "SlashingAttack": 4, "PiercingAttack": 6},
+          "*-corrupt": {"BluntAttack": 2, "SlashingAttack": 5, "PiercingAttack": 6},
+          "*-nightmare": {"BluntAttack": 3, "SlashingAttack": 6, "PiercingAttack": 7},
+          "*-stilt": {"BluntAttack": 3, "SlashingAttack": 7, "PiercingAttack": 8},
+          "*-bellhead": {"BluntAttack": 3, "SlashingAttack": 7, "PiercingAttack": 8},
+          "*-deepsplit": {"BluntAttack": 3, "SlashingAttack": 7, "PiercingAttack": 8}
+        },
+        "HitSounds": {"Resistant": {"Code": "game:sounds/held/shieldblock-metal-light"}}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/shiver",
+    "op": "replace",
+    "path": "/server/behaviors/8/aitasks/2/damageTierByType",
+    "value": {"*-surface": 1, "*-deep": 1, "*-tainted": 2, "*-corrupt": 2, "*-nightmare": 3, "*-stilt": 4, "*-deepsplit": 5, "*-bellhead": 6}
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/shiver",
+    "op": "replace",
+    "path": "/server/behaviors/8/aitasks/2/damageByType",
+    "value": {"*-surface": 8, "*-deep": 12, "*-tainted": 16, "*-corrupt": 20, "*-nightmare": 20, "*-stilt": 24, "*-deepsplit": 30, "*-bellhead": 30}
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/shiver",
+    "op": "replace",
+    "path": "/server/behaviors/8/aitasks/2/damageTypeByType",
+    "value": {
+      "*-surface": "SlashingAttack",
+      "*-deep": "SlashingAttack",
+      "*-tainted": "SlashingAttack",
+      "*-corrupt": "SlashingAttack",
+      "*-nightmare": "SlashingAttack",
+      "*-stilt": "SlashingAttack",
+      "*-deepsplit": "SlashingAttack",
+      "*-bellhead": "BluntAttack"
+    }
+  },
+  {"side": "Server", "file": "game:entities/lore/shiver", "op": "replace", "path": "/server/behaviors/2/currenthealthByType/*-deep", "value": 16},
+  {"side": "Server", "file": "game:entities/lore/shiver", "op": "replace", "path": "/server/behaviors/2/maxhealthByType/*-deep", "value": 16},
+  {"side": "Server", "file": "game:entities/lore/shiver", "op": "replace", "path": "/hitboxSize/x", "value": 1.9}
+]

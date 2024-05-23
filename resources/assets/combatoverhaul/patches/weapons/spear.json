@@ -1,0 +1,61 @@
+﻿[
+  {
+    "file": "game:itemtypes/tool/spear",
+    "op": "add",
+    "path": "/skipVariants/-",
+    "value": "@spear-generic-(chert|granite|andesite|basalt|obsidian|peridotite|flint|copper|tinbronze|bismuthbronze|blackbronze|ornategold|ornatesilver)"
+  },
+  {"file": "game:itemtypes/tool/spear", "op": "add", "path": "/skipVariants/-", "value": "spear-scrap-scrap"},
+  {"side": "Server", "file": "game:recipes/grid/tool/spear", "op": "add", "path": "/ingredients/T/allowedVariants/-", "value": "iron"},
+  {"side": "Server", "file": "game:recipes/grid/tool/spear", "op": "add", "path": "/ingredients/T/allowedVariants/-", "value": "meteoriciron"},
+  {"side": "Server", "file": "game:recipes/grid/tool/spear", "op": "add", "path": "/ingredients/T/allowedVariants/-", "value": "steel"},
+  {"side": "Server", "file": "game:recipes/smithing/spear", "op": "add", "path": "/ingredient/allowedVariants/-", "value": "iron"},
+  {"side": "Server", "file": "game:recipes/smithing/spear", "op": "add", "path": "/ingredient/allowedVariants/-", "value": "meteoriciron"},
+  {"side": "Server", "file": "game:recipes/smithing/spear", "op": "add", "path": "/ingredient/allowedVariants/-", "value": "steel"},
+  {"side": "Server", "file": "game:itemtypes/toolhead/spearhead", "op": "add", "path": "/variantgroups/0/states/-", "value": "iron"},
+  {"side": "Server", "file": "game:itemtypes/toolhead/spearhead", "op": "add", "path": "/variantgroups/0/states/-", "value": "meteoriciron"},
+  {"side": "Server", "file": "game:itemtypes/toolhead/spearhead", "op": "add", "path": "/variantgroups/0/states/-", "value": "steel"},
+  {
+    "side": "Server",
+    "file": "game:itemtypes/toolhead/spearhead",
+    "op": "add",
+    "path": "/shapeByType/@*-(iron|meteoriciron|steel)",
+    "value": {"base": "item/tool/spear/spearhead-metal"}
+  },
+  {"side": "Server", "file": "game:itemtypes/toolhead/spearhead", "op": "move", "frompath": "/guiTransformByType/*", "path": "/move-temp"},
+  {
+    "side": "Server",
+    "file": "game:itemtypes/toolhead/spearhead",
+    "op": "add",
+    "path": "/guiTransformByType/@*-(iron|meteoriciron|steel)",
+    "value": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 43, "y": 28, "z": -59}, "origin": {"x": 0.45, "y": 0.02, "z": 0.5}, "scale": 3.51}
+  },
+  {"side": "Server", "file": "game:itemtypes/toolhead/spearhead", "op": "move", "frompath": "/move-temp", "path": "/guiTransformByType/*"},
+  {"side": "Server", "file": "game:itemtypes/toolhead/spearhead", "op": "move", "frompath": "/fpHandTransformByType/*", "path": "/move-temp"},
+  {
+    "side": "Server",
+    "file": "game:itemtypes/toolhead/spearhead",
+    "op": "add",
+    "path": "/fpHandTransformByType/@*-(iron|meteoriciron|steel)",
+    "value": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -23, "y": 127, "z": 81}, "origin": {"x": 0.5, "y": 0.06, "z": 0.51}, "scale": 2.5}
+  },
+  {"side": "Server", "file": "game:itemtypes/toolhead/spearhead", "op": "move", "frompath": "/move-temp", "path": "/fpHandTransformByType/*"},
+  {"side": "Server", "file": "game:itemtypes/toolhead/spearhead", "op": "move", "frompath": "/tpHandTransformByType/*", "path": "/move-temp"},
+  {
+    "side": "Server",
+    "file": "game:itemtypes/toolhead/spearhead",
+    "op": "add",
+    "path": "/tpHandTransformByType/@*-(iron|meteoriciron|steel)",
+    "value": {"translation": {"x": -0.8, "y": -0.1, "z": -0.6}, "rotation": {"x": -19, "y": -22, "z": -22}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 0.82}
+  },
+  {"side": "Server", "file": "game:itemtypes/toolhead/spearhead", "op": "move", "frompath": "/move-temp", "path": "/tpHandTransformByType/*"},
+  {"side": "Server", "file": "game:itemtypes/toolhead/spearhead", "op": "move", "frompath": "/groundTransformByType/*", "path": "/move-temp"},
+  {
+    "side": "Server",
+    "file": "game:itemtypes/toolhead/spearhead",
+    "op": "add",
+    "path": "/groundTransformByType/@*-(iron|meteoriciron|steel)",
+    "value": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 90, "y": -5, "z": 0}, "origin": {"x": 0.5, "y": 0.05, "z": 0.52}, "scale": 4.63}
+  },
+  {"side": "Server", "file": "game:itemtypes/toolhead/spearhead", "op": "move", "frompath": "/move-temp", "path": "/groundTransformByType/*"}
+]

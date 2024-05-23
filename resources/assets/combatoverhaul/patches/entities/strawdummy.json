@@ -1,0 +1,48 @@
+﻿[
+  {
+    "side": "Server",
+    "file": "game:entities/nonliving/strawdummy",
+    "op": "add",
+    "path": "/client/behaviors/0",
+    "value": {"code": "CombatOverhaul:EntityColliders", "elements": {"Torso": ["upper body", "body"], "Head": ["Head"], "Arm": ["hands"], "Leg": [], "Critical": []}}
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/nonliving/strawdummy",
+    "op": "add",
+    "path": "/server/behaviors/0",
+    "value": {"code": "CombatOverhaul:EntityColliders", "elements": {"Torso": ["upper body", "body"], "Head": ["Head"], "Arm": ["hands"], "Leg": [], "Critical": []}}
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/nonliving/strawdummy",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.5,
+        "HeadDamageMultiplier": 1.25,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResists": {"BluntAttack": 1, "SlashingAttack": 1, "PiercingAttack": 1}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/nonliving/strawdummy",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.5,
+        "HeadDamageMultiplier": 1.25,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResists": {"BluntAttack": 1, "SlashingAttack": 1, "PiercingAttack": 1}
+      }
+    }
+  }
+]

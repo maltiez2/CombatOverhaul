@@ -1,0 +1,50 @@
+﻿{
+  "code": "blade",
+  "variantgroups": [{"code": "type", "states": ["gladius", "arming", "claymore", "sabre"]}, {"code": "metal", "states": ["ruined"]}],
+  "shape": {"base": "item/tool/blade/ruined/{type}"},
+  "durability": 1,
+  "attributes": {
+    "handbook": {"groupBy": ["blade-*"]},
+    "toolrackTransformByType": {"*": {"translation": {"x": 0.16, "y": 0.7, "z": 0}, "rotation": {"x": 0, "y": 180, "z": 1}, "scale": 1.25}},
+    "groundStorageTransformByType": {
+      "*-gladius-*": {"translation": {"x": 0, "y": 0.33, "z": 0.07}, "rotation": {"x": 24, "y": 90, "z": -87}, "scale": 0.63},
+      "*-arming-*": {"translation": {"x": 0, "y": 0.63, "z": 0.08}, "rotation": {"x": 24, "y": 90, "z": -87}, "scale": 0.63},
+      "*-claymore-*": {"translation": {"x": 0, "y": 1.05, "z": 0.065}, "rotation": {"x": 24, "y": 90, "z": -87}, "scale": 0.63},
+      "*": {"translation": {"x": 0.24, "y": 0.195, "z": -0.06}, "rotation": {"x": 24, "y": 61, "z": -87}, "scale": 0.88}
+    },
+    "antlerMountable": true,
+    "onAntlerMountTransformByType": {
+      "*-gladius-*": {"translation": {"x": -0.4, "y": 0.533, "z": -0.28}, "rotation": {"x": -90, "y": 0, "z": -90}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 0.63},
+      "*-arming-*": {"translation": {"x": -0.4, "y": 0.533, "z": -0.4}, "rotation": {"x": -85, "y": 0, "z": -90}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 0.63},
+      "*-claymore-*": {"translation": {"x": -0.39, "y": 0.533, "z": -0.68}, "rotation": {"x": -90, "y": -22, "z": -90}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 0.67},
+      "*-sabre-*": {"translation": {"x": -0.39, "y": 0.533, "z": -0.32}, "rotation": {"x": -72, "y": 4, "z": -90}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 0.63}
+    }
+  },
+  "behaviors": [
+    {
+      "name": "GroundStorable",
+      "properties": {
+        "layout": "WallHalves",
+        "wallOffYByType": {"*-claymore-*": 2, "*-arming-*": 2, "*": 1},
+        "ctrlKey": true,
+        "selectionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.1, "z2": 1},
+        "collisionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 0, "y2": 0, "z2": 0}
+      }
+    }
+  ],
+  "creativeinventory": {"general": ["*"], "items": ["*"], "tools": ["*"], "clutter": ["*"]},
+  "guiTransformByType": {
+    "*-claymore-*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -87, "y": 119, "z": 30}, "origin": {"x": 1.15, "y": -0.1, "z": 0.57}, "scale": 1.95},
+    "*-sabre-*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -37, "y": 124, "z": -7}, "origin": {"x": 0.85, "y": -0.1, "z": 0.57}, "scale": 2.06},
+    "*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -53, "y": 118, "z": 8}, "origin": {"x": 1.15, "y": 0.2, "z": 0.57}, "scale": 1.76}
+  },
+  "groundTransformByType": {
+    "*-claymore-*": {"translation": {"x": 0, "y": 0.05, "z": 0}, "rotation": {"x": 14, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 3.4},
+    "*": {"translation": {"x": 0, "y": 0.04, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 3.4}
+  },
+  "tpHandTransformByType": {
+    "*-arming-*": {"translation": {"x": -1.08, "y": 0.055, "z": -0.78}, "rotation": {"x": 85, "y": 0, "z": 2}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 0.63},
+    "*-claymore-*": {"translation": {"x": -0.68, "y": 0.055, "z": -0.78}, "rotation": {"x": 85, "y": 0, "z": 2}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 0.67},
+    "*": {"translation": {"x": -0.98, "y": 0.055, "z": -0.78}, "rotation": {"x": 85, "y": 0, "z": 2}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 0.63}
+  }
+}

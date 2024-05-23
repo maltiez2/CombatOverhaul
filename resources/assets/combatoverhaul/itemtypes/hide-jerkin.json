@@ -1,0 +1,68 @@
+﻿{
+  "code": "armor",
+  "class": "CombatOverhaul:WearableArmor",
+  "variantgroups": [
+    {"code": "bodypart", "states": ["head", "body", "legs"]},
+    {"code": "construction", "states": ["jerkin"]},
+    {"code": "material", "states": ["hide"]},
+    {"code": "subtype", "states": ["plain"]}
+  ],
+  "shape": {"base": "armor/hide/{bodypart}"},
+  "texturesByType": {"*": {"seraph": {"base": "game:block/transparent"}, "material": {"base": "combatoverhaul:armor/{material}"}}},
+  "storageFlags": 128,
+  "attributes": {
+    "visibleDamageEffect": true,
+    "materialCount": 4,
+    "clothesCategoryByType": {"*-head-*": "armorhead", "*-body-*": "armorbody", "*-legs-*": "armorlegs"},
+    "attachableToEntity": {
+      "texturePrefixCode": "armor-{bodypart}-{construction}-{material}-{subtype}",
+      "disableElementsByType": {
+        "*-head-*": ["hidehat", "Hood", "hoodupperover", "Hair tile upper part", "ponytailhigh", "ponytaillow", "Hair", "hair-uncovered", "sidehigh", "sidelow", "bangs"],
+        "*-body-*": ["Waist", "hideupperarm"],
+        "*-legs-*": ["hideshoeL", "hideshoeR", "shoefluffL", "shoefluffR"]
+      },
+      "keepElementsByType": {"*-head-*": ["hair-covered"], "*-legs-*": ["showshoeR", "showshoeL"]}
+    },
+    "warmth": 1.5
+  },
+  "behaviors": [
+    {
+      "name": "CombatOverhaul:Armor",
+      "properties": {
+        "Layers": ["Skin"],
+        "ZonesByType": {"*-head-*": ["Head", "Neck", "Face"], "*-body-*": ["Torso", "Arms", "Hands"], "*-legs-*": ["Legs", "Feet"]},
+        "ResistsByType": {"*-hide-*": {"PiercingAttack": 0, "SlashingAttack": 0, "BluntAttack": 2}},
+        "FlatReduction": {},
+        "PlayerStatsByType": {
+          "*-head-*": {"walkspeed": 0, "manipulationSpeed": 0, "steadyAim": -0.01, "healingeffectivness": -0.09, "hungerrate": 0.03},
+          "*-body-*": {"walkspeed": 0, "manipulationSpeed": -0.01, "steadyAim": -0.01, "healingeffectivness": -0.09, "hungerrate": 0.03},
+          "*-legs-*": {"walkspeed": -0.01, "manipulationSpeed": 0, "steadyAim": 0, "healingeffectivness": -0.09, "hungerrate": 0.02}
+        }
+      }
+    }
+  ],
+  "durabilityByType": {"*-hide-*": 900},
+  "creativeinventory": {"general": ["*"], "clothing": ["*"], "combatoverhaul": ["*"]},
+  "renderAlphaTest": 0.25,
+  "heldTpIdleAnimation": "holdunderarm",
+  "tpHandTransformByType": {
+    "*-head-*": {"translation": {"x": -0.82, "y": -2.2, "z": -0.5}, "rotation": {"x": 18, "y": 169, "z": 30}, "origin": {"x": 0.5, "y": 1.7, "z": 0.5}, "scale": 0.64},
+    "*-body-*": {"translation": {"x": -1, "y": -1.9, "z": -0.5}, "rotation": {"x": 97, "y": -168, "z": 94}, "origin": {"x": 0.5, "y": 1.5, "z": 0.5}, "scale": 0.67},
+    "*-legs-*": {"translation": {"x": -0.7, "y": -0.6, "z": -0.4}, "rotation": {"x": 95, "y": -20, "z": -91}, "origin": {"x": 0.5, "y": 0.7, "z": 0.5}, "scale": 0.74}
+  },
+  "guiTransformByType": {
+    "*-head-*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -26, "y": -46, "z": -180}, "origin": {"x": 0.6, "y": 1.72, "z": 0.5}, "scale": 2},
+    "*-body-*": {"translation": {"x": 3, "y": 0, "z": 0}, "rotation": {"x": -26, "y": -46, "z": -180}, "origin": {"x": 0.5, "y": 1.11, "z": 0.5}, "scale": 1.37},
+    "*-legs-*": {
+      "translation": {"x": 1, "y": 0, "z": 0},
+      "rotation": {"x": -26, "y": -46, "z": -180},
+      "origin": {"x": 0.5, "y": 0.75, "z": 0.5},
+      "scaleXyz": {"x": -1.78, "y": 1.78, "z": 1.78}
+    }
+  },
+  "groundTransformByType": {
+    "*-head-*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0.34, "y": 1.71, "z": 0.5}, "scale": 3.1},
+    "*-body-*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 90}, "origin": {"x": 0.34, "y": 1.12, "z": 0.5}, "scale": 3.1},
+    "*-legs-*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 90}, "origin": {"x": 0.34, "y": 1.12, "z": 0.5}, "scale": 3.1}
+  }
+}

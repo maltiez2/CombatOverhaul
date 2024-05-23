@@ -1,0 +1,100 @@
+Name	Type	Subtype	Material	Layers	LayerCount	Zones	ZoneCount	PiercingAttack	SlashingAttack	BluntAttack	walkspeed	manipulationSpeed	steadyAim	healingeffectivness	hungerrate
+armor-body-improvised-wood	body	improvised	wood	Outer, Middle, Skin	3	Torso	1	0	1	1	5%	5%	5%	9%	9%
+armor-head-lamellar-wood	head	lamellar	wood	Outer, Middle, Skin	3	Head, Neck, Face	3	2	2	2	0%	5%	10%	9%	9%
+armor-body-lamellar-wood	body	lamellar	wood	Outer, Middle, Skin	3	Torso, Arms, Hands	3	2	2	2	6%	15%	20%	9%	9%
+armor-legs-lamellar-wood	legs	lamellar	wood	Outer, Middle, Skin	3	Legs, Feet	2	2	2	2	14%	0%	0%	6%	6%
+armor-body-jerkin-leather	body	jerkin	leather	Skin	1	Torso, Arms, Hands	3	0	0	4	0%	1%	2%	9%	3%
+armor-legs-jerkin-leather	legs	jerkin	leather	Skin	1	Legs, Feet	2	0	0	4	1%	0%	0%	6%	2%
+armor-head-sewn-leather	head	sewn	leather	Outer, Middle	2	Head, Neck, Face	3	2	3	1	0%	5%	6%	9%	9%
+armor-body-sewn-leather	body	sewn	leather	Outer, Middle	2	Torso, Arms, Hands	3	2	3	1	4%	10%	17%	9%	9%
+armor-legs-sewn-leather	legs	sewn	leather	Outer, Middle	2	Legs, Feet	2	2	3	1	10%	0%	0%	6%	6%
+armor-head-sewn-linen	head	sewn	linen	Skin	1	Head, Neck, Face	3	1	1	5	0%	0%	0%	9%	3%
+armor-body-sewn-linen	body	sewn	linen	Skin	1	Torso, Arms, Hands	3	1	1	5	0%	1%	2%	9%	3%
+armor-legs-sewn-linen	legs	sewn	linen	Skin	1	Legs, Feet	2	1	1	5	1%	0%	0%	6%	2%
+armor-head-tailored-*-linen	head	tailored	linen	Skin	1	Head, Neck, Face	3	2	2	6	0%	0%	0%	9%	3%
+armor-body-tailored-*-linen	body	tailored	linen	Skin	1	Torso, Arms, Hands	3	2	2	6	0%	1%	2%	9%	3%
+armor-legs-tailored-*-linen	legs	tailored	linen	Skin	1	Legs, Feet	2	2	2	6	1%	0%	0%	6%	2%
+armor-head-lamellar-copper	head	lamellar	copper	Outer, Middle, Skin	3	Head, Neck, Face	3	3	3	3	0%	5%	10%	9%	9%
+armor-body-lamellar-copper	body	lamellar	copper	Outer, Middle, Skin	3	Torso, Arms, Hands	3	3	3	3	6%	15%	20%	9%	9%
+armor-legs-lamellar-copper	legs	lamellar	copper	Outer, Middle, Skin	3	Legs, Feet	2	3	3	3	14%	0%	0%	6%	6%
+armor-head-brigandine-copper	head	brigandine	copper	Outer	1	Head, Neck, Face	3	4	4	1	0%	5%	10%	9%	12%
+armor-body-brigandine-copper	body	brigandine	copper	Outer	1	Torso, Arms, Hands	3	4	4	1	5%	20%	30%	9%	12%
+armor-legs-brigandine-copper	legs	brigandine	copper	Outer	1	Legs, Feet	2	4	4	1	20%	0%	0%	6%	8%
+armor-head-chain-copper	head	chain	copper	Middle	1	Head, Neck, Face	3	0	2	0	0%	0%	2%	9%	9%
+armor-body-chain-copper	body	chain	copper	Middle	1	Torso, Arms, Hands	3	0	2	0	0%	4%	6%	9%	9%
+armor-legs-chain-copper	legs	chain	copper	Middle	1	Legs, Feet	2	0	2	0	4%	0%	0%	6%	6%
+armor-head-scale-copper	head	scale	copper	Outer, Middle	2	Head, Neck, Face	3	3	3	0	0%	5%	6%	9%	9%
+armor-body-scale-copper	body	scale	copper	Outer, Middle	2	Torso, Arms, Hands	3	3	3	0	4%	10%	17%	9%	9%
+armor-legs-scale-copper	legs	scale	copper	Outer, Middle	2	Legs, Feet	2	3	3	0	10%	0%	0%	6%	6%
+armor-head-plate-copper	head	plate	copper	Outer	1	Head, Neck, Face	3	6	4	2	0%	5%	10%	9%	12%
+armor-body-plate-copper	body	plate	copper	Outer	1	Torso, Arms, Hands	3	6	4	2	5%	20%	30%	9%	12%
+armor-legs-plate-copper	legs	plate	copper	Outer	1	Legs, Feet	2	6	4	2	20%	0%	0%	6%	8%
+armor-head-lamellar-*bronze	head	lamellar	*bronze	Outer, Middle, Skin	3	Head, Neck, Face	3	4	4	4	0%	5%	10%	9%	9%
+armor-body-lamellar-*bronze	body	lamellar	*bronze	Outer, Middle, Skin	3	Torso, Arms, Hands	3	4	4	4	6%	15%	20%	9%	9%
+armor-legs-lamellar-*bronze	legs	lamellar	*bronze	Outer, Middle, Skin	3	Legs, Feet	2	4	4	4	14%	0%	0%	6%	6%
+armor-head-brigandine-*bronze	head	brigandine	*bronze	Outer	1	Head, Neck, Face	3	5	5	3	0%	5%	10%	9%	12%
+armor-body-brigandine-*bronze	body	brigandine	*bronze	Outer	1	Torso, Arms, Hands	3	5	5	3	5%	20%	30%	9%	12%
+armor-legs-brigandine-*bronze	legs	brigandine	*bronze	Outer	1	Legs, Feet	2	5	5	3	20%	0%	0%	6%	8%
+armor-head-chain-*bronze	head	chain	*bronze	Middle	1	Head, Neck, Face	3	1	3	0	0%	0%	2%	9%	9%
+armor-body-chain-*bronze	body	chain	*bronze	Middle	1	Torso, Arms, Hands	3	1	3	0	0%	4%	6%	9%	9%
+armor-legs-chain-*bronze	legs	chain	*bronze	Middle	1	Legs, Feet	2	1	3	0	4%	0%	0%	6%	6%
+armor-head-scale-*bronze	head	scale	*bronze	Outer, Middle	2	Head, Neck, Face	3	4	4	0	0%	5%	6%	9%	9%
+armor-body-scale-*bronze	body	scale	*bronze	Outer, Middle	2	Torso, Arms, Hands	3	4	4	0	4%	10%	17%	9%	9%
+armor-legs-scale-*bronze	legs	scale	*bronze	Outer, Middle	2	Legs, Feet	2	4	4	0	10%	0%	0%	6%	6%
+armor-head-plate-*bronze	head	plate	*bronze	Outer	1	Head, Neck, Face	3	7	5	4	0%	5%	10%	9%	12%
+armor-body-plate-*bronze	body	plate	*bronze	Outer	1	Torso, Arms, Hands	3	7	5	4	5%	20%	30%	9%	12%
+armor-legs-plate-*bronze	legs	plate	*bronze	Outer	1	Legs, Feet	2	7	5	4	20%	0%	0%	6%	8%
+armor-head-brigandine-*iron	head	brigandine	*iron	Outer	1	Head, Neck, Face	3	6	6	5	0%	5%	10%	9%	12%
+armor-body-brigandine-*iron	body	brigandine	*iron	Outer	1	Torso, Arms, Hands	3	6	6	5	5%	20%	30%	9%	12%
+armor-legs-brigandine-*iron	legs	brigandine	*iron	Outer	1	Legs, Feet	2	6	6	5	20%	0%	0%	6%	8%
+armor-head-chain-*iron	head	chain	*iron	Middle	1	Head, Neck, Face	3	2	4	0	0%	0%	2%	9%	9%
+armor-body-chain-*iron	body	chain	*iron	Middle	1	Torso, Arms, Hands	3	2	4	0	0%	4%	6%	9%	9%
+armor-legs-chain-*iron	legs	chain	*iron	Middle	1	Legs, Feet	2	2	4	0	4%	0%	0%	6%	6%
+armor-head-scale-*iron	head	scale	*iron	Outer, Middle	2	Head, Neck, Face	3	5	5	1	0%	5%	6%	9%	9%
+armor-body-scale-*iron	body	scale	*iron	Outer, Middle	2	Torso, Arms, Hands	3	5	5	1	4%	10%	17%	9%	9%
+armor-legs-scale-*iron	legs	scale	*iron	Outer, Middle	2	Legs, Feet	2	5	5	1	10%	0%	0%	6%	6%
+armor-head-plate-*iron	head	plate	*iron	Outer	1	Head, Neck, Face	3	8	6	6	0%	5%	10%	9%	12%
+armor-body-plate-*iron	body	plate	*iron	Outer	1	Torso, Arms, Hands	3	8	6	6	5%	20%	30%	9%	12%
+armor-legs-plate-*iron	legs	plate	*iron	Outer	1	Legs, Feet	2	8	6	6	20%	0%	0%	6%	8%
+armor-head-brigandine-steel	head	brigandine	steel	Outer	1	Head, Neck, Face	3	7	7	7	0%	5%	10%	9%	12%
+armor-body-brigandine-steel	body	brigandine	steel	Outer	1	Torso, Arms, Hands	3	7	7	7	5%	20%	30%	9%	12%
+armor-legs-brigandine-steel	legs	brigandine	steel	Outer	1	Legs, Feet	2	7	7	7	20%	0%	0%	6%	8%
+armor-head-chain-steel	head	chain	steel	Middle	1	Head, Neck, Face	3	3	5	0	0%	0%	2%	9%	9%
+armor-body-chain-steel	body	chain	steel	Middle	1	Torso, Arms, Hands	3	3	5	0	0%	4%	6%	9%	9%
+armor-legs-chain-steel	legs	chain	steel	Middle	1	Legs, Feet	2	3	5	0	4%	0%	0%	6%	6%
+armor-head-scale-steel	head	scale	steel	Outer, Middle	2	Head, Neck, Face	3	6	6	2	0%	5%	6%	9%	9%
+armor-body-scale-steel	body	scale	steel	Outer, Middle	2	Torso, Arms, Hands	3	6	6	2	4%	10%	17%	9%	9%
+armor-legs-scale-steel	legs	scale	steel	Outer, Middle	2	Legs, Feet	2	6	6	2	10%	0%	0%	6%	6%
+armor-head-plate-steel	head	plate	steel	Outer	1	Head, Neck, Face	3	9	7	8	0%	5%	10%	9%	12%
+armor-body-plate-steel	body	plate	steel	Outer	1	Torso, Arms, Hands	3	9	7	8	5%	20%	30%	9%	12%
+armor-legs-plate-steel	legs	plate	steel	Outer	1	Legs, Feet	2	9	7	8	20%	0%	0%	6%	8%
+armor-head-chain-gold	head	chain	gold	Middle	1	Head, Neck, Face	3	0	2	0	0%	0%	2%	9%	9%
+armor-body-chain-gold	body	chain	gold	Middle	1	Torso, Arms, Hands	3	0	2	0	0%	4%	6%	9%	9%
+armor-legs-chain-gold	legs	chain	gold	Middle	1	Legs, Feet	2	0	2	0	4%	0%	0%	6%	6%
+armor-head-plate-gold	head	plate	gold	Outer	1	Head, Neck, Face	3	6	4	5	0%	5%	10%	9%	12%
+armor-body-plate-gold	body	plate	gold	Outer	1	Torso, Arms, Hands	3	6	4	5	5%	20%	30%	9%	12%
+armor-legs-plate-gold	legs	plate	gold	Outer	1	Legs, Feet	2	6	4	5	20%	0%	0%	6%	8%
+armor-head-chain-silver	head	chain	silver	Middle	1	Head, Neck, Face	3	0	2	0	0%	0%	2%	9%	9%
+armor-body-chain-silver	body	chain	silver	Middle	1	Torso, Arms, Hands	3	0	2	0	0%	4%	6%	9%	9%
+armor-legs-chain-silver	legs	chain	silver	Middle	1	Legs, Feet	2	0	2	0	4%	0%	0%	6%	6%
+armor-head-plate-silver	head	plate	silver	Outer	1	Head, Neck, Face	3	6	4	5	0%	5%	10%	9%	12%
+armor-body-plate-silver	body	plate	silver	Outer	1	Torso, Arms, Hands	3	6	4	5	5%	20%	30%	9%	12%
+armor-legs-plate-silver	legs	plate	silver	Outer	1	Legs, Feet	2	6	4	5	20%	0%	0%	6%	8%
+armor-head-antique-blackguard-pristine	head	antique	pristine	Outer, Middle	2	Head, Neck, Face	3	10	11	8	0%	5%	15%	18%	21%
+armor-body-antique-blackguard-pristine	body	antique	pristine	Outer, Middle	2	Torso, Arms, Hands	3	10	11	8	5%	20%	40%	18%	21%
+armor-legs-antique-blackguard-pristine	legs	antique	pristine	Outer, Middle	2	Legs, Feet	2	10	11	8	29%	0%	0%	12%	14%
+armor-head-antique-blackguard-damaged	head	antique	damaged	Outer, Middle	2	Head, Neck, Face	3	8	9	6	0%	5%	15%	18%	21%
+armor-body-antique-blackguard-damaged	body	antique	damaged	Outer, Middle	2	Torso, Arms, Hands	3	8	9	6	5%	20%	40%	18%	21%
+armor-legs-antique-blackguard-damaged	legs	antique	damaged	Outer, Middle	2	Legs, Feet	2	8	9	6	29%	0%	0%	12%	14%
+armor-head-antique-blackguard-broken	head	antique	broken	Outer, Middle	2	Head, Neck, Face	3	6	7	4	0%	5%	15%	18%	21%
+armor-body-antique-blackguard-broken	body	antique	broken	Outer, Middle	2	Torso, Arms, Hands	3	6	7	4	5%	20%	40%	18%	21%
+armor-legs-antique-blackguard-broken	legs	antique	broken	Outer, Middle	2	Legs, Feet	2	6	7	4	29%	0%	0%	12%	14%
+armor-head-antique-forlorn-pristine	head	antique	pristine	Outer, Middle	2	Head, Neck, Face	3	9	10	7	0%	5%	10%	18%	21%
+armor-body-antique-forlorn-pristine	body	antique	pristine	Outer, Middle	2	Torso, Arms, Hands	3	9	10	7	5%	18%	24%	18%	21%
+armor-legs-antique-forlorn-pristine	legs	antique	pristine	Outer, Middle	2	Legs, Feet	2	9	10	7	18%	0%	0%	12%	14%
+armor-head-antique-forlorn-damaged	head	antique	damaged	Outer, Middle	2	Head, Neck, Face	3	7	8	5	0%	5%	10%	18%	21%
+armor-body-antique-forlorn-damaged	body	antique	damaged	Outer, Middle	2	Torso, Arms, Hands	3	7	8	5	5%	18%	24%	18%	21%
+armor-legs-antique-forlorn-damaged	legs	antique	damaged	Outer, Middle	2	Legs, Feet	2	7	8	5	18%	0%	0%	12%	14%
+armor-head-antique-forlorn-broken	head	antique	broken	Outer, Middle	2	Head, Neck, Face	3	5	6	3	0%	5%	10%	18%	21%
+armor-body-antique-forlorn-broken	body	antique	broken	Outer, Middle	2	Torso, Arms, Hands	3	5	6	3	5%	18%	24%	18%	21%
+armor-legs-antique-forlorn-broken	legs	antique	broken	Outer, Middle	2	Legs, Feet	2	5	6	3	18%	0%	0%	12%	14%

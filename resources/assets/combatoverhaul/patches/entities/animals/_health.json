@@ -1,0 +1,63 @@
+﻿[
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/bear-adult",
+    "op": "replace",
+    "path": "/server/behaviors/3/maxhealthByType",
+    "value": {"*-sun-*": 40, "*-panda-*": 44, "*-black-*": 52, "*-brown-*": 60, "*-polar-*": 68}
+  },
+  {"side": "Server", "file": "game:entities/animal/mammal/raccoon-adult", "op": "replace", "path": "/server/behaviors/4/currenthealth", "value": 8},
+  {"side": "Server", "file": "game:entities/animal/mammal/raccoon-adult", "op": "replace", "path": "/server/behaviors/4/maxhealth", "value": 8},
+  {"side": "Server", "file": "game:entities/animal/mammal/fox-adult", "op": "replace", "path": "/server/behaviors/4/currenthealth", "value": 8},
+  {"side": "Server", "file": "game:entities/animal/mammal/fox-adult", "op": "replace", "path": "/server/behaviors/4/maxhealth", "value": 8},
+  {"side": "Server", "file": "game:entities/animal/mammal/hooved/pig-adult", "op": "replace", "path": "/server/behaviors/3/currenthealth", "value": 12},
+  {"side": "Server", "file": "game:entities/animal/mammal/hooved/pig-adult", "op": "replace", "path": "/server/behaviors/3/maxhealth", "value": 12},
+  {"side": "Server", "file": "game:entities/animal/mammal/wolf-adult", "op": "replace", "path": "/server/behaviors/3/currenthealthByType", "value": {"*": 16}},
+  {"side": "Server", "file": "game:entities/animal/mammal/wolf-adult", "op": "replace", "path": "/server/behaviors/3/maxhealthByType", "value": {"*": 16}},
+  {"side": "Server", "file": "game:entities/animal/mammal/hyena-adult", "op": "replace", "path": "/server/behaviors/4/currenthealth", "value": 16},
+  {"side": "Server", "file": "game:entities/animal/mammal/hyena-adult", "op": "replace", "path": "/server/behaviors/4/maxhealth", "value": 16},
+  {"side": "Server", "file": "game:entities/animal/mammal/hare-adult", "op": "replace", "path": "/server/behaviors/4/currenthealth", "value": 4},
+  {"side": "Server", "file": "game:entities/animal/mammal/hare-adult", "op": "replace", "path": "/server/behaviors/4/maxhealth", "value": 4},
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/deer-adult",
+    "op": "replace",
+    "path": "/server/behaviors/4/currenthealthByType",
+    "value": {"*-pudu-*": 8, "*-pampas-*": 12, "*-redbrocket-*": 12, "*-water-*": 12, "*-elk-*": 32, "*": 28}
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/deer-adult",
+    "op": "replace",
+    "path": "/server/behaviors/4/maxhealthByType",
+    "value": {"*-pudu-*": 8, "*-pampas-*": 12, "*-redbrocket-*": 12, "*-water-*": 12, "*-elk-*": 32, "*": 28}
+  },
+  {"side": "Server", "file": "game:entities/animal/mammal/hooved/gazelle-adult", "op": "replace", "path": "/server/behaviors/3/currenthealth", "value": 20},
+  {"side": "Server", "file": "game:entities/animal/mammal/hooved/gazelle-adult", "op": "replace", "path": "/server/behaviors/3/maxhealth", "value": 20},
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/goat-adult",
+    "op": "replace",
+    "path": "/server/behaviors/4/currenthealthByType",
+    "value": {"*-muskox-*-male": 32, "*-takingold-*-male": 32, "*-male": 20, "*-female": 16}
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/goat-adult",
+    "op": "replace",
+    "path": "/server/behaviors/4/maxhealthByType",
+    "value": {"*-muskox-*-male": 32, "*-takingold-*-male": 32, "*-male": 20, "*-female": 16}
+  },
+  {"side": "Server", "file": "game:entities/animal/mammal/hooved/moose-adult", "op": "replace", "path": "/server/behaviors/4/currenthealth", "value": 36},
+  {"side": "Server", "file": "game:entities/animal/mammal/hooved/moose-adult", "op": "replace", "path": "/server/behaviors/4/maxhealth", "value": 36},
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/sheep-adult",
+    "op": "replace",
+    "path": "/server/behaviors/3/currenthealthByType",
+    "value": {"*-female": 20, "*": 24}
+  },
+  {"side": "Server", "file": "game:entities/animal/mammal/hooved/sheep-adult", "op": "replace", "path": "/server/behaviors/3/maxhealthByType", "value": {"*-female": 20, "*": 24}},
+  {"side": "Server", "file": "game:entities/animal/bird/chicken-adult", "op": "replace", "path": "/server/behaviors/3/currenthealth", "value": 4},
+  {"side": "Server", "file": "game:entities/animal/bird/chicken-adult", "op": "replace", "path": "/server/behaviors/3/maxhealth", "value": 4}
+]

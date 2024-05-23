@@ -1,0 +1,56 @@
+﻿{
+  "code": "spear",
+  "class": "CombatOverhaul:Projectile",
+  "tags": ["projectile", "inanimate"],
+  "variantgroups": [
+    {"code": "type", "states": ["generic", "scrap", "boar", "voulge", "fork", "ranseur"]},
+    {
+      "code": "material",
+      "states": [
+        "chert",
+        "granite",
+        "andesite",
+        "basalt",
+        "obsidian",
+        "peridotite",
+        "flint",
+        "scrap",
+        "copper",
+        "tinbronze",
+        "bismuthbronze",
+        "blackbronze",
+        "ornategold",
+        "ornatesilver",
+        "iron",
+        "meteoriciron",
+        "steel",
+        "hacking",
+        "ruined",
+        "erel"
+      ]
+    }
+  ],
+  "skipVariants": ["spear-generic-ruined"],
+  "allowedVariants": ["spear-generic-*", "spear-scrap-scrap", "spear-boar-ruined", "spear-voulge-ruined", "spear-fork-ruined", "spear-ranseur-ruined"],
+  "SelectionBoxSize": {"x": 0.2, "y": 0.2},
+  "CollisionBoxSize": {"x": 0.01, "y": 0.01},
+  "client": {
+    "size": 0.8,
+    "renderer": "Shape",
+    "shapeByType": {
+      "@spear-generic-(chert|granite|andesite|basalt|obsidian|peridotite|flint)": {"base": "combatoverhaul:weapons/spears/spear-flint"},
+      "*-scrap": {"base": "combatoverhaul:weapons/spears/spear-{material}"},
+      "spear-generic-erel": {"base": "game:entity/nonliving/projectile/erel-large-usable"},
+      "spear-generic-hacking": {"base": "game:item/tool/spear/hacking"},
+      "spear-generic-ornategold": {"base": "game:item/tool/spear/ornategold"},
+      "spear-generic-ornatesilver": {"base": "game:item/tool/spear/ornatesilver"},
+      "@spear-generic-(copper|tinbronze|bismuthbronze|blackbronze)": {"base": "combatoverhaul:weapons/spears/spear-{material}"},
+      "@spear-generic-(iron|meteoriciron|steel)": {"base": "combatoverhaul:weapons/spears/spear-{material}"},
+      "*-ruined": {"base": "game:item/tool/spear/ruined/{type}"}
+    },
+    "texturesByType": {"@spear-generic-(chert|granite|andesite|basalt|obsidian|peridotite)": {"head": {"base": "game:block/stone/rock/{material}1"}}},
+    "behaviors": [{"code": "CombatOverhaul:ProjectilePhysics", "groundDragFactor": 1, "airDragFactor": 3, "gravityFactor": 3}, {"code": "interpolateposition"}]
+  },
+  "server": {"behaviors": [{"code": "CombatOverhaul:ProjectilePhysics", "groundDragFactor": 1, "airDragFactor": 3, "gravityFactor": 3}, {"code": "despawn", "minSeconds": 600}]},
+  "sounds": {}
+}

@@ -1,0 +1,738 @@
+{
+  "version": 2,
+  "patches": {
+    "string": {
+      "game:itemtypes/combatoverhaul/spear.json": {
+        "behaviors/1/properties/stats/HitSound": "(arrow_ping_sound_on_hit) ? value : empty_string"
+      },
+      "game:itemtypes/combatoverhaul/arrow.json": {
+        "behaviors/1/properties/stats/HitSound": "(arrow_ping_sound_on_hit) ? value : empty_string"
+      }
+    },
+    "other":  {
+      "game:itemtypes/combatoverhaul/spear.json": {
+        "attributes/TwoHandedStance/AttackDirectionsType": "(spears_directional_attacks) ? spear_directions_two : spear_directions_none",
+        "attributes/TwoHandedStance/AttackAnimation": "(spears_directional_attacks) ? spear_directions_two_animations : spear_directions_none_animations"
+      }
+    },
+    "boolean": {
+      "game:itemtypes/combatoverhaul/spear.json": {
+        "attributes/RenderingOffset": "not(weapon_rendering_offset)"
+      },
+      "game:itemtypes/combatoverhaul/club.json": {
+        "attributes/RenderingOffset": "not(weapon_rendering_offset)"
+      },
+      "game:itemtypes/combatoverhaul/sword.json": {
+        "attributes/RenderingOffset": "not(weapon_rendering_offset)"
+      },
+      "combatoverhaul:patches/entities/player.json": {
+        "2/value/secondChanceAvailable": "second_chance_available"
+      },
+      "game:itemtypes/combatoverhaul/bow.json": {
+        "attributes/TwoHanded": "bow_two_handed"
+      }
+    },
+    "number": {
+      "combatoverhaul:entities/spear.json": {
+        "client/behaviors/code=CombatOverhaul:ProjectilePhysics/airDragFactor": "value / spears_thrown_distance",
+        "client/behaviors/code=CombatOverhaul:ProjectilePhysics/gravityFactor": "value / spears_thrown_distance",
+        "server/behaviors/code=CombatOverhaul:ProjectilePhysics/airDragFactor": "value / spears_thrown_distance",
+        "server/behaviors/code=CombatOverhaul:ProjectilePhysics/gravityFactor": "value / spears_thrown_distance"
+      },
+      "game:itemtypes/combatoverhaul/bow.json": {
+        "attributes/AimingByType/@@*/AimDifficulty": "bow_aiming_difficulty",
+        "attributes/ArrowDamageMultiplierByType/@@*": "value * bows_damage_multiplier",
+        "attributes/ScreenShakeStrengthByType/@@*": "value * bow_screenshake"
+      },
+      "game:itemtypes/combatoverhaul/spear.json": {
+        "attributes/ThrowAttack/Aiming/AimDifficulty": "spears_aiming_difficulty",
+        "behaviors/1/properties/stats/DamageStatsByType/@@*/Damage": "value * spears_range_damage_multiplier",
+        "attributes/OneHandedStance/Attack/DamageTypes/0/DamageByType/@@*/Damage": "value * melee_weapons_damage_multiplier",
+        "attributes/TwoHandedStance/Attack/DamageTypes/0/DamageByType/@@*/Damage": "value * melee_weapons_damage_multiplier"
+      },
+      "game:itemtypes/combatoverhaul/scrap/spear.json": {
+        "attributes/ThrowAttack/Aiming/AimDifficulty": "spears_aiming_difficulty",
+        "behaviors/1/properties/stats/DamageStats/Damage": "value * spears_range_damage_multiplier",
+        "attributes/OneHandedStance/Attack/DamageTypes/0/Damage/Damage": "value * melee_weapons_damage_multiplier",
+        "attributes/TwoHandedStance/Attack/DamageTypes/0/Damage/Damage": "value * melee_weapons_damage_multiplier"
+      },
+      "game:itemtypes/combatoverhaul/club.json": {
+        "attributes/OneHandedStance/Attack/DamageTypesByType/@@*/0/Damage/Damage": "value * melee_weapons_damage_multiplier",
+        "attributes/TwoHandedStance/Attack/DamageTypesByType/@@*/0/Damage/Damage": "value * melee_weapons_damage_multiplier"
+      },
+      "game:itemtypes/combatoverhaul/sword.json": {
+        "attributes/OneHandedStanceByType/@@*/Attack/DamageTypes/0/DamageByType/@@*/Damage": "value * melee_weapons_damage_multiplier"
+      },
+      "game:itemtypes/combatoverhaul/scrap/mace.json": {
+        "attributes/OneHandedStance/Attack/DamageTypesByType/@@*/0/Damage/Damage": "value * melee_weapons_damage_multiplier"
+      },
+      "combatoverhaul:patches/entities/player.json": {
+        "2/value/secondChanceCooldownSec": "second_chance_cooldown",
+        "2/value/damageModel/Zones/0/DamageMultiplier": "player_model_torso_damage",
+        "2/value/damageModel/Zones/1/DamageMultiplier": "player_model_head_damage",
+        "2/value/damageModel/Zones/2/DamageMultiplier": "player_model_neck_damage",
+        "2/value/damageModel/Zones/3/DamageMultiplier": "player_model_face_damage",
+        "2/value/damageModel/Zones/4-8/DamageMultiplier": "player_model_arms_damage",
+        "2/value/damageModel/Zones/8-12/DamageMultiplier": "player_model_legs_damage",
+        "3/value/secondChanceCooldownSec": "second_chance_cooldown",
+        "3/value/damageModel/Zones/0/DamageMultiplier": "player_model_torso_damage",
+        "3/value/damageModel/Zones/1/DamageMultiplier": "player_model_head_damage",
+        "3/value/damageModel/Zones/2/DamageMultiplier": "player_model_neck_damage",
+        "3/value/damageModel/Zones/3/DamageMultiplier": "player_model_face_damage",
+        "3/value/damageModel/Zones/4-8/DamageMultiplier": "player_model_arms_damage",
+        "3/value/damageModel/Zones/8-12/DamageMultiplier": "player_model_legs_damage"
+      },
+      "combatoverhaul:patches/entities/lore/bowtorn.json": {
+        "8/value/SeekingRangeByType/*-surface": "bowtorn_maxrange_surface + 5",
+        "8/value/FiringRangeMaxByType/*-surface": "bowtorn_maxrange_surface",
+        "8/value/ProjectileSpeedByType/*-surface": "bowtorn_projectile_velocity_surface",
+        "9/value/*-surface": "(bowtorn_maxrange_surface - 14) / 2 + 14",
+        "10/value/*-surface": "bowtorn_maxrange_surface - ((bowtorn_maxrange_surface - 14) / 2 + 14)",
+        "11/value/*-surface": "bowtorn_maxrange_surface * 1.2",
+        "12/value/*-surface": "bowtorn_maxrange_surface * 1.2",
+        "13/value/*-surface": "bowtorn_maxrange_surface * 2",
+        "8/value/SeekingRangeByType/*-deep": "bowtorn_maxrange_deep + 5",
+        "8/value/FiringRangeMaxByType/*-deep": "bowtorn_maxrange_deep",
+        "8/value/ProjectileSpeedByType/*-deep": "bowtorn_projectile_velocity_deep",
+        "9/value/*-deep": "(bowtorn_maxrange_deep - 14) / 2 + 14",
+        "10/value/*-deep": "bowtorn_maxrange_deep - ((bowtorn_maxrange_deep - 14) / 2 + 14)",
+        "11/value/*-deep": "bowtorn_maxrange_deep * 1.2",
+        "12/value/*-deep": "bowtorn_maxrange_deep * 1.2",
+        "13/value/*-deep": "bowtorn_maxrange_deep * 2",
+        "8/value/SeekingRangeByType/*-tainted": "bowtorn_maxrange_tainted + 5",
+        "8/value/FiringRangeMaxByType/*-tainted": "bowtorn_maxrange_tainted",
+        "8/value/ProjectileSpeedByType/*-tainted": "bowtorn_projectile_velocity_tainted",
+        "9/value/*-tainted": "(bowtorn_maxrange_tainted - 14) / 2 + 14",
+        "10/value/*-tainted": "bowtorn_maxrange_tainted - ((bowtorn_maxrange_tainted - 14) / 2 + 14)",
+        "11/value/*-tainted": "bowtorn_maxrange_tainted * 1.2",
+        "12/value/*-tainted": "bowtorn_maxrange_tainted * 1.2",
+        "13/value/*-tainted": "bowtorn_maxrange_tainted * 2",
+        "8/value/SeekingRangeByType/*-corrupt": "bowtorn_maxrange_corrupt + 5",
+        "8/value/FiringRangeMaxByType/*-corrupt": "bowtorn_maxrange_corrupt",
+        "8/value/ProjectileSpeedByType/*-corrupt": "bowtorn_projectile_velocity_corrupt",
+        "9/value/*-corrupt": "(bowtorn_maxrange_corrupt - 14) / 2 + 14",
+        "10/value/*-corrupt": "bowtorn_maxrange_corrupt - ((bowtorn_maxrange_corrupt - 14) / 2 + 14)",
+        "11/value/*-corrupt": "bowtorn_maxrange_corrupt * 1.2",
+        "12/value/*-corrupt": "bowtorn_maxrange_corrupt * 1.2",
+        "13/value/*-corrupt": "bowtorn_maxrange_corrupt * 2",
+        "8/value/SeekingRangeByType/*-nightmare": "bowtorn_maxrange_nightmare + 5",
+        "8/value/FiringRangeMaxByType/*-nightmare": "bowtorn_maxrange_nightmare",
+        "8/value/ProjectileSpeedByType/*-nightmare": "bowtorn_projectile_velocity_nightmare",
+        "9/value/*-nightmare": "(bowtorn_maxrange_nightmare - 14) / 2 + 14",
+        "10/value/*-nightmare": "bowtorn_maxrange_nightmare - ((bowtorn_maxrange_nightmare - 14) / 2 + 14)",
+        "11/value/*-nightmare": "bowtorn_maxrange_nightmare * 1.2",
+        "12/value/*-nightmare": "bowtorn_maxrange_nightmare * 1.2",
+        "13/value/*-nightmare": "bowtorn_maxrange_nightmare * 2",
+        "8/value/SeekingRangeByType/*-gearfoot": "bowtorn_maxrange_gearfoot + 5",
+        "8/value/FiringRangeMaxByType/*-gearfoot": "bowtorn_maxrange_gearfoot",
+        "8/value/ProjectileSpeedByType/*-gearfoot": "bowtorn_projectile_velocity_gearfoot",
+        "9/value/*-gearfoot": "(bowtorn_maxrange_gearfoot - 14) / 2 + 14",
+        "10/value/*-gearfoot": "bowtorn_maxrange_gearfoot - ((bowtorn_maxrange_gearfoot - 14) / 2 + 14)",
+        "11/value/*-gearfoot": "bowtorn_maxrange_gearfoot * 1.2",
+        "12/value/*-gearfoot": "bowtorn_maxrange_gearfoot * 1.2",
+        "13/value/*-gearfoot": "bowtorn_maxrange_gearfoot * 2"
+      },
+      "combatoverhaul:config/animations/bows.json": {
+        "@@bow-draw-*/PlayerKeyFrames/1/FOVMultiplier": "(bow_fov_effect) ? clamp(1 - (1 - value) * bow_fov_multiplier, 0.01, 1) : 1",
+        "@@bow-draw-short-*/PlayerKeyFrames/1/FOVMultiplier": "(bow_fov_effect) ? clamp(1 - (1 - value) * bow_fov_multiplier, 0.01, 1) : 1",
+        "@@bow-release-*/PlayerKeyFrames/0/FOVMultiplier": "(bow_fov_effect) ? clamp(1 - (1 - value) * bow_fov_multiplier, 0.01, 1) : 1"
+      },
+    }
+  },
+  "constants": {
+    "empty_string": "",
+    "vanilla_axe": "ItemAxe",
+    "vanilla_item": "Item",
+    "spear_directions_none": "None",
+    "spear_directions_two": "TopBottom",
+    "spear_directions_none_animations": {"Main": ["combatoverhaul:spear-thrust-2h-1", "combatoverhaul:spear-thrust-2h-2", "combatoverhaul:spear-thrust-2h-3"]},
+    "spear_directions_two_animations": {"Top": ["combatoverhaul:spear-thrust-2h-top"], "Bottom": ["combatoverhaul:spear-thrust-2h-bottom"]}
+  },
+  "settings": [
+    {
+      "type": "separator",
+      "title": "combatoverhaul:setting-title-client-side"
+    },
+    {
+      "code": "bows_aiming_cursor_type",
+      "type": "string",
+      "ingui": "combatoverhaul:setting-bows_aiming_cursor_type",
+      "clientSide": true,
+      "default": "Fixed",
+      "values": [
+        "None",
+        "Vanilla",
+        "Fixed",
+        "Moving",
+        "MovingNone"
+      ]
+    },
+    {
+      "code": "thrown_weapons_cursor_type",
+      "type": "string",
+      "ingui": "combatoverhaul:setting-thrown_weapons_cursor_type",
+      "clientSide": true,
+      "default": "Fixed",
+      "values": [
+        "None",
+        "Vanilla",
+        "Fixed",
+        "Moving",
+        "MovingNone"
+      ]
+    },
+    {
+      "code": "flip_direction_after_attack",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-flip_direction_after_attack",
+      "clientSide": true,
+      "default": true
+    },
+    {
+      "code": "directions_invert",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-directions_invert",
+      "clientSide": true,
+      "default": false
+    },
+    {
+      "code": "directions_movement_controls",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-directions_movement_controls",
+      "clientSide": true,
+      "default": false
+    },
+    {
+      "code": "directions_hotkeys_controls",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-directions_hotkeys_controls",
+      "comment": "setting-comment-directions_hotkeys_controls",
+      "clientSide": true,
+      "default": false
+    },
+    {
+      "code": "directions_cursor_transparency",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-directions_cursor_transparency",
+      "clientSide": true,
+      "default": 0.5,
+      "range": {
+        "min": 0.0,
+        "max": 1.0
+      }
+    },
+    {
+      "code": "directions_cursor_scale",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-directions_cursor_scale",
+      "clientSide": true,
+      "default": 0.5,
+      "range": {
+        "min": 0.1,
+        "max": 3.0
+      }
+    },
+    {
+      "code": "directions_sensitivity",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-directions_sensitivity",
+      "clientSide": true,
+      "logarithmic": true,
+      "default": 1.0,
+      "range": {
+        "min": 0.001,
+        "max": 1000.0
+      }
+    },
+    {
+      "code": "bow_aiming_vertical_limit",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-bow_aiming_vertical_limit",
+      "clientSide": true,
+      "default": 1.0,
+      "range": {
+        "min": 0.0,
+        "max": 2.0
+      }
+    },
+    {
+      "code": "bow_aiming_horisontal_limit",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-bow_aiming_horisontal_limit",
+      "clientSide": true,
+      "default": 1.0,
+      "range": {
+        "min": 0.0,
+        "max": 2.0
+      }
+    },
+    {
+      "code": "bow_fov_effect",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-bow_fov_effect",
+      "comment": "combatoverhaul:setting-comment-bow_fov_effect",
+      "clientSide": true,
+      "default": true
+    },
+    {
+      "code": "vanilla_actions_while_blocking",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-vanilla_actions_while_blocking",
+      "clientSide": true,
+      "default": true
+    },
+    {
+      "code": "switch_from_immersive_first_person",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-switch_from_immersive_first_person",
+      "clientSide": true,
+      "default": true
+    },
+    {
+      "type": "separator",
+      "title": "combatoverhaul:setting-title-server-side"
+    },
+    {
+      "type": "separator",
+      "title": "combatoverhaul:setting-title-bow-settings",
+      "collapsible": true
+    },
+    {
+      "code": "bow_screenshake",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-bow_screenshake",
+      "default": 1.0,
+      "range": {
+        "min": 0.0,
+        "max": 2.0
+      }
+    },
+    {
+      "code": "bow_aiming_difficulty",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-bow_aiming_difficulty",
+      "default": 1.0,
+      "range": {
+        "min": 0.0,
+        "max": 2.0
+      }
+    },
+    {
+      "code": "bow_fov_multiplier",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-bow_fov_multiplier",
+      "default": 1.0,
+      "range": {
+        "min": 0.0,
+        "max": 5.0
+      }
+    },
+    {
+      "code": "bows_damage_multiplier",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-bows_damage_multiplier",
+      "default": 1.0,
+      "logarithmic": true,
+      "range": {
+        "min": 0.2,
+        "max": 5.0
+      }
+    },
+    {
+      "code": "bow_two_handed",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-bow_two_handed",
+      "default": true
+    },
+    {
+      "code": "arrow_ping_sound_on_hit",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-arrow_ping_sound_on_hit",
+      "default": true
+    },
+    {
+      "type": "separator",
+      "title": "combatoverhaul:setting-title-spears-settings",
+      "collapsible": true
+    },
+    {
+      "code": "spears_directional_attacks",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-spears_directional_attacks",
+      "default": false
+    },
+    {
+      "code": "spears_aiming_difficulty",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-spears_aiming_difficulty",
+      "default": 1.0,
+      "range": {
+        "min": 0.0,
+        "max": 2.0
+      }
+    },
+    {
+      "code": "spears_thrown_distance",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-spears_thrown_distance",
+      "default": 1.0,
+      "range": {
+        "min": 0.5,
+        "max": 5.0
+      }
+    },
+    {
+      "code": "spears_range_damage_multiplier",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-spears_range_damage_multiplier",
+      "default": 1.0,
+      "logarithmic": true,
+      "range": {
+        "min": 0.2,
+        "max": 5.0
+      }
+    },
+    {
+      "type": "separator",
+      "title": "combatoverhaul:setting-title-ranged-settings",
+      "collapsible": true
+    },
+    {
+      "code": "ranged_weapons_damage_support",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-ranged_weapons_damage_support",
+      "default": true
+    },
+    {
+      "type": "separator",
+      "title": "combatoverhaul:setting-title-melee-settings",
+      "collapsible": true
+    },
+    {
+      "code": "melee_weapons_damage_multiplier",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-melee_weapons_damage_multiplier",
+      "default": 1.0,
+      "logarithmic": true,
+      "range": {
+        "min": 0.2,
+        "max": 5.0
+      }
+    },
+    {
+      "code": "melee_weapon_attack_speed_multiplier",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-melee_weapon_attack_speed_multiplier",
+      "default": 1.0,
+      "logarithmic": true,
+      "range": {
+        "min": 0.2,
+        "max": 5.0
+      }
+    },
+    {
+      "code": "global_attack_cooldown_ms",
+      "type": "integer",
+      "ingui": "combatoverhaul:setting-global_attack_cooldown_ms",
+      "default": 1000,
+      "range": {
+        "min": 0,
+        "max": 5000
+      }
+    },
+    {
+      "code": "melee_weapon_stop_on_terrain_hit",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-melee_weapon_stop_on_terrain_hit",
+      "default": true
+    },
+    {
+      "code": "melee_weapon_ignore_terrain_behind",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-melee_weapon_ignore_terrain_behind",
+      "default": false
+    },
+    {
+      "code": "weapon_rendering_offset",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-weapon_rendering_offset",
+      "default": true
+    },
+    {
+      "type": "separator",
+      "title": "combatoverhaul:setting-title-logs-settings",
+      "collapsible": true
+    },
+    {
+      "code": "print_range_hits",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-print_range_hits",
+      "comment": "Can causes lags in some cases",
+      "default": false
+    },
+    {
+      "code": "print_melee_hits",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-print_melee_hits",
+      "comment": "Can causes lags in some cases",
+      "default": false
+    },
+    {
+      "code": "print_player_hits",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-print_player_hits",
+      "comment": "Can causes lags in some cases",
+      "default": true
+    },
+    {
+      "type": "separator",
+      "title": "combatoverhaul:setting-title-debug-particles-settings",
+      "collapsible": true
+    },
+    {
+      "code": "debug_hit_particles",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-debug_hit_particles",
+      "comment": "Spawn particles on melee hits",
+      "default": false
+    },
+    {
+      "code": "debug_weapon_trail_particles",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-debug_weapon_trail_particles",
+      "comment": "Draw melee weapon colliders as prticles",
+      "default": false
+    },
+    {
+      "code": "debug_weapon_trail_particles_size",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-debug_weapon_trail_particles_size",
+      "comment": "Melee weapon collider prticles size",
+      "default": 0.5,
+      "range": {
+        "min": 0.1,
+        "max": 1.0
+      }
+    },
+    {
+      "code": "debug_projectiles_trails_particles",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-debug_projectiles_trails_particles",
+      "comment": "Spawn particle trails for projectiles",
+      "default": false
+    },
+    {
+      "code": "debug_block_angles_particles",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-debug_block_angles_particles",
+      "comment": "Spawn particles indicating block angles and if an entity is in block angle range",
+      "default": false
+    },
+    {
+      "type": "separator",
+      "title": "combatoverhaul:setting-title-player-settings",
+      "collapsible": true
+    },
+    {
+      "code": "second_chance_available",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-second_chance_available",
+      "default": true
+    },
+    {
+      "code": "second_chance_cooldown",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-second_chance_cooldown",
+      "default": 300.0
+    },
+    {
+      "code": "player_model_torso_damage",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-player_model_torso_damage",
+      "default": 1.0,
+      "range": {
+        "min": 0.0,
+        "max": 5.0
+      }
+    },
+    {
+      "code": "player_model_head_damage",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-player_model_head_damage",
+      "default": 2.0,
+      "range": {
+        "min": 0.0,
+        "max": 5.0
+      }
+    },
+    {
+      "code": "player_model_neck_damage",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-player_model_neck_damage",
+      "default": 2.0,
+      "range": {
+        "min": 0.0,
+        "max": 5.0
+      }
+    },
+    {
+      "code": "player_model_face_damage",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-player_model_face_damage",
+      "default": 1.5,
+      "range": {
+        "min": 0.0,
+        "max": 5.0
+      }
+    },
+    {
+      "code": "player_model_arms_damage",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-player_model_arms_damage",
+      "default": 0.5,
+      "range": {
+        "min": 0.0,
+        "max": 5.0
+      }
+    },
+    {
+      "code": "player_model_legs_damage",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-player_model_legs_damage",
+      "default": 0.5,
+      "range": {
+        "min": 0.0,
+        "max": 5.0
+      }
+    },
+    {
+      "type": "separator",
+      "title": "combatoverhaul:setting-title-entities"
+    },
+    {
+      "type": "separator",
+      "title": "combatoverhaul:setting-title-bowtorns",
+      "collapsible": true
+    },
+    {
+      "code": "bowtorn_maxrange_surface",
+      "type": "integer",
+      "ingui": "combatoverhaul:setting-bowtorn_maxrange_surface",
+      "default": 25,
+      "range": {
+        "min": 15,
+        "max": 300
+      }
+    },
+    {
+      "code": "bowtorn_maxrange_deep",
+      "type": "integer",
+      "ingui": "combatoverhaul:setting-bowtorn_maxrange_deep",
+      "default": 30,
+      "range": {
+        "min": 15,
+        "max": 300
+      }
+    },
+    {
+      "code": "bowtorn_maxrange_tainted",
+      "type": "integer",
+      "ingui": "combatoverhaul:setting-bowtorn_maxrange_tainted",
+      "default": 37,
+      "range": {
+        "min": 15,
+        "max": 300
+      }
+    },
+    {
+      "code": "bowtorn_maxrange_corrupt",
+      "type": "integer",
+      "ingui": "combatoverhaul:setting-bowtorn_maxrange_corrupt",
+      "default": 45,
+      "range": {
+        "min": 15,
+        "max": 300
+      }
+    },
+    {
+      "code": "bowtorn_maxrange_nightmare",
+      "type": "integer",
+      "ingui": "combatoverhaul:setting-bowtorn_maxrange_nightmare",
+      "default": 53,
+      "range": {
+        "min": 15,
+        "max": 300
+      }
+    },
+    {
+      "code": "bowtorn_maxrange_gearfoot",
+      "type": "integer",
+      "ingui": "combatoverhaul:setting-bowtorn_maxrange_gearfoot",
+      "default": 90,
+      "range": {
+        "min": 15,
+        "max": 300
+      }
+    },
+    {
+      "code": "bowtorn_projectile_velocity_surface",
+      "type": "integer",
+      "ingui": "combatoverhaul:setting-bowtorn_projectile_velocity_surface",
+      "default": 40,
+      "range": {
+        "min": 10,
+        "max": 300
+      }
+    },
+    {
+      "code": "bowtorn_projectile_velocity_deep",
+      "type": "integer",
+      "ingui": "combatoverhaul:setting-bowtorn_projectile_velocity_deep",
+      "default": 48,
+      "range": {
+        "min": 10,
+        "max": 300
+      }
+    },
+    {
+      "code": "bowtorn_projectile_velocity_tainted",
+      "type": "integer",
+      "ingui": "combatoverhaul:setting-bowtorn_projectile_velocity_tainted",
+      "default": 56,
+      "range": {
+        "min": 10,
+        "max": 300
+      }
+    },
+    {
+      "code": "bowtorn_projectile_velocity_corrupt",
+      "type": "integer",
+      "ingui": "combatoverhaul:setting-bowtorn_projectile_velocity_corrupt",
+      "default": 64,
+      "range": {
+        "min": 10,
+        "max": 300
+      }
+    },
+    {
+      "code": "bowtorn_projectile_velocity_nightmare",
+      "type": "integer",
+      "ingui": "combatoverhaul:setting-bowtorn_projectile_velocity_nightmare",
+      "default": 72,
+      "range": {
+        "min": 10,
+        "max": 300
+      }
+    },
+    {
+      "code": "bowtorn_projectile_velocity_gearfoot",
+      "type": "integer",
+      "ingui": "combatoverhaul:setting-bowtorn_projectile_velocity_gearfoot",
+      "default": 100,
+      "range": {
+        "min": 10,
+        "max": 300
+      }
+    }
+  ]
+}

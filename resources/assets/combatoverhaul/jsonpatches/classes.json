@@ -1,0 +1,46 @@
+﻿[
+  {"enabled": true, "file": "game:config/traits", "op": "replace", "path": "/code=soldier/attributes/armorWalkSpeedAffectedness", "value": -0.5},
+  {"enabled": true, "file": "game:config/traits", "op": "addmerge", "path": "/code=soldier/attributes", "value": {"armorManipulationSpeedAffectedness": -0.5}},
+  {"enabled": true, "file": "game:config/traits", "op": "addmerge", "path": "/code=soldier/attributes", "value": {"armorHungerRateAffectedness": -0.5}},
+  {"enabled": true, "file": "game:config/traits", "op": "remove", "path": "/code=soldier/attributes/meleeWeaponsDamage"},
+  {"enabled": true, "file": "game:config/characterclasses", "op": "remove", "path": "/code=blackguard/traits/-", "value": "nearsighted"},
+  {
+    "enabled": true,
+    "file": "game:config/characterclasses",
+    "op": "addeach",
+    "path": "/code=blackguard/traits/-",
+    "value": ["meleeExpert", "oneHandedSwordsProficiency", "twoHandedSwordsProficiency", "poleaxeProficiency", "tremblingAim", "clumsyHands", "canParryProjectiles", "legDay"]
+  },
+  {"enabled": true, "file": "game:config/traits", "op": "addmerge", "path": "/code=precise/attributes", "value": {"rangedDamageTierBonusBluntAttack": 1}},
+  {
+    "enabled": true,
+    "file": "game:config/characterclasses",
+    "op": "addeach",
+    "path": "/code=clockmaker/traits/-",
+    "value": ["crossbowsProficiency", "firearmsProficiency", "quarterstaffProficiency", "bigHead", "frightenedOfMelee"]
+  },
+  {"enabled": true, "file": "game:config/traits", "op": "remove", "path": "/code=focused/attributes/rangedWeaponsDamage"},
+  {"enabled": true, "file": "game:config/traits", "op": "remove", "path": "/code=focused/attributes/rangedWeaponsAcc"},
+  {"enabled": true, "file": "game:config/traits", "op": "remove", "path": "/code=focused/attributes/bowDrawingStrength"},
+  {"enabled": true, "file": "game:config/traits", "op": "addmerge", "path": "/code=focused/attributes", "value": {"rangedDamageTierBonusSlashingAttack": 1}},
+  {"enabled": true, "file": "game:config/traits", "op": "remove", "path": "/code=farsighted/attributes/meleeWeaponsDamage"},
+  {"enabled": true, "file": "game:config/traits", "op": "addmerge", "path": "/code=farsighted/attributes", "value": {"meleeDamageTierBonusBluntAttack": -1}},
+  {
+    "enabled": true,
+    "file": "game:config/characterclasses",
+    "op": "addeach",
+    "path": "/code=hunter/traits/-",
+    "value": ["bowsProficiency", "crossbowsProficiency", "steadyAim", "spearsProficiency", "halberdsProficiency"]
+  },
+  {"enabled": true, "file": "game:config/traits", "op": "remove", "path": "/code=frail/attributes/bowDrawingStrength"},
+  {"enabled": true, "file": "game:config/traits", "op": "remove", "path": "/code=nervous/attributes/meleeWeaponsDamage"},
+  {"enabled": true, "file": "game:config/traits", "op": "addmerge", "path": "/code=nervous/attributes", "value": {"meleeDamageTierBonusPiercingAttack": -1}},
+  {
+    "enabled": true,
+    "file": "game:config/characterclasses",
+    "op": "addeach",
+    "path": "/code=malefactor/traits/-",
+    "value": ["javelinsProficiency", "slingsProficiency", "macesProficiency", "clubsProficiency", "axesProficiency", "thickSkull"]
+  },
+  {"enabled": true, "file": "game:config/characterclasses", "op": "addeach", "path": "/code=tailor/traits/-", "value": ["selfDefence"]}
+]

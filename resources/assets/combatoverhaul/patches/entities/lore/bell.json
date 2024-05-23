@@ -1,0 +1,79 @@
+﻿[
+  {
+    "side": "Server",
+    "file": "game:entities/lore/bell",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {"code": "CombatOverhaul:ShowStatsBehavior", "entriesByType": {"*": [["Vulnerable to {0} damage", "Blunt"], ["Bell part of this monster is resistant to damage."]]}}
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/bell",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {
+        "Torso": ["vertebrae 1", "vertebrae 2", "vertebrae 3", "vertebrae 4", "vertebrae 5", "vertebrae 6", "vertebrae 7", "vertebrae 8"],
+        "Head": [],
+        "Arm": [],
+        "Leg": ["funnel 1", "funnel 2", "funnel 3", "funnel 4"],
+        "Critical": ["stone"],
+        "Resistant": ["S tip", "W tip", "E tip", "N tip", "N", "W", "S", "E", "E small", "N small", "W small", "S small", "top"]
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/bell",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {
+        "Torso": ["vertebrae 1", "vertebrae 2", "vertebrae 3", "vertebrae 4", "vertebrae 5", "vertebrae 6", "vertebrae 7", "vertebrae 8"],
+        "Head": [],
+        "Arm": [],
+        "Leg": ["funnel 1", "funnel 2", "funnel 3", "funnel 4"],
+        "Critical": ["stone"],
+        "Resistant": ["S tip", "W tip", "E tip", "N tip", "N", "W", "S", "E", "E small", "N small", "W small", "S small", "top"]
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/bell",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.8,
+        "HeadDamageMultiplier": 1,
+        "CriticalDamageMultiplier": 5,
+        "ResistantDamageMultiplier": 0.2,
+        "DefaultResists": {"BluntAttack": 3, "SlashingAttack": 6, "PiercingAttack": 7},
+        "HitSounds": {"Resistant": {"Code": "game:sounds/held/shieldblock-metal-light"}}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/bell",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.8,
+        "HeadDamageMultiplier": 1,
+        "CriticalDamageMultiplier": 5,
+        "ResistantDamageMultiplier": 0.2,
+        "DefaultResists": {"BluntAttack": 3, "SlashingAttack": 6, "PiercingAttack": 7},
+        "HitSounds": {"Resistant": {"Code": "game:sounds/held/shieldblock-metal-light"}}
+      }
+    }
+  }
+]

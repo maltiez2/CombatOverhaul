@@ -1,0 +1,47 @@
+[
+	{
+		"ingredientPattern": "B,P",
+		"recipeGroup": 2,
+		"ingredients": {
+			"B": { "type": "item", "code": "game:armor-head-brigandine-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"] },
+			"P": { "type": "item", "code": "game:metalplate-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel"] }
+		},
+		"width": 1,
+		"height": 2,
+		"shapeless": true,
+		"copyAttributesFrom": "B",
+		"averageDurability": false,
+		"name": "brigandine helmet repair",
+		"output": { "type": "item", "code": "game:armor-head-brigandine-{metal}"  }
+	},
+	{
+      "ingredientPattern": "B,P",
+      "recipeGroup": 2,
+      "ingredients": {
+          "B": { "type": "item", "code": "game:armor-body-brigandine-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"] },
+          "P": { "type": "item", "code": "game:metalplate-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel"] }
+      },
+      "width": 1,
+      "height": 2,
+      "shapeless": true,
+      "copyAttributesFrom": "B",
+      "averageDurability": false,
+      "name": "brigandine body armor repair",
+      "output": { "type": "item", "code": "game:armor-body-brigandine-{metal}"  }
+  },
+	{
+		"ingredientPattern": "B,P",
+		"recipeGroup": 2,
+		"ingredients": {
+			"B": { "type": "item", "code": "game:armor-legs-brigandine-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"] },
+			"P": { "type": "item", "code": "game:metalplate-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel"] }
+		},
+		"width": 1,
+		"height": 2,
+		"shapeless": true,
+		"copyAttributesFrom": "B",
+		"averageDurability": false,
+		"name": "brigandine leg armor repair",
+		"output": { "type": "item", "code": "game:armor-legs-brigandine-{metal}"  }
+	}
+]

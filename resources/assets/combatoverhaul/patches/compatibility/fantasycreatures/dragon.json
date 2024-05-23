@@ -1,0 +1,398 @@
+﻿[
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/dragon",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {
+        "Torso": [
+          "neck_652",
+          "neck_551",
+          "neck_449",
+          "neck_347",
+          "neck_245",
+          "neck_143",
+          "shoulders6",
+          "body0",
+          "body1",
+          "tail_1180",
+          "tail_2182",
+          "tail_3184",
+          "tail_4186",
+          "tail_5188",
+          "tail_6190"
+        ],
+        "Head": ["head56", "head55", "head54", "head58", "head59", "jaw110", "jaw112", "jaw113", "jaw116", "head75", "head69", "head70", "head60", "head62"],
+        "Arm": [
+          "wing_18",
+          "wing_210",
+          "wing_312",
+          "wing_515",
+          "wing_523",
+          "wing_522",
+          "wing_524",
+          "wing_313",
+          "wing_211",
+          "wing_19",
+          "wing_625",
+          "wing_727",
+          "wing_829",
+          "wing_1032",
+          "wing_1040",
+          "wing_1041",
+          "wing_1039",
+          "wing_830",
+          "wing_728",
+          "wing_626"
+        ],
+        "Leg": [
+          "arm_1122",
+          "arm_1123",
+          "arm_2124",
+          "hand_1125",
+          "arm_3151",
+          "arm_3152",
+          "arm_4153",
+          "hand_2154",
+          "arm_5137",
+          "arm_6138",
+          "hand_3139",
+          "arm_7166",
+          "arm_8167",
+          "hand_4168"
+        ],
+        "Critical": [],
+        "Resistant": ["head85", "head86", "head87", "head82", "head83", "head84"]
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/dragon",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {
+        "Torso": [
+          "neck_652",
+          "neck_551",
+          "neck_449",
+          "neck_347",
+          "neck_245",
+          "neck_143",
+          "shoulders6",
+          "body0",
+          "body1",
+          "tail_1180",
+          "tail_2182",
+          "tail_3184",
+          "tail_4186",
+          "tail_5188",
+          "tail_6190"
+        ],
+        "Head": ["head56", "head55", "head54", "head58", "head59", "jaw110", "jaw112", "jaw113", "jaw116", "head75", "head69", "head70", "head60", "head62"],
+        "Arm": [
+          "wing_18",
+          "wing_210",
+          "wing_312",
+          "wing_515",
+          "wing_523",
+          "wing_522",
+          "wing_524",
+          "wing_313",
+          "wing_211",
+          "wing_19",
+          "wing_625",
+          "wing_727",
+          "wing_829",
+          "wing_1032",
+          "wing_1040",
+          "wing_1041",
+          "wing_1039",
+          "wing_830",
+          "wing_728",
+          "wing_626"
+        ],
+        "Leg": [
+          "arm_1122",
+          "arm_1123",
+          "arm_2124",
+          "hand_1125",
+          "arm_3151",
+          "arm_3152",
+          "arm_4153",
+          "hand_2154",
+          "arm_5137",
+          "arm_6138",
+          "hand_3139",
+          "arm_7166",
+          "arm_8167",
+          "hand_4168"
+        ],
+        "Critical": [],
+        "Resistant": ["head85", "head86", "head87", "head82", "head83", "head84"]
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/dragon",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.5,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResists": {"BluntAttack": 6, "SlashingAttack": 6, "PiercingAttack": 3}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/dragon",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.5,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResists": {"BluntAttack": 6, "SlashingAttack": 6, "PiercingAttack": 3}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/dragon-flying",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {
+        "Torso": [
+          "neck_652",
+          "neck_551",
+          "neck_449",
+          "neck_347",
+          "neck_245",
+          "neck_143",
+          "shoulders6",
+          "body0",
+          "body1",
+          "tail_1180",
+          "tail_2182",
+          "tail_3184",
+          "tail_4186",
+          "tail_5188",
+          "tail_6190"
+        ],
+        "Head": ["head56", "head55", "head54", "head58", "head59", "jaw110", "jaw112", "jaw113", "jaw116", "head75", "head69", "head70", "head60", "head62"],
+        "Arm": [
+          "wing_18",
+          "wing_210",
+          "wing_312",
+          "wing_515",
+          "wing_523",
+          "wing_522",
+          "wing_524",
+          "wing_313",
+          "wing_211",
+          "wing_19",
+          "wing_625",
+          "wing_727",
+          "wing_829",
+          "wing_1032",
+          "wing_1040",
+          "wing_1041",
+          "wing_1039",
+          "wing_830",
+          "wing_728",
+          "wing_626"
+        ],
+        "Leg": [
+          "arm_1122",
+          "arm_1123",
+          "arm_2124",
+          "hand_1125",
+          "arm_3151",
+          "arm_3152",
+          "arm_4153",
+          "hand_2154",
+          "arm_5137",
+          "arm_6138",
+          "hand_3139",
+          "arm_7166",
+          "arm_8167",
+          "hand_4168"
+        ],
+        "Critical": [],
+        "Resistant": ["head85", "head86", "head87", "head82", "head83", "head84"]
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/dragon-flying",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {
+        "Torso": [
+          "neck_652",
+          "neck_551",
+          "neck_449",
+          "neck_347",
+          "neck_245",
+          "neck_143",
+          "shoulders6",
+          "body0",
+          "body1",
+          "tail_1180",
+          "tail_2182",
+          "tail_3184",
+          "tail_4186",
+          "tail_5188",
+          "tail_6190"
+        ],
+        "Head": ["head56", "head55", "head54", "head58", "head59", "jaw110", "jaw112", "jaw113", "jaw116", "head75", "head69", "head70", "head60", "head62"],
+        "Arm": [
+          "wing_18",
+          "wing_210",
+          "wing_312",
+          "wing_515",
+          "wing_523",
+          "wing_522",
+          "wing_524",
+          "wing_313",
+          "wing_211",
+          "wing_19",
+          "wing_625",
+          "wing_727",
+          "wing_829",
+          "wing_1032",
+          "wing_1040",
+          "wing_1041",
+          "wing_1039",
+          "wing_830",
+          "wing_728",
+          "wing_626"
+        ],
+        "Leg": [
+          "arm_1122",
+          "arm_1123",
+          "arm_2124",
+          "hand_1125",
+          "arm_3151",
+          "arm_3152",
+          "arm_4153",
+          "hand_2154",
+          "arm_5137",
+          "arm_6138",
+          "hand_3139",
+          "arm_7166",
+          "arm_8167",
+          "hand_4168"
+        ],
+        "Critical": [],
+        "Resistant": ["head85", "head86", "head87", "head82", "head83", "head84"]
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/dragon-flying",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.5,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResists": {"BluntAttack": 6, "SlashingAttack": 6, "PiercingAttack": 3}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/dragon-flying",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.5,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResists": {"BluntAttack": 6, "SlashingAttack": 6, "PiercingAttack": 3}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/dragon",
+    "op": "add",
+    "path": "/server/behaviors/8/aitasksByType/dragon-*/0/damageType",
+    "value": "Fire"
+  },
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/dragon",
+    "op": "replace",
+    "path": "/server/behaviors/8/aitasksByType/dragon-*/1/damageType",
+    "value": "SlashingAttack"
+  },
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/dragon",
+    "op": "add",
+    "path": "/server/behaviors/8/aitasksByType/dragon-*/2/damageType",
+    "value": "PiercingAttack"
+  },
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/dragon",
+    "op": "add",
+    "path": "/server/behaviors/8/aitasksByType/dragon-*/0/damageTier",
+    "value": 6
+  },
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/dragon",
+    "op": "replace",
+    "path": "/server/behaviors/8/aitasksByType/dragon-*/1/damageTier",
+    "value": 7
+  },
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/dragon",
+    "op": "add",
+    "path": "/server/behaviors/8/aitasksByType/dragon-*/2/damageTier",
+    "value": 6
+  }
+]

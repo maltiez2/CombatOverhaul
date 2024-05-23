@@ -1,0 +1,133 @@
+﻿[
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/bear-adult",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:ShowStatsBehavior",
+      "entriesByType": {
+        "*-sun-*": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "6", "2", "Slashing"]],
+        "*-black-*": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "10", "2", "Slashing"]],
+        "*-panda-*": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "10", "2", "Slashing"]],
+        "*-brown-*": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "14", "3", "Slashing"]],
+        "*-polar-*": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "16", "4", "Slashing"]],
+        "*": []
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/bear-adult",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {
+        "Torso": ["shoulders", "body", "abdomen"],
+        "Head": ["neck", "head", "cheeks", "mouth"],
+        "Arm": ["L front leg", "L front leg3", "L front foot", "R front leg", "R front feet", "R front paw"],
+        "Leg": ["L back leg", "L back feet", "R back feet", "R back leg", "L back paw", "R back paw"],
+        "Critical": [],
+        "Resistant": []
+      },
+      "defaultPenetrationResistance": 9
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/bear-adult",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {
+        "Torso": ["shoulders", "body", "abdomen"],
+        "Head": ["neck", "head", "cheeks", "mouth"],
+        "Arm": ["L front leg", "L front leg3", "L front foot", "R front leg", "R front feet", "R front paw"],
+        "Leg": ["L back leg", "L back feet", "R back feet", "R back leg", "L back paw", "R back paw"],
+        "Critical": [],
+        "Resistant": []
+      },
+      "defaultPenetrationResistance": 9
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/bear-adult",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.5,
+        "HeadDamageMultiplier": 1.25,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResistsByType": {
+          "*-black-*": {"BluntAttack": 7, "SlashingAttack": 5, "PiercingAttack": 2},
+          "*-sun-*": {"BluntAttack": 7, "SlashingAttack": 5, "PiercingAttack": 2},
+          "*-panda-*": {"BluntAttack": 7, "SlashingAttack": 5, "PiercingAttack": 2},
+          "*-brown-*": {"BluntAttack": 8, "SlashingAttack": 6, "PiercingAttack": 3},
+          "*-polar-*": {"BluntAttack": 8, "SlashingAttack": 6, "PiercingAttack": 3}
+        }
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/bear-adult",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.5,
+        "HeadDamageMultiplier": 1.25,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResistsByType": {
+          "*-black-*": {"BluntAttack": 7, "SlashingAttack": 5, "PiercingAttack": 2},
+          "*-sun-*": {"BluntAttack": 7, "SlashingAttack": 5, "PiercingAttack": 2},
+          "*-panda-*": {"BluntAttack": 7, "SlashingAttack": 5, "PiercingAttack": 2},
+          "*-brown-*": {"BluntAttack": 8, "SlashingAttack": 6, "PiercingAttack": 3},
+          "*-polar-*": {"BluntAttack": 8, "SlashingAttack": 6, "PiercingAttack": 3}
+        }
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/bear-adult",
+    "op": "add",
+    "path": "/server/behaviors/9/aitasks/0/damageTierByType",
+    "value": {"*-black-*": 2, "*-brown-*": 3, "*-sun-*": 2, "*-panda-*": 2, "*-polar-*": 4}
+  },
+  {"side": "Server", "file": "game:entities/animal/mammal/bear-adult", "op": "remove", "path": "/server/behaviors/9/aitasks/0/damageTier"},
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/bear-adult",
+    "op": "add",
+    "path": "/server/behaviors/9/aitasks/3/damageTierByType",
+    "value": {"*-black-*": 2, "*-brown-*": 3, "*-sun-*": 2, "*-panda-*": 2, "*-polar-*": 4}
+  },
+  {"side": "Server", "file": "game:entities/animal/mammal/bear-adult", "op": "remove", "path": "/server/behaviors/9/aitasks/3/damageTier"},
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/bear-adult",
+    "op": "replace",
+    "path": "/server/behaviors/9/aitasks/0/damageByType",
+    "value": {"*-black-*": 10, "*-brown-*": 14, "*-sun-*": 6, "*-panda-*": 10, "*-polar-*": 16}
+  },
+  {"side": "Server", "file": "game:entities/animal/mammal/bear-adult", "op": "remove", "path": "/server/behaviors/9/aitasks/0/damage"},
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/bear-adult",
+    "op": "replace",
+    "path": "/server/behaviors/9/aitasks/3/damageByType",
+    "value": {"*-black-*": 10, "*-brown-*": 14, "*-sun-*": 6, "*-panda-*": 10, "*-polar-*": 16}
+  },
+  {"side": "Server", "file": "game:entities/animal/mammal/bear-adult", "op": "remove", "path": "/server/behaviors/9/aitasks/3/damage"},
+  {"side": "Server", "file": "game:entities/animal/mammal/bear-adult", "op": "replace", "path": "/server/behaviors/9/aitasks/0/damageType", "value": "SlashingAttack"},
+  {"side": "Server", "file": "game:entities/animal/mammal/bear-adult", "op": "replace", "path": "/server/behaviors/9/aitasks/3/damageType", "value": "SlashingAttack"}
+]

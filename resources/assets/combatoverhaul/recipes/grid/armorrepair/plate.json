@@ -1,0 +1,28 @@
+[
+	{
+    "ingredientPattern": "AP",
+    "recipeGroup": 2,
+    "ingredients": {"A": {"type": "item", "code": "game:armor-{type}-plate-{material}"}, "P": {"type": "item", "code": "game:metalplate-steel"}},
+    "allowedVariants": {"material": ["gold", "silver"]},
+    "width": 2,
+    "height": 1,
+    "shapeless": true,
+    "copyAttributesFrom": "A",
+    "averageDurability": false,
+    "name": "plate armor repair",
+    "output": {"type": "item", "code": "game:armor-{type}-plate-{material}"}
+  },
+  {
+    "ingredientPattern": "AP",
+    "recipeGroup": 2,
+    "ingredients": {"A": {"type": "item", "code": "game:armor-{type}-plate-{material}"}, "P": {"type": "item", "code": "game:metalplate-{material}"}},
+    "allowedVariants": {"material": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel"]},
+    "width": 2,
+    "height": 1,
+    "shapeless": true,
+    "copyAttributesFrom": "A",
+    "averageDurability": false,
+    "name": "plate armor repair",
+    "output": {"type": "item", "code": "game:armor-{type}-plate-{material}"}
+  }
+]

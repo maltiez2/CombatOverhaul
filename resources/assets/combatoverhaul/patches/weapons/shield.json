@@ -1,0 +1,229 @@
+﻿[
+  {"file": "game:itemtypes/tool/shield", "op": "replace", "path": "/class", "value": "CombatOverhaul:VanillaShield"},
+  {"file": "game:itemtypes/tool/shield", "op": "remove", "path": "/attributes/shield"},
+  {"file": "game:itemtypes/tool/shield", "op": "replace", "path": "/durabilitybytype/shield-crude", "value": 160},
+  {"file": "game:itemtypes/tool/shield", "op": "replace", "path": "/durabilitybytype/shield-woodmetal", "value": 600},
+  {"file": "game:itemtypes/tool/shield", "op": "replace", "path": "/durabilitybytype/shield-woodmetalleather", "value": 900},
+  {"file": "game:itemtypes/tool/shield", "op": "replace", "path": "/durabilitybytype/shield-metal", "value": 2000},
+  {"file": "game:itemtypes/tool/shield", "op": "replace", "path": "/durabilitybytype/shield-blackguard", "value": 1000},
+  {"file": "game:itemtypes/tool/shield", "op": "add", "path": "/creativeinventory/combatoverhaul", "value": ["shield-crude", "shield-blackguard"]},
+  {
+    "file": "game:itemtypes/tool/shield",
+    "op": "add",
+    "path": "/attributes/OffHandStanceByType",
+    "value": {
+      "*-crude": {
+        "CanAttack": false,
+        "CanParry": true,
+        "CanBlock": true,
+        "CanSprint": true,
+        "SpeedPenalty": 0,
+        "BlockSpeedPenalty": -0.1,
+        "Parry": {
+          "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
+          "Directions": [45, 45, 45, 45],
+          "Sound": "game:sounds/held/shieldblock-wood-heavy",
+          "BlockTier": {"BluntAttack": 4, "SlashingAttack": 4, "PiercingAttack": 4},
+          "StaggerTier": 4,
+          "StaggerTimeMs": 2000
+        },
+        "Block": {
+          "Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
+          "Directions": [90, 90, 90, 90],
+          "Sound": "game:sounds/held/shieldblock-wood-light",
+          "BlockTier": {"BluntAttack": 2, "SlashingAttack": 2, "PiercingAttack": 2}
+        },
+        "ParryCooldownMs": 600,
+        "BlockCooldownMs": 0,
+        "BlockAnimation": "combatoverhaul:shield-light-parry",
+        "ReadyAnimation": "combatoverhaul:shield-light-ready",
+        "IdleAnimation": "combatoverhaul:shield-light-ready",
+        "BlockTpAnimation": "block"
+      },
+      "*-woodmetal": {
+        "CanAttack": false,
+        "CanParry": true,
+        "CanBlock": true,
+        "CanSprint": true,
+        "CanBash": true,
+        "SpeedPenalty": 0,
+        "BlockSpeedPenalty": -0.05,
+        "Parry": {
+          "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
+          "Directions": [45, 45, 45, 45],
+          "Sound": "game:sounds/held/shieldblock-wood-heavy",
+          "BlockTier": {"BluntAttack": 5, "SlashingAttack": 5, "PiercingAttack": 5},
+          "StaggerTier": 5,
+          "StaggerTimeMs": 2000
+        },
+        "Block": {
+          "Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
+          "Directions": [90, 90, 90, 90],
+          "Sound": "game:sounds/held/shieldblock-wood-light",
+          "BlockTier": {"BluntAttack": 4, "SlashingAttack": 4, "PiercingAttack": 4}
+        },
+        "BlockBash": {
+          "StopOnTerrainHit": false,
+          "StopOnEntityHit": true,
+          "CollideWithTerrain": true,
+          "MaxReach": 9,
+          "DamageTypes": [
+            {
+              "DamageByType": {"*": {"DamageType": "BluntAttack", "Tier": 0, "Damage": 1}},
+              "Knockback": 2,
+              "DurabilityDamage": 1,
+              "Collider": [-0.3, -0.3, 0.2, 0.39999998, -0.3, 0.2],
+              "StaggerTimeMs": 500,
+              "StaggerTier": 2
+            }
+          ]
+        },
+        "ParryCooldownMs": 600,
+        "BlockCooldownMs": 0,
+        "BlockBashAnimation": {"Main": ["combatoverhaul:shield-light-bash"]},
+        "BlockAnimation": "combatoverhaul:shield-light-parry",
+        "ReadyAnimation": "combatoverhaul:shield-light-ready",
+        "IdleAnimation": "combatoverhaul:shield-light-ready",
+        "BlockTpAnimation": "block"
+      },
+      "*-woodmetalleather": {
+        "CanAttack": false,
+        "CanParry": true,
+        "CanBlock": true,
+        "CanSprint": true,
+        "CanBash": true,
+        "SpeedPenalty": 0,
+        "BlockSpeedPenalty": -0.05,
+        "Parry": {
+          "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
+          "Directions": [45, 45, 45, 45],
+          "Sound": "game:sounds/held/shieldblock-wood-heavy",
+          "BlockTier": {"BluntAttack": 6, "SlashingAttack": 6, "PiercingAttack": 6},
+          "StaggerTier": 4,
+          "StaggerTimeMs": 2000
+        },
+        "Block": {
+          "Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
+          "Directions": [90, 90, 90, 90],
+          "Sound": "game:sounds/held/shieldblock-wood-light",
+          "BlockTier": {"BluntAttack": 5, "SlashingAttack": 5, "PiercingAttack": 5}
+        },
+        "BlockBash": {
+          "StopOnTerrainHit": false,
+          "StopOnEntityHit": true,
+          "CollideWithTerrain": true,
+          "MaxReach": 9,
+          "DamageTypes": [
+            {
+              "DamageByType": {"*": {"DamageType": "BluntAttack", "Tier": 0, "Damage": 1}},
+              "Knockback": 2,
+              "DurabilityDamage": 1,
+              "Collider": [-0.3, -0.3, 0.2, 0.39999998, -0.3, 0.2],
+              "StaggerTimeMs": 500,
+              "StaggerTier": 2
+            }
+          ]
+        },
+        "ParryCooldownMs": 600,
+        "BlockCooldownMs": 0,
+        "BlockBashAnimation": {"Main": ["combatoverhaul:shield-light-bash"]},
+        "BlockAnimation": "combatoverhaul:shield-light-parry",
+        "ReadyAnimation": "combatoverhaul:shield-light-ready",
+        "IdleAnimation": "combatoverhaul:shield-light-ready",
+        "BlockTpAnimation": "block"
+      },
+      "*-metal": {
+        "CanAttack": false,
+        "CanParry": true,
+        "CanBlock": true,
+        "CanSprint": true,
+        "CanBash": true,
+        "SpeedPenalty": 0,
+        "BlockSpeedPenalty": -0.1,
+        "Parry": {
+          "Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
+          "Directions": [90, 90, 90, 90],
+          "Sound": "game:sounds/held/shieldblock-metal-heavy",
+          "BlockTier": {"BluntAttack": 7, "SlashingAttack": 7, "PiercingAttack": 7},
+          "StaggerTier": 5,
+          "StaggerTimeMs": 2000
+        },
+        "Block": {
+          "Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
+          "Directions": [90, 90, 90, 90],
+          "Sound": "game:sounds/held/shieldblock-metal-light",
+          "BlockTier": {"BluntAttack": 6, "SlashingAttack": 6, "PiercingAttack": 6}
+        },
+        "BlockBash": {
+          "StopOnTerrainHit": false,
+          "StopOnEntityHit": true,
+          "CollideWithTerrain": true,
+          "MaxReach": 9,
+          "DamageTypes": [
+            {
+              "DamageByType": {"*": {"DamageType": "BluntAttack", "Tier": 0, "Damage": 1}},
+              "Knockback": 2,
+              "DurabilityDamage": 1,
+              "Collider": [-0.3, -0.3, 0.2, 0.39999998, -0.3, 0.2],
+              "StaggerTimeMs": 500,
+              "StaggerTier": 3
+            }
+          ]
+        },
+        "ParryCooldownMs": 600,
+        "BlockCooldownMs": 0,
+        "BlockBashAnimation": {"Main": ["combatoverhaul:shield-light-bash"]},
+        "BlockAnimation": "combatoverhaul:shield-light-parry",
+        "ReadyAnimation": "combatoverhaul:shield-light-ready",
+        "IdleAnimation": "combatoverhaul:shield-light-ready",
+        "BlockTpAnimation": "block"
+      },
+      "*-blackguard": {
+        "CanAttack": false,
+        "CanParry": true,
+        "CanBlock": true,
+        "CanSprint": true,
+        "CanBash": true,
+        "SpeedPenalty": 0,
+        "BlockSpeedPenalty": 0,
+        "Parry": {
+          "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
+          "Directions": [90, 90, 90, 90],
+          "Sound": "game:sounds/held/shieldblock-metal-heavy",
+          "BlockTier": {"BluntAttack": 7, "SlashingAttack": 7, "PiercingAttack": 7},
+          "StaggerTier": 6,
+          "StaggerTimeMs": 3000
+        },
+        "Block": {
+          "Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
+          "Directions": [90, 90, 90, 90],
+          "Sound": "game:sounds/held/shieldblock-metal-light",
+          "BlockTier": {"BluntAttack": 5, "SlashingAttack": 5, "PiercingAttack": 5}
+        },
+        "BlockBash": {
+          "StopOnTerrainHit": false,
+          "StopOnEntityHit": true,
+          "CollideWithTerrain": true,
+          "MaxReach": 9,
+          "DamageTypes": [
+            {
+              "DamageByType": {"*": {"DamageType": "BluntAttack", "Tier": 0, "Damage": 1}},
+              "Knockback": 2,
+              "DurabilityDamage": 1,
+              "Collider": [-0.3, -0.3, 0.2, 0.39999998, -0.3, 0.2],
+              "StaggerTimeMs": 500,
+              "StaggerTier": 3
+            }
+          ]
+        },
+        "ParryCooldownMs": 600,
+        "BlockCooldownMs": 0,
+        "BlockBashAnimation": {"Main": ["combatoverhaul:shield-light-bash"]},
+        "BlockAnimation": "combatoverhaul:shield-light-parry",
+        "ReadyAnimation": "combatoverhaul:shield-light-ready",
+        "IdleAnimation": "combatoverhaul:shield-light-ready",
+        "BlockTpAnimation": "block"
+      }
+    }
+  }
+]

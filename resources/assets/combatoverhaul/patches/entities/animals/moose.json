@@ -1,0 +1,169 @@
+﻿[
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/moose-adult",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:ShowStatsBehavior",
+      "entriesByType": {
+        "*-male": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "8", "3", "Blunt"]],
+        "*-female": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "6", "3", "Blunt"]],
+        "*": []
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/moose-adult",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*": {
+          "Torso": ["Neck", "Chest", "Midsection", "Rear", "L Shoulder", "L Haunch", "R Shoulder", "R Haunch"],
+          "Head": ["Head", "MouthUp", "Snout", "Jaw"],
+          "Arm": ["L ArmUp", "L ArmMid", "L ArmLow", "R ArmUp", "R ArmMid", "R ArmLow"],
+          "Leg": ["L LegUp", "L LegLow", "R LegUp", "R LegLow"],
+          "Critical": ["Neck2"],
+          "Resistant": []
+        }
+      },
+      "defaultPenetrationResistance": 6
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/moose-baby",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*": {
+          "Torso": ["Neck", "Chest", "Midsection", "Rear", "L Shoulder", "L Haunch", "R Shoulder", "R Haunch"],
+          "Head": ["Head", "MouthUp", "Snout", "Jaw"],
+          "Arm": ["L ArmUp", "L ArmMid", "L ArmLow", "R ArmUp", "R ArmMid", "R ArmLow"],
+          "Leg": ["L LegUp", "L LegLow", "R LegUp", "R LegLow"],
+          "Critical": ["Neck2"],
+          "Resistant": []
+        }
+      },
+      "defaultPenetrationResistance": 6
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/moose-adult",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*": {
+          "Torso": ["Neck", "Chest", "Midsection", "Rear", "L Shoulder", "L Haunch", "R Shoulder", "R Haunch"],
+          "Head": ["Head", "MouthUp", "Snout", "Jaw"],
+          "Arm": ["L ArmUp", "L ArmMid", "L ArmLow", "R ArmUp", "R ArmMid", "R ArmLow"],
+          "Leg": ["L LegUp", "L LegLow", "R LegUp", "R LegLow"],
+          "Critical": ["Neck2"],
+          "Resistant": []
+        }
+      },
+      "defaultPenetrationResistance": 6
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/moose-baby",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*": {
+          "Torso": ["Neck", "Chest", "Midsection", "Rear", "L Shoulder", "L Haunch", "R Shoulder", "R Haunch"],
+          "Head": ["Head", "MouthUp", "Snout", "Jaw"],
+          "Arm": ["L ArmUp", "L ArmMid", "L ArmLow", "R ArmUp", "R ArmMid", "R ArmLow"],
+          "Leg": ["L LegUp", "L LegLow", "R LegUp", "R LegLow"],
+          "Critical": ["Neck2"],
+          "Resistant": []
+        }
+      },
+      "defaultPenetrationResistance": 6
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/moose-adult",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResistsByType": {"*-baby": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}, "*": {"BluntAttack": 6, "SlashingAttack": 4, "PiercingAttack": 2}}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/moose-baby",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResistsByType": {"*-baby": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}, "*": {"BluntAttack": 6, "SlashingAttack": 4, "PiercingAttack": 2}}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/moose-adult",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResistsByType": {"*-baby": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}, "*": {"BluntAttack": 6, "SlashingAttack": 4, "PiercingAttack": 2}}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/moose-baby",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResistsByType": {"*-baby": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}, "*": {"BluntAttack": 6, "SlashingAttack": 4, "PiercingAttack": 2}}
+      }
+    }
+  },
+  {"side": "Server", "file": "game:entities/animal/mammal/hooved/moose-adult", "op": "replace", "path": "/server/behaviors/10/aitasks/0/damageType", "value": "BluntAttack"},
+  {"side": "Server", "file": "game:entities/animal/mammal/hooved/moose-adult", "op": "replace", "path": "/server/behaviors/10/aitasks/0/damageTier", "value": 3},
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/moose-adult",
+    "op": "replace",
+    "path": "/server/behaviors/10/aitasks/0/damageByType",
+    "value": {"*-male": 8, "*-female": 6}
+  }
+]

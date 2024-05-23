@@ -1,0 +1,148 @@
+﻿[
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/raccoon-adult",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {"code": "CombatOverhaul:ShowStatsBehavior", "entriesByType": {"*": [["Attacks:<br/>  {0} ({1} tier) of {2} damage", "4", "1", "Slashing"]]}}
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/raccoon-adult",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {
+        "Torso": ["body", "abdomen", "tail", "L back leg", "R back leg"],
+        "Head": ["head", "mouth"],
+        "Arm": ["R front feet", "L front feet"],
+        "Leg": ["L back feet", "R back feet"],
+        "Critical": ["neck"],
+        "Resistant": []
+      },
+      "defaultPenetrationResistance": 2
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/raccoon-adult",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {
+        "Torso": ["body", "abdomen", "tail", "L back leg", "R back leg"],
+        "Head": ["head", "mouth"],
+        "Arm": ["R front feet", "L front feet"],
+        "Leg": ["L back feet", "R back feet"],
+        "Critical": ["neck"],
+        "Resistant": []
+      },
+      "defaultPenetrationResistance": 2
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/raccoon-baby",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {
+        "Torso": ["body", "abdomen", "tail", "L back leg", "R back leg"],
+        "Head": ["head", "mouth"],
+        "Arm": ["R front feet", "L front feet"],
+        "Leg": ["L back feet", "R back feet"],
+        "Critical": ["neck"],
+        "Resistant": []
+      },
+      "defaultPenetrationResistance": 0
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/raccoon-baby",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {
+        "Torso": ["body", "abdomen", "tail", "L back leg", "R back leg"],
+        "Head": ["head", "mouth"],
+        "Arm": ["R front feet", "L front feet"],
+        "Leg": ["L back feet", "R back feet"],
+        "Critical": ["neck"],
+        "Resistant": []
+      },
+      "defaultPenetrationResistance": 0
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/raccoon-adult",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 4,
+        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/raccoon-adult",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 4,
+        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/raccoon-baby",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 4,
+        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/raccoon-baby",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 4,
+        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}
+      }
+    }
+  },
+  {"side": "Server", "file": "game:entities/animal/mammal/raccoon-adult", "op": "add", "path": "/server/behaviors/10/aitasks/0/damageType", "value": "SlashingAttack"},
+  {"side": "Server", "file": "game:entities/animal/mammal/raccoon-adult", "op": "add", "path": "/server/behaviors/10/aitasks/0/damageTier", "value": 1},
+  {"side": "Server", "file": "game:entities/animal/mammal/raccoon-adult", "op": "replace", "path": "/server/behaviors/10/aitasks/0/damage", "value": 4}
+]

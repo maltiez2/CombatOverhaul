@@ -1,0 +1,23 @@
+﻿{
+  "code": "slingbullet",
+  "class": "CombatOverhaul:Projectile",
+  "variantgroups": [{"code": "material", "states": ["chert", "granite", "andesite", "basalt", "obsidian", "peridotite", "flint", "lead", "blueclay", "redclay", "fireclay"]}],
+  "SelectionBoxSize": {"x": 0.1, "y": 0.1},
+  "CollisionBoxSize": {"x": 0.01, "y": 0.01},
+  "client": {
+    "size": 1,
+    "renderer": "Shape",
+    "shape": {"base": "combatoverhaul:ammo/sling-bullet-shifted"},
+    "texturesByType": {
+      "@.*-(chert|granite|andesite|basalt|obsidian|peridotite)": {"material": {"base": "game:block/stone/rock/{material}1"}},
+      "*-flint": {"material": {"base": "game:block/stone/flint"}},
+      "*-blueclay": {"material": {"base": "game:block/clay/hardened/blue1"}},
+      "*-redclay": {"material": {"base": "game:block/clay/hardened/red1"}},
+      "*-fireclay": {"material": {"base": "game:block/clay/hardened/fire1"}},
+      "*": {"material": {"base": "game:block/metal/plate/{material}"}}
+    },
+    "behaviors": [{"code": "CombatOverhaul:ProjectilePhysics", "groundDragFactor": 1, "airDragFactor": 1, "gravityFactor": 1}, {"code": "interpolateposition"}]
+  },
+  "server": {"behaviors": [{"code": "CombatOverhaul:ProjectilePhysics", "groundDragFactor": 1, "airDragFactor": 1, "gravityFactor": 1}, {"code": "despawn", "minSeconds": 0}]},
+  "sounds": {}
+}

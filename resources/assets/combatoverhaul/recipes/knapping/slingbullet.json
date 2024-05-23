@@ -1,0 +1,36 @@
+[
+  {
+    "ingredient": {"type": "item", "code": "game:stone-*", "name": "rock", "allowedVariants": ["chert", "granite", "andesite", "basalt", "obsidian", "peridotite"]},
+    "pattern": [[
+      "####_#####",
+      "####_#####",
+      "####_#####",
+      "###___####",
+      "__________",
+      "###___####",
+      "####_#####",
+      "####_#####",
+      "####_#####",
+      "###___####"
+    ]],
+    "name": "sling bullet",
+    "output": {"type": "item", "code": "combatoverhaul:slingbullet-{rock}", "quantity": 4}
+  },
+  {
+    "ingredient": {"type": "item", "code": "game:flint"},
+    "pattern": [[
+      "####_#####",
+      "####_#####",
+      "####_#####",
+      "###___####",
+      "__________",
+      "###___####",
+      "####_#####",
+      "####_#####",
+      "####_#####",
+      "###___####"
+    ]],
+    "name": "sling bullet",
+    "output": {"type": "item", "code": "combatoverhaul:slingbullet-flint", "quantity": 4}
+  }
+]

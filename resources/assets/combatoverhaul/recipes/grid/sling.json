@@ -1,0 +1,25 @@
+[
+	{
+		"ingredientPattern": "R,B",
+		"requiresTrait": "improviser",
+		"ingredients": {
+			"R": { "type": "item", "code": "game:rope", "quantity": 2 },
+			"B": { "type": "item", "code": "combatoverhaul:slingbullet-*", "isTool": true, "toolDurabilityCost": 0 }
+		},
+		"width": 1,
+		"height": 2,
+		"output": { "type": "item", "code": "game:sling", "quantity": 1  }
+	},
+	{
+		"ingredientPattern": "R,B,L",
+		"requiresTrait": "improviser",
+		"ingredients": {
+			"R": { "type": "item", "code": "game:flaxtwine", "quantity": 2 },
+			"L": { "type": "item", "code": "game:leather-normal-plain", "quantity": 1},
+			"B": { "type": "item", "code": "combatoverhaul:slingbullet-*", "isTool": true, "toolDurabilityCost": 0 }
+		},
+		"width": 1,
+		"height": 3,
+		"output": { "type": "item", "code": "combatoverhaul:sling-linen", "quantity": 1 }
+	}
+]

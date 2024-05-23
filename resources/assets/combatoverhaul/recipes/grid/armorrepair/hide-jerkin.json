@@ -1,0 +1,47 @@
+[
+  {
+		"ingredientPattern": "J,Q",
+		"recipeGroup": 2,
+		"ingredients": {
+			"J": { "type": "item", "code": "combatoverhaul:armor-head-jerkin-hide-plain"  },
+			"Q": { "type": "item", "code": "game:hide-pelt-small", "quantity": 1 }
+		},
+		"width": 1,
+		"height": 2,
+		"shapeless": true,
+		"averageDurability": false,
+		"copyAttributesFrom": "J",
+		"name": "hide head jerkin repair",
+		"output": { "type": "item", "code": "combatoverhaul:armor-head-jerkin-hide-plain"  }
+	},
+	{
+		"ingredientPattern": "J,Q",
+		"recipeGroup": 2,
+		"ingredients": {
+			"J": { "type": "item", "code": "combatoverhaul:armor-body-jerkin-hide-plain"  },
+			"Q": { "type": "item", "code": "game:hide-pelt-small", "quantity": 1 }
+		},
+		"width": 1,
+		"height": 2,
+		"shapeless": true,
+		"averageDurability": false,
+		"copyAttributesFrom": "J",
+		"name": "hide body jerkin repair",
+		"output": { "type": "item", "code": "combatoverhaul:armor-body-jerkin-hide-plain"  }
+	},
+	{
+		"ingredientPattern": "J,Q",
+		"recipeGroup": 2,
+		"ingredients": {
+			"J": { "type": "item", "code": "combatoverhaul:armor-legs-jerkin-hide-plain"  },
+			"Q": { "type": "item", "code": "game:hide-pelt-small", "quantity": 1 }
+		},
+		"width": 1,
+		"height": 2,
+		"shapeless": true,
+		"copyAttributesFrom": "J",
+		"averageDurability": false,
+		"name": "hide legs jerkin repair",
+		"output": { "type": "item", "code": "combatoverhaul:armor-legs-jerkin-hide-plain"  }
+	}
+]

@@ -1,0 +1,82 @@
+[
+	{
+		"ingredientPattern": "TST,L_L",
+		"recipeGroup": 0,
+		"ingredients": {
+			"L": { "type": "item", "code": "game:cloth-*", "quantity": 1, "name": "color", "allowedVariants": ["plain", "blue", "brown", "gray", "black", "green", "orange", "pink", "purple", "red", "white", "yellow"] },
+			"T": { "type": "item", "code": "game:flaxtwine", "quantity": 1 },
+			"S": { "type": "item", "code": "combatoverhaul:sewingkit-armor-tailor-steel", "quantity": 1, "isTool": true, "toolDurabilityCost": 1 }
+		},
+		"width": 3,
+		"height": 2,
+		"name": "gambeson helmet",
+		"output": { "type": "item", "code": "game:armor-head-tailored-{color}-linen"  }
+	},
+	{
+		"ingredientPattern": "L_L,MMM,LSL",
+		"recipeGroup": 0,
+		"ingredients": {
+			"L": { "type": "item", "code": "game:cloth-*", "quantity": 1, "name": "color", "allowedVariants": ["plain", "blue", "brown", "gray", "black", "green", "orange", "pink", "purple", "red", "white", "yellow"] },
+			"M": { "type": "item", "code": "game:cloth-*", "quantity": 2, "name": "color", "allowedVariants": ["plain", "blue", "brown", "gray", "black", "green", "orange", "pink", "purple", "red", "white", "yellow"] },
+			"S": { "type": "item", "code": "combatoverhaul:sewingkit-armor-tailor-steel", "quantity": 1, "isTool": true, "toolDurabilityCost": 1 }
+
+		},
+		"width": 3,
+		"height": 3,
+		"name": "gambeson body armor",
+		"output": { "type": "item", "code": "game:armor-body-tailored-{color}-linen"  }
+	},
+	{
+		"ingredientPattern": "LSL,L_L,T_T",
+		"recipeGroup": 0,
+		"ingredients": {
+			"L": { "type": "item", "code": "game:cloth-*", "quantity": 1, "name": "color", "allowedVariants": ["plain", "blue", "brown", "gray", "black", "green", "orange", "pink", "purple", "red", "white", "yellow"] },
+			"T": { "type": "item", "code": "game:flaxtwine", "quantity": 1 },
+			"S": { "type": "item", "code": "combatoverhaul:sewingkit-armor-tailor-steel", "quantity": 1, "isTool": true, "toolDurabilityCost": 1 }
+		},
+		"width": 3,
+		"height": 3,
+		"name": "gambeson leg armor",
+		"output": { "type": "item", "code": "game:armor-legs-tailored-{color}-linen"  }
+	},
+	{
+		"ingredientPattern": "TST,L_L",
+		"recipeGroup": 1,
+		"ingredients": {
+			"L": { "type": "item", "code": "game:cloth-*", "quantity": 1, "name": "color", "allowedVariants": ["plain", "blue", "brown", "gray", "black", "green", "orange", "pink", "purple", "red", "white", "yellow"] },
+			"T": { "type": "item", "code": "game:flaxtwine", "quantity": 1 },
+			"S": { "type": "item", "code": "combatoverhaul:sewingkit-armor-tailor-meteoriciron", "quantity": 1, "isTool": true, "toolDurabilityCost": 1 }
+		},
+		"width": 3,
+		"height": 2,
+		"name": "gambeson helmet",
+		"output": { "type": "item", "code": "game:armor-head-tailored-{color}-linen"  }
+	},
+	{
+		"ingredientPattern": "L_L,MMM,LSL",
+		"recipeGroup": 1,
+		"ingredients": {
+			"L": { "type": "item", "code": "game:cloth-*", "quantity": 1, "name": "color", "allowedVariants": ["plain", "blue", "brown", "gray", "black", "green", "orange", "pink", "purple", "red", "white", "yellow"] },
+			"M": { "type": "item", "code": "game:cloth-*", "quantity": 2, "name": "color", "allowedVariants": ["plain", "blue", "brown", "gray", "black", "green", "orange", "pink", "purple", "red", "white", "yellow"] },
+			"S": { "type": "item", "code": "combatoverhaul:sewingkit-armor-tailor-meteoriciron", "quantity": 1, "isTool": true, "toolDurabilityCost": 1 }
+
+		},
+		"width": 3,
+		"height": 3,
+		"name": "gambeson body armor",
+		"output": { "type": "item", "code": "game:armor-body-tailored-{color}-linen"  }
+	},
+	{
+		"ingredientPattern": "LSL,L_L,T_T",
+		"recipeGroup": 1,
+		"ingredients": {
+			"L": { "type": "item", "code": "game:cloth-*", "quantity": 1, "name": "color", "allowedVariants": ["plain", "blue", "brown", "gray", "black", "green", "orange", "pink", "purple", "red", "white", "yellow"] },
+			"T": { "type": "item", "code": "game:flaxtwine", "quantity": 1 },
+			"S": { "type": "item", "code": "combatoverhaul:sewingkit-armor-tailor-meteoriciron", "quantity": 1, "isTool": true, "toolDurabilityCost": 1 }
+		},
+		"width": 3,
+		"height": 3,
+		"name": "gambeson leg armor",
+		"output": { "type": "item", "code": "game:armor-legs-tailored-{color}-linen"  }
+	}
+]

@@ -1,0 +1,51 @@
+﻿{
+  "code": "axe",
+  "class": "Item",
+  "variantgroups": [{"code": "type", "states": ["bearded", "battle", "bardiche", "double"]}, {"code": "material", "states": ["ruined"]}],
+  "shape": {"base": "item/tool/axe/ruined/{type}"},
+  "durability": 1,
+  "attributes": {
+    "handbook": {"groupBy": ["axe-*"]},
+    "attachableToEntity": {"categoryCode": "toolholding"},
+    "toolrackTransformByType": {
+      "*-bardiche-*": {"translation": {"x": 0, "y": 0.7, "z": 0.2}, "rotation": {"x": 22, "y": 1, "z": -1}, "scale": 1.25},
+      "*-battle-*": {"translation": {"x": -0.2, "y": 0.7, "z": 0.1}, "rotation": {"x": 12, "y": 1, "z": -1}, "scale": 1.25},
+      "*-double-*": {"translation": {"x": 0, "y": 0.7, "z": -0.2}, "rotation": {"x": -12, "y": 1, "z": -1}, "scale": 1.25},
+      "*-bearded-*": {"translation": {"x": -0.3, "y": 0.7, "z": 0}, "rotation": {"x": 0, "y": 1, "z": -1}, "scale": 1.25}
+    },
+    "groundStorageTransformByType": {
+      "*-bearded-*": {"translation": {"x": 0, "y": 0.2, "z": -0.1435}, "rotation": {"x": 26, "y": 88, "z": -94}, "scale": 0.88},
+      "*-battle-*": {"translation": {"x": 0.45, "y": -0.1, "z": 0.22}, "rotation": {"x": 34, "y": 0, "z": -90}, "scale": 0.88},
+      "*-bardiche-*": {"translation": {"x": 0.45, "y": -0.1, "z": -0.02}, "rotation": {"x": 26, "y": 0, "z": -87}, "scale": 0.88},
+      "*-double-*": {"translation": {"x": -0.1, "y": 0.14, "z": -0.34}, "rotation": {"x": 26, "y": 110, "z": -87}, "scale": 0.88}
+    },
+    "antlerMountable": true,
+    "onAntlerMountTransformByType": {
+      "*-bardiche-*": {"translation": {"x": -0.36, "y": 0.533, "z": 0.32}, "rotation": {"x": -90, "y": -32, "z": -90}, "origin": {"x": 0.5, "y": 0, "z": 0.5}},
+      "*-bearded-*": {"translation": {"x": -0.36, "y": 0.533, "z": 0}, "rotation": {"x": -90, "y": 0, "z": -90}, "origin": {"x": 0.5, "y": 0, "z": 0.5}},
+      "*-double-*": {"translation": {"x": -0.36, "y": 0.533, "z": 0.22}, "rotation": {"x": -90, "y": 24, "z": -90}, "origin": {"x": 0.5, "y": 0, "z": 0.5}},
+      "*": {"translation": {"x": -0.36, "y": 0.533, "z": 0.02}, "rotation": {"x": -90, "y": 0, "z": -90}, "origin": {"x": 0.5, "y": 0, "z": 0.5}}
+    }
+  },
+  "behaviors": [
+    {
+      "name": "GroundStorable",
+      "properties": {
+        "layout": "WallHalves",
+        "wallOffYByType": {"*-bardiche-*": 2, "*-double-*": 2, "*": 1},
+        "ctrlKey": true,
+        "selectionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.1, "z2": 1},
+        "collisionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 0, "y2": 0, "z2": 0}
+      }
+    }
+  ],
+  "heldRightReadyAnimationByType": {"*-double-*": "axeready", "*-bardiche-*": "axeready", "*": "beginholditem"},
+  "creativeinventory": {"general": ["*"], "items": ["*"], "tools": ["*"], "clutterByType": {"*-ruined": ["*"]}},
+  "guiTransformByType": {"*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -63, "y": -123, "z": -180}, "origin": {"x": 0.61, "y": 0, "z": 0.47}, "scale": 1.58}},
+  "groundTransformByType": {"*": {"translation": {"x": 0, "y": 0.03, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 3.6}},
+  "tpHandTransformByType": {
+    "*-bardiche-*": {"translation": {"x": -1.09, "y": -0.5, "z": -0.03}, "rotation": {"x": 90, "y": 0, "z": -2}, "scale": 0.95},
+    "*-battle-*": {"translation": {"x": -0.69, "y": -0.5, "z": -0.03}, "rotation": {"x": 90, "y": 0, "z": -2}, "scale": 0.95},
+    "*": {"translation": {"x": -0.89, "y": -0.5, "z": -0.03}, "rotation": {"x": 90, "y": 0, "z": -2}, "scale": 0.95}
+  }
+}

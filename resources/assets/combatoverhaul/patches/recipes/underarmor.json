@@ -1,0 +1,10 @@
+﻿[
+  {"file": "game:recipes/grid/armor/gambeson", "op": "add", "path": "/0/enabled", "value": false},
+  {"file": "game:recipes/grid/armor/gambeson", "op": "add", "path": "/1/enabled", "value": false},
+  {"file": "game:recipes/grid/armor/gambeson", "op": "add", "path": "/2/enabled", "value": false},
+  {"file": "game:recipes/grid/armor/tailoredgambeson", "op": "add", "path": "/0/enabled", "value": false},
+  {"file": "game:recipes/grid/armor/tailoredgambeson", "op": "add", "path": "/1/enabled", "value": false},
+  {"file": "game:recipes/grid/armor/tailoredgambeson", "op": "add", "path": "/2/enabled", "value": false},
+  {"file": "game:recipes/grid/armor/jerkin", "op": "add", "path": "/0/enabled", "value": false},
+  {"file": "game:recipes/grid/armor/jerkin", "op": "add", "path": "/1/enabled", "value": false}
+]

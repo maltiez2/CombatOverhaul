@@ -1,0 +1,199 @@
+﻿{
+  "code": "blade",
+  "class": "CombatOverhaul:MeleeWeapon",
+  "tags": ["weapon", "weapon-melee", "sword", "onehanded"],
+  "variantgroups": [
+    {"code": "type", "states": ["scrap", "falx", "blackguard", "forlorn"]},
+    {"code": "metal", "states": ["scrap", "copper", "tinbronze", "bismuthbronze", "blackbronze", "gold", "silver", "iron", "meteoriciron", "steel"]}
+  ],
+  "tool": "sword",
+  "attributes": {
+    "groundStorageTransformByType": {
+      "*-blackguard-*": {"translation": {"x": 0.2, "y": 0.1, "z": 0.68}, "rotation": {"x": -14, "y": 90, "z": 120}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.6},
+      "*-forlorn-*": {"translation": {"x": 0.2, "y": 0.1, "z": 0.62}, "rotation": {"x": -14, "y": 90, "z": 120}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.6},
+      "*-falx-*": {"translation": {"x": 0.2, "y": 0.06, "z": 0.68}, "rotation": {"x": -15, "y": 90, "z": 126}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.6},
+      "*-scrap-*": {"translation": {"x": 0.24, "y": 0.34, "z": 0}, "rotation": {"x": 24, "y": 61, "z": -87}, "scale": 0.88}
+    },
+    "toolrackTransformByType": {
+      "*-blackguard-*": {"translation": {"x": 0.95, "y": 0.5, "z": 0.9}, "rotation": {"x": 0, "y": 180, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}},
+      "*-forlorn-*": {"translation": {"x": 1.05, "y": 0.55, "z": 0.9}, "rotation": {"x": 0, "y": 180, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}},
+      "*-falx-*": {"translation": {"x": 0.95, "y": 0.5, "z": 0.9}, "rotation": {"x": 0, "y": 180, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}},
+      "*-scrap-*": {"translation": {"x": 0.2, "y": 0.85}, "rotation": {"y": 180, "z": 1}, "scale": 1.66}
+    },
+    "ProficiencyStats": ["meleeProficiency", "knightlyProficiency", "oneHandedSwordsProficiency"],
+    "RenderingOffset": false,
+    "OneHandedStanceByType": {
+      "*-forlorn-*": {
+        "CanAttack": true,
+        "CanParry": true,
+        "CanBlock": false,
+        "CanSprint": true,
+        "SpeedPenalty": 0,
+        "Attack": {
+          "StopOnTerrainHit": false,
+          "StopOnEntityHit": true,
+          "CollideWithTerrain": true,
+          "MaxReach": 9,
+          "DamageTypes": [
+            {"DamageByType": {"*": {"DamageType": "SlashingAttack", "Tier": 5, "Damage": 4}}, "Knockback": 1, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.3, 0, 0.5]}
+          ]
+        },
+        "AttackHitSound": "game:sounds/thud",
+        "AttackAnimation": {"Main": ["combatoverhaul:sword-forlorn-thrust-1", "combatoverhaul:sword-forlorn-thrust-2", "combatoverhaul:sword-forlorn-thrust-3"]},
+        "Parry": {
+          "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
+          "Directions": [60, 60, 60, 60],
+          "Sound": "game:sounds/held/shieldblock-metal-heavy",
+          "BlockTier": {"BluntAttack": 9, "SlashingAttack": 9, "PiercingAttack": 9},
+          "CanBlockProjectiles": false,
+          "StaggerTier": 6,
+          "StaggerTimeMs": 3000
+        },
+        "ParryCooldownMs": 600,
+        "BlockCooldownMs": 0,
+        "BlockAnimation": "combatoverhaul:sword-short-parry",
+        "ReadyAnimation": "combatoverhaul:sword-falx-ready",
+        "IdleAnimation": "combatoverhaul:sword-falx-idle"
+      },
+      "*-blackguard-*": {
+        "CanAttack": true,
+        "CanParry": true,
+        "CanBlock": false,
+        "CanSprint": true,
+        "SpeedPenalty": 0,
+        "Attack": {
+          "StopOnTerrainHit": false,
+          "StopOnEntityHit": true,
+          "CollideWithTerrain": true,
+          "MaxReach": 9,
+          "DamageTypes": [
+            {"DamageByType": {"*": {"DamageType": "SlashingAttack", "Tier": 4, "Damage": 4}}, "Knockback": 1, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.8, 0, 0.5]}
+          ]
+        },
+        "AttackHitSound": "game:sounds/thud",
+        "AttackAnimation": {"Main": ["combatoverhaul:sword-blackguard-thrust-1", "combatoverhaul:sword-blackguard-thrust-2", "combatoverhaul:sword-blackguard-thrust-3"]},
+        "Parry": {
+          "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
+          "Directions": [60, 60, 60, 60],
+          "Sound": "game:sounds/held/shieldblock-metal-heavy",
+          "BlockTier": {"BluntAttack": 9, "SlashingAttack": 9, "PiercingAttack": 9},
+          "CanBlockProjectiles": false,
+          "StaggerTier": 6,
+          "StaggerTimeMs": 3000
+        },
+        "ParryCooldownMs": 600,
+        "BlockCooldownMs": 0,
+        "BlockAnimation": "combatoverhaul:sword-short-parry",
+        "ReadyAnimation": "combatoverhaul:sword-falx-ready",
+        "IdleAnimation": "combatoverhaul:sword-falx-idle"
+      },
+      "*-falx-*": {
+        "CanAttack": true,
+        "CanParry": false,
+        "CanBlock": false,
+        "CanSprint": true,
+        "SpeedPenalty": 0,
+        "Attack": {
+          "StopOnTerrainHit": false,
+          "StopOnEntityHit": true,
+          "CollideWithTerrain": true,
+          "MaxReach": 9,
+          "DamageTypes": [
+            {
+              "DamageByType": {
+                "*-copper": {"DamageType": "SlashingAttack", "Tier": 3, "Damage": 4},
+                "*-*bronze": {"DamageType": "SlashingAttack", "Tier": 4, "Damage": 4},
+                "*-iron": {"DamageType": "SlashingAttack", "Tier": 5, "Damage": 4},
+                "*-meteoriciron": {"DamageType": "SlashingAttack", "Tier": 6, "Damage": 4},
+                "*-gold": {"DamageType": "SlashingAttack", "Tier": 7, "Damage": 4},
+                "*-silver": {"DamageType": "SlashingAttack", "Tier": 7, "Damage": 4},
+                "*-steel": {"DamageType": "SlashingAttack", "Tier": 7, "Damage": 4}
+              },
+              "Knockback": -0.5,
+              "DurabilityDamage": 1,
+              "Collider": [0, 0, 0.5, 1.2, 0, 0.05]
+            }
+          ]
+        },
+        "AttackHitSound": "game:sounds/thud",
+        "AttackAnimation": {"Main": ["combatoverhaul:sword-falx-slash-1", "combatoverhaul:sword-falx-slash-2"]},
+        "ReadyAnimation": "combatoverhaul:sword-falx-ready",
+        "IdleAnimation": "combatoverhaul:sword-falx-idle"
+      },
+      "*-scrap-*": {
+        "CanAttack": true,
+        "CanParry": false,
+        "CanBlock": false,
+        "CanSprint": true,
+        "SpeedPenalty": 0,
+        "AttackCooldownMs": 0,
+        "Attack": {
+          "StopOnTerrainHit": false,
+          "StopOnEntityHit": true,
+          "CollideWithTerrain": true,
+          "MaxReach": 9,
+          "DamageTypes": [
+            {"DamageByType": {"*": {"DamageType": "SlashingAttack", "Tier": 2, "Damage": 3.5}}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0.5, 0, 0.45, 1.4, 0, 0.45]}
+          ]
+        },
+        "AttackHitSound": "game:sounds/thud",
+        "AttackAnimation": {"Main": ["combatoverhaul:sword-falx-slash-1", "combatoverhaul:sword-falx-slash-2"]},
+        "ReadyAnimation": "combatoverhaul:sword-falx-ready",
+        "IdleAnimation": "combatoverhaul:sword-falx-idle"
+      }
+    }
+  },
+  "behaviors": [
+    {
+      "name": "GroundStorable",
+      "properties": {
+        "layout": "WallHalves",
+        "wallOffY": 2,
+        "sprintKey": true,
+        "selectionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.1, "z2": 1},
+        "collisionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 0, "y2": 0, "z2": 0}
+      }
+    }
+  ],
+  "skipVariants": ["blade-falx-scrap"],
+  "allowedVariants": ["blade-falx-*", "blade-blackguard-iron", "blade-forlorn-iron", "blade-scrap-scrap"],
+  "shapeByType": {
+    "blade-falx-*": {"base": "item/tool/blade/falx/{metal}"},
+    "blade-blackguard-*": {"base": "combatoverhaul:weapons/swords/sword-blackguard"},
+    "blade-forlorn-*": {"base": "combatoverhaul:weapons/swords/sword-forlorn"},
+    "blade-scrap-scrap": {"base": "item/tool/blade/{metal}"}
+  },
+  "durabilitybytype": {
+    "blade-scrap-scrap": 150,
+    "blade-falx-copper": 300,
+    "blade-falx-tinbronze": 550,
+    "blade-falx-bismuthbronze": 600,
+    "blade-falx-blackbronze": 650,
+    "blade-falx-iron": 600,
+    "blade-falx-meteoriciron": 750,
+    "blade-falx-steel": 1250,
+    "blade-falx-gold": 1250,
+    "blade-falx-silver": 1250,
+    "blade-blackguard-iron": 750,
+    "blade-forlorn-iron": 750
+  },
+  "creativeinventory": {"general": ["*"], "items": ["*"], "tools": ["*"], "combatoverhaul": ["*"]},
+  "guiTransformByType": {
+    "blade-blackguard-iron": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -89, "y": 47, "z": 23}, "origin": {"x": 0.65, "y": 1.1, "z": 0.46}, "scale": 2.45},
+    "blade-forlorn-iron": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -89, "y": 47, "z": 44}, "origin": {"x": 0.6, "y": 0.4, "z": 0.47}, "scale": 2.7},
+    "*-scrap-*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -94, "y": 47, "z": 44}, "origin": {"x": 0.73, "y": 0, "z": 0.48}, "scale": 2.2},
+    "*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -53, "y": 118, "z": -5}, "origin": {"x": 0.65, "y": 0.1, "z": 0.37}, "scale": 1.65}
+  },
+  "groundTransformByType": {
+    "blade-blackguard-iron": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 3.4},
+    "blade-forlorn-iron": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 3.4},
+    "*-scrap-*": {"translation": {"x": 0, "y": 0.05, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 3.67},
+    "*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 3.4}
+  },
+  "tpHandTransformByType": {
+    "blade-blackguard-iron": {"translation": {"x": -1.25, "y": 0.05, "z": -0.76}, "rotation": {"x": -90, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 0.6},
+    "blade-forlorn-iron": {"translation": {"x": -1.25, "y": 0.03, "z": -0.83}, "rotation": {"x": -90, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 0.6},
+    "*-scrap-*": {"translation": {"x": -0.65, "y": -0.01, "z": -0.53}, "rotation": {"x": 90, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 0.91},
+    "*": {"translation": {"x": -1.03, "y": -0.005, "z": -0.66}, "rotation": {"x": 85, "y": 0, "z": 2}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 0.8}
+  }
+}

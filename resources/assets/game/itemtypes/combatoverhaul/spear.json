@@ -1,0 +1,241 @@
+﻿{
+  "code": "spear",
+  "class": "CombatOverhaul:MeleeWeapon",
+  "tags": ["weapon", "weapon-melee", "weapon-ranged", "projectile", "spear", "onehanded", "twohanded", "polearm"],
+  "behaviors": [
+    {
+      "name": "GroundStorable",
+      "properties": {
+        "layout": "WallHalves",
+        "wallOffY": 3,
+        "sprintKey": true,
+        "selectionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.1, "z2": 1},
+        "collisionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 0, "y2": 0, "z2": 0}
+      }
+    },
+    {
+      "name": "CombatOverhaul:Projectile",
+      "properties": {
+        "stats": {
+          "AdditionalDurabilityCost": 0,
+          "CollisionRadius": 0.05,
+          "DamageStatsByType": {
+            "*-flint": {"DamageType": "PiercingAttack", "Damage": 4},
+            "*-obsidian": {"DamageType": "PiercingAttack", "Damage": 4},
+            "*-copper": {"DamageType": "PiercingAttack", "Damage": 4},
+            "*-*bronze": {"DamageType": "PiercingAttack", "Damage": 6},
+            "*-*iron": {"DamageType": "PiercingAttack", "Damage": 6},
+            "*-ornategold": {"DamageType": "PiercingAttack", "Damage": 6},
+            "*-ornatesilver": {"DamageType": "PiercingAttack", "Damage": 6},
+            "*-steel": {"DamageType": "PiercingAttack", "Damage": 6},
+            "*": {"DamageType": "PiercingAttack", "Damage": 2}
+          },
+          "HitSound": "game:sounds/player/projectilehit",
+          "SpeedThreshold": 0.3,
+          "Knockback": 0.3,
+          "EntityCode": "combatoverhaul:spear-generic-{material}",
+          "DurabilityDamage": 2,
+          "DropChance": 1
+        }
+      }
+    }
+  ],
+  "variantgroups": [
+    {"code": "type", "states": ["generic"]},
+    {
+      "code": "material",
+      "states": [
+        "chert",
+        "granite",
+        "andesite",
+        "basalt",
+        "obsidian",
+        "peridotite",
+        "flint",
+        "copper",
+        "tinbronze",
+        "bismuthbronze",
+        "blackbronze",
+        "iron",
+        "meteoriciron",
+        "steel",
+        "ornategold",
+        "ornatesilver"
+      ]
+    }
+  ],
+  "tool": "spear",
+  "shapeByType": {
+    "@spear-generic-(chert|granite|andesite|basalt|obsidian|peridotite|flint)": {"base": "combatoverhaul:weapons/spears/spear-flint"},
+    "*": {"base": "combatoverhaul:weapons/spears/spear-{material}"}
+  },
+  "texturesByType": {"@spear-generic-(chert|granite|andesite|basalt|obsidian|peridotite)": {"head": {"base": "game:block/stone/rock/{material}1"}}},
+  "attributes": {
+    "handbook": {"groupBy": ["spear-generic-{material}"]},
+    "groundStorageTransform": {"translation": {"x": 0.5, "y": 2, "z": 0.41}, "rotation": {"x": 12, "y": 0, "z": 90}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
+    "toolrackTransform": {"translation": {"x": 1.6, "y": 1.2, "z": 0.5}, "rotation": {"x": 90, "y": -2, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 1.3},
+    "ProficiencyStats": ["meleeProficiency", "polearmsProficiency", "spearsProficiency"],
+    "RenderingOffset": false,
+    "OneHandedStance": {
+      "CanAttack": true,
+      "CanParry": false,
+      "CanBlock": false,
+      "CanSprint": true,
+      "CanThrow": true,
+      "SpeedPenalty": 0,
+      "AttackCooldownMs": 550,
+      "GripLengthFactor": 2,
+      "GripMinLength": 12,
+      "GripMaxLength": 0,
+      "Attack": {
+        "StopOnTerrainHit": false,
+        "StopOnEntityHit": false,
+        "CollideWithTerrain": true,
+        "HitOnlyOneEntity": true,
+        "MaxReach": 9,
+        "DamageTypes": [
+          {
+            "DamageByType": {
+              "*-flint": {"DamageType": "PiercingAttack", "Tier": 1, "Damage": 4},
+              "*-obsidian": {"DamageType": "PiercingAttack", "Tier": 2, "Damage": 4},
+              "*-copper": {"DamageType": "PiercingAttack", "Tier": 2, "Damage": 4},
+              "*-*bronze": {"DamageType": "PiercingAttack", "Tier": 3, "Damage": 4},
+              "*-iron": {"DamageType": "PiercingAttack", "Tier": 4, "Damage": 4},
+              "*-ornategold": {"DamageType": "PiercingAttack", "Tier": 4, "Damage": 4},
+              "*-ornatesilver": {"DamageType": "PiercingAttack", "Tier": 4, "Damage": 4},
+              "*-meteoriciron": {"DamageType": "PiercingAttack", "Tier": 5, "Damage": 4},
+              "*-steel": {"DamageType": "PiercingAttack", "Tier": 6, "Damage": 4},
+              "*": {"DamageType": "PiercingAttack", "Tier": 1, "Damage": 2}
+            },
+            "Knockback": 0,
+            "DurabilityDamage": 1,
+            "Collider": [0.4, 0, 0.5, 1.2, 0, 0.5]
+          }
+        ]
+      },
+      "HandleAttack": {
+        "StopOnTerrainHit": true,
+        "StopOnEntityHit": false,
+        "CollideWithTerrain": true,
+        "MaxReach": 9,
+        "DamageTypes": [{"Damage": {"DamageType": "BluntAttack", "Tier": 1, "Damage": 1}, "Knockback": 1, "DurabilityDamage": 1, "Collider": [-2.5, 0, 0.5, 0.5, 0, 0.5]}]
+      },
+      "AttackHitSound": "game:sounds/thud",
+      "HandleHitSound": "game:sounds/held/shieldblock-wood-light",
+      "AttackDirectionsType": "None",
+      "AttackAnimation": {"Main": ["combatoverhaul:spear-thrust-1h"]},
+      "ReadyAnimation": "combatoverhaul:spear-ready-1h",
+      "IdleAnimation": "combatoverhaul:spear-idle-1h"
+    },
+    "TwoHandedStance": {
+      "CanAttack": true,
+      "CanParry": false,
+      "CanBlock": false,
+      "CanSprint": true,
+      "CanThrow": true,
+      "SpeedPenalty": 0,
+      "AttackCooldownMs": 500,
+      "BlockCooldownMs": 750,
+      "GripLengthFactor": 4,
+      "GripMinLength": 0,
+      "GripMaxLength": 20,
+      "Attack": {
+        "StopOnTerrainHit": false,
+        "StopOnEntityHit": false,
+        "CollideWithTerrain": true,
+        "HitOnlyOneEntity": true,
+        "MaxReach": 15,
+        "DamageTypes": [
+          {
+            "DamageByType": {
+              "*-flint": {"DamageType": "PiercingAttack", "Tier": 1, "Damage": 6},
+              "*-obsidian": {"DamageType": "PiercingAttack", "Tier": 2, "Damage": 6},
+              "*-copper": {"DamageType": "PiercingAttack", "Tier": 2, "Damage": 6},
+              "*-*bronze": {"DamageType": "PiercingAttack", "Tier": 3, "Damage": 6},
+              "*-iron": {"DamageType": "PiercingAttack", "Tier": 4, "Damage": 6},
+              "*-ornategold": {"DamageType": "PiercingAttack", "Tier": 4, "Damage": 6},
+              "*-ornatesilver": {"DamageType": "PiercingAttack", "Tier": 4, "Damage": 6},
+              "*-meteoriciron": {"DamageType": "PiercingAttack", "Tier": 5, "Damage": 6},
+              "*-steel": {"DamageType": "PiercingAttack", "Tier": 6, "Damage": 6},
+              "*": {"DamageType": "PiercingAttack", "Tier": 1, "Damage": 4}
+            },
+            "Knockback": 0,
+            "DurabilityDamage": 1,
+            "PushTier": 9,
+            "Collider": [0.4, 0, 0.5, 1.2, 0, 0.5]
+          }
+        ]
+      },
+      "HandleAttack": {
+        "StopOnTerrainHit": true,
+        "StopOnEntityHit": false,
+        "CollideWithTerrain": true,
+        "MaxReach": 9,
+        "DamageTypes": [{"Damage": {"DamageType": "BluntAttack", "Tier": 1, "Damage": 1}, "Knockback": 2, "DurabilityDamage": 1, "Collider": [-2.5, 0, 0.5, 0.5, 0, 0.5]}]
+      },
+      "AttackHitSound": "game:sounds/thud",
+      "HandleHitSound": "game:sounds/held/shieldblock-wood-light",
+      "AttackDirectionsType": "None",
+      "AttackAnimation": {"Main": ["combatoverhaul:spear-thrust-2h-1", "combatoverhaul:spear-thrust-2h-2", "combatoverhaul:spear-thrust-2h-3"]},
+      "ReadyAnimation": "combatoverhaul:spear-ready-2h",
+      "IdleAnimation": "combatoverhaul:spear-idle-2h"
+    },
+    "ThrowAttack": {
+      "AimAnimation": "combatoverhaul:javelin-aim",
+      "ThrowAnimation": "combatoverhaul:javelin-throw",
+      "TpAimAnimation": "",
+      "TpThrowAnimation": "",
+      "Aiming": {
+        "AimDifficulty": 1,
+        "CursorType": "Fixed",
+        "AccuracyOvertimeSec": 0,
+        "CursorTextureReady": "combatoverhaul:gui/aiming/arrow-full.png",
+        "CursorTextureNotReady": "combatoverhaul:gui/aiming/arrow-part.png",
+        "AllowSprint": true,
+        "MoveSpeedPenalty": 0.1,
+        "AimDrift": 60,
+        "AimTwitch": 4,
+        "AnimationFollowX": 5.5,
+        "AnimationFollowY": 5.5,
+        "VerticalLimit": 0.25,
+        "VerticalOffset": -0.05
+      },
+      "DamageStrengthByType": {
+        "*-flint": 1,
+        "*-obsidian": 1,
+        "*-copper": 2,
+        "*-*bronze": 3,
+        "*-iron": 4,
+        "*-ornategold": 4,
+        "*-ornatesilver": 4,
+        "*-meteoriciron": 5,
+        "*-steel": 6,
+        "*": 1
+      },
+      "Knockback": 1,
+      "DurabilityDamage": 1,
+      "Velocity": 0.9,
+      "Zeroing": 2.5
+    }
+  },
+  "durabilitybytype": {
+    "*-copper": 300,
+    "*-tinbronze": 500,
+    "*-bismuthbronze": 550,
+    "*-blackbronze": 600,
+    "*-iron": 550,
+    "*-meteoriciron": 750,
+    "*-ornategold": 550,
+    "*-ornatesilver": 500,
+    "*-steel": 1250,
+    "*-flint": 150,
+    "*-obsidian": 100,
+    "*": 100
+  },
+  "creativeinventory": {"general": ["*"], "items": ["*"], "tools": ["*"], "combatoverhaul": ["*"]},
+  "guiTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 39, "y": 0, "z": -130}, "origin": {"x": 1, "y": 0.1, "z": 0.3}, "scale": 2},
+  "groundTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -90, "y": 0, "z": 0}, "origin": {"x": 0.6, "y": 0, "z": 0.4}, "scale": 4},
+  "tpHandTransform": {"translation": {"x": -2.5, "y": 0.05, "z": 0.5}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
+  "heldTpIdleAnimation": "combatoverhaul-spear-idle",
+  "heldRightReadyAnimation": "combatoverhaul-spear-idle"
+}

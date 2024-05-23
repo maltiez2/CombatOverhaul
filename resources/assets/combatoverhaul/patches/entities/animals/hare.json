@@ -1,0 +1,110 @@
+﻿[
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hare-adult",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {"Torso": ["abdomen", "body", "L back leg", "R back leg"], "Head": ["head", "mouth"], "Arm": [], "Leg": [], "Critical": ["neck"], "Resistant": []},
+      "defaultPenetrationResistance": 2
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hare-adult",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {"Torso": ["abdomen", "body", "L back leg", "R back leg"], "Head": ["head", "mouth"], "Arm": [], "Leg": [], "Critical": ["neck"], "Resistant": []},
+      "defaultPenetrationResistance": 2
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hare-baby",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {"Torso": ["abdomen", "body", "L back leg", "R back leg"], "Head": ["head", "mouth"], "Arm": [], "Leg": [], "Critical": ["neck"], "Resistant": []},
+      "defaultPenetrationResistance": 0
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hare-baby",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {"Torso": ["abdomen", "body", "L back leg", "R back leg"], "Head": ["head", "mouth"], "Arm": [], "Leg": [], "Critical": ["neck"], "Resistant": []},
+      "defaultPenetrationResistance": 0
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hare-adult",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 4,
+        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hare-adult",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 4,
+        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hare-baby",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 1,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 4,
+        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hare-baby",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 1,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 4,
+        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}
+      }
+    }
+  }
+]

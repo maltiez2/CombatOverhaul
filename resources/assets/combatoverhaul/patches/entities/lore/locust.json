@@ -1,0 +1,135 @@
+﻿[
+  {
+    "side": "Server",
+    "file": "game:entities/lore/locust",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:ShowStatsBehavior",
+      "entriesByType": {
+        "*-bronze": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "2", "3", "Piercing"]],
+        "*-corrupt": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "4", "5", "Piercing"]],
+        "*-corrupt-sawblade": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "8", "7", "Slashing"]],
+        "*": []
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/locust",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*-corrupt-sawblade": {
+          "Torso": [],
+          "Head": ["body"],
+          "Arm": ["segment 1", "segment 2", "segment 3", "segment 5", "segment 6", "sawblade base"],
+          "Leg": ["leg extention 21", "leg extention 18", "leg extention 15", "leg extention 5", "leg extention 3", "leg extention 1"],
+          "Critical": [],
+          "Resistant": []
+        },
+        "*": {
+          "Torso": ["abdomen"],
+          "Head": ["body"],
+          "Arm": [],
+          "Leg": ["leg extention 21", "leg extention 18", "leg extention 15", "leg extention 5", "leg extention 3", "leg extention 1"],
+          "Critical": [],
+          "Resistant": []
+        }
+      },
+      "defaultPenetrationResistance": 3
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/locust",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*-corrupt-sawblade": {
+          "Torso": [],
+          "Head": ["body"],
+          "Arm": ["segment 1", "segment 2", "segment 3", "segment 5", "segment 6", "sawblade base"],
+          "Leg": ["leg extention 21", "leg extention 18", "leg extention 15", "leg extention 5", "leg extention 3", "leg extention 1"],
+          "Critical": [],
+          "Resistant": []
+        },
+        "*": {
+          "Torso": ["abdomen"],
+          "Head": ["body"],
+          "Arm": [],
+          "Leg": ["leg extention 21", "leg extention 18", "leg extention 15", "leg extention 5", "leg extention 3", "leg extention 1"],
+          "Critical": [],
+          "Resistant": []
+        }
+      },
+      "defaultPenetrationResistance": 3
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/locust",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 1,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResistsByType": {
+          "*-bronze": {"BluntAttack": 1, "SlashingAttack": 3, "PiercingAttack": 4},
+          "*-corrupt": {"BluntAttack": 2, "SlashingAttack": 5, "PiercingAttack": 6},
+          "*-corrupt-sawblade": {"BluntAttack": 3, "SlashingAttack": 7, "PiercingAttack": 8}
+        }
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/locust",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 1,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResistsByType": {
+          "*-bronze": {"BluntAttack": 1, "SlashingAttack": 3, "PiercingAttack": 4},
+          "*-corrupt": {"BluntAttack": 2, "SlashingAttack": 5, "PiercingAttack": 6},
+          "*-corrupt-sawblade": {"BluntAttack": 3, "SlashingAttack": 7, "PiercingAttack": 8}
+        }
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/locust",
+    "op": "replace",
+    "path": "/server/behaviors/7/aitasks/0",
+    "value": {
+      "code": "meleeattack",
+      "entityCodes": ["player"],
+      "priority": 3,
+      "damageByType": {"*-bronze": 2, "*-corrupt": 4, "*-corrupt-sawblade": 8},
+      "damageTierByType": {"*-bronze": 3, "*-corrupt": 5, "*-corrupt-sawblade": 7},
+      "mincooldown": 1500,
+      "maxcooldown": 1500,
+      "damageTypeByType": {"*-bronze": "PiercingAttack", "*-corrupt": "PiercingAttack", "*-corrupt-sawblade": "SlashingAttack"},
+      "damagePlayerAtMs": 500,
+      "attackDurationMs": 800,
+      "animation": "attack",
+      "animationSpeed": 1.8,
+      "soundByType": {"*-corrupt-sawblade": "creature/locust/saw"},
+      "soundStartMs": 1000
+    }
+  }
+]

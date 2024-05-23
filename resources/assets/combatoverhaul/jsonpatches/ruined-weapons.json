@@ -1,0 +1,4 @@
+﻿[
+  {"op": "add", "side": "server", "file": "@@game:itemtypes/tool/(axe-metal|blade|spear)", "path": "/skipVariants/-", "value": "*-ruined"},
+  {"op": "remove", "side": "server", "file": "@@game:itemtypes/tool/(axe-metal|blade|club|spear)", "path": "/allowedVariants/-", "value": "@@*-ruined"}
+]

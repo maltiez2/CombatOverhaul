@@ -1,0 +1,159 @@
+﻿[
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/fox-adult",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:ShowStatsBehavior",
+      "entriesByType": {"*": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "4", "1", "Slashing"]]}
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/fox-adult",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*": {
+          "Torso": ["neck", "body", "abdomen", "tail", "L back leg", "R back leg"],
+          "Head": ["head", "mouth"],
+          "Arm": ["L front leg", "left front feet", "R front leg", "right front feet"],
+          "Leg": ["L back feet", "R back feet"],
+          "Critical": [],
+          "Resistant": []
+        }
+      },
+      "defaultPenetrationResistance": 3
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/fox-baby",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*": {
+          "Torso": ["neck", "body", "abdomen", "L back leg", "R back leg"],
+          "Head": ["head", "mouth"],
+          "Arm": ["L front leg", "L front feet", "R front leg", "R front feet"],
+          "Leg": ["L back feet", "R back feet"],
+          "Critical": [],
+          "Resistant": []
+        }
+      },
+      "defaultPenetrationResistance": 3
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/fox-adult",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*": {
+          "Torso": ["neck", "body", "abdomen", "tail", "L back leg", "R back leg"],
+          "Head": ["head", "mouth"],
+          "Arm": ["L front leg", "left front feet", "R front leg", "right front feet"],
+          "Leg": ["L back feet", "R back feet"],
+          "Critical": [],
+          "Resistant": []
+        }
+      },
+      "defaultPenetrationResistance": 3
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/fox-baby",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*": {
+          "Torso": ["neck", "body", "abdomen", "L back leg", "R back leg"],
+          "Head": ["head", "mouth"],
+          "Arm": ["L front leg", "L front feet", "R front leg", "R front feet"],
+          "Leg": ["L back feet", "R back feet"],
+          "Critical": [],
+          "Resistant": []
+        }
+      },
+      "defaultPenetrationResistance": 3
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/fox-adult",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 4,
+        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/fox-baby",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 4,
+        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/fox-adult",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 4,
+        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/fox-baby",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 4,
+        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}
+      }
+    }
+  },
+  {"side": "Server", "file": "game:entities/animal/mammal/fox-adult", "op": "replace", "path": "/server/behaviors/11/aitasks/0/damageType", "value": "SlashingAttack"},
+  {"side": "Server", "file": "game:entities/animal/mammal/fox-adult", "op": "add", "path": "/server/behaviors/11/aitasks/0/damageTier", "value": 1},
+  {"side": "Server", "file": "game:entities/animal/mammal/fox-adult", "op": "replace", "path": "/server/behaviors/11/aitasks/0/damage", "value": 4}
+]
