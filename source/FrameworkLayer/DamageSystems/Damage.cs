@@ -1,6 +1,4 @@
-﻿using CompactExifLib;
-using System.Collections.Immutable;
-using Vintagestory.API.Common;
+﻿using System.Collections.Immutable;
 
 namespace CombatOverhaul.DamageSystems;
 
@@ -15,7 +13,7 @@ public enum DamageTypes
     /// </summary>
     Blunt,
     /// <summary>
-    /// Deals fulldamage if bypassed protection plus extra damage proportional to strength left after bypassing protection
+    /// Deals full damage if bypassed protection plus extra damage proportional to strength left after bypassing protection
     /// </summary>
     Thermal
 }
@@ -53,7 +51,7 @@ public static class DamageUtils
         { DamageTypes.Sharp, "mm of RHA" },
         { DamageTypes.Blunt, "MPA" },
         { DamageTypes.Thermal, "K" }
-    
+
     }.ToImmutableDictionary();
 
     public static DamageData ApplyResist(DamageResistData resist, DamageData damage)

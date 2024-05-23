@@ -1,12 +1,11 @@
-﻿using OpenTK.Core;
-using Vintagestory.API.MathTools;
+﻿using Vintagestory.API.MathTools;
 
 namespace CombatOverhaul.PlayerAnimations;
 
 /// <summary>
 /// Default option usually is <see cref="Linear"/><br/><br/>
 /// Animations themselves is smoothed by Animator itself, but animation speed is not, that can result in more harsh and robotic animations.<br/>
-/// Animation speed can modified and smoothed by applying <see cref="EasingFunctions.EasingFunction"/> to animation progress.<br/>
+/// Animation speed can modified and smoothed by applying <see cref="EasingFunctions.EasingFunctionDelegate"/> to animation progress.<br/>
 /// In the future automatic smoothing for animation speed will be added.<br/><br/>
 /// </summary>
 /// <remarks>
@@ -115,14 +114,14 @@ public enum EasingFunctionType
 }
 
 /// <summary>
-/// Stores all the <see cref="EasingFunctions.EasingFunction"/> available to animations.
+/// Stores all the <see cref="EasingFunctions.EasingFunctionDelegate"/> available to animations.
 /// Custom modifiers can be registered.
 /// </summary>
 static public class EasingFunctions // @TODO add clean up on mod system dispose
 {
-    public delegate float EasingFunction(float progress);
+    public delegate float EasingFunctionDelegate(float progress);
 
-    private readonly static Dictionary<EasingFunctionType, EasingFunction> Modifiers = new()
+    private readonly static Dictionary<EasingFunctionType, EasingFunctionDelegate> Modifiers = new()
     {
         { EasingFunctionType.Linear,       (float progress) => progress },
         { EasingFunctionType.Quadratic,    (float progress) => progress * progress },
@@ -137,24 +136,24 @@ static public class EasingFunctions // @TODO add clean up on mod system dispose
         { EasingFunctionType.Bounce,       (float progress) => 0.5f - GameMath.Cos(progress * GameMath.PI) / 2 + MathF.Pow(GameMath.Sin(progress * GameMath.PI), 2) * 0.35f },
     };
 
-    public static EasingFunction Get(EasingFunctionType id) => Modifiers[id];
-    public static EasingFunction Get(int id) => Modifiers[(EasingFunctionType)id];
-    public static EasingFunction Get(string name) => Get((EasingFunctionType)Enum.Parse(typeof(EasingFunctionType), name));
+    public static EasingFunctionDelegate Get(EasingFunctionType id) => Modifiers[id];
+    public static EasingFunctionDelegate Get(int id) => Modifiers[(EasingFunctionType)id];
+    public static EasingFunctionDelegate Get(string name) => Get((EasingFunctionType)Enum.Parse(typeof(EasingFunctionType), name));
     /// <summary>
-    /// Registers <see cref="EasingFunction"/> by given id.<br/>
-    /// It is better to use <see cref="Register(string,EasingFunction)"/> to avoid conflicts.
+    /// Registers <see cref="EasingFunctionDelegate"/> by given id.<br/>
+    /// It is better to use <see cref="Register(string,EasingFunctionDelegate)"/> to avoid conflicts.
     /// </summary>
     /// <param name="id"></param>
     /// <param name="modifier"></param>
     /// <returns><c>false</c> if <paramref name="id"/> already registered</returns>
-    public static bool Register(int id, EasingFunction modifier) => Modifiers.TryAdd((EasingFunctionType)id, modifier);
+    public static bool Register(int id, EasingFunctionDelegate modifier) => Modifiers.TryAdd((EasingFunctionType)id, modifier);
     /// <summary>
-    /// Registers <see cref="EasingFunction"/> by given name. Name should be unique across mods.
+    /// Registers <see cref="EasingFunctionDelegate"/> by given name. Name should be unique across mods.
     /// </summary>
     /// <param name="name">Unique name of modifier</param>
     /// <param name="modifier"></param>
     /// <returns><c>false</c> if <paramref name="name"/> already registered, or it has hash conflict with another registered <paramref name="name"/></returns>
-    public static bool Register(string name, EasingFunction modifier) => Modifiers.TryAdd((EasingFunctionType)ToCrc32(name), modifier);
+    public static bool Register(string name, EasingFunctionDelegate modifier) => Modifiers.TryAdd((EasingFunctionType)ToCrc32(name), modifier);
 
     internal static uint ToCrc32(string value) => GameMath.Crc32(value.ToLowerInvariant()) & int.MaxValue;
 }
