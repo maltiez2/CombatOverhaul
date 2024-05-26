@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CombatOverhaul.PlayerAnimations;
+﻿namespace CombatOverhaul.PlayerAnimations;
 
 internal enum ShapeElements
 {
@@ -23,7 +21,7 @@ internal sealed class Composer
 {
     public Composer()
     {
-        
+
     }
 
     public Frame Compose(TimeSpan delta)
@@ -124,7 +122,7 @@ internal struct Animator
         _currentDuration = TimeSpan.Zero;
         _previousAnimationFrame = _lastFrame;
     }
-    
+
     public Frame Animate(TimeSpan delta)
     {
         _currentDuration += delta;
@@ -142,7 +140,7 @@ internal struct Animator
     private Animation _currentAnimation;
 }
 
-internal readonly struct Animation
+internal sealed class Animation
 {
     public readonly KeyFrame[] KeyFrames;
     public readonly TimeSpan[] Durations;
@@ -163,7 +161,7 @@ internal readonly struct Animation
         Durations = durations.ToArray();
     }
 
-    public static readonly Animation Zero = new Animation(new KeyFrame[] { KeyFrame.Zero });
+    public static readonly Animation Zero = new(new KeyFrame[] { KeyFrame.Zero });
 
     public Frame Interpolate(Frame previousAnimationFrame, TimeSpan currentDuration)
     {

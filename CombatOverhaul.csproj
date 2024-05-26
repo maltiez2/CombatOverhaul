@@ -116,9 +116,6 @@
       <Private>False</Private>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="resources\assets\combatoverhaul\shapes\weapons\shields\" />
-  </ItemGroup>
 
   <!-- Creates/updates modinfo.json file in build directory -->
   <Target Name="ModInfo">
