@@ -18,10 +18,53 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
 
     public override string PropertyName() => "FirstPersonAnimations";
 
+    public override void OnGameTick(float deltaTime)
+    {
+        int mainHandItemId = _player.RightHandItemSlot.Itemstack?.Item?.Id ?? 0;
+        int offhandItemId = _player.LeftHandItemSlot.Itemstack?.Item?.Id ?? 0;
+
+        if (_mainHandItemId != mainHandItemId)
+        {
+            _mainHandItemId = mainHandItemId;
+            foreach (string category in _mainHandCategories)
+            {
+                _composer.Stop(category);
+            }
+            _mainHandCategories.Clear();
+        }
+
+        if (_offHandItemId != offhandItemId)
+        {
+            _offHandItemId = offhandItemId;
+            foreach (string category in _offhandCategories)
+            {
+                _composer.Stop(category);
+            }
+            _offhandCategories.Clear();
+        }
+    }
+
+    public void Play(AnimationRequest request, bool mainHand = true)
+    {
+        _composer.Play(request);
+        if (mainHand)
+        {
+            _mainHandCategories.Add(request.Category);
+        }
+        else
+        {
+            _offhandCategories.Add(request.Category);
+        }
+    }
+
 
     private readonly Composer _composer = new();
     private readonly EntityPlayer _player;
     private Frame _lastFrame = Frame.Empty;
+    private readonly List<string> _offhandCategories = new();
+    private readonly List<string> _mainHandCategories = new();
+    private int _offHandItemId = 0;
+    private int _mainHandItemId = 0;
 
     private void OnBeforeFrame(Entity entity, float dt)
     {
@@ -176,8 +219,6 @@ public readonly struct AnimationRequest
     public readonly TimeSpan EaseOutDuration;
     public readonly TimeSpan EaseInDuration;
     public readonly bool EaseOut;
-    public readonly int ItemId;
-    public readonly AnimationType AnimationType;
 }
 
 internal struct Animator

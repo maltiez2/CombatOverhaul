@@ -295,9 +295,6 @@ internal class ProceduralClientAnimator : ClientAnimator
             Mat4f.Mul(outFramePose.AnimModelMatrix, outFramePose.AnimModelMatrix, localTransformMatrix);
             CalculateElementTransformMatrices(elem, outFramePose);
 
-
-
-
             if (outFramePose.ChildElementPoses != null)
             {
                 CalculateMatrices(

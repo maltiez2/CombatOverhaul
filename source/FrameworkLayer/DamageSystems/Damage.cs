@@ -1,5 +1,4 @@
 ﻿using System.Collections.Immutable;
-using Vintagestory.GameContent;
 
 namespace CombatOverhaul.DamageSystems;
 
