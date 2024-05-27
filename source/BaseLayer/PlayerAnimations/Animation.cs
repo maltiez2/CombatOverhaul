@@ -1,4 +1,40 @@
-﻿namespace CombatOverhaul.PlayerAnimations;
+﻿using CombatOverhaul.Integration;
+using System.Collections.Immutable;
+using Vintagestory.API.Common;
+using Vintagestory.API.Common.Entities;
+
+namespace CombatOverhaul.PlayerAnimations;
+
+public sealed class FirstPersonAnimationsBehavior : EntityBehavior
+{
+    public FirstPersonAnimationsBehavior(Entity entity) : base(entity)
+    {
+        if (entity is not EntityPlayer player) throw new ArgumentException("Only for players");
+        _player = player;
+
+        AnimatorPatch.OnBeforeFrame += OnBeforeFrame;
+        AnimatorPatch.OnFrame += OnFrame;
+    }
+
+    public override string PropertyName() => "FirstPersonAnimations";
+
+
+    private readonly Composer _composer = new();
+    private readonly EntityPlayer _player;
+    private Frame _lastFrame = Frame.Empty;
+
+    private void OnBeforeFrame(Entity entity, float dt)
+    {
+        if (entity.EntityId != _player.EntityId) return;
+        _lastFrame = _composer.Compose(TimeSpan.FromSeconds(dt));
+    }
+
+    private void OnFrame(Entity entity, ElementPose pose)
+    {
+        if (entity.EntityId != _player.EntityId) return;
+        _lastFrame.Apply(pose);
+    }
+}
 
 internal enum ShapeElements
 {
@@ -10,7 +46,7 @@ internal enum ShapeElements
     UpperArmL
 }
 
-internal enum AnimationType
+public enum AnimationType
 {
     RightHand,
     LeftHand,
@@ -26,33 +62,27 @@ internal sealed class Composer
 
     public Frame Compose(TimeSpan delta)
     {
-        foreach ((string category, _) in _weights)
+        if (!_requests.Any()) return Frame.Empty;
+        
+        foreach ((string category, AnimatorWeightState state) in _weightState)
         {
-            if (_easeOutTimes[category] == TimeSpan.Zero) continue;
+            _currentTimes.Add(category, delta);
 
-            _currentTimes[category] += delta;
-            double newWeight = _weights[category] * _currentTimes[category] / _easeOutTimes[category];
-
-            if (newWeight <= 0)
-            {
-                _animators.Remove(category);
-                _weights.Remove(category);
-                _easeOutTimes.Remove(category);
-                _currentTimes.Remove(category);
-                continue;
-            }
-
-            _animators[category] = (_animators[category].animator, (float)newWeight);
+            ProcessWeight(category, state);
         }
 
-        Frame result = Frame.Compose(_animators.Select(entry => (entry.Value.animator.Animate(delta), entry.Value.weight)));
+        Frame result = Frame.Compose(_animators.Select(entry => (entry.Value.Animate(delta), _currentWeight[entry.Key])));
 
-        foreach ((string category, (Animator animator, float weight)) in _animators)
+        foreach (string category in _requests.Select(entry => entry.Key))
         {
-            if (animator.Finished())
+            if (_animators[category].Finished() && _weightState[category] == AnimatorWeightState.Finished)
             {
-                _weights.Add(category, weight);
-                _currentTimes.Add(category, TimeSpan.Zero);
+                _animators.Remove(category);
+                _currentTimes.Remove(category);
+                _previousWeight.Remove(category);
+                _currentWeight.Remove(category);
+                _weightState.Remove(category);
+                _requests.Remove(category);
             }
         }
 
@@ -82,11 +112,22 @@ internal sealed class Composer
         }
     }
 
+    public void Stop(string category)
+    {
+        _animators.Remove(category);
+        _currentTimes.Remove(category);
+        _previousWeight.Remove(category);
+        _currentWeight.Remove(category);
+        _weightState.Remove(category);
+        _requests.Remove(category);
+    }
+
     private enum AnimatorWeightState
     {
         EaseIn,
         Stay,
-        EaseOut
+        EaseOut,
+        Finished
     }
 
     private readonly Dictionary<string, Animator> _animators = new();
@@ -95,9 +136,38 @@ internal sealed class Composer
     private readonly Dictionary<string, float> _currentWeight = new();
     private readonly Dictionary<string, AnimatorWeightState> _weightState = new();
     private readonly Dictionary<string, TimeSpan> _currentTimes = new();
+
+    private void ProcessWeight(string category, AnimatorWeightState state)
+    {
+        switch (state)
+        {
+            case AnimatorWeightState.EaseIn:
+                _currentWeight[category] = (_requests[category].Weight - _previousWeight[category]) * (float)(_currentTimes[category] / _requests[category].EaseInDuration);
+                if (_currentWeight[category] > _requests[category].Weight)
+                {
+                    _currentWeight[category] = _requests[category].Weight;
+                    _weightState[category] = AnimatorWeightState.Stay;
+                }
+                break;
+            case AnimatorWeightState.Stay:
+                if (_requests[category].EaseOut && _requests[category].Animation.TotalDuration / _requests[category].AnimationSpeed > _currentTimes[category])
+                {
+                    _weightState[category] = AnimatorWeightState.EaseOut;
+                }
+                break;
+            case AnimatorWeightState.EaseOut:
+                _currentWeight[category] = _requests[category].Weight * (float)((_requests[category].EaseOutDuration - (_currentTimes[category] - _requests[category].Animation.TotalDuration / _requests[category].AnimationSpeed)) / _requests[category].EaseOutDuration);
+                if (_currentWeight[category] < 0)
+                {
+                    _currentWeight[category] = 0;
+                    _weightState[category] = AnimatorWeightState.Finished;
+                }
+                break;
+        }
+    }
 }
 
-internal readonly struct AnimationRequest
+public readonly struct AnimationRequest
 {
     public readonly Animation Animation;
     public readonly float AnimationSpeed;
@@ -105,6 +175,9 @@ internal readonly struct AnimationRequest
     public readonly string Category;
     public readonly TimeSpan EaseOutDuration;
     public readonly TimeSpan EaseInDuration;
+    public readonly bool EaseOut;
+    public readonly int ItemId;
+    public readonly AnimationType AnimationType;
 }
 
 internal struct Animator
@@ -140,17 +213,17 @@ internal struct Animator
     private Animation _currentAnimation;
 }
 
-internal sealed class Animation
+public sealed class Animation
 {
-    public readonly KeyFrame[] KeyFrames;
-    public readonly TimeSpan[] Durations;
+    public readonly ImmutableArray<KeyFrame> KeyFrames;
+    public readonly ImmutableArray<TimeSpan> Durations;
     public readonly TimeSpan TotalDuration;
 
     public Animation(IEnumerable<KeyFrame> frames)
     {
         if (!frames.Any()) throw new ArgumentException("Frames number should be at least 1");
 
-        KeyFrames = frames.ToArray();
+        KeyFrames = frames.ToImmutableArray();
         TotalDuration = TimeSpan.Zero;
         List<TimeSpan> durations = new();
         foreach (KeyFrame frame in frames)
@@ -158,7 +231,7 @@ internal sealed class Animation
             TotalDuration += frame.EasingTime;
             durations.Add(TotalDuration);
         }
-        Durations = durations.ToArray();
+        Durations = durations.ToImmutableArray();
     }
 
     public static readonly Animation Zero = new(new KeyFrame[] { KeyFrame.Zero });
@@ -181,7 +254,7 @@ internal sealed class Animation
     public bool Finished(TimeSpan currentDuration) => currentDuration >= TotalDuration;
 }
 
-internal readonly struct KeyFrame
+public readonly struct KeyFrame
 {
     public readonly Frame Frame;
     public readonly TimeSpan EasingTime;
@@ -206,7 +279,7 @@ internal readonly struct KeyFrame
     public bool Reached(TimeSpan currentDuration) => currentDuration >= EasingTime;
 }
 
-internal readonly struct Frame
+public readonly struct Frame
 {
     public readonly RightHandFrame? RightHand;
     public readonly LeftHandFrame? LeftHand;
@@ -218,6 +291,13 @@ internal readonly struct Frame
     }
 
     public static readonly Frame Zero = new(RightHandFrame.Zero, LeftHandFrame.Zero);
+    public static readonly Frame Empty = new(null, null);
+
+    public void Apply(ElementPose pose)
+    {
+        RightHand?.Apply(pose);
+        LeftHand?.Apply(pose);
+    }
 
     public static Frame Interpolate(Frame from, Frame to, float progress)
     {
@@ -262,7 +342,7 @@ internal readonly struct Frame
     }
 }
 
-internal readonly struct RightHandFrame
+public readonly struct RightHandFrame
 {
     public readonly AnimationElement ItemAnchor;
     public readonly AnimationElement LowerArmR;
@@ -273,6 +353,22 @@ internal readonly struct RightHandFrame
         ItemAnchor = anchor;
         LowerArmR = lower;
         UpperArmR = upper;
+    }
+
+    public void Apply(ElementPose pose)
+    {
+        switch (pose.ForElement.Name)
+        {
+            case "ItemAnchor":
+                ItemAnchor.Apply(pose);
+                break;
+            case "LowerArmR":
+                LowerArmR.Apply(pose);
+                break;
+            case "UpperArmR":
+                UpperArmR.Apply(pose);
+                break;
+        }
     }
 
     public static readonly RightHandFrame Zero = new(AnimationElement.Zero, AnimationElement.Zero, AnimationElement.Zero);
@@ -296,7 +392,7 @@ internal readonly struct RightHandFrame
     }
 }
 
-internal readonly struct LeftHandFrame
+public readonly struct LeftHandFrame
 {
     public readonly AnimationElement ItemAnchorL;
     public readonly AnimationElement LowerArmL;
@@ -307,6 +403,22 @@ internal readonly struct LeftHandFrame
         ItemAnchorL = anchor;
         LowerArmL = lower;
         UpperArmL = upper;
+    }
+
+    public void Apply(ElementPose pose)
+    {
+        switch (pose.ForElement.Name)
+        {
+            case "ItemAnchorL":
+                ItemAnchorL.Apply(pose);
+                break;
+            case "LowerArmL":
+                LowerArmL.Apply(pose);
+                break;
+            case "UpperArmL":
+                UpperArmL.Apply(pose);
+                break;
+        }
     }
 
     public static readonly LeftHandFrame Zero = new(AnimationElement.Zero, AnimationElement.Zero, AnimationElement.Zero);
@@ -330,7 +442,7 @@ internal readonly struct LeftHandFrame
     }
 }
 
-internal readonly struct AnimationElement
+public readonly struct AnimationElement
 {
     public readonly float OffsetX;
     public readonly float OffsetY;
@@ -356,6 +468,16 @@ internal readonly struct AnimationElement
         RotationX = rotationX;
         RotationY = rotationY;
         RotationZ = rotationZ;
+    }
+
+    public void Apply(ElementPose pose)
+    {
+        pose.translateX = OffsetX;
+        pose.translateY = OffsetY;
+        pose.translateZ = OffsetZ;
+        pose.degX = RotationX;
+        pose.degY = RotationY;
+        pose.degZ = RotationZ;
     }
 
     public static readonly AnimationElement Zero = new(0, 0, 0, 0, 0, 0);

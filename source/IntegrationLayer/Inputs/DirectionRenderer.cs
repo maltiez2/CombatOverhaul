@@ -2,7 +2,7 @@
 using Vintagestory.API.Common;
 using Vintagestory.API.Config;
 
-namespace CombatOverhaul.Integration;
+namespace CombatOverhaul.Inputs;
 
 public sealed class DirectionCursorRenderer : IRenderer
 {

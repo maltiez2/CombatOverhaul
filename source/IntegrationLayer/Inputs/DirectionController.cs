@@ -3,7 +3,7 @@ using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 using VSImGui.Debug;
 
-namespace CombatOverhaul.Integration;
+namespace CombatOverhaul.Inputs;
 
 public enum DirectionsConfiguration
 {

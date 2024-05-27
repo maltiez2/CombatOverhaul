@@ -1,21 +1,20 @@
 ﻿using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Vintagestory.API.Client;
-using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Common;
-using Vintagestory.API.MathTools;
-using Vintagestory.GameContent;
+using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
+using Vintagestory.API.MathTools;
 
 namespace CombatOverhaul.Integration;
 
 internal static class AnimatorPatch
 {
+
+    public static event Action<Entity, float>? OnBeforeFrame;
+    public static event Action<Entity, ElementPose>? OnFrame;
+
+
     public static void Patch(string harmonyId, AnimationManager manager, ICoreClientAPI api)
     {
         new Harmony(harmonyId).Patch(
@@ -32,6 +31,8 @@ internal static class AnimatorPatch
         new Harmony(harmonyId).Unpatch(typeof(Vintagestory.API.Common.AnimationManager).GetMethod("OnClientFrame", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
     }
 
+    public static void OnFrameInvoke(Entity entity, ElementPose pose) => OnFrame?.Invoke(entity, pose);
+
     private static AnimationManager? _manager;
     private static ICoreClientAPI? _coreClientAPI;
     private static readonly FieldInfo? _animManager = typeof(Vintagestory.API.Common.EntityPlayer).GetField("animManager", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -42,14 +43,14 @@ internal static class AnimatorPatch
     {
         EntityAgent? entity = (Entity?)_entity?.GetValue(__instance) as EntityAgent;
 
-        _manager?.OnFrameHandler(__instance, entity, dt);
+        if (entity != null) OnBeforeFrame?.Invoke(entity, dt);
 
         ClientAnimator? animator = __instance.Animator as ClientAnimator;
         if (__instance.Animator is not ProceduralClientAnimator && animator != null && _manager != null)
         {
             if (entity != null)
             {
-                __instance.Animator = ProceduralClientAnimator.Create(_manager, __instance, animator, entity);
+                __instance.Animator = ProceduralClientAnimator.Create(__instance, animator, entity);
             }
         }
     }
@@ -57,14 +58,14 @@ internal static class AnimatorPatch
     {
         EntityAgent? entity = (Entity?)_entity?.GetValue(__instance) as EntityAgent;
 
-        _manager?.OnFrameHandler(__instance, entity, dt);
+        if (entity != null) OnBeforeFrame?.Invoke(entity, dt);
 
         ClientAnimator? animator = __instance.Animator as ClientAnimator;
         if (__instance.Animator is not ProceduralClientAnimator && animator != null && _manager != null)
         {
             if (entity != null)
             {
-                __instance.Animator = ProceduralClientAnimator.Create(_manager, __instance, animator, entity);
+                __instance.Animator = ProceduralClientAnimator.Create(__instance, animator, entity);
             }
         }
     }
@@ -79,7 +80,7 @@ internal class ProceduralClientAnimator : ClientAnimator
     static public event AnimatorEventDelegate? AnimationApplication;
     static public event Action<ShapeElement, Entity, Shape> ShapeElementAnimated;
 
-    public ProceduralClientAnimator(ClientAnimator previous, EntityAgent entity, AnimationManager manager, Vintagestory.API.Common.Animation[] animations, Action<string> onAnimationStoppedListener) : base(
+    public ProceduralClientAnimator(ClientAnimator previous, EntityAgent entity, Vintagestory.API.Common.Animation[] animations, Action<string> onAnimationStoppedListener) : base(
         () => entity.Controls.MovespeedMultiplier * entity.GetWalkSpeedMultiplier(),
         previous.RootPoses,
         animations,
@@ -100,7 +101,7 @@ internal class ProceduralClientAnimator : ClientAnimator
         tmpMatrix = (float[])((float[])_tmpMatrix.GetValue(previous)).Clone();
     }
 
-    public ProceduralClientAnimator(Shape shape, AnimationManager manager, WalkSpeedSupplierDelegate walkSpeedSupplier, List<ElementPose> rootPoses, Vintagestory.API.Common.Animation[] animations, ShapeElement[] rootElements, Dictionary<int, AnimationJoint> jointsById, Action<string> onAnimationStoppedListener = null) : base(
+    public ProceduralClientAnimator(Shape shape, WalkSpeedSupplierDelegate walkSpeedSupplier, List<ElementPose> rootPoses, Vintagestory.API.Common.Animation[] animations, ShapeElement[] rootElements, Dictionary<int, AnimationJoint> jointsById, Action<string> onAnimationStoppedListener = null) : base(
         walkSpeedSupplier,
         rootPoses,
         animations,
@@ -110,7 +111,6 @@ internal class ProceduralClientAnimator : ClientAnimator
         )
     {
         _entity = null;
-        _manager = manager;
         _shape = shape;
 
         frameByDepthByAnimation = (List<ElementPose>[][])_frameByDepthByAnimation.GetValue(this);
@@ -123,7 +123,7 @@ internal class ProceduralClientAnimator : ClientAnimator
         tmpMatrix = (float[])((float[])_tmpMatrix.GetValue(this)).Clone();
     }
 
-    public ProceduralClientAnimator(Shape shape, AnimationManager manager, WalkSpeedSupplierDelegate walkSpeedSupplier, Vintagestory.API.Common.Animation[] animations, ShapeElement[] rootElements, Dictionary<int, AnimationJoint> jointsById, Action<string> onAnimationStoppedListener = null) : base(
+    public ProceduralClientAnimator(Shape shape, WalkSpeedSupplierDelegate walkSpeedSupplier, Vintagestory.API.Common.Animation[] animations, ShapeElement[] rootElements, Dictionary<int, AnimationJoint> jointsById, Action<string> onAnimationStoppedListener = null) : base(
         walkSpeedSupplier,
         animations,
         rootElements,
@@ -132,7 +132,6 @@ internal class ProceduralClientAnimator : ClientAnimator
         )
     {
         _entity = null;
-        _manager = manager;
         _shape = shape;
 
         frameByDepthByAnimation = (List<ElementPose>[][])_frameByDepthByAnimation.GetValue(this);
@@ -145,13 +144,13 @@ internal class ProceduralClientAnimator : ClientAnimator
         tmpMatrix = (float[])((float[])_tmpMatrix.GetValue(this)).Clone();
     }
 
-    public static ProceduralClientAnimator Create(AnimationManager manager, Vintagestory.API.Common.AnimationManager proceduralManager, ClientAnimator previousAnimator, Entity entity)
+    public static ProceduralClientAnimator Create(Vintagestory.API.Common.AnimationManager proceduralManager, ClientAnimator previousAnimator, Entity entity)
     {
         WalkSpeedSupplierDelegate? walkSpeedSupplier = (WalkSpeedSupplierDelegate?)_walkSpeedSupplier?.GetValue(previousAnimator);
         Action<string>? onAnimationStoppedListener = (Action<string>?)_onAnimationStoppedListener?.GetValue(previousAnimator);
         Vintagestory.API.Common.Animation[] animations = (Vintagestory.API.Common.Animation[])previousAnimator.anims.Select(entry => entry.Animation).ToArray().Clone();
 
-        ProceduralClientAnimator result = new(previousAnimator, entity as EntityAgent, manager, animations, proceduralManager.OnAnimationStopped);
+        ProceduralClientAnimator result = new(previousAnimator, entity as EntityAgent, animations, proceduralManager.OnAnimationStopped);
 
 
         return result;
@@ -290,9 +289,13 @@ internal class ProceduralClientAnimator : ClientAnimator
 
             if (_shape != null) AnimationApplication?.Invoke(outFramePose, ref weightSumCopy, _shape);
 
+            if (_entity != null) AnimatorPatch.OnFrameInvoke(_entity, outFramePose);
+
             elem.GetLocalTransformMatrix(animVersion, localTransformMatrix, outFramePose);
             Mat4f.Mul(outFramePose.AnimModelMatrix, outFramePose.AnimModelMatrix, localTransformMatrix);
             CalculateElementTransformMatrices(elem, outFramePose);
+
+
 
 
             if (outFramePose.ChildElementPoses != null)
