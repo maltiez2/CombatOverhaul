@@ -1,6 +1,4 @@
 ﻿using CombatOverhaul.Integration;
-using System;
-using System.Collections.Generic;
 using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -10,10 +8,10 @@ using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
 
 #if DEBUG
-    using VSImGui.Debug;
+using VSImGui.Debug;
 #endif
 
-namespace CombatOverhaul.Collider;
+namespace CombatOverhaul.Colliders;
 
 
 public enum ColliderTypes
@@ -166,6 +164,8 @@ public sealed class CollidersEntityBehavior : EntityBehavior
 
         return foundIntersection;
     }
+
+    public ColliderTypes GetColliderType(int colliderId) => CollidersTypes[CollidersIds[colliderId]];
 
     private void RecalculateColliders(ProceduralClientAnimator animator, ICoreClientAPI clientApi)
     {

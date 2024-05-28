@@ -1,11 +1,17 @@
-﻿using CombatOverhaul.Utils;
+﻿using CombatOverhaul.Colliders;
+using CombatOverhaul.MeleeSystems;
+using CombatOverhaul.Utils;
 using System.Collections.Immutable;
+using Vintagestory.API.Common;
+using Vintagestory.API.Common.Entities;
+using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
+using Vintagestory.GameContent;
 
 namespace CombatOverhaul.DamageSystems;
 
 [Flags]
-public enum DamageZoneType
+public enum DamageZone
 {
     None = 0,
     Head = 1,
@@ -18,27 +24,147 @@ public enum DamageZoneType
     Feet = 128
 }
 
+public sealed class PlayerDamageModelBehavior : EntityBehavior
+{
+    public PlayerDamageModelBehavior(Entity entity) : base(entity)
+    {
+    }
+
+    public override string PropertyName() => "PlayerDamageModel";
+
+    public PlayerDamageModel DamageModel { get; private set; } = new(Array.Empty<DamageZoneStatsJson>());
+    public Dictionary<DamageZone, DamageResistData> Resists { get; private set; } = new();
+    public readonly ImmutableDictionary<string, DamageZone> CollidersToZones = new Dictionary<string, DamageZone>()
+    {
+        { "LowerTorso", DamageZone.Torso },
+        { "UpperTorso", DamageZone.Torso },
+        { "Head", DamageZone.Head },
+        { "Neck", DamageZone.Neck },
+        { "UpperArmR", DamageZone.Arms },
+        { "UpperArmL", DamageZone.Arms },
+        { "LowerArmR", DamageZone.Hands },
+        { "LowerArmL", DamageZone.Hands },
+        { "UpperFootL", DamageZone.Legs },
+        { "UpperFootR", DamageZone.Legs },
+        { "LowerFootL", DamageZone.Feet },
+        { "LowerFootR", DamageZone.Feet }
+    }.ToImmutableDictionary();
+
+    public DamageBlockStats? CurrentDamageBlock { get; set; } = null;
+
+    public override void Initialize(EntityProperties properties, JsonObject attributes)
+    {
+        _colliders = entity.GetBehavior<CollidersEntityBehavior>();
+
+        if (attributes.KeyExists("damageModel"))
+        {
+            PlayerDamageModelJson stats = attributes["damageModel"].AsObject<PlayerDamageModelJson>();
+
+            DamageModel = new(stats.Zones);
+        }
+
+        entity.GetBehavior<EntityBehaviorHealth>().onDamaged += OnReceiveDamage;
+    }
+
+    private CollidersEntityBehavior? _colliders;
+
+    private float OnReceiveDamage(float damage, DamageSource damageSource)
+    {
+        (DamageZone damageZone, float multiplier) = DetermineHitZone(damageSource);
+
+        ApplyBlock(damageSource, damageZone, ref damage);
+
+        ApplyArmorResists(damageSource, damageZone, ref damage);
+
+        damage *= multiplier;
+
+        return damage;
+    }
+
+    private (DamageZone zone, float multiplier) DetermineHitZone(DamageSource damageSource)
+    {
+        DamageZone damageZone;
+        float multiplier;
+        if (_colliders != null && damageSource is ILocationalDamage locationalDamageSource)
+        {
+            damageZone = CollidersToZones[_colliders.CollidersIds[locationalDamageSource.Collider]];
+            multiplier = DamageModel.GetMultiplier(damageZone);
+        }
+        else if (damageSource is IDirectionalDamage directionalDamage)
+        {
+            (damageZone, multiplier) = DamageModel.GetZone(directionalDamage.Direction, directionalDamage.Target, directionalDamage.WeightMultiplier);
+        }
+        else
+        {
+            damageZone = DamageZone.Torso;
+            multiplier = 1;
+        }
+
+        return (damageZone, multiplier);
+    }
+    private void ApplyBlock(DamageSource damageSource, DamageZone zone, ref float damage)
+    {
+        if (CurrentDamageBlock == null) return;
+        if ((zone & CurrentDamageBlock.ZoneType) == 0) return;
+
+        if (damageSource is IDirectionalDamage directionalDamage)
+        {
+            if (!CurrentDamageBlock.Directions.Check(directionalDamage.Direction)) return;
+        }
+        else if (damageSource.SourceEntity != null)
+        {
+            DirectionOffset offset = DirectionOffset.GetDirection(entity, damageSource.SourceEntity);
+
+            if (!CurrentDamageBlock.Directions.Check(offset)) return;
+        }
+
+        DamageData data = new(damageSource.Type, 0);
+        if (damageSource is ITypedDamage typedDamage)
+        {
+            data = typedDamage.DamageTypeData;
+            typedDamage.DamageTypeData = CurrentDamageBlock.Resists.ApplyResist(typedDamage.DamageTypeData, ref damage);
+        }
+        else
+        {
+            _ = CurrentDamageBlock.Resists.ApplyResist(data, ref damage);
+        }
+
+        CurrentDamageBlock.Callback.Invoke(data);
+    }
+    private void ApplyArmorResists(DamageSource damageSource, DamageZone zone, ref float damage)
+    {
+        if (damageSource is ITypedDamage typedDamage)
+        {
+            typedDamage.DamageTypeData = Resists[zone].ApplyResist(typedDamage.DamageTypeData, ref damage);
+        }
+        else
+        {
+            DamageData data = new(damageSource.Type, 0);
+            _ = Resists[zone].ApplyResist(data, ref damage);
+        }
+    }
+}
 public sealed class PlayerDamageModel
 {
     public readonly ImmutableArray<DamageZoneStats> DamageZones;
 
     public PlayerDamageModel(DamageZoneStatsJson[] zones)
     {
-        DamageZones = zones.Select(zone => zone.ToStats()).Where(zone => zone.ZoneType != DamageZoneType.None).ToImmutableArray();
+        DamageZones = zones.Select(zone => zone.ToStats()).Where(zone => zone.ZoneType != DamageZone.None).ToImmutableArray();
         _random = new(0.5f, 0.5f, EnumDistribution.UNIFORM);
 
         _weights = new();
-        foreach (DamageZoneType zone in Enum.GetValues<DamageZoneType>())
+        foreach (DamageZone zone in Enum.GetValues<DamageZone>())
         {
             _weights[zone] = 0;
         }
     }
 
-    public (DamageZoneType zone, float damageMultiplier) GetZone(DirectionOffset direction, DamageZoneType target = DamageZoneType.None, float multiplier = 1f)
+    public (DamageZone zone, float damageMultiplier) GetZone(DirectionOffset direction, DamageZone target = DamageZone.None, float multiplier = 1f)
     {
         IEnumerable<DamageZoneStats> zones = DamageZones.Where(zone => zone.Directions.Check(direction));
 
-        foreach ((DamageZoneType zone, _) in _weights)
+        foreach ((DamageZone zone, _) in _weights)
         {
             _weights[zone] = 0;
         }
@@ -51,7 +177,7 @@ public sealed class PlayerDamageModel
             _weights[zone.ZoneType] += zone.Coverage * zoneMultiplier;
         }
 
-        foreach ((DamageZoneType zone, _) in _weights)
+        foreach ((DamageZone zone, _) in _weights)
         {
             _weights[zone] /= sum;
         }
@@ -59,25 +185,37 @@ public sealed class PlayerDamageModel
         float randomValue = _random.nextFloat();
 
         sum = 0;
-        foreach ((DamageZoneType zone, float weight) in _weights)
+        foreach ((DamageZone zone, float weight) in _weights)
         {
             sum += weight;
             if (sum >= randomValue)
             {
-                return (zone, zones.Where(element => element.ZoneType == zone).Select(element => element.DamageMultiplier).Average());
+                return (zone, zones.Where(element => (element.ZoneType & zone) != 0).Select(element => element.DamageMultiplier).Average());
             }
         }
 
-        return (DamageZoneType.None, 1.0f);
+        return (DamageZone.None, 1.0f);
+    }
+
+    public float GetMultiplier(DamageZone zone)
+    {
+        return DamageZones.Where(element => (element.ZoneType & zone) != 0).Select(element => element.DamageMultiplier).Average();
     }
 
     private readonly NatFloat _random;
-    private readonly Dictionary<DamageZoneType, float> _weights;
+    private readonly Dictionary<DamageZone, float> _weights;
 }
 
 public sealed class PlayerDamageModelJson
 {
     public DamageZoneStatsJson[] Zones { get; set; } = Array.Empty<DamageZoneStatsJson>();
+}
+
+public interface IDirectionalDamage
+{
+    DirectionOffset Direction { get; }
+    DamageZone Target { get; }
+    float WeightMultiplier { get; }
 }
 
 public sealed class DamageZoneStatsJson
@@ -90,20 +228,37 @@ public sealed class DamageZoneStatsJson
     public float Right { get; set; } = 0;
     public float DamageMultiplier { get; set; } = 1;
 
-    public DamageZoneStats ToStats() => new(Enum.Parse<DamageZoneType>(Zone), Coverage, DirectionConstrain.FromDegrees(Top, Bottom, Right, Left), DamageMultiplier);
+    public DamageZoneStats ToStats() => new(Enum.Parse<DamageZone>(Zone), Coverage, DirectionConstrain.FromDegrees(Top, Bottom, Right, Left), DamageMultiplier);
 }
 
 public readonly struct DamageZoneStats
 {
-    public readonly DamageZoneType ZoneType;
+    public readonly DamageZone ZoneType;
     public readonly float Coverage;
     public readonly DirectionConstrain Directions;
     public readonly float DamageMultiplier;
 
-    public DamageZoneStats(DamageZoneType type, float coverage, DirectionConstrain directions, float damageMultiplier)
+    public DamageZoneStats(DamageZone type, float coverage, DirectionConstrain directions, float damageMultiplier)
     {
         ZoneType = type;
         Coverage = coverage;
         Directions = directions;
+        DamageMultiplier = damageMultiplier;
+    }
+}
+
+public sealed class DamageBlockStats
+{
+    public readonly DamageZone ZoneType;
+    public readonly DirectionConstrain Directions;
+    public readonly DamageResistData Resists;
+    public readonly Action<DamageData> Callback;
+
+    public DamageBlockStats(DamageZone type, DirectionConstrain directions, DamageResistData resists, Action<DamageData> callback)
+    {
+        ZoneType = type;
+        Directions = directions;
+        Resists = resists;
+        Callback = callback;
     }
 }

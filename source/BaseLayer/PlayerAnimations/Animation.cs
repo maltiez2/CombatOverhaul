@@ -89,13 +89,6 @@ internal enum ShapeElements
     UpperArmL
 }
 
-public enum AnimationType
-{
-    RightHand,
-    LeftHand,
-    TwoHanded
-}
-
 internal sealed class Composer
 {
     public Composer()

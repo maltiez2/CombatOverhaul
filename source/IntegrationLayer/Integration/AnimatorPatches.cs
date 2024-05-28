@@ -5,6 +5,9 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
 using Vintagestory.API.MathTools;
+using Vintagestory.Client.NoObf;
+using Vintagestory.Common;
+using Vintagestory.Server;
 
 namespace CombatOverhaul.Integration;
 
@@ -23,7 +26,6 @@ internal static class AnimatorPatch
             );
 
         _manager = manager;
-        _coreClientAPI = api;
     }
 
     public static void Unpatch(string harmonyId)
@@ -34,27 +36,9 @@ internal static class AnimatorPatch
     public static void OnFrameInvoke(Entity entity, ElementPose pose) => OnFrame?.Invoke(entity, pose);
 
     private static AnimationManager? _manager;
-    private static ICoreClientAPI? _coreClientAPI;
-    private static readonly FieldInfo? _animManager = typeof(Vintagestory.API.Common.EntityPlayer).GetField("animManager", BindingFlags.NonPublic | BindingFlags.Instance);
-    private static readonly FieldInfo? _selfFpAnimManager = typeof(Vintagestory.API.Common.EntityPlayer).GetField("selfFpAnimManager", BindingFlags.NonPublic | BindingFlags.Instance);
     private static readonly FieldInfo? _entity = typeof(Vintagestory.API.Common.AnimationManager).GetField("entity", BindingFlags.NonPublic | BindingFlags.Instance);
 
     private static void ReplaceAnimator(Vintagestory.API.Common.AnimationManager __instance, float dt)
-    {
-        EntityAgent? entity = (Entity?)_entity?.GetValue(__instance) as EntityAgent;
-
-        if (entity != null) OnBeforeFrame?.Invoke(entity, dt);
-
-        ClientAnimator? animator = __instance.Animator as ClientAnimator;
-        if (__instance.Animator is not ProceduralClientAnimator && animator != null && _manager != null)
-        {
-            if (entity != null)
-            {
-                __instance.Animator = ProceduralClientAnimator.Create(__instance, animator, entity);
-            }
-        }
-    }
-    private static void ReplacePlayerAnimator(Vintagestory.API.Common.PlayerAnimationManager __instance, float dt)
     {
         EntityAgent? entity = (Entity?)_entity?.GetValue(__instance) as EntityAgent;
 

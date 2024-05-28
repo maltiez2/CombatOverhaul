@@ -1,4 +1,5 @@
 ﻿using Vintagestory.API.Common;
+using Vintagestory.API.Common.Entities;
 using Vintagestory.API.MathTools;
 
 namespace CombatOverhaul.Utils;
@@ -97,7 +98,7 @@ public readonly struct DirectionOffset
     public static bool operator <=(DirectionOffset a, DirectionOffset b) => !(a > b);
     public static bool operator >=(DirectionOffset a, DirectionOffset b) => !(a < b);
 
-    static public Vec3f FromCameraReferenceFrame(EntityAgent player, Vec3f position)
+    public static Vec3f FromCameraReferenceFrame(EntityAgent player, Vec3f position)
     {
         Vec3f viewVector = player.SidedPos.GetViewVector().Normalize();
         Vec3f vertical = new(0, 1, 0);
@@ -106,7 +107,7 @@ public readonly struct DirectionOffset
         Vec3f localY = localX.Cross(localZ);
         return localX * position.X + localY * position.Y + localZ * position.Z;
     }
-    static public Vec3d FromCameraReferenceFrame(EntityAgent player, Vec3d position)
+    public static Vec3d FromCameraReferenceFrame(EntityAgent player, Vec3d position)
     {
         Vec3f viewVectorF = player.SidedPos.GetViewVector();
         Vec3d viewVector = new(viewVectorF.X, viewVectorF.Y, viewVectorF.Z);
@@ -116,7 +117,7 @@ public readonly struct DirectionOffset
         Vec3d localY = localX.Cross(localZ);
         return localX * position.X + localY * position.Y + localZ * position.Z;
     }
-    static public Vec3d ToCameraReferenceFrame(EntityAgent player, Vec3d position)
+    public static Vec3d ToCameraReferenceFrame(EntityAgent player, Vec3d position)
     {
         Vec3f viewVectorF = player.SidedPos.GetViewVector();
         Vec3d viewVector = new(viewVectorF.X, viewVectorF.Y, viewVectorF.Z);
@@ -129,7 +130,7 @@ public readonly struct DirectionOffset
 
         return localX * position.X + localY * position.Y + localZ * position.Z;
     }
-    static public Vec3f ToCameraReferenceFrame(EntityAgent player, Vec3f position)
+    public static Vec3f ToCameraReferenceFrame(EntityAgent player, Vec3f position)
     {
         Vec3f viewVectorF = player.SidedPos.GetViewVector();
         Vec3f viewVector = new(viewVectorF.X, viewVectorF.Y, viewVectorF.Z);
@@ -142,7 +143,7 @@ public readonly struct DirectionOffset
 
         return localX * position.X + localY * position.Y + localZ * position.Z;
     }
-    static public Vec3d ToReferenceFrame(Vec3d reference, Vec3d position)
+    public static Vec3d ToReferenceFrame(Vec3d reference, Vec3d position)
     {
         Vec3d vertical = new(0, 1, 0);
         Vec3d localZ = reference.Normalize();
@@ -153,7 +154,7 @@ public readonly struct DirectionOffset
 
         return localX * position.X + localY * position.Y + localZ * position.Z;
     }
-    static public Vec3f ToReferenceFrame(Vec3f reference, Vec3f position)
+    public static Vec3f ToReferenceFrame(Vec3f reference, Vec3f position)
     {
         Vec3f vertical = new(0, 1, 0);
         Vec3f localZ = reference.Normalize();
@@ -164,7 +165,7 @@ public readonly struct DirectionOffset
 
         return localX * position.X + localY * position.Y + localZ * position.Z;
     }
-    static public void InverseMatrix(Vec3d X, Vec3d Y, Vec3d Z)
+    public static void InverseMatrix(Vec3d X, Vec3d Y, Vec3d Z)
     {
         double[] matrix = { X.X, X.Y, X.Z, Y.X, Y.Y, Y.Z, Z.X, Z.Y, Z.Z };
         Mat3d.Invert(matrix, matrix);
@@ -178,7 +179,7 @@ public readonly struct DirectionOffset
         Z.Y = matrix[7];
         Z.Z = matrix[8];
     }
-    static public void InverseMatrix(Vec3f X, Vec3f Y, Vec3f Z)
+    public static void InverseMatrix(Vec3f X, Vec3f Y, Vec3f Z)
     {
         float[] matrix = { X.X, X.Y, X.Z, Y.X, Y.Y, Y.Z, Z.X, Z.Y, Z.Z };
         Mat3f.Invert(matrix, matrix);
@@ -191,6 +192,15 @@ public readonly struct DirectionOffset
         Z.X = matrix[6];
         Z.Y = matrix[7];
         Z.Z = matrix[8];
+    }
+
+    public static DirectionOffset GetDirection(Entity receiver, Entity source)
+    {
+        Vec3f sourceEyesPosition = source.ServerPos.XYZFloat.Add(0, (float)source.LocalEyePos.Y, 0);
+        Vec3f attackDirection = sourceEyesPosition - receiver.LocalEyePos.ToVec3f();
+        Vec3f playerViewDirection = EntityPos.GetViewVector(receiver.SidedPos.Pitch, receiver.SidedPos.Yaw);
+        Vec3f direction = ToReferenceFrame(playerViewDirection, attackDirection);
+        return new(direction, new Vec3f(0, 0, 1));
     }
 }
 
