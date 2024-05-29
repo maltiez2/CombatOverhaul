@@ -4,20 +4,6 @@
 		"file": "game:entities/humanoid/player", 
 		"op": "add", 
 		"path": "/client/behaviors/0", 
-		"value": { "code": "meleeweaponsframework:meleeweapon" }
-	},
-	{ 
-		"side": "Server", 
-		"file": "game:entities/humanoid/player", 
-		"op": "add", 
-		"path": "/client/behaviors/0", 
-		"value": { "code": "meleeweaponsframework:meleeblock" }
-	},
-	{ 
-		"side": "Server", 
-		"file": "game:entities/humanoid/player", 
-		"op": "add", 
-		"path": "/server/behaviors/0", 
-		"value": { "code": "meleeweaponsframework:meleeblock" }
+		"value": { "code": "CombatOverhaul:FirstPersonAnimations" }
 	}
 ]

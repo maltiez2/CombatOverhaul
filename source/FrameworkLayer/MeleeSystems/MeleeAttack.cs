@@ -76,11 +76,10 @@ public sealed class MeleeAttack
         DamageTypes = stats.DamageTypes.Select((stats, index) => new MeleeAttackDamageType(new(itemId, id, index), stats)).ToImmutableArray();
     }
 
-    public void Start(IPlayer player, AttackDirection direction)
+    public void Start(IPlayer player)
     {
         long entityId = player.Entity.EntityId;
 
-        _direction = direction;
         _currentTime[entityId] = 0;
         _totalTime[entityId] = (float)Duration.TotalMilliseconds; // @TODO: Make some stats to affect this
         if (_totalTime[entityId] <= 0) _totalTime[entityId] = 1;
@@ -152,7 +151,6 @@ public sealed class MeleeAttack
     private readonly List<MeleeAttackDamagePacket> _damagePackets = new();
     private readonly HashSet<(Block block, Vector3 point)> _terrainCollisionsBuffer = new();
     private readonly HashSet<(Entity entity, Vector3 point, AttackResultFlag hitType)> _entitiesCollisionsBuffer = new();
-    private AttackDirection _direction = AttackDirection.Top;
 
     private IEnumerable<(Block block, Vector3 point)> CheckTerrainCollision(float progress)
     {
@@ -189,7 +187,7 @@ public sealed class MeleeAttack
                     .OfType<EntityAgent>()
                     )
             {
-                MeleeBlockBehavior? blockBehavior = entity.GetBehavior<MeleeBlockBehavior>();
+                /*MeleeBlockBehavior? blockBehavior = entity.GetBehavior<MeleeBlockBehavior>();
                 if (blockBehavior == null || (!blockBehavior.IsParrying() && !blockBehavior.IsBlocking())) continue;
 
                 Vector3? intersection = CollideWithMeleeBlock(blockBehavior, damageType);
@@ -200,7 +198,7 @@ public sealed class MeleeAttack
                 if (blockBehavior.IsBlocking() && StopOnBlock) return new (Entity entity, Vector3 point, AttackResultFlag hitType)[] { (entity, intersection.Value, AttackResultFlag.Blocked) };
 
                 if (blockBehavior.IsParrying()) _entitiesCollisionsBuffer.Add((entity, intersection.Value, AttackResultFlag.Parried));
-                if (blockBehavior.IsBlocking()) _entitiesCollisionsBuffer.Add((entity, intersection.Value, AttackResultFlag.Blocked));
+                if (blockBehavior.IsBlocking()) _entitiesCollisionsBuffer.Add((entity, intersection.Value, AttackResultFlag.Blocked));*/
             }
 
             if (stop) break;
@@ -213,7 +211,7 @@ public sealed class MeleeAttack
                     .Where(entity => entity != player.Entity)
                     .Where(entity => !_attackedEntities[entityId].Contains(entity.EntityId)))
             {
-                Vector3? point = damageType.TryAttack(player, entity, _direction, out collider);
+                Vector3? point = damageType.TryAttack(player, entity, out collider);
 
                 if (point == null) continue;
                 packets.Add(new MeleeAttackDamagePacket() { Id = damageType.Id, Position = new float[] { point.Value.X, point.Value.Y, point.Value.Z }, AttackerEntityId = player.Entity.EntityId, TargetEntityId = entity.EntityId, Collider = collider });
@@ -233,7 +231,7 @@ public sealed class MeleeAttack
         return result;
     }
 
-    private static Vector3? CollideWithMeleeBlock(MeleeBlockBehavior blockBehavior, MeleeAttackDamageType damageType)
+    /*private static Vector3? CollideWithMeleeBlock(MeleeBlockBehavior blockBehavior, MeleeAttackDamageType damageType)
     {
         IEnumerable<IParryCollider> colliders = blockBehavior.GetColliders();
 
@@ -253,5 +251,5 @@ public sealed class MeleeAttack
         }
 
         return intersected ? closestIntersection : null;
-    }
+    }*/
 }

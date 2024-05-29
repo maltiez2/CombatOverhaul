@@ -46,6 +46,16 @@
     <ReleasePathDev>$(ReleasesDir)\$(ReleaseFile)_dev.zip</ReleasePathDev>
   </PropertyGroup>
 
+  <!-- Startup settings -->
+  <PropertyGroup>
+    <DataFolderName>VintagestoryDataDev</DataFolderName>
+    <AppDataDir>C:\Users\user\AppData\Roaming</AppDataDir>
+    <DataFolder>$(AppDataDir)\$(DataFolderName)</DataFolder>
+    <AditionalModsFolder>$(AppDataDir)\$(DataFolderName)\Mods</AditionalModsFolder>
+    <WorldName>test_$(ModId)</WorldName>
+    <ModDir>$(ProjectDir)\$(OutputDir)</ModDir>
+  </PropertyGroup>
+
   <!-- References to libraries that are being used in project -->
   <ItemGroup>
     <PackageReference Include="VSImGui" Version="0.0.6" />

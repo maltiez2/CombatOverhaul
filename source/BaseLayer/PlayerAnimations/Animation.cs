@@ -1,7 +1,14 @@
 ﻿using CombatOverhaul.Integration;
-using System.Collections.Immutable;
+using ImGuiNET;
+using Newtonsoft.Json.Linq;
+using System.Numerics;
+using System.Text;
+using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
+using Vintagestory.API.Datastructures;
+using VSImGui;
+using VSImGui.API;
 
 namespace CombatOverhaul.PlayerAnimations;
 
@@ -17,7 +24,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     }
 
     public override string PropertyName() => "FirstPersonAnimations";
-
+   
     public override void OnGameTick(float deltaTime)
     {
         int mainHandItemId = _player.RightHandItemSlot.Itemstack?.Item?.Id ?? 0;
@@ -44,6 +51,8 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
         }
     }
 
+    public Frame? FrameOverride { get; set; } = null;
+
     public void Play(AnimationRequest request, bool mainHand = true)
     {
         _composer.Play(request);
@@ -56,7 +65,6 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
             _offhandCategories.Add(request.Category);
         }
     }
-
 
     private readonly Composer _composer = new();
     private readonly EntityPlayer _player;
@@ -75,7 +83,131 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     private void OnFrame(Entity entity, ElementPose pose)
     {
         if (entity.EntityId != _player.EntityId) return;
-        _lastFrame.Apply(pose);
+        if (FrameOverride != null)
+        {
+            FrameOverride.Value.Apply(pose);
+        }
+        else
+        {
+            _lastFrame.Apply(pose);
+        }
+    }
+}
+
+public sealed class AnimationsManager
+{
+    public Dictionary<string, Animation> Animations { get; private set; }
+
+    public AnimationsManager(ICoreClientAPI api)
+    {
+        List<IAsset> animations = api.Assets.GetManyInCategory("config", "animations");
+
+        Dictionary<string, Animation> animationsByCode = new();
+        foreach (Dictionary<string, Animation> assetAnimations in animations.Select(FromAsset))
+        {
+            foreach ((string code, Animation animation) in assetAnimations)
+            {
+                animationsByCode.Add(code, animation);
+            }
+        }
+
+        Animations = animationsByCode;
+
+        api.ModLoader.GetModSystem<ImGuiModSystem>().Draw += DrawEditor;
+        api.Input.RegisterHotKey("combatOverhaul_editor", "Show animation editor", GlKeys.L, ctrlPressed: true);
+        api.Input.SetHotKeyHandler("combatOverhaul_editor", keys => _showAnimationEditor = !_showAnimationEditor);
+
+        _behavior = api.World.Player.Entity.GetBehavior<FirstPersonAnimationsBehavior>();
+    }
+
+    private bool _showAnimationEditor = false;
+    private int _selectedAnimationIndex = 0;
+    private int _tempAnimations = 0;
+    private bool _overwriteFrame = false;
+    private readonly FirstPersonAnimationsBehavior _behavior;
+
+    private CallbackGUIStatus DrawEditor(float deltaSeconds)
+    {
+        if (!_showAnimationEditor) return CallbackGUIStatus.Closed;
+
+        if (ImGui.Begin("Combat Overhaul - Animations editor", ref _showAnimationEditor))
+        {
+            string[] codes = Animations.Keys.ToArray();
+
+            if (ImGui.Button("Play") && Animations.Count > 0)
+            {
+                AnimationRequest request = new(
+                    Animations[codes[_selectedAnimationIndex]],
+                    1,
+                    1,
+                    "test",
+                    TimeSpan.FromSeconds(0.2),
+                    TimeSpan.FromSeconds(0.5),
+                    true
+                    );
+
+                _behavior.Play(request);
+            }
+            ImGui.SameLine();
+
+            if (ImGui.Button("Export to clipboard") && Animations.Count > 0)
+            {
+                ImGui.SetClipboardText(Animations[codes[_selectedAnimationIndex]].ToJsonString());
+            }
+            ImGui.SameLine();
+
+            VSImGui.ListEditor.Edit(
+                "Animations",
+                codes,
+                ref _selectedAnimationIndex,
+                onRemove: (value, index) => Animations.Remove(value),
+                onAdd: key =>
+                {
+                    Animations.Add($"temp_{++_tempAnimations}", Animation.Zero);
+                    return $"temp_{_tempAnimations}";
+                }
+                );
+
+            codes = Animations.Keys.ToArray();
+
+            ImGui.Separator();
+
+            if (_selectedAnimationIndex < Animations.Count)
+            {
+                ImGui.Checkbox("Overwrite current frame", ref _overwriteFrame);
+                Animations[codes[_selectedAnimationIndex]].Edit(codes[_selectedAnimationIndex]);
+                if (_overwriteFrame)
+                {
+                    _behavior.FrameOverride = Animations[codes[_selectedAnimationIndex]].KeyFrames[Animations[codes[_selectedAnimationIndex]]._frameIndex].Frame;
+                }
+                else
+                {
+                    _behavior.FrameOverride = null;
+                }
+            }
+
+            ImGui.End();
+        }
+
+        return _showAnimationEditor ? CallbackGUIStatus.GrabMouse : CallbackGUIStatus.Closed;
+    }
+    private static Dictionary<string, Animation> FromAsset(IAsset asset)
+    {
+        Dictionary<string, Animation> result = new();
+
+        string domain = asset.Location.Domain;
+        JsonObject json = JsonObject.FromJson(Encoding.UTF8.GetString(asset.Data));
+        foreach (KeyValuePair<string, JToken?> entry in json.Token as JObject)
+        {
+            string code = entry.Key;
+            JsonObject animationJson = new(entry.Value);
+
+            Animation animation = Animation.FromJson(animationJson.AsArray());
+
+            result.Add($"{domain}:{code}", animation);
+        }
+
+        return result;
     }
 }
 
@@ -99,7 +231,7 @@ internal sealed class Composer
     public Frame Compose(TimeSpan delta)
     {
         if (!_requests.Any()) return Frame.Empty;
-        
+
         foreach ((string category, AnimatorWeightState state) in _weightState)
         {
             _currentTimes.Add(category, delta);
@@ -212,6 +344,17 @@ public readonly struct AnimationRequest
     public readonly TimeSpan EaseOutDuration;
     public readonly TimeSpan EaseInDuration;
     public readonly bool EaseOut;
+
+    public AnimationRequest(Animation animation, float animationSpeed, float weight, string category, TimeSpan easeOutDuration, TimeSpan easeInDuration, bool easeOut)
+    {
+        Animation = animation;
+        AnimationSpeed = animationSpeed;
+        Weight = weight;
+        Category = category;
+        EaseOutDuration = easeOutDuration;
+        EaseInDuration = easeInDuration;
+        EaseOut = easeOut;
+    }
 }
 
 internal struct Animator
@@ -249,23 +392,17 @@ internal struct Animator
 
 public sealed class Animation
 {
-    public readonly ImmutableArray<KeyFrame> KeyFrames;
-    public readonly ImmutableArray<TimeSpan> Durations;
-    public readonly TimeSpan TotalDuration;
+    public List<KeyFrame> KeyFrames { get; private set; }
+    public List<TimeSpan> Durations { get; private set; } = new();
+    public TimeSpan TotalDuration { get; private set; }
 
     public Animation(IEnumerable<KeyFrame> frames)
     {
         if (!frames.Any()) throw new ArgumentException("Frames number should be at least 1");
 
-        KeyFrames = frames.ToImmutableArray();
-        TotalDuration = TimeSpan.Zero;
-        List<TimeSpan> durations = new();
-        foreach (KeyFrame frame in frames)
-        {
-            TotalDuration += frame.EasingTime;
-            durations.Add(TotalDuration);
-        }
-        Durations = durations.ToImmutableArray();
+        KeyFrames = frames.ToList();
+
+        CalculateDurations();
     }
 
     public static readonly Animation Zero = new(new KeyFrame[] { KeyFrame.Zero });
@@ -275,7 +412,7 @@ public sealed class Animation
         if (Finished(currentDuration)) return KeyFrames[^1].Frame;
 
         int nextKeyFrame;
-        for (nextKeyFrame = 0; nextKeyFrame < KeyFrames.Length - 1; nextKeyFrame++)
+        for (nextKeyFrame = 0; nextKeyFrame < KeyFrames.Count - 1; nextKeyFrame++)
         {
             if (Durations[nextKeyFrame + 1] > currentDuration) break;
         }
@@ -286,6 +423,150 @@ public sealed class Animation
     }
 
     public bool Finished(TimeSpan currentDuration) => currentDuration >= TotalDuration;
+
+    public void Edit(string title)
+    {
+        ImGui.Text($"Total duration: {(int)TotalDuration.TotalMilliseconds} ms");
+
+        if (_frameIndex >= KeyFrames.Count) _frameIndex = KeyFrames.Count - 1;
+        if (_frameIndex < 0) _frameIndex = 0;
+
+        if (KeyFrames.Count > 0)
+        {
+            if (ImGui.Button($"Remove##{title}"))
+            {
+                KeyFrames.RemoveAt(_frameIndex);
+            }
+            ImGui.SameLine();
+        }
+
+        if (ImGui.Button($"Insert##{title}"))
+        {
+            KeyFrames.Insert(_frameIndex, new(Frame.Zero, TimeSpan.Zero, EasingFunctionType.Linear));
+        }
+
+        if (KeyFrames.Count > 0) ImGui.SliderInt($"Key frame", ref _frameIndex, 0, KeyFrames.Count - 1);
+
+        if (KeyFrames.Count > 0)
+        {
+            KeyFrame frame = KeyFrames[_frameIndex].Edit(title);
+            KeyFrames[_frameIndex] = frame;
+        }
+    }
+
+    public JsonObject[] ToJson()
+    {
+        return KeyFrames
+            .Select(KeyFrameJson.FromKeyFrame)
+            .Select(JsonUtil.ToPrettyString)
+            .Select(JsonObject.FromJson)
+            .ToArray();
+    }
+
+    public string ToJsonString()
+    {
+        KeyFrameJson[] keyFrames = KeyFrames
+            .Select(KeyFrameJson.FromKeyFrame)
+            .ToArray();
+
+        AnimationJson toJson = new()
+        {
+            KeyFrames = keyFrames
+        };
+
+        return JsonUtil.ToPrettyString(toJson);
+    }
+
+    public static Animation FromJson(JsonObject[] json)
+    {
+        return new(json.Select(frame => frame.AsObject<KeyFrameJson>().ToKeyFrame()));
+    }
+
+    internal int _frameIndex = 0;
+
+    private void CalculateDurations()
+    {
+        TotalDuration = TimeSpan.Zero;
+        Durations.Clear();
+        foreach (KeyFrame frame in KeyFrames)
+        {
+            TotalDuration += frame.EasingTime;
+            Durations.Add(TotalDuration);
+        }
+    }
+}
+
+public sealed class AnimationJson
+{
+    public KeyFrameJson[] KeyFrames { get; set; } = Array.Empty<KeyFrameJson>();
+}
+
+public sealed class KeyFrameJson
+{
+    public float EasingTime { get; set; } = 0;
+    public string EasingFunction { get; set; } = "Linear";
+    public Dictionary<string, float[]> Elements { get; set; } = new();
+
+    public KeyFrame ToKeyFrame()
+    {
+        TimeSpan time = TimeSpan.FromMilliseconds(EasingTime);
+        EasingFunctionType function = Enum.Parse<EasingFunctionType>(EasingFunction);
+
+        RightHandFrame? rightHand = null;
+        if (Elements.ContainsKey("ItemAnchor") || Elements.ContainsKey("LowerArmR") || Elements.ContainsKey("UpperArmR"))
+        {
+            rightHand = new(
+                Elements.ContainsKey("ItemAnchor") ? new AnimationElement(Elements["ItemAnchor"]) : AnimationElement.Zero,
+                Elements.ContainsKey("LowerArmR") ? new AnimationElement(Elements["LowerArmR"]) : AnimationElement.Zero,
+                Elements.ContainsKey("UpperArmR") ? new AnimationElement(Elements["UpperArmR"]) : AnimationElement.Zero
+                );
+        }
+
+        LeftHandFrame? leftHand = null;
+        if (Elements.ContainsKey("ItemAnchorL") || Elements.ContainsKey("LowerArmL") || Elements.ContainsKey("UpperArmL"))
+        {
+            leftHand = new(
+                Elements.ContainsKey("ItemAnchorL") ? new AnimationElement(Elements["ItemAnchorL"]) : AnimationElement.Zero,
+                Elements.ContainsKey("LowerArmL") ? new AnimationElement(Elements["LowerArmL"]) : AnimationElement.Zero,
+                Elements.ContainsKey("UpperArmL") ? new AnimationElement(Elements["UpperArmL"]) : AnimationElement.Zero
+                );
+        }
+
+        return new(
+            new Frame(rightHand, leftHand),
+            time,
+            function
+            );
+    }
+
+    public static KeyFrameJson FromKeyFrame(KeyFrame frame)
+    {
+        KeyFrameJson result = new()
+        {
+            EasingTime = (float)frame.EasingTime.TotalMilliseconds,
+            EasingFunction = frame.EasingFunction.ToString()
+        };
+
+        if (frame.Frame.RightHand != null)
+        {
+            RightHandFrame rightHand = frame.Frame.RightHand.Value;
+
+            result.Elements.Add("ItemAnchor", rightHand.ItemAnchor.ToArray());
+            result.Elements.Add("LowerArmR", rightHand.LowerArmR.ToArray());
+            result.Elements.Add("UpperArmR", rightHand.UpperArmR.ToArray());
+        }
+
+        if (frame.Frame.LeftHand != null)
+        {
+            LeftHandFrame leftHand = frame.Frame.LeftHand.Value;
+
+            result.Elements.Add("ItemAnchorL", leftHand.ItemAnchorL.ToArray());
+            result.Elements.Add("LowerArmL", leftHand.LowerArmL.ToArray());
+            result.Elements.Add("UpperArmL", leftHand.UpperArmL.ToArray());
+        }
+
+        return result;
+    }
 }
 
 public readonly struct KeyFrame
@@ -311,6 +592,20 @@ public readonly struct KeyFrame
     }
 
     public bool Reached(TimeSpan currentDuration) => currentDuration >= EasingTime;
+
+    public KeyFrame Edit(string title)
+    {
+        int milliseconds = (int)EasingTime.TotalMilliseconds;
+        ImGui.DragInt($"Easing time##{title}", ref milliseconds);
+
+        EasingFunctionType function = VSImGui.EnumEditor<EasingFunctionType>.Combo($"Easing function##{title}", EasingFunction);
+
+        ImGui.SeparatorText("Key frame");
+
+        Frame frame = Frame.Edit(title);
+
+        return new(frame, TimeSpan.FromMilliseconds(milliseconds), function);
+    }
 }
 
 public readonly struct Frame
@@ -331,6 +626,25 @@ public readonly struct Frame
     {
         RightHand?.Apply(pose);
         LeftHand?.Apply(pose);
+    }
+
+    public Frame Edit(string title)
+    {
+        bool rightHand = RightHand != null;
+        bool leftHand = LeftHand != null;
+
+        ImGui.Checkbox($"Right hand frame##{title}", ref rightHand); ImGui.SameLine();
+        ImGui.Checkbox($"Left hand frame##{title}", ref leftHand);
+
+        RightHandFrame? right = RightHand?.Edit(title);
+        LeftHandFrame? left = LeftHand?.Edit(title);
+
+        if (RightHand == null && rightHand) right = RightHandFrame.Zero;
+        if (RightHand != null && !rightHand) right = null;
+        if (LeftHand == null && leftHand) left = LeftHandFrame.Zero;
+        if (LeftHand != null && !leftHand) left = null;
+
+        return new(right, left);
     }
 
     public static Frame Interpolate(Frame from, Frame to, float progress)
@@ -407,6 +721,18 @@ public readonly struct RightHandFrame
 
     public static readonly RightHandFrame Zero = new(AnimationElement.Zero, AnimationElement.Zero, AnimationElement.Zero);
 
+    public RightHandFrame Edit(string title)
+    {
+        ImGui.SeparatorText($"ItemAnchor");
+        AnimationElement anchor = ItemAnchor.Edit($"{title}##ItemAnchor");
+        ImGui.SeparatorText($"LowerArmR");
+        AnimationElement lower = LowerArmR.Edit($"{title}##LowerArmR");
+        ImGui.SeparatorText($"UpperArmR");
+        AnimationElement upper = UpperArmR.Edit($"{title}##UpperArmR");
+
+        return new(anchor, lower, upper);
+    }
+
     public static RightHandFrame Interpolate(RightHandFrame from, RightHandFrame to, float progress)
     {
         return new(
@@ -456,6 +782,18 @@ public readonly struct LeftHandFrame
     }
 
     public static readonly LeftHandFrame Zero = new(AnimationElement.Zero, AnimationElement.Zero, AnimationElement.Zero);
+
+    public LeftHandFrame Edit(string title)
+    {
+        ImGui.SeparatorText($"ItemAnchorL");
+        AnimationElement anchor = ItemAnchorL.Edit($"{title}##ItemAnchorL");
+        ImGui.SeparatorText($"LowerArmL");
+        AnimationElement lower = LowerArmL.Edit($"{title}##LowerArmL");
+        ImGui.SeparatorText($"UpperArmL");
+        AnimationElement upper = UpperArmL.Edit($"{title}##UpperArmL");
+
+        return new(anchor, lower, upper);
+    }
 
     public static LeftHandFrame Interpolate(LeftHandFrame from, LeftHandFrame to, float progress)
     {
@@ -515,6 +853,34 @@ public readonly struct AnimationElement
     }
 
     public static readonly AnimationElement Zero = new(0, 0, 0, 0, 0, 0);
+
+    public AnimationElement Edit(string title)
+    {
+        Vector3 translation = new(OffsetX, OffsetY, OffsetZ);
+        ImGui.DragFloat3($"Translation##{title}", ref translation);
+
+        Vector3 rotation = new(RotationX, RotationY, RotationZ);
+        ImGui.DragFloat3($"Rotation##{title}", ref rotation);
+
+        return new(
+            translation.X,
+            translation.Y,
+            translation.Z,
+            rotation.X,
+            rotation.Y,
+            rotation.Z
+            );
+    }
+
+    public float[] ToArray() => new float[]
+            {
+                OffsetX,
+                OffsetY,
+                OffsetZ,
+                RotationX,
+                RotationY,
+                RotationZ
+            };
 
     public static AnimationElement Interpolate(AnimationElement from, AnimationElement to, float progress)
     {

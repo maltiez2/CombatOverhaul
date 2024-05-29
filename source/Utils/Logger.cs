@@ -22,6 +22,9 @@ internal static class LoggerUtil
     public static void Verbose(ICoreAPI? api, object caller, string format) => api?.Logger?.VerboseDebug(Format(caller, format));
     public static void Verbose(ICoreAPI? api, Type type, string format) => api?.Logger?.VerboseDebug(Format(type, format));
 
+    public static void Audit(ICoreAPI? api, object caller, string format) => api?.Logger?.Audit(Format(caller, format));
+    public static void Audit(ICoreAPI? api, Type type, string format) => api?.Logger?.Audit(Format(type, format));
+
     public static void Dev(ICoreAPI? api, object caller, string format)
     {
 #if DEBUG
@@ -69,7 +72,7 @@ internal static class LoggerUtil
         return type.Name;
     }
 
-    private static string GetTypeName(Type type)
+    public static string GetTypeName(Type type)
     {
         if (type.IsGenericType)
         {

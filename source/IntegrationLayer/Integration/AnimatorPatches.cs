@@ -18,14 +18,12 @@ internal static class AnimatorPatch
     public static event Action<Entity, ElementPose>? OnFrame;
 
 
-    public static void Patch(string harmonyId, AnimationManager manager, ICoreClientAPI api)
+    public static void Patch(string harmonyId)
     {
         new Harmony(harmonyId).Patch(
                 typeof(Vintagestory.API.Common.AnimationManager).GetMethod("OnClientFrame", AccessTools.all),
                 prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimatorPatch), nameof(AnimatorPatch.ReplaceAnimator)))
             );
-
-        _manager = manager;
     }
 
     public static void Unpatch(string harmonyId)
@@ -35,7 +33,6 @@ internal static class AnimatorPatch
 
     public static void OnFrameInvoke(Entity entity, ElementPose pose) => OnFrame?.Invoke(entity, pose);
 
-    private static AnimationManager? _manager;
     private static readonly FieldInfo? _entity = typeof(Vintagestory.API.Common.AnimationManager).GetField("entity", BindingFlags.NonPublic | BindingFlags.Instance);
 
     private static void ReplaceAnimator(Vintagestory.API.Common.AnimationManager __instance, float dt)
@@ -45,7 +42,7 @@ internal static class AnimatorPatch
         if (entity != null) OnBeforeFrame?.Invoke(entity, dt);
 
         ClientAnimator? animator = __instance.Animator as ClientAnimator;
-        if (__instance.Animator is not ProceduralClientAnimator && animator != null && _manager != null)
+        if (__instance.Animator is not ProceduralClientAnimator && animator != null)
         {
             if (entity != null)
             {
