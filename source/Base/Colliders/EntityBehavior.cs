@@ -57,7 +57,7 @@ public sealed class CollidersEntityBehavior : EntityBehavior
     public CollidersEntityBehavior(Entity entity) : base(entity)
     {
 #if DEBUG
-        DebugWidgets.CheckBox("AMlib", "rendering", "Render debug colliders", () => RenderColliders, (value) => RenderColliders = value);
+        //DebugWidgets.CheckBox("AMlib", "rendering", "Render debug colliders", () => RenderColliders, (value) => RenderColliders = value);
 #endif
     }
 

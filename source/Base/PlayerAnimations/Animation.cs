@@ -174,6 +174,17 @@ public sealed class AnimationsManager
 
             if (_selectedAnimationIndex < Animations.Count)
             {
+                if (ImGui.Button("Toggle rendering offset"))
+                {
+                    if (RenderingOffset.FpHandsOffset != RenderingOffset.DefaultFpHandsOffset)
+                    {
+                        RenderingOffset.FpHandsOffset = RenderingOffset.DefaultFpHandsOffset;
+                    }
+                    else
+                    {
+                        RenderingOffset.FpHandsOffset = 0;
+                    }
+                }
                 ImGui.Checkbox("Overwrite current frame", ref _overwriteFrame);
                 Animations[codes[_selectedAnimationIndex]].Edit(codes[_selectedAnimationIndex]);
                 if (_overwriteFrame)

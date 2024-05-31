@@ -7,13 +7,15 @@ namespace CombatOverhaul.Integration;
 
 internal static class RenderingOffset
 {
-    public const float DefaultFpHandsOffset = -0.3f;
     public static float FpHandsOffset { get; set; } = DefaultFpHandsOffset;
-    public static float ResetOffset() => FpHandsOffset = DefaultFpHandsOffset;
+    public const float DefaultFpHandsOffset = -0.3f;
 
-    
+    public static float ResetOffset() => FpHandsOffset = DefaultFpHandsOffset;
+    public static float SetOffset(float offset) => FpHandsOffset = offset;
+    public static float GetOffset(ModSystemFpHands modSys) => FpHandsOffset;
+
     [HarmonyPatch(typeof(EntityPlayerShapeRenderer), "DoRender3DOpaque")]
-    public static class EntityShapeRendererPatch
+    public class EntityShapeRendererPatch
     {
         [HarmonyTranspiler]
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
@@ -38,7 +40,7 @@ internal static class RenderingOffset
     }
 
     [HarmonyPatch(typeof(EntityPlayerShapeRenderer), "getReadyShader")]
-    public static class EntityShapeRendererShaderPatch
+    public class EntityShapeRendererShaderPatch
     {
         [HarmonyTranspiler]
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)

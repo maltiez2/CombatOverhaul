@@ -5,7 +5,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"LowerTorso",
 				"UpperTorso",
@@ -35,7 +35,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElementsByType": {
 				"*-double-headed": [
 					"Body",
@@ -80,7 +80,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"N",
 				"N tip",
@@ -103,7 +103,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"body",
 				"shoulder",
@@ -125,7 +125,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"UpperTorso",
 				"UpperArmL",
@@ -147,7 +147,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"UpperTorso",
 				"UpperArmL",
@@ -169,7 +169,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"body",
 				"head"
@@ -182,7 +182,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"Body",
 				"throat",
@@ -197,7 +197,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"body",
 				"neck",
@@ -214,7 +214,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"body",
 				"head",
@@ -234,7 +234,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"body",
 				"head",
@@ -254,7 +254,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"Body",
 				"head",
@@ -278,7 +278,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"Body",
 				"head",
@@ -302,7 +302,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"Body",
 				"head",
@@ -326,7 +326,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"grub1",
 				"grub1tail"
@@ -339,7 +339,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"body",
 				"head",
@@ -353,7 +353,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"body",
 				"head",
@@ -368,7 +368,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"body",
 				"head",
@@ -383,7 +383,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"Body",
 				"neck",
@@ -403,7 +403,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"Body",
 				"neck",
@@ -423,7 +423,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"body",
 				"head",
@@ -442,7 +442,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"abdomen",
 				"body",
@@ -469,7 +469,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"body",
 				"abdomen",
@@ -488,7 +488,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"body",
 				"abdomen",
@@ -507,7 +507,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"body",
 				"leg extention 1",
@@ -529,7 +529,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"body",
 				"neck",
@@ -547,7 +547,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"body",
 				"neck",
@@ -566,7 +566,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"body",
 				"nose",
@@ -584,7 +584,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"body",
 				"head",
@@ -604,7 +604,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"body",
 				"head",
@@ -624,7 +624,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"body",
 				"head",
@@ -644,7 +644,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"Body",
 				"head",
@@ -662,7 +662,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"Body",
 				"head",
@@ -682,7 +682,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"Body",
 				"head",
@@ -700,7 +700,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"body",
 				"upper body",
@@ -715,7 +715,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"Body",
 				"head",
@@ -736,7 +736,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"Body",
 				"head",
@@ -757,7 +757,7 @@
 		"op": "add", 
 		"path": "/client/behaviors/0", 
 		"value": { 
-			"code": "animationmanagerlib:colliders",
+			"code": "CombatOverhaul:EntityColliders",
 			"colliderShapeElements": [
 				"body",
 				"head",
