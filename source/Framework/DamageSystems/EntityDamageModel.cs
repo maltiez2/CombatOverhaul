@@ -62,7 +62,6 @@ public sealed class EntityDamageModelBehavior : EntityBehavior
 
         entity.GetBehavior<EntityBehaviorHealth>().onDamaged += OnReceiveDamage;
     }
-    
 
     private CollidersEntityBehavior? _colliders;
 
@@ -75,7 +74,7 @@ public sealed class EntityDamageModelBehavior : EntityBehavior
             damage *= multiplier;
         }
 
-        if (Resists != null && damageSource is ITypedDamage typedDamage && damageSource is not ILocationalDamage)
+        if (Resists != null && damageSource is ITypedDamage typedDamage)
         {
             if (damageSource is ILocationalDamage locationalDamage && _colliders != null)
             {

@@ -121,7 +121,7 @@ static public class EasingFunctions // @TODO add clean up on mod system dispose
 {
     public delegate float EasingFunctionDelegate(float progress);
 
-    private readonly static Dictionary<EasingFunctionType, EasingFunctionDelegate> Modifiers = new()
+    private readonly static Dictionary<EasingFunctionType, EasingFunctionDelegate> _modifiers = new()
     {
         { EasingFunctionType.Linear,       (float progress) => progress },
         { EasingFunctionType.Quadratic,    (float progress) => progress * progress },
@@ -136,8 +136,8 @@ static public class EasingFunctions // @TODO add clean up on mod system dispose
         { EasingFunctionType.Bounce,       (float progress) => 0.5f - GameMath.Cos(progress * GameMath.PI) / 2 + MathF.Pow(GameMath.Sin(progress * GameMath.PI), 2) * 0.35f },
     };
 
-    public static EasingFunctionDelegate Get(EasingFunctionType id) => Modifiers[id];
-    public static EasingFunctionDelegate Get(int id) => Modifiers[(EasingFunctionType)id];
+    public static EasingFunctionDelegate Get(EasingFunctionType id) => _modifiers[id];
+    public static EasingFunctionDelegate Get(int id) => _modifiers[(EasingFunctionType)id];
     public static EasingFunctionDelegate Get(string name) => Get((EasingFunctionType)Enum.Parse(typeof(EasingFunctionType), name));
     /// <summary>
     /// Registers <see cref="EasingFunctionDelegate"/> by given id.<br/>
@@ -146,14 +146,14 @@ static public class EasingFunctions // @TODO add clean up on mod system dispose
     /// <param name="id"></param>
     /// <param name="modifier"></param>
     /// <returns><c>false</c> if <paramref name="id"/> already registered</returns>
-    public static bool Register(int id, EasingFunctionDelegate modifier) => Modifiers.TryAdd((EasingFunctionType)id, modifier);
+    public static bool Register(int id, EasingFunctionDelegate modifier) => _modifiers.TryAdd((EasingFunctionType)id, modifier);
     /// <summary>
     /// Registers <see cref="EasingFunctionDelegate"/> by given name. Name should be unique across mods.
     /// </summary>
     /// <param name="name">Unique name of modifier</param>
     /// <param name="modifier"></param>
     /// <returns><c>false</c> if <paramref name="name"/> already registered, or it has hash conflict with another registered <paramref name="name"/></returns>
-    public static bool Register(string name, EasingFunctionDelegate modifier) => Modifiers.TryAdd((EasingFunctionType)ToCrc32(name), modifier);
+    public static bool Register(string name, EasingFunctionDelegate modifier) => _modifiers.TryAdd((EasingFunctionType)ToCrc32(name), modifier);
 
     internal static uint ToCrc32(string value) => GameMath.Crc32(value.ToLowerInvariant()) & int.MaxValue;
 }

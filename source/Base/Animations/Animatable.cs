@@ -15,7 +15,7 @@ public class Animatable : CollectibleBehavior // Based on code from TeacupAngel 
     public Shape? FirstPersonShape => ShapeFirstPerson?.Shape;
     public Shape? ThirdPersonShape => Shape?.Shape;
 
-    protected CombatOverhaulAnimationsModSystem? ModSystem;
+    protected CombatOverhaulAnimationsSystem? ModSystem;
     protected Dictionary<string, AnimationMetaData> ActiveAnimationsByCode = new();
     protected ICoreClientAPI? ClientApi;
     protected string? AnimatedShapePath;
@@ -42,7 +42,7 @@ public class Animatable : CollectibleBehavior // Based on code from TeacupAngel 
 
     public override void OnLoaded(ICoreAPI api)
     {
-        ModSystem = api.ModLoader.GetModSystem<CombatOverhaulAnimationsModSystem>();
+        ModSystem = api.ModLoader.GetModSystem<CombatOverhaulAnimationsSystem>();
 
         if (api is ICoreClientAPI clientApi)
         {

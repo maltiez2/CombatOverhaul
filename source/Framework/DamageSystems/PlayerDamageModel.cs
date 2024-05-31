@@ -94,10 +94,16 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
         {
             (damageZone, multiplier) = DamageModel.GetZone(directionalDamage.Direction, directionalDamage.Target, directionalDamage.WeightMultiplier);
         }
+        else if (damageSource.SourceEntity != null)
+        {
+            DirectionOffset direction = DirectionOffset.GetDirection(entity, damageSource.SourceEntity);
+
+            (damageZone, multiplier) = DamageModel.GetZone(direction);
+        }
         else
         {
-            damageZone = DamageZone.Torso;
-            multiplier = 1;
+            damageZone = DamageZone.None;
+            multiplier = 1.0f;
         }
 
         return (damageZone, multiplier);

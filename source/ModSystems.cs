@@ -12,7 +12,7 @@ using Vintagestory.Client.NoObf;
 namespace CombatOverhaul;
 
 
-public sealed class CombatOverhaulModSystem : ModSystem
+public sealed class CombatOverhaulSystem : ModSystem
 {
     public const string ArmorInventoryId = "CombatOverhaul:ArmorInventory";
 
@@ -36,9 +36,8 @@ public sealed class CombatOverhaulModSystem : ModSystem
 }
 
 
-public sealed class CombatOverhaulAnimationsModSystem : ModSystem
+public sealed class CombatOverhaulAnimationsSystem : ModSystem
 {
-    public const string ArmorInventoryId = "CombatOverhaul:ArmorInventory";
     public AnimationsManager? PlayerAnimationsManager { get; private set; }
 
     internal IShaderProgram? AnimatedItemShaderProgram => _shaderProgram;

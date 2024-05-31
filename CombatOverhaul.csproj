@@ -128,6 +128,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="resources\assets\combatoverhaul\config\animations\" />
+    <Folder Include="resources\assets\combatoverhaul\patches\damageModels\" />
   </ItemGroup>
 
   <!-- Creates/updates modinfo.json file in build directory -->
