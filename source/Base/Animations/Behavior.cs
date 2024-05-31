@@ -43,7 +43,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
         }
     }
 
-    public PlayerFrame? FrameOverride { get; set; } = null;
+    public PlayerItemFrame? FrameOverride { get; set; } = null;
 
     public void Play(AnimationRequest request, bool mainHand = true)
     {
@@ -60,7 +60,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
 
     private readonly Composer _composer = new();
     private readonly EntityPlayer _player;
-    private PlayerFrame _lastFrame = PlayerFrame.Empty;
+    private PlayerItemFrame _lastFrame = PlayerItemFrame.Empty;
     private readonly List<string> _offhandCategories = new();
     private readonly List<string> _mainHandCategories = new();
     private int _offHandItemId = 0;
@@ -93,9 +93,9 @@ internal sealed class Composer
 
     }
 
-    public PlayerFrame Compose(TimeSpan delta)
+    public PlayerItemFrame Compose(TimeSpan delta)
     {
-        if (!_requests.Any()) return PlayerFrame.Empty;
+        if (!_requests.Any()) return PlayerItemFrame.Empty;
 
         foreach ((string category, AnimatorWeightState state) in _weightState)
         {
@@ -104,7 +104,7 @@ internal sealed class Composer
             ProcessWeight(category, state);
         }
 
-        PlayerFrame result = PlayerFrame.Compose(_animators.Select(entry => (entry.Value.Animate(delta), _currentWeight[entry.Key])));
+        PlayerItemFrame result = PlayerItemFrame.Compose(_animators.Select(entry => (entry.Value.Animate(delta), _currentWeight[entry.Key])));
 
         foreach (string category in _requests.Select(entry => entry.Key))
         {
@@ -238,7 +238,7 @@ internal struct Animator
         _previousAnimationFrame = _lastFrame;
     }
 
-    public PlayerFrame Animate(TimeSpan delta)
+    public PlayerItemFrame Animate(TimeSpan delta)
     {
         _currentDuration += delta;
         TimeSpan adjustedDuration = _currentDuration / _animationSpeed;
@@ -248,8 +248,8 @@ internal struct Animator
     }
     public readonly bool Finished() => _currentAnimation.TotalDuration >= _currentDuration / _animationSpeed;
 
-    private PlayerFrame _previousAnimationFrame = new();
-    private PlayerFrame _lastFrame = new();
+    private PlayerItemFrame _previousAnimationFrame = new();
+    private PlayerItemFrame _lastFrame = new();
     private TimeSpan _currentDuration = TimeSpan.Zero;
     private float _animationSpeed = 1;
     private Animation _currentAnimation;

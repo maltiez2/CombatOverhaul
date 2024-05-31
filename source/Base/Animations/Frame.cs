@@ -9,24 +9,29 @@ namespace CombatOverhaul.PlayerAnimations;
 public readonly struct PlayerItemFrame
 {
     public readonly PlayerFrame Player;
-    public readonly ItemFrame Item;
+    public readonly ItemFrame? Item;
 
-    public PlayerItemFrame(PlayerFrame player, ItemFrame item)
+    public PlayerItemFrame(PlayerFrame player, ItemFrame? item)
     {
         Player = player;
         Item = item;
     }
 
+    public static readonly PlayerItemFrame Empty = new(PlayerFrame.Empty, null);
+
     public void Apply(ElementPose pose)
     {
         Player.Apply(pose);
-        Item.Apply(pose);
+        Item?.Apply(pose);
     }
 
     public static PlayerItemFrame Compose(IEnumerable<(PlayerItemFrame element, float weight)> frames)
     {
         PlayerFrame player = PlayerFrame.Compose(frames.Select(entry => (entry.element.Player, entry.weight)));
-        ItemFrame item = ItemFrame.Compose(frames.Select(entry => (entry.element.Item, entry.weight)));
+        ItemFrame item = ItemFrame.Compose(frames
+            .Where(entry => entry.element.Item != null)
+            .Select(entry => (entry.element.Item.Value, entry.weight))
+            );
         return new(player, item);
     }
 }
@@ -89,7 +94,7 @@ public readonly struct ItemKeyFrame
         {
             result.Add(new(new(frames.ToDictionary(entry => entry.Key, entry => entry.Value[0])), 0));
         }
-        
+
         for (int index = missingFirstFrame ? 1 : 0; index < keyFramesCount; index++)
         {
             result.Add(new(new(frames.ToDictionary(entry => entry.Key, entry => entry.Value[index])), vanillaKeyFrames[index].Frame / vanillaKeyFrames[^1].Frame == 0 ? 1 : vanillaKeyFrames[^1].Frame));

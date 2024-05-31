@@ -68,7 +68,7 @@ public sealed class AnimationsManager
 
             if (ImGui.Button("Export to clipboard") && Animations.Count > 0)
             {
-                ImGui.SetClipboardText(Animations[codes[_selectedAnimationIndex]].ToJsonString());
+                ImGui.SetClipboardText(Animations[codes[_selectedAnimationIndex]].ToString());
             }
             ImGui.SameLine();
 
@@ -105,7 +105,7 @@ public sealed class AnimationsManager
                 Animations[codes[_selectedAnimationIndex]].Edit(codes[_selectedAnimationIndex]);
                 if (_overwriteFrame)
                 {
-                    _behavior.FrameOverride = Animations[codes[_selectedAnimationIndex]].PlayerKeyFrames[Animations[codes[_selectedAnimationIndex]]._frameIndex].Frame;
+                    _behavior.FrameOverride = Animations[codes[_selectedAnimationIndex]].StillFrame(Animations[codes[_selectedAnimationIndex]]._frameIndex);
                 }
                 else
                 {
@@ -129,7 +129,7 @@ public sealed class AnimationsManager
             string code = entry.Key;
             JsonObject animationJson = new(entry.Value);
 
-            Animation animation = Animation.FromJson(animationJson.AsArray());
+            Animation animation = animationJson.AsObject<AnimationJson>().ToAnimation();
 
             result.Add($"{domain}:{code}", animation);
         }

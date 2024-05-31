@@ -43,38 +43,10 @@ public sealed class Animation
     {
         if (Finished(currentDuration)) return new(PlayerKeyFrames[^1].Frame, ItemKeyFrames[^1].Frame);
 
-        int nextPlayerKeyFrame;
-        for (nextPlayerKeyFrame = 0; nextPlayerKeyFrame < PlayerKeyFrames.Count - 1; nextPlayerKeyFrame++)
-        {
-            if (Durations[nextPlayerKeyFrame + 1] > currentDuration) break;
-        }
+        ItemFrame? itemFrame = InterpolateItemFrame(previousAnimationFrame, currentDuration);
+        PlayerFrame playerFrame = InterpolatePlayerFrame(previousAnimationFrame, currentDuration);
 
-        int nextItemKeyFrame;
-        float progress = (float)(currentDuration / TotalDuration);
-        for (nextItemKeyFrame = 0; nextItemKeyFrame < ItemKeyFrames.Count - 1; nextItemKeyFrame++)
-        {
-            if (ItemKeyFrames[nextItemKeyFrame + 1].DurationFraction > progress) break;
-        }
-        float itemFrameProgress;
-        if (nextItemKeyFrame == 0)
-        {
-            itemFrameProgress = progress / ItemKeyFrames[0].DurationFraction;
-        }
-        else
-        {
-            float progressRange = ItemKeyFrames[nextItemKeyFrame].DurationFraction - ItemKeyFrames[nextItemKeyFrame - 1].DurationFraction;
-            itemFrameProgress = (progress - ItemKeyFrames[nextItemKeyFrame - 1].DurationFraction) / progressRange;
-        }
-
-        if (nextPlayerKeyFrame == 0 && nextItemKeyFrame == 0) return new(
-                PlayerKeyFrames[0].Interpolate(previousAnimationFrame.Player, currentDuration),
-                ItemKeyFrames[0].Interpolate(previousAnimationFrame.Item, itemFrameProgress)
-            );
-
-        return new(
-            PlayerKeyFrames[nextPlayerKeyFrame].Interpolate(PlayerKeyFrames[nextPlayerKeyFrame - 1].Frame, currentDuration - Durations[nextPlayerKeyFrame - 1]),
-            ItemKeyFrames[nextItemKeyFrame].Interpolate(ItemKeyFrames[nextItemKeyFrame - 1].Frame, itemFrameProgress)
-            );
+        return new(playerFrame, itemFrame);
     }
     public bool Finished(TimeSpan currentDuration) => currentDuration >= TotalDuration;
     public void Edit(string title)
@@ -107,6 +79,14 @@ public sealed class Animation
         }
     }
     public override string ToString() => AnimationJson.FromAnimation(this).ToString();
+    public PlayerItemFrame StillFrame(int playerFrame)
+    {
+        return Interpolate(PlayerItemFrame.Empty, Durations[playerFrame]);
+    }
+    public PlayerItemFrame StillFrame(float progress)
+    {
+        return Interpolate(PlayerItemFrame.Empty, progress * TotalDuration);
+    }
 
     internal int _frameIndex = 0;
 
@@ -118,6 +98,53 @@ public sealed class Animation
         {
             TotalDuration += frame.EasingTime;
             Durations.Add(TotalDuration);
+        }
+    }
+    private ItemFrame? InterpolateItemFrame(PlayerItemFrame previousAnimationFrame, TimeSpan currentDuration)
+    {
+        if (!ItemKeyFrames.Any()) return null;
+
+        int nextItemKeyFrame;
+        float progress = (float)(currentDuration / TotalDuration);
+        for (nextItemKeyFrame = 0; nextItemKeyFrame < ItemKeyFrames.Count - 1; nextItemKeyFrame++)
+        {
+            if (ItemKeyFrames[nextItemKeyFrame + 1].DurationFraction > progress) break;
+        }
+        float itemFrameProgress;
+        if (nextItemKeyFrame == 0)
+        {
+            itemFrameProgress = progress / ItemKeyFrames[0].DurationFraction;
+        }
+        else
+        {
+            float progressRange = ItemKeyFrames[nextItemKeyFrame].DurationFraction - ItemKeyFrames[nextItemKeyFrame - 1].DurationFraction;
+            itemFrameProgress = (progress - ItemKeyFrames[nextItemKeyFrame - 1].DurationFraction) / progressRange;
+        }
+
+        if (nextItemKeyFrame == 0)
+        {
+            return ItemKeyFrames[0].Interpolate(previousAnimationFrame.Item.Value, itemFrameProgress);
+        }
+        else
+        {
+            return ItemKeyFrames[nextItemKeyFrame].Interpolate(ItemKeyFrames[nextItemKeyFrame - 1].Frame, itemFrameProgress);
+        }
+    }
+    private PlayerFrame InterpolatePlayerFrame(PlayerItemFrame previousAnimationFrame, TimeSpan currentDuration)
+    {
+        int nextPlayerKeyFrame;
+        for (nextPlayerKeyFrame = 0; nextPlayerKeyFrame < PlayerKeyFrames.Count - 1; nextPlayerKeyFrame++)
+        {
+            if (Durations[nextPlayerKeyFrame + 1] > currentDuration) break;
+        }
+
+        if (nextPlayerKeyFrame == 0)
+        {
+            return PlayerKeyFrames[0].Interpolate(previousAnimationFrame.Player, currentDuration);
+        }
+        else
+        {
+            return PlayerKeyFrames[nextPlayerKeyFrame].Interpolate(PlayerKeyFrames[nextPlayerKeyFrame - 1].Frame, currentDuration - Durations[nextPlayerKeyFrame - 1]);
         }
     }
 }
