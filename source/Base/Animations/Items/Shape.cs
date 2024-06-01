@@ -14,15 +14,6 @@ public sealed class AnimatableShape : ITexPositionSource, IDisposable
     public MultiTextureMeshRef MeshRef { get; private set; }
     public ITextureAtlasAPI Atlas { get; private set; }
 
-    private readonly ICoreClientAPI mClientApi;
-    private readonly AnimatableShapeRenderer mRenderer;
-    private readonly Dictionary<long, AnimatorBase> mAnimators = new();
-    private readonly Dictionary<long, string> mCacheKeys = new();
-    private readonly Item mItem;
-    private readonly string mCachePrefix;
-
-    private bool mDisposed = false;
-
     public static AnimatableShape? Create(ICoreClientAPI api, string shapePath, Item item)
     {
         string cacheKey = $"shapeEditorCollectibleMeshes-{shapePath}";
@@ -36,24 +27,22 @@ public sealed class AnimatableShape : ITexPositionSource, IDisposable
 
         return new AnimatableShape(api, cacheKey, currentShape, item);
     }
-
     public AnimatorBase? GetAnimator(long entityId)
     {
-        if (mAnimators.ContainsKey(entityId)) return mAnimators[entityId];
+        if (_animators.ContainsKey(entityId)) return _animators[entityId];
 
         RemoveAnimatorsForNonValidEntities();
 
-        string cacheKey = $"{mCachePrefix}.{entityId}";
+        string cacheKey = $"{_cachePrefix}.{entityId}";
 
-        AnimatorBase? animator = GetAnimator(mClientApi, cacheKey, Shape);
+        AnimatorBase? animator = GetAnimator(_clientApi, cacheKey, Shape);
 
         if (animator == null) return null;
 
-        mAnimators.Add(entityId, animator);
-        mCacheKeys.Add(entityId, cacheKey);
+        _animators.Add(entityId, animator);
+        _cacheKeys.Add(entityId, cacheKey);
         return animator;
     }
-
     public void Render(
         IShaderProgram shaderProgram,
         ItemRenderInfo itemStackRenderInfo,
@@ -63,30 +52,41 @@ public sealed class AnimatableShape : ITexPositionSource, IDisposable
         Matrixf itemModelMat,
         Entity entity,
         float dt
-        ) => mRenderer.Render(shaderProgram, itemStackRenderInfo, render, itemStack, lightrgbs, itemModelMat, entity, dt);
+        ) => _renderer.Render(shaderProgram, itemStackRenderInfo, render, itemStack, lightrgbs, itemModelMat, entity, dt);
+    public void Dispose()
+    {
+        MeshRef.Dispose();
+    }
+
+    private readonly ICoreClientAPI _clientApi;
+    private readonly AnimatableShapeRenderer _renderer;
+    private readonly Dictionary<long, AnimatorBase> _animators = new();
+    private readonly Dictionary<long, string> _cacheKeys = new();
+    private readonly Item _item;
+    private readonly string _cachePrefix;
 
     private AnimatableShape(ICoreClientAPI api, string cacheKey, Shape currentShape, Item item)
     {
-        mClientApi = api;
-        mCachePrefix = cacheKey;
+        _clientApi = api;
+        _cachePrefix = cacheKey;
         Shape = currentShape;
         Atlas = api.ItemTextureAtlas;
-        mItem = item;
+        _item = item;
 
         MeshData meshData = InitializeMeshData(api, cacheKey, currentShape, this);
         MeshRef = InitializeMeshRef(api, meshData);
-        mRenderer = new(api, this);
+        _renderer = new(api, this);
     }
     private void RemoveAnimatorsForNonValidEntities()
     {
-        foreach ((long entityId, AnimatorBase? animator) in mAnimators)
+        foreach ((long entityId, _) in _animators)
         {
-            Entity? entity = mClientApi.World.GetEntityById(entityId);
+            Entity? entity = _clientApi.World.GetEntityById(entityId);
 
             if (entity == null || !entity.Alive)
             {
-                mAnimators.Remove(entityId);
-                mCacheKeys.Remove(entityId);
+                _animators.Remove(entityId);
+                _cacheKeys.Remove(entityId);
             }
         }
     }
@@ -129,7 +129,7 @@ public sealed class AnimatableShape : ITexPositionSource, IDisposable
             CacheInvTransforms(elements[i].Children);
         }
     }
-    private AnimatorBase? GetAnimator(ICoreClientAPI clientApi, string cacheDictKey, Shape? shape)
+    private static AnimatorBase? GetAnimator(ICoreClientAPI clientApi, string cacheDictKey, Shape? shape)
     {
         if (shape == null)
         {
@@ -176,16 +176,16 @@ public sealed class AnimatableShape : ITexPositionSource, IDisposable
         return animator;
     }
 
-
+    #region ITexPositionSource
     public Size2i? AtlasSize => Atlas?.Size;
     public TextureAtlasPosition? this[string textureCode]
     {
         get
         {
             AssetLocation? texturePath = null;
-            if (mItem.Textures.ContainsKey(textureCode))
+            if (_item.Textures.ContainsKey(textureCode))
             {
-                texturePath = mItem.Textures[textureCode].Base;
+                texturePath = _item.Textures[textureCode].Base;
             }
             else
             {
@@ -208,46 +208,38 @@ public sealed class AnimatableShape : ITexPositionSource, IDisposable
 
         if (texturePosition == null)
         {
-            IAsset texAsset = mClientApi.Assets.TryGet(texturePath.Clone().WithPathPrefixOnce("textures/").WithPathAppendixOnce(".png"));
+            IAsset texAsset = _clientApi.Assets.TryGet(texturePath.Clone().WithPathPrefixOnce("textures/").WithPathAppendixOnce(".png"));
             if (texAsset != null)
             {
                 Atlas.GetOrInsertTexture(texturePath, out _, out texturePosition);
             }
             else
             {
-                mClientApi.World.Logger.Warning($"[Animation Manager] texture {texturePath}, not no such texture found.");
+                _clientApi.World.Logger.Warning($"[Animation Manager] texture {texturePath}, not no such texture found.");
             }
         }
 
         return texturePosition;
     }
-
-    public void Dispose()
-    {
-        if (mDisposed) return;
-        mDisposed = true;
-
-        MeshRef.Dispose();
-    }
+    #endregion
 }
 
-public class AnimatableShapeRenderer
+internal class AnimatableShapeRenderer
 {
-    private float mTimeAccumulation = 0;
-    private readonly ICoreClientAPI mClientApi;
-    private readonly AnimatableShape mShape;
-
     public AnimatableShapeRenderer(ICoreClientAPI api, AnimatableShape shape)
     {
-        mClientApi = api;
-        mShape = shape;
+        _clientApi = api;
+        _shape = shape;
     }
-
     public void Render(IShaderProgram shaderProgram, ItemRenderInfo itemStackRenderInfo, IRenderAPI render, ItemStack itemStack, Vec4f lightrgbs, Matrixf itemModelMat, Entity entity, float dt)
     {
-        RenderAnimatableShape(shaderProgram, mClientApi.World, mShape, itemStackRenderInfo, render, itemStack, entity, lightrgbs, itemModelMat);
-        SpawnParticles(itemModelMat, itemStack, dt, ref mTimeAccumulation, mClientApi, entity);
+        RenderAnimatableShape(shaderProgram, _clientApi.World, _shape, itemStackRenderInfo, render, itemStack, entity, lightrgbs, itemModelMat);
+        SpawnParticles(itemModelMat, itemStack, dt, ref _timeAccumulation, _clientApi, entity);
     }
+
+    private float _timeAccumulation = 0;
+    private readonly ICoreClientAPI _clientApi;
+    private readonly AnimatableShape _shape;
 
     private static void RenderAnimatableShape(IShaderProgram shaderProgram, IWorldAccessor world, AnimatableShape shape, ItemRenderInfo itemStackRenderInfo, IRenderAPI render, ItemStack itemStack, Entity entity, Vec4f lightrgbs, Matrixf itemModelMat)
     {
@@ -276,7 +268,6 @@ public class AnimatableShapeRenderer
         shaderProgram.Uniform("damageEffect", 0f);
         shaderProgram.Stop();
     }
-
     private static void SpawnParticles(Matrixf itemModelMat, ItemStack itemStack, float dt, ref float timeAccumulation, ICoreClientAPI api, Entity entity)
     {
         if (itemStack.Collectible?.ParticleProperties == null) return;
@@ -306,7 +297,6 @@ public class AnimatableShapeRenderer
             }
         }
     }
-
     private static void ZeroTransformCorrection(float[] elementTransforms)
     {
         bool zeroTransform = elementTransforms.Count(value => value == 0) == elementTransforms.Length;

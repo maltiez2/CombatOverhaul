@@ -1,10 +1,12 @@
 ﻿using CombatOverhaul.Integration;
+using CombatOverhaul.ItemsAnimations;
 using ImGuiNET;
 using Newtonsoft.Json.Linq;
 using System.Text;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
+using Vintagestory.API.MathTools;
 using VSImGui;
 using VSImGui.API;
 
@@ -34,6 +36,7 @@ public sealed class AnimationsManager
         api.Input.SetHotKeyHandler("combatOverhaul_editor", keys => _showAnimationEditor = !_showAnimationEditor);
 
         _behavior = api.World.Player.Entity.GetBehavior<FirstPersonAnimationsBehavior>();
+        _api = api;
     }
 
     private bool _showAnimationEditor = false;
@@ -41,6 +44,9 @@ public sealed class AnimationsManager
     private int _tempAnimations = 0;
     private bool _overwriteFrame = false;
     private readonly FirstPersonAnimationsBehavior _behavior;
+    private readonly ICoreClientAPI _api;
+    private string _itemAnimation = "";
+    private string _animationKey = "";
 
     private CallbackGUIStatus DrawEditor(float deltaSeconds)
     {
@@ -71,6 +77,8 @@ public sealed class AnimationsManager
                 ImGui.SetClipboardText(Animations[codes[_selectedAnimationIndex]].ToString());
             }
             ImGui.SameLine();
+
+            CreateFromItemAnimation();
 
             VSImGui.ListEditor.Edit(
                 "Animations",
@@ -135,5 +143,41 @@ public sealed class AnimationsManager
         }
 
         return result;
+    }
+    
+    private void CreateFromItemAnimation()
+    {
+        Item? item = _api.World.Player.Entity.RightHandItemSlot.Itemstack?.Item;
+        if (item == null)
+        {
+            ImGui.Text("Take item in right hand");
+            return;
+        }
+
+        Animatable? behavior = item.GetBehavior<Animatable>();
+        if (behavior == null)
+        {
+            ImGui.Text("Take item with animatable behavior in right hand");
+            return;
+        }
+
+        Shape? shape = behavior.CurrentShape;
+        if (shape == null)
+        {
+            ImGui.Text("Take item with animatable behavior in right hand");
+            return;
+        }
+
+        ImGui.InputText($"Item animation code", ref _itemAnimation, 300);
+        ImGui.InputText($"New animation code", ref _animationKey, 300);
+
+        bool canCreate = !Animations.ContainsKey(_animationKey) && shape.AnimationsByCrc32.ContainsKey(GameMath.Crc32(_animationKey.ToLowerInvariant()));
+
+        if (!canCreate) ImGui.BeginDisabled();
+        if (ImGui.Button("Create##itemanimation"))
+        {
+            Animations.Add(_animationKey, new Animation(new PLayerKeyFrame[] { PLayerKeyFrame.Zero }, _itemAnimation, shape));
+        }
+        if (!canCreate) ImGui.EndDisabled();
     }
 }

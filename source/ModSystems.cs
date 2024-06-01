@@ -16,11 +16,15 @@ public sealed class CombatOverhaulSystem : ModSystem
 {
     public const string ArmorInventoryId = "CombatOverhaul:ArmorInventory";
 
+    public override void StartPre(ICoreAPI api)
+    {
+        (api as ClientCoreAPI)?.ClassRegistryNative.RegisterInventoryClass(GlobalConstants.characterInvClassName, typeof(ArmorInventory));
+    }
+
     public override void Start(ICoreAPI api)
     {
         api.RegisterEntityBehaviorClass("CombatOverhaul:FirstPersonAnimations", typeof(FirstPersonAnimationsBehavior));
         api.RegisterEntityBehaviorClass("CombatOverhaul:EntityColliders", typeof(CollidersEntityBehavior));
-        (api as ClientCoreAPI)?.ClassRegistryNative.RegisterInventoryClass(GlobalConstants.characterInvClassName, typeof(ArmorInventory));
 
         new Harmony("CombatOverhaulAuto").PatchAll();
     }

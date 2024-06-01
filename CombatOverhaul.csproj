@@ -4,7 +4,7 @@
     <ModName>Combat Overhaul</ModName>
     <ModType>code</ModType>
     <GameVersion>1.19.4</GameVersion>
-    <ModVersion>0.0.0</ModVersion>
+    <ModVersion>0.0.1</ModVersion>
     <ModId>combatoverhaul</ModId>
     <Description></Description>
     <Side>Universal</Side>
@@ -125,10 +125,6 @@
       <HintPath>$(GameDirectory)/Mods/VSCreativeMod.dll</HintPath>
       <Private>False</Private>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="resources\assets\combatoverhaul\config\animations\" />
-    <Folder Include="resources\assets\combatoverhaul\patches\damageModels\" />
   </ItemGroup>
 
   <!-- Creates/updates modinfo.json file in build directory -->

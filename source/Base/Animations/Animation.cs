@@ -41,7 +41,7 @@ public sealed class Animation
 
     public PlayerItemFrame Interpolate(PlayerItemFrame previousAnimationFrame, TimeSpan currentDuration)
     {
-        if (Finished(currentDuration)) return new(PlayerKeyFrames[^1].Frame, ItemKeyFrames[^1].Frame);
+        if (Finished(currentDuration)) return new(PlayerKeyFrames[^1].Frame, ItemKeyFrames.Any() ? ItemKeyFrames[^1].Frame : null);
 
         ItemFrame? itemFrame = InterpolateItemFrame(previousAnimationFrame, currentDuration);
         PlayerFrame playerFrame = InterpolatePlayerFrame(previousAnimationFrame, currentDuration);

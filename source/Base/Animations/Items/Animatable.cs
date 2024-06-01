@@ -7,25 +7,12 @@ using Vintagestory.API.MathTools;
 
 namespace CombatOverhaul.ItemsAnimations;
 
-public class Animatable : CollectibleBehavior // Based on code from TeacupAngel (https://github.com/TeacupAngel)
+public class Animatable : CollectibleBehavior
 {
-    public bool RenderProceduralAnimations { get; set; }
     public Shape? CurrentShape => CurrentAnimatableShape?.Shape;
     public AnimatableShape? CurrentAnimatableShape => (CurrentFirstPerson ? ShapeFirstPerson : Shape) ?? Shape ?? ShapeFirstPerson;
     public Shape? FirstPersonShape => ShapeFirstPerson?.Shape;
     public Shape? ThirdPersonShape => Shape?.Shape;
-
-    protected CombatOverhaulAnimationsSystem? ModSystem;
-    protected Dictionary<string, AnimationMetaData> ActiveAnimationsByCode = new();
-    protected ICoreClientAPI? ClientApi;
-    protected string? AnimatedShapePath;
-    protected string? AnimatedShapeFirstPersonPath;
-    protected bool OnlyWhenAnimating;
-    protected AnimatableShape? Shape;
-    protected AnimatableShape? ShapeFirstPerson;
-    protected Matrixf ItemModelMat = new();
-    protected float TimeAccumulation = 0;
-    protected bool CurrentFirstPerson = false;
 
     public Animatable(CollectibleObject collObj) : base(collObj)
     {
@@ -35,11 +22,9 @@ public class Animatable : CollectibleBehavior // Based on code from TeacupAngel 
     {
         AnimatedShapePath = properties["animated-shape"].AsString(null);
         AnimatedShapeFirstPersonPath = properties["animated-shape-fp"].AsString(null);
-        OnlyWhenAnimating = properties["only-when-animating"].AsBool(true);
 
         base.Initialize(properties);
     }
-
     public override void OnLoaded(ICoreAPI api)
     {
         ModSystem = api.ModLoader.GetModSystem<CombatOverhaulAnimationsSystem>();
@@ -57,41 +42,25 @@ public class Animatable : CollectibleBehavior // Based on code from TeacupAngel 
         }
     }
 
-    public virtual void InitAnimatable()
-    {
-        Item? item = (collObj as Item);
-
-        if (item == null || ClientApi == null || (item.Shape == null && AnimatedShapePath == null && AnimatedShapeFirstPersonPath == null)) return;
-
-        Shape = AnimatableShape.Create(ClientApi, AnimatedShapePath ?? AnimatedShapeFirstPersonPath ?? item.Shape.Base.ToString() ?? "", item);
-        ShapeFirstPerson = AnimatableShape.Create(ClientApi, AnimatedShapeFirstPersonPath ?? AnimatedShapePath ?? item.Shape.Base.ToString() ?? "", item);
-    }
-
     public virtual void BeforeRender(ICoreClientAPI clientApi, ItemStack itemStack, Entity player, EnumItemRenderTarget target, float dt)
     {
         CurrentFirstPerson = IsFirstPerson(player);
 
         if (CurrentAnimatableShape != null) CalculateAnimation(CurrentAnimatableShape.GetAnimator(player.EntityId), CurrentAnimatableShape.Shape, clientApi, player, target, dt);
     }
-
-    public virtual void RenderShape(IShaderProgram shaderProgram, IWorldAccessor world, AnimatableShape shape, ItemRenderInfo itemStackRenderInfo, IRenderAPI render, ItemStack itemStack, Vec4f lightrgbs, Matrixf itemModelMat, ItemSlot itemSlot, Entity entity, float dt)
-    {
-        CurrentAnimatableShape?.Render(shaderProgram, itemStackRenderInfo, render, itemStack, lightrgbs, itemModelMat, entity, dt);
-    }
-
     public void RenderHeldItem(float[] modelMat, ICoreClientAPI api, ItemSlot itemSlot, Entity entity, Vec4f lightrgbs, float dt, bool isShadowPass, bool right, ItemRenderInfo renderInfo)
     {
         if (CurrentAnimatableShape == null || itemSlot.Itemstack == null || ModSystem?.AnimatedItemShaderProgram == null) return;
 
-        if (OnlyWhenAnimating && !RenderProceduralAnimations)
+        ItemRenderInfo? itemStackRenderInfo = PrepareShape(api, ItemModelMat, modelMat, itemSlot, entity, right, dt);
+
+        if (itemStackRenderInfo == null) return;
+
+        if (!IsOwner(entity))
         {
             ClientApi?.Render.RenderMultiTextureMesh(renderInfo.ModelRef);
             return;
         }
-
-        ItemRenderInfo? itemStackRenderInfo = PrepareShape(api, ItemModelMat, modelMat, itemSlot, entity, right, dt);
-
-        if (itemStackRenderInfo == null) return;
 
         if (isShadowPass)
         {
@@ -111,6 +80,31 @@ public class Animatable : CollectibleBehavior // Based on code from TeacupAngel 
         }
     }
 
+
+    protected CombatOverhaulAnimationsSystem? ModSystem;
+    protected Dictionary<string, AnimationMetaData> ActiveAnimationsByCode = new();
+    protected ICoreClientAPI? ClientApi;
+    protected string? AnimatedShapePath;
+    protected string? AnimatedShapeFirstPersonPath;
+    protected AnimatableShape? Shape;
+    protected AnimatableShape? ShapeFirstPerson;
+    protected Matrixf ItemModelMat = new();
+    protected float TimeAccumulation = 0;
+    protected bool CurrentFirstPerson = false;
+
+    protected virtual void InitAnimatable()
+    {
+        Item? item = (collObj as Item);
+
+        if (item == null || ClientApi == null || (item.Shape == null && AnimatedShapePath == null && AnimatedShapeFirstPersonPath == null)) return;
+
+        Shape = AnimatableShape.Create(ClientApi, AnimatedShapePath ?? AnimatedShapeFirstPersonPath ?? item.Shape?.Base.ToString() ?? "", item);
+        ShapeFirstPerson = AnimatableShape.Create(ClientApi, AnimatedShapeFirstPersonPath ?? AnimatedShapePath ?? item.Shape?.Base.ToString() ?? "", item);
+    }
+    protected virtual void RenderShape(IShaderProgram shaderProgram, IWorldAccessor world, AnimatableShape shape, ItemRenderInfo itemStackRenderInfo, IRenderAPI render, ItemStack itemStack, Vec4f lightrgbs, Matrixf itemModelMat, ItemSlot itemSlot, Entity entity, float dt)
+    {
+        CurrentAnimatableShape?.Render(shaderProgram, itemStackRenderInfo, render, itemStack, lightrgbs, itemModelMat, entity, dt);
+    }
     protected virtual void CalculateAnimation(AnimatorBase? animator, Shape shape, ICoreClientAPI clientApi, Entity entity, EnumItemRenderTarget target, float dt)
     {
         if (
@@ -119,17 +113,13 @@ public class Animatable : CollectibleBehavior // Based on code from TeacupAngel 
             target == EnumItemRenderTarget.HandFp &&
             (
                 ActiveAnimationsByCode.Count > 0 ||
-                animator.ActiveAnimationCount > 0 ||
-                RenderProceduralAnimations ||
-                !OnlyWhenAnimating
+                animator.ActiveAnimationCount > 0
             )
         )
         {
-            //if (RenderProceduralAnimations) ModSystem?.OnBeforeRender(animator, entity, dt, shape);
             animator.OnFrame(ActiveAnimationsByCode, dt);
         }
     }
-
     protected static bool IsFirstPerson(Entity entity)
     {
         bool owner = (entity.Api as ICoreClientAPI)?.World.Player.Entity.EntityId == entity.EntityId;
@@ -139,7 +129,6 @@ public class Animatable : CollectibleBehavior // Based on code from TeacupAngel 
 
         return firstPerson;
     }
-
     protected static ItemRenderInfo? PrepareShape(ICoreClientAPI api, Matrixf itemModelMat, float[] modelMat, ItemSlot itemSlot, Entity entity, bool right, float dt)
     {
         ItemStack? itemStack = itemSlot?.Itemstack;
@@ -171,7 +160,6 @@ public class Animatable : CollectibleBehavior // Based on code from TeacupAngel 
 
         return itemStackRenderInfo;
     }
-
     protected static void ShadowPass(ICoreClientAPI api, ItemRenderInfo itemStackRenderInfo, Matrixf itemModelMat, AnimatableShape shape)
     {
         IRenderAPI render = api.Render;
@@ -194,4 +182,5 @@ public class Animatable : CollectibleBehavior // Based on code from TeacupAngel 
             render.GlEnableCullFace();
         }
     }
+    protected static bool IsOwner(Entity entity) => (entity.Api as ICoreClientAPI)?.World.Player.Entity.EntityId == entity.EntityId;
 }
