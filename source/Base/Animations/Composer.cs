@@ -1,4 +1,6 @@
-﻿namespace CombatOverhaul.PlayerAnimations;
+﻿using Vintagestory.API.Common.Entities;
+
+namespace CombatOverhaul.PlayerAnimations;
 
 internal sealed class Composer
 {
@@ -9,16 +11,22 @@ internal sealed class Composer
 
     public PlayerItemFrame Compose(TimeSpan delta)
     {
-        if (!_requests.Any()) return PlayerItemFrame.Empty;
+        if (!_requests.Any() || !_animators.Any()) return PlayerItemFrame.Empty;
 
         foreach ((string category, AnimatorWeightState state) in _weightState)
         {
-            _currentTimes.Add(category, delta);
+            _currentTimes[category] += delta;
 
             ProcessWeight(category, state);
         }
 
-        PlayerItemFrame result = PlayerItemFrame.Compose(_animators.Select(entry => (entry.Value.Animate(delta), _currentWeight[entry.Key])));
+        List<(PlayerItemFrame, float)> frames = new();
+        foreach ((string category, var animator) in _animators)
+        {
+            PlayerItemFrame frame = animator.Animate(delta);
+            frames.Add((frame, _currentWeight[category]));
+        }
+        PlayerItemFrame result = PlayerItemFrame.Compose(frames);
 
         foreach (string category in _requests.Select(entry => entry.Key))
         {
@@ -89,22 +97,24 @@ internal sealed class Composer
         switch (state)
         {
             case AnimatorWeightState.EaseIn:
-                _currentWeight[category] = (_requests[category].Weight - _previousWeight[category]) * (float)(_currentTimes[category] / _requests[category].EaseInDuration);
-                if (_currentWeight[category] > _requests[category].Weight)
+                float progress = Math.Clamp((float)(_currentTimes[category] / _requests[category].EaseInDuration), 0, 1);
+                _currentWeight[category] = _previousWeight[category] + (_requests[category].Weight - _previousWeight[category]) * progress;
+                if (progress >= 1)
                 {
                     _currentWeight[category] = _requests[category].Weight;
                     _weightState[category] = AnimatorWeightState.Stay;
                 }
                 break;
             case AnimatorWeightState.Stay:
-                if (_requests[category].EaseOut && _requests[category].Animation.TotalDuration / _requests[category].AnimationSpeed > _currentTimes[category])
+                if (_requests[category].EaseOut && _requests[category].Animation.TotalDuration / _requests[category].AnimationSpeed >= _currentTimes[category])
                 {
                     _weightState[category] = AnimatorWeightState.EaseOut;
                 }
                 break;
             case AnimatorWeightState.EaseOut:
-                _currentWeight[category] = _requests[category].Weight * (float)((_requests[category].EaseOutDuration - (_currentTimes[category] - _requests[category].Animation.TotalDuration / _requests[category].AnimationSpeed)) / _requests[category].EaseOutDuration);
-                if (_currentWeight[category] < 0)
+                float progress2 = Math.Clamp((float)((_currentTimes[category] - _requests[category].Animation.TotalDuration / _requests[category].AnimationSpeed) / _requests[category].EaseOutDuration), 0, 1);
+                _currentWeight[category] = _requests[category].Weight * (1f - progress2);
+                if (progress2 >= 1)
                 {
                     _currentWeight[category] = 0;
                     _weightState[category] = AnimatorWeightState.Finished;
@@ -136,7 +146,7 @@ public readonly struct AnimationRequest
     }
 }
 
-internal struct Animator
+internal class Animator
 {
     public Animator(Animation animation)
     {
@@ -160,10 +170,10 @@ internal struct Animator
         _lastFrame = _currentAnimation.Interpolate(_previousAnimationFrame, adjustedDuration);
         return _lastFrame;
     }
-    public readonly bool Finished() => _currentAnimation.TotalDuration >= _currentDuration / _animationSpeed;
+    public bool Finished() => _currentAnimation.TotalDuration <= _currentDuration / _animationSpeed;
 
-    private PlayerItemFrame _previousAnimationFrame = new();
-    private PlayerItemFrame _lastFrame = new();
+    private PlayerItemFrame _previousAnimationFrame = PlayerItemFrame.Zero;
+    private PlayerItemFrame _lastFrame = PlayerItemFrame.Zero;
     private TimeSpan _currentDuration = TimeSpan.Zero;
     private float _animationSpeed = 1;
     private Animation _currentAnimation;

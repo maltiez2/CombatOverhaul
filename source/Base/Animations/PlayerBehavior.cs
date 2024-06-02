@@ -61,7 +61,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
 
     private readonly Composer _composer = new();
     private readonly EntityPlayer _player;
-    private PlayerItemFrame _lastFrame = PlayerItemFrame.Empty;
+    private PlayerItemFrame _lastFrame = PlayerItemFrame.Zero;
     private readonly List<string> _offhandCategories = new();
     private readonly List<string> _mainHandCategories = new();
     private int _offHandItemId = 0;
@@ -69,13 +69,14 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
 
     private void OnBeforeFrame(Entity entity, float dt)
     {
-        if (entity.EntityId != _player.EntityId || !IsOwner(entity)) return;
-
-        _lastFrame = _composer.Compose(TimeSpan.FromSeconds(dt));
+        if (!IsOwner(entity)) return;
+        
+        _lastFrame = _composer.Compose(TimeSpan.FromSeconds(dt / 2));
     }
     private void OnFrame(Entity entity, ElementPose pose)
     {
-        if (entity.EntityId != _player.EntityId) return;
+        if (!IsFirstPerson(entity)) return;
+
         if (FrameOverride != null)
         {
             FrameOverride.Value.Apply(pose);
@@ -86,4 +87,13 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
         }
     }
     private static bool IsOwner(Entity entity) => (entity.Api as ICoreClientAPI)?.World.Player.Entity.EntityId == entity.EntityId;
+    private static bool IsFirstPerson(Entity entity)
+    {
+        bool owner = (entity.Api as ICoreClientAPI)?.World.Player.Entity.EntityId == entity.EntityId;
+        if (!owner) return false;
+
+        bool firstPerson = entity.Api is ICoreClientAPI { World.Player.CameraMode: EnumCameraMode.FirstPerson };
+
+        return firstPerson;
+    }
 }

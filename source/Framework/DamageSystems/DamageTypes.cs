@@ -3,22 +3,6 @@ using Vintagestory.API.Common;
 
 namespace CombatOverhaul.DamageSystems;
 
-public enum DamageTypes
-{
-    /// <summary>
-    /// If bypassed protection deals full damage
-    /// </summary>
-    Sharp,
-    /// <summary>
-    /// Deals fraction of full damage proportional to percentage of strength left after bypassing protection
-    /// </summary>
-    Blunt,
-    /// <summary>
-    /// Deals full damage if bypassed protection plus extra damage proportional to strength left after bypassing protection
-    /// </summary>
-    Heat
-}
-
 public interface ITypedDamage
 {
     DamageData DamageTypeData { get; set; }
@@ -75,8 +59,8 @@ public sealed class DamageResistData
         {
             EnumDamageType.Gravity => Percentage(protectionLevel, damageData.Strength),
             EnumDamageType.Fire => Percentage(protectionLevel, damageData.Strength),
-            EnumDamageType.BluntAttack => PenetrationPercentage(protectionLevel, damageData.Strength),
-            EnumDamageType.SlashingAttack => PenetrationPercentage(protectionLevel, damageData.Strength),
+            EnumDamageType.BluntAttack => PenetrationCheck(protectionLevel, damageData.Strength),
+            EnumDamageType.SlashingAttack => PenetrationCheck(protectionLevel, damageData.Strength),
             EnumDamageType.PiercingAttack => PenetrationCheck(protectionLevel, damageData.Strength),
             EnumDamageType.Suffocation => Percentage(protectionLevel, damageData.Strength),
             EnumDamageType.Heal => 1 + damageData.Strength + protectionLevel,
@@ -93,5 +77,11 @@ public sealed class DamageResistData
 
     private static float Percentage(float protection, float strength) => Math.Clamp(1 + strength - protection, 0, 1);
     private static float PenetrationCheck(float protection, float strength) => protection >= strength ? 0 : 1;
-    private static float PenetrationPercentage(float protection, float strength) => Math.Clamp((strength - protection / strength), 0, 1);
+    private static float PenetrationPercentage(float protection, float strength)
+    {
+        if (protection == 0) return 1;
+        if (protection >= strength) return 0;
+
+        return Math.Clamp((strength - 2 * protection) / protection, 0, 1);
+    }
 }

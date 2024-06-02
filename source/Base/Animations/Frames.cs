@@ -17,7 +17,8 @@ public readonly struct PlayerItemFrame
         Item = item;
     }
 
-    public static readonly PlayerItemFrame Empty = new(PlayerFrame.Empty, null);
+    public static readonly PlayerItemFrame Zero = new(PlayerFrame.Zero, null);
+    public static readonly PlayerItemFrame Empty = new(new PlayerFrame(), null);
 
     public void Apply(ElementPose pose)
     {
@@ -92,12 +93,15 @@ public readonly struct ItemKeyFrame
         List<ItemKeyFrame> result = new();
         if (missingFirstFrame)
         {
-            result.Add(new(new(frames.ToDictionary(entry => entry.Key, entry => entry.Value[0])), 0));
+            result.Add(new ItemKeyFrame(new ItemFrame(frames.ToDictionary(entry => entry.Key, entry => entry.Value[0])), 0));
         }
 
         for (int index = missingFirstFrame ? 1 : 0; index < keyFramesCount; index++)
         {
-            result.Add(new(new(frames.ToDictionary(entry => entry.Key, entry => entry.Value[index])), vanillaKeyFrames[index].Frame / vanillaKeyFrames[^1].Frame == 0 ? 1 : vanillaKeyFrames[^1].Frame));
+            int frameIndex = missingFirstFrame ? index - 1 : index;
+            float durationFraction = (float)vanillaKeyFrames[frameIndex].Frame / (vanillaKeyFrames[^1].Frame == 0 ? 1 : vanillaKeyFrames[^1].Frame);
+            
+            result.Add(new ItemKeyFrame(new ItemFrame(frames.ToDictionary(entry => entry.Key, entry => entry.Value[index])), durationFraction));
         }
 
         return result;
@@ -188,18 +192,16 @@ public readonly struct ItemKeyFrame
 
 public readonly struct ItemFrame
 {
-    public readonly int ElementsHash;
+    public readonly int ElementsHash = 0;
     public readonly ImmutableDictionary<string, AnimationElement> Elements;
 
     public ItemFrame(Dictionary<string, AnimationElement> elements)
     {
         Elements = elements.ToImmutableDictionary();
-        ElementsHash = Elements.Select(entry => entry.Key.GetHashCode()).Aggregate((first, second) => HashCode.Combine(first, second));
-    }
-    public ItemFrame(ImmutableDictionary<string, AnimationElement> elements)
-    {
-        Elements = elements;
-        ElementsHash = Elements.Select(entry => entry.Key.GetHashCode()).Aggregate((first, second) => HashCode.Combine(first, second));
+        if (elements.Any())
+        {
+            ElementsHash = Elements.Select(entry => entry.Key.GetHashCode()).Aggregate((first, second) => HashCode.Combine(first, second));
+        }
     }
 
     public static readonly ItemFrame Empty = new(new Dictionary<string, AnimationElement>());
@@ -213,6 +215,8 @@ public readonly struct ItemFrame
     }
     public static ItemFrame Interpolate(ItemFrame from, ItemFrame to, float progress)
     {
+        if (!from.Elements.Any()) return to;
+        
         if (from.ElementsHash != to.ElementsHash)
         {
             throw new InvalidOperationException("Trying to interpolate item frames with different sets of elements");
@@ -315,7 +319,6 @@ public readonly struct PlayerFrame
     }
 
     public static readonly PlayerFrame Zero = new(RightHandFrame.Zero, LeftHandFrame.Zero);
-    public static readonly PlayerFrame Empty = new(null, null);
 
     public void Apply(ElementPose pose)
     {
@@ -539,9 +542,9 @@ public readonly struct AnimationElement
 
     public void Apply(ElementPose pose)
     {
-        pose.translateX = OffsetX;
-        pose.translateY = OffsetY;
-        pose.translateZ = OffsetZ;
+        pose.translateX = OffsetX / 16;
+        pose.translateY = OffsetY / 16;
+        pose.translateZ = OffsetZ / 16;
         pose.degX = RotationX;
         pose.degY = RotationY;
         pose.degZ = RotationZ;
@@ -609,12 +612,15 @@ public readonly struct AnimationElement
             rotationZ += element.RotationZ * weight;
         }
 
-        offsetX /= totalWeight;
-        offsetY /= totalWeight;
-        offsetZ /= totalWeight;
-        rotationX /= totalWeight;
-        rotationY /= totalWeight;
-        rotationZ /= totalWeight;
+        if (totalWeight != 0)
+        {
+            offsetX /= totalWeight;
+            offsetY /= totalWeight;
+            offsetZ /= totalWeight;
+            rotationX /= totalWeight;
+            rotationY /= totalWeight;
+            rotationZ /= totalWeight;
+        }
 
         foreach ((AnimationElement element, _) in elements.Where(entry => entry.weight <= 0))
         {

@@ -10,6 +10,13 @@ using Vintagestory.GameContent;
 
 namespace CombatOverhaul.Integration;
 
+
+internal class AnimatorTranspilerPatch
+{
+
+}
+
+
 internal static class AnimatorPatch
 {
 
@@ -22,6 +29,11 @@ internal static class AnimatorPatch
         new Harmony(harmonyId).Patch(
                 typeof(EntityShapeRenderer).GetMethod("RenderHeldItem", AccessTools.all),
                 prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimatorPatch), nameof(RenderHeldItem)))
+            );
+
+        new Harmony(harmonyId).Patch(
+                typeof(EntityPlayer).GetMethod("OnSelfBeforeRender", AccessTools.all),
+                prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimatorPatch), nameof(BeforeRender)))
             );
 
         new Harmony(harmonyId).Patch(
@@ -40,11 +52,14 @@ internal static class AnimatorPatch
 
     private static readonly FieldInfo? _entity = typeof(Vintagestory.API.Common.AnimationManager).GetField("entity", BindingFlags.NonPublic | BindingFlags.Instance);
 
+    private static void BeforeRender(EntityPlayer __instance, float dt)
+    {
+        OnBeforeFrame?.Invoke(__instance, dt);
+    }
+
     private static void ReplaceAnimator(Vintagestory.API.Common.AnimationManager __instance, float dt)
     {
         EntityAgent? entity = (Entity?)_entity?.GetValue(__instance) as EntityAgent;
-
-        if (entity != null) OnBeforeFrame?.Invoke(entity, dt);
 
         ClientAnimator? animator = __instance.Animator as ClientAnimator;
         if (__instance.Animator is not ProceduralClientAnimator && animator != null)
@@ -73,7 +88,7 @@ internal static class AnimatorPatch
 
         if (slot?.Itemstack?.Item == null) return true;
 
-        Animatable? behavior = slot.Itemstack.Item.GetBehavior<AnimatableAttachable>() ?? slot.Itemstack.Item.GetBehavior<Animatable>();
+        Animatable? behavior = slot.Itemstack.Item.GetCollectibleBehavior(typeof(Animatable), true) as Animatable;
 
         if (behavior == null) return true;
 
@@ -243,8 +258,8 @@ internal class ProceduralClientAnimator : ClientAnimator
         }
     }
 
-    private readonly Entity? _entity;
-    private readonly Shape? _shape;
+    internal Entity? _entity;
+    internal Shape? _shape;
 
     private readonly List<ElementPose>[][] frameByDepthByAnimation;
     private readonly List<ElementPose>[][] nextFrameTransformsByAnimation;

@@ -230,26 +230,4 @@ public sealed class MeleeAttack
         _entitiesCollisionsBuffer.Clear();
         return result;
     }
-
-    /*private static Vector3? CollideWithMeleeBlock(MeleeBlockBehavior blockBehavior, MeleeAttackDamageType damageType)
-    {
-        IEnumerable<IParryCollider> colliders = blockBehavior.GetColliders();
-
-        float closestParameter = float.MaxValue;
-        Vector3 closestIntersection = Vector3.Zero;
-        bool intersected = false;
-        foreach (IParryCollider parryCollider in colliders)
-        {
-            if (parryCollider.IntersectSegment(damageType.InWorldCollider, out float parameter, out Vector3 intersection) && parameter < closestParameter)
-            {
-                closestParameter = parameter;
-                closestIntersection = intersection;
-                intersected = true;
-
-                Console.WriteLine($"closestParameter: {closestParameter}");
-            }
-        }
-
-        return intersected ? closestIntersection : null;
-    }*/
 }

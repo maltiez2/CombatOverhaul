@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using CombatOverhaul.Integration;
+using System.Diagnostics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -110,13 +111,11 @@ public class Animatable : CollectibleBehavior
         if (
             animator != null &&
             !clientApi.IsGamePaused &&
-            target == EnumItemRenderTarget.HandFp &&
-            (
-                ActiveAnimationsByCode.Count > 0 ||
-                animator.ActiveAnimationCount > 0
-            )
+            target == EnumItemRenderTarget.HandFp
         )
         {
+            if (animator is ProceduralClientAnimator procedural)
+                procedural._entity = entity;
             animator.OnFrame(ActiveAnimationsByCode, dt);
         }
     }

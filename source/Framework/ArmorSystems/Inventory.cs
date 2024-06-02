@@ -217,8 +217,6 @@ public sealed class ArmorInventory : InventoryCharacter
         ArmorLayers layer = ArmorLayerFromIndex((index - defaultSlotsCount) / zonesCount);
         DamageZone zone = DamageZoneFromIndex(index - defaultSlotsCount - IndexFromArmorLayer(layer) * zonesCount);
 
-        Console.WriteLine($"index:{index}; layer: {layer}; zone: {zone}");
-
         return new(layer, zone);
     }
     private static ArmorLayers ArmorLayerFromIndex(int index)

@@ -38,8 +38,7 @@ public sealed class EntityDamageModelBehavior : EntityBehavior
 
     public override void Initialize(EntityProperties properties, JsonObject attributes)
     {
-        _colliders = entity.GetBehavior<CollidersEntityBehavior>();
-
+        
         if (attributes.KeyExists("damageModel"))
         {
             EntityDamageModelJson stats = attributes["damageModel"].AsObject<EntityDamageModelJson>();
@@ -59,7 +58,11 @@ public sealed class EntityDamageModelBehavior : EntityBehavior
                 { ColliderTypes.Critical, stats.CriticalDamageMultiplier }
             }.ToImmutableDictionary();
         }
+    }
 
+    public override void AfterInitialized(bool onFirstSpawn)
+    {
+        _colliders = entity.GetBehavior<CollidersEntityBehavior>();
         entity.GetBehavior<EntityBehaviorHealth>().onDamaged += OnReceiveDamage;
     }
 

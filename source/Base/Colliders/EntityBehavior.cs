@@ -40,7 +40,12 @@ public enum ColliderTypes
     /// Very high damage received<br/>
     /// No special effects
     /// </summary>
-    Critical
+    Critical,
+    /// <summary>
+    /// No damage received<br/>
+    /// No special effects
+    /// </summary>
+    Resistant
 }
 
 internal sealed class ColliderTypesJson
@@ -50,6 +55,7 @@ internal sealed class ColliderTypesJson
     public string[] Arm { get; set; } = Array.Empty<string>();
     public string[] Leg { get; set; } = Array.Empty<string>();
     public string[] Critical { get; set; } = Array.Empty<string>();
+    public string[] Resistant { get; set; } = Array.Empty<string>();
 }
 
 public sealed class CollidersEntityBehavior : EntityBehavior

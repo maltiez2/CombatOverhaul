@@ -54,15 +54,17 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
 
     public override void Initialize(EntityProperties properties, JsonObject attributes)
     {
-        _colliders = entity.GetBehavior<CollidersEntityBehavior>();
-
         if (attributes.KeyExists("damageModel"))
         {
             PlayerDamageModelJson stats = attributes["damageModel"].AsObject<PlayerDamageModelJson>();
 
             DamageModel = new(stats.Zones);
         }
+    }
 
+    public override void AfterInitialized(bool onFirstSpawn)
+    {
+        _colliders = entity.GetBehavior<CollidersEntityBehavior>();
         entity.GetBehavior<EntityBehaviorHealth>().onDamaged += OnReceiveDamage;
     }
 

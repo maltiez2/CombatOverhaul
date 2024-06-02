@@ -6,7 +6,6 @@ using System.Text;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
-using Vintagestory.API.MathTools;
 using VSImGui;
 using VSImGui.API;
 
@@ -56,6 +55,9 @@ public sealed class AnimationsManager
         {
             string[] codes = Animations.Keys.ToArray();
 
+            CreateFromItemAnimation();
+            ImGui.Separator();
+
             if (ImGui.Button("Play") && Animations.Count > 0)
             {
                 AnimationRequest request = new(
@@ -63,8 +65,8 @@ public sealed class AnimationsManager
                     1,
                     1,
                     "test",
-                    TimeSpan.FromSeconds(0.2),
-                    TimeSpan.FromSeconds(0.5),
+                    TimeSpan.FromSeconds(0.6),
+                    TimeSpan.FromSeconds(0.6),
                     true
                     );
 
@@ -77,8 +79,6 @@ public sealed class AnimationsManager
                 ImGui.SetClipboardText(Animations[codes[_selectedAnimationIndex]].ToString());
             }
             ImGui.SameLine();
-
-            CreateFromItemAnimation();
 
             VSImGui.ListEditor.Edit(
                 "Animations",
@@ -144,7 +144,7 @@ public sealed class AnimationsManager
 
         return result;
     }
-    
+
     private void CreateFromItemAnimation()
     {
         Item? item = _api.World.Player.Entity.RightHandItemSlot.Itemstack?.Item;
@@ -154,7 +154,7 @@ public sealed class AnimationsManager
             return;
         }
 
-        Animatable? behavior = item.GetBehavior<Animatable>();
+        Animatable? behavior = item.GetCollectibleBehavior(typeof(Animatable), true) as Animatable;
         if (behavior == null)
         {
             ImGui.Text("Take item with animatable behavior in right hand");
@@ -171,7 +171,7 @@ public sealed class AnimationsManager
         ImGui.InputText($"Item animation code", ref _itemAnimation, 300);
         ImGui.InputText($"New animation code", ref _animationKey, 300);
 
-        bool canCreate = !Animations.ContainsKey(_animationKey) && shape.AnimationsByCrc32.ContainsKey(GameMath.Crc32(_animationKey.ToLowerInvariant()));
+        bool canCreate = !Animations.ContainsKey(_animationKey);// && shape.AnimationsByCrc32.ContainsKey(GameMath.Crc32(_animationKey.ToLowerInvariant()));
 
         if (!canCreate) ImGui.BeginDisabled();
         if (ImGui.Button("Create##itemanimation"))

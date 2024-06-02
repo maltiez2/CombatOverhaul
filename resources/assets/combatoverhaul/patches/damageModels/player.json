@@ -1,3 +1,87 @@
 [ 
-	
+	{ 
+		"side": "Server", 
+		"file": "game:entities/humanoid/player", 
+		"op": "add", 
+		"path": "/server/behaviors/0", 
+		"value": { 
+			"code": "CombatOverhaul:PlayerDamageModel",
+			"damageModel": {
+				"Zones": [
+					{
+						"Zone": "Torso",
+						"Coverage": 60,
+						"Top": 90,
+						"Bottom": 60,
+						"Left": 180,
+						"Right": 180,
+						"DamageMultiplier": 1
+					},
+					{
+						"Zone": "Head",
+						"Coverage": 30,
+						"Top": 90,
+						"Bottom": 60,
+						"Left": 180,
+						"Right": 180,
+						"DamageMultiplier": 1.5
+					},
+					{
+						"Zone": "Neck",
+						"Coverage": 5,
+						"Top": 30,
+						"Bottom": 15,
+						"Left": 180,
+						"Right": 180,
+						"DamageMultiplier": 3.0
+					},
+					{
+						"Zone": "Face",
+						"Coverage": 10,
+						"Top": 60,
+						"Bottom": 60,
+						"Left": 60,
+						"Right": 60,
+						"DamageMultiplier": 1.5
+					},
+					{
+						"Zone": "Arms",
+						"Coverage": 10,
+						"Top": 90,
+						"Bottom": 90,
+						"Left": 180,
+						"Right": 180,
+						"DamageMultiplier": 0.5
+					},
+					{
+						"Zone": "Hands",
+						"Coverage": 10,
+						"Top": 90,
+						"Bottom": 90,
+						"Left": 180,
+						"Right": 180,
+						"DamageMultiplier": 0.5
+					},
+					{
+						"Zone": "Legs",
+						"Coverage": 10,
+						"Top": 90,
+						"Bottom": 90,
+						"Left": 180,
+						"Right": 180,
+						"DamageMultiplier": 0.5
+					},
+					{
+						"Zone": "Feet",
+						"Coverage": 10,
+						"Top": 90,
+						"Bottom": 90,
+						"Left": 180,
+						"Right": 180,
+						"DamageMultiplier": 0.5
+					}
+				]
+			}
+		}
+	}
 ]

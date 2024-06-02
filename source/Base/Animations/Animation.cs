@@ -1,4 +1,5 @@
-﻿using ImGuiNET;
+﻿using CombatOverhaul.ItemsAnimations;
+using ImGuiNET;
 using Vintagestory.API.Common;
 
 namespace CombatOverhaul.PlayerAnimations;
@@ -53,42 +54,58 @@ public sealed class Animation
     {
         ImGui.Text($"Total duration: {(int)TotalDuration.TotalMilliseconds} ms");
 
-        if (_frameIndex >= PlayerKeyFrames.Count) _frameIndex = PlayerKeyFrames.Count - 1;
-        if (_frameIndex < 0) _frameIndex = 0;
-
-        if (PlayerKeyFrames.Count > 0)
+        ImGui.BeginTabBar($"##{title}tab");
+        if (ImGui.BeginTabItem($"Player animation##{title}"))
         {
-            if (ImGui.Button($"Remove##{title}"))
+            if (_frameIndex >= PlayerKeyFrames.Count) _frameIndex = PlayerKeyFrames.Count - 1;
+            if (_frameIndex < 0) _frameIndex = 0;
+
+            if (PlayerKeyFrames.Count > 0)
             {
-                PlayerKeyFrames.RemoveAt(_frameIndex);
+                if (ImGui.Button($"Remove##{title}"))
+                {
+                    PlayerKeyFrames.RemoveAt(_frameIndex);
+                }
+                ImGui.SameLine();
             }
-            ImGui.SameLine();
-        }
 
-        if (ImGui.Button($"Insert##{title}"))
+            if (ImGui.Button($"Insert##{title}"))
+            {
+                PlayerKeyFrames.Insert(_frameIndex, new(PlayerFrame.Zero, TimeSpan.Zero, EasingFunctionType.Linear));
+            }
+
+            if (PlayerKeyFrames.Count > 0) ImGui.SliderInt($"Key frame", ref _frameIndex, 0, PlayerKeyFrames.Count - 1);
+
+            if (PlayerKeyFrames.Count > 0)
+            {
+                PLayerKeyFrame frame = PlayerKeyFrames[_frameIndex].Edit(title);
+                PlayerKeyFrames[_frameIndex] = frame;
+            }
+            
+            ImGui.EndTabItem();
+        }
+        if (ItemKeyFrames.Any() && ImGui.BeginTabItem($"Item animation##{title}"))
         {
-            PlayerKeyFrames.Insert(_frameIndex, new(PlayerFrame.Zero, TimeSpan.Zero, EasingFunctionType.Linear));
+            
+            
+            ImGui.EndTabItem();
         }
+        ImGui.EndTabBar();
 
-        if (PlayerKeyFrames.Count > 0) ImGui.SliderInt($"Key frame", ref _frameIndex, 0, PlayerKeyFrames.Count - 1);
-
-        if (PlayerKeyFrames.Count > 0)
-        {
-            PLayerKeyFrame frame = PlayerKeyFrames[_frameIndex].Edit(title);
-            PlayerKeyFrames[_frameIndex] = frame;
-        }
+        CalculateDurations();
     }
     public override string ToString() => AnimationJson.FromAnimation(this).ToString();
     public PlayerItemFrame StillFrame(int playerFrame)
     {
-        return Interpolate(PlayerItemFrame.Empty, Durations[playerFrame]);
+        return Interpolate(PlayerItemFrame.Zero, Durations[playerFrame]);
     }
     public PlayerItemFrame StillFrame(float progress)
     {
-        return Interpolate(PlayerItemFrame.Empty, progress * TotalDuration);
+        return Interpolate(PlayerItemFrame.Zero, progress * TotalDuration);
     }
 
     internal int _frameIndex = 0;
+    private string _animationCode = "";
 
     private void CalculateDurations()
     {
@@ -106,10 +123,11 @@ public sealed class Animation
 
         int nextItemKeyFrame;
         float progress = (float)(currentDuration / TotalDuration);
-        for (nextItemKeyFrame = 0; nextItemKeyFrame < ItemKeyFrames.Count - 1; nextItemKeyFrame++)
+        for (nextItemKeyFrame = 0; nextItemKeyFrame < ItemKeyFrames.Count; nextItemKeyFrame++)
         {
-            if (ItemKeyFrames[nextItemKeyFrame + 1].DurationFraction > progress) break;
+            if (ItemKeyFrames[nextItemKeyFrame].DurationFraction > progress) break;
         }
+
         float itemFrameProgress;
         if (nextItemKeyFrame == 0)
         {
@@ -117,13 +135,16 @@ public sealed class Animation
         }
         else
         {
-            float progressRange = ItemKeyFrames[nextItemKeyFrame].DurationFraction - ItemKeyFrames[nextItemKeyFrame - 1].DurationFraction;
-            itemFrameProgress = (progress - ItemKeyFrames[nextItemKeyFrame - 1].DurationFraction) / progressRange;
+            float previousFrameProgress = ItemKeyFrames[nextItemKeyFrame - 1].DurationFraction;
+            float nextFrameProgress = ItemKeyFrames[nextItemKeyFrame].DurationFraction;
+            float progressRange = nextFrameProgress - previousFrameProgress;
+            itemFrameProgress = (progress - previousFrameProgress) / progressRange;
         }
 
         if (nextItemKeyFrame == 0)
         {
-            return ItemKeyFrames[0].Interpolate(previousAnimationFrame.Item.Value, itemFrameProgress);
+            ItemFrame previousFrame = previousAnimationFrame.Item ?? ItemFrame.Empty;
+            return ItemKeyFrames[0].Interpolate(previousFrame, itemFrameProgress);
         }
         else
         {
@@ -133,9 +154,9 @@ public sealed class Animation
     private PlayerFrame InterpolatePlayerFrame(PlayerItemFrame previousAnimationFrame, TimeSpan currentDuration)
     {
         int nextPlayerKeyFrame;
-        for (nextPlayerKeyFrame = 0; nextPlayerKeyFrame < PlayerKeyFrames.Count - 1; nextPlayerKeyFrame++)
+        for (nextPlayerKeyFrame = 0; nextPlayerKeyFrame < PlayerKeyFrames.Count; nextPlayerKeyFrame++)
         {
-            if (Durations[nextPlayerKeyFrame + 1] > currentDuration) break;
+            if (Durations[nextPlayerKeyFrame] > currentDuration) break;
         }
 
         if (nextPlayerKeyFrame == 0)

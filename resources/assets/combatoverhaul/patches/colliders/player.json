@@ -1,0 +1,62 @@
+[
+  { 
+		"side": "Server", 
+		"file": "game:entities/humanoid/player", 
+		"op": "add", 
+		"path": "/client/behaviors/0", 
+		"value": { 
+			"code": "CombatOverhaul:EntityColliders",
+			"colliderShapeElements": [
+				"LowerTorso",
+				"UpperTorso",
+				"Head",
+				"Neck",
+				"UpperArmR",
+				"UpperArmL",
+				"LowerArmR",
+				"LowerArmL",
+				"UpperFootL",
+				"UpperFootR",
+				"LowerFootL",
+				"LowerFootR"
+			],
+			"elementsTypes": {
+				"Torso": ["LowerTorso", "UpperTorso"],
+				"Head": ["Head"],
+				"Arm": ["UpperArmR", "UpperArmL", "LowerArmR", "LowerArmL"],
+				"Leg": ["UpperFootL", "UpperFootR", "LowerFootL", "LowerFootR"],
+				"Critical": ["Neck"]
+			}
+		}
+	},
+	{ 
+		"side": "Server", 
+		"file": "game:entities/humanoid/player", 
+		"op": "add", 
+		"path": "/server/behaviors/0", 
+		"value": { 
+			"code": "CombatOverhaul:EntityColliders",
+			"colliderShapeElements": [
+				"LowerTorso",
+				"UpperTorso",
+				"Head",
+				"Neck",
+				"UpperArmR",
+				"UpperArmL",
+				"LowerArmR",
+				"LowerArmL",
+				"UpperFootL",
+				"UpperFootR",
+				"LowerFootL",
+				"LowerFootR"
+			],
+			"elementsTypes": {
+				"Torso": ["LowerTorso", "UpperTorso"],
+				"Head": ["Head"],
+				"Arm": ["UpperArmR", "UpperArmL", "LowerArmR", "LowerArmL"],
+				"Leg": ["UpperFootL", "UpperFootR", "LowerFootL", "LowerFootR"],
+				"Critical": ["Neck"]
+			}
+		}
+	}
+]

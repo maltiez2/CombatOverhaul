@@ -1,6 +1,8 @@
 ﻿using CombatOverhaul.Armor;
 using CombatOverhaul.Colliders;
+using CombatOverhaul.DamageSystems;
 using CombatOverhaul.Integration;
+using CombatOverhaul.ItemsAnimations;
 using CombatOverhaul.PlayerAnimations;
 using HarmonyLib;
 using Vintagestory.API.Client;
@@ -25,6 +27,11 @@ public sealed class CombatOverhaulSystem : ModSystem
     {
         api.RegisterEntityBehaviorClass("CombatOverhaul:FirstPersonAnimations", typeof(FirstPersonAnimationsBehavior));
         api.RegisterEntityBehaviorClass("CombatOverhaul:EntityColliders", typeof(CollidersEntityBehavior));
+        api.RegisterEntityBehaviorClass("CombatOverhaul:EntityDamageModel", typeof(EntityDamageModelBehavior));
+        api.RegisterEntityBehaviorClass("CombatOverhaul:PlayerDamageModel", typeof(PlayerDamageModelBehavior));
+
+        api.RegisterCollectibleBehaviorClass("CombatOverhaul:Animatable", typeof(Animatable));
+        api.RegisterCollectibleBehaviorClass("CombatOverhaul:AnimatableAttachable", typeof(AnimatableAttachable));
 
         new Harmony("CombatOverhaulAuto").PatchAll();
     }
