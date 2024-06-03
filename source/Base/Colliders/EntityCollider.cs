@@ -414,8 +414,6 @@ public sealed class ShapeElementCollider
         return closestPoint;
     }
 
-
-
 #if DEBUG
     public void Render(ICoreClientAPI api, EntityAgent entityPlayer, int color = ColorUtil.WhiteArgb)
     {

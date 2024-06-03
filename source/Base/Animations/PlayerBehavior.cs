@@ -1,4 +1,5 @@
 ﻿using CombatOverhaul.Integration;
+using CombatOverhaul.ItemsAnimations;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -77,13 +78,25 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     {
         if (!IsFirstPerson(entity)) return;
 
+        Animatable? animatable = (entity as EntityAgent)?.RightHandItemSlot?.Itemstack?.Item?.GetCollectibleBehavior(typeof(Animatable), true) as Animatable;
+
         if (FrameOverride != null)
         {
             FrameOverride.Value.Apply(pose);
+
+            if (animatable != null && FrameOverride.Value.DetachedAnchor)
+            {
+                animatable.DetachedAnchor = true;
+            }
         }
         else
         {
             _lastFrame.Apply(pose);
+
+            if (animatable != null && _lastFrame.DetachedAnchor)
+            {
+                animatable.DetachedAnchor = true;
+            }
         }
     }
     private static bool IsOwner(Entity entity) => (entity.Api as ICoreClientAPI)?.World.Player.Entity.EntityId == entity.EntityId;

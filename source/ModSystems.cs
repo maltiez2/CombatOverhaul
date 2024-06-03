@@ -4,7 +4,7 @@ using CombatOverhaul.DamageSystems;
 using CombatOverhaul.Integration;
 using CombatOverhaul.ItemsAnimations;
 using CombatOverhaul.PlayerAnimations;
-using CombatOverhaul.RangeSystems;
+using CombatOverhaul.RangedSystems;
 using HarmonyLib;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;

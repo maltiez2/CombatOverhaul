@@ -10,11 +10,13 @@ public readonly struct PlayerItemFrame
 {
     public readonly PlayerFrame Player;
     public readonly ItemFrame? Item;
+    public readonly bool DetachedAnchor;
 
     public PlayerItemFrame(PlayerFrame player, ItemFrame? item)
     {
         Player = player;
         Item = item;
+        DetachedAnchor = player.DetachedAnchor;
     }
 
     public static readonly PlayerItemFrame Zero = new(PlayerFrame.Zero, null);
@@ -311,23 +313,28 @@ public readonly struct PlayerFrame
 {
     public readonly RightHandFrame? RightHand;
     public readonly LeftHandFrame? LeftHand;
+    public readonly bool DetachedAnchor;
 
-    public PlayerFrame(RightHandFrame? rightHand = null, LeftHandFrame? leftHand = null)
+    public PlayerFrame(RightHandFrame? rightHand = null, LeftHandFrame? leftHand = null, bool detachedAnchor = false)
     {
         RightHand = rightHand;
         LeftHand = leftHand;
+        DetachedAnchor = detachedAnchor;
     }
 
     public static readonly PlayerFrame Zero = new(RightHandFrame.Zero, LeftHandFrame.Zero);
 
     public void Apply(ElementPose pose)
     {
-        RightHand?.Apply(pose);
+        RightHand?.Apply(pose, DetachedAnchor);
         LeftHand?.Apply(pose);
     }
 
     public PlayerFrame Edit(string title)
     {
+        bool detachedAnchor = DetachedAnchor;
+        ImGui.Checkbox($"Detached anchor##{title}", ref detachedAnchor);
+
         bool rightHand = RightHand != null;
         bool leftHand = LeftHand != null;
 
@@ -342,7 +349,7 @@ public readonly struct PlayerFrame
         if (LeftHand == null && leftHand) left = LeftHandFrame.Zero;
         if (LeftHand != null && !leftHand) left = null;
 
-        return new(right, left);
+        return new(right, left, detachedAnchor);
     }
 
     public static PlayerFrame Interpolate(PlayerFrame from, PlayerFrame to, float progress)
@@ -375,14 +382,15 @@ public readonly struct PlayerFrame
             leftHand = LeftHandFrame.Interpolate(from.LeftHand.Value, to.LeftHand.Value, progress);
         }
 
-        return new(righthand, leftHand);
+        return new(righthand, leftHand, from.DetachedAnchor || to.DetachedAnchor);
     }
     public static PlayerFrame Compose(IEnumerable<(PlayerFrame element, float weight)> frames)
     {
 #pragma warning disable CS8629 // Nullable value type may be null.
         return new(
             RightHandFrame.Compose(frames.Where(entry => entry.element.RightHand != null).Select(entry => (entry.element.RightHand.Value, entry.weight))),
-            LeftHandFrame.Compose(frames.Where(entry => entry.element.LeftHand != null).Select(entry => (entry.element.LeftHand.Value, entry.weight)))
+            LeftHandFrame.Compose(frames.Where(entry => entry.element.LeftHand != null).Select(entry => (entry.element.LeftHand.Value, entry.weight))),
+            frames.Select(entry => entry.element.DetachedAnchor).Aggregate((first, second) => first | second)
             );
 #pragma warning restore CS8629 // Nullable value type may be null.
     }
@@ -401,12 +409,15 @@ public readonly struct RightHandFrame
         UpperArmR = upper;
     }
 
-    public void Apply(ElementPose pose)
+    public void Apply(ElementPose pose, bool detachedAnchor)
     {
         switch (pose.ForElement.Name)
         {
             case "ItemAnchor":
-                ItemAnchor.Apply(pose);
+                if (!detachedAnchor) ItemAnchor.Apply(pose);
+                break;
+            case "DetachedAnchor":
+                if (detachedAnchor) ItemAnchor.Apply(pose);
                 break;
             case "LowerArmR":
                 LowerArmR.Apply(pose);
@@ -554,16 +565,16 @@ public readonly struct AnimationElement
 
     public AnimationElement Edit(string title)
     {
-        Vector3 translation = new(OffsetX, OffsetY, OffsetZ);
+        Vector3 translation = new Vector3(OffsetX, OffsetY, OffsetZ) * 100f;
         ImGui.DragFloat3($"Translation##{title}", ref translation);
 
         Vector3 rotation = new(RotationX, RotationY, RotationZ);
         ImGui.DragFloat3($"Rotation##{title}", ref rotation);
 
         return new(
-            translation.X,
-            translation.Y,
-            translation.Z,
+            translation.X / 100f,
+            translation.Y / 100f,
+            translation.Z / 100f,
             rotation.X,
             rotation.Y,
             rotation.Z

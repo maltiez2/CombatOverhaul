@@ -1,6 +1,5 @@
 ﻿using CombatOverhaul.Colliders;
 using CombatOverhaul.DamageSystems;
-using CombatOverhaul.MeleeSystems;
 using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -17,7 +16,7 @@ public struct ProjectileStats
     public AssetLocation ImpactSound { get; set; } = new("game:sounds/arrow-impact");
     public AssetLocation HitSound { get; set; } = new("game:sounds/player/projectilehit");
     public float CollisionRadius { get; set; } = 0;
-    public DamageDataJson Damage { get; set; } = new();
+    public DamageDataJson DamageStats { get; set; } = new();
     public float SpeedThreshold { get; set; } = 0;
     public float Knockback { get; set; } = 0;
     public string EntityCode { get; set; } = "";
@@ -47,8 +46,10 @@ public struct ProjectileCollisionPacket
 }
 
 
-internal sealed class ProjectileSystemClient : MeleeSystem
+internal sealed class ProjectileSystemClient
 {
+    public const string NetworkChannelId = "CombatOverhaul:projectiles";
+
     public ProjectileSystemClient(ICoreClientAPI api)
     {
         _clientChannel = api.Network.RegisterChannel(NetworkChannelId)
@@ -72,8 +73,10 @@ internal sealed class ProjectileSystemClient : MeleeSystem
     private readonly IClientNetworkChannel _clientChannel;
 }
 
-internal sealed class ProjectileSystemServer : MeleeSystem
+internal sealed class ProjectileSystemServer
 {
+    public const string NetworkChannelId = "CombatOverhaul:projectiles";
+
     public ProjectileSystemServer(ICoreServerAPI api)
     {
         _api = api;
@@ -209,8 +212,8 @@ internal sealed class ProjectileServer
         if (!CheckPermissions(attacker, target)) return false;
         if (!CheckRelativeSpeed(target)) return false;
 
-        float damage = _stats.Damage.Damage * _spawnStats.DamageMultiplier;
-        DamageData damageData = new(Enum.Parse<EnumDamageType>(_stats.Damage.DamageType), _stats.Damage.Strength * _spawnStats.StrengthMultiplier);
+        float damage = _stats.DamageStats.Damage * _spawnStats.DamageMultiplier;
+        DamageData damageData = new(Enum.Parse<EnumDamageType>(_stats.DamageStats.DamageType), _stats.DamageStats.Strength * _spawnStats.StrengthMultiplier);
 
         bool damageReceived = target.ReceiveDamage(new DirectionalTypedDamageSource()
         {
@@ -281,7 +284,6 @@ internal sealed class ProjectileServer
         return projectile;
     }
 }
-
 
 public sealed class ProjectileEntity : Entity
 {

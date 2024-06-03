@@ -1,5 +1,4 @@
 ﻿using CombatOverhaul.Integration;
-using System.Diagnostics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -14,6 +13,7 @@ public class Animatable : CollectibleBehavior
     public AnimatableShape? CurrentAnimatableShape => (CurrentFirstPerson ? ShapeFirstPerson : Shape) ?? Shape ?? ShapeFirstPerson;
     public Shape? FirstPersonShape => ShapeFirstPerson?.Shape;
     public Shape? ThirdPersonShape => Shape?.Shape;
+    public bool DetachedAnchor { get; set; } = false;
 
     public Animatable(CollectibleObject collObj) : base(collObj)
     {
@@ -128,7 +128,7 @@ public class Animatable : CollectibleBehavior
 
         return firstPerson;
     }
-    protected static ItemRenderInfo? PrepareShape(ICoreClientAPI api, Matrixf itemModelMat, float[] modelMat, ItemSlot itemSlot, Entity entity, bool right, float dt)
+    protected ItemRenderInfo? PrepareShape(ICoreClientAPI api, Matrixf itemModelMat, float[] modelMat, ItemSlot itemSlot, Entity entity, bool right, float dt)
     {
         ItemStack? itemStack = itemSlot?.Itemstack;
         if (itemStack == null)
@@ -136,7 +136,14 @@ public class Animatable : CollectibleBehavior
             return null;
         }
 
-        AttachmentPointAndPose? attachmentPointAndPose = entity.AnimManager?.Animator?.GetAttachmentPointPose(right ? "RightHand" : "LeftHand");
+        string attachmentPoint = right ? "RightHand" : "LeftHand";
+        if (IsFirstPerson(entity) && DetachedAnchor)
+        {
+            attachmentPoint = "DetachedAnchor";
+            DetachedAnchor = false;
+        }
+
+        AttachmentPointAndPose? attachmentPointAndPose = entity.AnimManager?.Animator?.GetAttachmentPointPose(attachmentPoint);
         if (attachmentPointAndPose == null)
         {
             return null;

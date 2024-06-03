@@ -1,4 +1,5 @@
 ﻿using CombatOverhaul.Colliders;
+using CombatOverhaul.DamageSystems;
 using CombatOverhaul.Utils;
 using ImGuiNET;
 using ProtoBuf;
@@ -130,7 +131,7 @@ public class MeleeAttackDamageType : IHasLineCollider
             targetId = playerTarget.GetName();
         }
 
-        bool damageReceived = target.ReceiveDamage(new DirectionalDamageSource()
+        bool damageReceived = target.ReceiveDamage(new DirectionalTypedDamageSource()
         {
             Source = attacker is EntityPlayer ? EnumDamageSource.Player : EnumDamageSource.Entity,
             SourceEntity = null,
