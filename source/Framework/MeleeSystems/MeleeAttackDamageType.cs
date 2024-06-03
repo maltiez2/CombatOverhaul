@@ -46,18 +46,6 @@ public class MeleeAttackDamageTypeStats
     public float[] Collider { get; set; } = new float[6];
 }
 
-public interface ILocationalDamage
-{
-    public Vector3 Position { get; set; }
-    public int Collider { get; set; }
-}
-
-public class MeleeAttackDirectionalDamageSource : DamageSource, ILocationalDamage
-{
-    public Vector3 Position { get; set; }
-    public int Collider { get; set; }
-}
-
 public class MeleeAttackDamageType : IHasLineCollider
 {
     public MeleeAttackDamageId Id { get; }
@@ -142,7 +130,7 @@ public class MeleeAttackDamageType : IHasLineCollider
             targetId = playerTarget.GetName();
         }
 
-        bool damageReceived = target.ReceiveDamage(new MeleeAttackDirectionalDamageSource()
+        bool damageReceived = target.ReceiveDamage(new DirectionalDamageSource()
         {
             Source = attacker is EntityPlayer ? EnumDamageSource.Player : EnumDamageSource.Entity,
             SourceEntity = null,

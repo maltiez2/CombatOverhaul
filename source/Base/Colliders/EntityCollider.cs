@@ -174,6 +174,19 @@ public readonly struct CuboidAABBCollider
 
         return true;
     }
+
+    public bool Collide(Vector3 origin, float radius, out Vector3 intersection)
+    {
+        intersection = new(
+            Math.Clamp(origin.X, Math.Min(VertexA.X, VertexB.X), Math.Max(VertexA.X, VertexB.X)),
+            Math.Clamp(origin.Y, Math.Min(VertexA.Y, VertexB.Y), Math.Max(VertexA.Y, VertexB.Y)),
+            Math.Clamp(origin.Z, Math.Min(VertexA.Z, VertexB.Z), Math.Max(VertexA.Z, VertexB.Z))
+        );
+
+        float distanceSquared = Vector3.DistanceSquared(origin, intersection);
+
+        return distanceSquared <= radius * radius;
+    }
 }
 
 public sealed class ShapeElementCollider
@@ -239,7 +252,20 @@ public sealed class ShapeElementCollider
         parameter = closestParameter;
         return foundIntersection;
     }
+    public bool Collide(Vector3 origin, float radius, out float distance, out Vector3 intersection)
+    {
+        Vector3[] vertices = new Vector3[VertexCount];
+        for (int index = 0; index < VertexCount; index++)
+        {
+            vertices[index] = new(InworldVertices[index].X, InworldVertices[index].Y, InworldVertices[index].Z);
+        }
 
+        intersection = ClosestPoint(origin, vertices);
+        distance = Vector3.Distance(intersection, origin);
+
+        return distance <= radius;
+    }
+    
     private void SetElementVertices(ShapeElement element)
     {
         Vector4 from = new((float)element.From[0], (float)element.From[1], (float)element.From[2], 1);
@@ -355,6 +381,39 @@ public sealed class ShapeElementCollider
         }
         return result;
     }
+    private static Vector3 ClosestPoint(Vector3 point, Vector3[] obbVertices)
+    {
+        // Assuming the OBB vertices are ordered and form a valid OBB
+        // Calculate the center of the OBB
+        Vector3 center = (obbVertices[0] + obbVertices[1] + obbVertices[2] + obbVertices[3] +
+                          obbVertices[4] + obbVertices[5] + obbVertices[6] + obbVertices[7]) / 8.0f;
+
+        // Calculate the axes of the OBB
+        Vector3[] axes = new Vector3[3];
+        axes[0] = Vector3.Normalize(obbVertices[1] - obbVertices[0]); // X-axis
+        axes[1] = Vector3.Normalize(obbVertices[3] - obbVertices[0]); // Y-axis
+        axes[2] = Vector3.Normalize(obbVertices[4] - obbVertices[0]); // Z-axis
+
+        // Calculate the half-sizes of the OBB along each axis
+        float[] halfSizes = new float[3];
+        halfSizes[0] = Vector3.Distance(obbVertices[0], obbVertices[1]) / 2.0f; // X half-size
+        halfSizes[1] = Vector3.Distance(obbVertices[0], obbVertices[3]) / 2.0f; // Y half-size
+        halfSizes[2] = Vector3.Distance(obbVertices[0], obbVertices[4]) / 2.0f; // Z half-size
+
+        // Calculate the closest point on the OBB
+        Vector3 closestPoint = center;
+        Vector3 direction = point - center;
+
+        for (int i = 0; i < 3; i++)
+        {
+            float distance = Vector3.Dot(direction, axes[i]);
+            distance = Math.Clamp(distance, -halfSizes[i], halfSizes[i]);
+            closestPoint += distance * axes[i];
+        }
+
+        return closestPoint;
+    }
+
 
 
 #if DEBUG

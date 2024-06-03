@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using System.Numerics;
 using Vintagestory.API.Common;
 
 namespace CombatOverhaul.DamageSystems;
@@ -6,6 +7,15 @@ namespace CombatOverhaul.DamageSystems;
 public interface ITypedDamage
 {
     DamageData DamageTypeData { get; set; }
+}
+
+public struct DamageDataJson
+{
+    public string DamageType { get; set; } = "PiercingAttack";
+    public float Strength { get; set; }
+    public float Damage { get; set; }
+
+    public DamageDataJson() { }
 }
 
 public readonly struct DamageData
@@ -28,6 +38,19 @@ public readonly struct DamageData
         { EnumDamageType.Heat, "%" }
 
     }.ToImmutableDictionary();
+}
+
+public interface ILocationalDamage
+{
+    public Vector3 Position { get; set; }
+    public int Collider { get; set; }
+}
+
+public class DirectionalTypedDamageSource : DamageSource, ILocationalDamage, ITypedDamage
+{
+    public Vector3 Position { get; set; }
+    public int Collider { get; set; }
+    public DamageData DamageTypeData { get; set; }
 }
 
 public sealed class DamageResistData

@@ -105,7 +105,6 @@ public sealed class Animation
     }
 
     internal int _frameIndex = 0;
-    private string _animationCode = "";
 
     private void CalculateDurations()
     {

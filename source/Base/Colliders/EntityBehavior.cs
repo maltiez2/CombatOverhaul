@@ -170,6 +170,37 @@ public sealed class CollidersEntityBehavior : EntityBehavior
 
         return foundIntersection;
     }
+    public bool Collide(Vector3 origin, float radius, out int collider, out float distance, out Vector3 intersection)
+    {
+        distance = float.MaxValue;
+        bool foundIntersection = false;
+        collider = -1;
+
+        if (!HasOBBCollider)
+        {
+            CuboidAABBCollider AABBCollider = new(entity.CollisionBox);
+            AABBCollider.Collide(origin, radius, out intersection);
+            return true;
+        }
+
+        if (!BoundingBox.Collide(origin, radius, out intersection))
+        {
+            return false;
+        }
+
+        foreach ((int key, ShapeElementCollider shapeElementCollider) in Colliders)
+        {
+            if (shapeElementCollider.Collide(origin, radius, out float currentDistance, out Vector3 currentIntersection) && currentDistance < distance)
+            {
+                distance = currentDistance;
+                collider = key;
+                intersection = currentIntersection;
+                foundIntersection = true;
+            }
+        }
+
+        return foundIntersection;
+    }
 
     public ColliderTypes GetColliderType(int colliderId) => CollidersTypes[CollidersIds[colliderId]];
 

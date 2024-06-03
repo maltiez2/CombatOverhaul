@@ -4,6 +4,7 @@ using CombatOverhaul.DamageSystems;
 using CombatOverhaul.Integration;
 using CombatOverhaul.ItemsAnimations;
 using CombatOverhaul.PlayerAnimations;
+using CombatOverhaul.RangeSystems;
 using HarmonyLib;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -37,13 +38,20 @@ public sealed class CombatOverhaulSystem : ModSystem
     }
     public override void StartServerSide(ICoreServerAPI api)
     {
-
+        ServerProjectileSystem = new(api);
+    }
+    public override void StartClientSide(ICoreClientAPI api)
+    {
+        ClientProjectileSystem = new(api);
     }
 
     public override void Dispose()
     {
         new Harmony("CombatOverhaulAuto").UnpatchAll();
     }
+
+    internal ProjectileSystemClient? ClientProjectileSystem { get; private set; }
+    internal ProjectileSystemServer? ServerProjectileSystem { get; private set; }
 }
 
 
