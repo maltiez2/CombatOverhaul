@@ -2,21 +2,31 @@
 using System.Collections.Immutable;
 using System.Numerics;
 using Vintagestory.API.Common;
+using Vintagestory.API.Common.Entities;
 using Vintagestory.API.MathTools;
 
 namespace CombatOverhaul.PlayerAnimations;
+
+public enum AnimationAnchor
+{
+    Default = 0,
+    Switched,
+    Detached
+}
 
 public readonly struct PlayerItemFrame
 {
     public readonly PlayerFrame Player;
     public readonly ItemFrame? Item;
     public readonly bool DetachedAnchor;
+    public readonly bool SwitchArms;
 
     public PlayerItemFrame(PlayerFrame player, ItemFrame? item)
     {
         Player = player;
         Item = item;
         DetachedAnchor = player.DetachedAnchor;
+        SwitchArms = player.SwitchArms;
     }
 
     public static readonly PlayerItemFrame Zero = new(PlayerFrame.Zero, null);
@@ -313,27 +323,56 @@ public readonly struct PlayerFrame
 {
     public readonly RightHandFrame? RightHand;
     public readonly LeftHandFrame? LeftHand;
+    public readonly AnimationElement UpperTorso;
+    public readonly AnimationElement DetachedAnchorFrame;
     public readonly bool DetachedAnchor;
+    public readonly bool SwitchArms;
+    public readonly float PitchFollow;
 
-    public PlayerFrame(RightHandFrame? rightHand = null, LeftHandFrame? leftHand = null, bool detachedAnchor = false)
+    public const float DefaultPitchFollow = 0.8f;
+    public const float PerfectPitchFollow = 1.0f;
+    public const float Epsilon = 1E-6f;
+
+    public PlayerFrame(RightHandFrame? rightHand = null, LeftHandFrame? leftHand = null, AnimationElement? upperTorso = null, AnimationElement? detachedAnchorFrame = null, bool detachedAnchor = false, bool switchArms = false, float pitchFollow = DefaultPitchFollow)
     {
         RightHand = rightHand;
         LeftHand = leftHand;
+        UpperTorso = upperTorso ?? AnimationElement.Zero;
+        DetachedAnchorFrame = detachedAnchorFrame ?? AnimationElement.Zero;
         DetachedAnchor = detachedAnchor;
+        SwitchArms = switchArms;
+        PitchFollow = pitchFollow;
     }
 
     public static readonly PlayerFrame Zero = new(RightHandFrame.Zero, LeftHandFrame.Zero);
 
     public void Apply(ElementPose pose)
     {
-        RightHand?.Apply(pose, DetachedAnchor);
-        LeftHand?.Apply(pose);
+        switch (pose.ForElement.Name)
+        {
+            case "DetachedAnchor":
+                DetachedAnchorFrame.Apply(pose);
+                break;
+            case "UpperTorso":
+                UpperTorso.Apply(pose);
+                break;
+            default:
+                RightHand?.Apply(pose, DetachedAnchor);
+                LeftHand?.Apply(pose);
+                break;
+        }
     }
 
     public PlayerFrame Edit(string title)
     {
         bool detachedAnchor = DetachedAnchor;
         ImGui.Checkbox($"Detached anchor##{title}", ref detachedAnchor);
+
+        bool switchArms = SwitchArms;
+        ImGui.Checkbox($"Switch arms##{title}", ref switchArms);
+
+        bool pitchFollow = Math.Abs(PitchFollow - PerfectPitchFollow) < Epsilon;
+        ImGui.Checkbox($"Pitch follow##{title}", ref pitchFollow);
 
         bool rightHand = RightHand != null;
         bool leftHand = LeftHand != null;
@@ -349,7 +388,13 @@ public readonly struct PlayerFrame
         if (LeftHand == null && leftHand) left = LeftHandFrame.Zero;
         if (LeftHand != null && !leftHand) left = null;
 
-        return new(right, left, detachedAnchor);
+        ImGui.SeparatorText($"UpperTorso");
+        AnimationElement torso = UpperTorso.Edit($"{title}##UpperTorso");
+
+        ImGui.SeparatorText($"DetachedAnchor");
+        AnimationElement anchor = DetachedAnchorFrame.Edit($"{title}##DetachedAnchor");
+
+        return new(right, left, torso, anchor, detachedAnchor, switchArms, pitchFollow ? PerfectPitchFollow : DefaultPitchFollow);
     }
 
     public static PlayerFrame Interpolate(PlayerFrame from, PlayerFrame to, float progress)
@@ -382,7 +427,12 @@ public readonly struct PlayerFrame
             leftHand = LeftHandFrame.Interpolate(from.LeftHand.Value, to.LeftHand.Value, progress);
         }
 
-        return new(righthand, leftHand, from.DetachedAnchor || to.DetachedAnchor);
+        AnimationElement anchor = AnimationElement.Interpolate(from.DetachedAnchorFrame, to.DetachedAnchorFrame, progress);
+        AnimationElement torso = AnimationElement.Interpolate(from.UpperTorso, to.UpperTorso, progress);
+
+        float pitchFollow = from.PitchFollow + (to.PitchFollow - from.PitchFollow) * progress;
+
+        return new(righthand, leftHand, torso, anchor, to.DetachedAnchor, to.SwitchArms, pitchFollow);
     }
     public static PlayerFrame Compose(IEnumerable<(PlayerFrame element, float weight)> frames)
     {
@@ -390,7 +440,11 @@ public readonly struct PlayerFrame
         return new(
             RightHandFrame.Compose(frames.Where(entry => entry.element.RightHand != null).Select(entry => (entry.element.RightHand.Value, entry.weight))),
             LeftHandFrame.Compose(frames.Where(entry => entry.element.LeftHand != null).Select(entry => (entry.element.LeftHand.Value, entry.weight))),
-            frames.Select(entry => entry.element.DetachedAnchor).Aggregate((first, second) => first | second)
+            AnimationElement.Compose(frames.Select(entry => (entry.element.UpperTorso, entry.weight))),
+            AnimationElement.Compose(frames.Select(entry => (entry.element.DetachedAnchorFrame, entry.weight))),
+            frames.Select(entry => entry.element.DetachedAnchor).Aggregate((first, second) => first || second),
+            frames.Select(entry => entry.element.SwitchArms).Aggregate((first, second) => first || second),
+            frames.Select(entry => entry.element.PitchFollow).Aggregate(Math.Max)
             );
 #pragma warning restore CS8629 // Nullable value type may be null.
     }
@@ -414,10 +468,7 @@ public readonly struct RightHandFrame
         switch (pose.ForElement.Name)
         {
             case "ItemAnchor":
-                if (!detachedAnchor) ItemAnchor.Apply(pose);
-                break;
-            case "DetachedAnchor":
-                if (detachedAnchor) ItemAnchor.Apply(pose);
+                ItemAnchor.Apply(pose);
                 break;
             case "LowerArmR":
                 LowerArmR.Apply(pose);

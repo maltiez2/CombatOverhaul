@@ -1,8 +1,10 @@
 ﻿using CombatOverhaul.Integration;
 using CombatOverhaul.ItemsAnimations;
+using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
+using Vintagestory.GameContent;
 
 namespace CombatOverhaul.PlayerAnimations;
 
@@ -13,8 +15,8 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
         if (entity is not EntityPlayer player) throw new ArgumentException("Only for players");
         _player = player;
 
-        AnimatorPatch.OnBeforeFrame += OnBeforeFrame;
-        AnimatorPatch.OnFrame += OnFrame;
+        AnimationPatch.OnBeforeFrame += OnBeforeFrame;
+        AnimationPatch.OnFrame += OnFrame;
     }
 
     public override string PropertyName() => "FirstPersonAnimations";
@@ -82,20 +84,39 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
 
         if (FrameOverride != null)
         {
-            FrameOverride.Value.Apply(pose);
+            ApplyFrame(FrameOverride.Value, entity, pose, animatable);
+        }
+        else
+        {
+            ApplyFrame(_lastFrame, entity, pose, animatable);
+        }
+    }
+    private void ApplyFrame(PlayerItemFrame frame, Entity entity, ElementPose pose, Animatable? animatable)
+    {
+        frame.Apply(pose);
 
-            if (animatable != null && FrameOverride.Value.DetachedAnchor)
+        if (animatable != null && frame.DetachedAnchor)
+        {
+            animatable.DetachedAnchor = true;
+        }
+
+        if (animatable != null && frame.SwitchArms)
+        {
+            animatable.SwitchArms = true;
+        }
+
+        if ((frame.Player.PitchFollow - PlayerFrame.DefaultPitchFollow) >= PlayerFrame.Epsilon)
+        {
+            if (entity.Properties.Client.Renderer is EntityPlayerShapeRenderer renderer)
             {
-                animatable.DetachedAnchor = true;
+                renderer.HeldItemPitchFollowOverride = frame.Player.PitchFollow;
             }
         }
         else
         {
-            _lastFrame.Apply(pose);
-
-            if (animatable != null && _lastFrame.DetachedAnchor)
+            if (entity.Properties.Client.Renderer is EntityPlayerShapeRenderer renderer)
             {
-                animatable.DetachedAnchor = true;
+                renderer.HeldItemPitchFollowOverride = null;
             }
         }
     }
@@ -108,5 +129,11 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
         bool firstPerson = entity.Api is ICoreClientAPI { World.Player.CameraMode: EnumCameraMode.FirstPerson };
 
         return firstPerson;
+    }
+    public static void SetFirstPersonHandsPitch(IClientPlayer player, float value)
+    {
+        if (player.Entity.Properties.Client.Renderer is not EntityPlayerShapeRenderer renderer) return;
+
+        renderer.HeldItemPitchFollowOverride = 0.8f * value;
     }
 }

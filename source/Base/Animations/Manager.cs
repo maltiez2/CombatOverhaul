@@ -2,10 +2,13 @@
 using CombatOverhaul.ItemsAnimations;
 using ImGuiNET;
 using Newtonsoft.Json.Linq;
+using System.Reflection;
 using System.Text;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
+using Vintagestory.API.MathTools;
+using Vintagestory.Client.NoObf;
 using VSImGui;
 using VSImGui.API;
 
@@ -14,7 +17,6 @@ namespace CombatOverhaul.PlayerAnimations;
 public sealed class AnimationsManager
 {
     public Dictionary<string, Animation> Animations { get; private set; }
-
     public AnimationsManager(ICoreClientAPI api)
     {
         List<IAsset> animations = api.Assets.GetManyInCategory("config", "animations");
@@ -46,6 +48,8 @@ public sealed class AnimationsManager
     private readonly ICoreClientAPI _api;
     private string _itemAnimation = "";
     private string _animationKey = "";
+    private readonly FieldInfo _mainCameraInfo = typeof(ClientMain).GetField("MainCamera", BindingFlags.NonPublic | BindingFlags.Instance);
+    private readonly FieldInfo _cameraFov = typeof(Camera).GetField("Fov", BindingFlags.NonPublic | BindingFlags.Instance);
 
     private CallbackGUIStatus DrawEditor(float deltaSeconds)
     {
@@ -53,73 +57,47 @@ public sealed class AnimationsManager
 
         if (ImGui.Begin("Combat Overhaul - Animations editor", ref _showAnimationEditor))
         {
-            string[] codes = Animations.Keys.ToArray();
-
-            CreateFromItemAnimation();
-            ImGui.Separator();
-
-            if (ImGui.Button("Play") && Animations.Count > 0)
+            ImGui.BeginTabBar($"##main_tab_bar");
+            if (ImGui.BeginTabItem($"Animations"))
             {
-                AnimationRequest request = new(
-                    Animations[codes[_selectedAnimationIndex]],
-                    1,
-                    1,
-                    "test",
-                    TimeSpan.FromSeconds(0.6),
-                    TimeSpan.FromSeconds(0.6),
-                    true
-                    );
-
-                _behavior.Play(request);
+                AnimationsTab();
+                ImGui.EndTabItem();
             }
-            ImGui.SameLine();
-
-            if (ImGui.Button("Export to clipboard") && Animations.Count > 0)
+            if (ImGui.BeginTabItem($"Camera movement effects"))
             {
-                ImGui.SetClipboardText(Animations[codes[_selectedAnimationIndex]].ToString());
+                float Amplitude = EyeHightController.Amplitude;
+                ImGui.SliderFloat("Amplitude##effects", ref Amplitude, 0, 2);
+                EyeHightController.Amplitude = Amplitude;
+
+                float Frequency = EyeHightController.Frequency;
+                ImGui.SliderFloat("Frequency##effects", ref Frequency, 0, 2);
+                EyeHightController.Frequency = Frequency;
+
+                float SprintFrequencyEffect = EyeHightController.SprintFrequencyEffect;
+                ImGui.SliderFloat("SprintFrequencyEffect##effects", ref SprintFrequencyEffect, 0, 2);
+                EyeHightController.SprintFrequencyEffect = SprintFrequencyEffect;
+
+                float SprintAmplitudeEffect = EyeHightController.SprintAmplitudeEffect;
+                ImGui.SliderFloat("SprintAmplitudeEffect##effects", ref SprintAmplitudeEffect, 0, 2);
+                EyeHightController.SprintAmplitudeEffect = SprintAmplitudeEffect;
+
+                float SneakEffect = EyeHightController.SneakEffect;
+                ImGui.SliderFloat("SneakEffect##effects", ref SneakEffect, 0.5f, 2);
+                EyeHightController.SneakEffect = SneakEffect;
+
+                float Offset = EyeHightController.Offset;
+                ImGui.SliderFloat("Offset##effects", ref Offset, 0, 2);
+                EyeHightController.Offset = Offset;
+
+                float LiquidEffect = EyeHightController.LiquidEffect;
+                ImGui.SliderFloat("LiquidEffect##effects", ref LiquidEffect, 0, 2);
+                EyeHightController.LiquidEffect = LiquidEffect;
+
+                EditFov();
+
+                ImGui.EndTabItem();
             }
-            ImGui.SameLine();
-
-            VSImGui.ListEditor.Edit(
-                "Animations",
-                codes,
-                ref _selectedAnimationIndex,
-                onRemove: (value, index) => Animations.Remove(value),
-                onAdd: key =>
-                {
-                    Animations.Add($"temp_{++_tempAnimations}", Animation.Zero);
-                    return $"temp_{_tempAnimations}";
-                }
-                );
-
-            codes = Animations.Keys.ToArray();
-
-            ImGui.Separator();
-
-            if (_selectedAnimationIndex < Animations.Count)
-            {
-                if (ImGui.Button("Toggle rendering offset"))
-                {
-                    if (RenderingOffset.FpHandsOffset != RenderingOffset.DefaultFpHandsOffset)
-                    {
-                        RenderingOffset.FpHandsOffset = RenderingOffset.DefaultFpHandsOffset;
-                    }
-                    else
-                    {
-                        RenderingOffset.FpHandsOffset = 0;
-                    }
-                }
-                ImGui.Checkbox("Overwrite current frame", ref _overwriteFrame);
-                Animations[codes[_selectedAnimationIndex]].Edit(codes[_selectedAnimationIndex]);
-                if (_overwriteFrame)
-                {
-                    _behavior.FrameOverride = Animations[codes[_selectedAnimationIndex]].StillFrame(Animations[codes[_selectedAnimationIndex]]._frameIndex);
-                }
-                else
-                {
-                    _behavior.FrameOverride = null;
-                }
-            }
+            ImGui.EndTabBar();
 
             ImGui.End();
         }
@@ -143,6 +121,95 @@ public sealed class AnimationsManager
         }
 
         return result;
+    }
+    private void EditFov()
+    {
+        ClientMain? client = _api.World as ClientMain;
+        if (client == null) return;
+
+        PlayerCamera? camera = (PlayerCamera?)_mainCameraInfo.GetValue(client);
+        if (camera == null) return;
+
+        float? fovField = (float?)_cameraFov.GetValue(camera);
+        if (fovField == null) return;
+
+        float fovMultiplier = PlayerRenderingPatches.HandsFovMultiplier;
+        ImGui.SliderFloat("FOV", ref fovMultiplier, 0.5f, 1.5f);
+        PlayerRenderingPatches.HandsFovMultiplier = fovMultiplier;
+        _cameraFov.SetValue(camera, ClientSettings.FieldOfView * GameMath.DEG2RAD * fovMultiplier);
+
+        ImGui.Text($"FOV: {ClientSettings.FieldOfView * fovMultiplier}");
+    }
+
+    private void AnimationsTab()
+    {
+        string[] codes = Animations.Keys.ToArray();
+
+        CreateFromItemAnimation();
+        ImGui.Separator();
+
+        if (ImGui.Button("Play") && Animations.Count > 0)
+        {
+            AnimationRequest request = new(
+                Animations[codes[_selectedAnimationIndex]],
+                1,
+                1,
+                "test",
+                TimeSpan.FromSeconds(0.6),
+                TimeSpan.FromSeconds(0.6),
+                true
+                );
+
+            _behavior.Play(request);
+        }
+        ImGui.SameLine();
+
+        if (ImGui.Button("Export to clipboard") && Animations.Count > 0)
+        {
+            ImGui.SetClipboardText(Animations[codes[_selectedAnimationIndex]].ToString());
+        }
+        ImGui.SameLine();
+
+        VSImGui.ListEditor.Edit(
+            "Animations",
+            codes,
+            ref _selectedAnimationIndex,
+            onRemove: (value, index) => Animations.Remove(value),
+            onAdd: key =>
+            {
+                Animations.Add($"temp_{++_tempAnimations}", Animation.Zero);
+                return $"temp_{_tempAnimations}";
+            }
+            );
+
+        codes = Animations.Keys.ToArray();
+
+        ImGui.Separator();
+
+        if (_selectedAnimationIndex < Animations.Count)
+        {
+            if (ImGui.Button("Toggle rendering offset"))
+            {
+                if (PlayerRenderingPatches.FpHandsOffset != PlayerRenderingPatches.DefaultFpHandsOffset)
+                {
+                    PlayerRenderingPatches.FpHandsOffset = PlayerRenderingPatches.DefaultFpHandsOffset;
+                }
+                else
+                {
+                    PlayerRenderingPatches.FpHandsOffset = 0;
+                }
+            }
+            ImGui.Checkbox("Overwrite current frame", ref _overwriteFrame);
+            Animations[codes[_selectedAnimationIndex]].Edit(codes[_selectedAnimationIndex]);
+            if (_overwriteFrame)
+            {
+                _behavior.FrameOverride = Animations[codes[_selectedAnimationIndex]].StillFrame(Animations[codes[_selectedAnimationIndex]]._frameIndex);
+            }
+            else
+            {
+                _behavior.FrameOverride = null;
+            }
+        }
     }
 
     private void CreateFromItemAnimation()
@@ -180,4 +247,6 @@ public sealed class AnimationsManager
         }
         if (!canCreate) ImGui.EndDisabled();
     }
+
+
 }

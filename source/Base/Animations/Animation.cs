@@ -97,7 +97,7 @@ public sealed class Animation
     public override string ToString() => AnimationJson.FromAnimation(this).ToString();
     public PlayerItemFrame StillFrame(int playerFrame)
     {
-        return Interpolate(PlayerItemFrame.Zero, Durations[playerFrame]);
+        return Interpolate(PlayerItemFrame.Zero, Durations[playerFrame] - TimeSpan.FromMilliseconds(1));
     }
     public PlayerItemFrame StillFrame(float progress)
     {
@@ -220,6 +220,9 @@ public sealed class PLayerKeyFrameJson
 {
     public float EasingTime { get; set; } = 0;
     public string EasingFunction { get; set; } = "Linear";
+    public bool DetachedAnchor { get; set; } = false;
+    public bool SwitchArms { get; set; } = false;
+    public bool PitchFollow { get; set; } = false;
     public Dictionary<string, float[]> Elements { get; set; } = new();
 
     public PLayerKeyFrame ToKeyFrame()
@@ -247,8 +250,15 @@ public sealed class PLayerKeyFrameJson
                 );
         }
 
+        AnimationElement torso = new AnimationElement(Elements["UpperTorso"]);
+        AnimationElement anchor = new AnimationElement(Elements["DetachedAnchor"]);
+
+        float pitch = PitchFollow ? PlayerFrame.PerfectPitchFollow : PlayerFrame.DefaultPitchFollow;
+
+        PlayerFrame frame = new(rightHand, leftHand, torso, anchor, DetachedAnchor, SwitchArms, pitch);
+
         return new(
-            new PlayerFrame(rightHand, leftHand),
+            frame,
             time,
             function
             );
@@ -259,7 +269,10 @@ public sealed class PLayerKeyFrameJson
         PLayerKeyFrameJson result = new()
         {
             EasingTime = (float)frame.EasingTime.TotalMilliseconds,
-            EasingFunction = frame.EasingFunction.ToString()
+            EasingFunction = frame.EasingFunction.ToString(),
+            DetachedAnchor = frame.Frame.DetachedAnchor,
+            SwitchArms = frame.Frame.SwitchArms,
+            PitchFollow = Math.Abs(frame.Frame.PitchFollow - PlayerFrame.PerfectPitchFollow) < PlayerFrame.Epsilon
         };
 
         if (frame.Frame.RightHand != null)
@@ -279,6 +292,9 @@ public sealed class PLayerKeyFrameJson
             result.Elements.Add("LowerArmL", leftHand.LowerArmL.ToArray());
             result.Elements.Add("UpperArmL", leftHand.UpperArmL.ToArray());
         }
+
+        result.Elements.Add("UpperTorso", frame.Frame.DetachedAnchorFrame.ToArray());
+        result.Elements.Add("DetachedAnchor", frame.Frame.DetachedAnchorFrame.ToArray());
 
         return result;
     }

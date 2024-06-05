@@ -12,8 +12,6 @@ public class RangeWeaponClient : IBehaviorManagedItem
     {
         CombatOverhaulSystem system = api.ModLoader.GetModSystem<CombatOverhaulSystem>();
 
-        ProjectileSystem = system.ClientProjectileSystem ?? throw new Exception();
-
         Item = item;
         Api = api;
     }
@@ -37,7 +35,6 @@ public class RangeWeaponClient : IBehaviorManagedItem
 
     }
 
-    protected readonly ProjectileSystemClient ProjectileSystem;
     protected readonly Item Item;
     protected readonly ICoreClientAPI Api;
 }

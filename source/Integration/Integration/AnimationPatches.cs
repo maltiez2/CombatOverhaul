@@ -10,14 +10,7 @@ using Vintagestory.GameContent;
 
 namespace CombatOverhaul.Integration;
 
-
-internal class AnimatorTranspilerPatch
-{
-
-}
-
-
-internal static class AnimatorPatch
+internal static class AnimationPatch
 {
 
     public static event Action<Entity, float>? OnBeforeFrame;
@@ -28,17 +21,22 @@ internal static class AnimatorPatch
     {
         new Harmony(harmonyId).Patch(
                 typeof(EntityShapeRenderer).GetMethod("RenderHeldItem", AccessTools.all),
-                prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimatorPatch), nameof(RenderHeldItem)))
+                prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimationPatch), nameof(RenderHeldItem)))
             );
 
         new Harmony(harmonyId).Patch(
                 typeof(EntityPlayer).GetMethod("OnSelfBeforeRender", AccessTools.all),
-                prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimatorPatch), nameof(BeforeRender)))
+                prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimationPatch), nameof(BeforeRender)))
             );
 
         new Harmony(harmonyId).Patch(
                 typeof(Vintagestory.API.Common.AnimationManager).GetMethod("OnClientFrame", AccessTools.all),
-                prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimatorPatch), nameof(AnimatorPatch.ReplaceAnimator)))
+                prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimationPatch), nameof(AnimationPatch.ReplaceAnimator)))
+            );
+
+        new Harmony(harmonyId).Patch(
+                typeof(EntityPlayer).GetMethod("updateEyeHeight", AccessTools.all),
+                prefix: new HarmonyMethod(AccessTools.Method(typeof(EyeHightController), nameof(EyeHightController.UpdateEyeHeight)))
             );
     }
 
@@ -46,6 +44,8 @@ internal static class AnimatorPatch
     {
         new Harmony(harmonyId).Unpatch(typeof(EntityShapeRenderer).GetMethod("RenderHeldItem", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         new Harmony(harmonyId).Unpatch(typeof(Vintagestory.API.Common.AnimationManager).GetMethod("OnClientFrame", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
+        new Harmony(harmonyId).Unpatch(typeof(EntityPlayer).GetMethod("OnSelfBeforeRender", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
+        new Harmony(harmonyId).Unpatch(typeof(EntityPlayer).GetMethod("updateEyeHeight", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
     }
 
     public static void OnFrameInvoke(Entity entity, ElementPose pose) => OnFrame?.Invoke(entity, pose);
@@ -73,7 +73,7 @@ internal static class AnimatorPatch
 
     private static bool RenderHeldItem(EntityShapeRenderer __instance, float dt, bool isShadowPass, bool right)
     {
-        if (isShadowPass) return true;
+        //if (isShadowPass) return true;
 
         ItemSlot? slot;
 
@@ -330,7 +330,7 @@ internal class ProceduralClientAnimator : ClientAnimator
 
             if (_shape != null) AnimationApplication?.Invoke(outFramePose, ref weightSumCopy, _shape);
 
-            if (_entity != null) AnimatorPatch.OnFrameInvoke(_entity, outFramePose);
+            if (_entity != null) AnimationPatch.OnFrameInvoke(_entity, outFramePose);
 
             elem.GetLocalTransformMatrix(animVersion, localTransformMatrix, outFramePose);
             Mat4f.Mul(outFramePose.AnimModelMatrix, outFramePose.AnimModelMatrix, localTransformMatrix);

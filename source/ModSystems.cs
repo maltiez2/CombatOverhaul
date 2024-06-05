@@ -6,6 +6,7 @@ using CombatOverhaul.Integration;
 using CombatOverhaul.ItemsAnimations;
 using CombatOverhaul.PlayerAnimations;
 using CombatOverhaul.RangedSystems;
+using CombatOverhaul.RangedSystems.Aiming;
 using HarmonyLib;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -48,19 +49,28 @@ public sealed class CombatOverhaulSystem : ModSystem
         ClientProjectileSystem = new(api);
         ActionListener = new(api);
         DirectionCursorRenderer = new(api);
+        ReticleRenderer = new(api);
         DirectionController = new(api, DirectionCursorRenderer);
         ClientRangedWeaponSystem = new(api);
+
+        api.Event.RegisterRenderer(ReticleRenderer, EnumRenderStage.Ortho);
+        api.Event.RegisterRenderer(DirectionCursorRenderer, EnumRenderStage.Ortho);
+
+        AimingPatches.Patch("CombatOverhaulAiming");
     }
 
     public override void Dispose()
     {
         new Harmony("CombatOverhaulAuto").UnpatchAll();
+
+        AimingPatches.Unpatch("CombatOverhaulAiming");
     }
 
     internal ProjectileSystemClient? ClientProjectileSystem { get; private set; }
     internal ProjectileSystemServer? ServerProjectileSystem { get; private set; }
     internal ActionListener? ActionListener { get; private set; }
     internal DirectionCursorRenderer? DirectionCursorRenderer { get; private set; }
+    internal ReticleRenderer? ReticleRenderer { get; private set; }
     internal DirectionController? DirectionController { get; private set; }
     internal RangedWeaponSystemClient? ClientRangedWeaponSystem { get; private set; }
     internal RangedWeaponSystemServer? ServerRangedWeaponSystem { get; private set; }
@@ -78,7 +88,7 @@ public sealed class CombatOverhaulAnimationsSystem : ModSystem
     {
         _api = api;
 
-        AnimatorPatch.Patch("CombatOverhaul");
+        AnimationPatch.Patch("CombatOverhaul");
     }
 
     public override void StartClientSide(ICoreClientAPI api)
@@ -102,7 +112,7 @@ public sealed class CombatOverhaulAnimationsSystem : ModSystem
 
     public override void Dispose()
     {
-        AnimatorPatch.Unpatch("CombatOverhaul");
+        AnimationPatch.Unpatch("CombatOverhaul");
 
         if (_api is ICoreClientAPI clientApi)
         {

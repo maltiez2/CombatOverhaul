@@ -14,6 +14,7 @@ public class Animatable : CollectibleBehavior
     public Shape? FirstPersonShape => ShapeFirstPerson?.Shape;
     public Shape? ThirdPersonShape => Shape?.Shape;
     public bool DetachedAnchor { get; set; } = false;
+    public bool SwitchArms { get; set; } = false;
 
     public Animatable(CollectibleObject collObj) : base(collObj)
     {
@@ -65,7 +66,7 @@ public class Animatable : CollectibleBehavior
 
         if (isShadowPass)
         {
-            ShadowPass(api, itemStackRenderInfo, ItemModelMat, CurrentAnimatableShape);
+            //ShadowPass(api, itemStackRenderInfo, ItemModelMat, CurrentAnimatableShape); // Vanilla shadows are bugged and item casts shadows on itself (from tp onto fp)
         }
         else
         {
@@ -136,12 +137,7 @@ public class Animatable : CollectibleBehavior
             return null;
         }
 
-        string attachmentPoint = right ? "RightHand" : "LeftHand";
-        if (IsFirstPerson(entity) && DetachedAnchor)
-        {
-            attachmentPoint = "DetachedAnchor";
-            DetachedAnchor = false;
-        }
+        string attachmentPoint = GetAttachmentPointName(right, entity);
 
         AttachmentPointAndPose? attachmentPointAndPose = entity.AnimManager?.Animator?.GetAttachmentPointPose(attachmentPoint);
         if (attachmentPointAndPose == null)
@@ -165,6 +161,24 @@ public class Animatable : CollectibleBehavior
             .Translate(0f - itemStackRenderInfo.Transform.Origin.X, 0f - itemStackRenderInfo.Transform.Origin.Y, 0f - itemStackRenderInfo.Transform.Origin.Z);
 
         return itemStackRenderInfo;
+    }
+    protected string GetAttachmentPointName(bool right, Entity entity)
+    {
+        if (IsFirstPerson(entity) && DetachedAnchor)
+        {
+            DetachedAnchor = false;
+            return "DetachedAnchor";
+        }
+
+        if (!SwitchArms)
+        {
+            return right ? "RightHand" : "LeftHand";
+        }
+        else
+        {
+            SwitchArms = false;
+            return right ? "LeftHand" : "RightHand";
+        }
     }
     protected static void ShadowPass(ICoreClientAPI api, ItemRenderInfo itemStackRenderInfo, Matrixf itemModelMat, AnimatableShape shape)
     {

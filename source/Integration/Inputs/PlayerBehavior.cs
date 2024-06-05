@@ -234,7 +234,7 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
 
         if (stack == null || stack.Item is not IBehaviorManagedItem weapon)
         {
-            RenderingOffset.ResetOffset();
+            PlayerRenderingPatches.ResetOffset();
             return;
         }
 
@@ -243,7 +243,7 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
 
         if (stack.Item.Attributes?["fpHandsOffset"].Exists == true)
         {
-            RenderingOffset.SetOffset(stack.Item.Attributes["fpHandsOffset"].AsFloat());
+            PlayerRenderingPatches.SetOffset(stack.Item.Attributes["fpHandsOffset"].AsFloat());
         }
     }
     private void ProcessOffHandItemChanged()
