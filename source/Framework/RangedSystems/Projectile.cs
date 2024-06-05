@@ -46,7 +46,7 @@ public struct ProjectileCollisionPacket
 }
 
 
-internal sealed class ProjectileSystemClient
+public sealed class ProjectileSystemClient
 {
     public const string NetworkChannelId = "CombatOverhaul:projectiles";
 
@@ -73,7 +73,7 @@ internal sealed class ProjectileSystemClient
     private readonly IClientNetworkChannel _clientChannel;
 }
 
-internal sealed class ProjectileSystemServer
+public sealed class ProjectileSystemServer
 {
     public const string NetworkChannelId = "CombatOverhaul:projectiles";
 
@@ -104,7 +104,7 @@ internal sealed class ProjectileSystemServer
     }
 }
 
-internal sealed class ProjectileClient
+public sealed class ProjectileClient
 {
     public ProjectileClient(ICoreClientAPI api, ProjectileEntity entity, float colliderRadius, EntityPartitioning entityPartitioning)
     {
@@ -174,7 +174,7 @@ internal sealed class ProjectileClient
     }
 }
 
-internal sealed class ProjectileServer
+public sealed class ProjectileServer
 {
     public ProjectileServer(Guid id, ProjectileStats projectileStats, ProjectileCreationStats spawnStats, ICoreServerAPI api, Action<Guid> clearCallback, ItemStack projectileStack)
     {
@@ -287,8 +287,8 @@ internal sealed class ProjectileServer
 
 public sealed class ProjectileEntity : Entity
 {
-    internal ProjectileClient? ClientProjectile { get; set; }
-    internal ProjectileServer? ServerProjectile { get; set; }
+    public ProjectileClient? ClientProjectile { get; set; }
+    public ProjectileServer? ServerProjectile { get; set; }
     public Guid ProjectileId { get; set; }
     public ItemStack? ProjectileStack { get; set; }
     public float DropOnImpactChance { get; set; }

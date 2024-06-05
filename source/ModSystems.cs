@@ -1,6 +1,7 @@
 ﻿using CombatOverhaul.Armor;
 using CombatOverhaul.Colliders;
 using CombatOverhaul.DamageSystems;
+using CombatOverhaul.Inputs;
 using CombatOverhaul.Integration;
 using CombatOverhaul.ItemsAnimations;
 using CombatOverhaul.PlayerAnimations;
@@ -30,6 +31,7 @@ public sealed class CombatOverhaulSystem : ModSystem
         api.RegisterEntityBehaviorClass("CombatOverhaul:EntityColliders", typeof(CollidersEntityBehavior));
         api.RegisterEntityBehaviorClass("CombatOverhaul:EntityDamageModel", typeof(EntityDamageModelBehavior));
         api.RegisterEntityBehaviorClass("CombatOverhaul:PlayerDamageModel", typeof(PlayerDamageModelBehavior));
+        api.RegisterEntityBehaviorClass("CombatOverhaul:ActionsManager", typeof(ActionsManagerPlayerBehavior));
 
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:Animatable", typeof(Animatable));
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:AnimatableAttachable", typeof(AnimatableAttachable));
@@ -39,10 +41,15 @@ public sealed class CombatOverhaulSystem : ModSystem
     public override void StartServerSide(ICoreServerAPI api)
     {
         ServerProjectileSystem = new(api);
+        ServerRangedWeaponSystem = new(api);
     }
     public override void StartClientSide(ICoreClientAPI api)
     {
         ClientProjectileSystem = new(api);
+        ActionListener = new(api);
+        DirectionCursorRenderer = new(api);
+        DirectionController = new(api, DirectionCursorRenderer);
+        ClientRangedWeaponSystem = new(api);
     }
 
     public override void Dispose()
@@ -52,6 +59,11 @@ public sealed class CombatOverhaulSystem : ModSystem
 
     internal ProjectileSystemClient? ClientProjectileSystem { get; private set; }
     internal ProjectileSystemServer? ServerProjectileSystem { get; private set; }
+    internal ActionListener? ActionListener { get; private set; }
+    internal DirectionCursorRenderer? DirectionCursorRenderer { get; private set; }
+    internal DirectionController? DirectionController { get; private set; }
+    internal RangedWeaponSystemClient? ClientRangedWeaponSystem { get; private set; }
+    internal RangedWeaponSystemServer? ServerRangedWeaponSystem { get; private set; }
 }
 
 

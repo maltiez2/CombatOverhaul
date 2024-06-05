@@ -43,7 +43,7 @@ public readonly struct MouseMovementData
     }
 }
 
-public sealed class AttackDirectionController
+public sealed class DirectionController
 {
     public DirectionsConfiguration DirectionsConfiguration { get; set; } = DirectionsConfiguration.Eight;
     public int Depth { get; set; } = 5;
@@ -51,7 +51,7 @@ public sealed class AttackDirectionController
     public AttackDirection CurrentDirection { get; private set; }
     public int CurrentDirectionNormalized { get; private set; }
 
-    public AttackDirectionController(ICoreClientAPI api, DirectionCursorRenderer renderer)
+    public DirectionController(ICoreClientAPI api, DirectionCursorRenderer renderer)
     {
         _api = api;
         _directionCursorRenderer = renderer;
