@@ -93,7 +93,7 @@ public sealed class AnimationsManager
                 ImGui.SliderFloat("LiquidEffect##effects", ref LiquidEffect, 0, 2);
                 EyeHightController.LiquidEffect = LiquidEffect;
 
-                EditFov();
+                //EditFov();
 
                 ImGui.EndTabItem();
             }

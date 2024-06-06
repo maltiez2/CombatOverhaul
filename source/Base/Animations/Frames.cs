@@ -328,12 +328,21 @@ public readonly struct PlayerFrame
     public readonly bool DetachedAnchor;
     public readonly bool SwitchArms;
     public readonly float PitchFollow;
+    public readonly float FovMultiplier;
 
     public const float DefaultPitchFollow = 0.8f;
     public const float PerfectPitchFollow = 1.0f;
     public const float Epsilon = 1E-6f;
 
-    public PlayerFrame(RightHandFrame? rightHand = null, LeftHandFrame? leftHand = null, AnimationElement? upperTorso = null, AnimationElement? detachedAnchorFrame = null, bool detachedAnchor = false, bool switchArms = false, float pitchFollow = DefaultPitchFollow)
+    public PlayerFrame(
+        RightHandFrame? rightHand = null,
+        LeftHandFrame? leftHand = null,
+        AnimationElement? upperTorso = null,
+        AnimationElement? detachedAnchorFrame = null,
+        bool detachedAnchor = false,
+        bool switchArms = false,
+        float pitchFollow = DefaultPitchFollow,
+        float fovMultiplier = 1.0f)
     {
         RightHand = rightHand;
         LeftHand = leftHand;
@@ -342,6 +351,7 @@ public readonly struct PlayerFrame
         DetachedAnchor = detachedAnchor;
         SwitchArms = switchArms;
         PitchFollow = pitchFollow;
+        FovMultiplier = fovMultiplier;
     }
 
     public static readonly PlayerFrame Zero = new(RightHandFrame.Zero, LeftHandFrame.Zero);
@@ -374,6 +384,9 @@ public readonly struct PlayerFrame
         bool pitchFollow = Math.Abs(PitchFollow - PerfectPitchFollow) < Epsilon;
         ImGui.Checkbox($"Pitch follow##{title}", ref pitchFollow);
 
+        float fov = FovMultiplier;
+        ImGui.SliderFloat($"FOV multiplier##{title}", ref fov, 0.1f, 2.0f);
+
         bool rightHand = RightHand != null;
         bool leftHand = LeftHand != null;
 
@@ -394,7 +407,7 @@ public readonly struct PlayerFrame
         ImGui.SeparatorText($"DetachedAnchor");
         AnimationElement anchor = DetachedAnchorFrame.Edit($"{title}##DetachedAnchor");
 
-        return new(right, left, torso, anchor, detachedAnchor, switchArms, pitchFollow ? PerfectPitchFollow : DefaultPitchFollow);
+        return new(right, left, torso, anchor, detachedAnchor, switchArms, pitchFollow ? PerfectPitchFollow : DefaultPitchFollow, fov);
     }
 
     public static PlayerFrame Interpolate(PlayerFrame from, PlayerFrame to, float progress)
@@ -431,8 +444,9 @@ public readonly struct PlayerFrame
         AnimationElement torso = AnimationElement.Interpolate(from.UpperTorso, to.UpperTorso, progress);
 
         float pitchFollow = from.PitchFollow + (to.PitchFollow - from.PitchFollow) * progress;
+        float fov = from.FovMultiplier + (to.FovMultiplier - from.FovMultiplier) * progress;
 
-        return new(righthand, leftHand, torso, anchor, to.DetachedAnchor, to.SwitchArms, pitchFollow);
+        return new(righthand, leftHand, torso, anchor, to.DetachedAnchor, to.SwitchArms, pitchFollow, fov);
     }
     public static PlayerFrame Compose(IEnumerable<(PlayerFrame element, float weight)> frames)
     {
@@ -444,7 +458,8 @@ public readonly struct PlayerFrame
             AnimationElement.Compose(frames.Select(entry => (entry.element.DetachedAnchorFrame, entry.weight))),
             frames.Select(entry => entry.element.DetachedAnchor).Aggregate((first, second) => first || second),
             frames.Select(entry => entry.element.SwitchArms).Aggregate((first, second) => first || second),
-            frames.Select(entry => entry.element.PitchFollow).Aggregate(Math.Max)
+            frames.Select(entry => entry.element.PitchFollow).Max(),
+            frames.Select(entry => entry.element.FovMultiplier).Min()
             );
 #pragma warning restore CS8629 // Nullable value type may be null.
     }

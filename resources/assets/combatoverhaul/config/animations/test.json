@@ -1,5 +1,6 @@
 {
   "test": {
+    "Hold": true,
     "PlayerKeyFrames": [
       {
         "EasingTime": 1000.0,
@@ -7,9 +8,10 @@
         "DetachedAnchor": false,
         "SwitchArms": false,
         "PitchFollow": true,
+        "FOVMultiplier": 0.8,
         "Elements": {
           "ItemAnchor": [
-            5.03,
+            6.88,
             0.9,
             1.4,
             11.0,
@@ -31,79 +33,6 @@
             0.0,
             2.0,
             -98.0
-          ],
-          "ItemAnchorL": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-          ],
-          "LowerArmL": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-          ],
-          "UpperArmL": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-          ],
-          "UpperTorso": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-          ],
-          "DetachedAnchor": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-          ]
-        }
-      },
-      {
-        "EasingTime": 1000.0,
-        "EasingFunction": "Linear",
-        "DetachedAnchor": false,
-        "SwitchArms": false,
-        "PitchFollow": false,
-        "Elements": {
-          "ItemAnchor": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-          ],
-          "LowerArmR": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-          ],
-          "UpperArmR": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            -120.0
           ],
           "ItemAnchorL": [
             0.0,

@@ -10,6 +10,7 @@ public sealed class Animation
     public List<ItemKeyFrame> ItemKeyFrames { get; private set; } = new();
     public List<TimeSpan> Durations { get; private set; } = new();
     public TimeSpan TotalDuration { get; private set; }
+    public bool Hold { get; set; } = false;
 
     public Animation(IEnumerable<PLayerKeyFrame> playerFrames, IEnumerable<ItemKeyFrame> itemFrames)
     {
@@ -54,6 +55,10 @@ public sealed class Animation
     {
         ImGui.Text($"Total duration: {(int)TotalDuration.TotalMilliseconds} ms");
 
+        bool hold = Hold;
+        ImGui.Checkbox($"Hold##{title}", ref hold);
+        Hold = hold;
+
         ImGui.BeginTabBar($"##{title}tab");
         if (ImGui.BeginTabItem($"Player animation##{title}"))
         {
@@ -68,6 +73,9 @@ public sealed class Animation
                 }
                 ImGui.SameLine();
             }
+
+            if (_frameIndex >= PlayerKeyFrames.Count) _frameIndex = PlayerKeyFrames.Count - 1;
+            if (_frameIndex < 0) _frameIndex = 0;
 
             if (ImGui.Button($"Insert##{title}"))
             {
@@ -171,18 +179,20 @@ public sealed class Animation
 
 public sealed class AnimationJson
 {
+    public bool Hold { get; set; } = false;
     public PLayerKeyFrameJson[] PlayerKeyFrames { get; set; } = Array.Empty<PLayerKeyFrameJson>();
     public ItemKeyFrameJson[] ItemKeyFrames { get; set; } = Array.Empty<ItemKeyFrameJson>();
 
     public Animation ToAnimation()
     {
-        return new(PlayerKeyFrames.Select(element => element.ToKeyFrame()), ItemKeyFrames.Select(element => element.ToKeyFrame()));
+        return new(PlayerKeyFrames.Select(element => element.ToKeyFrame()), ItemKeyFrames.Select(element => element.ToKeyFrame())) { Hold = Hold };
     }
 
     public static AnimationJson FromAnimation(Animation animation)
     {
         return new()
         {
+            Hold = animation.Hold,
             PlayerKeyFrames = animation.PlayerKeyFrames.Select(PLayerKeyFrameJson.FromKeyFrame).ToArray(),
             ItemKeyFrames = animation.ItemKeyFrames.Select(ItemKeyFrameJson.FromKeyFrame).ToArray()
         };
@@ -223,6 +233,7 @@ public sealed class PLayerKeyFrameJson
     public bool DetachedAnchor { get; set; } = false;
     public bool SwitchArms { get; set; } = false;
     public bool PitchFollow { get; set; } = false;
+    public float FOVMultiplier { get; set; } = 1;
     public Dictionary<string, float[]> Elements { get; set; } = new();
 
     public PLayerKeyFrame ToKeyFrame()
@@ -255,7 +266,7 @@ public sealed class PLayerKeyFrameJson
 
         float pitch = PitchFollow ? PlayerFrame.PerfectPitchFollow : PlayerFrame.DefaultPitchFollow;
 
-        PlayerFrame frame = new(rightHand, leftHand, torso, anchor, DetachedAnchor, SwitchArms, pitch);
+        PlayerFrame frame = new(rightHand, leftHand, torso, anchor, DetachedAnchor, SwitchArms, pitch, FOVMultiplier);
 
         return new(
             frame,
@@ -272,7 +283,8 @@ public sealed class PLayerKeyFrameJson
             EasingFunction = frame.EasingFunction.ToString(),
             DetachedAnchor = frame.Frame.DetachedAnchor,
             SwitchArms = frame.Frame.SwitchArms,
-            PitchFollow = Math.Abs(frame.Frame.PitchFollow - PlayerFrame.PerfectPitchFollow) < PlayerFrame.Epsilon
+            PitchFollow = Math.Abs(frame.Frame.PitchFollow - PlayerFrame.PerfectPitchFollow) < PlayerFrame.Epsilon,
+            FOVMultiplier = frame.Frame.FovMultiplier
         };
 
         if (frame.Frame.RightHand != null)

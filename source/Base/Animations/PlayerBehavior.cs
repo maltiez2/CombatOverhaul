@@ -1,9 +1,13 @@
 ﻿using CombatOverhaul.Integration;
 using CombatOverhaul.ItemsAnimations;
+using ImGuiNET;
 using System.Numerics;
+using System.Reflection;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
+using Vintagestory.API.MathTools;
+using Vintagestory.Client.NoObf;
 using Vintagestory.GameContent;
 
 namespace CombatOverhaul.PlayerAnimations;
@@ -14,6 +18,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     {
         if (entity is not EntityPlayer player) throw new ArgumentException("Only for players");
         _player = player;
+        _api = player.Api as ICoreClientAPI;
 
         AnimationPatch.OnBeforeFrame += OnBeforeFrame;
         AnimationPatch.OnFrame += OnFrame;
@@ -69,6 +74,11 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     private readonly List<string> _mainHandCategories = new();
     private int _offHandItemId = 0;
     private int _mainHandItemId = 0;
+    private bool _resetFov = false;
+    private ICoreClientAPI? _api;
+
+    private readonly FieldInfo _mainCameraInfo = typeof(ClientMain).GetField("MainCamera", BindingFlags.NonPublic | BindingFlags.Instance);
+    private readonly FieldInfo _cameraFov = typeof(Camera).GetField("Fov", BindingFlags.NonPublic | BindingFlags.Instance);
 
     private void OnBeforeFrame(Entity entity, float dt)
     {
@@ -79,6 +89,15 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     private void OnFrame(Entity entity, ElementPose pose)
     {
         if (!IsFirstPerson(entity)) return;
+        if (!_composer.AnyActiveAnimations() && FrameOverride == null)
+        {
+            if (_resetFov)
+            {
+                SetFov(1);
+                _resetFov = false;
+            }
+            return;
+        }
 
         Animatable? animatable = (entity as EntityAgent)?.RightHandItemSlot?.Itemstack?.Item?.GetCollectibleBehavior(typeof(Animatable), true) as Animatable;
 
@@ -119,6 +138,9 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
                 renderer.HeldItemPitchFollowOverride = null;
             }
         }
+
+        SetFov(frame.Player.FovMultiplier);
+        _resetFov = true;
     }
     private static bool IsOwner(Entity entity) => (entity.Api as ICoreClientAPI)?.World.Player.Entity.EntityId == entity.EntityId;
     private static bool IsFirstPerson(Entity entity)
@@ -135,5 +157,19 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
         if (player.Entity.Properties.Client.Renderer is not EntityPlayerShapeRenderer renderer) return;
 
         renderer.HeldItemPitchFollowOverride = 0.8f * value;
+    }
+    private void SetFov(float multiplier)
+    {
+        ClientMain? client = _api?.World as ClientMain;
+        if (client == null) return;
+
+        PlayerCamera? camera = (PlayerCamera?)_mainCameraInfo.GetValue(client);
+        if (camera == null) return;
+
+        float? fovField = (float?)_cameraFov.GetValue(camera);
+        if (fovField == null) return;
+
+        PlayerRenderingPatches.HandsFovMultiplier = multiplier;
+        _cameraFov.SetValue(camera, ClientSettings.FieldOfView * GameMath.DEG2RAD * multiplier);
     }
 }

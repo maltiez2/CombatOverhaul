@@ -77,6 +77,8 @@ internal sealed class Composer
         _requests.Remove(category);
     }
 
+    public bool AnyActiveAnimations() => _animators.Any();
+
     private enum AnimatorWeightState
     {
         EaseIn,
@@ -170,7 +172,7 @@ internal class Animator
         _lastFrame = _currentAnimation.Interpolate(_previousAnimationFrame, adjustedDuration);
         return _lastFrame;
     }
-    public bool Finished() => _currentAnimation.TotalDuration <= _currentDuration / _animationSpeed;
+    public bool Finished() => (_currentAnimation.TotalDuration <= _currentDuration / _animationSpeed) && !_currentAnimation.Hold;
 
     private PlayerItemFrame _previousAnimationFrame = PlayerItemFrame.Zero;
     private PlayerItemFrame _lastFrame = PlayerItemFrame.Zero;
