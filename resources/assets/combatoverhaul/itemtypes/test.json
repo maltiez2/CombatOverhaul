@@ -1,4 +1,4 @@
-{
+﻿{
   "code": "test",
   "class": "Item",
   "creativeinventory": {"combatoverhaul": ["*"]},
@@ -19,10 +19,7 @@
     },
     {
       "name": "CombatOverhaul:Animatable",
-      "properties": {
-        "animated-shape": "combatoverhaul:firearms/firearms/carbine-animated-tp",
-        "animated-shape-fp": "combatoverhaul:firearms/firearms/carbine-animated-fp"
-      }
+      "properties": {"animated-shape": "combatoverhaul:firearms/firearms/carbine-animated-tp", "animated-shape-fp": "combatoverhaul:firearms/firearms/carbine-animated-fp"}
     }
   ],
   "attributes": {

@@ -56,6 +56,22 @@
     <ModDir>$(ProjectDir)\$(OutputDir)</ModDir>
   </PropertyGroup>
 
+  <!-- Formatting JSON files -->
+  <PropertyGroup>
+    <Scripts>$(ProjectDir)\scripts</Scripts>
+    <Formatter>$(Scripts)\formatter.py</Formatter>
+  </PropertyGroup>
+  <ItemGroup>
+    <AssetsToFormat Include="$(AssetsDir)\$(ModId)\blocktypes" />
+    <AssetsToFormat Include="$(AssetsDir)\$(ModId)\itemtypes" />
+    <AssetsToFormat Include="$(AssetsDir)\$(ModId)\patches" />
+    <AssetsToFormat Include="$(AssetsDir)\$(ModId)\entities" />
+    <AssetsToFormat Include="$(AssetsDir)\$(ModId)\config\animations" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="VSImGui" Version="0.0.6" />
+  </ItemGroup>
+
   <!-- References to libraries that are being used in project -->
   <ItemGroup>
     <PackageReference Include="VSImGui" Version="0.0.6" />
@@ -154,8 +170,13 @@
     <WriteLinesToFile File="$(OutputPath)/modinfo.json" Lines="$(ModInfo)" Overwrite="true" WriteOnlyWhenDifferent="true" />
   </Target>
 
+  <!-- Formats asssets files -->
+  <Target Name="Format" AfterTargets="ModInfo" BeforeTargets="CopyFilesToOutput">
+    <Exec Command="python $(Formatter) -a -d %(AssetsToFormat.Identity)" />
+  </Target>
+
   <!-- Copies modicon, assets folder and native libraries if they exist into output directory -->
-  <Target Name="CopyFilesToOutput" AfterTargets="ModInfo" BeforeTargets="Build">
+  <Target Name="CopyFilesToOutput" AfterTargets="Format" BeforeTargets="Build">
     <ItemGroup>
       <AssetsFolder Include="$(AssetsDir)\**\*.*" />
       <ModIcon Include="$(ModIconFile)" />
