@@ -7,8 +7,7 @@ public sealed class Animation
 {
     public List<PLayerKeyFrame> PlayerKeyFrames { get; private set; } = new();
     public List<ItemKeyFrame> ItemKeyFrames { get; private set; } = new();
-    public List<TimeSpan> Durations { get; private set; } = new();
-    public TimeSpan TotalDuration { get; private set; }
+    public TimeSpan TotalDuration => PlayerKeyFrames[^1].Time;
     public bool Hold { get; set; } = false;
 
     public Animation(IEnumerable<PLayerKeyFrame> playerFrames, IEnumerable<ItemKeyFrame> itemFrames)
@@ -18,7 +17,8 @@ public sealed class Animation
         PlayerKeyFrames = playerFrames.ToList();
         ItemKeyFrames = itemFrames.ToList();
 
-        CalculateDurations();
+        PlayerKeyFrames.Sort((x, y) => (int)(x.Time - y.Time).TotalMilliseconds);
+        ItemKeyFrames.Sort((x, y) => (int)((x.DurationFraction - y.DurationFraction) * 1E6f));
     }
     public Animation(IEnumerable<PLayerKeyFrame> playerFrames)
     {
@@ -26,7 +26,8 @@ public sealed class Animation
 
         PlayerKeyFrames = playerFrames.ToList();
 
-        CalculateDurations();
+        PlayerKeyFrames.Sort((x, y) => (int)(x.Time - y.Time).TotalMilliseconds);
+        ItemKeyFrames.Sort((x, y) => (int)((x.DurationFraction - y.DurationFraction) * 1E6f));
     }
     public Animation(IEnumerable<PLayerKeyFrame> playerFrames, string itemAnimation, Shape itemShape)
     {
@@ -35,7 +36,8 @@ public sealed class Animation
         PlayerKeyFrames = playerFrames.ToList();
         ItemKeyFrames = ItemKeyFrame.FromVanillaAnimation(itemAnimation, itemShape);
 
-        CalculateDurations();
+        PlayerKeyFrames.Sort((x, y) => (int)(x.Time - y.Time).TotalMilliseconds);
+        ItemKeyFrames.Sort((x, y) => (int)((x.DurationFraction - y.DurationFraction) * 1E6f));
     }
 
     public static readonly Animation Zero = new(new PLayerKeyFrame[] { PLayerKeyFrame.Zero });
@@ -52,7 +54,17 @@ public sealed class Animation
     public bool Finished(TimeSpan currentDuration) => currentDuration >= TotalDuration;
     public void Edit(string title)
     {
+        ImGui.Separator();
+
+        if (ImGui.Button($"Sort frames##{title}"))
+        {
+            PlayerKeyFrames.Sort((x, y) => (int)(x.Time - y.Time).TotalMilliseconds);
+            ItemKeyFrames.Sort((x, y) => (int)((x.DurationFraction - y.DurationFraction) * 1E6f));
+        }
+        ImGui.SameLine();
+        
         ImGui.Text($"Total duration: {(int)TotalDuration.TotalMilliseconds} ms");
+        ImGui.SameLine();
 
         bool hold = Hold;
         ImGui.Checkbox($"Hold##{title}", ref hold);
@@ -61,68 +73,36 @@ public sealed class Animation
         ImGui.BeginTabBar($"##{title}tab");
         if (ImGui.BeginTabItem($"Player animation##{title}"))
         {
-            if (_frameIndex >= PlayerKeyFrames.Count) _frameIndex = PlayerKeyFrames.Count - 1;
-            if (_frameIndex < 0) _frameIndex = 0;
-
-            if (PlayerKeyFrames.Count > 0)
-            {
-                if (ImGui.Button($"Remove##{title}"))
-                {
-                    PlayerKeyFrames.RemoveAt(_frameIndex);
-                }
-                ImGui.SameLine();
-            }
-
-            if (_frameIndex >= PlayerKeyFrames.Count) _frameIndex = PlayerKeyFrames.Count - 1;
-            if (_frameIndex < 0) _frameIndex = 0;
-
-            if (ImGui.Button($"Insert##{title}"))
-            {
-                PlayerKeyFrames.Insert(_frameIndex, new(PlayerFrame.Zero, TimeSpan.Zero, EasingFunctionType.Linear));
-            }
-
-            if (PlayerKeyFrames.Count > 0) ImGui.SliderInt($"Key frame", ref _frameIndex, 0, PlayerKeyFrames.Count - 1);
-
-            if (PlayerKeyFrames.Count > 0)
-            {
-                PLayerKeyFrame frame = PlayerKeyFrames[_frameIndex].Edit(title);
-                PlayerKeyFrames[_frameIndex] = frame;
-            }
+            EditPlayerAnimation(title + "player");
 
             ImGui.EndTabItem();
         }
         if (ItemKeyFrames.Any() && ImGui.BeginTabItem($"Item animation##{title}"))
         {
-
+            EditItemAnimation(title + "item");
 
             ImGui.EndTabItem();
         }
         ImGui.EndTabBar();
-
-        CalculateDurations();
     }
     public override string ToString() => AnimationJson.FromAnimation(this).ToString();
-    public PlayerItemFrame StillFrame(int playerFrame)
+    public PlayerItemFrame StillPlayerFrame(int playerFrame)
     {
-        return Interpolate(PlayerItemFrame.Zero, Durations[playerFrame] - TimeSpan.FromMilliseconds(1));
+        return Interpolate(PlayerItemFrame.Zero, PlayerKeyFrames[playerFrame].Time - TimeSpan.FromMilliseconds(1));
+    }
+    public PlayerItemFrame StillItemFrame(int itemFrame)
+    {
+        return StillFrame(ItemKeyFrames[itemFrame].DurationFraction);
     }
     public PlayerItemFrame StillFrame(float progress)
     {
         return Interpolate(PlayerItemFrame.Zero, progress * TotalDuration);
     }
 
-    internal int _frameIndex = 0;
+    internal int _playerFrameIndex = 0;
+    internal int _itemFrameIndex = 0;
+    internal bool _playerFrameEdited = true;
 
-    private void CalculateDurations()
-    {
-        TotalDuration = TimeSpan.Zero;
-        Durations.Clear();
-        foreach (PLayerKeyFrame frame in PlayerKeyFrames)
-        {
-            TotalDuration += frame.EasingTime;
-            Durations.Add(TotalDuration);
-        }
-    }
     private ItemFrame? InterpolateItemFrame(PlayerItemFrame previousAnimationFrame, TimeSpan currentDuration)
     {
         if (!ItemKeyFrames.Any()) return null;
@@ -162,17 +142,65 @@ public sealed class Animation
         int nextPlayerKeyFrame;
         for (nextPlayerKeyFrame = 0; nextPlayerKeyFrame < PlayerKeyFrames.Count; nextPlayerKeyFrame++)
         {
-            if (Durations[nextPlayerKeyFrame] > currentDuration) break;
+            if (PlayerKeyFrames[nextPlayerKeyFrame].Time > currentDuration) break;
         }
 
         if (nextPlayerKeyFrame == 0)
         {
-            return PlayerKeyFrames[0].Interpolate(previousAnimationFrame.Player, currentDuration);
+            return PlayerKeyFrames[0].Interpolate(previousAnimationFrame.Player, (float)(currentDuration / PlayerKeyFrames[nextPlayerKeyFrame].Time));
         }
         else
         {
-            return PlayerKeyFrames[nextPlayerKeyFrame].Interpolate(PlayerKeyFrames[nextPlayerKeyFrame - 1].Frame, currentDuration - Durations[nextPlayerKeyFrame - 1]);
+            TimeSpan frameDuration = PlayerKeyFrames[nextPlayerKeyFrame].Time - PlayerKeyFrames[nextPlayerKeyFrame - 1].Time;
+            return PlayerKeyFrames[nextPlayerKeyFrame].Interpolate(PlayerKeyFrames[nextPlayerKeyFrame - 1].Frame, (float)((currentDuration - PlayerKeyFrames[nextPlayerKeyFrame - 1].Time) / frameDuration));
         }
+    }
+    private void EditPlayerAnimation(string title)
+    {
+        if (_playerFrameIndex >= PlayerKeyFrames.Count) _playerFrameIndex = PlayerKeyFrames.Count - 1;
+        if (_playerFrameIndex < 0) _playerFrameIndex = 0;
+
+        if (PlayerKeyFrames.Count > 0)
+        {
+            if (ImGui.Button($"Remove##{title}"))
+            {
+                PlayerKeyFrames.RemoveAt(_playerFrameIndex);
+            }
+            ImGui.SameLine();
+        }
+
+        if (_playerFrameIndex >= PlayerKeyFrames.Count) _playerFrameIndex = PlayerKeyFrames.Count - 1;
+        if (_playerFrameIndex < 0) _playerFrameIndex = 0;
+
+        if (ImGui.Button($"Insert##{title}"))
+        {
+            PlayerKeyFrames.Insert(_playerFrameIndex, new(PlayerFrame.Zero, TimeSpan.Zero, EasingFunctionType.Linear));
+        }
+
+        if (PlayerKeyFrames.Count > 0) ImGui.SliderInt($"Key frame##{title}", ref _playerFrameIndex, 0, PlayerKeyFrames.Count - 1);
+
+        if (PlayerKeyFrames.Count > 0)
+        {
+            PLayerKeyFrame frame = PlayerKeyFrames[_playerFrameIndex].Edit(title);
+            PlayerKeyFrames[_playerFrameIndex] = frame;
+        }
+
+        _playerFrameEdited = true;
+    }
+    private void EditItemAnimation(string title)
+    {
+        if (_itemFrameIndex >= ItemKeyFrames.Count) _itemFrameIndex = ItemKeyFrames.Count - 1;
+        if (_itemFrameIndex < 0) _itemFrameIndex = 0;
+
+        if (ItemKeyFrames.Count > 0)
+        {
+            ImGui.SliderInt($"Key frame##{title}", ref _itemFrameIndex, 0, ItemKeyFrames.Count - 1);
+
+            ItemKeyFrame frame = ItemKeyFrames[_itemFrameIndex].Edit(title);
+            ItemKeyFrames[_itemFrameIndex] = frame;
+        }
+
+        _playerFrameEdited = false;
     }
 }
 
@@ -203,13 +231,17 @@ public sealed class AnimationJson
 public sealed class ItemKeyFrameJson
 {
     public float DurationFraction { get; set; }
+    public string EasingFunction { get; set; } = "Linear";
     public Dictionary<string, float[]> Elements { get; set; } = new();
 
     public ItemKeyFrame ToKeyFrame()
     {
+        EasingFunctionType function = Enum.Parse<EasingFunctionType>(EasingFunction);
+
         return new(
                 new ItemFrame(Elements.ToDictionary(entry => entry.Key, entry => new AnimationElement(entry.Value))),
-                DurationFraction
+                DurationFraction,
+                function
             );
     }
 
@@ -218,6 +250,7 @@ public sealed class ItemKeyFrameJson
         ItemKeyFrameJson result = new()
         {
             DurationFraction = frame.DurationFraction,
+            EasingFunction = frame.EasingFunction.ToString(),
             Elements = frame.Frame.Elements.ToDictionary(entry => entry.Key, entry => entry.Value.ToArray())
         };
 
@@ -233,6 +266,7 @@ public sealed class PLayerKeyFrameJson
     public bool SwitchArms { get; set; } = false;
     public bool PitchFollow { get; set; } = false;
     public float FOVMultiplier { get; set; } = 1;
+    public float BobbingAmplitude { get; set; } = 1;
     public Dictionary<string, float[]> Elements { get; set; } = new();
 
     public PLayerKeyFrame ToKeyFrame()
@@ -265,7 +299,7 @@ public sealed class PLayerKeyFrameJson
 
         float pitch = PitchFollow ? PlayerFrame.PerfectPitchFollow : PlayerFrame.DefaultPitchFollow;
 
-        PlayerFrame frame = new(rightHand, leftHand, torso, anchor, DetachedAnchor, SwitchArms, pitch, FOVMultiplier);
+        PlayerFrame frame = new(rightHand, leftHand, torso, anchor, DetachedAnchor, SwitchArms, pitch, FOVMultiplier, BobbingAmplitude);
 
         return new(
             frame,
@@ -278,12 +312,13 @@ public sealed class PLayerKeyFrameJson
     {
         PLayerKeyFrameJson result = new()
         {
-            EasingTime = (float)frame.EasingTime.TotalMilliseconds,
+            EasingTime = (float)frame.Time.TotalMilliseconds,
             EasingFunction = frame.EasingFunction.ToString(),
             DetachedAnchor = frame.Frame.DetachedAnchor,
             SwitchArms = frame.Frame.SwitchArms,
             PitchFollow = Math.Abs(frame.Frame.PitchFollow - PlayerFrame.PerfectPitchFollow) < PlayerFrame.Epsilon,
-            FOVMultiplier = frame.Frame.FovMultiplier
+            FOVMultiplier = frame.Frame.FovMultiplier,
+            BobbingAmplitude = frame.Frame.BobbingAmplitude
         };
 
         if (frame.Frame.RightHand != null)

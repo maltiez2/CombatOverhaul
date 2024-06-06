@@ -53,32 +53,35 @@ public readonly struct ItemKeyFrame
 {
     public readonly ItemFrame Frame;
     public readonly float DurationFraction;
+    public readonly EasingFunctionType EasingFunction;
 
-    public ItemKeyFrame(ItemFrame frame, float durationFraction)
+    public ItemKeyFrame(ItemFrame frame, float durationFraction, EasingFunctionType easeFunction)
     {
         Frame = frame;
         DurationFraction = durationFraction;
+        EasingFunction = easeFunction;
     }
 
-    public static readonly ItemKeyFrame Empty = new(ItemFrame.Empty, 0);
+    public static readonly ItemKeyFrame Empty = new(ItemFrame.Empty, 0, EasingFunctionType.Linear);
 
     public ItemFrame Interpolate(ItemFrame frame, float frameProgress)
     {
-        return ItemFrame.Interpolate(frame, Frame, frameProgress);
+        float interpolatedProgress = EasingFunctions.Get(EasingFunction).Invoke((float)frameProgress);
+        return ItemFrame.Interpolate(frame, Frame, interpolatedProgress);
     }
 
     public bool Reached(float animationProgress) => animationProgress >= DurationFraction;
 
     public ItemKeyFrame Edit(string title)
     {
-        float progress = DurationFraction;
-        ImGui.SliderFloat($"Duration fraction", ref progress, 0, 1);
+        float progress = DurationFraction * 100;
+        ImGui.InputFloat($"Duration fraction %", ref progress, 0, 1);
 
-        ImGui.SeparatorText("Key frame");
+        EasingFunctionType function = VSImGui.EnumEditor<EasingFunctionType>.Combo($"Easing function##{title}", EasingFunction);
 
         ItemFrame frame = Frame.Edit(title);
 
-        return new(frame, progress);
+        return new(frame, progress / 100, function);
     }
 
     public static List<ItemKeyFrame> FromVanillaAnimation(string code, Shape shape)
@@ -105,7 +108,7 @@ public readonly struct ItemKeyFrame
         List<ItemKeyFrame> result = new();
         if (missingFirstFrame)
         {
-            result.Add(new ItemKeyFrame(new ItemFrame(frames.ToDictionary(entry => entry.Key, entry => entry.Value[0])), 0));
+            result.Add(new ItemKeyFrame(new ItemFrame(frames.ToDictionary(entry => entry.Key, entry => entry.Value[0])), 0, EasingFunctionType.Linear));
         }
 
         for (int index = missingFirstFrame ? 1 : 0; index < keyFramesCount; index++)
@@ -113,7 +116,7 @@ public readonly struct ItemKeyFrame
             int frameIndex = missingFirstFrame ? index - 1 : index;
             float durationFraction = (float)vanillaKeyFrames[frameIndex].Frame / (vanillaKeyFrames[^1].Frame == 0 ? 1 : vanillaKeyFrames[^1].Frame);
             
-            result.Add(new ItemKeyFrame(new ItemFrame(frames.ToDictionary(entry => entry.Key, entry => entry.Value[index])), durationFraction));
+            result.Add(new ItemKeyFrame(new ItemFrame(frames.ToDictionary(entry => entry.Key, entry => entry.Value[index])), durationFraction, EasingFunctionType.Linear));
         }
 
         return result;
@@ -273,7 +276,7 @@ public readonly struct ItemFrame
         foreach ((string key, AnimationElement element) in Elements)
         {
             ImGui.SeparatorText(key);
-            AnimationElement newElement = element.Edit(title);
+            AnimationElement newElement = element.Edit(title + key, 1);
             newElements.Add(key, newElement);
         }
         return new(newElements);
@@ -283,30 +286,29 @@ public readonly struct ItemFrame
 public readonly struct PLayerKeyFrame
 {
     public readonly PlayerFrame Frame;
-    public readonly TimeSpan EasingTime;
+    public readonly TimeSpan Time;
     public readonly EasingFunctionType EasingFunction;
 
     public PLayerKeyFrame(PlayerFrame frame, TimeSpan easingTime, EasingFunctionType easeFunction)
     {
         Frame = frame;
-        EasingTime = easingTime;
+        Time = easingTime;
         EasingFunction = easeFunction;
     }
 
     public static readonly PLayerKeyFrame Zero = new(PlayerFrame.Zero, TimeSpan.Zero, EasingFunctionType.Linear);
 
-    public PlayerFrame Interpolate(PlayerFrame frame, TimeSpan currentDuration)
+    public PlayerFrame Interpolate(PlayerFrame frame, float frameProgress)
     {
-        double progress = EasingTime == TimeSpan.Zero ? 1.0 : currentDuration / EasingTime;
-        float interpolatedProgress = EasingFunctions.Get(EasingFunction).Invoke((float)progress);
+        float interpolatedProgress = EasingFunctions.Get(EasingFunction).Invoke((float)frameProgress);
         return PlayerFrame.Interpolate(frame, Frame, interpolatedProgress);
     }
 
-    public bool Reached(TimeSpan currentDuration) => currentDuration >= EasingTime;
+    public bool Reached(TimeSpan currentDuration) => currentDuration >= Time;
 
     public PLayerKeyFrame Edit(string title)
     {
-        int milliseconds = (int)EasingTime.TotalMilliseconds;
+        int milliseconds = (int)Time.TotalMilliseconds;
         ImGui.DragInt($"Easing time##{title}", ref milliseconds);
 
         EasingFunctionType function = VSImGui.EnumEditor<EasingFunctionType>.Combo($"Easing function##{title}", EasingFunction);
@@ -329,6 +331,7 @@ public readonly struct PlayerFrame
     public readonly bool SwitchArms;
     public readonly float PitchFollow;
     public readonly float FovMultiplier;
+    public readonly float BobbingAmplitude;
 
     public const float DefaultPitchFollow = 0.8f;
     public const float PerfectPitchFollow = 1.0f;
@@ -342,7 +345,8 @@ public readonly struct PlayerFrame
         bool detachedAnchor = false,
         bool switchArms = false,
         float pitchFollow = DefaultPitchFollow,
-        float fovMultiplier = 1.0f)
+        float fovMultiplier = 1.0f,
+        float bobbingAmplitude = 1.0f)
     {
         RightHand = rightHand;
         LeftHand = leftHand;
@@ -352,6 +356,7 @@ public readonly struct PlayerFrame
         SwitchArms = switchArms;
         PitchFollow = pitchFollow;
         FovMultiplier = fovMultiplier;
+        BobbingAmplitude = bobbingAmplitude;
     }
 
     public static readonly PlayerFrame Zero = new(RightHandFrame.Zero, LeftHandFrame.Zero);
@@ -365,6 +370,9 @@ public readonly struct PlayerFrame
                 break;
             case "UpperTorso":
                 UpperTorso.Apply(pose);
+                break;
+            case "LowerTorso":
+                AnimationElement.Zero.Apply(pose);
                 break;
             default:
                 RightHand?.Apply(pose, DetachedAnchor);
@@ -387,6 +395,9 @@ public readonly struct PlayerFrame
         float fov = FovMultiplier;
         ImGui.SliderFloat($"FOV multiplier##{title}", ref fov, 0.1f, 2.0f);
 
+        float bobbing = BobbingAmplitude;
+        ImGui.SliderFloat($"Bobbing amplitude##{title}", ref bobbing, 0.1f, 2.0f);
+
         bool rightHand = RightHand != null;
         bool leftHand = LeftHand != null;
 
@@ -407,7 +418,7 @@ public readonly struct PlayerFrame
         ImGui.SeparatorText($"DetachedAnchor");
         AnimationElement anchor = DetachedAnchorFrame.Edit($"{title}##DetachedAnchor");
 
-        return new(right, left, torso, anchor, detachedAnchor, switchArms, pitchFollow ? PerfectPitchFollow : DefaultPitchFollow, fov);
+        return new(right, left, torso, anchor, detachedAnchor, switchArms, pitchFollow ? PerfectPitchFollow : DefaultPitchFollow, fov, bobbing);
     }
 
     public static PlayerFrame Interpolate(PlayerFrame from, PlayerFrame to, float progress)
@@ -445,8 +456,9 @@ public readonly struct PlayerFrame
 
         float pitchFollow = from.PitchFollow + (to.PitchFollow - from.PitchFollow) * progress;
         float fov = from.FovMultiplier + (to.FovMultiplier - from.FovMultiplier) * progress;
+        float bobbing = from.BobbingAmplitude + (to.BobbingAmplitude - from.BobbingAmplitude) * progress;
 
-        return new(righthand, leftHand, torso, anchor, to.DetachedAnchor, to.SwitchArms, pitchFollow, fov);
+        return new(righthand, leftHand, torso, anchor, to.DetachedAnchor, to.SwitchArms, pitchFollow, fov, bobbing);
     }
     public static PlayerFrame Compose(IEnumerable<(PlayerFrame element, float weight)> frames)
     {
@@ -459,7 +471,8 @@ public readonly struct PlayerFrame
             frames.Select(entry => entry.element.DetachedAnchor).Aggregate((first, second) => first || second),
             frames.Select(entry => entry.element.SwitchArms).Aggregate((first, second) => first || second),
             frames.Select(entry => entry.element.PitchFollow).Max(),
-            frames.Select(entry => entry.element.FovMultiplier).Min()
+            frames.Select(entry => entry.element.FovMultiplier).Min(),
+            frames.Select(entry => entry.element.BobbingAmplitude).Min()
             );
 #pragma warning restore CS8629 // Nullable value type may be null.
     }
@@ -629,23 +642,26 @@ public readonly struct AnimationElement
 
     public static readonly AnimationElement Zero = new(0, 0, 0, 0, 0, 0);
 
-    public AnimationElement Edit(string title)
+    public AnimationElement Edit(string title, float multiplier = 10)
     {
-        Vector3 translation = new Vector3(OffsetX, OffsetY, OffsetZ) * 100f;
-        ImGui.DragFloat3($"Translation##{title}", ref translation);
+        float speed = ImGui.GetIO().KeysDown[(int)ImGuiKey.LeftShift] ? 0.1f : 1;
+
+        Vector3 translation = new Vector3(OffsetX, OffsetY, OffsetZ) * multiplier;
+        ImGui.DragFloat3($"Translation##{title}", ref translation, speed);
 
         Vector3 rotation = new(RotationX, RotationY, RotationZ);
-        ImGui.DragFloat3($"Rotation##{title}", ref rotation);
+        ImGui.DragFloat3($"Rotation##{title}", ref rotation, speed);
 
         return new(
-            translation.X / 100f,
-            translation.Y / 100f,
-            translation.Z / 100f,
+            translation.X / multiplier,
+            translation.Y / multiplier,
+            translation.Z / multiplier,
             rotation.X,
             rotation.Y,
             rotation.Z
             );
     }
+    
 
     public float[] ToArray() => new float[]
             {

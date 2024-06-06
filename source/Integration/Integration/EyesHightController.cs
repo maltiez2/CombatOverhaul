@@ -12,7 +12,7 @@ internal static class EyeHightController
     public static float SprintFrequencyEffect { get; set; } = 1.0f;
     public static float SprintAmplitudeEffect { get; set; } = 1.0f;
     public static float SneakEffect { get; set; } = 1.0f;
-    public static float Offset { get; set; } = 1.0f;
+    public static float OffsetMultiplier { get; set; } = 1.0f;
     public static float LiquidEffect { get; set; } = 1.0f;
 
     public static bool UpdateEyeHeight(EntityPlayer __instance, float dt)
@@ -161,7 +161,7 @@ internal static class EyeHightController
         double sneakDiv = controls.Sneak ? 5 * SneakEffect : 1.8;
         double sprint = controls.Sprint ? 0.07 * SprintAmplitudeEffect : 0;
         double amplitude = (__instance.FeetInLiquid ? 0.8 * LiquidEffect : 1 + sprint) / (3 * sneakDiv) * Amplitude;
-        double offset = -0.2 / sneakDiv * Offset;
+        double offset = -0.2 / sneakDiv * OffsetMultiplier;
 
         double stepHeight = -Math.Max(0, Math.Abs(GameMath.Sin(5.5f * walkCounter.Value) * amplitude) + offset);
 

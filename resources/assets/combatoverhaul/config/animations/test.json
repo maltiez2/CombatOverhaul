@@ -9,6 +9,7 @@
         "SwitchArms": false,
         "PitchFollow": true,
         "FOVMultiplier": 0.8,
+        "BobbingAmplitude": 0.64,
         "Elements": {
           "ItemAnchor": [6.88, 0.9, 1.4, 11, -9, 100],
           "LowerArmR": [0, 0, 0, 0, 0, 0],

@@ -84,9 +84,9 @@ public sealed class AnimationsManager
                 ImGui.SliderFloat("SneakEffect##effects", ref SneakEffect, 0.5f, 2);
                 EyeHightController.SneakEffect = SneakEffect;
 
-                float Offset = EyeHightController.Offset;
+                float Offset = EyeHightController.OffsetMultiplier;
                 ImGui.SliderFloat("Offset##effects", ref Offset, 0, 2);
-                EyeHightController.Offset = Offset;
+                EyeHightController.OffsetMultiplier = Offset;
 
                 float LiquidEffect = EyeHightController.LiquidEffect;
                 ImGui.SliderFloat("LiquidEffect##effects", ref LiquidEffect, 0, 2);
@@ -108,7 +108,7 @@ public sealed class AnimationsManager
         Dictionary<string, Animation> result = new();
 
         string domain = asset.Location.Domain;
-        JsonObject json = JsonObject.FromJson(Encoding.UTF8.GetString(asset.Data));
+        JsonObject json = JsonObject.FromJson(asset.ToText());
         foreach (KeyValuePair<string, JToken?> entry in json.Token as JObject)
         {
             string code = entry.Key;
@@ -198,11 +198,19 @@ public sealed class AnimationsManager
                     PlayerRenderingPatches.FpHandsOffset = 0;
                 }
             }
+            ImGui.SameLine();
             ImGui.Checkbox("Overwrite current frame", ref _overwriteFrame);
             Animations[codes[_selectedAnimationIndex]].Edit(codes[_selectedAnimationIndex]);
             if (_overwriteFrame)
             {
-                _behavior.FrameOverride = Animations[codes[_selectedAnimationIndex]].StillFrame(Animations[codes[_selectedAnimationIndex]]._frameIndex);
+                if (Animations[codes[_selectedAnimationIndex]]._playerFrameEdited)
+                {
+                    _behavior.FrameOverride = Animations[codes[_selectedAnimationIndex]].StillPlayerFrame(Animations[codes[_selectedAnimationIndex]]._playerFrameIndex);
+                }
+                else
+                {
+                    _behavior.FrameOverride = Animations[codes[_selectedAnimationIndex]].StillItemFrame(Animations[codes[_selectedAnimationIndex]]._itemFrameIndex);
+                }
             }
             else
             {

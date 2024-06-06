@@ -358,7 +358,7 @@ internal class AnimatableShapeRenderer
         shaderProgram.UniformMatrix("projectionMatrix", render.CurrentProjectionMatrix);
         shaderProgram.UniformMatrix("viewMatrix", render.CameraMatrixOriginf);
         shaderProgram.UniformMatrix("modelMatrix", itemModelMatrix.Values);
-        shaderProgram.Uniform("depthOffset", GetDepthOffset(world));
+        shaderProgram.Uniform("depthOffset", PlayerRenderingPatches.FpHandsOffset);
     }
     private static float GetDepthOffset(IWorldAccessor world)
     {
