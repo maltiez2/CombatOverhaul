@@ -1,7 +1,4 @@
 ﻿using CombatOverhaul.Integration;
-using CombatOverhaul.ItemsAnimations;
-using ImGuiNET;
-using System.Numerics;
 using System.Reflection;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -10,7 +7,7 @@ using Vintagestory.API.MathTools;
 using Vintagestory.Client.NoObf;
 using Vintagestory.GameContent;
 
-namespace CombatOverhaul.PlayerAnimations;
+namespace CombatOverhaul.Animations;
 
 public sealed class FirstPersonAnimationsBehavior : EntityBehavior
 {
@@ -83,7 +80,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     private void OnBeforeFrame(Entity entity, float dt)
     {
         if (!IsOwner(entity)) return;
-        
+
         _lastFrame = _composer.Compose(TimeSpan.FromSeconds(dt / 2));
     }
     private void OnFrame(Entity entity, ElementPose pose)

@@ -1,6 +1,6 @@
 ﻿using Vintagestory.API.MathTools;
 
-namespace CombatOverhaul.PlayerAnimations;
+namespace CombatOverhaul.Animations;
 
 /// <summary>
 /// Default option usually is <see cref="Linear"/><br/><br/>

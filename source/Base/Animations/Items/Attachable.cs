@@ -3,7 +3,7 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.MathTools;
 
-namespace CombatOverhaul.ItemsAnimations;
+namespace CombatOverhaul.Animations;
 
 public class AnimatableAttachable : Animatable
 {

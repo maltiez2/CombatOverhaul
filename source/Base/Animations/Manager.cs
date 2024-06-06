@@ -1,5 +1,4 @@
 ﻿using CombatOverhaul.Integration;
-using CombatOverhaul.ItemsAnimations;
 using ImGuiNET;
 using Newtonsoft.Json.Linq;
 using System.Reflection;
@@ -12,7 +11,7 @@ using Vintagestory.Client.NoObf;
 using VSImGui;
 using VSImGui.API;
 
-namespace CombatOverhaul.PlayerAnimations;
+namespace CombatOverhaul.Animations;
 
 public sealed class AnimationsManager
 {

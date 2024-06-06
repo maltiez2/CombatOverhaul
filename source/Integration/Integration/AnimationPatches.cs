@@ -1,4 +1,4 @@
-﻿using CombatOverhaul.ItemsAnimations;
+﻿using CombatOverhaul.Animations;
 using HarmonyLib;
 using System.Reflection;
 using Vintagestory.API.Client;

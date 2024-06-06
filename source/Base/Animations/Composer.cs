@@ -1,6 +1,4 @@
-﻿using Vintagestory.API.Common.Entities;
-
-namespace CombatOverhaul.PlayerAnimations;
+﻿namespace CombatOverhaul.Animations;
 
 internal sealed class Composer
 {
@@ -21,7 +19,7 @@ internal sealed class Composer
         }
 
         List<(PlayerItemFrame, float)> frames = new();
-        foreach ((string category, var animator) in _animators)
+        foreach ((string category, Animator? animator) in _animators)
         {
             PlayerItemFrame frame = animator.Animate(delta);
             frames.Add((frame, _currentWeight[category]));

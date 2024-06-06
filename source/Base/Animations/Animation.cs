@@ -1,8 +1,7 @@
-﻿using CombatOverhaul.ItemsAnimations;
-using ImGuiNET;
+﻿using ImGuiNET;
 using Vintagestory.API.Common;
 
-namespace CombatOverhaul.PlayerAnimations;
+namespace CombatOverhaul.Animations;
 
 public sealed class Animation
 {
@@ -89,13 +88,13 @@ public sealed class Animation
                 PLayerKeyFrame frame = PlayerKeyFrames[_frameIndex].Edit(title);
                 PlayerKeyFrames[_frameIndex] = frame;
             }
-            
+
             ImGui.EndTabItem();
         }
         if (ItemKeyFrames.Any() && ImGui.BeginTabItem($"Item animation##{title}"))
         {
-            
-            
+
+
             ImGui.EndTabItem();
         }
         ImGui.EndTabBar();
@@ -261,8 +260,8 @@ public sealed class PLayerKeyFrameJson
                 );
         }
 
-        AnimationElement torso = new AnimationElement(Elements["UpperTorso"]);
-        AnimationElement anchor = new AnimationElement(Elements["DetachedAnchor"]);
+        AnimationElement torso = new(Elements["UpperTorso"]);
+        AnimationElement anchor = new(Elements["DetachedAnchor"]);
 
         float pitch = PitchFollow ? PlayerFrame.PerfectPitchFollow : PlayerFrame.DefaultPitchFollow;
 

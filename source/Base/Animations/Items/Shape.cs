@@ -6,7 +6,7 @@ using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
 using Vintagestory.API.MathTools;
 
-namespace CombatOverhaul.ItemsAnimations;
+namespace CombatOverhaul.Animations;
 
 public sealed class AnimatableShape : ITexPositionSource, IDisposable
 {

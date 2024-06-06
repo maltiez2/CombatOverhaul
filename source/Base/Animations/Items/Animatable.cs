@@ -5,7 +5,7 @@ using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 
-namespace CombatOverhaul.ItemsAnimations;
+namespace CombatOverhaul.Animations;
 
 public class Animatable : CollectibleBehavior
 {
