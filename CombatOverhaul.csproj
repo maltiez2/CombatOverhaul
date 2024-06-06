@@ -68,9 +68,6 @@
     <AssetsToFormat Include="$(AssetsDir)\$(ModId)\entities" />
     <AssetsToFormat Include="$(AssetsDir)\$(ModId)\config\animations" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="VSImGui" Version="0.0.6" />
-  </ItemGroup>
 
   <!-- References to libraries that are being used in project -->
   <ItemGroup>
