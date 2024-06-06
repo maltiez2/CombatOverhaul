@@ -5,12 +5,13 @@ using Vintagestory.API.Server;
 
 namespace CombatOverhaul.RangedSystems;
 
-[HasActionEventHandlers]
-public class RangeWeaponClient : IBehaviorManagedItem
+public class RangeWeaponClient : IClientWeaponLogic
 {
     public RangeWeaponClient(ICoreClientAPI api, Item item)
     {
         CombatOverhaulSystem system = api.ModLoader.GetModSystem<CombatOverhaulSystem>();
+
+        RangedWeaponSystem = system.ClientRangedWeaponSystem ?? throw new Exception();
 
         Item = item;
         Api = api;
@@ -37,9 +38,10 @@ public class RangeWeaponClient : IBehaviorManagedItem
 
     protected readonly Item Item;
     protected readonly ICoreClientAPI Api;
+    protected readonly RangedWeaponSystemClient RangedWeaponSystem;
 }
 
-public class RangeWeaponServer : IRangedWeaponLogicServer
+public class RangeWeaponServer : IServerRangedWeaponLogic
 {
     public RangeWeaponServer(ICoreServerAPI api, Item item)
     {
@@ -67,7 +69,7 @@ public class RangeWeaponServer : IRangedWeaponLogicServer
 
 public abstract class RangedWeaponItem : Item, IRangedWeapon
 {
-    public IRangedWeaponLogicServer ServerWeaponLogic => _serverWeaponLogic ?? throw new Exception("Trying to access server side weapon logic from client side, or trying to access it before loaded.");
+    public IServerRangedWeaponLogic ServerWeaponLogic => _serverWeaponLogic ?? throw new Exception("Trying to access server side weapon logic from client side, or trying to access it before loaded.");
 
     public override void OnLoaded(ICoreAPI api)
     {

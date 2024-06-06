@@ -64,9 +64,9 @@ public sealed class AnimationsManager
             }
             if (ImGui.BeginTabItem($"Camera movement effects"))
             {
-                float Amplitude = EyeHightController.Amplitude;
+                /*float Amplitude = EyeHightController.Amplitude;
                 ImGui.SliderFloat("Amplitude##effects", ref Amplitude, 0, 2);
-                EyeHightController.Amplitude = Amplitude;
+                EyeHightController.Amplitude = Amplitude;*/
 
                 float Frequency = EyeHightController.Frequency;
                 ImGui.SliderFloat("Frequency##effects", ref Frequency, 0, 2);
@@ -254,6 +254,4 @@ public sealed class AnimationsManager
         }
         if (!canCreate) ImGui.EndDisabled();
     }
-
-
 }

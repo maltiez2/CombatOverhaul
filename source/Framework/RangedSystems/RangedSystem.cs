@@ -136,7 +136,7 @@ public class RangedWeaponSystemServer
             return;
         }
 
-        if (weaponSlot.Itemstack.Item is not IRangedWeapon rangedWeapon)
+        if (weaponSlot.Itemstack.Item is not IHasRangedWeaponLogic rangedWeapon)
         {
             OnFailedReload(player, packet);
             return;
@@ -148,7 +148,7 @@ public class RangedWeaponSystemServer
             ammoSlot = GetAmmoSlot(player, packet.InventoryId, packet.SlotId.Value);
         }
 
-        if (rangedWeapon.ServerWeaponLogic.Reload(player, weaponSlot, ammoSlot, packet))
+        if (rangedWeapon.ServerWeaponLogic?.Reload(player, weaponSlot, ammoSlot, packet) == true)
         {
             OnSuccessfulReload(player, packet);
         }
@@ -168,13 +168,13 @@ public class RangedWeaponSystemServer
             return;
         }
 
-        if (weaponSlot.Itemstack.Item is not IRangedWeapon rangedWeapon)
+        if (weaponSlot.Itemstack.Item is not IHasRangedWeaponLogic rangedWeapon)
         {
             OnFailedShot(player, packet);
             return;
         }
 
-        if (rangedWeapon.ServerWeaponLogic.Shoot(player, weaponSlot, packet))
+        if (rangedWeapon.ServerWeaponLogic?.Shoot(player, weaponSlot, packet) == true)
         {
             OnSuccessfulShot(player, packet);
         }
@@ -192,25 +192,31 @@ public class RangedWeaponSystemServer
     private static ItemSlot GetAmmoSlot(IServerPlayer player, string inventoryId, int slotId) => player.InventoryManager.GetInventory(inventoryId)[slotId];
 }
 
-public interface IRangedWeaponLogicServer
+public interface IServerRangedWeaponLogic
 {
     bool Reload(IServerPlayer player, ItemSlot slot, ItemSlot? ammoSlot, ReloadPacket packet);
     bool Shoot(IServerPlayer player, ItemSlot slot, ShotPacket packet);
 }
 
-public interface IRangedWeapon
+public interface IHasRangedWeaponLogic
 {
-    IRangedWeaponLogicServer ServerWeaponLogic { get; }
+    IServerRangedWeaponLogic? ServerWeaponLogic { get; }
 }
 
-public class ItemInventory
+public class ItemInventoryBuffer
 {
-    public string Id { get; }
-    public List<ItemStack> Items { get; } = new();
+    public string Id { get; private set; } = "";
+    public List<ItemStack> Items { get; private set; } = new();
     public string Attribute => $"CombatOverhaul:inventory.{Id}";
 
-    public ItemInventory(ItemSlot slot, string id)
+    public ItemInventoryBuffer()
     {
+    }
+
+    public void Read(ItemSlot slot, string id)
+    {
+        Clear();
+        
         Id = id;
 
         if (!slot.Itemstack.Attributes.HasAttribute(Attribute))
@@ -228,8 +234,6 @@ public class ItemInventory
             Items.Add(new ItemStack(stream));
         }
     }
-
-    public static ItemInventory Read(ItemSlot slot, string id) => new(slot, id);
     public void Write(ItemSlot slot)
     {
         using MemoryStream memoryStream = new();
@@ -245,5 +249,10 @@ public class ItemInventory
         slot.Itemstack.Attributes.RemoveAttribute(Attribute);
         slot.Itemstack.Attributes.SetBytes(Attribute, memoryStream.ToArray());
         slot.MarkDirty();
+    }
+    public void Clear()
+    {
+        Id = "";
+        Items.Clear();
     }
 }

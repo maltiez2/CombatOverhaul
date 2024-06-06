@@ -22,6 +22,9 @@
     <Dependencies Include="game">
       <Version>$(GameVersion)</Version>
     </Dependencies>
+    <Dependencies Include="vsimgui">
+      <Version>1.1.3</Version>
+    </Dependencies>
   </ItemGroup>
 
   <!-- Project settings -->

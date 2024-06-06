@@ -4,6 +4,7 @@ using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
+using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
 using Vintagestory.GameContent;
@@ -29,7 +30,6 @@ public struct ProjectileStats
 public struct ProjectileCreationStats
 {
     public long ProducerEntityId { get; set; }
-    public int ProjectileType { get; set; }
     public float DamageMultiplier { get; set; }
     public float StrengthMultiplier { get; set; }
     public Vector3 Position { get; set; }
@@ -400,5 +400,19 @@ public sealed class ProjectileEntity : Entity
             ClientProjectile.SelfCollide = currentTime - _spawnTime >= _collisionDelay;
             _ = ClientProjectile.Collide();
         }
+    }
+}
+
+public class ProjectileBehavior : CollectibleBehavior
+{
+    public ProjectileStats Stats { get; private set; }
+
+    public ProjectileBehavior(CollectibleObject collObj) : base(collObj)
+    { 
+    }
+    
+    public override void Initialize(JsonObject properties)
+    {
+        Stats = properties["stats"].AsObject<ProjectileStats>();
     }
 }

@@ -21,7 +21,12 @@ public class HasActionEventHandlersAttribute : Attribute
 
 }
 
-public interface IBehaviorManagedItem
+public interface IHasWeaponLogic
+{
+    IClientWeaponLogic? ClientLogic { get; }
+}
+
+public interface IClientWeaponLogic
 {
     int ItemId { get; }
     DirectionsConfiguration DirectionsType { get; }
@@ -85,8 +90,8 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
     private readonly ActionListener _actionListener;
     private readonly DirectionController _directionController;
 
-    private IBehaviorManagedItem? _currentMainHandWeapon;
-    private IBehaviorManagedItem? _currentOffHandWeapon;
+    private IClientWeaponLogic? _currentMainHandWeapon;
+    private IClientWeaponLogic? _currentOffHandWeapon;
     private int _currentMainHandItemId = -1;
     private int _currentOffHandItemId = -1;
     private int _mainHandState = 0;
@@ -94,11 +99,12 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
 
     private void RegisterWeapons()
     {
-        GetClassesWithAttribute<HasActionEventHandlersAttribute>()
-            .OfType<IBehaviorManagedItem>()
+        _api.World.Items
+            .OfType<IHasWeaponLogic>()
+            .Select(element => element.ClientLogic)
             .Foreach(RegisterWeapon);
     }
-    private void RegisterWeapon(IBehaviorManagedItem? weapon)
+    private void RegisterWeapon(IClientWeaponLogic? weapon)
     {
         if (weapon is null) return;
 
@@ -232,14 +238,14 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
 
         ItemStack? stack = _player.ActiveHandItemSlot.Itemstack;
 
-        if (stack == null || stack.Item is not IBehaviorManagedItem weapon)
+        if (stack == null || stack.Item is not IHasWeaponLogic weapon)
         {
             PlayerRenderingPatches.ResetOffset();
             return;
         }
 
-        weapon.OnSelected(_player.ActiveHandItemSlot, _player, true, ref _mainHandState);
-        _currentMainHandWeapon = weapon;
+        weapon.ClientLogic?.OnSelected(_player.ActiveHandItemSlot, _player, true, ref _mainHandState);
+        _currentMainHandWeapon = weapon.ClientLogic;
 
         if (stack.Item.Attributes?["fpHandsOffset"].Exists == true)
         {
@@ -258,7 +264,7 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
 
         ItemStack? stack = _player.ActiveHandItemSlot.Itemstack;
 
-        if (stack == null || stack.Item is not IBehaviorManagedItem weapon) return;
+        if (stack == null || stack.Item is not IClientWeaponLogic weapon) return;
 
         weapon.OnSelected(_player.LeftHandItemSlot, _player, false, ref _offHandState);
         _currentOffHandWeapon = weapon;
@@ -267,7 +273,7 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
     {
         ItemStack? stack = _player.ActiveHandItemSlot.Itemstack;
 
-        if (stack == null || stack.Item is not IBehaviorManagedItem weapon)
+        if (stack == null || stack.Item is not IClientWeaponLogic weapon)
         {
             _directionController.DirectionsConfiguration = DirectionsConfiguration.None;
             return;
