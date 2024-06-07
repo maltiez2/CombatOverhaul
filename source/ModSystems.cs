@@ -12,6 +12,7 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Config;
 using Vintagestory.API.Server;
 using Vintagestory.Client.NoObf;
+using CombatOverhaul.Implementations.Vanilla;
 
 namespace CombatOverhaul;
 
@@ -35,6 +36,9 @@ public sealed class CombatOverhaulSystem : ModSystem
 
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:Animatable", typeof(Animatable));
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:AnimatableAttachable", typeof(AnimatableAttachable));
+        api.RegisterCollectibleBehaviorClass("CombatOverhaul:Projectile", typeof(ProjectileBehavior));
+
+        api.RegisterItemClass("CombatOverhaul:Bow", typeof(BowItem));
 
         new Harmony("CombatOverhaulAuto").PatchAll();
     }

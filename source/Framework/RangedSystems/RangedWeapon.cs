@@ -29,7 +29,7 @@ public class RangeWeaponClient : IClientWeaponLogic
     }
     public virtual void OnRegistered(ActionsManagerPlayerBehavior behavior, ICoreClientAPI api)
     {
-
+        PlayerBehavior = behavior;
     }
     public virtual void OnSelected(ItemSlot slot, EntityPlayer player, bool mainHand, ref int state)
     {
@@ -39,6 +39,7 @@ public class RangeWeaponClient : IClientWeaponLogic
     protected readonly Item Item;
     protected readonly ICoreClientAPI Api;
     protected readonly RangedWeaponSystemClient RangedWeaponSystem;
+    protected ActionsManagerPlayerBehavior PlayerBehavior;
 }
 
 public class RangeWeaponServer : IServerRangedWeaponLogic
@@ -64,26 +65,4 @@ public class RangeWeaponServer : IServerRangedWeaponLogic
     protected ProjectileSystemServer ProjectileSystem;
     protected readonly Item Item;
     protected readonly ICoreServerAPI Api;
-}
-
-
-public abstract class RangedWeaponItem : Item, IRangedWeapon
-{
-    public IServerRangedWeaponLogic ServerWeaponLogic => _serverWeaponLogic ?? throw new Exception("Trying to access server side weapon logic from client side, or trying to access it before loaded.");
-
-    public override void OnLoaded(ICoreAPI api)
-    {
-        if (api is ICoreServerAPI server)
-        {
-            _serverWeaponLogic = new(server, this);
-        }
-
-        if (api is ICoreClientAPI client)
-        {
-            _clientWeaponLogic = new(client, this);
-        }
-    }
-
-    private RangeWeaponClient? _clientWeaponLogic;
-    private RangeWeaponServer? _serverWeaponLogic;
 }

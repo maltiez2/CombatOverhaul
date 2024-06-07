@@ -1,0 +1,4 @@
+﻿[
+  {"file": "game:itemtypes/tool/arrow", "op": "add", "path": "/behaviors", "value": []},
+  {"file": "game:itemtypes/tool/arrow", "op": "add", "path": "/behaviors/-", "value": {"name": "CombatOverhaul:Projectile", "properties": {"stats": {}}}}
+]

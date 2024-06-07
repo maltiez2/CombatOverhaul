@@ -8,7 +8,6 @@ using Vintagestory.API.Server;
 
 namespace CombatOverhaul.Implementations.Vanilla;
 
-[HasActionEventHandlers]
 public sealed class BowClient : RangeWeaponClient
 {
     public BowClient(ICoreClientAPI api, Item item) : base(api, item)
@@ -20,27 +19,46 @@ public sealed class BowClient : RangeWeaponClient
 
     public override void OnSelected(ItemSlot slot, EntityPlayer player, bool mainHand, ref int state)
     {
-        _arrowInventory.Read(slot, _inventoryId);
         _attachable.ClearAttachments(player.EntityId);
-        if (_arrowInventory.Items.Any()) _attachable.SetAttachment(player.EntityId, "arrow", _arrowInventory.Items[0], _arrowTransform);
     }
 
     public override void OnDeselected(EntityPlayer player)
     {
-        _arrowInventory.Clear();
+        _arrowSlot = null;
         _attachable.ClearAttachments(player.EntityId);
+        PlayerBehavior.SetState(2);
     }
 
     private readonly ICoreClientAPI _api;
-    private readonly ItemInventoryBuffer _arrowInventory = new();
     private readonly AnimatableAttachable _attachable;
     private readonly ModelTransform _arrowTransform;
-    private const string _inventoryId = "arrow";
+    private ItemSlot? _arrowSlot = null;
 
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Pressed)]
     private bool Load(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand)
     {
         if (state != 0 || eventData.AltPressed) return false;
+
+
+        player.WalkInventory(slot =>
+        {
+            if (slot?.Itemstack?.Item == null) return true;
+
+            if (slot.Itemstack.Item.HasBehavior<ProjectileBehavior>())
+            {
+                _arrowSlot = slot;
+                return false;
+            }
+
+            return true;
+        });
+
+        if (_arrowSlot == null) return false;
+
+        _attachable.SetAttachment(player.EntityId, "arrow", _arrowSlot.Itemstack, _arrowTransform);
+        RangedWeaponSystem.Reload(slot, _arrowSlot, 1, mainHand, ReloadCallback);
+
+        state = 1;
 
         return true;
     }
@@ -48,7 +66,7 @@ public sealed class BowClient : RangeWeaponClient
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Active)]
     private bool Aim(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand)
     {
-        if (state != 1 || eventData.AltPressed) return false;
+        if (state != 2 || eventData.AltPressed) return false;
 
         return true;
     }
@@ -56,9 +74,21 @@ public sealed class BowClient : RangeWeaponClient
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Released)]
     private bool Shoot(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand)
     {
-        if (state != 2 || eventData.AltPressed) return false;
+        if (state != 3 || eventData.AltPressed) return false;
 
         return true;
+    }
+
+    private void ReloadCallback(bool success)
+    {
+        if (success)
+        {
+            PlayerBehavior.SetState(2);
+        }
+        else
+        {
+            PlayerBehavior.SetState(0);
+        }
     }
 }
 
@@ -74,44 +104,33 @@ public class BowServer : RangeWeaponServer
 
     public override bool Reload(IServerPlayer player, ItemSlot slot, ItemSlot? ammoSlot, ReloadPacket packet)
     {
-        _arrowInventory.Read(slot, _inventoryId);
-        if (_arrowInventory.Items.Count == 0 && ammoSlot?.Itemstack?.Item != null && ammoSlot.Itemstack.Item.HasBehavior<ProjectileBehavior>())
+        if (ammoSlot?.Itemstack?.Item != null && ammoSlot.Itemstack.Item.HasBehavior<ProjectileBehavior>())
         {
-            ItemStack arrow = ammoSlot.TakeOut(1);
-            ammoSlot.MarkDirty();
-
-            _arrowInventory.Items.Add(arrow);
-            _arrowInventory.Write(slot);
-
-            _arrowInventory.Clear();
+            _arrowSlot = ammoSlot;
             return true;
         }
 
-        if (ammoSlot == null && _arrowInventory.Items.Count != 0)
+        if (ammoSlot == null)
         {
-            ItemStack arrow = _arrowInventory.Items[0];
-            _arrowInventory.Write(slot);
-
-            if (!player.Entity.TryGiveItemStack(arrow))
-            {
-                Api.World.SpawnItemEntity(arrow, player.Entity.Pos.XYZ);
-            }
-
-            _arrowInventory.Clear();
+            _arrowSlot = null;
             return true;
         }
 
-        _arrowInventory.Clear();
         return false;
     }
 
     public override bool Shoot(IServerPlayer player, ItemSlot slot, ShotPacket packet)
     {
-        _arrowInventory.Read(slot, _inventoryId);
+        if (_arrowSlot?.Itemstack == null || _arrowSlot.Itemstack.StackSize < 1) return false;
 
-        if (_arrowInventory.Items.Count == 0) return false;
+        ProjectileStats? stats = _arrowSlot.Itemstack.Item.GetCollectibleBehavior<ProjectileBehavior>(true)?.Stats;
 
-        ProjectileStats stats = _arrowInventory.Items[0].Item.GetCollectibleBehavior<ProjectileBehavior>(true).Stats;
+        if (stats ==  null)
+        {
+            _arrowSlot = null;
+            return false;
+        }
+
         ProjectileCreationStats spawnStats = new()
         {
             ProducerEntityId = player.Entity.EntityId,
@@ -121,16 +140,13 @@ public class BowServer : RangeWeaponServer
             Velocity = Vector3.Normalize(packet.Velocity) * _velocity
         };
 
-        _projectileSystem.Spawn(stats, spawnStats, _arrowInventory.Items[0]);
-
-        _arrowInventory.Clear();
+        _projectileSystem.Spawn(stats.Value, spawnStats, _arrowSlot.TakeOut(1));
 
         return true;
     }
 
-    private readonly ItemInventoryBuffer _arrowInventory = new();
+    private ItemSlot? _arrowSlot = null;
     private readonly ProjectileSystemServer _projectileSystem;
-    private const string _inventoryId = "arrow";
     private readonly float _damageMultiplier;
     private readonly float _strengthMultiplier;
     private readonly float _velocity;
@@ -157,5 +173,10 @@ public class BowItem : Item, IHasWeaponLogic, IHasRangedWeaponLogic
         {
             ServerLogic = new(serverAPI, this);
         }
+    }
+
+
+    public override void OnHeldDropped(IWorldAccessor world, IPlayer byPlayer, ItemSlot slot, int quantity, ref EnumHandling handling)
+    {
     }
 }

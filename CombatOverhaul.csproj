@@ -142,6 +142,9 @@
       <Private>False</Private>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="resources\assets\combatoverhaul\itemtypes\ammo\" />
+  </ItemGroup>
 
   <!-- Creates/updates modinfo.json file in build directory -->
   <Target Name="ModInfo" BeforeTargets="CopyFilesToOutput">

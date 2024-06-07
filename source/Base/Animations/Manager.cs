@@ -1,8 +1,8 @@
 ﻿using CombatOverhaul.Integration;
+using CombatOverhaul.Utils;
 using ImGuiNET;
 using Newtonsoft.Json.Linq;
 using System.Reflection;
-using System.Text;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
@@ -49,6 +49,7 @@ public sealed class AnimationsManager
     private string _animationKey = "";
     private readonly FieldInfo _mainCameraInfo = typeof(ClientMain).GetField("MainCamera", BindingFlags.NonPublic | BindingFlags.Instance);
     private readonly FieldInfo _cameraFov = typeof(Camera).GetField("Fov", BindingFlags.NonPublic | BindingFlags.Instance);
+    private string _playerAnimationKey = "";
 
     private CallbackGUIStatus DrawEditor(float deltaSeconds)
     {
@@ -144,9 +145,6 @@ public sealed class AnimationsManager
     {
         string[] codes = Animations.Keys.ToArray();
 
-        CreateFromItemAnimation();
-        ImGui.Separator();
-
         if (ImGui.Button("Play") && Animations.Count > 0)
         {
             AnimationRequest request = new(
@@ -167,21 +165,22 @@ public sealed class AnimationsManager
         {
             ImGui.SetClipboardText(Animations[codes[_selectedAnimationIndex]].ToString());
         }
-        ImGui.SameLine();
 
-        VSImGui.ListEditor.Edit(
-            "Animations",
-            codes,
-            ref _selectedAnimationIndex,
-            onRemove: (value, index) => Animations.Remove(value),
-            onAdd: key =>
-            {
-                Animations.Add($"temp_{++_tempAnimations}", Animation.Zero);
-                return $"temp_{_tempAnimations}";
-            }
-            );
+        ImGui.ListBox("Animations", ref _selectedAnimationIndex, Animations.Keys.ToArray(), Animations.Count);
+
+        if (ImGui.Button("Remove##animations"))
+        {
+            Animations.Remove(Animations.Keys.ToArray()[_selectedAnimationIndex]);
+            _selectedAnimationIndex--;
+            if (_selectedAnimationIndex < 0) _selectedAnimationIndex = 0;
+        }
 
         codes = Animations.Keys.ToArray();
+
+        if (ImGui.CollapsingHeader($"Add animation"))
+        {
+            CreateAnimationGui();
+        }
 
         ImGui.Separator();
 
@@ -200,6 +199,7 @@ public sealed class AnimationsManager
             }
             ImGui.SameLine();
             ImGui.Checkbox("Overwrite current frame", ref _overwriteFrame);
+            ImGui.SeparatorText("Animation");
             Animations[codes[_selectedAnimationIndex]].Edit(codes[_selectedAnimationIndex]);
             if (_overwriteFrame)
             {
@@ -219,6 +219,25 @@ public sealed class AnimationsManager
         }
     }
 
+    private void CreateAnimationGui()
+    {
+        ImGui.Indent();
+        ImGui.SeparatorText("Just player");
+
+        ImGui.InputText("Animation code##playeranimation", ref _playerAnimationKey, 300);
+
+        bool canAddAnimation = !Animations.ContainsKey(_playerAnimationKey) && _playerAnimationKey != "";
+        if (!canAddAnimation) ImGui.BeginDisabled();
+        if (ImGui.Button($"Create##playeranimation"))
+        {
+            Animations.Add(_playerAnimationKey, Animation.Zero);
+        }
+        if (!canAddAnimation) ImGui.EndDisabled();
+
+        ImGui.SeparatorText("Item + Player");
+        CreateFromItemAnimation();
+        ImGui.Unindent();
+    }
     private void CreateFromItemAnimation()
     {
         Item? item = _api.World.Player.Entity.RightHandItemSlot.Itemstack?.Item;
@@ -245,12 +264,19 @@ public sealed class AnimationsManager
         ImGui.InputText($"Item animation code", ref _itemAnimation, 300);
         ImGui.InputText($"New animation code", ref _animationKey, 300);
 
-        bool canCreate = !Animations.ContainsKey(_animationKey);// && shape.AnimationsByCrc32.ContainsKey(GameMath.Crc32(_animationKey.ToLowerInvariant()));
+        bool canCreate = !Animations.ContainsKey(_animationKey);
 
         if (!canCreate) ImGui.BeginDisabled();
         if (ImGui.Button("Create##itemanimation"))
         {
-            Animations.Add(_animationKey, new Animation(new PLayerKeyFrame[] { PLayerKeyFrame.Zero }, _itemAnimation, shape));
+            try
+            {
+                Animations.Add(_animationKey, new Animation(new PLayerKeyFrame[] { PLayerKeyFrame.Zero }, _itemAnimation, shape));
+            }
+            catch (Exception exception)
+            {
+                LoggerUtil.Warn(_api, this, $"Error on creating animation: {exception}");
+            }
         }
         if (!canCreate) ImGui.EndDisabled();
     }

@@ -54,8 +54,6 @@ public sealed class Animation
     public bool Finished(TimeSpan currentDuration) => currentDuration >= TotalDuration;
     public void Edit(string title)
     {
-        ImGui.Separator();
-
         if (ImGui.Button($"Sort frames##{title}"))
         {
             PlayerKeyFrames.Sort((x, y) => (int)(x.Time - y.Time).TotalMilliseconds);
@@ -88,7 +86,11 @@ public sealed class Animation
     public override string ToString() => AnimationJson.FromAnimation(this).ToString();
     public PlayerItemFrame StillPlayerFrame(int playerFrame)
     {
-        return Interpolate(PlayerItemFrame.Zero, PlayerKeyFrames[playerFrame].Time - TimeSpan.FromMilliseconds(1));
+        TimeSpan timestamp = PlayerKeyFrames[playerFrame].Time - TimeSpan.FromMilliseconds(1);
+        if (timestamp < TimeSpan.Zero) timestamp = TimeSpan.Zero;
+
+
+        return Interpolate(PlayerItemFrame.Zero, timestamp);
     }
     public PlayerItemFrame StillItemFrame(int itemFrame)
     {

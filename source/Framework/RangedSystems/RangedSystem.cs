@@ -56,12 +56,29 @@ public class RangedWeaponSystemClient
         _callbacks[id] = reloadCallback;
 
         InventoryBase inventory = ammo.Inventory;
-        int slotId = inventory.GetSlotId(weapon);
+        int slotId = inventory.GetSlotId(ammo);
 
         ReloadPacket packet = new()
         {
             InventoryId = inventory.InventoryID,
             SlotId = slotId,
+            Amount = amount,
+            RightHand = rightHand,
+            ItemId = weapon.Itemstack?.Item?.Id ?? 0,
+            ReloadId = id
+        };
+
+        _clientChannel.SendPacket(packet);
+    }
+    public void Unload(ItemSlot weapon, int amount, bool rightHand, Action<bool> reloadCallback)
+    {
+        Guid id = Guid.NewGuid();
+        _callbacks[id] = reloadCallback;
+
+        ReloadPacket packet = new()
+        {
+            InventoryId = "",
+            SlotId = null,
             Amount = amount,
             RightHand = rightHand,
             ItemId = weapon.Itemstack?.Item?.Id ?? 0,
@@ -189,7 +206,7 @@ public class RangedWeaponSystemServer
     private void OnFailedShot(IServerPlayer player, ShotPacket packet) => _serverChannel.SendPacket(new ShotConfirmPacket() { ShotId = packet.ShotId, Success = false }, player);
     private void OnSuccessfulShot(IServerPlayer player, ShotPacket packet) => _serverChannel.SendPacket(new ShotConfirmPacket() { ShotId = packet.ShotId, Success = true }, player);
     private static ItemSlot GetWeaponSlot(IServerPlayer player, bool RightHand) => RightHand ? player.Entity.RightHandItemSlot : player.Entity.LeftHandItemSlot;
-    private static ItemSlot GetAmmoSlot(IServerPlayer player, string inventoryId, int slotId) => player.InventoryManager.GetInventory(inventoryId)[slotId];
+    private static ItemSlot? GetAmmoSlot(IServerPlayer player, string inventoryId, int slotId) => player.InventoryManager.GetInventory(inventoryId)?[slotId];
 }
 
 public interface IServerRangedWeaponLogic

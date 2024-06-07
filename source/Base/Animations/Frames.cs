@@ -2,7 +2,6 @@
 using System.Collections.Immutable;
 using System.Numerics;
 using Vintagestory.API.Common;
-using Vintagestory.API.Common.Entities;
 using Vintagestory.API.MathTools;
 
 namespace CombatOverhaul.Animations;
@@ -30,7 +29,7 @@ public readonly struct PlayerItemFrame
     }
 
     public static readonly PlayerItemFrame Zero = new(PlayerFrame.Zero, null);
-    public static readonly PlayerItemFrame Empty = new(new PlayerFrame(), null);
+    public static readonly PlayerItemFrame Empty = new(PlayerFrame.Empty, null);
 
     public void Apply(ElementPose pose)
     {
@@ -115,7 +114,7 @@ public readonly struct ItemKeyFrame
         {
             int frameIndex = missingFirstFrame ? index - 1 : index;
             float durationFraction = (float)vanillaKeyFrames[frameIndex].Frame / (vanillaKeyFrames[^1].Frame == 0 ? 1 : vanillaKeyFrames[^1].Frame);
-            
+
             result.Add(new ItemKeyFrame(new ItemFrame(frames.ToDictionary(entry => entry.Key, entry => entry.Value[index])), durationFraction, EasingFunctionType.Linear));
         }
 
@@ -231,7 +230,7 @@ public readonly struct ItemFrame
     public static ItemFrame Interpolate(ItemFrame from, ItemFrame to, float progress)
     {
         if (!from.Elements.Any()) return to;
-        
+
         if (from.ElementsHash != to.ElementsHash)
         {
             throw new InvalidOperationException("Trying to interpolate item frames with different sets of elements");
@@ -325,13 +324,13 @@ public readonly struct PlayerFrame
 {
     public readonly RightHandFrame? RightHand;
     public readonly LeftHandFrame? LeftHand;
-    public readonly AnimationElement UpperTorso;
-    public readonly AnimationElement DetachedAnchorFrame;
-    public readonly bool DetachedAnchor;
-    public readonly bool SwitchArms;
-    public readonly float PitchFollow;
-    public readonly float FovMultiplier;
-    public readonly float BobbingAmplitude;
+    public readonly AnimationElement UpperTorso = AnimationElement.Zero;
+    public readonly AnimationElement DetachedAnchorFrame = AnimationElement.Zero;
+    public readonly bool DetachedAnchor = false;
+    public readonly bool SwitchArms = false;
+    public readonly float PitchFollow = DefaultPitchFollow;
+    public readonly float FovMultiplier = 1;
+    public readonly float BobbingAmplitude = 1;
 
     public const float DefaultPitchFollow = 0.8f;
     public const float PerfectPitchFollow = 1.0f;
@@ -360,6 +359,7 @@ public readonly struct PlayerFrame
     }
 
     public static readonly PlayerFrame Zero = new(RightHandFrame.Zero, LeftHandFrame.Zero);
+    public static readonly PlayerFrame Empty = new();
 
     public void Apply(ElementPose pose)
     {
@@ -661,7 +661,7 @@ public readonly struct AnimationElement
             rotation.Z
             );
     }
-    
+
 
     public float[] ToArray() => new float[]
             {

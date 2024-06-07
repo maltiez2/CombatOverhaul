@@ -15,12 +15,6 @@ public class ActionEventHandlerAttribute : Attribute
     public ActionEventHandlerAttribute(EnumEntityAction action, ActionState state) => Event = new(action, state);
 }
 
-[AttributeUsage(AttributeTargets.Class)]
-public class HasActionEventHandlersAttribute : Attribute
-{
-
-}
-
 public interface IHasWeaponLogic
 {
     IClientWeaponLogic? ClientLogic { get; }
@@ -79,6 +73,18 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
         _ = CheckIfItemsInHandsChanged();
         _actionListener.SuppressLMB = SuppressLMB;
         _actionListener.SuppressRMB = SuppressRMB;
+    }
+    public int GetState(bool mainHand = true) => mainHand ? _mainHandState : _offHandState;
+    public void SetState(int state, bool mainHand = true)
+    {
+        if (mainHand)
+        {
+            _mainHandState = state;
+        }
+        else
+        {
+            _offHandState = state;
+        }
     }
 
     private readonly bool _mainPlayer = false;
