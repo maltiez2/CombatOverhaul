@@ -1,4 +1,5 @@
 ﻿using CombatOverhaul.Animations;
+using CombatOverhaul.Colliders;
 using HarmonyLib;
 using System.Reflection;
 using Vintagestory.API.Client;
@@ -25,6 +26,11 @@ internal static class AnimationPatch
             );
 
         new Harmony(harmonyId).Patch(
+                typeof(EntityShapeRenderer).GetMethod("DoRender3DOpaque", AccessTools.all),
+                prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimationPatch), nameof(DoRender3DOpaque)))
+            );
+
+        new Harmony(harmonyId).Patch(
                 typeof(EntityPlayer).GetMethod("OnSelfBeforeRender", AccessTools.all),
                 prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimationPatch), nameof(BeforeRender)))
             );
@@ -43,6 +49,7 @@ internal static class AnimationPatch
     public static void Unpatch(string harmonyId)
     {
         new Harmony(harmonyId).Unpatch(typeof(EntityShapeRenderer).GetMethod("RenderHeldItem", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
+        new Harmony(harmonyId).Unpatch(typeof(EntityShapeRenderer).GetMethod("DoRender3DOpaque", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         new Harmony(harmonyId).Unpatch(typeof(Vintagestory.API.Common.AnimationManager).GetMethod("OnClientFrame", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         new Harmony(harmonyId).Unpatch(typeof(EntityPlayer).GetMethod("OnSelfBeforeRender", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         new Harmony(harmonyId).Unpatch(typeof(EntityPlayer).GetMethod("updateEyeHeight", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
@@ -55,6 +62,12 @@ internal static class AnimationPatch
     private static void BeforeRender(EntityPlayer __instance, float dt)
     {
         OnBeforeFrame?.Invoke(__instance, dt);
+    }
+
+    private static void DoRender3DOpaque(EntityShapeRenderer __instance, float dt, bool isShadowPass)
+    {
+        var behavior = __instance.entity.GetBehavior<CollidersEntityBehavior>();
+        behavior?.Render(__instance.entity.Api as ICoreClientAPI, __instance.entity as EntityAgent, __instance);
     }
 
     private static void ReplaceAnimator(Vintagestory.API.Common.AnimationManager __instance, float dt)
@@ -131,6 +144,7 @@ internal class ProceduralClientAnimator : ClientAnimator
         )
     {
         _entity = entity;
+        _colliders = entity.GetBehavior<CollidersEntityBehavior>();
 
         frameByDepthByAnimation = (List<ElementPose>[][])_frameByDepthByAnimation.GetValue(previous);
         nextFrameTransformsByAnimation = (List<ElementPose>[][])_nextFrameTransformsByAnimation.GetValue(previous);
@@ -231,6 +245,8 @@ internal class ProceduralClientAnimator : ClientAnimator
             float[] tmp = new float[16];
             Mat4f.Identity(tmp);
 
+            if (_colliders != null) _colliders.Animator = this;
+
             CalculateMatrices(num, dt, RootPoses, weightsByAnimationAndElement[0], Mat4f.Create(), frameByDepthByAnimation[0], nextFrameTransformsByAnimation[0], 0);
 
             for (int j = 0; j < GlobalConstants.MaxAnimatedElements; j++)
@@ -260,6 +276,7 @@ internal class ProceduralClientAnimator : ClientAnimator
 
     internal Entity? _entity;
     internal Shape? _shape;
+    internal CollidersEntityBehavior? _colliders;
 
     private readonly List<ElementPose>[][] frameByDepthByAnimation;
     private readonly List<ElementPose>[][] nextFrameTransformsByAnimation;
@@ -335,6 +352,8 @@ internal class ProceduralClientAnimator : ClientAnimator
             elem.GetLocalTransformMatrix(animVersion, localTransformMatrix, outFramePose);
             Mat4f.Mul(outFramePose.AnimModelMatrix, outFramePose.AnimModelMatrix, localTransformMatrix);
             CalculateElementTransformMatrices(elem, outFramePose);
+
+            _colliders?.SetColliderElement(elem);
 
             if (outFramePose.ChildElementPoses != null)
             {

@@ -1,36 +1,46 @@
-﻿using System.Numerics;
+﻿using ProtoBuf;
+using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
+using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Server;
 
 namespace CombatOverhaul.RangedSystems;
 
-public struct ReloadPacket
+[ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
+public class ReloadPacket
 {
-    public string InventoryId { get; set; }
+    public string InventoryId { get; set; } = "";
     public int? SlotId { get; set; }
     public int Amount { get; set; }
     public int ItemId { get; set; }
     public bool RightHand { get; set; }
-    public Guid ReloadId { get; set; }
+    public int ReloadId { get; set; }
 }
-public struct ReloadConfirmPacket
+
+[ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
+public class ReloadConfirmPacket
 {
-    public Guid ReloadId { get; set; }
+    public int ReloadId { get; set; }
     public bool Success { get; set; }
 }
-public struct ShotPacket
+
+[ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
+public class ShotPacket
 {
-    public Guid ShotId { get; set; }
-    public Vector3 Position { get; set; }
-    public Vector3 Velocity { get; set; }
+    public Guid ProjectileId { get; set; }
+    public int ShotId { get; set; }
+    public float[] Position { get; set; }
+    public float[] Velocity { get; set; }
     public int ItemId { get; set; }
     public int Amount { get; set; }
     public bool RightHand { get; set; }
 }
-public struct ShotConfirmPacket
+
+[ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
+public class ShotConfirmPacket
 {
-    public Guid ShotId { get; set; }
+    public int ShotId { get; set; }
     public bool Success { get; set; }
 }
 
@@ -52,7 +62,8 @@ public class RangedWeaponSystemClient
 
     public void Reload(ItemSlot weapon, ItemSlot ammo, int amount, bool rightHand, Action<bool> reloadCallback)
     {
-        Guid id = Guid.NewGuid();
+        if (_nextId > int.MaxValue / 2) _nextId = 0;
+        int id = _nextId++;
         _callbacks[id] = reloadCallback;
 
         InventoryBase inventory = ammo.Inventory;
@@ -72,7 +83,8 @@ public class RangedWeaponSystemClient
     }
     public void Unload(ItemSlot weapon, int amount, bool rightHand, Action<bool> reloadCallback)
     {
-        Guid id = Guid.NewGuid();
+        if (_nextId > int.MaxValue / 2) _nextId = 0;
+        int id = _nextId++;
         _callbacks[id] = reloadCallback;
 
         ReloadPacket packet = new()
@@ -87,16 +99,18 @@ public class RangedWeaponSystemClient
 
         _clientChannel.SendPacket(packet);
     }
-    public void Shoot(ItemSlot weapon, int amount, Vector3 position, Vector3 velocity, bool rightHand, Action<bool> shootCallback)
+    public void Shoot(ItemSlot weapon, Guid projectileId, int amount, Vector3 position, Vector3 velocity, bool rightHand, Action<bool> shootCallback)
     {
-        Guid id = Guid.NewGuid();
+        if (_nextId > int.MaxValue / 2) _nextId = 0;
+        int id = _nextId++;
         _callbacks[id] = shootCallback;
 
         ShotPacket packet = new()
         {
+            ProjectileId = projectileId,
             ShotId = id,
-            Position = position,
-            Velocity = velocity,
+            Position = new float[3] { position.X, position.Y, position.Z },
+            Velocity = new float[3] { velocity.X, velocity.Y, velocity.Z },
             ItemId = weapon.Itemstack?.Item?.Id ?? 0,
             Amount = amount,
             RightHand = rightHand
@@ -107,7 +121,8 @@ public class RangedWeaponSystemClient
 
     private readonly ICoreClientAPI _api;
     private readonly IClientNetworkChannel _clientChannel;
-    private readonly Dictionary<Guid, Action<bool>> _callbacks = new();
+    private readonly Dictionary<int, Action<bool>> _callbacks = new();
+    private int _nextId = 0;
 
     private void HandleReloadPacket(ReloadConfirmPacket packet)
     {
@@ -191,7 +206,7 @@ public class RangedWeaponSystemServer
             return;
         }
 
-        if (rangedWeapon.ServerWeaponLogic?.Shoot(player, weaponSlot, packet) == true)
+        if (rangedWeapon.ServerWeaponLogic?.Shoot(player, weaponSlot, packet, player.Entity) == true)
         {
             OnSuccessfulShot(player, packet);
         }
@@ -212,7 +227,7 @@ public class RangedWeaponSystemServer
 public interface IServerRangedWeaponLogic
 {
     bool Reload(IServerPlayer player, ItemSlot slot, ItemSlot? ammoSlot, ReloadPacket packet);
-    bool Shoot(IServerPlayer player, ItemSlot slot, ShotPacket packet);
+    bool Shoot(IServerPlayer player, ItemSlot slot, ShotPacket packet, Entity shooter);
 }
 
 public interface IHasRangedWeaponLogic

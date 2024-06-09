@@ -1,4 +1,5 @@
-﻿using CombatOverhaul.Integration;
+﻿using CombatOverhaul.Colliders;
+using CombatOverhaul.Integration;
 using CombatOverhaul.Utils;
 using ImGuiNET;
 using Newtonsoft.Json.Linq;
@@ -10,15 +11,24 @@ using Vintagestory.API.MathTools;
 using Vintagestory.Client.NoObf;
 using VSImGui;
 using VSImGui.API;
+using static OpenTK.Graphics.OpenGL.GL;
 
 namespace CombatOverhaul.Animations;
 
 public sealed class AnimationsManager
 {
-    public Dictionary<string, Animation> Animations { get; private set; }
+    public Dictionary<string, Animation> Animations { get; private set; } = new();
     public AnimationsManager(ICoreClientAPI api)
     {
-        List<IAsset> animations = api.Assets.GetManyInCategory("config", "animations");
+        api.ModLoader.GetModSystem<ImGuiModSystem>().Draw += DrawEditor;
+        api.Input.RegisterHotKey("combatOverhaul_editor", "Show animation editor", GlKeys.L, ctrlPressed: true);
+        api.Input.SetHotKeyHandler("combatOverhaul_editor", keys => _showAnimationEditor = !_showAnimationEditor);
+
+        _api = api;
+    }
+    public void Load()
+    {
+        List<IAsset> animations = _api.Assets.GetManyInCategory("config", "animations");
 
         Dictionary<string, Animation> animationsByCode = new();
         foreach (Dictionary<string, Animation> assetAnimations in animations.Select(FromAsset))
@@ -31,19 +41,14 @@ public sealed class AnimationsManager
 
         Animations = animationsByCode;
 
-        api.ModLoader.GetModSystem<ImGuiModSystem>().Draw += DrawEditor;
-        api.Input.RegisterHotKey("combatOverhaul_editor", "Show animation editor", GlKeys.L, ctrlPressed: true);
-        api.Input.SetHotKeyHandler("combatOverhaul_editor", keys => _showAnimationEditor = !_showAnimationEditor);
-
-        _behavior = api.World.Player.Entity.GetBehavior<FirstPersonAnimationsBehavior>();
-        _api = api;
+        _behavior = _api.World.Player.Entity.GetBehavior<FirstPersonAnimationsBehavior>();
     }
 
     private bool _showAnimationEditor = false;
     private int _selectedAnimationIndex = 0;
     private int _tempAnimations = 0;
     private bool _overwriteFrame = false;
-    private readonly FirstPersonAnimationsBehavior _behavior;
+    private FirstPersonAnimationsBehavior? _behavior;
     private readonly ICoreClientAPI _api;
     private string _itemAnimation = "";
     private string _animationKey = "";
@@ -96,6 +101,12 @@ public sealed class AnimationsManager
                 //EditFov();
 
                 ImGui.EndTabItem();
+            }
+            if (ImGui.BeginTabItem("Debug##tab"))
+            {
+                bool collidersRender = CollidersEntityBehavior.RenderColliders;
+                ImGui.Checkbox("Render entities colliders", ref collidersRender);
+                CollidersEntityBehavior.RenderColliders = collidersRender;
             }
             ImGui.EndTabBar();
 

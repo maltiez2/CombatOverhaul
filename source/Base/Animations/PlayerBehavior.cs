@@ -16,6 +16,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
         if (entity is not EntityPlayer player) throw new ArgumentException("Only for players");
         _player = player;
         _api = player.Api as ICoreClientAPI;
+        _animationsManager = player.Api.ModLoader.GetModSystem<CombatOverhaulAnimationsSystem>().PlayerAnimationsManager;
 
         AnimationPatch.OnBeforeFrame += OnBeforeFrame;
         AnimationPatch.OnFrame += OnFrame;
@@ -63,9 +64,23 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
             _offhandCategories.Add(request.Category);
         }
     }
+    public void Play(AnimationRequestByCode requestByCode, bool mainHand = true)
+    {
+        if (_animationsManager == null) return;
+        if (!_animationsManager.Animations.TryGetValue(requestByCode.Animation, out Animation? animation)) return;
+
+        AnimationRequest request = new(animation, requestByCode);
+
+        Play(request, mainHand);
+    }
+    public void Stop(string category)
+    {
+        _composer.Stop(category);
+    }
 
     private readonly Composer _composer = new();
     private readonly EntityPlayer _player;
+    private readonly AnimationsManager? _animationsManager;
     private PlayerItemFrame _lastFrame = PlayerItemFrame.Zero;
     private readonly List<string> _offhandCategories = new();
     private readonly List<string> _mainHandCategories = new();

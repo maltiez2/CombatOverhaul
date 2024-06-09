@@ -1,6 +1,8 @@
-﻿using CombatOverhaul.Inputs;
+﻿using CombatOverhaul.Animations;
+using CombatOverhaul.Inputs;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
+using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Server;
 
 namespace CombatOverhaul.RangedSystems;
@@ -30,6 +32,7 @@ public class RangeWeaponClient : IClientWeaponLogic
     public virtual void OnRegistered(ActionsManagerPlayerBehavior behavior, ICoreClientAPI api)
     {
         PlayerBehavior = behavior;
+        AnimationBehavior = behavior.entity.GetBehavior<FirstPersonAnimationsBehavior>();
     }
     public virtual void OnSelected(ItemSlot slot, EntityPlayer player, bool mainHand, ref int state)
     {
@@ -39,7 +42,8 @@ public class RangeWeaponClient : IClientWeaponLogic
     protected readonly Item Item;
     protected readonly ICoreClientAPI Api;
     protected readonly RangedWeaponSystemClient RangedWeaponSystem;
-    protected ActionsManagerPlayerBehavior PlayerBehavior;
+    protected FirstPersonAnimationsBehavior? AnimationBehavior;
+    protected ActionsManagerPlayerBehavior? PlayerBehavior;
 }
 
 public class RangeWeaponServer : IServerRangedWeaponLogic
@@ -57,7 +61,7 @@ public class RangeWeaponServer : IServerRangedWeaponLogic
     {
         return false;
     }
-    public virtual bool Shoot(IServerPlayer player, ItemSlot slot, ShotPacket packet)
+    public virtual bool Shoot(IServerPlayer player, ItemSlot slot, ShotPacket packet, Entity shooter)
     {
         return false;
     }

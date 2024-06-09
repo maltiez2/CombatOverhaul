@@ -117,11 +117,25 @@ public sealed class CollidersEntityBehavior : EntityBehavior
         if (HasOBBCollider && Animator != null && entity.Api is ICoreClientAPI clientApi && entity.IsRendered) RecalculateColliders(Animator, clientApi);
     }
 
+    public void SetColliderElement(ShapeElement element)
+    {
+        if (UnprocessedElementsLeft && ShapeElementsToProcess.Contains(element.Name))
+        {
+            int colliderId = CollidersIds.Count;
+            Colliders.Add(colliderId, new ShapeElementCollider(element));
+            CollidersIds.Add(element.Name);
+            ShapeElementsToProcess.Remove(element.Name);
+            UnprocessedElementsLeft = ShapeElementsToProcess.Count > 0;
+        }
+    }
     public void Render(ICoreClientAPI api, EntityAgent entityPlayer, EntityShapeRenderer renderer, int color = ColorUtil.WhiteArgb)
     {
-        //if (api.World.Player.Entity.EntityId == entityPlayer.EntityId) return;
+        if (api.World.Player.Entity.EntityId == entityPlayer.EntityId) return;
 
         if (!HasOBBCollider) return;
+
+        IShaderProgram? currentShader = api.Render.CurrentActiveShader;
+        currentShader?.Stop();
 
         foreach (ShapeElementCollider collider in Colliders.Values)
         {
@@ -131,10 +145,10 @@ public sealed class CollidersEntityBehavior : EntityBehavior
                 collider.HasRenderer = true;
             }
 
-#if DEBUG
             if (RenderColliders) collider.Render(api, entityPlayer, color);
-#endif
         }
+
+        currentShader?.Use();
     }
     public bool Collide(Vector3 segmentStart, Vector3 segmentDirection, out int collider, out float parameter, out Vector3 intersection)
     {
@@ -170,7 +184,7 @@ public sealed class CollidersEntityBehavior : EntityBehavior
 
         return foundIntersection;
     }
-    public bool Collide(Vector3 origin, float radius, out int collider, out float distance, out Vector3 intersection)
+    public bool Collide(Vector3 thisTickOrigin, Vector3 previousTickOrigin, float radius, out int collider, out float distance, out Vector3 intersection)
     {
         distance = float.MaxValue;
         bool foundIntersection = false;
@@ -179,18 +193,18 @@ public sealed class CollidersEntityBehavior : EntityBehavior
         if (!HasOBBCollider)
         {
             CuboidAABBCollider AABBCollider = new(entity.CollisionBox);
-            AABBCollider.Collide(origin, radius, out intersection);
+            AABBCollider.Collide(thisTickOrigin, previousTickOrigin, radius, out intersection);
             return true;
         }
 
-        if (!BoundingBox.Collide(origin, radius, out intersection))
+        if (!BoundingBox.Collide(thisTickOrigin, previousTickOrigin, radius, out intersection))
         {
             return false;
         }
 
         foreach ((int key, ShapeElementCollider shapeElementCollider) in Colliders)
         {
-            if (shapeElementCollider.Collide(origin, radius, out float currentDistance, out Vector3 currentIntersection) && currentDistance < distance)
+            if (shapeElementCollider.Collide(thisTickOrigin, previousTickOrigin, radius, out float currentDistance, out Vector3 currentIntersection) && currentDistance < distance)
             {
                 distance = currentDistance;
                 collider = key;

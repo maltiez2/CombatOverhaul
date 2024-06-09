@@ -13,6 +13,8 @@ using Vintagestory.API.Config;
 using Vintagestory.API.Server;
 using Vintagestory.Client.NoObf;
 using CombatOverhaul.Implementations.Vanilla;
+using OpenTK.Windowing.GraphicsLibraryFramework;
+using Vintagestory.GameContent;
 
 namespace CombatOverhaul;
 
@@ -40,6 +42,8 @@ public sealed class CombatOverhaulSystem : ModSystem
 
         api.RegisterItemClass("CombatOverhaul:Bow", typeof(BowItem));
 
+        api.RegisterEntity("CombatOverhaul:Projectile", typeof(ProjectileEntity));
+
         new Harmony("CombatOverhaulAuto").PatchAll();
     }
     public override void StartServerSide(ICoreServerAPI api)
@@ -49,7 +53,7 @@ public sealed class CombatOverhaulSystem : ModSystem
     }
     public override void StartClientSide(ICoreClientAPI api)
     {
-        ClientProjectileSystem = new(api);
+        ClientProjectileSystem = new(api, api.ModLoader.GetModSystem<EntityPartitioning>());
         ActionListener = new(api);
         DirectionCursorRenderer = new(api);
         ReticleRenderer = new(api);
@@ -98,6 +102,7 @@ public sealed class CombatOverhaulAnimationsSystem : ModSystem
     {
         api.Event.ReloadShader += LoadAnimatedItemShaders;
         LoadAnimatedItemShaders();
+        PlayerAnimationsManager = new(api);
     }
 
     public override void StartServerSide(ICoreServerAPI api)
@@ -107,10 +112,7 @@ public sealed class CombatOverhaulAnimationsSystem : ModSystem
 
     public override void AssetsFinalize(ICoreAPI api)
     {
-        if (api is ICoreClientAPI clientApi)
-        {
-            PlayerAnimationsManager = new(clientApi);
-        }
+        PlayerAnimationsManager?.Load();
     }
 
     public override void Dispose()

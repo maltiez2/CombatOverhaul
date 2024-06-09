@@ -43,6 +43,10 @@ public class AnimatableAttachable : Animatable
     public bool ClearAttachments(long entityId)
     {
         if (!ActiveAttachments.ContainsKey(entityId)) return false;
+        foreach ((_, Attachment attachment) in Attachments[entityId])
+        {
+            attachment.Dispose();
+        }
         Attachments[entityId].Clear();
         ActiveAttachments[entityId].Clear();
         return true;

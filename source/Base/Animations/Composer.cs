@@ -144,6 +144,39 @@ public readonly struct AnimationRequest
         EaseInDuration = easeInDuration;
         EaseOut = easeOut;
     }
+
+    public AnimationRequest(Animation animation, AnimationRequestByCode request)
+    {
+        Animation = animation;
+        AnimationSpeed = request.AnimationSpeed;
+        Weight = request.Weight;
+        Category = request.Category;
+        EaseOutDuration = request.EaseOutDuration;
+        EaseInDuration = request.EaseInDuration;
+        EaseOut = request.EaseOut;
+    }
+}
+
+public readonly struct AnimationRequestByCode
+{
+    public readonly string Animation;
+    public readonly float AnimationSpeed;
+    public readonly float Weight;
+    public readonly string Category;
+    public readonly TimeSpan EaseOutDuration;
+    public readonly TimeSpan EaseInDuration;
+    public readonly bool EaseOut;
+
+    public AnimationRequestByCode(string animation, float animationSpeed, float weight, string category, TimeSpan easeOutDuration, TimeSpan easeInDuration, bool easeOut)
+    {
+        Animation = animation;
+        AnimationSpeed = animationSpeed;
+        Weight = weight;
+        Category = category;
+        EaseOutDuration = easeOutDuration;
+        EaseInDuration = easeInDuration;
+        EaseOut = easeOut;
+    }
 }
 
 internal class Animator

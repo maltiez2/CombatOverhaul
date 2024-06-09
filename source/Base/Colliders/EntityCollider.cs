@@ -175,17 +175,20 @@ public readonly struct CuboidAABBCollider
         return true;
     }
 
-    public bool Collide(Vector3 origin, float radius, out Vector3 intersection)
+    public bool Collide(Vector3 thisTickOrigin, Vector3 previousTickOrigin, float radius, out Vector3 intersection)
     {
+        Vector3 origin = (thisTickOrigin + previousTickOrigin) / 2;
+        float maxRadius = (thisTickOrigin - previousTickOrigin).Length() / 2f + radius;
+
         intersection = new(
             Math.Clamp(origin.X, Math.Min(VertexA.X, VertexB.X), Math.Max(VertexA.X, VertexB.X)),
             Math.Clamp(origin.Y, Math.Min(VertexA.Y, VertexB.Y), Math.Max(VertexA.Y, VertexB.Y)),
             Math.Clamp(origin.Z, Math.Min(VertexA.Z, VertexB.Z), Math.Max(VertexA.Z, VertexB.Z))
         );
 
-        float distanceSquared = Vector3.DistanceSquared(origin, intersection);
+        float distanceSquared = Vector3.DistanceSquared(thisTickOrigin, intersection);
 
-        return distanceSquared <= radius * radius;
+        return distanceSquared <= maxRadius * maxRadius;
     }
 }
 
@@ -252,7 +255,7 @@ public sealed class ShapeElementCollider
         parameter = closestParameter;
         return foundIntersection;
     }
-    public bool Collide(Vector3 origin, float radius, out float distance, out Vector3 intersection)
+    public bool Collide(Vector3 thisTickOrigin, Vector3 previousTickOrigin, float radius, out float distance, out Vector3 intersection)
     {
         Vector3[] vertices = new Vector3[VertexCount];
         for (int index = 0; index < VertexCount; index++)
@@ -260,8 +263,8 @@ public sealed class ShapeElementCollider
             vertices[index] = new(InworldVertices[index].X, InworldVertices[index].Y, InworldVertices[index].Z);
         }
 
-        intersection = ClosestPoint(origin, vertices);
-        distance = Vector3.Distance(intersection, origin);
+        intersection = ClosestPoint(thisTickOrigin, previousTickOrigin, vertices, out Vector3 segmentClosestPoint);
+        distance = Vector3.Distance(intersection, segmentClosestPoint);
 
         return distance <= radius;
     }
@@ -381,7 +384,7 @@ public sealed class ShapeElementCollider
         }
         return result;
     }
-    private static Vector3 ClosestPoint(Vector3 point, Vector3[] obbVertices)
+    private static Vector3 ClosestPoint(Vector3 start, Vector3 end, Vector3[] obbVertices, out Vector3 segmentClosestPoint)
     {
         // Assuming the OBB vertices are ordered and form a valid OBB
         // Calculate the center of the OBB
@@ -402,7 +405,8 @@ public sealed class ShapeElementCollider
 
         // Calculate the closest point on the OBB
         Vector3 closestPoint = center;
-        Vector3 direction = point - center;
+        segmentClosestPoint = ClosestPointOnSegment(start, end, center);
+        Vector3 direction = segmentClosestPoint - center;
 
         for (int i = 0; i < 3; i++)
         {
@@ -412,6 +416,22 @@ public sealed class ShapeElementCollider
         }
 
         return closestPoint;
+    }
+    public static Vector3 ClosestPointOnSegment(Vector3 A, Vector3 B, Vector3 P)
+    {
+        Vector3 AB = B - A;
+        Vector3 AP = P - A;
+
+        float AB_dot_AB = Vector3.Dot(AB, AB);
+        float AP_dot_AB = Vector3.Dot(AP, AB);
+        float t = AP_dot_AB / AB_dot_AB;
+
+        // Clamp t to the range [0, 1]
+        t = Math.Max(0, Math.Min(1, t));
+
+        // Compute the closest point
+        Vector3 closest = A + t * AB;
+        return closest;
     }
 
 #if DEBUG
