@@ -42,6 +42,7 @@ public class ProjectileCollisionPacket
     public Guid Id { get; set; }
     public float[] CollisionPoint { get; set; } = Array.Empty<float>();
     public float[] AfterCollisionVelocity { get; set; } = Array.Empty<float>();
+    public float RelativeSpeed { get; set; }
     public int Collider { get; set; }
     public long ReceiverEntity { get; set; }
     public int PacketVersion { get; set; }
@@ -54,6 +55,7 @@ public class ProjectileCollisionCheckRequest
     public long ProjectileEntityId { get; set; }
     public float[] CurrentPosition { get; set; } = Array.Empty<float>();
     public float[] PreviousPosition { get; set; } = Array.Empty<float>();
+    public float[] Velocity { get; set; } = Array.Empty<float>();
     public float Radius { get; set; }
     public bool CollideWithShooter { get; set; }
     public long[] IgnoreEntities { get; set; } = Array.Empty<long>();
@@ -109,13 +111,14 @@ public sealed class ProjectileSystemClient : ProjectileSystemBase
         _entityPartitioning = entityPartitioning;
     }
 
-    public void Collide(Guid id, Entity target, Vector3 point, Vector3 velocity, int collider, ProjectileCollisionCheckRequest packet)
+    public void Collide(Guid id, Entity target, Vector3 point, Vector3 velocity, float relativeSpeed, int collider, ProjectileCollisionCheckRequest packet)
     {
         ProjectileCollisionPacket newPacket = new()
         {
             Id = id,
             CollisionPoint = new float[] { point.X, point.Y, point.Z },
             AfterCollisionVelocity = new float[] { velocity.X, velocity.Y, velocity.Z },
+            RelativeSpeed = relativeSpeed,
             ReceiverEntity = target.EntityId,
             Collider = collider,
             PacketVersion = packet.PacketVersion
@@ -136,17 +139,30 @@ public sealed class ProjectileSystemClient : ProjectileSystemBase
             _entityCollisionRadius + packet.Radius,
             _entityCollisionRadius + packet.Radius);
 
+        Vector3 currentPosition = new(packet.CurrentPosition[0], packet.CurrentPosition[1], packet.CurrentPosition[2]);
+        Vector3 previousPosition = new(packet.PreviousPosition[0], packet.PreviousPosition[1], packet.PreviousPosition[2]);
+        Vector3 velocity = new(packet.Velocity[0], packet.Velocity[1], packet.Velocity[2]);
+
+        foreach (Entity entity in entities)
+        {
+            if (entity.EntityId == packet.ProjectileEntityId && entity is ProjectileEntity projectile)
+            {
+                currentPosition = new Vector3((float)projectile.Pos.X, (float)projectile.Pos.Y, (float)projectile.Pos.Z);
+                previousPosition = new Vector3((float)projectile.PreviousPosition.X, (float)projectile.PreviousPosition.Y, (float)projectile.PreviousPosition.Z);
+                velocity = new Vector3((float)projectile.Pos.Motion.X, (float)projectile.Pos.Motion.Y, (float)projectile.Pos.Motion.Z);
+                break;
+            }
+        }
+
         foreach (Entity entity in entities.Where(entity => entity.IsCreature))
         {
-            if (Collide(entity, packet))
+            if (Collide(entity, packet, currentPosition, previousPosition, velocity))
             {
-                
-                
                 return;
             }
         }
     }
-    private bool Collide(Entity target, ProjectileCollisionCheckRequest packet)
+    private bool Collide(Entity target, ProjectileCollisionCheckRequest packet, Vector3 currentPosition, Vector3 previousPosition, Vector3 velocity)
     {
         if (target.EntityId == packet.ProjectileEntityId) return false;
 
@@ -154,27 +170,28 @@ public sealed class ProjectileSystemClient : ProjectileSystemBase
 
         if (packet.IgnoreEntities.Contains(target.EntityId)) return false;
 
-        if (!CheckCollision(target, out int collider, out Vector3 point, packet)) return false;
+        if (!CheckCollision(target, out int collider, out Vector3 point, currentPosition, previousPosition, packet.Radius)) return false;
 
-        Collide(packet.ProjectileId, target, point, new Vector3((float)target.Pos.Motion.X, (float)target.Pos.Motion.Y, (float)target.Pos.Motion.Z), collider, packet);
+        Vector3 targetVelocity = new Vector3((float)target.Pos.Motion.X, (float)target.Pos.Motion.Y, (float)target.Pos.Motion.Z);
+
+        float relativeSpeed = (targetVelocity - velocity).Length();
+
+        Collide(packet.ProjectileId, target, point, targetVelocity, relativeSpeed, collider, packet);
 
         return true;
     }
-    private bool CheckCollision(Entity target, out int collider, out Vector3 point, ProjectileCollisionCheckRequest packet)
+    private bool CheckCollision(Entity target, out int collider, out Vector3 point, Vector3 currentPosition, Vector3 previousPosition, float radius)
     {
-        Vector3 currentPosition = new(packet.CurrentPosition[0], packet.CurrentPosition[1], packet.CurrentPosition[2]);
-        Vector3 previousPosition = new(packet.PreviousPosition[0], packet.PreviousPosition[1], packet.PreviousPosition[2]);
-
         CollidersEntityBehavior? colliders = target.GetBehavior<CollidersEntityBehavior>();
         if (colliders != null)
         {
-            return colliders.Collide(currentPosition, previousPosition, packet.Radius, out collider, out _, out point);
+            return colliders.Collide(currentPosition, previousPosition, radius, out collider, out _, out point);
         }
 
         collider = -1;
 
         CuboidAABBCollider collisionBox = GetCollisionBox(target);
-        return collisionBox.Collide(currentPosition, previousPosition, packet.Radius, out point);
+        return collisionBox.Collide(currentPosition, previousPosition, radius, out point);
     }
     private static CuboidAABBCollider GetCollisionBox(Entity entity)
     {
@@ -219,6 +236,7 @@ public sealed class ProjectileSystemServer : ProjectileSystemBase
             ProjectileEntityId = projectile.EntityId,
             CurrentPosition = new float[3] { (float)projectile.ServerPos.X, (float)projectile.ServerPos.Y, (float)projectile.ServerPos.Z },
             PreviousPosition = new float[3] { (float)projectile.PreviousPosition.X, (float)projectile.PreviousPosition.Y, (float)projectile.PreviousPosition.Z },
+            Velocity = new float[3] { (float)projectile.ServerPos.Motion.X, (float)projectile.ServerPos.Motion.Y, (float)projectile.ServerPos.Motion.Z },
             Radius = projectile.ColliderRadius,
             CollideWithShooter = false,
             IgnoreEntities = projectile.CollidedWith.ToArray(),
