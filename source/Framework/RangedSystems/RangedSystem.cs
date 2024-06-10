@@ -99,8 +99,10 @@ public class RangedWeaponSystemClient
 
         _clientChannel.SendPacket(packet);
     }
-    public void Shoot(ItemSlot weapon, Guid projectileId, int amount, Vector3 position, Vector3 velocity, bool rightHand, Action<bool> shootCallback)
+    public void Shoot(ItemSlot weapon, int amount, Vector3 position, Vector3 velocity, bool rightHand, Action<bool> shootCallback)
     {
+        Guid projectileId = Guid.NewGuid();
+
         if (_nextId > int.MaxValue / 2) _nextId = 0;
         int id = _nextId++;
         _callbacks[id] = shootCallback;

@@ -9,6 +9,15 @@ using Vintagestory.API.Server;
 
 namespace CombatOverhaul.Implementations.Vanilla;
 
+public enum BowState
+{
+    Unloaded,
+    Load,
+    Loaded,
+    Draw,
+    Drawn
+}
+
 public sealed class BowClient : RangeWeaponClient
 {
     public BowClient(ICoreClientAPI api, Item item) : base(api, item)
@@ -21,13 +30,17 @@ public sealed class BowClient : RangeWeaponClient
     public override void OnSelected(ItemSlot slot, EntityPlayer player, bool mainHand, ref int state)
     {
         _attachable.ClearAttachments(player.EntityId);
+
+        AnimationRequestByCode request = new("combatoverhaul:bow-idle", 1.0f, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true);
+        AnimationBehavior?.Play(request, mainHand);
     }
 
     public override void OnDeselected(EntityPlayer player)
     {
         _arrowSlot = null;
         _attachable.ClearAttachments(player.EntityId);
-        PlayerBehavior?.SetState(0);
+        PlayerBehavior?.SetState((int)BowState.Unloaded);
+        AnimationBehavior?.Stop("idle");
     }
 
     private readonly ICoreClientAPI _api;
@@ -38,7 +51,7 @@ public sealed class BowClient : RangeWeaponClient
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Pressed)]
     private bool Load(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
-        if (state != 0 || eventData.AltPressed) return false;
+        if (state != (int)BowState.Unloaded || eventData.AltPressed) return false;
 
         /*DebugWidgets.FloatDrag("test", "test", "arrow trnasform x", () => _arrowTransform.Translation.X, value => _arrowTransform.Translation.X = value);
         DebugWidgets.FloatDrag("test", "test", "arrow trnasform y", () => _arrowTransform.Translation.Y, value => _arrowTransform.Translation.Y = value);
@@ -66,7 +79,7 @@ public sealed class BowClient : RangeWeaponClient
         _attachable.SetAttachment(player.EntityId, "Arrow", _arrowSlot.Itemstack, _arrowTransform);
         RangedWeaponSystem.Reload(slot, _arrowSlot, 1, mainHand, ReloadCallback);
 
-        state = 1;
+        state = (int)BowState.Load;
 
         return true;
     }
@@ -74,13 +87,12 @@ public sealed class BowClient : RangeWeaponClient
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Active)]
     private bool Aim(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
-        if (state != 2 || eventData.AltPressed) return false;
+        if (state != (int)BowState.Loaded || eventData.AltPressed) return false;
 
-        AnimationRequestByCode request = new("combatoverhaul:bow-draw-simple", 1.0f, 1, "main", TimeSpan.FromSeconds(0.5), TimeSpan.FromSeconds(0.2), true);
-
+        AnimationRequestByCode request = new("combatoverhaul:bow-draw-simple", 1.0f, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true, FullLoadCallback);
         AnimationBehavior?.Play(request, mainHand);
 
-        state = 3;
+        state = (int)BowState.Draw;
 
         return true;
     }
@@ -88,9 +100,18 @@ public sealed class BowClient : RangeWeaponClient
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Released)]
     private bool Shoot(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
-        if (state != 3 || eventData.AltPressed) return false;
+        if (state == (int)BowState.Draw)
+        {
+            AnimationRequestByCode idleRequest = new("combatoverhaul:bow-idle", 1.0f, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true);
+            AnimationBehavior?.Play(idleRequest, true);
+            state = (int)BowState.Loaded;
+            return true;
+        }
 
-        AnimationBehavior?.Stop("main");
+        if (state != (int)BowState.Drawn) return false;
+
+        AnimationRequestByCode request = new("combatoverhaul:bow-release-simple", 1.0f, 1, "main", TimeSpan.FromSeconds(0.0), TimeSpan.FromSeconds(0.2), true, ReleasedAnimationCallback);
+        AnimationBehavior?.Play(request, mainHand);
 
         state = 0;
 
@@ -100,9 +121,7 @@ public sealed class BowClient : RangeWeaponClient
         _arrowSlot = null;
         _attachable.ClearAttachments(player.EntityId);
 
-        Guid id = Guid.NewGuid();
-
-        RangedWeaponSystem.Shoot(slot, id, 1, new((float)position.X, (float)position.Y, (float)position.Z), new(viewDirection.X, viewDirection.Y, viewDirection.Z), mainHand, ShootCallback);
+        RangedWeaponSystem.Shoot(slot, 1, new((float)position.X, (float)position.Y, (float)position.Z), new(viewDirection.X, viewDirection.Y, viewDirection.Z), mainHand, ShootCallback);
 
         return true;
     }
@@ -111,7 +130,7 @@ public sealed class BowClient : RangeWeaponClient
     {
         if (success)
         {
-            PlayerBehavior?.SetState(2);
+            PlayerBehavior?.SetState((int)BowState.Loaded);
         }
         else
         {
@@ -122,6 +141,18 @@ public sealed class BowClient : RangeWeaponClient
     private void ShootCallback(bool success)
     {
 
+    }
+    private bool FullLoadCallback()
+    {
+        PlayerBehavior?.SetState((int)BowState.Drawn);
+        return true;
+    }
+    private bool ReleasedAnimationCallback()
+    {
+        AnimationRequestByCode request = new("combatoverhaul:bow-idle", 1.0f, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true);
+        AnimationBehavior?.Play(request, true);
+
+        return true;
     }
 }
 
@@ -139,13 +170,13 @@ public class BowServer : RangeWeaponServer
     {
         if (ammoSlot?.Itemstack?.Item != null && ammoSlot.Itemstack.Item.HasBehavior<ProjectileBehavior>())
         {
-            _arrowSlot = ammoSlot;
+            _arrowSlots[player.Entity.EntityId] = ammoSlot;
             return true;
         }
 
         if (ammoSlot == null)
         {
-            _arrowSlot = null;
+            _arrowSlots[player.Entity.EntityId] = null;
             return true;
         }
 
@@ -154,13 +185,17 @@ public class BowServer : RangeWeaponServer
 
     public override bool Shoot(IServerPlayer player, ItemSlot slot, ShotPacket packet, Entity shooter)
     {
-        if (_arrowSlot?.Itemstack == null || _arrowSlot.Itemstack.StackSize < 1) return false;
+        if (!_arrowSlots.ContainsKey(player.Entity.EntityId)) return false;
 
-        ProjectileStats? stats = _arrowSlot.Itemstack.Item.GetCollectibleBehavior<ProjectileBehavior>(true)?.Stats;
+        ItemSlot? arrowSlot = _arrowSlots[player.Entity.EntityId];
+
+        if (arrowSlot?.Itemstack == null || arrowSlot.Itemstack.StackSize < 1) return false;
+
+        ProjectileStats? stats = arrowSlot.Itemstack.Item.GetCollectibleBehavior<ProjectileBehavior>(true)?.Stats;
 
         if (stats == null)
         {
-            _arrowSlot = null;
+            _arrowSlots[player.Entity.EntityId] = null;
             return false;
         }
 
@@ -173,14 +208,13 @@ public class BowServer : RangeWeaponServer
             Velocity = Vector3.Normalize(new Vector3(packet.Velocity[0], packet.Velocity[1], packet.Velocity[2])) * _velocity
         };
 
-        _projectileSystem.Spawn(packet.ProjectileId, stats.Value, spawnStats, _arrowSlot.TakeOut(1), shooter);
+        _projectileSystem.Spawn(packet.ProjectileId, stats.Value, spawnStats, arrowSlot.TakeOut(1), shooter);
 
-        _arrowSlot.MarkDirty();
-
+        arrowSlot.MarkDirty();
         return true;
     }
 
-    private ItemSlot? _arrowSlot = null;
+    private readonly Dictionary<long, ItemSlot?> _arrowSlots = new();
     private readonly ProjectileSystemServer _projectileSystem;
     private readonly float _damageMultiplier;
     private readonly float _strengthMultiplier;
@@ -209,7 +243,6 @@ public class BowItem : Item, IHasWeaponLogic, IHasRangedWeaponLogic
             ServerLogic = new(serverAPI, this);
         }
     }
-
 
     public override void OnHeldDropped(IWorldAccessor world, IPlayer byPlayer, ItemSlot slot, int quantity, ref EnumHandling handling)
     {

@@ -125,7 +125,9 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     }
     private void ApplyFrame(PlayerItemFrame frame, Entity entity, ElementPose pose, Animatable? animatable)
     {
-        frame.Apply(pose);
+        TorsoAnimationType torsoAnimation = (entity as EntityPlayer)?.Controls.Sneak ?? false ? TorsoAnimationType.Sneaking : TorsoAnimationType.Standing;
+
+        frame.Apply(pose, torsoAnimation);
 
         if (animatable != null && frame.DetachedAnchor)
         {

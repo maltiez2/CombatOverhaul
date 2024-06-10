@@ -8,7 +8,7 @@
   "tool": "bow",
   "behaviors": [{"name": "CombatOverhaul:AnimatableAttachable", "properties": {"animated-shape": "combatoverhaul:weapons/bows/{type}"}}],
   "attributes": {
-    "arrowTransform": {"translation": {"x": 0, "y": 0.3, "z": -8}, "rotation": {"x": 0, "y": 0, "z": 0}, "scale": 0.75},
+    "arrowTransform": {"translation": {"x": -8, "y": 0.3, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 1}, "scale": 0.75},
     "arrowDamageMultiplier": 1,
     "arrowStrengthMultiplier": 1,
     "arrowVelocity": 1

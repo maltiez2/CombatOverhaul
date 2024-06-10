@@ -156,9 +156,9 @@ public sealed class Attachment : IDisposable
             .Mul(apap.AnimModelMatrix)
             .Translate((ap.PosX + attachedRenderInfo.Transform.Translation.X) / 16f, (ap.PosY + attachedRenderInfo.Transform.Translation.Y) / 16f, (ap.PosZ + attachedRenderInfo.Transform.Translation.Z) / 16f)
             .Translate(renderInfo.Transform.Origin.X, renderInfo.Transform.Origin.Y, renderInfo.Transform.Origin.Z)
-            .RotateX((float)(ap.RotationX) * GameMath.DEG2RAD)
-            .RotateY((float)(ap.RotationY) * GameMath.DEG2RAD)
-            .RotateZ((float)(ap.RotationZ) * GameMath.DEG2RAD)
+            .RotateX((float)(ap.RotationX + attachedRenderInfo.Transform.Rotation.X) * GameMath.DEG2RAD)
+            .RotateY((float)(ap.RotationY + attachedRenderInfo.Transform.Rotation.Y) * GameMath.DEG2RAD)
+            .RotateZ((float)(ap.RotationZ + attachedRenderInfo.Transform.Rotation.Z) * GameMath.DEG2RAD)
             .Scale(attachedRenderInfo.Transform.ScaleXYZ.X, attachedRenderInfo.Transform.ScaleXYZ.Y, attachedRenderInfo.Transform.ScaleXYZ.Z)
             .Translate(-attachedRenderInfo.Transform.Origin.X / 16f, -attachedRenderInfo.Transform.Origin.Y / 16f, -attachedRenderInfo.Transform.Origin.Z / 16f)
             .Translate(-renderInfo.Transform.Origin.X, -renderInfo.Transform.Origin.Y, -renderInfo.Transform.Origin.Z);

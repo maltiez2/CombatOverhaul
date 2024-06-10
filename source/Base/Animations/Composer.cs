@@ -14,7 +14,6 @@ internal sealed class Composer
         foreach ((string category, AnimatorWeightState state) in _weightState)
         {
             _currentTimes[category] += delta;
-
             ProcessWeight(category, state);
         }
 
@@ -28,7 +27,27 @@ internal sealed class Composer
 
         foreach (string category in _requests.Select(entry => entry.Key))
         {
-            if (_animators[category].Finished() && _weightState[category] == AnimatorWeightState.Finished)
+            if ((_animators[category].Finished() && _weightState[category] == AnimatorWeightState.Finished))
+            {
+                System.Func<bool>? callback = _requests[category].FinishCallback;
+                bool removeCategory = false;
+                if (callback != null)
+                {
+                    removeCategory = !callback.Invoke();
+                }
+
+                if (removeCategory)
+                {
+                    _animators.Remove(category);
+                    _currentTimes.Remove(category);
+                    _previousWeight.Remove(category);
+                    _currentWeight.Remove(category);
+                    _weightState.Remove(category);
+                    _requests.Remove(category);
+                }
+            }
+
+            if (_animators[category].Stopped() && _requests[category].FinishCallback != null && !_requests[category].FinishCallback.Invoke())
             {
                 _animators.Remove(category);
                 _currentTimes.Remove(category);
@@ -106,7 +125,7 @@ internal sealed class Composer
                 }
                 break;
             case AnimatorWeightState.Stay:
-                if (_requests[category].EaseOut && _requests[category].Animation.TotalDuration / _requests[category].AnimationSpeed >= _currentTimes[category])
+                if (_requests[category].EaseOut && _animators[category].Finished()/*_requests[category].Animation.TotalDuration / _requests[category].AnimationSpeed >= _currentTimes[category]*/)
                 {
                     _weightState[category] = AnimatorWeightState.EaseOut;
                 }
@@ -133,8 +152,9 @@ public readonly struct AnimationRequest
     public readonly TimeSpan EaseOutDuration;
     public readonly TimeSpan EaseInDuration;
     public readonly bool EaseOut;
+    public readonly System.Func<bool>? FinishCallback;
 
-    public AnimationRequest(Animation animation, float animationSpeed, float weight, string category, TimeSpan easeOutDuration, TimeSpan easeInDuration, bool easeOut)
+    public AnimationRequest(Animation animation, float animationSpeed, float weight, string category, TimeSpan easeOutDuration, TimeSpan easeInDuration, bool easeOut, System.Func<bool>? finishCallback = null)
     {
         Animation = animation;
         AnimationSpeed = animationSpeed;
@@ -143,6 +163,7 @@ public readonly struct AnimationRequest
         EaseOutDuration = easeOutDuration;
         EaseInDuration = easeInDuration;
         EaseOut = easeOut;
+        FinishCallback = finishCallback;
     }
 
     public AnimationRequest(Animation animation, AnimationRequestByCode request)
@@ -154,6 +175,7 @@ public readonly struct AnimationRequest
         EaseOutDuration = request.EaseOutDuration;
         EaseInDuration = request.EaseInDuration;
         EaseOut = request.EaseOut;
+        FinishCallback = request.FinishCallback;
     }
 }
 
@@ -166,8 +188,9 @@ public readonly struct AnimationRequestByCode
     public readonly TimeSpan EaseOutDuration;
     public readonly TimeSpan EaseInDuration;
     public readonly bool EaseOut;
+    public readonly System.Func<bool>? FinishCallback;
 
-    public AnimationRequestByCode(string animation, float animationSpeed, float weight, string category, TimeSpan easeOutDuration, TimeSpan easeInDuration, bool easeOut)
+    public AnimationRequestByCode(string animation, float animationSpeed, float weight, string category, TimeSpan easeOutDuration, TimeSpan easeInDuration, bool easeOut, System.Func<bool>? finishCallback = null)
     {
         Animation = animation;
         AnimationSpeed = animationSpeed;
@@ -176,6 +199,7 @@ public readonly struct AnimationRequestByCode
         EaseOutDuration = easeOutDuration;
         EaseInDuration = easeInDuration;
         EaseOut = easeOut;
+        FinishCallback = finishCallback;
     }
 }
 
@@ -185,6 +209,8 @@ internal class Animator
     {
         _currentAnimation = animation;
     }
+
+    public bool FinishOverride { get; set; } = false;
 
     public void Play(Animation animation, TimeSpan duration) => Play(animation, (float)(animation.TotalDuration / duration));
     public void Play(Animation animation, float animationSpeed)
@@ -203,7 +229,8 @@ internal class Animator
         _lastFrame = _currentAnimation.Interpolate(_previousAnimationFrame, adjustedDuration);
         return _lastFrame;
     }
-    public bool Finished() => (_currentAnimation.TotalDuration <= _currentDuration / _animationSpeed) && !_currentAnimation.Hold;
+    public bool Stopped() => _currentAnimation.TotalDuration <= _currentDuration / _animationSpeed;
+    public bool Finished() => FinishOverride || (Stopped() && !_currentAnimation.Hold);
 
     private PlayerItemFrame _previousAnimationFrame = PlayerItemFrame.Zero;
     private PlayerItemFrame _lastFrame = PlayerItemFrame.Zero;

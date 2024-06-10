@@ -110,11 +110,16 @@ public sealed class Animation
         if (!ItemKeyFrames.Any()) return null;
 
         int nextItemKeyFrame;
-        float progress = (float)(currentDuration / TotalDuration);
+        TimeSpan totalDurationWithEasing = PlayerKeyFrames.Count == 1 ? TotalDuration : TotalDuration - PlayerKeyFrames[0].Time;
+        TimeSpan currentDurationWithEasing = PlayerKeyFrames.Count == 1 ? currentDuration : currentDuration - PlayerKeyFrames[0].Time;
+        float progress = Math.Clamp((float)(currentDurationWithEasing / totalDurationWithEasing), 0, 1);
+
         for (nextItemKeyFrame = 0; nextItemKeyFrame < ItemKeyFrames.Count; nextItemKeyFrame++)
         {
             if (ItemKeyFrames[nextItemKeyFrame].DurationFraction > progress) break;
         }
+
+        if (nextItemKeyFrame >= ItemKeyFrames.Count) nextItemKeyFrame = ItemKeyFrames.Count - 1;
 
         float itemFrameProgress;
         if (nextItemKeyFrame == 0)
@@ -167,6 +172,12 @@ public sealed class Animation
             if (ImGui.Button($"Remove##{title}"))
             {
                 PlayerKeyFrames.RemoveAt(_playerFrameIndex);
+            }
+            ImGui.SameLine();
+            if (ImGui.Button($"Duplicate##{title}"))
+            {
+                PlayerKeyFrames.Insert(_playerFrameIndex + 1, PlayerKeyFrames[_playerFrameIndex]);
+                _playerFrameIndex++;
             }
             ImGui.SameLine();
         }

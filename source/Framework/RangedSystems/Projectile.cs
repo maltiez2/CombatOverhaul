@@ -56,7 +56,7 @@ public sealed class ProjectileServer
     private bool Attack(Entity attacker, Entity target, Vector3 position, int collider, float relativeSpeed)
     {
         if (!CheckPermissions(attacker, target)) return false;
-        //if (relativeSpeed < _stats.SpeedThreshold) return false;
+        if (relativeSpeed < _stats.SpeedThreshold) return false;
 
         float damage = _stats.DamageStats.Damage * _spawnStats.DamageMultiplier;
         DamageData damageData = new(Enum.Parse<EnumDamageType>(_stats.DamageStats.DamageType), _stats.DamageStats.Strength * _spawnStats.StrengthMultiplier);
@@ -92,14 +92,6 @@ public sealed class ProjectileServer
 
         return true;
     }
-    private bool CheckRelativeSpeed(Entity target)
-    {
-        Vector3 targetVelocity = new((float)target.ServerPos.Motion.X, (float)target.ServerPos.Motion.Y, (float)target.ServerPos.Motion.Z);
-        Vector3 projectileVelocity = new((float)_entity.ServerPos.Motion.X, (float)_entity.ServerPos.Motion.Y, (float)_entity.ServerPos.Motion.Z);
-        float relativeSpeed = (projectileVelocity - targetVelocity).Length();
-
-        return relativeSpeed >= _stats.SpeedThreshold;
-    }
 }
 
 public sealed class ProjectileEntity : Entity
@@ -112,6 +104,7 @@ public sealed class ProjectileEntity : Entity
     public float ColliderRadius { get; set; }
     public long ShooterId { get; set; }
     public Vec3d PreviousPosition { get; private set; } = new(0, 0, 0);
+    public Vec3d PreviousVelocity { get; private set; } = new(0, 0, 0);
     public List<long> CollidedWith { get; set; } = new();
     public bool Stuck
     {
@@ -138,6 +131,7 @@ public sealed class ProjectileEntity : Entity
         GetBehavior<EntityBehaviorPassivePhysics>().collisionYExtra = 0f; // Slightly cheap hax so that stones/arrows don't collid with fences
 
         PreviousPosition = Pos.XYZ.Clone();
+        PreviousVelocity = Pos.Motion.Clone();
     }
     public override void OnGameTick(float dt)
     {
@@ -246,8 +240,9 @@ public sealed class ProjectileEntity : Entity
         {
             ServerProjectile.TryCollide();
         }
-
-        PreviousPosition = ServerPos.XYZ.Clone();
+        
+        PreviousPosition = SidedPos.XYZ.Clone();
+        PreviousVelocity = SidedPos.Motion.Clone();
     }
     private void OnTerrainCollision(EntityPos pos, double impactSpeed)
     {

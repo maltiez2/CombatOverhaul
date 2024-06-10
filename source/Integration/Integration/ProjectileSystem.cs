@@ -143,16 +143,16 @@ public sealed class ProjectileSystemClient : ProjectileSystemBase
         Vector3 previousPosition = new(packet.PreviousPosition[0], packet.PreviousPosition[1], packet.PreviousPosition[2]);
         Vector3 velocity = new(packet.Velocity[0], packet.Velocity[1], packet.Velocity[2]);
 
-        foreach (Entity entity in entities)
+        /*foreach (Entity entity in entities)
         {
             if (entity.EntityId == packet.ProjectileEntityId && entity is ProjectileEntity projectile)
             {
                 currentPosition = new Vector3((float)projectile.Pos.X, (float)projectile.Pos.Y, (float)projectile.Pos.Z);
                 previousPosition = new Vector3((float)projectile.PreviousPosition.X, (float)projectile.PreviousPosition.Y, (float)projectile.PreviousPosition.Z);
-                velocity = new Vector3((float)projectile.Pos.Motion.X, (float)projectile.Pos.Motion.Y, (float)projectile.Pos.Motion.Z);
+                velocity = new Vector3((float)projectile.PreviousVelocity.X, (float)projectile.PreviousVelocity.Y, (float)projectile.PreviousVelocity.Z);
                 break;
             }
-        }
+        }*/
 
         foreach (Entity entity in entities.Where(entity => entity.IsCreature))
         {
@@ -236,7 +236,7 @@ public sealed class ProjectileSystemServer : ProjectileSystemBase
             ProjectileEntityId = projectile.EntityId,
             CurrentPosition = new float[3] { (float)projectile.ServerPos.X, (float)projectile.ServerPos.Y, (float)projectile.ServerPos.Z },
             PreviousPosition = new float[3] { (float)projectile.PreviousPosition.X, (float)projectile.PreviousPosition.Y, (float)projectile.PreviousPosition.Z },
-            Velocity = new float[3] { (float)projectile.ServerPos.Motion.X, (float)projectile.ServerPos.Motion.Y, (float)projectile.ServerPos.Motion.Z },
+            Velocity = new float[3] { (float)projectile.PreviousVelocity.X, (float)projectile.PreviousVelocity.Y, (float)projectile.PreviousVelocity.Z },
             Radius = projectile.ColliderRadius,
             CollideWithShooter = false,
             IgnoreEntities = projectile.CollidedWith.ToArray(),

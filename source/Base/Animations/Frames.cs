@@ -13,6 +13,12 @@ public enum AnimationAnchor
     Detached
 }
 
+public enum TorsoAnimationType
+{
+    Standing,
+    Sneaking
+}
+
 public readonly struct PlayerItemFrame
 {
     public readonly PlayerFrame Player;
@@ -31,9 +37,9 @@ public readonly struct PlayerItemFrame
     public static readonly PlayerItemFrame Zero = new(PlayerFrame.Zero, null);
     public static readonly PlayerItemFrame Empty = new(PlayerFrame.Empty, null);
 
-    public void Apply(ElementPose pose)
+    public void Apply(ElementPose pose, TorsoAnimationType torsoAnimation)
     {
-        Player.Apply(pose);
+        Player.Apply(pose, torsoAnimation);
         Item?.Apply(pose);
     }
 
@@ -326,6 +332,7 @@ public readonly struct PlayerFrame
     public readonly LeftHandFrame? LeftHand;
     public readonly AnimationElement UpperTorso = AnimationElement.Zero;
     public readonly AnimationElement DetachedAnchorFrame = AnimationElement.Zero;
+    public readonly AnimationElement LowerTorso = AnimationElement.Zero;
     public readonly bool DetachedAnchor = false;
     public readonly bool SwitchArms = false;
     public readonly float PitchFollow = DefaultPitchFollow;
@@ -345,7 +352,8 @@ public readonly struct PlayerFrame
         bool switchArms = false,
         float pitchFollow = DefaultPitchFollow,
         float fovMultiplier = 1.0f,
-        float bobbingAmplitude = 1.0f)
+        float bobbingAmplitude = 1.0f,
+        AnimationElement? lowerTorso = null)
     {
         RightHand = rightHand;
         LeftHand = leftHand;
@@ -356,12 +364,13 @@ public readonly struct PlayerFrame
         PitchFollow = pitchFollow;
         FovMultiplier = fovMultiplier;
         BobbingAmplitude = bobbingAmplitude;
+        LowerTorso = lowerTorso ?? AnimationElement.Zero;
     }
 
     public static readonly PlayerFrame Zero = new(RightHandFrame.Zero, LeftHandFrame.Zero);
     public static readonly PlayerFrame Empty = new();
 
-    public void Apply(ElementPose pose)
+    public void Apply(ElementPose pose, TorsoAnimationType torsoAnimation)
     {
         switch (pose.ForElement.Name)
         {
@@ -372,7 +381,15 @@ public readonly struct PlayerFrame
                 UpperTorso.Apply(pose);
                 break;
             case "LowerTorso":
-                AnimationElement.Zero.Apply(pose);
+                switch (torsoAnimation)
+                {
+                    case TorsoAnimationType.Standing:
+                        AnimationElement.Zero.Apply(pose);
+                        break;
+                    case TorsoAnimationType.Sneaking:
+                        new AnimationElement(0, -5, 0, 0, 0, 0).Apply(pose);
+                        break;
+                }
                 break;
             default:
                 RightHand?.Apply(pose, DetachedAnchor);
@@ -476,6 +493,9 @@ public readonly struct PlayerFrame
             );
 #pragma warning restore CS8629 // Nullable value type may be null.
     }
+
+    private readonly AnimationElement StandingTorso = AnimationElement.Zero;
+    private readonly AnimationElement SneakingTorso = new AnimationElement(0, -5, 0, 0, 0, 0);
 }
 
 public readonly struct RightHandFrame
