@@ -2,15 +2,11 @@
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.MathTools;
-using Vintagestory.API.Server;
 
 namespace CombatOverhaul.RangedSystems.Aiming;
 
-public class AimingAccuracyBehavior : EntityBehavior
+public sealed class AimingAccuracyBehavior : EntityBehavior
 {
-    public AimingStats Stats { get; set; } = new();
-    public bool IsAiming { get; private set; } = false;
-
     public AimingAccuracyBehavior(Entity entity) : base(entity)
     {
         if (entity is not EntityPlayer player)
@@ -22,34 +18,31 @@ public class AimingAccuracyBehavior : EntityBehavior
 
         CombatOverhaulSystem system = entity.Api.ModLoader.GetModSystem<CombatOverhaulSystem>();
 
-        if (entity.Api is ICoreClientAPI clientApi)
-        {
-            _clientAimingSystem = system.AimingSystem;
-            clientApi.Input.InWorldAction += InWorldAction;
-        }
+        if (entity.Api is not ICoreClientAPI clientApi) return;
 
-        _rand = new Random((int)(entity.EntityId + entity.World.ElapsedMilliseconds));
+        _mainPlayer = (entity as EntityPlayer)?.PlayerUID == clientApi.Settings.String["playeruid"];
 
-        _modifiers.Add(new BaseAimingAccuracy(_player, _clientAimingSystem));
-        _modifiers.Add(new MovingAimingAccuracy(_player, _clientAimingSystem));
-        _modifiers.Add(new MountedAimingAccuracy(_player, _clientAimingSystem));
-        _modifiers.Add(new OnHurtAimingAccuracy(_player, _clientAimingSystem));
+        if (!_mainPlayer) return;
 
-        entity.Attributes.RegisterModifiedListener("bullseyeAiming", OnAimingChanged);
-        entity.Stats.Set("walkspeed", "bullseyeaimmod", 0f);
+        ClientAimingSystem clientAimingSystem = system.AimingSystem ?? throw new Exception();
+        clientApi.Input.InWorldAction += InWorldAction;
+        _modifiers.Add(new BaseAimingAccuracy(_player, clientAimingSystem));
+        _modifiers.Add(new MovingAimingAccuracy(_player, clientAimingSystem));
+        _modifiers.Add(new MountedAimingAccuracy(_player, clientAimingSystem));
+        _modifiers.Add(new OnHurtAimingAccuracy(_player, clientAimingSystem));
     }
 
     public override void OnGameTick(float deltaTime)
     {
-        if (!IsAiming) return;
+        if (!_mainPlayer || !_isAiming) return;
 
         if (!entity.Alive)
         {
-            entity.Attributes.SetInt("bullseyeAiming", 0);
+            StopAim();
             return;
         }
 
-        if (!Stats.AllowSprint)
+        if (!_stats.AllowSprint)
         {
             _player.CurrentControls &= ~EnumEntityActivity.SprintMode;
             _player.Controls.Sprint = false;
@@ -58,12 +51,12 @@ public class AimingAccuracyBehavior : EntityBehavior
 
         for (int i = 0; i < _modifiers.Count; i++)
         {
-            _modifiers[i].Update(deltaTime, Stats);
+            _modifiers[i].Update(deltaTime, _stats);
         }
     }
     public override void OnEntityReceiveDamage(DamageSource damageSource, ref float damage)
     {
-        if (damageSource.Type == EnumDamageType.Heal) return;
+        if (!_mainPlayer || damageSource.Type == EnumDamageType.Heal) return;
 
         for (int i = 0; i < _modifiers.Count; i++)
         {
@@ -72,53 +65,35 @@ public class AimingAccuracyBehavior : EntityBehavior
     }
     public override string PropertyName() => "CombatOverhaul:aimingAccuracy";
 
-    private readonly Random _rand;
-    private readonly List<AccuracyModifier> _modifiers = new();
-    private readonly ClientAimingSystem? _clientAimingSystem;
-    private readonly EntityAgent _player;
+    public void StartAim(AimingStats stats)
+    {
+        _stats = stats;
+        _isAiming = true;
 
+        if (stats.MoveSpeedPenalty != 0)
+        {
+            entity.Stats.Set("walkspeed", "CombatOverhaul:aiming", -(stats.MoveSpeedPenalty * entity.Stats.GetBlended("walkspeed")));
+        }
+    }
+    public void StopAim()
+    {
+        _isAiming = false;
+
+        entity.Stats.Set("walkspeed", "CombatOverhaul:aiming", 0);
+    }
+
+    private readonly List<AccuracyModifier> _modifiers = new();
+    private readonly EntityAgent _player;
+    private readonly bool _mainPlayer = false;
+
+    private AimingStats _stats = new();
+    private bool _isAiming = false;
 
     private void InWorldAction(EnumEntityAction action, bool on, ref EnumHandling handled)
     {
-        if (IsAiming && !Stats.AllowSprint && action == EnumEntityAction.Sprint && on)
+        if (_isAiming && !_stats.AllowSprint && action == EnumEntityAction.Sprint && on)
         {
             handled = EnumHandling.PreventDefault;
-        }
-    }
-    private void OnAimingChanged()
-    {
-        bool beforeAiming = IsAiming;
-        IsAiming = entity.Attributes.GetInt("bullseyeAiming") > 0;
-
-        if (beforeAiming == IsAiming) return;
-
-        if (Stats.MoveSpeedPenalty != 0)
-        {
-            entity.Stats.Set("walkspeed", "bullseyeaimmod", IsAiming ? -(Stats.MoveSpeedPenalty * entity.Stats.GetBlended("walkspeed")) : 0f);
-        }
-
-        for (int i = 0; i < _modifiers.Count; i++)
-        {
-            if (IsAiming)
-            {
-                _modifiers[i].BeginAim();
-            }
-            else
-            {
-                _modifiers[i].EndAim();
-            }
-        }
-
-        if (entity.World is IServerWorldAccessor && IsAiming)
-        {
-            double rndpitch = _rand.NextDouble();
-            double rndyaw = _rand.NextDouble();
-            entity.WatchedAttributes.SetDouble("aimingRandPitch", rndpitch);
-            entity.WatchedAttributes.SetDouble("aimingRandYaw", rndyaw);
-        }
-        else if (entity.World is IClientWorldAccessor cWorld && cWorld.Player.Entity.EntityId == entity.EntityId)
-        {
-            if (IsAiming) { _clientAimingSystem.StartAiming(Stats); } else { _clientAimingSystem.StopAiming(); }
         }
     }
 }
@@ -137,8 +112,8 @@ internal class AccuracyModifier
 
     public AccuracyModifier(EntityAgent entity, ClientAimingSystem clientAimingSystem)
     {
-        this.Entity = entity;
-        this.ClientAimingSystem = clientAimingSystem;
+        Entity = entity;
+        ClientAimingSystem = clientAimingSystem;
     }
 
     public virtual void BeginAim()
@@ -158,7 +133,6 @@ internal class AccuracyModifier
 
     }
 }
-
 
 internal class BaseAimingAccuracy : AccuracyModifier
 {
@@ -181,11 +155,8 @@ internal class BaseAimingAccuracy : AccuracyModifier
         // Linear loss of accuracy from holding too long
         bullseyeAccuracy += GameMath.Clamp((SecondsSinceAimStart - weaponStats.AccuracyOvertimeStart - weaponStats.AccuracyStartTime) / weaponStats.AccuracyOvertimeTime, 0f, 1f) * weaponStats.AccuracyOvertime;
 
-        if (ClientAimingSystem != null)
-        {
-            ClientAimingSystem.DriftMultiplier = 1 + bullseyeAccuracy;
-            ClientAimingSystem.TwitchMultiplier = 1 + (bullseyeAccuracy * 3f);
-        }
+        ClientAimingSystem.DriftMultiplier = 1 + bullseyeAccuracy;
+        ClientAimingSystem.TwitchMultiplier = 1 + (bullseyeAccuracy * 3f);
     }
 }
 
@@ -281,8 +252,6 @@ internal class OnHurtAimingAccuracy : AccuracyModifier
     public override void Update(float dt, AimingStats weaponStats)
     {
         _accuracyPenalty = GameMath.Clamp(_accuracyPenalty - dt / 3, 0, 0.4f);
-
-        //accuracy -= accuracyPenalty;
     }
 
     public override void OnHurt(float damage)

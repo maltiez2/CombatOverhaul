@@ -54,6 +54,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     }
 
     public PlayerItemFrame? FrameOverride { get; set; } = null;
+    public static float CurrentFov { get; set; } = ClientSettings.FieldOfView;
 
     public void Play(AnimationRequest request, bool mainHand = true)
     {
@@ -191,5 +192,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
 
         PlayerRenderingPatches.HandsFovMultiplier = multiplier;
         _cameraFov.SetValue(camera, ClientSettings.FieldOfView * GameMath.DEG2RAD * multiplier);
+
+        CurrentFov = ClientSettings.FieldOfView * multiplier;
     }
 }

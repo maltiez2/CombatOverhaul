@@ -1,4 +1,5 @@
-﻿using CombatOverhaul.Integration;
+﻿using CombatOverhaul.Animations;
+using CombatOverhaul.Integration;
 using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.MathTools;
@@ -6,22 +7,20 @@ using Vintagestory.Client.NoObf;
 
 namespace CombatOverhaul.RangedSystems.Aiming;
 
-public enum AimingType
+public enum AimingCursorType
 {
-    Vanilla = 0,
-    WithCursor,
-    DownSights,
-    MovingReticle
-}
-
-public enum AimingCameraType
-{
+    None,
+    Vanilla,
     Fixed,
     Moving
 }
 
 public class AimingStats
 {
+    public float AimDifficulty { get; set; } = 1;
+    public AimingCursorType CursorType { get; set; } = AimingCursorType.Moving;
+    public bool InvertMouseYAxis { get; set; } = false;
+
     public float VerticalAccuracyMultiplier { get; set; } = 1f;
     public float HorizontalAccuracyMultiplier { get; set; } = 1f;
     public float AimDriftFrequency { get; set; } = 0.001f;
@@ -45,17 +44,20 @@ public class AimingStats
 public sealed class ClientAimingSystem : IDisposable
 {
     public bool Aiming { get; set; } = false;
-    public bool ShowReticle { get; private set; } = true;
+    public bool ShowVanillaReticle { get; private set; } = true;
+    public bool ShowBullseyeReticle { get; private set; } = false;
+
     public Vector3 TargetVec { get; private set; } = new();
     public Vector2 Aim { get; private set; } = new();
     public Vector2 AimOffset { get; private set; } = new();
-    public ReticleRenderer Renderer => _reticleRenderer;
-    public AimingCameraType CameraType { get; set; } = AimingCameraType.Fixed;
-    public bool InvertMouseYAxis { get; set; } = false;
-    public float AimDifficulty { get; set; } = 1;
-    public float FieldOfView { get; set; } = 70f;
     public float DriftMultiplier { get; set; } = 1f;
     public float TwitchMultiplier { get; set; } = 1f;
+
+    public WeaponAimingState AimingState
+    {
+        get => ShowBullseyeReticle ? _reticleRenderer.AimingState : WeaponAimingState.None;
+        set => _reticleRenderer.AimingState = value;
+    }
 
     public event Action? OnAimPointChange;
 
@@ -82,16 +84,17 @@ public sealed class ClientAimingSystem : IDisposable
             ResetAimOffset();
         }
 
-        if (CameraType == AimingCameraType.Moving)
+        if (_aimingStats.CursorType == AimingCursorType.Moving)
         {
             SetFixedAimPoint(_clientApi.Render.FrameWidth, _clientApi.Render.FrameHeight);
         }
 
         Aiming = true;
         _aimingDt = 0f;
-        ShowReticle = false;
+        ShowVanillaReticle = _aimingStats.CursorType == AimingCursorType.Vanilla;
+        ShowBullseyeReticle = _aimingStats.CursorType != AimingCursorType.None && _aimingStats.CursorType != AimingCursorType.Vanilla;
 
-        _reticleRenderer.AimingState = WeaponAimingState.FullCharge;
+        _clientApi.World.Player.Entity.GetBehavior<AimingAccuracyBehavior>().StartAim(stats);
     }
     public void StopAiming()
     {
@@ -99,13 +102,15 @@ public sealed class ClientAimingSystem : IDisposable
 
         _lastAimingEndTime = _clientApi.World.ElapsedMilliseconds;
 
-        ShowReticle = true;
+        ShowVanillaReticle = true;
 
         _reticleRenderer.AimingState = WeaponAimingState.None;
+
+        _clientApi.World.Player.Entity.GetBehavior<AimingAccuracyBehavior>().StopAim();
     }
     public Vector2 GetCurrentAim()
     {
-        float offsetMagnitude = Math.Clamp(AimDifficulty, 0, 1);
+        float offsetMagnitude = Math.Clamp(_aimingStats.AimDifficulty, 0, 2);
 
         if (_clientApi.World.Player?.Entity != null)
         {
@@ -127,18 +132,18 @@ public sealed class ClientAimingSystem : IDisposable
             ref double ___DelayedMouseDeltaX, ref double ___DelayedMouseDeltaY,
             float dt)
     {
-        AimingPatches.DrawDefaultReticle = ShowReticle;
+        AimingPatches.DrawDefaultReticle = ShowVanillaReticle;
 
         if (!Aiming) return;
-        
+
         // Default FOV is 70, and 1920 is the screen width of my dev machine :) 
-        _currentFovRatio = (__instance.Width / 1920f) * (GameMath.Tan((70f / 2 * GameMath.DEG2RAD)) / GameMath.Tan((FieldOfView / 2 * GameMath.DEG2RAD)));
+        _currentFovRatio = (__instance.Width / 1920f) * (GameMath.Tan((70f / 2 * GameMath.DEG2RAD)) / GameMath.Tan((FirstPersonAnimationsBehavior.CurrentFov / 2 * GameMath.DEG2RAD)));
         _aimingDt += dt;
 
         // Update
         UpdateAimOffsetSimple(__instance, dt);
 
-        if (CameraType == AimingCameraType.Fixed)
+        if (_aimingStats.CursorType == AimingCursorType.Fixed)
         {
             UpdateMouseDelta(__instance, ref ___MouseDeltaX, ref ___MouseDeltaY, ref ___DelayedMouseDeltaX, ref ___DelayedMouseDeltaY);
         }
@@ -184,7 +189,7 @@ public sealed class ClientAimingSystem : IDisposable
     {
         AimOffset = new(0, 0);
         _twitch = new(0, 0);
-        ShowReticle = true;
+        ShowVanillaReticle = true;
     }
     private void ResetAim()
     {
@@ -256,7 +261,7 @@ public sealed class ClientAimingSystem : IDisposable
         float verticalAimLimit = (__instance.Height / 2f) * _aimingStats.VerticalLimit;
         float verticalAimOffset = (__instance.Height / 2f) * _aimingStats.VerticalOffset;
 
-        float yInversionFactor = InvertMouseYAxis ? -1 : 1;
+        float yInversionFactor = _aimingStats.InvertMouseYAxis ? -1 : 1;
 
         float deltaX = (float)(___MouseDeltaX - ___DelayedMouseDeltaX);
         float deltaY = (float)(___MouseDeltaY - ___DelayedMouseDeltaY) * yInversionFactor;
@@ -288,7 +293,7 @@ public sealed class ClientAimingSystem : IDisposable
     }
     private void SetFixedAimPoint(int screenWidth, int screenHeight)
     {
-        float difficultyModifier = GameMath.Clamp(AimDifficulty, 0, 1);
+        float difficultyModifier = GameMath.Clamp(_aimingStats.AimDifficulty, 0, 2);
 
         float horizontalLimit = GameMath.Min(_aimingStats.HorizontalLimit, 0.25f);
         float verticalLimit = GameMath.Min(_aimingStats.VerticalLimit, 0.25f);

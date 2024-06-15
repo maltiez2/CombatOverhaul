@@ -19,6 +19,15 @@ public enum BowState
     Drawn
 }
 
+public enum BowAimingType
+{
+    Vanilla,
+    NoReticle,
+    BullseyeCursor,
+    BullseyeCamera,
+    BullseyeNoReticle
+}
+
 public class WeaponStats
 {
     public string ReadyAnimation { get; set; } = "";
@@ -29,6 +38,8 @@ public sealed class BowStats : WeaponStats
 {
     public string DrawAnimation { get; set; } = "";
     public string ReleaseAnimation { get; set; } = "";
+    public string AimingType { get; set; } = "Vanilla";
+    public float AimingDifficulty { get; set; } = 1.0f;
 }
 
 public sealed class BowClient : RangeWeaponClient
@@ -182,8 +193,8 @@ public sealed class BowClient : RangeWeaponClient
         return true;
     }
 
-    private float _followFactor_X = 0.07f;
-    private float _followFactor_Y = 0.09f;
+    private float _followFactor_X = 0.03f;
+    private float _followFactor_Y = 0.03f;
     private float _followOffset_X = 0.0f;
     private float _followOffset_Y = 0.0f;
 
@@ -192,7 +203,7 @@ public sealed class BowClient : RangeWeaponClient
         Vector2 currentAim = _aimingSystem.GetCurrentAim();
 
         float yaw = 0 - currentAim.X * _followFactor_X + _followOffset_X;
-        float pitch = currentAim.Y * 0.05f + _followOffset_Y;
+        float pitch = currentAim.Y * _followFactor_Y + _followOffset_Y;
 
         AnimationElement element = new(0, 0, 0, 0, yaw, pitch);
 
