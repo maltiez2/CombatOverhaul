@@ -57,6 +57,8 @@ public sealed class ClientAimingSystem : IDisposable
     public float DriftMultiplier { get; set; } = 1f;
     public float TwitchMultiplier { get; set; } = 1f;
 
+    public event Action? OnAimPointChange;
+
     public ClientAimingSystem(ICoreClientAPI api, ReticleRenderer renderer)
     {
         _clientApi = api;
@@ -144,6 +146,8 @@ public sealed class ClientAimingSystem : IDisposable
         SetAim();
 
         _reticleRenderer.AimingPoint = GetCurrentAim();
+
+        OnAimPointChange?.Invoke();
     }
 
     public void SetReticleTextures(LoadedTexture partChargeTex, LoadedTexture fullChargeTex, LoadedTexture blockedTex)

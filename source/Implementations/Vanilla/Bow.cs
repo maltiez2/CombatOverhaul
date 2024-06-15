@@ -56,7 +56,6 @@ public sealed class BowClient : RangeWeaponClient
         _arrowSlot = null;
         _attachable.ClearAttachments(player.EntityId);
         PlayerBehavior?.SetState((int)BowState.Unloaded);
-        AnimationBehavior?.Stop("idle");
         _aimingSystem.StopAiming();
     }
 
@@ -115,6 +114,8 @@ public sealed class BowClient : RangeWeaponClient
 
         _aimingSystem.StartAiming(new AimingStats());
 
+        PlayCursorFollowAnimation(mainHand);
+
         return true;
     }
 
@@ -147,6 +148,8 @@ public sealed class BowClient : RangeWeaponClient
 
         RangedWeaponSystem.Shoot(slot, 1, new((float)position.X, (float)position.Y, (float)position.Z), new(targetDirection.X, targetDirection.Y, targetDirection.Z), mainHand, ShootCallback);
 
+        StopCursorFollowAnimation(mainHand);
+
         return true;
     }
 
@@ -177,6 +180,49 @@ public sealed class BowClient : RangeWeaponClient
         AnimationBehavior?.Play(request, true);
 
         return true;
+    }
+
+    private float _followFactor_X = 0.07f;
+    private float _followFactor_Y = 0.09f;
+    private float _followOffset_X = 0.0f;
+    private float _followOffset_Y = 0.0f;
+
+    private PLayerKeyFrame GetAimingFrame()
+    {
+        Vector2 currentAim = _aimingSystem.GetCurrentAim();
+
+        float yaw = 0 - currentAim.X * _followFactor_X + _followOffset_X;
+        float pitch = currentAim.Y * 0.05f + _followOffset_Y;
+
+        AnimationElement element = new(0, 0, 0, 0, yaw, pitch);
+
+        PlayerFrame frame = new(upperTorso: element);
+
+        return new PLayerKeyFrame(frame, TimeSpan.Zero, EasingFunctionType.Linear);
+    }
+
+    private Animations.Animation _cursorFollowAnimation = Animations.Animation.Zero;
+    private Animations.Animation _cursorStopFollowAnimation = Animations.Animation.Zero;
+
+    private void PlayCursorFollowAnimation(bool mainHand)
+    {
+        AnimationRequest request = new(_cursorFollowAnimation, 1.0f, 0, "aiming", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true);
+        AnimationBehavior?.Play(request, mainHand);
+        _aimingSystem.OnAimPointChange += UpdateCursorFollowAnimation;
+    }
+
+    private void StopCursorFollowAnimation(bool mainHand)
+    {
+        _cursorStopFollowAnimation.PlayerKeyFrames[0] = new PLayerKeyFrame(PlayerFrame.Zero, TimeSpan.FromMilliseconds(500), EasingFunctionType.CosShifted);
+        AnimationRequest request = new(_cursorStopFollowAnimation, 1.0f, 0, "aiming", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true);
+        AnimationBehavior?.Play(request, mainHand);
+        _aimingSystem.OnAimPointChange -= UpdateCursorFollowAnimation;
+    }
+
+    private void UpdateCursorFollowAnimation()
+    {
+        _cursorFollowAnimation.PlayerKeyFrames[0] = GetAimingFrame();
+        _cursorFollowAnimation.Hold = true;
     }
 }
 
