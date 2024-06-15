@@ -348,13 +348,28 @@
 									]
 								}
 							]
-						}
-					],
-					"attachmentpoints": [
+						},
 						{
-							"code": "Arrow",
-							"posX": "1.5","posY": "0.7","posZ": "0.0",
-							"rotationX": "0.0","rotationY": "90.0","rotationZ": "0.0"
+							"name": "Arrow",
+							"from": [ 1.5, 0.7, 0.0 ],
+							"to": [ 1.5, 0.7, 0.0 ],
+							"rotationOrigin": [ 1.5, 0.7, 0.0 ],
+							"rotationY": 90.0,
+							"faces": {
+								"north": { "texture": "#plain", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+								"east": { "texture": "#plain", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+								"south": { "texture": "#plain", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+								"west": { "texture": "#plain", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+								"up": { "texture": "#plain", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+								"down": { "texture": "#plain", "uv": [ 0.0, 0.0, 0.5, 0.5 ] }
+							},
+							"attachmentpoints": [
+								{
+									"code": "Arrow",
+									"posX": "0.0","posY": "0.0","posZ": "0.0",
+									"rotationX": "0.0","rotationY": "0.0","rotationZ": "0.0"
+								}
+							]
 						}
 					]
 				},

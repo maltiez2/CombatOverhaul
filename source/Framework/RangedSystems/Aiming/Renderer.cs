@@ -15,7 +15,6 @@ public enum WeaponAimingState
 
 public sealed class ReticleRenderer : IRenderer
 {
-    public bool ShowReticle { get; set; }
     public WeaponAimingState AimingState { get; set; } = WeaponAimingState.None;
     public bool ReticleScaling { get; set; } = false;
     public bool ThrowCircle { get; set; } = false;

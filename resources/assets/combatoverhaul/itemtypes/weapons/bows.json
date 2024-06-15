@@ -11,7 +11,10 @@
     "arrowTransform": {"translation": {"x": -8, "y": 0.3, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 1}, "scale": 0.75},
     "arrowDamageMultiplier": 1,
     "arrowStrengthMultiplier": 1,
-    "arrowVelocity": 1
+    "arrowVelocity": 1,
+    "ReadyAnimation": "combatoverhaul:bow-idle",
+    "DrawAnimation": "combatoverhaul:bow-draw-{type}",
+    "ReleaseAnimation": "combatoverhaul:bow-release-simple"
   },
   "shape": {"base": "combatoverhaul:weapons/bows/{type}"},
   "guiTransformByType": {

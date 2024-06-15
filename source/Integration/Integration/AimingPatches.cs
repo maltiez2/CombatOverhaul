@@ -7,7 +7,7 @@ namespace CombatOverhaul.Integration;
 
 internal static class AimingPatches
 {
-    public delegate void UpdateCameraYawPitchDelegate(ClientMain client, Vector2 mouseDelta, Vector2 delayedMouseDelta, float dt);
+    public delegate void UpdateCameraYawPitchDelegate(ClientMain __instance, ref double ___MouseDeltaX, ref double ___MouseDeltaY, ref double ___DelayedMouseDeltaX, ref double ___DelayedMouseDeltaY, float dt);
 
     public static bool DrawDefaultReticle { get; set; } = true;
     public static event UpdateCameraYawPitchDelegate? UpdateCameraYawPitch;
@@ -39,6 +39,6 @@ internal static class AimingPatches
             ref double ___DelayedMouseDeltaX, ref double ___DelayedMouseDeltaY,
             float dt)
     {
-        UpdateCameraYawPitch?.Invoke(__instance, new((float)___MouseDeltaX, (float)___MouseDeltaY), new((float)___DelayedMouseDeltaX, (float)___DelayedMouseDeltaY), dt);
+        UpdateCameraYawPitch?.Invoke(__instance, ref ___MouseDeltaX, ref ___MouseDeltaY, ref ___DelayedMouseDeltaX, ref ___DelayedMouseDeltaY, dt);
     }
 }

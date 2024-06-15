@@ -10,10 +10,8 @@
 	},
 	"textures": {
 		"string": "game:block/cloth/burlap/string",
-		"flint": "game:block/stone/flint",
 		"aged": "game:block/wood/debarked/aged",
-		"wood": "game:block/wood/debarked/larch",
-		"maple": "game:block/wood/debarked/maple"
+		"wood": "game:block/wood/debarked/larch"
 	},
 	"elements": [
 		{
@@ -349,13 +347,28 @@
 									]
 								}
 							]
-						}
-					],
-					"attachmentpoints": [
+						},
 						{
-							"code": "Arrow",
-							"posX": "1.5","posY": "0.7","posZ": "0.0",
-							"rotationX": "0.0","rotationY": "90.0","rotationZ": "0.0"
+							"name": "Arrow",
+							"from": [ 1.5, 0.7, 0.0 ],
+							"to": [ 1.5, 0.7, 0.0 ],
+							"rotationOrigin": [ 1.5, 0.7, 0.0 ],
+							"rotationY": 90.0,
+							"faces": {
+								"north": { "texture": "#string", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+								"east": { "texture": "#string", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+								"south": { "texture": "#string", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+								"west": { "texture": "#string", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+								"up": { "texture": "#string", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+								"down": { "texture": "#string", "uv": [ 0.0, 0.0, 0.5, 0.5 ] }
+							},
+							"attachmentpoints": [
+								{
+									"code": "Arrow",
+									"posX": "0.0","posY": "0.0","posZ": "0.0",
+									"rotationX": "0.0","rotationY": "0.0","rotationZ": "0.0"
+								}
+							]
 						}
 					]
 				},

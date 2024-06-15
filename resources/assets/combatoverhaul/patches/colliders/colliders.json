@@ -390,7 +390,11 @@
     "file": "game:entities/land/strawdummy",
     "op": "add",
     "path": "/client/behaviors/0",
-    "value": {"code": "CombatOverhaul:EntityColliders", "colliderShapeElements": ["body", "upper body", "hands", "Head"]}
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "colliderShapeElements": ["body", "upper body", "hands", "Head"],
+      "elementsTypes": {"Torso": ["upper body", "body"], "Head": ["Head"], "Arm": ["hands"], "Leg": [], "Critical": []}
+    }
   },
   {
     "side": "Server",

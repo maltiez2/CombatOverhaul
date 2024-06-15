@@ -5,11 +5,28 @@ namespace CombatOverhaul.Animations;
 
 public sealed class Animation
 {
-    public List<PLayerKeyFrame> PlayerKeyFrames { get; private set; } = new();
-    public List<ItemKeyFrame> ItemKeyFrames { get; private set; } = new();
+    public List<PLayerKeyFrame> PlayerKeyFrames { get; } = new();
+    public List<ItemKeyFrame> ItemKeyFrames { get; } = new();
+    public List<SoundFrame> SoundFrames { get; } = new();
     public TimeSpan TotalDuration => PlayerKeyFrames[^1].Time;
+    public TimeSpan ItemAnimationStart { get; set; } = TimeSpan.Zero;
+    public TimeSpan ItemAnimationEnd { get; set; } = TimeSpan.Zero;
     public bool Hold { get; set; } = false;
 
+    public Animation(IEnumerable<PLayerKeyFrame> playerFrames, IEnumerable<ItemKeyFrame> itemFrames, IEnumerable<SoundFrame> soundFrames)
+    {
+        if (!playerFrames.Any()) throw new ArgumentException("Frames number should be at least 1");
+
+        PlayerKeyFrames = playerFrames.ToList();
+        ItemKeyFrames = itemFrames.ToList();
+        SoundFrames = soundFrames.ToList();
+
+        PlayerKeyFrames.Sort((x, y) => (int)(x.Time - y.Time).TotalMilliseconds);
+        ItemKeyFrames.Sort((x, y) => (int)((x.DurationFraction - y.DurationFraction) * 1E6f));
+        SoundFrames.Sort((x, y) => (int)((x.DurationFraction - y.DurationFraction) * 1E6f));
+
+        ItemAnimationEnd = TotalDuration;
+    }
     public Animation(IEnumerable<PLayerKeyFrame> playerFrames, IEnumerable<ItemKeyFrame> itemFrames)
     {
         if (!playerFrames.Any()) throw new ArgumentException("Frames number should be at least 1");
@@ -19,6 +36,8 @@ public sealed class Animation
 
         PlayerKeyFrames.Sort((x, y) => (int)(x.Time - y.Time).TotalMilliseconds);
         ItemKeyFrames.Sort((x, y) => (int)((x.DurationFraction - y.DurationFraction) * 1E6f));
+
+        ItemAnimationEnd = TotalDuration;
     }
     public Animation(IEnumerable<PLayerKeyFrame> playerFrames)
     {
@@ -28,6 +47,8 @@ public sealed class Animation
 
         PlayerKeyFrames.Sort((x, y) => (int)(x.Time - y.Time).TotalMilliseconds);
         ItemKeyFrames.Sort((x, y) => (int)((x.DurationFraction - y.DurationFraction) * 1E6f));
+
+        ItemAnimationEnd = TotalDuration;
     }
     public Animation(IEnumerable<PLayerKeyFrame> playerFrames, string itemAnimation, Shape itemShape)
     {
@@ -38,16 +59,25 @@ public sealed class Animation
 
         PlayerKeyFrames.Sort((x, y) => (int)(x.Time - y.Time).TotalMilliseconds);
         ItemKeyFrames.Sort((x, y) => (int)((x.DurationFraction - y.DurationFraction) * 1E6f));
+
+        ItemAnimationEnd = TotalDuration;
     }
 
     public static readonly Animation Zero = new(new PLayerKeyFrame[] { PLayerKeyFrame.Zero });
 
+    public void PlaySounds(SoundsSynchronizerClient soundsManager, TimeSpan currentDuration, TimeSpan previousDuration)
+    {
+        foreach (SoundFrame frame in SoundFrames.Where(frame => frame.DurationFraction * TotalDuration > previousDuration && frame.DurationFraction * TotalDuration <= currentDuration))
+        {
+            soundsManager.Play(frame);
+        }
+    }
     public PlayerItemFrame Interpolate(PlayerItemFrame previousAnimationFrame, TimeSpan currentDuration)
     {
         if (Finished(currentDuration)) return new(PlayerKeyFrames[^1].Frame, ItemKeyFrames.Any() ? ItemKeyFrames[^1].Frame : null);
 
-        ItemFrame? itemFrame = InterpolateItemFrame(previousAnimationFrame, currentDuration);
-        PlayerFrame playerFrame = InterpolatePlayerFrame(previousAnimationFrame, currentDuration);
+        PlayerFrame playerFrame = InterpolatePlayerFrame(previousAnimationFrame, currentDuration, out TimeSpan adjustedCurrentDuration);
+        ItemFrame? itemFrame = InterpolateItemFrame(previousAnimationFrame, adjustedCurrentDuration);
 
         return new(playerFrame, itemFrame);
     }
@@ -60,7 +90,7 @@ public sealed class Animation
             ItemKeyFrames.Sort((x, y) => (int)((x.DurationFraction - y.DurationFraction) * 1E6f));
         }
         ImGui.SameLine();
-        
+
         ImGui.Text($"Total duration: {(int)TotalDuration.TotalMilliseconds} ms");
         ImGui.SameLine();
 
@@ -77,11 +107,30 @@ public sealed class Animation
         }
         if (ItemKeyFrames.Any() && ImGui.BeginTabItem($"Item animation##{title}"))
         {
+            int itemAnimationStart = (int)ItemAnimationStart.TotalMilliseconds;
+            ImGui.DragInt($"Item animation start##{title}", ref itemAnimationStart);
+            ItemAnimationStart = TimeSpan.FromMilliseconds(itemAnimationStart);
+
+            int itemAnimationEnd = (int)ItemAnimationEnd.TotalMilliseconds;
+            ImGui.DragInt($"Item animation end##{title}", ref itemAnimationEnd);
+            ItemAnimationEnd = TimeSpan.FromMilliseconds(itemAnimationEnd);
+
             EditItemAnimation(title + "item");
 
             ImGui.EndTabItem();
         }
+        if (ImGui.BeginTabItem($"Sounds##{title}"))
+        {
+            EditSoundFrames(title + "sounds");
+
+            ImGui.EndTabItem();
+        }
         ImGui.EndTabBar();
+
+
+
+        if (ItemAnimationEnd > TotalDuration) ItemAnimationEnd = TotalDuration;
+        if (ItemAnimationStart > ItemAnimationEnd) ItemAnimationStart = ItemAnimationEnd;
     }
     public override string ToString() => AnimationJson.FromAnimation(this).ToString();
     public PlayerItemFrame StillPlayerFrame(int playerFrame)
@@ -104,14 +153,15 @@ public sealed class Animation
     internal int _playerFrameIndex = 0;
     internal int _itemFrameIndex = 0;
     internal bool _playerFrameEdited = true;
+    internal int _soundsFrameIndex = 0;
 
     private ItemFrame? InterpolateItemFrame(PlayerItemFrame previousAnimationFrame, TimeSpan currentDuration)
     {
         if (!ItemKeyFrames.Any()) return null;
 
         int nextItemKeyFrame;
-        TimeSpan totalDurationWithEasing = PlayerKeyFrames.Count == 1 ? TotalDuration : TotalDuration - PlayerKeyFrames[0].Time;
-        TimeSpan currentDurationWithEasing = PlayerKeyFrames.Count == 1 ? currentDuration : currentDuration - PlayerKeyFrames[0].Time;
+        TimeSpan totalDurationWithEasing = ItemAnimationEnd - ItemAnimationStart;
+        TimeSpan currentDurationWithEasing = currentDuration - ItemAnimationStart;
         float progress = Math.Clamp((float)(currentDurationWithEasing / totalDurationWithEasing), 0, 1);
 
         for (nextItemKeyFrame = 0; nextItemKeyFrame < ItemKeyFrames.Count; nextItemKeyFrame++)
@@ -144,22 +194,28 @@ public sealed class Animation
             return ItemKeyFrames[nextItemKeyFrame].Interpolate(ItemKeyFrames[nextItemKeyFrame - 1].Frame, itemFrameProgress);
         }
     }
-    private PlayerFrame InterpolatePlayerFrame(PlayerItemFrame previousAnimationFrame, TimeSpan currentDuration)
+    private PlayerFrame InterpolatePlayerFrame(PlayerItemFrame previousAnimationFrame, TimeSpan currentDuration, out TimeSpan adjustedCurrentDuration)
     {
         int nextPlayerKeyFrame;
         for (nextPlayerKeyFrame = 0; nextPlayerKeyFrame < PlayerKeyFrames.Count; nextPlayerKeyFrame++)
         {
             if (PlayerKeyFrames[nextPlayerKeyFrame].Time > currentDuration) break;
-        }
+        } 
 
         if (nextPlayerKeyFrame == 0)
         {
-            return PlayerKeyFrames[0].Interpolate(previousAnimationFrame.Player, (float)(currentDuration / PlayerKeyFrames[nextPlayerKeyFrame].Time));
+            float frameProgress = (float)(currentDuration / PlayerKeyFrames[nextPlayerKeyFrame].Time);
+            adjustedCurrentDuration = currentDuration * EasingFunctions.Get(PlayerKeyFrames[nextPlayerKeyFrame].EasingFunction).Invoke(frameProgress);
+
+            return PlayerKeyFrames[0].Interpolate(previousAnimationFrame.Player, frameProgress);
         }
         else
         {
             TimeSpan frameDuration = PlayerKeyFrames[nextPlayerKeyFrame].Time - PlayerKeyFrames[nextPlayerKeyFrame - 1].Time;
-            return PlayerKeyFrames[nextPlayerKeyFrame].Interpolate(PlayerKeyFrames[nextPlayerKeyFrame - 1].Frame, (float)((currentDuration - PlayerKeyFrames[nextPlayerKeyFrame - 1].Time) / frameDuration));
+            float frameProgress = (float)((currentDuration - PlayerKeyFrames[nextPlayerKeyFrame - 1].Time) / frameDuration);
+            adjustedCurrentDuration = PlayerKeyFrames[nextPlayerKeyFrame - 1].Time + frameDuration * EasingFunctions.Get(PlayerKeyFrames[nextPlayerKeyFrame].EasingFunction).Invoke(frameProgress);
+
+            return PlayerKeyFrames[nextPlayerKeyFrame].Interpolate(PlayerKeyFrames[nextPlayerKeyFrame - 1].Frame, frameProgress);
         }
     }
     private void EditPlayerAnimation(string title)
@@ -215,6 +271,34 @@ public sealed class Animation
 
         _playerFrameEdited = false;
     }
+    private void EditSoundFrames(string title)
+    {
+        if (ImGui.Button($"Add##{title}"))
+        {
+            SoundFrames.Add(new("", 0));
+        }
+        ImGui.SameLine();
+
+        if (_soundsFrameIndex >= SoundFrames.Count) _soundsFrameIndex = SoundFrames.Count - 1;
+        if (_soundsFrameIndex < 0) _soundsFrameIndex = 0;
+
+        bool canRemove = SoundFrames.Any();
+        if (!canRemove) ImGui.BeginDisabled();
+        if (ImGui.Button($"Remove##{title}"))
+        {
+            SoundFrames.RemoveAt(_soundsFrameIndex);
+        }
+        if (!canRemove) ImGui.EndDisabled();
+
+        ImGui.ListBox($"Sounds##{title}", ref _soundsFrameIndex, SoundFrames.Select(element => element.Code).ToArray(), SoundFrames.Count);
+
+        ImGui.Separator();
+
+        if (_soundsFrameIndex < SoundFrames.Count)
+        {
+            SoundFrames[_soundsFrameIndex] = SoundFrames[_soundsFrameIndex].Edit(title);
+        }
+    }
 }
 
 public sealed class AnimationJson
@@ -222,10 +306,18 @@ public sealed class AnimationJson
     public bool Hold { get; set; } = false;
     public PLayerKeyFrameJson[] PlayerKeyFrames { get; set; } = Array.Empty<PLayerKeyFrameJson>();
     public ItemKeyFrameJson[] ItemKeyFrames { get; set; } = Array.Empty<ItemKeyFrameJson>();
+    public SoundFrameJson[] SoundFrames { get; set; } = Array.Empty<SoundFrameJson>();
+    public int ItemAnimationStart { get; set; }
+    public int ItemAnimationEnd { get; set; }
 
     public Animation ToAnimation()
     {
-        return new(PlayerKeyFrames.Select(element => element.ToKeyFrame()), ItemKeyFrames.Select(element => element.ToKeyFrame())) { Hold = Hold };
+        return new(PlayerKeyFrames.Select(element => element.ToKeyFrame()), ItemKeyFrames.Select(element => element.ToKeyFrame()), SoundFrames.Select(element => element.ToSoundFrame()))
+        {
+            Hold = Hold,
+            ItemAnimationStart = TimeSpan.FromMilliseconds(ItemAnimationStart),
+            ItemAnimationEnd = TimeSpan.FromMilliseconds(ItemAnimationEnd)
+        };
     }
 
     public static AnimationJson FromAnimation(Animation animation)
@@ -234,11 +326,42 @@ public sealed class AnimationJson
         {
             Hold = animation.Hold,
             PlayerKeyFrames = animation.PlayerKeyFrames.Select(PLayerKeyFrameJson.FromKeyFrame).ToArray(),
-            ItemKeyFrames = animation.ItemKeyFrames.Select(ItemKeyFrameJson.FromKeyFrame).ToArray()
+            ItemKeyFrames = animation.ItemKeyFrames.Select(ItemKeyFrameJson.FromKeyFrame).ToArray(),
+            SoundFrames = animation.SoundFrames.Select(SoundFrameJson.FromSoundFrame).ToArray(),
+            ItemAnimationStart = (int)animation.ItemAnimationStart.TotalMilliseconds,
+            ItemAnimationEnd = (int)animation.ItemAnimationEnd.TotalMilliseconds
         };
     }
 
     public override string ToString() => JsonUtil.ToPrettyString(this);
+}
+
+public sealed class SoundFrameJson
+{
+    public string Code { get; set; } = "";
+    public float DurationFraction { get; set; }
+    public bool RandomizePitch { get; set; }
+    public float Range { get; set; }
+    public float Volume { get; set; }
+    public bool Synchronize { get; set; }
+
+    public SoundFrame ToSoundFrame()
+    {
+        return new(Code, DurationFraction, RandomizePitch, Range, Volume, Synchronize);
+    }
+
+    public static SoundFrameJson FromSoundFrame(SoundFrame frame)
+    {
+        return new()
+        {
+            Code = frame.Code,
+            DurationFraction = frame.DurationFraction,
+            RandomizePitch = frame.RandomizePitch,
+            Range = frame.Range,
+            Volume = frame.Volume,
+            Synchronize = frame.Synchronize
+        };
+    }
 }
 
 public sealed class ItemKeyFrameJson

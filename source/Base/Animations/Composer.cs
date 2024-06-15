@@ -2,9 +2,9 @@
 
 internal sealed class Composer
 {
-    public Composer()
+    public Composer(SoundsSynchronizerClient soundsManager)
     {
-
+        _soundsManager = soundsManager;
     }
 
     public PlayerItemFrame Compose(TimeSpan delta)
@@ -75,7 +75,7 @@ internal sealed class Composer
         else
         {
             string category = request.Category;
-            _animators.Add(category, new Animator(request.Animation));
+            _animators.Add(category, new Animator(request.Animation, _soundsManager));
             _requests.Add(category, request);
             _previousWeight[category] = 0;
             _currentWeight[category] = 0;
@@ -110,6 +110,7 @@ internal sealed class Composer
     private readonly Dictionary<string, float> _currentWeight = new();
     private readonly Dictionary<string, AnimatorWeightState> _weightState = new();
     private readonly Dictionary<string, TimeSpan> _currentTimes = new();
+    private readonly SoundsSynchronizerClient _soundsManager;
 
     private void ProcessWeight(string category, AnimatorWeightState state)
     {
@@ -205,9 +206,10 @@ public readonly struct AnimationRequestByCode
 
 internal class Animator
 {
-    public Animator(Animation animation)
+    public Animator(Animation animation, SoundsSynchronizerClient soundsManager)
     {
         _currentAnimation = animation;
+        _soundsManager = soundsManager;
     }
 
     public bool FinishOverride { get; set; } = false;
@@ -223,9 +225,11 @@ internal class Animator
 
     public PlayerItemFrame Animate(TimeSpan delta)
     {
+        TimeSpan previousDuration = _currentDuration / _animationSpeed;
         _currentDuration += delta;
         TimeSpan adjustedDuration = _currentDuration / _animationSpeed;
 
+        _currentAnimation.PlaySounds(_soundsManager, previousDuration, adjustedDuration);
         _lastFrame = _currentAnimation.Interpolate(_previousAnimationFrame, adjustedDuration);
         return _lastFrame;
     }
@@ -237,4 +241,5 @@ internal class Animator
     private TimeSpan _currentDuration = TimeSpan.Zero;
     private float _animationSpeed = 1;
     private Animation _currentAnimation;
+    private readonly SoundsSynchronizerClient _soundsManager;
 }

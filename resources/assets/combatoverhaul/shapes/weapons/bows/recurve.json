@@ -12,10 +12,8 @@
 		"fireclay": "game:block/clay/fireclay",
 		"wrapping": "game:block/cloth/linen/normal1",
 		"plain": "game:block/leather/plain",
-		"iron": "game:block/metal/ingot/iron",
 		"kapok": "game:block/wood/debarked/kapok",
-		"wood": "game:block/wood/debarked/larch",
-		"handle": "game:item/tool/material/handle"
+		"wood": "game:block/wood/debarked/larch"
 	},
 	"elements": [
 		{
@@ -45,7 +43,7 @@
 							"from": [ 2.5, 0.0, 0.0 ],
 							"to": [ 4.0, 1.0, 0.6 ],
 							"rotationOrigin": [ 2.5, 0.5, 0.5 ],
-							"rotationY": 7.0,
+							"rotationY": 20.0,
 							"faces": {
 								"north": { "texture": "#fireclay", "uv": [ 9.5, 9.5, 11.7, 11.0 ], "autoUv": false },
 								"east": { "texture": "#fireclay", "uv": [ 1.0, 0.0, 1.5, 1.0 ] },
@@ -75,7 +73,7 @@
 											"from": [ 1.5, 0.01, 0.0 ],
 											"to": [ 3.0, 0.97, 0.4 ],
 											"rotationOrigin": [ 1.5, 0.0, 0.0 ],
-											"rotationY": -18.0,
+											"rotationY": -25.0,
 											"faces": {
 												"north": { "texture": "#fireclay", "uv": [ 13.0, 12.0, 15.2, 13.5 ], "autoUv": false, "windMode": [-1,-1,-1,-1] },
 												"east": { "texture": "#fireclay", "uv": [ 0.0, 0.0, 0.5, 1.0 ], "autoUv": false, "windMode": [-1,-1,-1,-1] },
@@ -149,9 +147,7 @@
 																			"from": [ 2.1684, -0.08, 0.6702 ],
 																			"to": [ 3.5684, 0.42, 1.1702 ],
 																			"rotationOrigin": [ 2.1684, 0.12, 1.1702 ],
-																			"rotationX": 0.0,
 																			"rotationY": 62.0,
-																			"rotationZ": 0.0,
 																			"faces": {
 																				"north": { "texture": "#wrapping", "uv": [ 12.5, 2.5, 13.5, 4.0 ], "autoUv": false },
 																				"east": { "texture": "#wrapping", "uv": [ 12.5, 3.0, 13.4, 4.5 ], "autoUv": false },
@@ -178,7 +174,7 @@
 							"from": [ -0.5, 0.0, 0.0 ],
 							"to": [ 1.0, 1.0, 0.6 ],
 							"rotationOrigin": [ -0.5, 0.5, 0.5 ],
-							"rotationY": -7.0,
+							"rotationY": -20.0,
 							"rotationZ": 180.0,
 							"faces": {
 								"north": { "texture": "#fireclay", "uv": [ 9.5, 9.5, 11.7, 11.0 ], "autoUv": false },
@@ -209,7 +205,7 @@
 											"from": [ 1.5, 0.01, 0.0 ],
 											"to": [ 3.0, 0.97, 0.4 ],
 											"rotationOrigin": [ 1.5, 0.0, 0.0 ],
-											"rotationY": -18.0,
+											"rotationY": -25.0,
 											"faces": {
 												"north": { "texture": "#fireclay", "uv": [ 13.0, 12.0, 15.2, 13.5 ], "autoUv": false },
 												"east": { "texture": "#fireclay", "uv": [ 0.0, 0.0, 0.5, 1.0 ], "autoUv": false },
@@ -283,9 +279,7 @@
 																			"from": [ 2.1684, -0.08, 0.6702 ],
 																			"to": [ 3.5684, 0.42, 1.1702 ],
 																			"rotationOrigin": [ 2.1684, 0.12, 1.1702 ],
-																			"rotationX": 0.0,
 																			"rotationY": 62.0,
-																			"rotationZ": 0.0,
 																			"faces": {
 																				"north": { "texture": "#wrapping", "uv": [ 12.5, 2.5, 13.5, 4.0 ], "autoUv": false },
 																				"east": { "texture": "#wrapping", "uv": [ 12.5, 3.0, 13.4, 4.5 ], "autoUv": false },
@@ -311,9 +305,9 @@
 				},
 				{
 					"name": "Bow_String",
-					"from": [ 7.0, 0.35, 4.4 ],
-					"to": [ 10.0, 1.05, 5.1 ],
-					"rotationOrigin": [ 8.5, 0.7, 4.8 ],
+					"from": [ 7.0, 0.35, 2.8 ],
+					"to": [ 10.0, 1.05, 3.5 ],
+					"rotationOrigin": [ 8.5, 0.7, 3.2 ],
 					"faces": {
 					},
 					"children": [
@@ -335,7 +329,7 @@
 								{
 									"name": "String_8",
 									"from": [ 0.0, -0.2, 0.1 ],
-									"to": [ 11.7, 0.1, 0.4 ],
+									"to": [ 11.9, 0.1, 0.4 ],
 									"rotationOrigin": [ 0.0, 0.1, 0.4 ],
 									"rotationZ": -180.0,
 									"faces": {
@@ -366,7 +360,7 @@
 								{
 									"name": "String_9",
 									"from": [ 0.0, -0.2, 0.1 ],
-									"to": [ 11.7, 0.1, 0.4 ],
+									"to": [ 11.9, 0.1, 0.4 ],
 									"rotationOrigin": [ 0.0, 0.1, 0.4 ],
 									"rotationZ": -180.0,
 									"faces": {
@@ -379,21 +373,36 @@
 									}
 								}
 							]
-						}
-					],
-					"attachmentpoints": [
+						},
 						{
-							"code": "Arrow",
-							"posX": "1.5","posY": "0.7","posZ": "0.0",
-							"rotationX": "0.0","rotationY": "90.0","rotationZ": "0.0"
+							"name": "Arrow",
+							"from": [ 1.5, 0.7, 0.0 ],
+							"to": [ 1.5, 0.7, 0.0 ],
+							"rotationOrigin": [ 1.5, 0.7, 0.0 ],
+							"rotationY": 90.0,
+							"faces": {
+								"north": { "texture": "#plain", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+								"east": { "texture": "#plain", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+								"south": { "texture": "#plain", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+								"west": { "texture": "#plain", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+								"up": { "texture": "#plain", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+								"down": { "texture": "#plain", "uv": [ 0.0, 0.0, 0.5, 0.5 ] }
+							},
+							"attachmentpoints": [
+								{
+									"code": "Arrow",
+									"posX": "0.0","posY": "0.0","posZ": "0.0",
+									"rotationX": "0.0","rotationY": "0.0","rotationZ": "0.0"
+								}
+							]
 						}
 					]
 				},
 				{
 					"name": "Bow_handle3",
-					"from": [ 6.5, 0.2, -0.1 ],
-					"to": [ 10.5, 1.4, 0.7 ],
-					"rotationOrigin": [ 6.5, 0.8, 0.8 ],
+					"from": [ 6.5, 0.2, -0.3 ],
+					"to": [ 10.5, 1.4, 0.6 ],
+					"rotationOrigin": [ 6.5, 0.8, 0.6 ],
 					"faces": {
 						"north": { "texture": "#plain", "uv": [ 9.0, 1.0, 16.0, 3.0 ], "autoUv": false },
 						"east": { "texture": "#plain", "uv": [ 0.0, 0.0, 1.5, 1.4 ], "autoUv": false },
@@ -436,16 +445,16 @@
 					"frame": 3,
 					"elements": {
 						"Bow_String": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 3.7 },
-						"String_9": { "rotationX": 0.0, "rotationY": -10.3, "rotationZ": 0.0 },
-						"String_8": { "rotationX": 0.0, "rotationY": -10.3, "rotationZ": 0.0 }
+						"String_9": { "rotationX": 0.0, "rotationY": -9.3, "rotationZ": 0.0 },
+						"String_8": { "rotationX": 0.0, "rotationY": -9.3, "rotationZ": 0.0 }
 					}
 				},
 				{
 					"frame": 5,
 					"elements": {
 						"Bow_String": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 5.0 },
-						"String_9": { "rotationX": 0.0, "rotationY": -12.0, "rotationZ": 0.0 },
-						"String_8": { "rotationX": 0.0, "rotationY": -12.0, "rotationZ": 0.0 }
+						"String_9": { "rotationX": 0.0, "rotationY": -10.0, "rotationZ": 0.0 },
+						"String_8": { "rotationX": 0.0, "rotationY": -10.0, "rotationZ": 0.0 }
 					}
 				},
 				{
@@ -453,15 +462,15 @@
 					"elements": {
 						"Bow_String": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 10.5 },
 						"Bpw_String_left": { "rotationX": 0.0, "rotationY": -20.0, "rotationZ": 0.0 },
-						"String_9": { "rotationX": 0.0, "rotationY": -17.6, "rotationZ": 0.0 },
+						"String_9": { "rotationX": 0.0, "rotationY": -14.6, "rotationZ": 0.0 },
 						"Bpw_String_right": { "rotationX": 0.0, "rotationY": 20.0, "rotationZ": 0.0 },
-						"String_8": { "rotationX": 0.0, "rotationY": -17.6, "rotationZ": 0.0 },
+						"String_8": { "rotationX": 0.0, "rotationY": -14.6, "rotationZ": 0.0 },
 						"Bow_right_limb_16": { "rotationX": 0.0, "rotationY": -2.0, "rotationZ": 0.0 },
 						"Bow_right_limb_17": { "rotationX": 0.0, "rotationY": -10.0, "rotationZ": 0.0 },
-						"Bow_right_limb_25": { "rotationX": 0.0, "rotationY": -12.0, "rotationZ": 0.0 },
+						"Bow_right_limb_25": { "rotationX": 0.0, "rotationY": -15.0, "rotationZ": 0.0 },
 						"Bow_right_limb_14": { "rotationX": 0.0, "rotationY": -2.0, "rotationZ": 0.0 },
 						"Bow_right_limb_15": { "rotationX": 0.0, "rotationY": -10.0, "rotationZ": 0.0 },
-						"Bow_right_limb_24": { "rotationX": 0.0, "rotationY": -12.0, "rotationZ": 0.0 }
+						"Bow_right_limb_24": { "rotationX": 0.0, "rotationY": -15.0, "rotationZ": 0.0 }
 					}
 				}
 			]

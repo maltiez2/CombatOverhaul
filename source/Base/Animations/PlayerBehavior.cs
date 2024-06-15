@@ -18,6 +18,9 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
         _api = player.Api as ICoreClientAPI;
         _animationsManager = player.Api.ModLoader.GetModSystem<CombatOverhaulAnimationsSystem>().PlayerAnimationsManager;
 
+        SoundsSynchronizerClient soundsManager = player.Api.ModLoader.GetModSystem<CombatOverhaulSystem>().ClientSoundsSynchronizer ?? throw new Exception();
+        _composer = new(soundsManager);
+
         AnimationPatch.OnBeforeFrame += OnBeforeFrame;
         AnimationPatch.OnFrame += OnFrame;
     }
@@ -78,7 +81,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
         _composer.Stop(category);
     }
 
-    private readonly Composer _composer = new();
+    private readonly Composer _composer;
     private readonly EntityPlayer _player;
     private readonly AnimationsManager? _animationsManager;
     private PlayerItemFrame _lastFrame = PlayerItemFrame.Zero;
@@ -126,6 +129,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     private void ApplyFrame(PlayerItemFrame frame, Entity entity, ElementPose pose, Animatable? animatable)
     {
         TorsoAnimationType torsoAnimation = (entity as EntityPlayer)?.Controls.Sneak ?? false ? TorsoAnimationType.Sneaking : TorsoAnimationType.Standing;
+        torsoAnimation = IsFirstPerson(entity) ? torsoAnimation : TorsoAnimationType.None;
 
         frame.Apply(pose, torsoAnimation);
 

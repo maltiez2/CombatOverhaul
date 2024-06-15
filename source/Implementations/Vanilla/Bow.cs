@@ -1,6 +1,7 @@
 ﻿using CombatOverhaul.Animations;
 using CombatOverhaul.Inputs;
 using CombatOverhaul.RangedSystems;
+using CombatOverhaul.RangedSystems.Aiming;
 using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -18,6 +19,18 @@ public enum BowState
     Drawn
 }
 
+public class WeaponStats
+{
+    public string ReadyAnimation { get; set; } = "";
+    public string IdleAnimation { get; set; } = "";
+}
+
+public sealed class BowStats : WeaponStats
+{
+    public string DrawAnimation { get; set; } = "";
+    public string ReleaseAnimation { get; set; } = "";
+}
+
 public sealed class BowClient : RangeWeaponClient
 {
     public BowClient(ICoreClientAPI api, Item item) : base(api, item)
@@ -25,13 +38,16 @@ public sealed class BowClient : RangeWeaponClient
         _api = api;
         _attachable = item.GetCollectibleBehavior<AnimatableAttachable>(withInheritance: true) ?? throw new Exception("Bow should have AnimatableAttachable behavior.");
         _arrowTransform = new(item.Attributes["arrowTransform"].AsObject<ModelTransformNoDefaults>(), ModelTransform.BlockDefaultTp());
+        _aimingSystem = api.ModLoader.GetModSystem<CombatOverhaulSystem>().AimingSystem ?? throw new Exception();
+
+        _stats = item.Attributes.AsObject<BowStats>();
     }
 
     public override void OnSelected(ItemSlot slot, EntityPlayer player, bool mainHand, ref int state)
     {
         _attachable.ClearAttachments(player.EntityId);
 
-        AnimationRequestByCode request = new("combatoverhaul:bow-idle", 1.0f, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true);
+        AnimationRequestByCode request = new(_stats.ReadyAnimation, 1.0f, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true);
         AnimationBehavior?.Play(request, mainHand);
     }
 
@@ -41,12 +57,15 @@ public sealed class BowClient : RangeWeaponClient
         _attachable.ClearAttachments(player.EntityId);
         PlayerBehavior?.SetState((int)BowState.Unloaded);
         AnimationBehavior?.Stop("idle");
+        _aimingSystem.StopAiming();
     }
 
     private readonly ICoreClientAPI _api;
     private readonly AnimatableAttachable _attachable;
     private readonly ModelTransform _arrowTransform;
+    private readonly ClientAimingSystem _aimingSystem;
     private ItemSlot? _arrowSlot = null;
+    private BowStats _stats;
 
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Pressed)]
     private bool Load(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
@@ -89,10 +108,12 @@ public sealed class BowClient : RangeWeaponClient
     {
         if (state != (int)BowState.Loaded || eventData.AltPressed) return false;
 
-        AnimationRequestByCode request = new("combatoverhaul:bow-draw-simple", 1.0f, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true, FullLoadCallback);
+        AnimationRequestByCode request = new(_stats.DrawAnimation, 1.0f, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true, FullLoadCallback);
         AnimationBehavior?.Play(request, mainHand);
 
         state = (int)BowState.Draw;
+
+        _aimingSystem.StartAiming(new AimingStats());
 
         return true;
     }
@@ -100,9 +121,11 @@ public sealed class BowClient : RangeWeaponClient
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Released)]
     private bool Shoot(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
+        _aimingSystem.StopAiming();
+
         if (state == (int)BowState.Draw)
         {
-            AnimationRequestByCode idleRequest = new("combatoverhaul:bow-idle", 1.0f, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true);
+            AnimationRequestByCode idleRequest = new(_stats.ReadyAnimation, 1.0f, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true);
             AnimationBehavior?.Play(idleRequest, true);
             state = (int)BowState.Loaded;
             return true;
@@ -110,18 +133,19 @@ public sealed class BowClient : RangeWeaponClient
 
         if (state != (int)BowState.Drawn) return false;
 
-        AnimationRequestByCode request = new("combatoverhaul:bow-release-simple", 1.0f, 1, "main", TimeSpan.FromSeconds(0.0), TimeSpan.FromSeconds(0.2), true, ReleasedAnimationCallback);
+        AnimationRequestByCode request = new(_stats.ReadyAnimation, 1.0f, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true); //new(_stats.ReleaseAnimation, 1.0f, 1, "main", TimeSpan.FromSeconds(0.0), TimeSpan.FromSeconds(0.2), true, ReleasedAnimationCallback);
         AnimationBehavior?.Play(request, mainHand);
 
         state = 0;
 
         Vintagestory.API.MathTools.Vec3d position = player.LocalEyePos + player.Pos.XYZ;
         Vintagestory.API.MathTools.Vec3f viewDirection = player.Pos.GetViewVector();
+        Vector3 targetDirection = _aimingSystem.TargetVec;
 
         _arrowSlot = null;
         _attachable.ClearAttachments(player.EntityId);
 
-        RangedWeaponSystem.Shoot(slot, 1, new((float)position.X, (float)position.Y, (float)position.Z), new(viewDirection.X, viewDirection.Y, viewDirection.Z), mainHand, ShootCallback);
+        RangedWeaponSystem.Shoot(slot, 1, new((float)position.X, (float)position.Y, (float)position.Z), new(targetDirection.X, targetDirection.Y, targetDirection.Z), mainHand, ShootCallback);
 
         return true;
     }
@@ -149,7 +173,7 @@ public sealed class BowClient : RangeWeaponClient
     }
     private bool ReleasedAnimationCallback()
     {
-        AnimationRequestByCode request = new("combatoverhaul:bow-idle", 1.0f, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true);
+        AnimationRequestByCode request = new(_stats.ReadyAnimation, 1.0f, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true);
         AnimationBehavior?.Play(request, true);
 
         return true;

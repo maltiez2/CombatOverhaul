@@ -15,6 +15,7 @@ public enum AnimationAnchor
 
 public enum TorsoAnimationType
 {
+    None,
     Standing,
     Sneaking
 }
@@ -50,7 +51,51 @@ public readonly struct PlayerItemFrame
             .Where(entry => entry.element.Item != null)
             .Select(entry => (entry.element.Item.Value, entry.weight))
             );
+
         return new(player, item);
+    }
+}
+
+public readonly struct SoundFrame
+{
+    public readonly string Code;
+    public readonly float DurationFraction;
+    public readonly bool RandomizePitch;
+    public readonly float Range;
+    public readonly float Volume;
+    public readonly bool Synchronize;
+
+    public SoundFrame(string code, float durationFraction, bool randomizePitch = false, float range = 32, float volume = 1, bool synchronize = true)
+    {
+        Code = code;
+        DurationFraction = durationFraction;
+        RandomizePitch = randomizePitch;
+        Range = range;
+        Volume = volume;
+        Synchronize = synchronize;
+    }
+
+    public SoundFrame Edit(string title)
+    {
+        string code = Code;
+        ImGui.InputText($"Sound code##{title}", ref code, 300);
+
+        float time = DurationFraction;
+        ImGui.InputFloat($"Duration fraction##{title}", ref time);
+
+        bool pitch = RandomizePitch;
+        ImGui.Checkbox($"Randomize pitch##{title}", ref pitch);
+
+        float range = Range;
+        ImGui.InputFloat($"Range##{title}", ref range);
+
+        float volume = Volume;
+        ImGui.SliderFloat($"Volume##{title}", ref volume, 0, 1);
+
+        bool sync = Synchronize;
+        ImGui.Checkbox($"Randomize pitch##{title}", ref sync);
+
+        return new(code, time, pitch, range, volume, sync);
     }
 }
 
@@ -384,10 +429,10 @@ public readonly struct PlayerFrame
                 switch (torsoAnimation)
                 {
                     case TorsoAnimationType.Standing:
-                        AnimationElement.Zero.Apply(pose);
+                        StandingTorso.Apply(pose);
                         break;
                     case TorsoAnimationType.Sneaking:
-                        new AnimationElement(0, -5, 0, 0, 0, 0).Apply(pose);
+                        SneakingTorso.Apply(pose);
                         break;
                 }
                 break;
@@ -495,7 +540,7 @@ public readonly struct PlayerFrame
     }
 
     private readonly AnimationElement StandingTorso = AnimationElement.Zero;
-    private readonly AnimationElement SneakingTorso = new AnimationElement(0, -5, 0, 0, 0, 0);
+    private readonly AnimationElement SneakingTorso = new(0, -5, 0, 0, 0, 0);
 }
 
 public readonly struct RightHandFrame

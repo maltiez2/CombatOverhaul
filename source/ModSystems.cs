@@ -21,8 +21,6 @@ namespace CombatOverhaul;
 
 public sealed class CombatOverhaulSystem : ModSystem
 {
-    public const string ArmorInventoryId = "CombatOverhaul:ArmorInventory";
-
     public override void StartPre(ICoreAPI api)
     {
         (api as ClientCoreAPI)?.ClassRegistryNative.RegisterInventoryClass(GlobalConstants.characterInvClassName, typeof(ArmorInventory));
@@ -35,6 +33,7 @@ public sealed class CombatOverhaulSystem : ModSystem
         api.RegisterEntityBehaviorClass("CombatOverhaul:EntityDamageModel", typeof(EntityDamageModelBehavior));
         api.RegisterEntityBehaviorClass("CombatOverhaul:PlayerDamageModel", typeof(PlayerDamageModelBehavior));
         api.RegisterEntityBehaviorClass("CombatOverhaul:ActionsManager", typeof(ActionsManagerPlayerBehavior));
+        api.RegisterEntityBehaviorClass("CombatOverhaul:AimingAccuracy", typeof(AimingAccuracyBehavior));
 
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:Animatable", typeof(Animatable));
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:AnimatableAttachable", typeof(AnimatableAttachable));
@@ -50,15 +49,20 @@ public sealed class CombatOverhaulSystem : ModSystem
     {
         ServerProjectileSystem = new(api);
         ServerRangedWeaponSystem = new(api);
+        ServerSoundsSynchronizer = new(api);
     }
     public override void StartClientSide(ICoreClientAPI api)
     {
+        _clientApi = api;
+
         ClientProjectileSystem = new(api, api.ModLoader.GetModSystem<EntityPartitioning>());
         ActionListener = new(api);
         DirectionCursorRenderer = new(api);
         ReticleRenderer = new(api);
         DirectionController = new(api, DirectionCursorRenderer);
         ClientRangedWeaponSystem = new(api);
+        ClientSoundsSynchronizer = new(api);
+        AimingSystem = new(api, ReticleRenderer);
 
         api.Event.RegisterRenderer(ReticleRenderer, EnumRenderStage.Ortho);
         api.Event.RegisterRenderer(DirectionCursorRenderer, EnumRenderStage.Ortho);
@@ -70,17 +74,26 @@ public sealed class CombatOverhaulSystem : ModSystem
     {
         new Harmony("CombatOverhaulAuto").UnpatchAll();
 
+        _clientApi?.Event.UnregisterRenderer(ReticleRenderer, EnumRenderStage.Ortho);
+        _clientApi?.Event.UnregisterRenderer(DirectionCursorRenderer, EnumRenderStage.Ortho);
+
         AimingPatches.Unpatch("CombatOverhaulAiming");
     }
 
-    internal ProjectileSystemClient? ClientProjectileSystem { get; private set; }
-    internal ProjectileSystemServer? ServerProjectileSystem { get; private set; }
-    internal ActionListener? ActionListener { get; private set; }
-    internal DirectionCursorRenderer? DirectionCursorRenderer { get; private set; }
-    internal ReticleRenderer? ReticleRenderer { get; private set; }
-    internal DirectionController? DirectionController { get; private set; }
-    internal RangedWeaponSystemClient? ClientRangedWeaponSystem { get; private set; }
-    internal RangedWeaponSystemServer? ServerRangedWeaponSystem { get; private set; }
+    public ProjectileSystemClient? ClientProjectileSystem { get; private set; }
+    public ProjectileSystemServer? ServerProjectileSystem { get; private set; }
+    public ActionListener? ActionListener { get; private set; }
+    public DirectionCursorRenderer? DirectionCursorRenderer { get; private set; }
+    public ReticleRenderer? ReticleRenderer { get; private set; }
+    public ClientAimingSystem? AimingSystem { get; private set; }
+    public DirectionController? DirectionController { get; private set; }
+    public RangedWeaponSystemClient? ClientRangedWeaponSystem { get; private set; }
+    public RangedWeaponSystemServer? ServerRangedWeaponSystem { get; private set; }
+    public SoundsSynchronizerClient? ClientSoundsSynchronizer { get; private set; }
+    public SoundsSynchronizerServer? ServerSoundsSynchronizer { get; private set; }
+
+    
+    private ICoreClientAPI? _clientApi;
 }
 
 
@@ -88,8 +101,8 @@ public sealed class CombatOverhaulAnimationsSystem : ModSystem
 {
     public AnimationsManager? PlayerAnimationsManager { get; private set; }
 
-    internal IShaderProgram? AnimatedItemShaderProgram => _shaderProgram;
-    internal IShaderProgram? AnimatedItemShaderProgramFirstPerson => _shaderProgramFirstPerson;
+    public IShaderProgram? AnimatedItemShaderProgram => _shaderProgram;
+    public IShaderProgram? AnimatedItemShaderProgramFirstPerson => _shaderProgramFirstPerson;
 
     public override void Start(ICoreAPI api)
     {

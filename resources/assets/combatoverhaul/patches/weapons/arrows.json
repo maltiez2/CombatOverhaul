@@ -10,7 +10,7 @@
       "properties": {
         "stats": {
           "AdditionalDurabilityCost": 0,
-          "CollisionRadius": 0.1,
+          "CollisionRadius": 0.05,
           "DamageStats": {"DamageType": "PiercingAttack", "Strength": 0, "Damage": 5},
           "SpeedThreshold": 0.3,
           "Knockback": 0,
