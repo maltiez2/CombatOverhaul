@@ -74,12 +74,22 @@ public sealed class AimingAccuracyBehavior : EntityBehavior
         {
             entity.Stats.Set("walkspeed", "CombatOverhaul:aiming", -(stats.MoveSpeedPenalty * entity.Stats.GetBlended("walkspeed")));
         }
+
+        for (int i = 0; i < _modifiers.Count; i++)
+        {
+            _modifiers[i].BeginAim();
+        }
     }
     public void StopAim()
     {
         _isAiming = false;
 
         entity.Stats.Set("walkspeed", "CombatOverhaul:aiming", 0);
+
+        for (int i = 0; i < _modifiers.Count; i++)
+        {
+            _modifiers[i].EndAim();
+        }
     }
 
     private readonly List<AccuracyModifier> _modifiers = new();
@@ -142,7 +152,7 @@ internal class BaseAimingAccuracy : AccuracyModifier
 
     public override void Update(float dt, AimingStats weaponStats)
     {
-        float modspeed = Entity.Stats.GetBlended("rangedWeaponsSpeed");
+        /*float modspeed = Entity.Stats.GetBlended("rangedWeaponsSpeed");
 
         // Linear inaccuracy from starting to aim - kept in reserve
         //float bullseyeAccuracy = GameMath.Max((weaponStats.accuracyStartTime - SecondsSinceAimStart * modspeed) / weaponStats.accuracyStartTime, 0f) * weaponStats.accuracyStart; // Linear inaccuracy from starting to aim
@@ -153,7 +163,14 @@ internal class BaseAimingAccuracy : AccuracyModifier
         float bullseyeAccuracy = accMod * weaponStats.AccuracyStart;
 
         // Linear loss of accuracy from holding too long
-        bullseyeAccuracy += GameMath.Clamp((SecondsSinceAimStart - weaponStats.AccuracyOvertimeStart - weaponStats.AccuracyStartTime) / weaponStats.AccuracyOvertimeTime, 0f, 1f) * weaponStats.AccuracyOvertime;
+        float bullseyeAccuracy = GameMath.Clamp((SecondsSinceAimStart - weaponStats.AccuracyOvertimeStart - weaponStats.AccuracyStartTime) / weaponStats.AccuracyOvertimeTime, 0f, 1f) * weaponStats.AccuracyOvertime;*/
+
+        float bullseyeAccuracy = SecondsSinceAimStart > weaponStats.AccuracyOvertime.TotalSeconds ? 1 : 0;
+
+        if (SecondsSinceAimStart > weaponStats.AccuracyOvertime.TotalSeconds)
+        {
+            ClientAimingSystem.AimingState = WeaponAimingState.PartCharge;
+        }
 
         ClientAimingSystem.DriftMultiplier = 1 + bullseyeAccuracy;
         ClientAimingSystem.TwitchMultiplier = 1 + (bullseyeAccuracy * 3f);

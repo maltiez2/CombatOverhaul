@@ -2,6 +2,7 @@
 using CombatOverhaul.Integration;
 using System.Numerics;
 using Vintagestory.API.Client;
+using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 using Vintagestory.Client.NoObf;
 
@@ -15,11 +16,12 @@ public enum AimingCursorType
     Moving
 }
 
-public class AimingStats
+public class AimingStatsJson
 {
     public float AimDifficulty { get; set; } = 1;
-    public AimingCursorType CursorType { get; set; } = AimingCursorType.Moving;
+    public string CursorType { get; set; } = "Moving";
     public bool InvertMouseYAxis { get; set; } = false;
+    public float ZeroingAngle { get; set; } = 0;
 
     public float VerticalAccuracyMultiplier { get; set; } = 1f;
     public float HorizontalAccuracyMultiplier { get; set; } = 1f;
@@ -33,12 +35,77 @@ public class AimingStats
 
     public bool AllowSprint { get; set; } = true;
     public float MoveSpeedPenalty { get; set; } = 0f;
-    public float AccuracyStartTime { get; set; } = 1f;
-    public float AccuracyStart { get; set; } = 2.5f;
-    public float AccuracyOvertimeStart { get; set; } = 6f;
-    public float AccuracyOvertimeTime { get; set; } = 12f;
-    public float AccuracyOvertime { get; set; } = 1f;
+    public float AccuracyOvertimeSec { get; set; } = 6;
     public float AccuracyMovePenalty { get; set; } = 1f;
+
+    public string CursorTextureReady { get; set; } = "";
+    public string CursorTextureNotReady { get; set; } = "";
+
+    public float AnimationFollowX { get; set; } = 0f;
+    public float AnimationFollowY { get; set; } = 0f;
+    public float AnimationOffsetX { get; set; } = 0f;
+    public float AnimationOffsetY { get; set; } = 0f;
+
+    public AimingStats ToStats()
+    {
+        return new AimingStats()
+        {
+            AimDifficulty = AimDifficulty,
+            CursorType = Enum.Parse<AimingCursorType>(CursorType),
+            InvertMouseYAxis = InvertMouseYAxis,
+            ZeroingAngle = ZeroingAngle,
+            VerticalAccuracyMultiplier = VerticalAccuracyMultiplier,
+            HorizontalAccuracyMultiplier = HorizontalAccuracyMultiplier,
+            AimDriftFrequency = AimDriftFrequency,
+            AimDrift = AimDrift,
+            AimTwitch = AimTwitch,
+            HorizontalLimit = HorizontalLimit,
+            VerticalLimit = VerticalLimit,
+            VerticalOffset = VerticalOffset,
+            AimTwitchDuration = AimTwitchDuration,
+            AllowSprint = AllowSprint,
+            MoveSpeedPenalty = MoveSpeedPenalty,
+            AccuracyOvertime = TimeSpan.FromSeconds(AccuracyOvertimeSec),
+            AccuracyMovePenalty = AccuracyMovePenalty,
+            CursorTextureReady = CursorTextureReady,
+            CursorTextureNotReady = CursorTextureNotReady,
+            AnimationFollowX = AnimationFollowX,
+            AnimationFollowY = AnimationFollowY,
+            AnimationOffsetX = AnimationOffsetX,
+            AnimationOffsetY = AnimationOffsetY
+        };
+    }
+}
+
+public class AimingStats
+{
+    public float AimDifficulty { get; set; } = 1;
+    public AimingCursorType CursorType { get; set; } = AimingCursorType.Moving;
+    public bool InvertMouseYAxis { get; set; } = false;
+    public float ZeroingAngle { get; set; } = 0;
+
+    public float VerticalAccuracyMultiplier { get; set; } = 1f;
+    public float HorizontalAccuracyMultiplier { get; set; } = 1f;
+    public float AimDriftFrequency { get; set; } = 0.001f;
+    public float AimDrift { get; set; } = 150f;
+    public float AimTwitch { get; set; } = 40f;
+    public float HorizontalLimit { get; set; } = 0.125f;
+    public float VerticalLimit { get; set; } = 0.35f;
+    public float VerticalOffset { get; set; } = -0.15f;
+    public int AimTwitchDuration { get; set; } = 300;
+
+    public bool AllowSprint { get; set; } = true;
+    public float MoveSpeedPenalty { get; set; } = 0f;
+    public TimeSpan AccuracyOvertime { get; set; } = TimeSpan.FromSeconds(6);
+    public float AccuracyMovePenalty { get; set; } = 1f;
+
+    public string CursorTextureReady { get; set; } = "";
+    public string CursorTextureNotReady { get; set; } = "";
+
+    public float AnimationFollowX { get; set; } = 0f;
+    public float AnimationFollowY { get; set; } = 0f;
+    public float AnimationOffsetX { get; set; } = 0f;
+    public float AnimationOffsetY { get; set; } = 0f;
 }
 
 public sealed class ClientAimingSystem : IDisposable
@@ -55,8 +122,8 @@ public sealed class ClientAimingSystem : IDisposable
 
     public WeaponAimingState AimingState
     {
-        get => ShowBullseyeReticle ? _reticleRenderer.AimingState : WeaponAimingState.None;
-        set => _reticleRenderer.AimingState = value;
+        get => _reticleRenderer.AimingState;
+        set => _reticleRenderer.AimingState = ShowBullseyeReticle ? value : WeaponAimingState.None;
     }
 
     public event Action? OnAimPointChange;
@@ -93,8 +160,11 @@ public sealed class ClientAimingSystem : IDisposable
         _aimingDt = 0f;
         ShowVanillaReticle = _aimingStats.CursorType == AimingCursorType.Vanilla;
         ShowBullseyeReticle = _aimingStats.CursorType != AimingCursorType.None && _aimingStats.CursorType != AimingCursorType.Vanilla;
+        _difficultyMultiplier = ShowBullseyeReticle ? 1 : _noCursorDifficultyMultiplier;
 
         _clientApi.World.Player.Entity.GetBehavior<AimingAccuracyBehavior>().StartAim(stats);
+
+        _reticleRenderer.SetReticleTextures(stats.CursorTextureNotReady, stats.CursorTextureReady);
     }
     public void StopAiming()
     {
@@ -110,7 +180,7 @@ public sealed class ClientAimingSystem : IDisposable
     }
     public Vector2 GetCurrentAim()
     {
-        float offsetMagnitude = Math.Clamp(_aimingStats.AimDifficulty, 0, 2);
+        float offsetMagnitude = Math.Clamp(_aimingStats.AimDifficulty, 0, 2) * _difficultyMultiplier;
 
         if (_clientApi.World.Player?.Entity != null)
         {
@@ -143,7 +213,7 @@ public sealed class ClientAimingSystem : IDisposable
         // Update
         UpdateAimOffsetSimple(__instance, dt);
 
-        if (_aimingStats.CursorType == AimingCursorType.Fixed)
+        if (_aimingStats.CursorType == AimingCursorType.Moving)
         {
             UpdateMouseDelta(__instance, ref ___MouseDeltaX, ref ___MouseDeltaY, ref ___DelayedMouseDeltaX, ref ___DelayedMouseDeltaY);
         }
@@ -155,13 +225,22 @@ public sealed class ClientAimingSystem : IDisposable
         OnAimPointChange?.Invoke();
     }
 
-    public void SetReticleTextures(LoadedTexture partChargeTex, LoadedTexture fullChargeTex, LoadedTexture blockedTex)
-    {
-        _reticleRenderer.SetReticleTextures(partChargeTex, fullChargeTex, blockedTex);
-    }
     public void Dispose()
     {
         AimingPatches.UpdateCameraYawPitch -= UpdateAimPoint;
+    }
+
+    public static Vector3 Zeroing(Vector3 direction, float ZeroingAngle)
+    {
+        Vector3 vertical = new(0, 1, 0);
+        Vector3 zeroingAxis = Vector3.Cross(direction, vertical);
+
+        double[] matrix = Mat4d.Create();
+        Mat4d.Rotate(matrix, matrix, ZeroingAngle * GameMath.DEG2RAD, new double[] { zeroingAxis.X, zeroingAxis.Y, zeroingAxis.Z });
+        double[] matrixVec = new double[] { direction.X, direction.Y, direction.Z, 0 };
+        matrixVec = Mat4d.MulWithVec4(matrix, matrixVec);
+
+        return new((float)matrixVec[0], (float)matrixVec[1], (float)matrixVec[2]);
     }
 
 
@@ -183,6 +262,8 @@ public sealed class ClientAimingSystem : IDisposable
     private const float _aimStartInterpolationTime = 0.3f;
     private Vector2 _currentAim = new();
     private float _currentFovRatio;
+    private float _difficultyMultiplier = 1;
+    private const float _noCursorDifficultyMultiplier = 0.75f;
 
 
     private void ResetAimOffset()
@@ -293,7 +374,7 @@ public sealed class ClientAimingSystem : IDisposable
     }
     private void SetFixedAimPoint(int screenWidth, int screenHeight)
     {
-        float difficultyModifier = GameMath.Clamp(_aimingStats.AimDifficulty, 0, 2);
+        float difficultyModifier = GameMath.Clamp(_aimingStats.AimDifficulty, 0, 2) * _difficultyMultiplier;
 
         float horizontalLimit = GameMath.Min(_aimingStats.HorizontalLimit, 0.25f);
         float verticalLimit = GameMath.Min(_aimingStats.VerticalLimit, 0.25f);

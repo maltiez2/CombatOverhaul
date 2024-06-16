@@ -6,7 +6,11 @@ using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
+using Vintagestory.API.Config;
+using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
+using Vintagestory.Client.NoObf;
+using VSImGui.Debug;
 
 namespace CombatOverhaul.Implementations.Vanilla;
 
@@ -38,8 +42,8 @@ public sealed class BowStats : WeaponStats
 {
     public string DrawAnimation { get; set; } = "";
     public string ReleaseAnimation { get; set; } = "";
-    public string AimingType { get; set; } = "Vanilla";
     public float AimingDifficulty { get; set; } = 1.0f;
+    public AimingStatsJson Aiming { get; set; } = new();
 }
 
 public sealed class BowClient : RangeWeaponClient
@@ -52,6 +56,7 @@ public sealed class BowClient : RangeWeaponClient
         _aimingSystem = api.ModLoader.GetModSystem<CombatOverhaulSystem>().AimingSystem ?? throw new Exception();
 
         _stats = item.Attributes.AsObject<BowStats>();
+        _aimingStats = _stats.Aiming.ToStats();
     }
 
     public override void OnSelected(ItemSlot slot, EntityPlayer player, bool mainHand, ref int state)
@@ -75,7 +80,8 @@ public sealed class BowClient : RangeWeaponClient
     private readonly ModelTransform _arrowTransform;
     private readonly ClientAimingSystem _aimingSystem;
     private ItemSlot? _arrowSlot = null;
-    private BowStats _stats;
+    private readonly BowStats _stats;
+    private readonly AimingStats _aimingStats;
 
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Pressed)]
     private bool Load(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
@@ -123,7 +129,8 @@ public sealed class BowClient : RangeWeaponClient
 
         state = (int)BowState.Draw;
 
-        _aimingSystem.StartAiming(new AimingStats());
+        _aimingSystem.StartAiming(_aimingStats);
+        _aimingSystem.AimingState = WeaponAimingState.Blocked;
 
         PlayCursorFollowAnimation(mainHand);
 
@@ -151,8 +158,9 @@ public sealed class BowClient : RangeWeaponClient
         state = 0;
 
         Vintagestory.API.MathTools.Vec3d position = player.LocalEyePos + player.Pos.XYZ;
-        Vintagestory.API.MathTools.Vec3f viewDirection = player.Pos.GetViewVector();
         Vector3 targetDirection = _aimingSystem.TargetVec;
+
+        targetDirection = ClientAimingSystem.Zeroing(targetDirection, 1.5f);
 
         _arrowSlot = null;
         _attachable.ClearAttachments(player.EntityId);
@@ -183,6 +191,7 @@ public sealed class BowClient : RangeWeaponClient
     private bool FullLoadCallback()
     {
         PlayerBehavior?.SetState((int)BowState.Drawn);
+        _aimingSystem.AimingState = WeaponAimingState.FullCharge;
         return true;
     }
     private bool ReleasedAnimationCallback()
@@ -198,12 +207,19 @@ public sealed class BowClient : RangeWeaponClient
     private float _followOffset_X = 0.0f;
     private float _followOffset_Y = 0.0f;
 
+    private const float _animationFollowMultiplier = 0.01f;
+
     private PLayerKeyFrame GetAimingFrame()
     {
         Vector2 currentAim = _aimingSystem.GetCurrentAim();
 
-        float yaw = 0 - currentAim.X * _followFactor_X + _followOffset_X;
-        float pitch = currentAim.Y * _followFactor_Y + _followOffset_Y;
+        /*DebugWidgets.FloatDrag("tweaks", "animation", "followX", () => _aimingStats.AnimationFollowX, value => _aimingStats.AnimationFollowX = value);
+        DebugWidgets.FloatDrag("tweaks", "animation", "followY", () => _aimingStats.AnimationFollowY, value => _aimingStats.AnimationFollowY = value);
+        DebugWidgets.FloatDrag("tweaks", "animation", "offsetX", () => _aimingStats.AnimationOffsetX, value => _aimingStats.AnimationOffsetX = value);
+        DebugWidgets.FloatDrag("tweaks", "animation", "offsetY", () => _aimingStats.AnimationOffsetY, value => _aimingStats.AnimationOffsetY = value);*/
+
+        float yaw = 0 - currentAim.X * _animationFollowMultiplier * _aimingStats.AnimationFollowX + _aimingStats.AnimationOffsetX;
+        float pitch = currentAim.Y * _animationFollowMultiplier * _aimingStats.AnimationFollowY + _aimingStats.AnimationOffsetY;
 
         AnimationElement element = new(0, 0, 0, 0, yaw, pitch);
 

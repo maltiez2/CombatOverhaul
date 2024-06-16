@@ -2,6 +2,7 @@
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Config;
+using static OpenTK.Graphics.OpenGL.GL;
 
 namespace CombatOverhaul.RangedSystems.Aiming;
 
@@ -81,11 +82,11 @@ public sealed class ReticleRenderer : IRenderer
         }
     }
 
-    public void SetReticleTextures(LoadedTexture partCharge, LoadedTexture fullCharge, LoadedTexture blocked)
+    public void SetReticleTextures(string partCharge = "", string fullCharge = "", string blocked = "")
     {
-        _currentTextures[WeaponAimingState.Blocked] = blocked.TextureId > 0 ? blocked : _defaultTextures[WeaponAimingState.Blocked];
-        _currentTextures[WeaponAimingState.PartCharge] = partCharge.TextureId > 0 ? partCharge : _defaultTextures[WeaponAimingState.PartCharge];
-        _currentTextures[WeaponAimingState.FullCharge] = fullCharge.TextureId > 0 ? fullCharge : _defaultTextures[WeaponAimingState.FullCharge];
+        _currentTextures[WeaponAimingState.Blocked] = blocked != "" ? GetTexture(blocked) : _defaultTextures[WeaponAimingState.Blocked];
+        _currentTextures[WeaponAimingState.PartCharge] = partCharge != "" ? GetTexture(partCharge) : _defaultTextures[WeaponAimingState.PartCharge];
+        _currentTextures[WeaponAimingState.FullCharge] = fullCharge != "" ? GetTexture(fullCharge) : _defaultTextures[WeaponAimingState.FullCharge];
     }
 
     public void Dispose()
@@ -94,10 +95,26 @@ public sealed class ReticleRenderer : IRenderer
         {
             texture.Dispose();
         }
+
+        foreach (LoadedTexture texture in _loadedTextures.Values)
+        {
+            texture.Dispose();
+        }
     }
 
     private readonly Dictionary<WeaponAimingState, LoadedTexture> _defaultTextures = new();
     private readonly Dictionary<WeaponAimingState, LoadedTexture> _currentTextures = new();
+    private readonly Dictionary<string, LoadedTexture> _loadedTextures = new();
     private readonly LoadedTexture _aimTextureThrowCircle;
     private readonly ICoreClientAPI _clientApi;
+
+    private LoadedTexture GetTexture(string path)
+    {
+        if (_loadedTextures.ContainsKey(path)) return _loadedTextures[path];
+
+        LoadedTexture texture = new(_clientApi);
+        _loadedTextures[path] = texture;
+        _clientApi.Render.GetOrLoadTexture(new AssetLocation(path), ref texture);
+        return texture;
+    }
 }

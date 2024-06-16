@@ -31,9 +31,10 @@ internal sealed class Composer
             {
                 System.Func<bool>? callback = _requests[category].FinishCallback;
                 bool removeCategory = false;
-                if (callback != null)
+                if (callback != null && !_callbacksCalled[category])
                 {
                     removeCategory = !callback.Invoke();
+                    _callbacksCalled[category] = true;
                 }
 
                 if (removeCategory)
@@ -44,17 +45,30 @@ internal sealed class Composer
                     _currentWeight.Remove(category);
                     _weightState.Remove(category);
                     _requests.Remove(category);
+                    _callbacksCalled.Remove(category);
                 }
             }
 
-            if (_animators[category].Stopped() && _requests[category].FinishCallback != null && !_requests[category].FinishCallback.Invoke())
+            if (_animators[category].Stopped() && _requests[category].FinishCallback != null)
             {
-                _animators.Remove(category);
-                _currentTimes.Remove(category);
-                _previousWeight.Remove(category);
-                _currentWeight.Remove(category);
-                _weightState.Remove(category);
-                _requests.Remove(category);
+                System.Func<bool>? callback = _requests[category].FinishCallback;
+                bool removeCategory = false;
+                if (callback != null && !_callbacksCalled[category])
+                {
+                    removeCategory = !callback.Invoke();
+                    _callbacksCalled[category] = true;
+                }
+
+                if (removeCategory)
+                {
+                    _animators.Remove(category);
+                    _currentTimes.Remove(category);
+                    _previousWeight.Remove(category);
+                    _currentWeight.Remove(category);
+                    _weightState.Remove(category);
+                    _requests.Remove(category);
+                    _callbacksCalled.Remove(category);
+                }
             }
         }
 
@@ -71,6 +85,7 @@ internal sealed class Composer
             _previousWeight[category] = _currentWeight[category];
             _weightState[category] = AnimatorWeightState.EaseIn;
             _currentTimes[category] = TimeSpan.Zero;
+            _callbacksCalled[category] = false;
         }
         else
         {
@@ -81,6 +96,7 @@ internal sealed class Composer
             _currentWeight[category] = 0;
             _weightState[category] = AnimatorWeightState.EaseIn;
             _currentTimes[category] = TimeSpan.Zero;
+            _callbacksCalled[category] = false;
         }
     }
 
@@ -92,6 +108,7 @@ internal sealed class Composer
         _currentWeight.Remove(category);
         _weightState.Remove(category);
         _requests.Remove(category);
+        _callbacksCalled.Remove(category);
     }
 
     public bool AnyActiveAnimations() => _animators.Any();
@@ -110,6 +127,7 @@ internal sealed class Composer
     private readonly Dictionary<string, float> _currentWeight = new();
     private readonly Dictionary<string, AnimatorWeightState> _weightState = new();
     private readonly Dictionary<string, TimeSpan> _currentTimes = new();
+    private readonly Dictionary<string, bool> _callbacksCalled = new();
     private readonly SoundsSynchronizerClient _soundsManager;
 
     private void ProcessWeight(string category, AnimatorWeightState state)
