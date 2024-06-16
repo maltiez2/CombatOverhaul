@@ -99,7 +99,7 @@ public sealed class DamageResistData
     }
 
     private static float Percentage(float protection, float strength) => Math.Clamp(1 + strength - protection, 0, 1);
-    private static float PenetrationCheck(float protection, float strength) => protection >= strength ? 0 : 1;
+    private static float PenetrationCheck(float protection, float strength) => protection > strength ? 0 : 1;
     private static float PenetrationPercentage(float protection, float strength)
     {
         if (protection == 0) return 1;

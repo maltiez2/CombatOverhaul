@@ -5,6 +5,7 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
+using Vintagestory.API.Server;
 using Vintagestory.GameContent;
 
 #if DEBUG
@@ -111,6 +112,11 @@ public sealed class CollidersEntityBehavior : EntityBehavior
                 CollidersTypes.Add(collider, ColliderTypes.Critical);
             }
         }
+
+        foreach (string element in ShapeElementsToProcess)
+        {
+            CollidersIds.Add(element);
+        }
     }
     public override void OnGameTick(float deltaTime)
     {
@@ -121,9 +127,7 @@ public sealed class CollidersEntityBehavior : EntityBehavior
     {
         if (UnprocessedElementsLeft && ShapeElementsToProcess.Contains(element.Name))
         {
-            int colliderId = CollidersIds.Count;
-            Colliders.Add(colliderId, new ShapeElementCollider(element));
-            CollidersIds.Add(element.Name);
+            Colliders.Add(CollidersIds.IndexOf(element.Name), new ShapeElementCollider(element));
             ShapeElementsToProcess.Remove(element.Name);
             UnprocessedElementsLeft = ShapeElementsToProcess.Count > 0;
         }

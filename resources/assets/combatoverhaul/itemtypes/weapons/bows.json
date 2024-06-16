@@ -34,7 +34,7 @@
       },
       "bow-simple": {
         "AimDifficulty": 1,
-        "CursorType": "Fixed",
+        "CursorType": "Moving",
         "AccuracyOvertimeSec": 8,
         "ZeroingAngle": 1.5,
         "CursorTextureReady": "combatoverhaul:gui/aiming/arrow-full.png",
@@ -50,7 +50,7 @@
       },
       "bow-long": {
         "AimDifficulty": 1,
-        "CursorType": "Vanilla",
+        "CursorType": "Moving",
         "AccuracyOvertimeSec": 6,
         "ZeroingAngle": 1.5,
         "CursorTextureReady": "combatoverhaul:gui/aiming/arrow-full.png",
@@ -66,7 +66,7 @@
       },
       "bow-recurve": {
         "AimDifficulty": 1,
-        "CursorType": "None",
+        "CursorType": "Moving",
         "AccuracyOvertimeSec": 8,
         "ZeroingAngle": 1.5,
         "CursorTextureReady": "combatoverhaul:gui/aiming/arrow-full.png",

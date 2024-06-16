@@ -202,11 +202,6 @@ public sealed class BowClient : RangeWeaponClient
         return true;
     }
 
-    private float _followFactor_X = 0.03f;
-    private float _followFactor_Y = 0.03f;
-    private float _followOffset_X = 0.0f;
-    private float _followOffset_Y = 0.0f;
-
     private const float _animationFollowMultiplier = 0.01f;
 
     private PLayerKeyFrame GetAimingFrame()

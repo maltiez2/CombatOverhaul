@@ -3,7 +3,7 @@
     "side": "Server",
     "file": "game:entities/humanoid/player",
     "op": "add",
-    "path": "/server/behaviors/0",
+    "path": "/server/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityDamageModel",
       "damageModel": {
@@ -19,6 +19,22 @@
           "*-nightmare": {"BluntAttack": 4, "SlashingAttack": 5, "PiercingAttack": 8, "Frost": 1, "Heat": 1, "Electricity": 0, "Fire": 0.6},
           "*-double-headed": {"BluntAttack": 5, "SlashingAttack": 6, "PiercingAttack": 8, "Frost": 1, "Heat": 1, "Electricity": 0, "Fire": 0.8}
         }
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/strawdummy",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.5,
+        "HeadDamageMultiplier": 1.25,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0, "Frost": 0, "Heat": 0, "Electricity": 0, "Fire": 0}
       }
     }
   }
