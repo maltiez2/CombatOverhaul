@@ -6,13 +6,10 @@ using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
-using Vintagestory.API.Config;
-using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
-using Vintagestory.Client.NoObf;
-using VSImGui.Debug;
+using Vintagestory.API.Util;
 
-namespace CombatOverhaul.Implementations.Vanilla;
+namespace CombatOverhaul.Implementations;
 
 public enum BowState
 {
@@ -21,15 +18,6 @@ public enum BowState
     Loaded,
     Draw,
     Drawn
-}
-
-public enum BowAimingType
-{
-    Vanilla,
-    NoReticle,
-    BullseyeCursor,
-    BullseyeCamera,
-    BullseyeNoReticle
 }
 
 public class WeaponStats
@@ -42,8 +30,11 @@ public sealed class BowStats : WeaponStats
 {
     public string DrawAnimation { get; set; } = "";
     public string ReleaseAnimation { get; set; } = "";
-    public float AimingDifficulty { get; set; } = 1.0f;
     public AimingStatsJson Aiming { get; set; } = new();
+    public float ArrowDamageMultiplier { get; set; } = 1;
+    public float ArrowStrengthMultiplier { get; set; } = 1;
+    public float ArrowVelocity { get; set; } = 1;
+    public string ArrowWildcard { get; set; } = "*arrow-*";
 }
 
 public sealed class BowClient : RangeWeaponClient
@@ -52,7 +43,7 @@ public sealed class BowClient : RangeWeaponClient
     {
         _api = api;
         _attachable = item.GetCollectibleBehavior<AnimatableAttachable>(withInheritance: true) ?? throw new Exception("Bow should have AnimatableAttachable behavior.");
-        _arrowTransform = new(item.Attributes["arrowTransform"].AsObject<ModelTransformNoDefaults>(), ModelTransform.BlockDefaultTp());
+        _arrowTransform = new(item.Attributes["ArrowTransform"].AsObject<ModelTransformNoDefaults>(), ModelTransform.BlockDefaultTp());
         _aimingSystem = api.ModLoader.GetModSystem<CombatOverhaulSystem>().AimingSystem ?? throw new Exception();
 
         _stats = item.Attributes.AsObject<BowStats>();
@@ -100,7 +91,7 @@ public sealed class BowClient : RangeWeaponClient
         {
             if (slot?.Itemstack?.Item == null) return true;
 
-            if (slot.Itemstack.Item.HasBehavior<ProjectileBehavior>())
+            if (slot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(_stats.ArrowWildcard, slot.Itemstack.Item.Code.Path))
             {
                 _arrowSlot = slot;
                 return false;
@@ -248,19 +239,17 @@ public sealed class BowClient : RangeWeaponClient
     }
 }
 
-public class BowServer : RangeWeaponServer
+public sealed class BowServer : RangeWeaponServer
 {
     public BowServer(ICoreServerAPI api, Item item) : base(api, item)
     {
         _projectileSystem = api.ModLoader.GetModSystem<CombatOverhaulSystem>().ServerProjectileSystem ?? throw new Exception();
-        _damageMultiplier = item.Attributes["arrowDamageMultiplier"].AsFloat();
-        _strengthMultiplier = item.Attributes["arrowStrengthMultiplier"].AsFloat();
-        _velocity = item.Attributes["arrowVelocity"].AsFloat();
+        _stats = item.Attributes.AsObject<BowStats>();
     }
 
     public override bool Reload(IServerPlayer player, ItemSlot slot, ItemSlot? ammoSlot, ReloadPacket packet)
     {
-        if (ammoSlot?.Itemstack?.Item != null && ammoSlot.Itemstack.Item.HasBehavior<ProjectileBehavior>())
+        if (ammoSlot?.Itemstack?.Item != null && ammoSlot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(_stats.ArrowWildcard, ammoSlot.Itemstack.Item.Code.Path))
         {
             _arrowSlots[player.Entity.EntityId] = ammoSlot;
             return true;
@@ -294,10 +283,10 @@ public class BowServer : RangeWeaponServer
         ProjectileSpawnStats spawnStats = new()
         {
             ProducerEntityId = player.Entity.EntityId,
-            DamageMultiplier = _damageMultiplier,
-            StrengthMultiplier = _strengthMultiplier,
+            DamageMultiplier = _stats.ArrowDamageMultiplier,
+            StrengthMultiplier = _stats.ArrowStrengthMultiplier,
             Position = new Vector3(packet.Position[0], packet.Position[1], packet.Position[2]),
-            Velocity = Vector3.Normalize(new Vector3(packet.Velocity[0], packet.Velocity[1], packet.Velocity[2])) * _velocity
+            Velocity = Vector3.Normalize(new Vector3(packet.Velocity[0], packet.Velocity[1], packet.Velocity[2])) * _stats.ArrowVelocity
         };
 
         _projectileSystem.Spawn(packet.ProjectileId, stats.Value, spawnStats, arrowSlot.TakeOut(1), shooter);
@@ -308,9 +297,7 @@ public class BowServer : RangeWeaponServer
 
     private readonly Dictionary<long, ItemSlot?> _arrowSlots = new();
     private readonly ProjectileSystemServer _projectileSystem;
-    private readonly float _damageMultiplier;
-    private readonly float _strengthMultiplier;
-    private readonly float _velocity;
+    private readonly BowStats _stats;
 }
 
 public class BowItem : Item, IHasWeaponLogic, IHasRangedWeaponLogic

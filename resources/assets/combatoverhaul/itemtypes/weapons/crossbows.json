@@ -1,0 +1,23 @@
+﻿{
+  "code": "crossbow",
+  "class": "Item",
+  "variantgroups": [{"code": "type", "states": ["simple", "repeating", "stirrup", "latch", "goatsfoot", "windlass"]}],
+  "creativeinventory": {"combatoverhaul": ["*"]},
+  "maxstacksize": 1,
+  "durabilityByType": {"*-simple": 450, "*-repeating": 600, "*-stirrup": 900, "*-latch": 900, "*-goatsfoot": 1600, "*-windlass": 1200},
+  "tool": "bow",
+  "behaviors": [{"name": "CombatOverhaul:AnimatableAttachable", "properties": {"animated-shape": "combatoverhaul:weapons/crossbows/{type}"}}],
+  "attributes": {"boltTransform": {"translation": {"x": -8, "y": 0.3, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 1}, "scale": 0.75}},
+  "shapeByType": {
+    "*-goatsfoot": {"base": "combatoverhaul:weapons/crossbows/{type}-tp"},
+    "*-windlass": {"base": "combatoverhaul:weapons/crossbows/{type}-tp"},
+    "*": {"base": "combatoverhaul:weapons/crossbows/{type}"}
+  },
+  "guiTransformByType": {
+    "*-repeating": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -52, "y": -41, "z": 180}, "origin": {"x": -0.05, "y": 0.3, "z": -0.25}, "scale": 0.7},
+    "*-simple": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -52, "y": -39, "z": 180}, "origin": {"x": 0.45, "y": -1, "z": -0.85}, "scale": 0.9},
+    "*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -52, "y": -41, "z": 180}, "origin": {"x": -0.05, "y": 0.1, "z": 0.05}, "scale": 0.95}
+  },
+  "tpHandTransform": {"translation": {"x": -0.2, "y": 0, "z": 0}, "rotation": {"x": 0, "y": -90, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
+  "groundTransform": {"translation": {"x": 0, "y": 0.13, "z": 0}, "rotation": {"x": 1, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 4.8}
+}

@@ -5,12 +5,7 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
-using Vintagestory.API.Server;
 using Vintagestory.GameContent;
-
-#if DEBUG
-using VSImGui.Debug;
-#endif
 
 namespace CombatOverhaul.Colliders;
 

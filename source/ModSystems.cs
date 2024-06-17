@@ -12,8 +12,7 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Config;
 using Vintagestory.API.Server;
 using Vintagestory.Client.NoObf;
-using CombatOverhaul.Implementations.Vanilla;
-using OpenTK.Windowing.GraphicsLibraryFramework;
+using CombatOverhaul.Implementations;
 using Vintagestory.GameContent;
 
 namespace CombatOverhaul;
