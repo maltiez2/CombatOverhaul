@@ -1,0 +1,22 @@
+﻿{
+  "code": "arrow",
+  "class": "CombatOverhaul:Projectile",
+  "variantgroups": [{"code": "material", "states": ["crude", "flint", "copper", "tinbronze", "bismuthbronze", "blackbronze", "gold", "silver", "iron", "steel", "meteoriciron"]}],
+  "hitboxSize": {"x": 0.125, "y": 0.125},
+  "client": {
+    "size": 0.75,
+    "renderer": "Shape",
+    "shapeByType": {
+      "*-crude": {"base": "ammo/arrows/crude"},
+      "*-flint": {"base": "ammo/arrows/stone"},
+      "*-meteoriciron": {"base": "ammo/arrows/envelop"},
+      "*-steel": {"base": "ammo/arrows/envelop"},
+      "*-iron": {"base": "ammo/arrows/envelop"},
+      "*": {"base": "ammo/arrows/insert"}
+    },
+    "texturesByType": {"arrow-crude": {}, "arrow-flint": {"material": {"base": "game:block/stone/flint"}}, "*": {"material": {"base": "game:block/metal/ingot/{material}"}}},
+    "behaviors": [{"code": "passivephysics", "groundDragFactor": 1, "airDragFactor": 0.25, "gravityFactor": 0.75}, {"code": "interpolateposition"}]
+  },
+  "server": {"behaviors": [{"code": "passivephysics", "groundDragFactor": 1, "airDragFactor": 0.25, "gravityFactor": 0.75}, {"code": "despawn", "minSeconds": 600}]},
+  "sounds": {}
+}

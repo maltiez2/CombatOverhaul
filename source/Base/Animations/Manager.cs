@@ -11,7 +11,6 @@ using Vintagestory.API.MathTools;
 using Vintagestory.Client.NoObf;
 using VSImGui;
 using VSImGui.API;
-using static OpenTK.Graphics.OpenGL.GL;
 
 namespace CombatOverhaul.Animations;
 
@@ -46,7 +45,6 @@ public sealed class AnimationsManager
 
     private bool _showAnimationEditor = false;
     private int _selectedAnimationIndex = 0;
-    private int _tempAnimations = 0;
     private bool _overwriteFrame = false;
     private FirstPersonAnimationsBehavior? _behavior;
     private readonly ICoreClientAPI _api;
@@ -162,13 +160,13 @@ public sealed class AnimationsManager
                 Animations[codes[_selectedAnimationIndex]],
                 1,
                 1,
-                "test",
+                "main",
                 TimeSpan.FromSeconds(0.6),
                 TimeSpan.FromSeconds(0.6),
                 true
                 );
 
-            _behavior.Play(request);
+            _behavior?.Play(request);
         }
         ImGui.SameLine();
 

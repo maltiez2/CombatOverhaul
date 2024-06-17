@@ -1,13 +1,16 @@
 ﻿{
   "code": "crossbow",
-  "class": "Item",
+  "class": "CombatOverhaul:Crossbow",
   "variantgroups": [{"code": "type", "states": ["simple", "repeating", "stirrup", "latch", "goatsfoot", "windlass"]}],
-  "creativeinventory": {"combatoverhaul": ["*"]},
+  "creativeinventory": {"combatoverhaul-crossbows": ["*"]},
   "maxstacksize": 1,
   "durabilityByType": {"*-simple": 450, "*-repeating": 600, "*-stirrup": 900, "*-latch": 900, "*-goatsfoot": 1600, "*-windlass": 1200},
   "tool": "bow",
   "behaviors": [{"name": "CombatOverhaul:AnimatableAttachable", "properties": {"animated-shape": "combatoverhaul:weapons/crossbows/{type}"}}],
-  "attributes": {"boltTransform": {"translation": {"x": -8, "y": 0.3, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 1}, "scale": 0.75}},
+  "attributes": {
+    "BoltTransform": {"translation": {"x": -8, "y": 0.3, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 1}, "scale": 0.75},
+    "ReadyAnimation": "combatoverhaul:crossbow-idle"
+  },
   "shapeByType": {
     "*-goatsfoot": {"base": "combatoverhaul:weapons/crossbows/{type}-tp"},
     "*-windlass": {"base": "combatoverhaul:weapons/crossbows/{type}-tp"},

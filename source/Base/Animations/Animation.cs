@@ -475,7 +475,7 @@ public sealed class PLayerKeyFrameJson
             result.Elements.Add("UpperArmL", leftHand.UpperArmL.ToArray());
         }
 
-        result.Elements.Add("UpperTorso", frame.Frame.DetachedAnchorFrame.ToArray());
+        result.Elements.Add("UpperTorso", frame.Frame.UpperTorso.ToArray());
         result.Elements.Add("DetachedAnchor", frame.Frame.DetachedAnchorFrame.ToArray());
 
         return result;

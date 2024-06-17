@@ -30,7 +30,7 @@ internal sealed class Composer
             if ((_animators[category].Finished() && _weightState[category] == AnimatorWeightState.Finished))
             {
                 System.Func<bool>? callback = _requests[category].FinishCallback;
-                bool removeCategory = false;
+                bool removeCategory = true;
                 if (callback != null && !_callbacksCalled[category])
                 {
                     removeCategory = !callback.Invoke();
@@ -46,6 +46,8 @@ internal sealed class Composer
                     _weightState.Remove(category);
                     _requests.Remove(category);
                     _callbacksCalled.Remove(category);
+
+                    continue;
                 }
             }
 
@@ -68,6 +70,8 @@ internal sealed class Composer
                     _weightState.Remove(category);
                     _requests.Remove(category);
                     _callbacksCalled.Remove(category);
+
+                    continue;
                 }
             }
         }

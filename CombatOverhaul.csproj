@@ -143,7 +143,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="resources\assets\combatoverhaul\itemtypes\ammo\" />
+    <Folder Include="resources\assets\combatoverhaul\patches\weapons\" />
   </ItemGroup>
 
   <!-- Creates/updates modinfo.json file in build directory -->

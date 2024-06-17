@@ -22,7 +22,6 @@ public class RangeWeaponClient : IClientWeaponLogic
     public int ItemId => Item.Id;
 
     public virtual DirectionsConfiguration DirectionsType => DirectionsConfiguration.None;
-    public virtual string ProjectileInventoryId => "projectile";
 
 
     public virtual void OnDeselected(EntityPlayer player)
