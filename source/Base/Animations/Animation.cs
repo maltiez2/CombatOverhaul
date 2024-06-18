@@ -265,7 +265,7 @@ public sealed class Animation
         {
             ImGui.SliderInt($"Key frame##{title}", ref _itemFrameIndex, 0, ItemKeyFrames.Count - 1);
 
-            ItemKeyFrame frame = ItemKeyFrames[_itemFrameIndex].Edit(title);
+            ItemKeyFrame frame = ItemKeyFrames[_itemFrameIndex].Edit(title, TotalDuration);
             ItemKeyFrames[_itemFrameIndex] = frame;
         }
 

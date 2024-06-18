@@ -55,7 +55,7 @@ public sealed class BowClient : RangeWeaponClient
         _attachable.ClearAttachments(player.EntityId);
 
         AnimationRequestByCode request = new(_stats.ReadyAnimation, 1.0f, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true);
-        AnimationBehavior?.Play(request, mainHand);
+        //AnimationBehavior?.Play(request, mainHand);
     }
 
     public override void OnDeselected(EntityPlayer player)
@@ -135,16 +135,14 @@ public sealed class BowClient : RangeWeaponClient
 
         if (state == (int)BowState.Draw)
         {
-            AnimationRequestByCode idleRequest = new(_stats.ReadyAnimation, 1.0f, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true);
-            AnimationBehavior?.Play(idleRequest, true);
+            AnimationBehavior?.PlayReadyAnimation(true);
             state = (int)BowState.Loaded;
             return true;
         }
 
         if (state != (int)BowState.Drawn) return false;
 
-        AnimationRequestByCode request = new(_stats.ReadyAnimation, 1.0f, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true); //new(_stats.ReleaseAnimation, 1.0f, 1, "main", TimeSpan.FromSeconds(0.0), TimeSpan.FromSeconds(0.2), true, ReleasedAnimationCallback);
-        AnimationBehavior?.Play(request, mainHand);
+        AnimationBehavior?.PlayReadyAnimation(true);
 
         state = 0;
 
@@ -171,7 +169,7 @@ public sealed class BowClient : RangeWeaponClient
         }
         else
         {
-            AnimationBehavior?.Stop("main");
+            AnimationBehavior?.PlayReadyAnimation(true);
             PlayerBehavior?.SetState(0);
         }
     }
@@ -187,9 +185,9 @@ public sealed class BowClient : RangeWeaponClient
     }
     private bool ReleasedAnimationCallback()
     {
-        AnimationRequestByCode request = new(_stats.ReadyAnimation, 1.0f, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true);
-        AnimationBehavior?.Play(request, true);
-
+        /*AnimationRequestByCode request = new(_stats.ReadyAnimation, 1.0f, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true);
+        AnimationBehavior?.Play(request, true);*/
+        AnimationBehavior?.PlayReadyAnimation(true);
         return true;
     }
 
@@ -300,13 +298,16 @@ public sealed class BowServer : RangeWeaponServer
     private readonly BowStats _stats;
 }
 
-public class BowItem : Item, IHasWeaponLogic, IHasRangedWeaponLogic
+public class BowItem : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasIdleAnimations
 {
     public BowClient? ClientLogic { get; private set; }
     public BowServer? ServerLogic { get; private set; }
 
     IClientWeaponLogic? IHasWeaponLogic.ClientLogic => ClientLogic;
     IServerRangedWeaponLogic? IHasRangedWeaponLogic.ServerWeaponLogic => ServerLogic;
+
+    public AnimationRequestByCode IdleAnimation { get; set; }
+    public AnimationRequestByCode ReadyAnimation { get; set; }
 
     public override void OnLoaded(ICoreAPI api)
     {
@@ -315,6 +316,10 @@ public class BowItem : Item, IHasWeaponLogic, IHasRangedWeaponLogic
         if (api is ICoreClientAPI clientAPI)
         {
             ClientLogic = new(clientAPI, this);
+
+            BowStats stats = Attributes.AsObject<BowStats>();
+            IdleAnimation = new(stats.IdleAnimation, 1, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), false);
+            ReadyAnimation = new(stats.ReadyAnimation, 1, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), false);
         }
 
         if (api is ICoreServerAPI serverAPI)

@@ -9,6 +9,12 @@ using Vintagestory.GameContent;
 
 namespace CombatOverhaul.Animations;
 
+public interface IHasIdleAnimations
+{
+    AnimationRequestByCode IdleAnimation { get; }
+    AnimationRequestByCode ReadyAnimation { get; }
+}
+
 public sealed class FirstPersonAnimationsBehavior : EntityBehavior
 {
     public FirstPersonAnimationsBehavior(Entity entity) : base(entity)
@@ -27,7 +33,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
 
     public override string PropertyName() => "FirstPersonAnimations";
 
-    public override void OnGameTick(float deltaTime)
+    public override void OnGameTick(float deltaTime) // @TODO refactor this brunching hell
     {
         int mainHandItemId = _player.RightHandItemSlot.Itemstack?.Item?.Id ?? 0;
         int offhandItemId = _player.LeftHandItemSlot.Itemstack?.Item?.Id ?? 0;
@@ -35,21 +41,57 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
         if (_mainHandItemId != mainHandItemId)
         {
             _mainHandItemId = mainHandItemId;
-            foreach (string category in _mainHandCategories)
+            StopIdleTimer(true);
+
+            if (_player.RightHandItemSlot.Itemstack?.Item is IHasIdleAnimations item)
             {
-                _composer.Stop(category);
+                string readyCategory = item.ReadyAnimation.Category;
+
+                foreach (string category in _mainHandCategories.Where(element => element != readyCategory))
+                {
+                    _composer.Stop(category);
+                }
+                _mainHandCategories.Clear();
+
+                Play(item.ReadyAnimation, true);
+                StartIdleTimer(item.IdleAnimation, true);
             }
-            _mainHandCategories.Clear();
+            else
+            {
+                foreach (string category in _mainHandCategories)
+                {
+                    _composer.Stop(category);
+                }
+                _mainHandCategories.Clear();
+            }
         }
 
         if (_offHandItemId != offhandItemId)
         {
             _offHandItemId = offhandItemId;
-            foreach (string category in _offhandCategories)
+            StopIdleTimer(false);
+
+            if (_player.LeftHandItemSlot.Itemstack?.Item is IHasIdleAnimations item)
             {
-                _composer.Stop(category);
+                string readyCategory = item.ReadyAnimation.Category;
+
+                foreach (string category in _offhandCategories.Where(element => element != readyCategory))
+                {
+                    _composer.Stop(category);
+                }
+                _offhandCategories.Clear();
+
+                Play(item.ReadyAnimation, false);
+                StartIdleTimer(item.IdleAnimation, false);
             }
-            _offhandCategories.Clear();
+            else
+            {
+                foreach (string category in _offhandCategories)
+                {
+                    _composer.Stop(category);
+                }
+                _offhandCategories.Clear();
+            }
         }
     }
 
@@ -59,6 +101,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     public void Play(AnimationRequest request, bool mainHand = true)
     {
         _composer.Play(request);
+        StopIdleTimer(mainHand, request.Category);
         if (mainHand)
         {
             _mainHandCategories.Add(request.Category);
@@ -77,6 +120,25 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
 
         Play(request, mainHand);
     }
+    public void PlayReadyAnimation(bool mainHand = true)
+    {
+        if (mainHand)
+        {
+            if (_player.RightHandItemSlot.Itemstack?.Item is IHasIdleAnimations item)
+            {
+                Play(item.ReadyAnimation, mainHand);
+                StartIdleTimer(item.IdleAnimation, mainHand);
+            }
+        }
+        else
+        {
+            if (_player.LeftHandItemSlot.Itemstack?.Item is IHasIdleAnimations item)
+            {
+                Play(item.ReadyAnimation, mainHand);
+                StartIdleTimer(item.IdleAnimation, mainHand);
+            }
+        }
+    }
     public void Stop(string category)
     {
         _composer.Stop(category);
@@ -90,8 +152,14 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     private readonly List<string> _mainHandCategories = new();
     private int _offHandItemId = 0;
     private int _mainHandItemId = 0;
+    private long _mainHandIdleTimer = -1;
+    private long _offHandIdleTimer = -1;
+    private string _mainHandIdleCategory = "";
+    private string _offHandIdleCategory = "";
     private bool _resetFov = false;
     private ICoreClientAPI? _api;
+
+    private static readonly TimeSpan _readyTimeout = TimeSpan.FromSeconds(5);
 
     private readonly FieldInfo _mainCameraInfo = typeof(ClientMain).GetField("MainCamera", BindingFlags.NonPublic | BindingFlags.Instance);
     private readonly FieldInfo _cameraFov = typeof(Camera).GetField("Fov", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -194,5 +262,71 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
         _cameraFov.SetValue(camera, ClientSettings.FieldOfView * GameMath.DEG2RAD * multiplier);
 
         CurrentFov = ClientSettings.FieldOfView * multiplier;
+    }
+    
+    private void StartIdleTimer(AnimationRequestByCode request, bool mainHand)
+    {
+        long timer = _api?.World.RegisterCallback(_ => PlayIdleAnimation(request, mainHand), (int)_readyTimeout.TotalMilliseconds) ?? -1;
+        if (mainHand)
+        {
+            _mainHandIdleTimer = timer;
+        }
+        else
+        {
+            _offHandIdleTimer = timer;
+        }
+    }
+    private void StopIdleTimer(bool mainHand)
+    {
+        if (mainHand)
+        {
+            if (_mainHandIdleTimer != -1)
+            {
+                _api?.World.UnregisterCallback(_mainHandIdleTimer);
+                _mainHandIdleTimer = -1;
+            }
+        }
+        else
+        {
+            if (_offHandIdleTimer != -1)
+            {
+                _api?.World.UnregisterCallback(_offHandIdleTimer);
+                _offHandIdleTimer = -1;
+            }
+        }
+    }
+    private void StopIdleTimer(bool mainHand, string category)
+    {
+        if (mainHand)
+        {
+            if (_mainHandIdleTimer != -1 && _mainHandIdleCategory == category)
+            {
+                _api?.World.UnregisterCallback(_mainHandIdleTimer);
+                _mainHandIdleTimer = -1;
+            }
+        }
+        else
+        {
+            if (_offHandIdleTimer != -1 && _offHandIdleCategory == category)
+            {
+                _api?.World.UnregisterCallback(_offHandIdleTimer);
+                _offHandIdleTimer = -1;
+            }
+        }
+    }
+    private void PlayIdleAnimation(AnimationRequestByCode request, bool mainHand)
+    {
+        if (mainHand)
+        {
+            _mainHandIdleTimer = -1;
+            _mainHandIdleCategory = request.Category;
+        }
+        else
+        {
+            _offHandIdleTimer = -1;
+            _offHandIdleCategory = request.Category;
+        }
+
+        Play(request, mainHand);
     }
 }

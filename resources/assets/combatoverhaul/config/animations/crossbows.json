@@ -11,12 +11,12 @@
         "FOVMultiplier": 1,
         "BobbingAmplitude": 0.788,
         "Elements": {
-          "ItemAnchor": [0, 1.3, 0.6, -21, -26, 89],
+          "ItemAnchor": [0, 1.3, 0.9, -21, -26, 102],
           "LowerArmR": [0, 0, 0, 0, 0, -89],
           "UpperArmR": [0, 0, 0, 34, 30, -34],
           "ItemAnchorL": [0, 0, 0, 0, 0, 0],
-          "LowerArmL": [0, 0, 0, 0, 0, -30],
-          "UpperArmL": [0, 0, 0, 0, 5, -54],
+          "LowerArmL": [0, 0, 0, 0, 0, -34],
+          "UpperArmL": [0, 0, 0, 0, 5, -44],
           "UpperTorso": [0, 0, 0, 0, 0, 0],
           "DetachedAnchor": [0, 0, 0, 0, 0, 0]
         }

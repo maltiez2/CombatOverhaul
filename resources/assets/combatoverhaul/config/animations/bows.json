@@ -703,6 +703,34 @@
         "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [0, 0, 0, 0, 0, 0],
+          "LowerArmR": [0, 0, 0, 0, 0, 0],
+          "UpperArmR": [0, 0, 0, 9, 0, 0],
+          "ItemAnchorL": [0, -1.1, -1, 1, -2, 0],
+          "LowerArmL": [0, 0, 0, 0, 10, -59],
+          "UpperArmL": [0, 0, 0, -10, 0, 1],
+          "UpperTorso": [0, 0, 0, 0, 0, 0],
+          "DetachedAnchor": [0, 0, 0, 0, 0, 0]
+        }
+      }
+    ],
+    "ItemKeyFrames": [],
+    "SoundFrames": [],
+    "ItemAnimationStart": 0,
+    "ItemAnimationEnd": 0
+  },
+  "bow-ready": {
+    "Hold": true,
+    "PlayerKeyFrames": [
+      {
+        "EasingTime": 500,
+        "EasingFunction": "Linear",
+        "DetachedAnchor": false,
+        "SwitchArms": true,
+        "PitchFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 0.8,
+        "Elements": {
+          "ItemAnchor": [0, 0, 0, 0, 0, 0],
           "LowerArmR": [0, 0, 0, 0, 0, -48],
           "UpperArmR": [0, 0, 0, 9, 24, -40],
           "ItemAnchorL": [0, -1.5, -1.3, -19, -5, 0],

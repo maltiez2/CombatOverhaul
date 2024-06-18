@@ -122,16 +122,20 @@ public readonly struct ItemKeyFrame
 
     public bool Reached(float animationProgress) => animationProgress >= DurationFraction;
 
-    public ItemKeyFrame Edit(string title)
+    public ItemKeyFrame Edit(string title, TimeSpan totalDuration)
     {
-        float progress = DurationFraction * 100;
-        ImGui.InputFloat($"Duration fraction %", ref progress, 0, 1);
+        float total = (float)totalDuration.TotalMilliseconds;
+
+        if (total < 1E-8) return this;
+
+        float progress = DurationFraction * total;
+        ImGui.InputFloat($"Time", ref progress, 0, 1);
 
         EasingFunctionType function = VSImGui.EnumEditor<EasingFunctionType>.Combo($"Easing function##{title}", EasingFunction);
 
         ItemFrame frame = Frame.Edit(title);
 
-        return new(frame, progress / 100, function);
+        return new(frame, progress / total, function);
     }
 
     public static List<ItemKeyFrame> FromVanillaAnimation(string code, Shape shape)

@@ -200,6 +200,18 @@ public readonly struct AnimationRequest
         EaseOut = request.EaseOut;
         FinishCallback = request.FinishCallback;
     }
+
+    public AnimationRequest(System.Func<bool> callback, AnimationRequest request)
+    {
+        Animation = request.Animation;
+        AnimationSpeed = request.AnimationSpeed;
+        Weight = request.Weight;
+        Category = request.Category;
+        EaseOutDuration = request.EaseOutDuration;
+        EaseInDuration = request.EaseInDuration;
+        EaseOut = request.EaseOut;
+        FinishCallback = callback;
+    }
 }
 
 public readonly struct AnimationRequestByCode
