@@ -1,0 +1,56 @@
+﻿{
+  "code": "bolt",
+  "class": "Item",
+  "variantgroups": [{"code": "material", "states": ["flint", "copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel"]}],
+  "behaviors": [
+    {
+      "name": "CombatOverhaul:Projectile",
+      "properties": {
+        "stats": {
+          "AdditionalDurabilityCost": 0,
+          "CollisionRadius": 0.05,
+          "DamageStatsByType": {
+            "*-flint": {"DamageType": "PiercingAttack", "Damage": 5},
+            "*-copper": {"DamageType": "PiercingAttack", "Damage": 6},
+            "*-tinbronze": {"DamageType": "PiercingAttack", "Damage": 7},
+            "*-bismuthbronze": {"DamageType": "PiercingAttack", "Damage": 7},
+            "*-blackbronze": {"DamageType": "PiercingAttack", "Damage": 7},
+            "*-iron": {"DamageType": "PiercingAttack", "Damage": 7},
+            "*-meteoriciron": {"DamageType": "PiercingAttack", "Damage": 7},
+            "*-steel": {"DamageType": "PiercingAttack", "Damage": 9}
+          },
+          "SpeedThreshold": 0.3,
+          "Knockback": 0.2,
+          "EntityCode": "combatoverhaul:bolt-{material}",
+          "DurabilityDamage": 0,
+          "DropChanceByType": {
+            "*-flint": 0.75,
+            "*-copper": 0.9,
+            "*-tinbronze": 0.95,
+            "*-bismuthbronze": 0.95,
+            "*-blackbronze": 0.95,
+            "*-iron": 0.98,
+            "*-meteoriciron": 0.98,
+            "*-steel": 0.995
+          }
+        }
+      }
+    }
+  ],
+  "maxstacksize": 64,
+  "storageFlags": 513,
+  "shapeByType": {
+    "*-flint": {"base": "ammo/bolts/crude"},
+    "*-copper": {"base": "ammo/bolts/crude"},
+    "*-meteoriciron": {"base": "ammo/bolts/envelop"},
+    "*-steel": {"base": "ammo/bolts/envelop"},
+    "*-iron": {"base": "ammo/bolts/envelop"},
+    "*": {"base": "ammo/bolts/insert"}
+  },
+  "texturesByType": {"*-flint": {"head": {"base": "game:block/stone/flint"}}, "*": {"head": {"base": "game:block/metal/ingot/{material}"}}},
+  "creativeinventory": {"combatoverhaul-crossbows": ["*"]},
+  "guiTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -20, "y": -41, "z": -145}, "origin": {"x": 0.6, "y": -0.44, "z": 0}, "scale": 2.73},
+  "tpHandTransform": {"translation": {"x": 0.3, "y": 0, "z": 0.5}, "rotation": {"x": 0, "y": 2, "z": 3}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
+  "groundTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": -0.03, "z": 0.5}, "scale": 4},
+  "attributes": {"handbook": {"groupBy": ["arrow-*"]}}
+}

@@ -32,7 +32,7 @@ public sealed class BowStats : WeaponStats
     public string ReleaseAnimation { get; set; } = "";
     public AimingStatsJson Aiming { get; set; } = new();
     public float ArrowDamageMultiplier { get; set; } = 1;
-    public float ArrowStrengthMultiplier { get; set; } = 1;
+    public float ArrowDamageStrength { get; set; } = 1;
     public float ArrowVelocity { get; set; } = 1;
     public string ArrowWildcard { get; set; } = "*arrow-*";
 }
@@ -53,9 +53,6 @@ public sealed class BowClient : RangeWeaponClient
     public override void OnSelected(ItemSlot slot, EntityPlayer player, bool mainHand, ref int state)
     {
         _attachable.ClearAttachments(player.EntityId);
-
-        AnimationRequestByCode request = new(_stats.ReadyAnimation, 1.0f, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true);
-        //AnimationBehavior?.Play(request, mainHand);
     }
 
     public override void OnDeselected(EntityPlayer player)
@@ -135,14 +132,14 @@ public sealed class BowClient : RangeWeaponClient
 
         if (state == (int)BowState.Draw)
         {
-            AnimationBehavior?.PlayReadyAnimation(true);
+            AnimationBehavior?.PlayReadyAnimation(mainHand);
             state = (int)BowState.Loaded;
             return true;
         }
 
         if (state != (int)BowState.Drawn) return false;
 
-        AnimationBehavior?.PlayReadyAnimation(true);
+        AnimationBehavior?.PlayReadyAnimation(mainHand);
 
         state = 0;
 
@@ -185,8 +182,6 @@ public sealed class BowClient : RangeWeaponClient
     }
     private bool ReleasedAnimationCallback()
     {
-        /*AnimationRequestByCode request = new(_stats.ReadyAnimation, 1.0f, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true);
-        AnimationBehavior?.Play(request, true);*/
         AnimationBehavior?.PlayReadyAnimation(true);
         return true;
     }
@@ -282,7 +277,7 @@ public sealed class BowServer : RangeWeaponServer
         {
             ProducerEntityId = player.Entity.EntityId,
             DamageMultiplier = _stats.ArrowDamageMultiplier,
-            StrengthMultiplier = _stats.ArrowStrengthMultiplier,
+            DamageStrength = _stats.ArrowDamageStrength,
             Position = new Vector3(packet.Position[0], packet.Position[1], packet.Position[2]),
             Velocity = Vector3.Normalize(new Vector3(packet.Velocity[0], packet.Velocity[1], packet.Velocity[2])) * _stats.ArrowVelocity
         };
@@ -326,9 +321,5 @@ public class BowItem : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasIdleAni
         {
             ServerLogic = new(serverAPI, this);
         }
-    }
-
-    public override void OnHeldDropped(IWorldAccessor world, IPlayer byPlayer, ItemSlot slot, int quantity, ref EnumHandling handling)
-    {
     }
 }

@@ -379,9 +379,9 @@ public readonly struct PlayerFrame
 {
     public readonly RightHandFrame? RightHand;
     public readonly LeftHandFrame? LeftHand;
-    public readonly AnimationElement UpperTorso = AnimationElement.Zero;
-    public readonly AnimationElement DetachedAnchorFrame = AnimationElement.Zero;
-    public readonly AnimationElement LowerTorso = AnimationElement.Zero;
+    public readonly AnimationElement? UpperTorso = null;
+    public readonly AnimationElement? DetachedAnchorFrame = null;
+    public readonly AnimationElement? LowerTorso = null;
     public readonly bool DetachedAnchor = false;
     public readonly bool SwitchArms = false;
     public readonly float PitchFollow = DefaultPitchFollow;
@@ -406,14 +406,14 @@ public readonly struct PlayerFrame
     {
         RightHand = rightHand;
         LeftHand = leftHand;
-        UpperTorso = upperTorso ?? AnimationElement.Zero;
-        DetachedAnchorFrame = detachedAnchorFrame ?? AnimationElement.Zero;
+        UpperTorso = upperTorso;
+        DetachedAnchorFrame = detachedAnchorFrame;
         DetachedAnchor = detachedAnchor;
         SwitchArms = switchArms;
         PitchFollow = pitchFollow;
         FovMultiplier = fovMultiplier;
         BobbingAmplitude = bobbingAmplitude;
-        LowerTorso = lowerTorso ?? AnimationElement.Zero;
+        LowerTorso = lowerTorso;
     }
 
     public static readonly PlayerFrame Zero = new(RightHandFrame.Zero, LeftHandFrame.Zero);
@@ -424,10 +424,10 @@ public readonly struct PlayerFrame
         switch (pose.ForElement.Name)
         {
             case "DetachedAnchor":
-                DetachedAnchorFrame.Apply(pose);
+                DetachedAnchorFrame?.Apply(pose);
                 break;
             case "UpperTorso":
-                UpperTorso.Apply(pose);
+                UpperTorso?.Apply(pose);
                 break;
             case "LowerTorso":
                 switch (torsoAnimation)
@@ -466,23 +466,30 @@ public readonly struct PlayerFrame
 
         bool rightHand = RightHand != null;
         bool leftHand = LeftHand != null;
+        bool upperTorso = UpperTorso != null;
 
         ImGui.Checkbox($"Right hand frame##{title}", ref rightHand); ImGui.SameLine();
-        ImGui.Checkbox($"Left hand frame##{title}", ref leftHand);
+        ImGui.Checkbox($"Left hand frame##{title}", ref leftHand); ImGui.SameLine();
+        ImGui.Checkbox($"Upper torso frame##{title}", ref upperTorso);
 
         RightHandFrame? right = RightHand?.Edit(title);
         LeftHandFrame? left = LeftHand?.Edit(title);
+
+        if (upperTorso) ImGui.SeparatorText($"UpperTorso");
+        AnimationElement? torso = UpperTorso?.Edit($"{title}##UpperTorso");
+
+        if (detachedAnchor) ImGui.SeparatorText($"DetachedAnchor");
+        AnimationElement? anchor = DetachedAnchorFrame?.Edit($"{title}##DetachedAnchor");
 
         if (RightHand == null && rightHand) right = RightHandFrame.Zero;
         if (RightHand != null && !rightHand) right = null;
         if (LeftHand == null && leftHand) left = LeftHandFrame.Zero;
         if (LeftHand != null && !leftHand) left = null;
 
-        ImGui.SeparatorText($"UpperTorso");
-        AnimationElement torso = UpperTorso.Edit($"{title}##UpperTorso");
-
-        ImGui.SeparatorText($"DetachedAnchor");
-        AnimationElement anchor = DetachedAnchorFrame.Edit($"{title}##DetachedAnchor");
+        if (UpperTorso == null && upperTorso) torso = AnimationElement.Zero;
+        if (UpperTorso != null && !upperTorso) torso = null;
+        if (DetachedAnchorFrame == null && detachedAnchor) anchor = AnimationElement.Zero;
+        if (DetachedAnchorFrame != null && !detachedAnchor) anchor = null;
 
         return new(right, left, torso, anchor, detachedAnchor, switchArms, pitchFollow ? PerfectPitchFollow : DefaultPitchFollow, fov, bobbing);
     }
@@ -492,11 +499,11 @@ public readonly struct PlayerFrame
         RightHandFrame? righthand = null;
         if (from.RightHand == null && to.RightHand != null)
         {
-            righthand = to.RightHand;
+            righthand = null;//to.RightHand;
         }
         else if (from.RightHand != null && to.RightHand == null)
         {
-            righthand = from.RightHand;
+            righthand = null;//from.RightHand;
         }
         else if (from.RightHand != null && to.RightHand != null)
         {
@@ -506,19 +513,22 @@ public readonly struct PlayerFrame
         LeftHandFrame? leftHand = null;
         if (from.LeftHand == null && to.LeftHand != null)
         {
-            leftHand = to.LeftHand;
+            leftHand = null;//to.LeftHand;
         }
         else if (from.LeftHand != null && to.LeftHand == null)
         {
-            leftHand = from.LeftHand;
+            leftHand = null;//from.LeftHand;
         }
         else if (from.LeftHand != null && to.LeftHand != null)
         {
             leftHand = LeftHandFrame.Interpolate(from.LeftHand.Value, to.LeftHand.Value, progress);
         }
 
-        AnimationElement anchor = AnimationElement.Interpolate(from.DetachedAnchorFrame, to.DetachedAnchorFrame, progress);
-        AnimationElement torso = AnimationElement.Interpolate(from.UpperTorso, to.UpperTorso, progress);
+        AnimationElement? anchor = AnimationElement.Interpolate(from.DetachedAnchorFrame ?? AnimationElement.Zero, to.DetachedAnchorFrame ?? AnimationElement.Zero, progress);
+        AnimationElement? torso = AnimationElement.Interpolate(from.UpperTorso ?? AnimationElement.Zero, to.UpperTorso ?? AnimationElement.Zero, progress);
+
+        if (from.DetachedAnchorFrame == null && to.DetachedAnchorFrame == null) anchor = null;
+        if (from.UpperTorso == null && to.UpperTorso == null) torso = null;
 
         float pitchFollow = from.PitchFollow + (to.PitchFollow - from.PitchFollow) * progress;
         float fov = from.FovMultiplier + (to.FovMultiplier - from.FovMultiplier) * progress;
@@ -532,8 +542,8 @@ public readonly struct PlayerFrame
         return new(
             RightHandFrame.Compose(frames.Where(entry => entry.element.RightHand != null).Select(entry => (entry.element.RightHand.Value, entry.weight))),
             LeftHandFrame.Compose(frames.Where(entry => entry.element.LeftHand != null).Select(entry => (entry.element.LeftHand.Value, entry.weight))),
-            AnimationElement.Compose(frames.Select(entry => (entry.element.UpperTorso, entry.weight))),
-            AnimationElement.Compose(frames.Select(entry => (entry.element.DetachedAnchorFrame, entry.weight))),
+            AnimationElement.Compose(frames.Where(entry => entry.element.UpperTorso != null).Select(entry => (entry.element.UpperTorso.Value, entry.weight))),
+            AnimationElement.Compose(frames.Where(entry => entry.element.DetachedAnchorFrame != null).Select(entry => (entry.element.DetachedAnchorFrame.Value, entry.weight))),
             frames.Select(entry => entry.element.DetachedAnchor).Aggregate((first, second) => first || second),
             frames.Select(entry => entry.element.SwitchArms).Aggregate((first, second) => first || second),
             frames.Select(entry => entry.element.PitchFollow).Max(),

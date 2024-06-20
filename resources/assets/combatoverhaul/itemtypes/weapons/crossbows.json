@@ -8,8 +8,35 @@
   "tool": "bow",
   "behaviors": [{"name": "CombatOverhaul:AnimatableAttachable", "properties": {"animated-shape": "combatoverhaul:weapons/crossbows/{type}"}}],
   "attributes": {
-    "BoltTransform": {"translation": {"x": -8, "y": 0.3, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 1}, "scale": 0.75},
-    "ReadyAnimation": "combatoverhaul:crossbow-idle"
+    "BoltTransform": {"translation": {"x": -5.65, "y": 0.2, "z": -1}, "rotation": {"x": 0, "y": 0, "z": 1}, "scale": 0.75},
+    "BoltDamageMultiplierByType": {"*": 1},
+    "BoltDamageStrengthByType": {"*": 1},
+    "BoltVelocityByType": {"*": 1.3},
+    "IdleAnimation": "combatoverhaul:crossbow-idle",
+    "ReadyAnimation": "combatoverhaul:crossbow-ready",
+    "DrawAnimation": "combatoverhaul:crossbow-{type}-draw",
+    "DrawnAnimation": "combatoverhaul:crossbow-{type}-drawn",
+    "LoadAnimation": "combatoverhaul:crossbow-{type}-load",
+    "ReleaseAnimation": "combatoverhaul:crossbow-{type}-release",
+    "AimAnimation": "combatoverhaul:crossbow-{type}-aim",
+    "AimingByType": {
+      "*": {
+        "AimDifficulty": 1,
+        "CursorType": "Moving",
+        "AccuracyOvertimeSec": 12,
+        "ZeroingAngle": 1,
+        "CursorTextureReady": "combatoverhaul:gui/aiming/arrow-full.png",
+        "CursorTextureNotReady": "combatoverhaul:gui/aiming/arrow-part.png",
+        "AllowSprint": true,
+        "MoveSpeedPenalty": 0.1,
+        "AimDrift": 60,
+        "AimTwitch": 4,
+        "AnimationFollowX": 5.5,
+        "AnimationFollowY": 5.5,
+        "VerticalLimit": 0.25,
+        "VerticalOffset": -0.05
+      }
+    }
   },
   "shapeByType": {
     "*-goatsfoot": {"base": "combatoverhaul:weapons/crossbows/{type}-tp"},

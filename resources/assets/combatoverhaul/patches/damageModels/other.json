@@ -12,12 +12,12 @@
         "HeadDamageMultiplier": 1.25,
         "CriticalDamageMultiplier": 2,
         "DefaultResistsByType": {
-          "*-normal": {"BluntAttack": 0, "SlashingAttack": 1, "PiercingAttack": 2, "Frost": 1, "Heat": 1, "Electricity": 0, "Fire": 0},
-          "*-deep": {"BluntAttack": 1, "SlashingAttack": 2, "PiercingAttack": 4, "Frost": 1, "Heat": 1, "Electricity": 0, "Fire": 0},
-          "*-tainted": {"BluntAttack": 2, "SlashingAttack": 3, "PiercingAttack": 6, "Frost": 1, "Heat": 1, "Electricity": 0, "Fire": 0.2},
-          "*-corrupt": {"BluntAttack": 3, "SlashingAttack": 4, "PiercingAttack": 6, "Frost": 1, "Heat": 1, "Electricity": 0, "Fire": 0.2},
-          "*-nightmare": {"BluntAttack": 4, "SlashingAttack": 5, "PiercingAttack": 8, "Frost": 1, "Heat": 1, "Electricity": 0, "Fire": 0.6},
-          "*-double-headed": {"BluntAttack": 5, "SlashingAttack": 6, "PiercingAttack": 8, "Frost": 1, "Heat": 1, "Electricity": 0, "Fire": 0.8}
+          "*-normal": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0, "Frost": 1, "Heat": 1, "Electricity": 0, "Fire": 0},
+          "*-deep": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 1, "Frost": 1, "Heat": 1, "Electricity": 0, "Fire": 0},
+          "*-tainted": {"BluntAttack": 0, "SlashingAttack": 1, "PiercingAttack": 2, "Frost": 1, "Heat": 1, "Electricity": 0, "Fire": 0.2},
+          "*-corrupt": {"BluntAttack": 1, "SlashingAttack": 2, "PiercingAttack": 3, "Frost": 1, "Heat": 1, "Electricity": 0, "Fire": 0.2},
+          "*-nightmare": {"BluntAttack": 1, "SlashingAttack": 3, "PiercingAttack": 4, "Frost": 1, "Heat": 1, "Electricity": 0, "Fire": 0.6},
+          "*-double-headed": {"BluntAttack": 1, "SlashingAttack": 5, "PiercingAttack": 5, "Frost": 1, "Heat": 1, "Electricity": 0, "Fire": 0.8}
         }
       }
     }

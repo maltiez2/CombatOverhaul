@@ -59,7 +59,7 @@ public sealed class ProjectileServer
         if (relativeSpeed < _stats.SpeedThreshold) return false;
 
         float damage = _stats.DamageStats.Damage * _spawnStats.DamageMultiplier;
-        DamageData damageData = new(Enum.Parse<EnumDamageType>(_stats.DamageStats.DamageType), _stats.DamageStats.Strength * _spawnStats.StrengthMultiplier);
+        DamageData damageData = new(Enum.Parse<EnumDamageType>(_stats.DamageStats.DamageType), _spawnStats.DamageStrength);
 
         bool damageReceived = target.ReceiveDamage(new DirectionalTypedDamageSource()
         {

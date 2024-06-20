@@ -99,6 +99,24 @@ public class RangedWeaponSystemClient
 
         _clientChannel.SendPacket(packet);
     }
+    public void Load(ItemSlot weapon, bool rightHand, Action<bool> reloadCallback, int amount = 0)
+    {
+        if (_nextId > int.MaxValue / 2) _nextId = 0;
+        int id = _nextId++;
+        _callbacks[id] = reloadCallback;
+
+        ReloadPacket packet = new()
+        {
+            InventoryId = "",
+            SlotId = null,
+            Amount = amount,
+            RightHand = rightHand,
+            ItemId = weapon.Itemstack?.Item?.Id ?? 0,
+            ReloadId = id
+        };
+
+        _clientChannel.SendPacket(packet);
+    }
     public void Shoot(ItemSlot weapon, int amount, Vector3 position, Vector3 velocity, bool rightHand, Action<bool> shootCallback)
     {
         Guid projectileId = Guid.NewGuid();

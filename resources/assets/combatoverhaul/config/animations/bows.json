@@ -695,7 +695,7 @@
     "PlayerKeyFrames": [
       {
         "EasingTime": 500,
-        "EasingFunction": "Linear",
+        "EasingFunction": "Sin",
         "DetachedAnchor": false,
         "SwitchArms": true,
         "PitchFollow": false,
@@ -723,7 +723,7 @@
     "PlayerKeyFrames": [
       {
         "EasingTime": 500,
-        "EasingFunction": "Linear",
+        "EasingFunction": "Sin",
         "DetachedAnchor": false,
         "SwitchArms": true,
         "PitchFollow": false,

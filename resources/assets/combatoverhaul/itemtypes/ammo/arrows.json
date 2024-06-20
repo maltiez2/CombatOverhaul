@@ -1,6 +1,6 @@
 ﻿{
   "code": "arrow",
-  "class": "ItemArrow",
+  "class": "Item",
   "variantgroups": [{"code": "material", "states": ["crude", "flint", "copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel"]}],
   "behaviors": [
     {
@@ -9,12 +9,32 @@
         "stats": {
           "AdditionalDurabilityCost": 0,
           "CollisionRadius": 0.05,
-          "DamageStats": {"DamageType": "PiercingAttack", "Strength": 0, "Damage": 5},
+          "DamageStatsByType": {
+            "*-crude": {"DamageType": "PiercingAttack", "Damage": 3.5},
+            "*-flint": {"DamageType": "PiercingAttack", "Damage": 4},
+            "*-copper": {"DamageType": "PiercingAttack", "Damage": 4.5},
+            "*-tinbronze": {"DamageType": "PiercingAttack", "Damage": 5},
+            "*-bismuthbronze": {"DamageType": "PiercingAttack", "Damage": 5},
+            "*-blackbronze": {"DamageType": "PiercingAttack", "Damage": 5},
+            "*-iron": {"DamageType": "PiercingAttack", "Damage": 5.6},
+            "*-meteoriciron": {"DamageType": "PiercingAttack", "Damage": 5.6},
+            "*-steel": {"DamageType": "PiercingAttack", "Damage": 6}
+          },
           "SpeedThreshold": 0.3,
-          "Knockback": 0,
+          "Knockback": 0.1,
           "EntityCode": "combatoverhaul:arrow-{material}",
           "DurabilityDamage": 0,
-          "DropChance": 1
+          "DropChanceByType": {
+            "*-crude": 0.5,
+            "*-flint": 0.75,
+            "*-copper": 0.9,
+            "*-tinbronze": 0.95,
+            "*-bismuthbronze": 0.95,
+            "*-blackbronze": 0.95,
+            "*-iron": 0.98,
+            "*-meteoriciron": 0.98,
+            "*-steel": 0.995
+          }
         }
       }
     }
@@ -35,33 +55,5 @@
   "fpHandTransform": {"translation": {"x": 0.35, "y": 0, "z": 0}, "rotation": {"x": 87, "y": 90, "z": -30}, "scale": 1.14},
   "tpHandTransform": {"translation": {"x": -1.05, "y": -0.4599, "z": -0.87}, "rotation": {"x": 0, "y": 2, "z": 3}, "scale": 0.55},
   "groundTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": -0.03, "z": 0.5}, "scale": 2.64},
-  "attributes": {
-    "damageByType": {
-      "*-crude": -0.75,
-      "*-flint": -0.5,
-      "*-copper": 0,
-      "*-tinbronze": 1,
-      "*-gold": 1,
-      "*-silver": 1,
-      "*-bismuthbronze": 1,
-      "*-blackbronze": 1.5,
-      "*-iron": 2,
-      "*-meteoriciron": 2.25,
-      "*-steel": 2.5
-    },
-    "breakChanceOnImpactByType": {
-      "*-crude": 0.3,
-      "*-flint": 0.25,
-      "*-copper": 0.15,
-      "*-tinbronze": 0.125,
-      "*-gold": 0.15,
-      "*-silver": 0.15,
-      "*-bismuthbronze": 0.125,
-      "*-blackbronze": 0.1,
-      "*-iron": 0.1,
-      "*-meteoriciron": 0.1,
-      "*-steel": 0.07
-    },
-    "handbook": {"groupBy": ["arrow-*"]}
-  }
+  "attributes": {"handbook": {"groupBy": ["arrow-*"]}}
 }

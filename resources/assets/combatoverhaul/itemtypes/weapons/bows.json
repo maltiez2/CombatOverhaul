@@ -10,7 +10,7 @@
   "attributes": {
     "ArrowTransform": {"translation": {"x": -3, "y": 0.3, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 1}, "scale": 0.75},
     "ArrowDamageMultiplierByType": {"bow-crude": 0.8, "bow-simple": 1, "bow-long": 1.8, "bow-recurve": 1.3},
-    "ArrowStrengthMultiplierByType": {"bow-crude": 0.5, "bow-simple": 1, "bow-long": 2, "bow-recurve": 1.5},
+    "ArrowDamageStrengthByType": {"bow-crude": 1, "bow-simple": 2, "bow-long": 4, "bow-recurve": 4},
     "ArrowVelocityByType": {"bow-crude": 0.9, "bow-simple": 1, "bow-long": 1.6, "bow-recurve": 1.3},
     "ReadyAnimation": "combatoverhaul:bow-ready",
     "IdleAnimation": "combatoverhaul:bow-idle",

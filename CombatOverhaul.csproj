@@ -146,6 +146,11 @@
     <Folder Include="resources\assets\combatoverhaul\patches\weapons\" />
   </ItemGroup>
 
+  <!-- Forces rebuild -->
+  <Target Name="ForceRebuild" BeforeTargets="BeforeBuild">
+    <Touch Files="@(Compile)" AlwaysCreate="true" />
+  </Target>
+
   <!-- Creates/updates modinfo.json file in build directory -->
   <Target Name="ModInfo" BeforeTargets="CopyFilesToOutput">
     <PropertyGroup>
@@ -179,7 +184,7 @@
   </Target>
 
   <!-- Copies modicon, assets folder and native libraries if they exist into output directory -->
-  <Target Name="CopyFilesToOutput" AfterTargets="Format" BeforeTargets="Build">
+  <Target Name="CopyFilesToOutput" AfterTargets="Format" BeforeTargets="BeforeBuild">
     <ItemGroup>
       <AssetsFolder Include="$(AssetsDir)\**\*.*" />
       <ModIcon Include="$(ModIconFile)" />
@@ -192,13 +197,13 @@
   </Target>
 
   <!-- Archives output directory into zip and puts it into Releases folder -->
-  <Target Name="ZipFiles" AfterTargets="Build" Condition=" '$(Configuration)' == 'Release' ">
+  <Target Name="ZipFiles" AfterTargets="BeforeBuild" Condition=" '$(Configuration)' == 'Release' ">
     <Message Text="Pachaging into '$(ReleaseFile)'" Importance="high" />
     <MakeDir Directories="$(ReleasesDir)" />
     <Delete Files="$(ReleasePath)" />
     <ZipDirectory SourceDirectory="$(OutputPath)" DestinationFile="$(ReleasePath)" />
   </Target>
-  <Target Name="ZipFilesDev" AfterTargets="Build" Condition=" '$(Configuration)' == 'Debug' ">
+  <Target Name="ZipFilesDev" AfterTargets="BeforeBuild" Condition=" '$(Configuration)' == 'Debug' ">
     <Message Text="Pachaging into '$(ReleaseFile)'" Importance="high" />
     <MakeDir Directories="$(ReleasesDir)" />
     <Delete Files="$(ReleasePathDev)" />

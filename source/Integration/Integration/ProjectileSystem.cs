@@ -17,7 +17,7 @@ public struct ProjectileStats
     public AssetLocation ImpactSound { get; set; } = new("game:sounds/arrow-impact");
     public AssetLocation HitSound { get; set; } = new("game:sounds/player/projectilehit");
     public float CollisionRadius { get; set; } = 0;
-    public DamageDataJson DamageStats { get; set; } = new();
+    public ProjectileDamageDataJson DamageStats { get; set; } = new();
     public float SpeedThreshold { get; set; } = 0;
     public float Knockback { get; set; } = 0;
     public string EntityCode { get; set; } = "";
@@ -31,7 +31,7 @@ public struct ProjectileSpawnStats
 {
     public long ProducerEntityId { get; set; }
     public float DamageMultiplier { get; set; }
-    public float StrengthMultiplier { get; set; }
+    public float DamageStrength { get; set; }
     public Vector3 Position { get; set; }
     public Vector3 Velocity { get; set; }
 }

@@ -823,7 +823,7 @@
 				{
 					"frame": 0,
 					"elements": {
-						"Attachment_bolt": { "offsetX": 0.0, "offsetY": 24.0, "offsetZ": 9.0, "rotationX": 90.0, "rotationY": 0.0, "rotationZ": 0.0 },
+						"Attachment_bolt": { "offsetX": 10.0, "offsetY": 15.0, "offsetZ": 15.0, "rotationX": 90.0, "rotationY": 0.0, "rotationZ": 0.0 },
 						"Lever": { "rotationX": -14.0, "rotationY": 0.0, "rotationZ": 0.0 },
 						"String": { "offsetX": 0.0, "offsetY": -0.4, "offsetZ": 8.8 },
 						"String_6": { "rotationX": 0.0, "rotationY": -31.0, "rotationZ": 4.0 },
@@ -843,7 +843,7 @@
 				{
 					"frame": 5,
 					"elements": {
-						"Attachment_bolt": { "offsetX": 0.0, "offsetY": 24.0, "offsetZ": 9.0, "rotationX": 90.0, "rotationY": 0.0, "rotationZ": 0.0 }
+						"Attachment_bolt": { "offsetX": 10.0, "offsetY": 15.0, "offsetZ": 15.0, "rotationX": 90.0, "rotationY": 0.0, "rotationZ": 0.0 }
 					}
 				},
 				{

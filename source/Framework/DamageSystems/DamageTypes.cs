@@ -18,6 +18,14 @@ public struct DamageDataJson
     public DamageDataJson() { }
 }
 
+public struct ProjectileDamageDataJson
+{
+    public string DamageType { get; set; } = "PiercingAttack";
+    public float Damage { get; set; }
+
+    public ProjectileDamageDataJson() { }
+}
+
 public readonly struct DamageData
 {
     public readonly EnumDamageType DamageType;
@@ -82,9 +90,9 @@ public sealed class DamageResistData
         {
             EnumDamageType.Gravity => Percentage(protectionLevel, damageData.Strength),
             EnumDamageType.Fire => Percentage(protectionLevel, damageData.Strength),
-            EnumDamageType.BluntAttack => PenetrationCheck(protectionLevel, damageData.Strength),
-            EnumDamageType.SlashingAttack => PenetrationCheck(protectionLevel, damageData.Strength),
-            EnumDamageType.PiercingAttack => PenetrationCheck(protectionLevel, damageData.Strength),
+            EnumDamageType.BluntAttack => PenetrationPercentage(protectionLevel, damageData.Strength, 2),
+            EnumDamageType.SlashingAttack => PenetrationPercentage(protectionLevel, damageData.Strength, 3),
+            EnumDamageType.PiercingAttack => PenetrationPercentage(protectionLevel, damageData.Strength, 5),
             EnumDamageType.Suffocation => Percentage(protectionLevel, damageData.Strength),
             EnumDamageType.Heal => 1 + damageData.Strength + protectionLevel,
             EnumDamageType.Poison => Percentage(protectionLevel, damageData.Strength),
@@ -100,11 +108,10 @@ public sealed class DamageResistData
 
     private static float Percentage(float protection, float strength) => Math.Clamp(1 + strength - protection, 0, 1);
     private static float PenetrationCheck(float protection, float strength) => protection > strength ? 0 : 1;
-    private static float PenetrationPercentage(float protection, float strength)
+    private static float PenetrationPercentage(float protection, float strength, float power)
     {
-        if (protection == 0) return 1;
-        if (protection >= strength) return 0;
+        if (protection == 0 || protection <= strength) return 1;
 
-        return Math.Clamp((strength - 2 * protection) / protection, 0, 1);
+        return Math.Clamp(MathF.Pow(strength / protection, power), 0, 1);
     }
 }

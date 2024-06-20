@@ -430,8 +430,8 @@ public sealed class PLayerKeyFrameJson
                 );
         }
 
-        AnimationElement torso = new(Elements["UpperTorso"]);
-        AnimationElement anchor = new(Elements["DetachedAnchor"]);
+        AnimationElement? torso = Elements.ContainsKey("UpperTorso") ? new(Elements["UpperTorso"]) : null;
+        AnimationElement? anchor = Elements.ContainsKey("DetachedAnchor") ? new(Elements["DetachedAnchor"]) : null;
 
         float pitch = PitchFollow ? PlayerFrame.PerfectPitchFollow : PlayerFrame.DefaultPitchFollow;
 
@@ -475,8 +475,8 @@ public sealed class PLayerKeyFrameJson
             result.Elements.Add("UpperArmL", leftHand.UpperArmL.ToArray());
         }
 
-        result.Elements.Add("UpperTorso", frame.Frame.UpperTorso.ToArray());
-        result.Elements.Add("DetachedAnchor", frame.Frame.DetachedAnchorFrame.ToArray());
+        if (frame.Frame.UpperTorso != null) result.Elements.Add("UpperTorso", frame.Frame.UpperTorso.Value.ToArray());
+        if (frame.Frame.DetachedAnchorFrame != null)  result.Elements.Add("DetachedAnchor", frame.Frame.DetachedAnchorFrame.Value.ToArray());
 
         return result;
     }
