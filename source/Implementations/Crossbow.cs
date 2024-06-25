@@ -88,7 +88,7 @@ public class CrossbowClient : RangeWeaponClient
 
         state = (int)CrossbowState.Draw;
 
-        return false;
+        return true;
     }
 
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Active)]
@@ -109,13 +109,13 @@ public class CrossbowClient : RangeWeaponClient
             return true;
         });
 
-        DebugWidgets.FloatDrag("test", "test", "bolt trnasform x", () => BoltTransform.Translation.X, value => BoltTransform.Translation.X = value);
+        /*DebugWidgets.FloatDrag("test", "test", "bolt trnasform x", () => BoltTransform.Translation.X, value => BoltTransform.Translation.X = value);
         DebugWidgets.FloatDrag("test", "test", "bolt trnasform y", () => BoltTransform.Translation.Y, value => BoltTransform.Translation.Y = value);
         DebugWidgets.FloatDrag("test", "test", "bolt trnasform z", () => BoltTransform.Translation.Z, value => BoltTransform.Translation.Z = value);
         DebugWidgets.FloatDrag("test", "test", "bolt trnasform rotation x", () => BoltTransform.Rotation.X, value => BoltTransform.Rotation.X = value);
         DebugWidgets.FloatDrag("test", "test", "bolt trnasform rotation y", () => BoltTransform.Rotation.Y, value => BoltTransform.Rotation.Y = value);
         DebugWidgets.FloatDrag("test", "test", "bolt trnasform rotation z", () => BoltTransform.Rotation.Z, value => BoltTransform.Rotation.Z = value);
-        DebugWidgets.FloatDrag("test", "test", "bolt trnasform scale", () => BoltTransform.ScaleXYZ.X, value => BoltTransform.Scale = value);
+        DebugWidgets.FloatDrag("test", "test", "bolt trnasform scale", () => BoltTransform.ScaleXYZ.X, value => BoltTransform.Scale = value);*/
 
         if (BoltSlot == null) return false;
 
@@ -125,7 +125,7 @@ public class CrossbowClient : RangeWeaponClient
 
         state = (int)CrossbowState.Load;
 
-        return false;
+        return true;
     }
 
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Active)]
@@ -142,7 +142,7 @@ public class CrossbowClient : RangeWeaponClient
 
         PlayCursorFollowAnimation(mainHand);
 
-        return false;
+        return true;
     }
 
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Released)]
@@ -177,11 +177,11 @@ public class CrossbowClient : RangeWeaponClient
     {
         if (state != (int)CrossbowState.Aimed || eventData.AltPressed || BoltSlot == null) return false;
 
-        AnimationBehavior?.Play(mainHand, Stats.ReleaseAnimation, category: "bolt", weight: 1000, callback: () => ReleaseAnimationCallback(slot, mainHand, player));
+        AnimationBehavior?.Play(mainHand, Stats.ReleaseAnimation, weight: 1000, callback: () => ReleaseAnimationCallback(slot, mainHand, player));
 
         BoltSlot = null;
 
-        return false;
+        return true;
     }
 
     protected virtual void DrawCallback(bool success)
@@ -199,6 +199,7 @@ public class CrossbowClient : RangeWeaponClient
     protected virtual bool DrawAnimationCallback(ItemSlot slot, bool mainHand)
     {
         RangedWeaponSystem.Load(slot, mainHand, DrawCallback);
+        AnimationBehavior?.PlayReadyAnimation();
         return true;
     }
     protected virtual void LoadCallback(bool success)
@@ -216,7 +217,7 @@ public class CrossbowClient : RangeWeaponClient
     {
         RangedWeaponSystem.Reload(slot, boltSlot, 1, mainHand, LoadCallback);
         AnimationBehavior?.PlayReadyAnimation();
-        return false;
+        return true;
     }
     protected virtual void ShootCallback(bool success)
     {

@@ -467,10 +467,12 @@ public readonly struct PlayerFrame
         bool rightHand = RightHand != null;
         bool leftHand = LeftHand != null;
         bool upperTorso = UpperTorso != null;
+        bool detachedAnchorFrame = DetachedAnchorFrame != null;
 
         ImGui.Checkbox($"Right hand frame##{title}", ref rightHand); ImGui.SameLine();
         ImGui.Checkbox($"Left hand frame##{title}", ref leftHand); ImGui.SameLine();
-        ImGui.Checkbox($"Upper torso frame##{title}", ref upperTorso);
+        ImGui.Checkbox($"Upper torso frame##{title}", ref upperTorso); ImGui.SameLine();
+        ImGui.Checkbox($"Detached anchor frame##{title}", ref detachedAnchorFrame);
 
         RightHandFrame? right = RightHand?.Edit(title);
         LeftHandFrame? left = LeftHand?.Edit(title);
@@ -478,7 +480,7 @@ public readonly struct PlayerFrame
         if (upperTorso) ImGui.SeparatorText($"UpperTorso");
         AnimationElement? torso = UpperTorso?.Edit($"{title}##UpperTorso");
 
-        if (detachedAnchor) ImGui.SeparatorText($"DetachedAnchor");
+        if (detachedAnchorFrame) ImGui.SeparatorText($"DetachedAnchor");
         AnimationElement? anchor = DetachedAnchorFrame?.Edit($"{title}##DetachedAnchor");
 
         if (RightHand == null && rightHand) right = RightHandFrame.Zero;
@@ -488,8 +490,8 @@ public readonly struct PlayerFrame
 
         if (UpperTorso == null && upperTorso) torso = AnimationElement.Zero;
         if (UpperTorso != null && !upperTorso) torso = null;
-        if (DetachedAnchorFrame == null && detachedAnchor) anchor = AnimationElement.Zero;
-        if (DetachedAnchorFrame != null && !detachedAnchor) anchor = null;
+        if (DetachedAnchorFrame == null && detachedAnchorFrame) anchor = AnimationElement.Zero;
+        if (DetachedAnchorFrame != null && !detachedAnchorFrame) anchor = null;
 
         return new(right, left, torso, anchor, detachedAnchor, switchArms, pitchFollow ? PerfectPitchFollow : DefaultPitchFollow, fov, bobbing);
     }
