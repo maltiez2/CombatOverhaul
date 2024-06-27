@@ -53,6 +53,7 @@ public sealed class AnimationsManager
     private readonly FieldInfo _mainCameraInfo = typeof(ClientMain).GetField("MainCamera", BindingFlags.NonPublic | BindingFlags.Instance);
     private readonly FieldInfo _cameraFov = typeof(Camera).GetField("Fov", BindingFlags.NonPublic | BindingFlags.Instance);
     private string _playerAnimationKey = "";
+    private float _animationSpeed = 1;
 
     private CallbackGUIStatus DrawEditor(float deltaSeconds)
     {
@@ -158,7 +159,7 @@ public sealed class AnimationsManager
         {
             AnimationRequest request = new(
                 Animations[codes[_selectedAnimationIndex]],
-                1,
+                _animationSpeed,
                 1,
                 "main",
                 TimeSpan.FromSeconds(0.6),
@@ -174,6 +175,10 @@ public sealed class AnimationsManager
         {
             ImGui.SetClipboardText(Animations[codes[_selectedAnimationIndex]].ToString());
         }
+        ImGui.SameLine();
+
+        ImGui.SetNextItemWidth(200);
+        ImGui.SliderFloat("Animation speed", ref _animationSpeed, 0.1f, 2);
 
         ImGui.ListBox("Animations", ref _selectedAnimationIndex, Animations.Keys.ToArray(), Animations.Count);
 

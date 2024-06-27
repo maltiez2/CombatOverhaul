@@ -30,6 +30,7 @@ public class CrossbowStats : WeaponStats
     public string LoadAnimation { get; set; } = "";
     public string ReleaseAnimation { get; set; } = "";
     public string AimAnimation { get; set; } = "";
+    public string LoadedAnimation { get; set; } = "";
 
     public AimingStatsJson Aiming { get; set; } = new();
     public float BoltDamageMultiplier { get; set; } = 1;
@@ -57,6 +58,7 @@ public class CrossbowClient : RangeWeaponClient
         if (drawn)
         {
             state = (int)CrossbowState.Drawn;
+            AnimationBehavior?.Play(mainHand, Stats.LoadedAnimation, category: "string", weight: 0.001f);
         }
         else
         {
@@ -84,7 +86,7 @@ public class CrossbowClient : RangeWeaponClient
     {
         if (state != (int)CrossbowState.Unloaded || eventData.AltPressed) return false;
 
-        AnimationBehavior?.Play(mainHand, Stats.DrawAnimation, callback: () => DrawAnimationCallback(slot, mainHand));
+        AnimationBehavior?.Play(mainHand, Stats.DrawAnimation, callback: () => DrawAnimationCallback(slot, mainHand), animationSpeed: 1.0f);
 
         state = (int)CrossbowState.Draw;
 
@@ -158,6 +160,7 @@ public class CrossbowClient : RangeWeaponClient
             case CrossbowState.Load:
                 state = (int)CrossbowState.Drawn;
                 AnimationBehavior?.PlayReadyAnimation();
+                Attachable.ClearAttachments(player.EntityId);
                 return true;
 
             case CrossbowState.Aimed:
@@ -177,6 +180,7 @@ public class CrossbowClient : RangeWeaponClient
     {
         if (state != (int)CrossbowState.Aimed || eventData.AltPressed || BoltSlot == null) return false;
 
+        AnimationBehavior?.Stop("string");
         AnimationBehavior?.Play(mainHand, Stats.ReleaseAnimation, weight: 1000, callback: () => ReleaseAnimationCallback(slot, mainHand, player));
 
         BoltSlot = null;
@@ -200,6 +204,7 @@ public class CrossbowClient : RangeWeaponClient
     {
         RangedWeaponSystem.Load(slot, mainHand, DrawCallback);
         AnimationBehavior?.PlayReadyAnimation();
+        AnimationBehavior?.Play(mainHand, Stats.LoadedAnimation, category: "string", weight: 0.001f);
         return true;
     }
     protected virtual void LoadCallback(bool success)

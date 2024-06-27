@@ -823,7 +823,7 @@
 				{
 					"frame": 0,
 					"elements": {
-						"Attachment_bolt": { "offsetX": 10.0, "offsetY": 15.0, "offsetZ": 15.0, "rotationX": 90.0, "rotationY": 0.0, "rotationZ": 0.0 },
+						"Attachment_bolt": { "offsetX": -5.0, "offsetY": -15.0, "offsetZ": 15.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
 						"Lever": { "rotationX": -14.0, "rotationY": 0.0, "rotationZ": 0.0 },
 						"String": { "offsetX": 0.0, "offsetY": -0.4, "offsetZ": 8.8 },
 						"String_6": { "rotationX": 0.0, "rotationY": -31.0, "rotationZ": 4.0 },
@@ -841,19 +841,27 @@
 					}
 				},
 				{
-					"frame": 5,
+					"frame": 9,
 					"elements": {
-						"Attachment_bolt": { "offsetX": 10.0, "offsetY": 15.0, "offsetZ": 15.0, "rotationX": 90.0, "rotationY": 0.0, "rotationZ": 0.0 }
+						"Lever": { "rotationX": -14.0, "rotationY": 0.0, "rotationZ": 0.0 },
+						"Bow_right_limb_13": { "rotationX": 0.0, "rotationY": -1.0, "rotationZ": 0.0 },
+						"Bow_right_limb_14": { "rotationX": 0.0, "rotationY": -5.0, "rotationZ": 0.0 },
+						"Bow_right_limb_15": { "rotationX": 0.0, "rotationY": -7.0, "rotationZ": 0.0 },
+						"Bow_right_limb_16": { "rotationX": 0.0, "rotationY": -9.0, "rotationZ": 0.0 },
+						"Bow_right_limb_17": { "rotationX": 0.0, "rotationY": -11.0, "rotationZ": 0.0 },
+						"Bow_right_limb_20": { "rotationX": 0.0, "rotationY": 1.0, "rotationZ": 0.0 },
+						"Bow_right_limb_21": { "rotationX": 0.0, "rotationY": -5.0, "rotationZ": 0.0 },
+						"Bow_right_limb_22": { "rotationX": 0.0, "rotationY": -7.0, "rotationZ": 0.0 },
+						"Bow_right_limb_23": { "rotationX": 0.0, "rotationY": -9.0, "rotationZ": 0.0 },
+						"Bow_right_limb_24": { "rotationX": 0.0, "rotationY": -11.0, "rotationZ": 0.0 },
+						"String": { "offsetX": 0.0, "offsetY": -0.4, "offsetZ": 8.8 },
+						"String_2": { "rotationX": 0.0, "rotationY": 31.0, "rotationZ": 4.0 },
+						"String_6": { "rotationX": 0.0, "rotationY": -31.0, "rotationZ": 4.0 },
+						"Attachment_bolt": { "offsetX": -5.0, "offsetY": 1.0, "offsetZ": 11.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 }
 					}
 				},
 				{
-					"frame": 22,
-					"elements": {
-						"Attachment_bolt": { "offsetX": 0.0, "offsetY": 3.0, "offsetZ": -3.0, "rotationX": 25.0, "rotationY": 0.0, "rotationZ": 0.0 }
-					}
-				},
-				{
-					"frame": 24,
+					"frame": 19,
 					"elements": {
 						"Attachment_bolt": { "offsetX": 0.0, "offsetY": 2.0, "offsetZ": -2.0, "rotationX": 15.0, "rotationY": 0.0, "rotationZ": 0.0 }
 					}

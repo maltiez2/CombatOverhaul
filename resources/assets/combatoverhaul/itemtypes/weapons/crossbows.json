@@ -19,6 +19,7 @@
     "LoadAnimation": "combatoverhaul:crossbow-{type}-load",
     "ReleaseAnimation": "combatoverhaul:crossbow-{type}-release",
     "AimAnimation": "combatoverhaul:crossbow-{type}-aim",
+    "LoadedAnimation": "combatoverhaul:crossbow-{type}-loaded",
     "AimingByType": {
       "*": {
         "AimDifficulty": 1,

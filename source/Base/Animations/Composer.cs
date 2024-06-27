@@ -25,7 +25,7 @@ internal sealed class Composer
         }
         PlayerItemFrame result = PlayerItemFrame.Compose(frames);
 
-        foreach (string category in _requests.Select(entry => entry.Key))
+        foreach (string category in _requests.Select(entry => entry.Key).ToArray())
         {
             if ((_animators[category].Finished() && _weightState[category] == AnimatorWeightState.Finished))
             {
@@ -94,7 +94,7 @@ internal sealed class Composer
         else
         {
             string category = request.Category;
-            _animators.Add(category, new Animator(request.Animation, _soundsManager));
+            _animators.Add(category, new Animator(request.Animation, _soundsManager, request.AnimationSpeed));
             _requests.Add(category, request);
             _previousWeight[category] = 0;
             _currentWeight[category] = 0;
@@ -240,10 +240,11 @@ public readonly struct AnimationRequestByCode
 
 internal class Animator
 {
-    public Animator(Animation animation, SoundsSynchronizerClient soundsManager)
+    public Animator(Animation animation, SoundsSynchronizerClient soundsManager, float animationSpeed)
     {
         _currentAnimation = animation;
         _soundsManager = soundsManager;
+        _animationSpeed = animationSpeed;
     }
 
     public bool FinishOverride { get; set; } = false;
@@ -259,15 +260,15 @@ internal class Animator
 
     public PlayerItemFrame Animate(TimeSpan delta)
     {
-        TimeSpan previousDuration = _currentDuration / _animationSpeed;
+        TimeSpan previousDuration = _currentDuration * _animationSpeed;
         _currentDuration += delta;
-        TimeSpan adjustedDuration = _currentDuration / _animationSpeed;
+        TimeSpan adjustedDuration = _currentDuration * _animationSpeed;
 
         _currentAnimation.PlaySounds(_soundsManager, previousDuration, adjustedDuration);
         _lastFrame = _currentAnimation.Interpolate(_previousAnimationFrame, adjustedDuration);
         return _lastFrame;
     }
-    public bool Stopped() => _currentAnimation.TotalDuration <= _currentDuration / _animationSpeed;
+    public bool Stopped() => _currentAnimation.TotalDuration <= _currentDuration * _animationSpeed;
     public bool Finished() => FinishOverride || (Stopped() && !_currentAnimation.Hold);
 
     private PlayerItemFrame _previousAnimationFrame = PlayerItemFrame.Zero;
