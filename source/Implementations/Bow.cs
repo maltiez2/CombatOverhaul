@@ -35,6 +35,7 @@ public sealed class BowStats : WeaponStats
     public float ArrowDamageStrength { get; set; } = 1;
     public float ArrowVelocity { get; set; } = 1;
     public string ArrowWildcard { get; set; } = "*arrow-*";
+    public float Zeroing { get; set; } = 1.5f;
 }
 
 public sealed class BowClient : RangeWeaponClient
@@ -63,6 +64,12 @@ public sealed class BowClient : RangeWeaponClient
         _aimingSystem.StopAiming();
     }
 
+    public override void OnRegistered(ActionsManagerPlayerBehavior behavior, ICoreClientAPI api)
+    {
+        base.OnRegistered(behavior, api);
+        _aimingAnimationController = new(_aimingSystem, AnimationBehavior, _aimingStats);
+    }
+
     private readonly ICoreClientAPI _api;
     private readonly AnimatableAttachable _attachable;
     private readonly ModelTransform _arrowTransform;
@@ -70,6 +77,7 @@ public sealed class BowClient : RangeWeaponClient
     private ItemSlot? _arrowSlot = null;
     private readonly BowStats _stats;
     private readonly AimingStats _aimingStats;
+    private AimingAnimationController? _aimingAnimationController;
 
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Pressed)]
     private bool Load(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
@@ -120,7 +128,7 @@ public sealed class BowClient : RangeWeaponClient
         _aimingSystem.StartAiming(_aimingStats);
         _aimingSystem.AimingState = WeaponAimingState.Blocked;
 
-        PlayCursorFollowAnimation(mainHand);
+        _aimingAnimationController?.Play(mainHand);
 
         return true;
     }
@@ -146,14 +154,14 @@ public sealed class BowClient : RangeWeaponClient
         Vintagestory.API.MathTools.Vec3d position = player.LocalEyePos + player.Pos.XYZ;
         Vector3 targetDirection = _aimingSystem.TargetVec;
 
-        targetDirection = ClientAimingSystem.Zeroing(targetDirection, 1.5f);
+        targetDirection = ClientAimingSystem.Zeroing(targetDirection, _stats.Zeroing);
 
         _arrowSlot = null;
         _attachable.ClearAttachments(player.EntityId);
 
         RangedWeaponSystem.Shoot(slot, 1, new((float)position.X, (float)position.Y, (float)position.Z), new(targetDirection.X, targetDirection.Y, targetDirection.Z), mainHand, ShootCallback);
 
-        StopCursorFollowAnimation(mainHand);
+        _aimingAnimationController?.Stop(mainHand);
 
         return true;
     }
@@ -185,8 +193,37 @@ public sealed class BowClient : RangeWeaponClient
         AnimationBehavior?.PlayReadyAnimation(true);
         return true;
     }
+}
 
+public sealed class AimingAnimationController
+{
+    public AimingAnimationController(ClientAimingSystem aimingSystem, FirstPersonAnimationsBehavior? animationBehavior, AimingStats stats)
+    {
+        _aimingSystem = aimingSystem;
+        _animationBehavior = animationBehavior;
+        _aimingStats = stats;
+    }
+
+    public void Play(bool mainHand)
+    {
+        AnimationRequest request = new(_cursorFollowAnimation, 1.0f, 0, "aiming", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true);
+        _animationBehavior?.Play(request, mainHand);
+        _aimingSystem.OnAimPointChange += UpdateCursorFollowAnimation;
+    }
+    public void Stop(bool mainHand)
+    {
+        _cursorStopFollowAnimation.PlayerKeyFrames[0] = new PLayerKeyFrame(PlayerFrame.Zero, TimeSpan.FromMilliseconds(500), EasingFunctionType.CosShifted);
+        AnimationRequest request = new(_cursorStopFollowAnimation, 1.0f, 0, "aiming", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true);
+        _animationBehavior?.Play(request, mainHand);
+        _aimingSystem.OnAimPointChange -= UpdateCursorFollowAnimation;
+    }
+
+    private readonly Animations.Animation _cursorFollowAnimation = Animations.Animation.Zero;
+    private readonly Animations.Animation _cursorStopFollowAnimation = Animations.Animation.Zero;
     private const float _animationFollowMultiplier = 0.01f;
+    private readonly ClientAimingSystem _aimingSystem;
+    private readonly AimingStats _aimingStats;
+    private readonly FirstPersonAnimationsBehavior? _animationBehavior;
 
     private PLayerKeyFrame GetAimingFrame()
     {
@@ -206,25 +243,6 @@ public sealed class BowClient : RangeWeaponClient
 
         return new PLayerKeyFrame(frame, TimeSpan.Zero, EasingFunctionType.Linear);
     }
-
-    private Animations.Animation _cursorFollowAnimation = Animations.Animation.Zero;
-    private Animations.Animation _cursorStopFollowAnimation = Animations.Animation.Zero;
-
-    private void PlayCursorFollowAnimation(bool mainHand)
-    {
-        AnimationRequest request = new(_cursorFollowAnimation, 1.0f, 0, "aiming", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true);
-        AnimationBehavior?.Play(request, mainHand);
-        _aimingSystem.OnAimPointChange += UpdateCursorFollowAnimation;
-    }
-
-    private void StopCursorFollowAnimation(bool mainHand)
-    {
-        _cursorStopFollowAnimation.PlayerKeyFrames[0] = new PLayerKeyFrame(PlayerFrame.Zero, TimeSpan.FromMilliseconds(500), EasingFunctionType.CosShifted);
-        AnimationRequest request = new(_cursorStopFollowAnimation, 1.0f, 0, "aiming", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true);
-        AnimationBehavior?.Play(request, mainHand);
-        _aimingSystem.OnAimPointChange -= UpdateCursorFollowAnimation;
-    }
-
     private void UpdateCursorFollowAnimation()
     {
         _cursorFollowAnimation.PlayerKeyFrames[0] = GetAimingFrame();

@@ -37,6 +37,7 @@ public class CrossbowStats : WeaponStats
     public float BoltDamageStrength { get; set; } = 1;
     public float BoltVelocity { get; set; } = 1;
     public string BoltWildcard { get; set; } = "*bolt-*";
+    public float Zeroing { get; set; } = 1.5f;
 }
 
 public class CrossbowClient : RangeWeaponClient
@@ -65,15 +66,20 @@ public class CrossbowClient : RangeWeaponClient
             state = (int)CrossbowState.Unloaded;
         }
     }
-
     public override void OnDeselected(EntityPlayer player)
     {
         Attachable.ClearAttachments(player.EntityId);
-        StopCursorFollowAnimation(true);
+        AimingAnimationController?.Stop(true);
         AimingSystem.StopAiming();
         BoltSlot = null;
     }
+    public override void OnRegistered(ActionsManagerPlayerBehavior behavior, ICoreClientAPI api)
+    {
+        base.OnRegistered(behavior, api);
+        AimingAnimationController = new(AimingSystem, AnimationBehavior, AimingStats);
+    }
 
+    protected AimingAnimationController? AimingAnimationController;
     protected readonly AnimatableAttachable Attachable;
     protected readonly ClientAimingSystem AimingSystem;
     protected readonly ModelTransform BoltTransform;
@@ -142,7 +148,7 @@ public class CrossbowClient : RangeWeaponClient
         AimingSystem.StartAiming(AimingStats);
         AimingSystem.AimingState = WeaponAimingState.FullCharge;
 
-        PlayCursorFollowAnimation(mainHand);
+        AimingAnimationController?.Play(mainHand);
 
         return true;
     }
@@ -166,7 +172,7 @@ public class CrossbowClient : RangeWeaponClient
             case CrossbowState.Aimed:
                 state = BoltSlot == null ? (int)CrossbowState.Unloaded : (int)CrossbowState.Loaded;
                 AnimationBehavior?.PlayReadyAnimation();
-                StopCursorFollowAnimation(mainHand);
+                AimingAnimationController?.Stop(mainHand);
                 AimingSystem.StopAiming();
                 return true;
 
@@ -233,56 +239,12 @@ public class CrossbowClient : RangeWeaponClient
         Vintagestory.API.MathTools.Vec3d position = player.LocalEyePos + player.Pos.XYZ;
         Vector3 targetDirection = AimingSystem.TargetVec;
 
-        targetDirection = ClientAimingSystem.Zeroing(targetDirection, 1.5f);
+        targetDirection = ClientAimingSystem.Zeroing(targetDirection, Stats.Zeroing);
 
         RangedWeaponSystem.Shoot(slot, 1, new((float)position.X, (float)position.Y, (float)position.Z), new(targetDirection.X, targetDirection.Y, targetDirection.Z), mainHand, ShootCallback);
 
         Attachable.ClearAttachments(player.EntityId);
         return true;
-    }
-
-
-    private const float _animationFollowMultiplier = 0.01f;
-
-    private PLayerKeyFrame GetAimingFrame()
-    {
-        Vector2 currentAim = AimingSystem.GetCurrentAim();
-
-        /*DebugWidgets.FloatDrag("tweaks", "animation", "followX", () => _aimingStats.AnimationFollowX, value => _aimingStats.AnimationFollowX = value);
-        DebugWidgets.FloatDrag("tweaks", "animation", "followY", () => _aimingStats.AnimationFollowY, value => _aimingStats.AnimationFollowY = value);
-        DebugWidgets.FloatDrag("tweaks", "animation", "offsetX", () => _aimingStats.AnimationOffsetX, value => _aimingStats.AnimationOffsetX = value);
-        DebugWidgets.FloatDrag("tweaks", "animation", "offsetY", () => _aimingStats.AnimationOffsetY, value => _aimingStats.AnimationOffsetY = value);*/
-
-        float yaw = 0 - currentAim.X * _animationFollowMultiplier * AimingStats.AnimationFollowX + AimingStats.AnimationOffsetX;
-        float pitch = currentAim.Y * _animationFollowMultiplier * AimingStats.AnimationFollowY + AimingStats.AnimationOffsetY;
-
-        AnimationElement element = new(0, 0, 0, 0, yaw, pitch);
-
-        PlayerFrame frame = new(upperTorso: element);
-
-        return new PLayerKeyFrame(frame, TimeSpan.Zero, EasingFunctionType.Linear);
-    }
-
-    private Animations.Animation _cursorFollowAnimation = Animations.Animation.Zero;
-    private Animations.Animation _cursorStopFollowAnimation = Animations.Animation.Zero;
-
-    private void PlayCursorFollowAnimation(bool mainHand)
-    {
-        AnimationRequest request = new(_cursorFollowAnimation, 1.0f, 0, "aiming", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true);
-        AnimationBehavior?.Play(request, mainHand);
-        AimingSystem.OnAimPointChange += UpdateCursorFollowAnimation;
-    }
-    private void StopCursorFollowAnimation(bool mainHand)
-    {
-        _cursorStopFollowAnimation.PlayerKeyFrames[0] = new PLayerKeyFrame(PlayerFrame.Zero, TimeSpan.FromMilliseconds(500), EasingFunctionType.CosShifted);
-        AnimationRequest request = new(_cursorStopFollowAnimation, 1.0f, 0, "aiming", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true);
-        AnimationBehavior?.Play(request, mainHand);
-        AimingSystem.OnAimPointChange -= UpdateCursorFollowAnimation;
-    }
-    private void UpdateCursorFollowAnimation()
-    {
-        _cursorFollowAnimation.PlayerKeyFrames[0] = GetAimingFrame();
-        _cursorFollowAnimation.Hold = true;
     }
 }
 

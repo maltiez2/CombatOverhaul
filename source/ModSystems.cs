@@ -40,6 +40,7 @@ public sealed class CombatOverhaulSystem : ModSystem
 
         api.RegisterItemClass("CombatOverhaul:Bow", typeof(BowItem));
         api.RegisterItemClass("CombatOverhaul:Crossbow", typeof(CrossbowItem));
+        api.RegisterItemClass("CombatOverhaul:MagazineCrossbow", typeof(MagazineCrossbowItem));
 
         api.RegisterEntity("CombatOverhaul:Projectile", typeof(ProjectileEntity));
 

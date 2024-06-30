@@ -165,6 +165,13 @@ internal class BaseAimingAccuracy : AccuracyModifier
         // Linear loss of accuracy from holding too long
         float bullseyeAccuracy = GameMath.Clamp((SecondsSinceAimStart - weaponStats.AccuracyOvertimeStart - weaponStats.AccuracyStartTime) / weaponStats.AccuracyOvertimeTime, 0f, 1f) * weaponStats.AccuracyOvertime;*/
 
+        if (weaponStats.AccuracyOvertime == TimeSpan.Zero)
+        {
+            ClientAimingSystem.DriftMultiplier = 1;
+            ClientAimingSystem.TwitchMultiplier = 1;
+            return;
+        }
+
         float bullseyeAccuracy = SecondsSinceAimStart > weaponStats.AccuracyOvertime.TotalSeconds ? 1 : 0;
 
         if (SecondsSinceAimStart > weaponStats.AccuracyOvertime.TotalSeconds)
