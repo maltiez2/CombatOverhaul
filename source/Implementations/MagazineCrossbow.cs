@@ -147,14 +147,17 @@ public class MagazineCrossbowClient : RangeWeaponClient
         });
         if (ammoSlot == null) return false;
 
-        AnimationBehavior?.Play(mainHand, Stats.LoadBoltAnimation, callback: () => LoadBoltCallback(slot, ammoSlot));
+        Attachable.SetAttachment(player.EntityId, "bolt", ammoSlot.Itemstack, BoltTransform);
+
+        AnimationBehavior?.Play(mainHand, Stats.LoadBoltAnimation, callback: () => LoadBoltCallback(slot, ammoSlot, player));
         state = (int)MagazineCrossbowState.Load;
 
         return true;
     }
-    protected virtual bool LoadBoltCallback(ItemSlot slot, ItemSlot ammoSlot)
+    protected virtual bool LoadBoltCallback(ItemSlot slot, ItemSlot ammoSlot, EntityPlayer player)
     {
         RangedWeaponSystem.Reload(slot, ammoSlot, 1, true, LoadBoltServerCallback);
+        //Attachable.ClearAttachments(player.EntityId);
         return true;
     }
     protected virtual void LoadBoltServerCallback(bool success)

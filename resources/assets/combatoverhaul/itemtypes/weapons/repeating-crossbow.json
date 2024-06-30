@@ -4,7 +4,7 @@
   "variantgroups": [{"code": "type", "states": ["repeating"]}],
   "creativeinventory": {"combatoverhaul-crossbows": ["*"]},
   "maxstacksize": 1,
-  "durabilityByType": {"*-simple": 450, "*-repeating": 600, "*-stirrup": 900, "*-latch": 900, "*-goatsfoot": 1600, "*-windlass": 1200},
+  "durabilityByType": {"*-repeating": 600},
   "tool": "bow",
   "behaviors": [{"name": "CombatOverhaul:AnimatableAttachable", "properties": {"animated-shape": "combatoverhaul:weapons/crossbows/{type}"}}],
   "attributes": {
@@ -19,6 +19,7 @@
     "CloseLidAnimation": "combatoverhaul:crossbow-{type}-close",
     "ShootAnimation": "combatoverhaul:crossbow-{type}-shoot",
     "ReturnAnimation": "combatoverhaul:crossbow-{type}-return",
+    "MagazineSize": 5,
     "AimingByType": {
       "*": {
         "AimDifficulty": 1,

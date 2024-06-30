@@ -1,6 +1,6 @@
 {
 	"editor": {
-		"collapsedPaths": "Root/lever_1,Root/Bow/Bow_right_limb_19,Root/Bow/Bow_right_limb_13,Root/Bow,Root/Stock,Root/Stock/Stock_front_1,Root/Bow/Bow_right_limb_7,Root/String,Root/Crossbow/Stock/Magazine,Root/Crossbow/String,Root/Bow_holder_1,Root/Crossbow/Stock/Bow_holder,Root/Crossbow/Handle/Magazine/Magazine_back/Magazine_Cover,Root/Bow_holder_4,Root/Bow_right_limb_7,Root/Bow_right_limb_1,Root/Cube12,Root/Crossbow/Bow,Root/Stock/Stock_back_1,Root/Bow/Bow_right_limb_19/Bow_right_limb_7,Root/Cube2,Root/Crossbow/Handle/Magazine/Magazine_back,Root/Cube3,Root/Crossbow/Handle/Magazine/Magazine_wall_1,Root/Crossbow/Handle/Magazine/Magazine_back2,Root/Crossbow/Handle/Magazine/Magazine_wall_0,Root/Crossbow/Handle/Magazine/Magazine_back/Magazine_Cover/Magazine_back7,Root/Wheel,Root/Crossbow/Stock/Handle",
+		"collapsedPaths": "Root/lever_1,Root/Bow/Bow_right_limb_19,Root/Bow/Bow_right_limb_13,Root/Bow,Root/Stock,Root/Stock/Stock_front_1,Root/Bow/Bow_right_limb_7,Root/String,Root/Crossbow/Stock/Magazine,Root/Crossbow/String,Root/Bow_holder_1,Root/Crossbow/Stock/Bow_holder,Root/Crossbow/Handle/Magazine/Magazine_back/Magazine_Cover,Root/Bow_holder_4,Root/Bow_right_limb_7,Root/Crossbow/Handle,Root/Bow_right_limb_1,Root/Cube12,Root/Crossbow/Stock,Root/Crossbow/Bow,Root/Stock/Stock_back_1,Root/Bow/Bow_right_limb_19/Bow_right_limb_7,Root/Cube2,Root/Crossbow/Handle/Magazine/Magazine_back,Root/Cube3,Root/Crossbow/Handle/Magazine/Magazine_wall_1,Root/Crossbow/Handle/Magazine/Magazine_back2,Root/Crossbow/Handle/Magazine/Magazine_wall_0,Root/Crossbow/Handle/Magazine/Magazine_back/Magazine_Cover/Magazine_back7,Root/Wheel,Root/Crossbow/Stock/Handle",
 		"allAngles": false,
 		"entityTextureMode": false
 	},
@@ -1193,6 +1193,27 @@
 							]
 						}
 					]
+				},
+				{
+					"name": "AttachmentPoint",
+					"from": [ 0.0, 4.0, -11.0 ],
+					"to": [ 0.0, 4.0, -11.0 ],
+					"rotationOrigin": [ 0.0, 4.0, -11.0 ],
+					"faces": {
+						"north": { "texture": "#woodbow", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+						"east": { "texture": "#woodbow", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+						"south": { "texture": "#woodbow", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+						"west": { "texture": "#woodbow", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+						"up": { "texture": "#woodbow", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+						"down": { "texture": "#woodbow", "uv": [ 0.0, 0.0, 0.5, 0.5 ] }
+					},
+					"attachmentpoints": [
+						{
+							"code": "bolt",
+							"posX": "0.0","posY": "0.0","posZ": "0.0",
+							"rotationX": "0.0","rotationY": "90.0","rotationZ": "0.0"
+						}
+					]
 				}
 			]
 		}
@@ -1429,6 +1450,48 @@
 					"elements": {
 						"Magazine_Cover": { "rotationX": 180.0, "rotationY": 0.0, "rotationZ": 0.0 },
 						"Magazine_back7": { "rotationX": 142.0, "rotationY": 0.0, "rotationZ": 0.0 }
+					}
+				}
+			]
+		},
+
+		{
+			"name": "load",
+			"code": "load",
+			"quantityframes": 16,
+			"onActivityStopped": "Rewind",
+			"onAnimationEnd": "Hold",
+			"keyframes": [
+				{
+					"frame": 0,
+					"elements": {
+						"Magazine_Cover": { "rotationX": 180.0, "rotationY": 0.0, "rotationZ": 0.0 },
+						"Magazine_back7": { "rotationX": 142.0, "rotationY": 0.0, "rotationZ": 0.0 },
+						"AttachmentPoint": { "offsetX": 4.0, "offsetY": -10.0, "offsetZ": 10.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 }
+					}
+				},
+				{
+					"frame": 5,
+					"elements": {
+						"Magazine_Cover": { "rotationX": 180.0, "rotationY": 0.0, "rotationZ": 0.0 },
+						"Magazine_back7": { "rotationX": 142.0, "rotationY": 0.0, "rotationZ": 0.0 },
+						"AttachmentPoint": { "offsetX": 2.0, "offsetY": 4.0, "offsetZ": 6.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 }
+					}
+				},
+				{
+					"frame": 10,
+					"elements": {
+						"Magazine_Cover": { "rotationX": 180.0, "rotationY": 0.0, "rotationZ": 0.0 },
+						"Magazine_back7": { "rotationX": 142.0, "rotationY": 0.0, "rotationZ": 0.0 },
+						"AttachmentPoint": { "offsetX": 0.0, "offsetY": 4.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 }
+					}
+				},
+				{
+					"frame": 15,
+					"elements": {
+						"Magazine_Cover": { "rotationX": 180.0, "rotationY": 0.0, "rotationZ": 0.0 },
+						"Magazine_back7": { "rotationX": 142.0, "rotationY": 0.0, "rotationZ": 0.0 },
+						"AttachmentPoint": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 }
 					}
 				}
 			]
