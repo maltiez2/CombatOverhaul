@@ -100,9 +100,8 @@ public class MagazineCrossbowClient : RangeWeaponClient
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Active)]
     protected virtual bool OpenLid(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
-        if ((state != (int)MagazineCrossbowState.Unloaded && state != (int)MagazineCrossbowState.Ready) || eventData.AltPressed) return false;
-
-        Console.WriteLine("OpenLid");
+        if (!CheckState(state, MagazineCrossbowState.Unloaded, MagazineCrossbowState.Ready)) return false;
+        if (eventData.AltPressed) return false;
 
         state = (int)MagazineCrossbowState.OpenLid;
 
@@ -130,8 +129,6 @@ public class MagazineCrossbowClient : RangeWeaponClient
         }
         Inventory.Clear();
 
-        Console.WriteLine("LoadBolt");
-
         ItemSlot? ammoSlot = null;
         player.WalkInventory(slot =>
         {
@@ -157,7 +154,7 @@ public class MagazineCrossbowClient : RangeWeaponClient
     protected virtual bool LoadBoltCallback(ItemSlot slot, ItemSlot ammoSlot, EntityPlayer player)
     {
         RangedWeaponSystem.Reload(slot, ammoSlot, 1, true, LoadBoltServerCallback);
-        //Attachable.ClearAttachments(player.EntityId);
+        Attachable.ClearAttachments(player.EntityId);
         return true;
     }
     protected virtual void LoadBoltServerCallback(bool success)
@@ -173,9 +170,8 @@ public class MagazineCrossbowClient : RangeWeaponClient
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Released)]
     protected virtual bool CloseLid(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
-        if ((state != (int)MagazineCrossbowState.ReadyToLoad && state != (int)MagazineCrossbowState.Load && state != (int)MagazineCrossbowState.OpenLid) || eventData.AltPressed) return false;
-
-        Console.WriteLine("CloseLid");
+        if (!CheckState(state, MagazineCrossbowState.ReadyToLoad, MagazineCrossbowState.Load, MagazineCrossbowState.OpenLid)) return false;
+        if (eventData.AltPressed) return false;
 
         AnimationBehavior?.Play(mainHand, Stats.CloseLidAnimation, callback: () => CloseLidCallback(slot));
         state = (int)MagazineCrossbowState.CloseLid;
@@ -216,8 +212,6 @@ public class MagazineCrossbowClient : RangeWeaponClient
         Inventory.Clear();
         AimingSystem.AimingState = WeaponAimingState.FullCharge;
 
-        Console.WriteLine("Shoot");
-
         AnimationBehavior?.Play(mainHand, Stats.ShootAnimation, callback: () => ShootCallback(slot, player));
         state = (int)MagazineCrossbowState.Shoot;
 
@@ -239,8 +233,6 @@ public class MagazineCrossbowClient : RangeWeaponClient
     protected virtual bool Return(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
         if (state != (int)MagazineCrossbowState.Shot || eventData.AltPressed) return false;
-
-        Console.WriteLine("Return");
 
         AnimationBehavior?.Play(mainHand, Stats.ReturnAnimation, callback: ReturnCallback);
         state = (int)MagazineCrossbowState.Return;

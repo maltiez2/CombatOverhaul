@@ -1,4 +1,5 @@
 ﻿using CombatOverhaul.Animations;
+using CombatOverhaul.Implementations;
 using CombatOverhaul.Inputs;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -43,6 +44,27 @@ public class RangeWeaponClient : IClientWeaponLogic
     protected readonly RangedWeaponSystemClient RangedWeaponSystem;
     protected FirstPersonAnimationsBehavior? AnimationBehavior;
     protected ActionsManagerPlayerBehavior? PlayerBehavior;
+
+    protected static bool CheckState<TState>(int state, params TState[] statesToCheck)
+        where TState : struct, Enum
+    {
+        return statesToCheck.Contains((TState)Enum.ToObject(typeof(TState), state));
+    }
+    protected bool CheckState<TState>(bool mainHand, params TState[] statesToCheck)
+        where TState : struct, Enum
+    {
+        return statesToCheck.Contains((TState)Enum.ToObject(typeof(TState), PlayerBehavior?.GetState(mainHand) ?? 0));
+    }
+    protected void SetState<TState>(TState state, bool mainHand = true)
+        where TState : struct, Enum
+    {
+        PlayerBehavior?.SetState((int)Enum.ToObject(typeof(TState), state), mainHand);
+    }
+    protected TState GetState<TState>(bool mainHand = true)
+        where TState : struct, Enum
+    {
+        return (TState)Enum.ToObject(typeof(TState), PlayerBehavior?.GetState(mainHand) ?? 0);
+    }
 }
 
 public class RangeWeaponServer : IServerRangedWeaponLogic
