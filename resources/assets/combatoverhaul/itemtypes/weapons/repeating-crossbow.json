@@ -2,7 +2,7 @@
   "code": "crossbow",
   "class": "CombatOverhaul:MagazineCrossbow",
   "variantgroups": [{"code": "type", "states": ["repeating"]}],
-  "creativeinventory": {"combatoverhaul-crossbows": ["*"]},
+  "creativeinventory": {"combatoverhaul": ["*"]},
   "maxstacksize": 1,
   "durabilityByType": {"*-repeating": 600},
   "tool": "bow",
@@ -23,7 +23,7 @@
     "AimingByType": {
       "*": {
         "AimDifficulty": 1,
-        "CursorType": "Moving",
+        "CursorType": "Fixed",
         "AccuracyOvertimeSec": 0,
         "ZeroingAngle": 1,
         "CursorTextureReady": "combatoverhaul:gui/aiming/arrow-full.png",

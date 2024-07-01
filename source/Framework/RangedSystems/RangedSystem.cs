@@ -1,4 +1,5 @@
 ﻿using ProtoBuf;
+using System.Data;
 using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -16,6 +17,7 @@ public class ReloadPacket
     public int ItemId { get; set; }
     public bool RightHand { get; set; }
     public int ReloadId { get; set; }
+    public byte[] Data { get; set; } = Array.Empty<byte>();
 }
 
 [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
@@ -35,6 +37,7 @@ public class ShotPacket
     public int ItemId { get; set; }
     public int Amount { get; set; }
     public bool RightHand { get; set; }
+    public byte[] Data { get; set; } = Array.Empty<byte>();
 }
 
 [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
@@ -60,7 +63,7 @@ public class RangedWeaponSystemClient
             .SetMessageHandler<ShotConfirmPacket>(HandleShotPacket);
     }
 
-    public void Reload(ItemSlot weapon, ItemSlot ammo, int amount, bool rightHand, Action<bool> reloadCallback)
+    public void Reload(ItemSlot weapon, ItemSlot ammo, int amount, bool rightHand, Action<bool> reloadCallback, byte[]? data = null)
     {
         if (_nextId > int.MaxValue / 2) _nextId = 0;
         int id = _nextId++;
@@ -76,12 +79,13 @@ public class RangedWeaponSystemClient
             Amount = amount,
             RightHand = rightHand,
             ItemId = weapon.Itemstack?.Item?.Id ?? 0,
-            ReloadId = id
-        };
+            ReloadId = id,
+            Data = data ?? Array.Empty<byte>()
+    };
 
         _clientChannel.SendPacket(packet);
     }
-    public void Unload(ItemSlot weapon, int amount, bool rightHand, Action<bool> reloadCallback)
+    public void Unload(ItemSlot weapon, int amount, bool rightHand, Action<bool> reloadCallback, byte[]? data = null)
     {
         if (_nextId > int.MaxValue / 2) _nextId = 0;
         int id = _nextId++;
@@ -94,12 +98,13 @@ public class RangedWeaponSystemClient
             Amount = amount,
             RightHand = rightHand,
             ItemId = weapon.Itemstack?.Item?.Id ?? 0,
-            ReloadId = id
+            ReloadId = id,
+            Data = data ?? Array.Empty<byte>()
         };
 
         _clientChannel.SendPacket(packet);
     }
-    public void Load(ItemSlot weapon, bool rightHand, Action<bool> reloadCallback, int amount = 0)
+    public void Load(ItemSlot weapon, bool rightHand, Action<bool> reloadCallback, int amount = 0, byte[]? data = null)
     {
         if (_nextId > int.MaxValue / 2) _nextId = 0;
         int id = _nextId++;
@@ -112,12 +117,13 @@ public class RangedWeaponSystemClient
             Amount = amount,
             RightHand = rightHand,
             ItemId = weapon.Itemstack?.Item?.Id ?? 0,
-            ReloadId = id
+            ReloadId = id,
+            Data = data ?? Array.Empty<byte>()
         };
 
         _clientChannel.SendPacket(packet);
     }
-    public void Shoot(ItemSlot weapon, int amount, Vector3 position, Vector3 velocity, bool rightHand, Action<bool> shootCallback)
+    public void Shoot(ItemSlot weapon, int amount, Vector3 position, Vector3 velocity, bool rightHand, Action<bool> shootCallback, byte[]? data = null)
     {
         Guid projectileId = Guid.NewGuid();
 
@@ -133,7 +139,8 @@ public class RangedWeaponSystemClient
             Velocity = new float[3] { velocity.X, velocity.Y, velocity.Z },
             ItemId = weapon.Itemstack?.Item?.Id ?? 0,
             Amount = amount,
-            RightHand = rightHand
+            RightHand = rightHand,
+            Data = data ?? Array.Empty<byte>()
         };
 
         _clientChannel.SendPacket(packet);

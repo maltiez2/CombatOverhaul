@@ -274,6 +274,23 @@
           "LowerArmL": [0, 0, 0, 0, -37, -37],
           "UpperArmL": [0, 0, 0, 0, -20, -44]
         }
+      },
+      {
+        "EasingTime": 1000,
+        "EasingFunction": "Sin",
+        "DetachedAnchor": false,
+        "SwitchArms": true,
+        "PitchFollow": true,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 0.65,
+        "Elements": {
+          "ItemAnchor": [0, 0, 0, 0, 0, 0],
+          "LowerArmR": [0, 0, 0, 0, 0, -11],
+          "UpperArmR": [0, -1.6, 0, 44, -20, -95],
+          "ItemAnchorL": [6.1, 0.9, -1.8, -54, 29, 85],
+          "LowerArmL": [0, 0, 0, 0, -37, -37],
+          "UpperArmL": [0, 0, 0, 0, -20, -44]
+        }
       }
     ],
     "ItemKeyFrames": [
@@ -289,24 +306,7 @@
     "Hold": true,
     "PlayerKeyFrames": [
       {
-        "EasingTime": 200,
-        "EasingFunction": "Linear",
-        "DetachedAnchor": false,
-        "SwitchArms": true,
-        "PitchFollow": true,
-        "FOVMultiplier": 1,
-        "BobbingAmplitude": 0.65,
-        "Elements": {
-          "ItemAnchor": [0, 0, 0, 0, 0, 0],
-          "LowerArmR": [0, 0, 0, 0, 0, -11],
-          "UpperArmR": [0, -1.6, 0, 44, -20, -95],
-          "ItemAnchorL": [6.1, 0.9, -1.8, -54, 29, 85],
-          "LowerArmL": [0, 0, 0, 0, -37, -37],
-          "UpperArmL": [0, 0, 0, 0, -20, -44]
-        }
-      },
-      {
-        "EasingTime": 280,
+        "EasingTime": 80,
         "EasingFunction": "Linear",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -323,7 +323,7 @@
         }
       },
       {
-        "EasingTime": 370,
+        "EasingTime": 170,
         "EasingFunction": "Linear",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -340,7 +340,7 @@
         }
       },
       {
-        "EasingTime": 500,
+        "EasingTime": 300,
         "EasingFunction": "Linear",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -357,7 +357,7 @@
         }
       },
       {
-        "EasingTime": 800,
+        "EasingTime": 600,
         "EasingFunction": "Linear",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -509,8 +509,8 @@
       }
     ],
     "SoundFrames": [],
-    "ItemAnimationStart": 200,
-    "ItemAnimationEnd": 800
+    "ItemAnimationStart": 0,
+    "ItemAnimationEnd": 600
   },
   "crossbow-repeating-return": {
     "Hold": true,

@@ -177,7 +177,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     }
     private void OnFrame(Entity entity, ElementPose pose)
     {
-        if (!IsFirstPerson(entity)) return;
+        if (!AnimationsManager.PlayAnimationsInThirdPerson && !IsFirstPerson(entity)) return;
         if (!_composer.AnyActiveAnimations() && FrameOverride == null)
         {
             if (_resetFov)

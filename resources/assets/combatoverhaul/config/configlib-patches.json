@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "patches": {
+    "string": {
+      "combatoverhaul:itemtypes/weapons/bows.json": {
+        "@@attributes/AimingByType/*/CursorType": "bows_aiming_cursor_type"
+      },
+      "combatoverhaul:itemtypes/weapons/crossbows.json": {
+        "@@attributes/AimingByType/*/CursorType": "crossbows_aiming_cursor_type"
+      },
+      "combatoverhaul:itemtypes/weapons/repeating-crossbow.json": {
+        "@@attributes/AimingByType/*/CursorType": "repeating_crossbow_aiming_cursor_type"
+      }
+    }
+  },
+  "settings": [
+    {
+      "type": "separator",
+      "title": "Aiming"
+    },
+    {
+      "code": "bows_aiming_cursor_type",
+      "type": "string",
+      "ingui": "Bows aiming cursor type",
+      "default": "Moving",
+      "values": [
+        "None",
+        "Vanilla",
+        "Fixed",
+        "Moving"
+      ]
+    },
+    {
+      "code": "crossbows_aiming_cursor_type",
+      "type": "string",
+      "ingui": "Crossbows aiming cursor type",
+      "default": "Moving",
+      "values": [
+        "None",
+        "Vanilla",
+        "Fixed",
+        "Moving"
+      ]
+    },
+    {
+      "code": "repeating_crossbow_aiming_cursor_type",
+      "type": "string",
+      "ingui": "Repeating crossbow aiming cursor type",
+      "default": "Fixed",
+      "values": [
+        "None",
+        "Vanilla",
+        "Fixed",
+        "Moving"
+      ]
+    }
+  ]
+}

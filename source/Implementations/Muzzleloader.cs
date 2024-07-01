@@ -12,7 +12,7 @@ using Vintagestory.API.Util;
 
 namespace CombatOverhaul.Implementations;
 
-public enum MagazineCrossbowState
+public enum MuzzleloaderState
 {
     Unloaded,
     OpenLid,
@@ -25,7 +25,7 @@ public enum MagazineCrossbowState
     Return
 }
 
-public class MagazineCrossbowStats : WeaponStats
+public class MuzzleloaderStats : WeaponStats
 {
     public string OpenLidAnimation { get; set; } = "";
     public string LoadBoltAnimation { get; set; } = "";
@@ -34,23 +34,23 @@ public class MagazineCrossbowStats : WeaponStats
     public string ReturnAnimation { get; set; } = "";
 
     public AimingStatsJson Aiming { get; set; } = new();
-    public float BoltDamageMultiplier { get; set; } = 1;
-    public float BoltDamageStrength { get; set; } = 1;
-    public float BoltVelocity { get; set; } = 1;
-    public string BoltWildcard { get; set; } = "@.*(bolt-copper|bolt-flint)";
+    public float BulletDamageMultiplier { get; set; } = 1;
+    public float BulletDamageStrength { get; set; } = 1;
+    public float BulletVelocity { get; set; } = 1;
+    public string BulletWildcard { get; set; } = "*bullet-*";
     public float Zeroing { get; set; } = 1.5f;
 
-    public int MagazineSize { get; set; } = 5;
+    public int MagazineSize { get; set; } = 1;
 }
 
-public class MagazineCrossbowClient : RangeWeaponClient
+public class MuzzleloaderClient : RangeWeaponClient
 {
-    public MagazineCrossbowClient(ICoreClientAPI api, Item item) : base(api, item)
+    public MuzzleloaderClient(ICoreClientAPI api, Item item) : base(api, item)
     {
         Attachable = item.GetCollectibleBehavior<AnimatableAttachable>(withInheritance: true) ?? throw new Exception("Crossbow should have AnimatableAttachable behavior.");
         BoltTransform = new(item.Attributes["BoltTransform"].AsObject<ModelTransformNoDefaults>(), ModelTransform.BlockDefaultTp());
         AimingSystem = api.ModLoader.GetModSystem<CombatOverhaulSystem>().AimingSystem ?? throw new Exception();
-        Stats = item.Attributes.AsObject<MagazineCrossbowStats>();
+        Stats = item.Attributes.AsObject<MuzzleloaderStats>();
         AimingStats = Stats.Aiming.ToStats();
     }
 
@@ -62,12 +62,12 @@ public class MagazineCrossbowClient : RangeWeaponClient
 
         if (Inventory.Items.Count != 0)
         {
-            state = (int)MagazineCrossbowState.Ready;
+            state = (int)MuzzleloaderState.Ready;
             AimingSystem.AimingState = WeaponAimingState.FullCharge;
         }
         else
         {
-            state = (int)MagazineCrossbowState.Unloaded;
+            state = (int)MuzzleloaderState.Unloaded;
             AimingSystem.AimingState = WeaponAimingState.Blocked;
         }
 
@@ -92,7 +92,7 @@ public class MagazineCrossbowClient : RangeWeaponClient
     protected readonly AnimatableAttachable Attachable;
     protected readonly ClientAimingSystem AimingSystem;
     protected readonly ModelTransform BoltTransform;
-    protected readonly MagazineCrossbowStats Stats;
+    protected readonly MuzzleloaderStats Stats;
     protected readonly AimingStats AimingStats;
     protected readonly ItemInventoryBuffer Inventory = new();
     protected const string InventoryId = "magazine";
@@ -100,7 +100,7 @@ public class MagazineCrossbowClient : RangeWeaponClient
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Active)]
     protected virtual bool OpenLid(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
-        if (!CheckState(state, MagazineCrossbowState.Unloaded, MagazineCrossbowState.Ready)) return false;
+        if (!CheckState(state, MuzzleloaderState.Unloaded, MuzzleloaderState.Ready)) return false;
         if (eventData.AltPressed) return false;
 
         Inventory.Read(slot, InventoryId);
@@ -111,7 +111,7 @@ public class MagazineCrossbowClient : RangeWeaponClient
         }
         Inventory.Clear();
 
-        state = (int)MagazineCrossbowState.OpenLid;
+        state = (int)MuzzleloaderState.OpenLid;
 
         AnimationBehavior?.Play(mainHand, Stats.OpenLidAnimation, callback: OpenLidCallback);
         AimingSystem.StopAiming();
@@ -120,14 +120,14 @@ public class MagazineCrossbowClient : RangeWeaponClient
     }
     protected virtual bool OpenLidCallback()
     {
-        PlayerBehavior?.SetState((int)MagazineCrossbowState.ReadyToLoad, mainHand: true);
+        PlayerBehavior?.SetState((int)MuzzleloaderState.ReadyToLoad, mainHand: true);
         return true;
     }
 
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Active)]
     protected virtual bool LoadBolt(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
-        if (state != (int)MagazineCrossbowState.ReadyToLoad || eventData.AltPressed) return false;
+        if (state != (int)MuzzleloaderState.ReadyToLoad || eventData.AltPressed) return false;
 
         Inventory.Read(slot, InventoryId);
         if (Inventory.Items.Count >= Stats.MagazineSize)
@@ -145,7 +145,7 @@ public class MagazineCrossbowClient : RangeWeaponClient
         {
             if (slot?.Itemstack?.Item == null) return true;
 
-            if (slot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(Stats.BoltWildcard, slot.Itemstack.Item.Code.Path))
+            if (slot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(Stats.BulletWildcard, slot.Itemstack.Item.Code.Path))
             {
                 ammoSlot = slot;
                 return false;
@@ -158,7 +158,7 @@ public class MagazineCrossbowClient : RangeWeaponClient
         Attachable.SetAttachment(player.EntityId, "bolt", ammoSlot.Itemstack, BoltTransform);
 
         AnimationBehavior?.Play(mainHand, Stats.LoadBoltAnimation, callback: () => LoadBoltCallback(slot, ammoSlot, player));
-        state = (int)MagazineCrossbowState.Load;
+        state = (int)MuzzleloaderState.Load;
 
         return true;
     }
@@ -172,26 +172,26 @@ public class MagazineCrossbowClient : RangeWeaponClient
     {
         int state = PlayerBehavior?.GetState(mainHand: true) ?? 0;
 
-        if (state == (int)MagazineCrossbowState.Load)
+        if (state == (int)MuzzleloaderState.Load)
         {
-            PlayerBehavior?.SetState((int)MagazineCrossbowState.ReadyToLoad, mainHand: true);
+            PlayerBehavior?.SetState((int)MuzzleloaderState.ReadyToLoad, mainHand: true);
         }
     }
 
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Released)]
     protected virtual bool CloseLid(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
-        if (!CheckState(state, MagazineCrossbowState.ReadyToLoad, MagazineCrossbowState.Load, MagazineCrossbowState.OpenLid)) return false;
+        if (!CheckState(state, MuzzleloaderState.ReadyToLoad, MuzzleloaderState.Load, MuzzleloaderState.OpenLid)) return false;
         if (eventData.AltPressed) return false;
 
         AnimationBehavior?.Play(mainHand, Stats.CloseLidAnimation, callback: () => CloseLidCallback(slot));
-        state = (int)MagazineCrossbowState.CloseLid;
+        state = (int)MuzzleloaderState.CloseLid;
 
         return true;
     }
     protected virtual bool CloseLidCallback(ItemSlot slot)
     {
-        PlayerBehavior?.SetState((int)MagazineCrossbowState.Ready, mainHand: true);
+        PlayerBehavior?.SetState((int)MuzzleloaderState.Ready, mainHand: true);
         AimingSystem.StartAiming(AimingStats);
 
         Inventory.Read(slot, InventoryId);
@@ -211,7 +211,7 @@ public class MagazineCrossbowClient : RangeWeaponClient
     [ActionEventHandler(EnumEntityAction.LeftMouseDown, ActionState.Active)]
     protected virtual bool Shoot(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
-        if (state != (int)MagazineCrossbowState.Ready || eventData.AltPressed) return false;
+        if (state != (int)MuzzleloaderState.Ready || eventData.AltPressed) return false;
 
         Inventory.Read(slot, InventoryId);
         if (Inventory.Items.Count == 0)
@@ -224,7 +224,7 @@ public class MagazineCrossbowClient : RangeWeaponClient
         AimingSystem.AimingState = WeaponAimingState.FullCharge;
 
         AnimationBehavior?.Play(mainHand, Stats.ShootAnimation, callback: () => ShootCallback(slot, player));
-        state = (int)MagazineCrossbowState.Shoot;
+        state = (int)MuzzleloaderState.Shoot;
 
         return true;
     }
@@ -235,7 +235,7 @@ public class MagazineCrossbowClient : RangeWeaponClient
         targetDirection = ClientAimingSystem.Zeroing(targetDirection, Stats.Zeroing);
         RangedWeaponSystem.Shoot(slot, 1, new((float)position.X, (float)position.Y, (float)position.Z), new(targetDirection.X, targetDirection.Y, targetDirection.Z), true, _ => { });
 
-        PlayerBehavior?.SetState((int)MagazineCrossbowState.Shot, mainHand: true);
+        PlayerBehavior?.SetState((int)MuzzleloaderState.Shot, mainHand: true);
 
         return true;
     }
@@ -243,26 +243,26 @@ public class MagazineCrossbowClient : RangeWeaponClient
     [ActionEventHandler(EnumEntityAction.LeftMouseDown, ActionState.Active)]
     protected virtual bool Return(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
-        if (state != (int)MagazineCrossbowState.Shot || eventData.AltPressed) return false;
+        if (state != (int)MuzzleloaderState.Shot || eventData.AltPressed) return false;
 
         AnimationBehavior?.Play(mainHand, Stats.ReturnAnimation, callback: ReturnCallback);
-        state = (int)MagazineCrossbowState.Return;
+        state = (int)MuzzleloaderState.Return;
 
         return true;
     }
     protected virtual bool ReturnCallback()
     {
-        PlayerBehavior?.SetState((int)MagazineCrossbowState.Ready, mainHand: true);
+        PlayerBehavior?.SetState((int)MuzzleloaderState.Ready, mainHand: true);
         return true;
     }
 }
 
-public class MagazineCrossbowServer : RangeWeaponServer
+public class MuzzleloaderServer : RangeWeaponServer
 {
-    public MagazineCrossbowServer(ICoreServerAPI api, Item item) : base(api, item)
+    public MuzzleloaderServer(ICoreServerAPI api, Item item) : base(api, item)
     {
         _projectileSystem = api.ModLoader.GetModSystem<CombatOverhaulSystem>().ServerProjectileSystem ?? throw new Exception();
-        _stats = item.Attributes.AsObject<MagazineCrossbowStats>();
+        _stats = item.Attributes.AsObject<MuzzleloaderStats>();
     }
 
     public override bool Reload(IServerPlayer player, ItemSlot slot, ItemSlot? ammoSlot, ReloadPacket packet)
@@ -270,7 +270,7 @@ public class MagazineCrossbowServer : RangeWeaponServer
         _inventory.Read(slot, _inventoryId);
         if (_inventory.Items.Count >= _stats.MagazineSize) return false;
 
-        if (ammoSlot?.Itemstack?.Item != null && ammoSlot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(_stats.BoltWildcard, ammoSlot.Itemstack.Item.Code.Path))
+        if (ammoSlot?.Itemstack?.Item != null && ammoSlot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(_stats.BulletWildcard, ammoSlot.Itemstack.Item.Code.Path))
         {
             ItemStack ammo = ammoSlot.TakeOut(1);
             ammoSlot.MarkDirty();
@@ -305,10 +305,10 @@ public class MagazineCrossbowServer : RangeWeaponServer
         ProjectileSpawnStats spawnStats = new()
         {
             ProducerEntityId = player.Entity.EntityId,
-            DamageMultiplier = _stats.BoltDamageMultiplier,
-            DamageStrength = _stats.BoltDamageStrength,
+            DamageMultiplier = _stats.BulletDamageMultiplier,
+            DamageStrength = _stats.BulletDamageStrength,
             Position = new Vector3(packet.Position[0], packet.Position[1], packet.Position[2]),
-            Velocity = Vector3.Normalize(new Vector3(packet.Velocity[0], packet.Velocity[1], packet.Velocity[2])) * _stats.BoltVelocity
+            Velocity = Vector3.Normalize(new Vector3(packet.Velocity[0], packet.Velocity[1], packet.Velocity[2])) * _stats.BulletVelocity
         };
 
         _projectileSystem.Spawn(packet.ProjectileId, stats.Value, spawnStats, ammo, shooter);
@@ -317,15 +317,15 @@ public class MagazineCrossbowServer : RangeWeaponServer
     }
 
     private readonly ProjectileSystemServer _projectileSystem;
-    private readonly MagazineCrossbowStats _stats;
+    private readonly MuzzleloaderStats _stats;
     private readonly ItemInventoryBuffer _inventory = new();
     private const string _inventoryId = "magazine";
 }
 
-public class MagazineCrossbowItem : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasIdleAnimations
+public class MuzzleloaderItem : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasIdleAnimations
 {
-    public MagazineCrossbowClient? ClientLogic { get; private set; }
-    public MagazineCrossbowServer? ServerLogic { get; private set; }
+    public MuzzleloaderClient? ClientLogic { get; private set; }
+    public MuzzleloaderServer? ServerLogic { get; private set; }
 
     public AnimationRequestByCode IdleAnimation { get; private set; }
     public AnimationRequestByCode ReadyAnimation { get; private set; }
@@ -341,7 +341,7 @@ public class MagazineCrossbowItem : Item, IHasWeaponLogic, IHasRangedWeaponLogic
         {
             ClientLogic = new(clientAPI, this);
 
-            MagazineCrossbowStats stats = Attributes.AsObject<MagazineCrossbowStats>();
+            MuzzleloaderStats stats = Attributes.AsObject<MuzzleloaderStats>();
             IdleAnimation = new(stats.IdleAnimation, 1, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), false);
             ReadyAnimation = new(stats.ReadyAnimation, 1, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), false);
         }

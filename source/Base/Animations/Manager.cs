@@ -17,6 +17,8 @@ namespace CombatOverhaul.Animations;
 public sealed class AnimationsManager
 {
     public Dictionary<string, Animation> Animations { get; private set; } = new();
+    public static bool PlayAnimationsInThirdPerson { get; set; } = false;
+
     public AnimationsManager(ICoreClientAPI api)
     {
         api.ModLoader.GetModSystem<ImGuiModSystem>().Draw += DrawEditor;
@@ -179,6 +181,11 @@ public sealed class AnimationsManager
 
         ImGui.SetNextItemWidth(200);
         ImGui.SliderFloat("Animation speed", ref _animationSpeed, 0.1f, 2);
+        ImGui.SameLine();
+
+        bool tpAnimations = PlayAnimationsInThirdPerson;
+        ImGui.Checkbox("Third person animations", ref tpAnimations);
+        PlayAnimationsInThirdPerson = tpAnimations;
 
         ImGui.ListBox("Animations", ref _selectedAnimationIndex, Animations.Keys.ToArray(), Animations.Count);
 
