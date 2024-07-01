@@ -1,6 +1,6 @@
 {
 	"editor": {
-		"collapsedPaths": "Root/Pistol/Barrel/Barrel_part_0/Barrel_muzzle_top_1,Root/Pistol/Stock,Root/Pistol/Wheellock/Plate,Root/Pistol/Ramrod,Root/Pistol/Barrel/Barrel_part_2,Root/Pistol/Barrel/Barrel_part_1,Root/Pistol/Barrel/Barrel_part_3,Root/Pistol/Barrel/Thick/Barrel_thick_0/Barrel_thick_side_0_0/Barrel_thick_side_0_1,Root/Pistol/Trigger_assembly/Guard_plate,Root/Pistol/Stock/Buttstock/Buttstock_bottom13,Root/Mortar/Wheellock,Root/Arquebus_origin/Stock,Root/Pistol/Wheellock/Flint_arm,Root/Arquebus_origin/Barrel,Root/Pistol/Trigger_assembly,Root/Pistol/Barrel/Thick/Barrel_thick_2,Root/Pistol/Lever_origin/Wheel_charging_lever,Root/Pistol/Barrel/Thick/Barrel_thick_1,Root/Pistol/Flask_origin/Flask_origin_inner,Root/Pistol/Barrel/Thick/Barrel_thick_0,Root/Mortar/Trigger_assembly,Root/Pistol/Patch,Root/Pistol/Barrel/Barrel_top4,Root/Pistol/Wheellock,Root/Pistol/Barrel/Barrel_top3,Root/Pistol/Barrel/Barrel_top2,Root/Pistol/Barrel/Thick/Barrel_thick_3,Root/Pistol/Barrel/Barrel_part_0,Root/Pistol/Flask_origin/Flask/Bottom_plate,Root/Pistol/Barrel/Barrel_top,Root/Arquebus_origin/Ramrod",
+		"collapsedPaths": "Root/Pistol/Barrel/Barrel_part_0/Barrel_muzzle_top_1,Root/Pistol/Stock,Root/Pistol/Wheellock/Plate,Root/Pistol/Ramrod,Root/Pistol/Barrel/Barrel_part_2,Root/Pistol/Barrel/Barrel_part_1,Root/Pistol/Barrel/Barrel_part_3,Root/Pistol/Barrel/Thick/Barrel_thick_0/Barrel_thick_side_0_0/Barrel_thick_side_0_1,Root/Pistol/Trigger_assembly/Guard_plate,Root/Pistol/Stock/Buttstock/Buttstock_bottom13,Root/Arquebus_origin/Stock,Root/Pistol/Wheellock/Flint_arm,Root/Arquebus_origin/Barrel,Root/Pistol/Trigger_assembly,Root/Pistol/Barrel/Thick/Barrel_thick_2,Root/Pistol/Lever_origin/Wheel_charging_lever,Root/Pistol/Barrel/Thick/Barrel_thick_1,Root/Pistol/Flask_origin/Flask_origin_inner,Root/Pistol/Barrel/Thick/Barrel_thick_0,Root/Mortar/Trigger_assembly,Root/Pistol/Patch,Root/Pistol/Barrel/Barrel_top4,Root/Pistol/Wheellock,Root/Pistol/Barrel/Barrel_top3,Root/Pistol/Barrel/Barrel_top2,Root/Pistol/Barrel/Thick/Barrel_thick_3,Root/Pistol/Barrel/Barrel_part_0,Root/Pistol/Flask_origin/Flask/Bottom_plate,Root/Pistol/Barrel/Barrel_top,Root/Arquebus_origin/Ramrod",
 		"allAngles": true,
 		"entityTextureMode": false
 	},
@@ -18,9 +18,8 @@
 	"elements": [
 		{
 			"name": "Mortar",
-			"from": [ 8.0, 3.0, 12.0 ],
-			"to": [ 8.0, 3.0, 12.0 ],
-			"rotationOrigin": [ 8.0, 3.0, 12.0 ],
+			"from": [ 0.0, 0.0, 0.0 ],
+			"to": [ 0.0, 0.0, 0.0 ],
 			"faces": {
 				"north": { "texture": "#tinbronze", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
 				"east": { "texture": "#tinbronze", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
@@ -340,9 +339,9 @@
 						},
 						{
 							"name": "Wheel_pin",
-							"from": [ -1.9, -1.1, -0.6 ],
-							"to": [ 0.5, -0.9, -0.4 ],
-							"rotationOrigin": [ -1.9, -1.1, -0.6 ],
+							"from": [ -1.6, -1.1, -0.6 ],
+							"to": [ 0.6, -0.9, -0.4 ],
+							"rotationOrigin": [ -1.6, -1.1, -0.6 ],
 							"faces": {
 								"north": { "texture": "#brass", "uv": [ 0.0, 0.0, 2.0, 0.5 ] },
 								"east": { "texture": "#brass", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
@@ -741,7 +740,6 @@
 																	"from": [ -0.02, 0.7, 1.5 ],
 																	"to": [ 1.08, 2.55, 1.8 ],
 																	"rotationOrigin": [ 0.51, 2.0, 1.5 ],
-																	"rotationX": 0.0,
 																	"faces": {
 																		"north": { "texture": "#brass", "uv": [ 0.0, 0.0, 1.0, 1.5 ] },
 																		"east": { "texture": "#brass", "uv": [ 0.0, 0.0, 0.5, 1.5 ] },
@@ -753,9 +751,9 @@
 																	"children": [
 																		{
 																			"name": "Buttstock_bottom15",
-																			"from": [ -0.45, -2.2, 0.0 ],
-																			"to": [ 1.49, 0.0, 0.3 ],
-																			"rotationOrigin": [ 0.11, 0.0, 0.3 ],
+																			"from": [ -0.25, -2.2, 0.0 ],
+																			"to": [ 1.39, 0.0, 0.3 ],
+																			"rotationOrigin": [ 0.31, 0.0, 0.3 ],
 																			"rotationX": 18.0,
 																			"faces": {
 																				"north": { "texture": "#brass", "uv": [ 0.0, 0.0, 1.5, 2.0 ] },

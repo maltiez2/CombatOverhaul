@@ -1,6 +1,6 @@
 {
 	"editor": {
-		"collapsedPaths": "Root/Pistol/Stock,Root/Pistol/Wheellock/Plate,Root/Mortar/Wheellock/Flint_arm2,Root/Mortar/Barrel/Barrel_part_3,Root/Pistol/Ramrod,Root/Mortar/Barrel/Barrel_top,Root/Mortar/Wheellock/Plate,Root/Mortar/Barrel/Barrel_part_2,Root/Mortar/Barrel/Barrel_part_1,Root/Mortar/Barrel/Barrel_top3,Root/Mortar/Barrel/Barrel_top2,Root/Mortar/Wheellock/Flint_arm,Root/Pistol/Trigger_assembly/Guard_plate,Root/Arquebus_origin/Stock,Root/Pistol/Wheellock/Flint_arm,Root/Arquebus_origin/Barrel,Root/Pistol/Trigger_assembly,Root/Mortar/Barrel/Barrel_top4,Root/Mortar/Wheellock/Wheel_housing,Root/Mortar/Wheellock/Wheel_housing2,Root/Pistol/Lever_origin/Wheel_charging_lever,Root/Mortar/Wheellock/Pan,Root/Pistol/Flask_origin/Flask_origin_inner,Root/Mortar/Trigger_assembly/Guard_plate,Root/Pistol/Patch,Root/Mortar/Wheellock/Pan2,Root/Pistol/Barrel/Barrel_top4,Root/Pistol/Wheellock,Root/Pistol/Barrel/Barrel_top3,Root/Pistol/Barrel/Barrel_top2,Root/Pistol/Flask_origin/Flask/Bottom_plate,Root/Pistol/Barrel/Barrel_top,Root/Arquebus_origin/Ramrod,Root/double-shot,Root/Mortar/Stock/Receiver",
+		"collapsedPaths": "Root/Pistol/Stock,Root/Pistol/Wheellock/Plate,Root/Mortar/Wheellock/Flint_arm2,Root/Mortar/Barrel/Barrel_part_3,Root/Pistol/Ramrod,Root/Mortar/Barrel/Barrel_top,Root/Mortar/Wheellock/Plate,Root/Mortar/Barrel/Barrel_part_2,Root/Mortar/Barrel/Barrel_part_1,Root/Mortar/Barrel/Barrel_top3,Root/Mortar/Barrel/Barrel_top2,Root/Mortar/Wheellock/Flint_arm,Root/Pistol/Trigger_assembly/Guard_plate,Root/Arquebus_origin/Stock,Root/Pistol/Wheellock/Flint_arm,Root/Arquebus_origin/Barrel,Root/Pistol/Trigger_assembly,Root/Mortar/Barrel/Barrel_top4,Root/Mortar/Wheellock/Wheel_housing,Root/Mortar/Wheellock/Wheel_housing2,Root/Pistol/Lever_origin/Wheel_charging_lever,Root/Mortar/Wheellock/Pan,Root/Pistol/Flask_origin/Flask_origin_inner,Root/Mortar/Trigger_assembly/Guard_plate,Root/Pistol/Patch,Root/Mortar/Wheellock/Pan2,Root/Pistol/Barrel/Barrel_top4,Root/Pistol/Wheellock,Root/Pistol/Barrel/Barrel_top3,Root/Pistol/Barrel/Barrel_top2,Root/Pistol/Flask_origin/Flask/Bottom_plate,Root/Pistol/Barrel/Barrel_top,Root/Arquebus_origin/Ramrod,Root/Mortar/Stock/Receiver",
 		"allAngles": true,
 		"entityTextureMode": false
 	},
@@ -449,9 +449,9 @@
 							"children": [
 								{
 									"name": "Wheel_pin",
-									"from": [ -1.8, 0.55, 0.55 ],
-									"to": [ 0.5, 0.75, 0.75 ],
-									"rotationOrigin": [ -1.8, 0.5, 0.5 ],
+									"from": [ -1.6, 0.55, 0.55 ],
+									"to": [ 0.7, 0.75, 0.75 ],
+									"rotationOrigin": [ -1.6, 0.5, 0.5 ],
 									"faces": {
 										"north": { "texture": "#brass", "uv": [ 0.0, 0.0, 2.0, 0.5 ] },
 										"east": { "texture": "#brass", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
@@ -848,9 +848,9 @@
 							"children": [
 								{
 									"name": "Wheel_pin2",
-									"from": [ -1.8, 0.55, 0.55 ],
-									"to": [ 0.5, 0.75, 0.75 ],
-									"rotationOrigin": [ -1.8, 0.5, 0.5 ],
+									"from": [ -1.6, 0.55, 0.55 ],
+									"to": [ 0.7, 0.75, 0.75 ],
+									"rotationOrigin": [ -1.6, 0.5, 0.5 ],
 									"faces": {
 										"north": { "texture": "#brass", "uv": [ 0.0, 0.0, 2.0, 0.5 ] },
 										"east": { "texture": "#brass", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
