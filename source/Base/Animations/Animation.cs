@@ -109,16 +109,16 @@ public sealed class Animation
         ImGui.Checkbox($"Hold##{title}", ref hold);
         Hold = hold;
 
-        ImGui.BeginTabBar($"##{title}tab");
-        if (ImGui.BeginTabItem($"Player animation##{title}"))
-        {
-            ImGui.SliderFloat($"Frame progress", ref _frameProgress, 0, 1);
+        ImGui.NewLine();
 
+        ImGui.BeginTabBar($"##{title}tab");
+        if (ImGui.BeginTabItem($"Player##{title}"))
+        {
             EditPlayerAnimation(title + "player");
 
             ImGui.EndTabItem();
         }
-        if (ItemKeyFrames.Any() && ImGui.BeginTabItem($"Item animation##{title}"))
+        if (ItemKeyFrames.Any() && ImGui.BeginTabItem($"Item##{title}"))
         {
             int itemAnimationStart = (int)ItemAnimationStart.TotalMilliseconds;
             ImGui.DragInt($"Item animation start##{title}", ref itemAnimationStart);
@@ -281,6 +281,8 @@ public sealed class Animation
         }
 
         if (PlayerKeyFrames.Count > 0) ImGui.SliderInt($"Key frame##{title}", ref _playerFrameIndex, 0, PlayerKeyFrames.Count - 1);
+
+        if (PlayerKeyFrames.Count > 0) ImGui.SliderFloat($"Frame progress", ref _frameProgress, 0, 1);
 
         if (PlayerKeyFrames.Count > 0)
         {

@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 using System.Reflection;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
+using Vintagestory.API.Config;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.Client.NoObf;
@@ -58,6 +59,7 @@ public sealed class AnimationsManager
     private string _playerAnimationKey = "";
     private float _animationSpeed = 1;
     private ParticleEffectsManager _particleEffectsManager;
+    private AnimationJson _animationBuffer;
 
     private CallbackGUIStatus DrawEditor(float deltaSeconds)
     {
@@ -166,30 +168,38 @@ public sealed class AnimationsManager
     {
         string[] codes = Animations.Keys.ToArray();
 
-        if (ImGui.Button("Play") && Animations.Count > 0)
+        if (ImGui.Button("Save to buffer"))
         {
-            AnimationRequest request = new(
-                Animations[codes[_selectedAnimationIndex]],
-                _animationSpeed,
-                1,
-                "main",
-                TimeSpan.FromSeconds(0.6),
-                TimeSpan.FromSeconds(0.6),
-                true
-                );
-
-            _behavior?.Play(request);
+            _animationBuffer = AnimationJson.FromAnimation(Animations[codes[_selectedAnimationIndex]]);
         }
         ImGui.SameLine();
 
-        if (ImGui.Button("Export to clipboard") && Animations.Count > 0)
+        if (ImGui.Button("Load from buffer"))
         {
-            ImGui.SetClipboardText(Animations[codes[_selectedAnimationIndex]].ToString());
+            Animations[codes[_selectedAnimationIndex]] = _animationBuffer.ToAnimation();
+        }
+
+        if (ImGui.Button("Save buffer to file"))
+        {
+            _api.StoreModConfig(_animationBuffer, "co-animation-export.json");
         }
         ImGui.SameLine();
+        if (ImGui.Button("Load buffer from file"))
+        {
+            _animationBuffer = _api.LoadModConfig<AnimationJson>("co-animation-export.json");
+        }
 
-        ImGui.SetNextItemWidth(200);
-        ImGui.SliderFloat("Animation speed", ref _animationSpeed, 0.1f, 2);
+        if (ImGui.Button("Toggle rendering offset"))
+        {
+            if (PlayerRenderingPatches.FpHandsOffset != PlayerRenderingPatches.DefaultFpHandsOffset)
+            {
+                PlayerRenderingPatches.FpHandsOffset = PlayerRenderingPatches.DefaultFpHandsOffset;
+            }
+            else
+            {
+                PlayerRenderingPatches.FpHandsOffset = 0;
+            }
+        }
         ImGui.SameLine();
 
         bool tpAnimations = PlayAnimationsInThirdPerson;
@@ -212,24 +222,35 @@ public sealed class AnimationsManager
             CreateAnimationGui();
         }
 
-        ImGui.Separator();
-
         if (_selectedAnimationIndex < Animations.Count)
         {
-            if (ImGui.Button("Toggle rendering offset"))
+            ImGui.SeparatorText("Animation");
+
+            if (ImGui.Button("Play") && Animations.Count > 0)
             {
-                if (PlayerRenderingPatches.FpHandsOffset != PlayerRenderingPatches.DefaultFpHandsOffset)
-                {
-                    PlayerRenderingPatches.FpHandsOffset = PlayerRenderingPatches.DefaultFpHandsOffset;
-                }
-                else
-                {
-                    PlayerRenderingPatches.FpHandsOffset = 0;
-                }
+                AnimationRequest request = new(
+                    Animations[codes[_selectedAnimationIndex]],
+                    _animationSpeed,
+                    1,
+                    "main",
+                    TimeSpan.FromSeconds(0.6),
+                    TimeSpan.FromSeconds(0.6),
+                    true
+                    );
+
+                _behavior?.Play(request);
             }
             ImGui.SameLine();
+
+            if (ImGui.Button("Export to clipboard") && Animations.Count > 0)
+            {
+                ImGui.SetClipboardText(Animations[codes[_selectedAnimationIndex]].ToString());
+            }
+            ImGui.SameLine();
+
+            ImGui.SetNextItemWidth(200);
+            ImGui.SliderFloat("Animation speed", ref _animationSpeed, 0.1f, 2);
             ImGui.Checkbox("Overwrite current frame", ref _overwriteFrame);
-            ImGui.SeparatorText("Animation");
             Animations[codes[_selectedAnimationIndex]].Edit(codes[_selectedAnimationIndex]);
             if (_overwriteFrame)
             {
