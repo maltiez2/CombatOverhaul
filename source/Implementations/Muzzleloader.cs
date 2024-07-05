@@ -8,7 +8,6 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Server;
 using Vintagestory.API.Util;
-using Vintagestory.GameContent;
 
 
 namespace CombatOverhaul.Implementations;
@@ -257,7 +256,7 @@ public class MuzzleloaderServer : RangeWeaponServer
                     ItemStack ammo = ammoSlot.TakeOut(1);
                     Inventory.Items.Add(ammo);
                 }
-                
+
                 ammoSlot.MarkDirty();
                 Inventory.Write(slot);
                 Inventory.Clear();
@@ -327,7 +326,7 @@ public class MuzzleloaderServer : RangeWeaponServer
     protected static TStage GetLoadingStage<TStage>(ReloadPacket packet)
         where TStage : struct, Enum
     {
-        
+
         int stage = BitConverter.ToInt32(packet.Data, 0);
         return (TStage)Enum.ToObject(typeof(TStage), stage);
     }

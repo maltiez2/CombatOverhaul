@@ -1,6 +1,6 @@
 {
 	"editor": {
-		"collapsedPaths": "Root/Pistol/Stock,Root/Pistol/Wheellock/Plate,Root/Mortar/Wheellock/Flint_arm2,Root/Mortar/Barrel/Barrel_part_3,Root/Pistol/Ramrod,Root/Mortar/Barrel/Barrel_top,Root/Mortar/Wheellock/Plate,Root/Mortar/Barrel/Barrel_part_2,Root/Mortar/Barrel/Barrel_part_1,Root/Mortar/Barrel/Barrel_top3,Root/Mortar/Barrel/Barrel_top2,Root/Mortar/Wheellock/Flint_arm,Root/Pistol/Trigger_assembly/Guard_plate,Root/Arquebus_origin/Stock,Root/Pistol/Wheellock/Flint_arm,Root/Arquebus_origin/Barrel,Root/Pistol/Trigger_assembly,Root/Mortar/Barrel/Barrel_top4,Root/Mortar/Wheellock/Wheel_housing,Root/Mortar/Wheellock/Wheel_housing2,Root/Pistol/Lever_origin/Wheel_charging_lever,Root/Mortar/Wheellock/Pan,Root/Pistol/Flask_origin/Flask_origin_inner,Root/Mortar/Trigger_assembly/Guard_plate,Root/Pistol/Patch,Root/Mortar/Wheellock/Pan2,Root/Pistol/Barrel/Barrel_top4,Root/Pistol/Wheellock,Root/Pistol/Barrel/Barrel_top3,Root/Pistol/Barrel/Barrel_top2,Root/Pistol/Flask_origin/Flask/Bottom_plate,Root/Pistol/Barrel/Barrel_top,Root/Arquebus_origin/Ramrod,Root/Mortar/Stock/Receiver",
+		"collapsedPaths": "Root/Band_second,Root/Musket/Band_first,Root/Band_first,Root/Carbine/Band_third,Root/Stock,Root/Flintlock,Root/Carbine/Trigger_assembly/Trigger_assemly_base,Root/Barrel,Root/Band_third,Root/Carbine/Flintlock,Root/Musket/Trigger_assembly,Root/Musket/Band_second,Root/Carbine/Trigger_assembly/Guard,Root/Carbine,Root/Musket/Flintlock/Plate,Root/Carbine/Ramrod_origin/Ramrod,Root/Musket,Root/Musket/Flintlock,Root/Carbine/Flask_origin/Flask_origin_inner,Root/Musket/Stock,Root/origin/Bottom_plate,Root/Carbine/Flintlock/Hammer,Root/Musket/Stock/Buttstock/Buttstock_bottom/Buttstock_butt/Buttstock_butt_plate,Root/Carbine/Flintlock/Pan,Root/Musket/Band_third,Root/Carbine/Flintlock/Hammer/Hammer_arm,Root/Carbine/Ramrod_origin,Root/Carbine/Barrel,Root/Carbine/Stock,Root/Trigger_assembly,Root/Carbine/Flintlock/Frizzen,Root/Musket/Stock/Buttstock/Buttstock_butt,Root/Ramrod,Root/double-shot,Root/Carbine/Band_second,Root/Musket/Barrel,Root/Carbine/Trigger_assembly",
 		"allAngles": true,
 		"entityTextureMode": false
 	},
@@ -9,18 +9,19 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"brass": "block/metal/plate/brass",
-		"tinbronze": "block/metal/plate/tinbronze",
-		"lead1": "block/metal/sheet-plain/lead1",
-		"rusty-iron2": "block/metal/tarnished/rusty-iron2",
-		"flint": "block/stone/flint",
-		"oak": "block/wood/debarked/oak"
+		"brass": "game:block/metal/plate/brass",
+		"tinbronze": "game:block/metal/plate/tinbronze",
+		"lead1": "game:block/metal/sheet-plain/lead1",
+		"rusty-iron2": "game:block/metal/tarnished/rusty-iron2",
+		"flint": "game:block/stone/flint",
+		"oak": "game:block/wood/debarked/oak"
 	},
 	"elements": [
 		{
 			"name": "double-shot",
-			"from": [ 0.0, 0.0, 0.0 ],
-			"to": [ 0.0, 0.0, 0.0 ],
+			"from": [ 0.2, -0.1, -0.9 ],
+			"to": [ 0.2, -0.1, -0.9 ],
+			"rotationOrigin": [ 0.2, -0.1, -0.9 ],
 			"faces": {
 				"north": { "texture": "#tinbronze", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
 				"east": { "texture": "#tinbronze", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
@@ -1906,6 +1907,72 @@
 						"Flint_arm": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 }
 					}
 				}
+			]
+		},
+
+		{
+			"name": "Load",
+			"code": "load",
+			"quantityframes": 215,
+			"onActivityStopped": "Stop",
+			"onAnimationEnd": "Hold",
+			"keyframes": [
+
+			]
+		},
+
+		{
+			"name": "Prime",
+			"code": "prime",
+			"quantityframes": 60,
+			"onActivityStopped": "Stop",
+			"onAnimationEnd": "Hold",
+			"keyframes": [
+
+			]
+		},
+
+		{
+			"name": "Fire",
+			"code": "fire",
+			"quantityframes": 30,
+			"onActivityStopped": "Stop",
+			"onAnimationEnd": "Hold",
+			"keyframes": [
+
+			]
+		},
+
+		{
+			"name": "Load",
+			"code": "load",
+			"quantityframes": 215,
+			"onActivityStopped": "Stop",
+			"onAnimationEnd": "Hold",
+			"keyframes": [
+
+			]
+		},
+
+		{
+			"name": "Prime",
+			"code": "prime",
+			"quantityframes": 60,
+			"onActivityStopped": "Stop",
+			"onAnimationEnd": "Hold",
+			"keyframes": [
+
+			]
+		},
+
+		{
+			"name": "Fire",
+			"code": "fire",
+			"quantityframes": 30,
+			"onActivityStopped": "Stop",
+			"onAnimationEnd": "Hold",
+			"keyframes": [
+
 			]
 		}
 	]

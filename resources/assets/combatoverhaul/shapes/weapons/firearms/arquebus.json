@@ -1,6 +1,6 @@
 {
 	"editor": {
-		"collapsedPaths": "Root/Flask_origin/Flask_origin_inner/Flask,Root/Arquebus_origin/Lever,Root/Arquebus_origin/Ramdrod_origin,Root/Arquebus_origin/Stock,Root/Arquebus_origin/Barrel,Root/Arquebus_origin/Matchlock/Lock_lever/Match_origin/Match,Root/Arquebus_origin/Matchlock/Lock_lever/Lever_arm,Root/Arquebus_origin/Flask_origin/Flask_origin_inner/Flask,Root/Arquebus_origin/Matchlock,Root/Arquebus_origin/Matchlock/Pan,Root/Flask/Bottom_plate,Root/Match",
+		"collapsedPaths": "Root/Band_second,Root/Musket/Band_first,Root/Band_first,Root/Carbine/Band_third,Root/Stock,Root/Flintlock,Root/Carbine/Trigger_assembly/Trigger_assemly_base,Root/Barrel,Root/Arquebus_origin/Matchlock,Root/Band_third,Root/Carbine/Flintlock,Root/Arquebus_origin/Stock,Root/Musket/Trigger_assembly,Root/Musket/Band_second,Root/Arquebus_origin/Barrel,Root/Carbine/Trigger_assembly/Guard,Root/Arquebus_origin,Root/Carbine,Root/Arquebus_origin/Flask_origin,Root/Musket/Flintlock/Plate,Root/Carbine/Ramrod_origin/Ramrod,Root/Musket,Root/Musket/Flintlock,Root/Carbine/Flask_origin/Flask_origin_inner,Root/Arquebus_origin/Patch,Root/Musket/Stock,Root/origin/Bottom_plate,Root/Carbine/Flintlock/Hammer,Root/Musket/Stock/Buttstock/Buttstock_bottom/Buttstock_butt/Buttstock_butt_plate,Root/Carbine/Flintlock/Pan,Root/Musket/Band_third,Root/Carbine/Flintlock/Hammer/Hammer_arm,Root/Arquebus_origin/Lever,Root/Carbine/Ramrod_origin,Root/Carbine/Barrel,Root/Carbine/Stock,Root/Trigger_assembly,Root/Carbine/Flintlock/Frizzen,Root/Musket/Stock/Buttstock/Buttstock_butt,Root/Ramrod,Root/Carbine/Band_second,Root/Musket/Barrel,Root/Carbine/Trigger_assembly",
 		"allAngles": false,
 		"entityTextureMode": false
 	},
@@ -15,14 +15,15 @@
 		"brass": "game:block/metal/plate/brass",
 		"metal": "game:block/metal/plate/iron",
 		"lead": "game:block/metal/plate/lead",
-		"wood": "game:block/wood/debarked/oak",
-		"flaskwood": "game:block/wood/debarked/oak"
+		"flaskwood": "game:block/wood/debarked/oak",
+		"wood": "game:block/wood/debarked/oak"
 	},
 	"elements": [
 		{
 			"name": "Arquebus_origin",
-			"from": [ 0.0, 0.0, 0.0 ],
-			"to": [ 0.0, 0.0, 0.0 ],
+			"from": [ 0.0, -1.2, -2.3 ],
+			"to": [ 0.0, -1.2, -2.3 ],
+			"rotationOrigin": [ 0.0, -1.2, -2.3 ],
 			"faces": {
 				"north": { "texture": "#wood", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
 				"east": { "texture": "#wood", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
@@ -1952,6 +1953,39 @@
 						"Match_3": { "rotationX": 22.0, "rotationY": 0.0, "rotationZ": 0.0 }
 					}
 				}
+			]
+		},
+
+		{
+			"name": "Load",
+			"code": "load",
+			"quantityframes": 215,
+			"onActivityStopped": "Stop",
+			"onAnimationEnd": "Hold",
+			"keyframes": [
+
+			]
+		},
+
+		{
+			"name": "Prime",
+			"code": "prime",
+			"quantityframes": 60,
+			"onActivityStopped": "Stop",
+			"onAnimationEnd": "Hold",
+			"keyframes": [
+
+			]
+		},
+
+		{
+			"name": "Fire",
+			"code": "fire",
+			"quantityframes": 30,
+			"onActivityStopped": "Stop",
+			"onAnimationEnd": "Hold",
+			"keyframes": [
+
 			]
 		}
 	]

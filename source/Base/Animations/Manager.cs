@@ -19,13 +19,14 @@ public sealed class AnimationsManager
     public Dictionary<string, Animation> Animations { get; private set; } = new();
     public static bool PlayAnimationsInThirdPerson { get; set; } = false;
 
-    public AnimationsManager(ICoreClientAPI api)
+    public AnimationsManager(ICoreClientAPI api, ParticleEffectsManager particleEffectsManager)
     {
         api.ModLoader.GetModSystem<ImGuiModSystem>().Draw += DrawEditor;
         api.Input.RegisterHotKey("combatOverhaul_editor", "Show animation editor", GlKeys.L, ctrlPressed: true);
         api.Input.SetHotKeyHandler("combatOverhaul_editor", keys => _showAnimationEditor = !_showAnimationEditor);
 
         _api = api;
+        _particleEffectsManager = particleEffectsManager;
     }
     public void Load()
     {
@@ -56,6 +57,7 @@ public sealed class AnimationsManager
     private readonly FieldInfo _cameraFov = typeof(Camera).GetField("Fov", BindingFlags.NonPublic | BindingFlags.Instance);
     private string _playerAnimationKey = "";
     private float _animationSpeed = 1;
+    private ParticleEffectsManager _particleEffectsManager;
 
     private CallbackGUIStatus DrawEditor(float deltaSeconds)
     {
@@ -103,11 +105,18 @@ public sealed class AnimationsManager
 
                 ImGui.EndTabItem();
             }
+            if (ImGui.BeginTabItem("Particle effects##tab"))
+            {
+                _particleEffectsManager.Draw("particle-effects");
+                ImGui.EndTabItem();
+            }
             if (ImGui.BeginTabItem("Debug##tab"))
             {
                 bool collidersRender = CollidersEntityBehavior.RenderColliders;
                 ImGui.Checkbox("Render entities colliders", ref collidersRender);
                 CollidersEntityBehavior.RenderColliders = collidersRender;
+
+                ImGui.EndTabItem();
             }
             ImGui.EndTabBar();
 
@@ -226,11 +235,11 @@ public sealed class AnimationsManager
             {
                 if (Animations[codes[_selectedAnimationIndex]]._playerFrameEdited)
                 {
-                    _behavior.FrameOverride = Animations[codes[_selectedAnimationIndex]].StillPlayerFrame(Animations[codes[_selectedAnimationIndex]]._playerFrameIndex);
+                    _behavior.FrameOverride = Animations[codes[_selectedAnimationIndex]].StillPlayerFrame(Animations[codes[_selectedAnimationIndex]]._playerFrameIndex, Animations[codes[_selectedAnimationIndex]]._frameProgress);
                 }
                 else
                 {
-                    _behavior.FrameOverride = Animations[codes[_selectedAnimationIndex]].StillItemFrame(Animations[codes[_selectedAnimationIndex]]._itemFrameIndex);
+                    _behavior.FrameOverride = Animations[codes[_selectedAnimationIndex]].StillItemFrame(Animations[codes[_selectedAnimationIndex]]._itemFrameIndex, Animations[codes[_selectedAnimationIndex]]._frameProgress);
                 }
             }
             else

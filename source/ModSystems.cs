@@ -14,6 +14,7 @@ using Vintagestory.API.Server;
 using Vintagestory.Client.NoObf;
 using CombatOverhaul.Implementations;
 using Vintagestory.GameContent;
+using CombatOverhaul.Utils;
 
 namespace CombatOverhaul;
 
@@ -93,7 +94,7 @@ public sealed class CombatOverhaulSystem : ModSystem
     public SoundsSynchronizerClient? ClientSoundsSynchronizer { get; private set; }
     public SoundsSynchronizerServer? ServerSoundsSynchronizer { get; private set; }
 
-    
+
     private ICoreClientAPI? _clientApi;
 }
 
@@ -101,6 +102,7 @@ public sealed class CombatOverhaulSystem : ModSystem
 public sealed class CombatOverhaulAnimationsSystem : ModSystem
 {
     public AnimationsManager? PlayerAnimationsManager { get; private set; }
+    public ParticleEffectsManager? ParticleEffectsManager { get; private set; }
 
     public IShaderProgram? AnimatedItemShaderProgram => _shaderProgram;
     public IShaderProgram? AnimatedItemShaderProgramFirstPerson => _shaderProgramFirstPerson;
@@ -110,18 +112,20 @@ public sealed class CombatOverhaulAnimationsSystem : ModSystem
         _api = api;
 
         AnimationPatch.Patch("CombatOverhaul");
+        
     }
 
     public override void StartClientSide(ICoreClientAPI api)
     {
         api.Event.ReloadShader += LoadAnimatedItemShaders;
         LoadAnimatedItemShaders();
-        PlayerAnimationsManager = new(api);
+        ParticleEffectsManager = new(api);
+        PlayerAnimationsManager = new(api, ParticleEffectsManager);
     }
 
     public override void StartServerSide(ICoreServerAPI api)
     {
-
+        ParticleEffectsManager = new(api);
     }
 
     public override void AssetsFinalize(ICoreAPI api)

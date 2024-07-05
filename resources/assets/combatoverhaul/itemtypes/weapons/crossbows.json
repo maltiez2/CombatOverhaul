@@ -1,7 +1,7 @@
 ﻿{
   "code": "crossbow",
   "class": "CombatOverhaul:Crossbow",
-  "variantgroups": [{"code": "type", "states": ["simple", "stirrup", "latch", "goatsfoot", "windlass"]}],
+  "variantgroups": [{"code": "type", "states": ["simple", "stirrup", "latch", "goatsfoot", "windlass"]}, {"code": "subtype", "states": ["regular"]}],
   "creativeinventory": {"combatoverhaul": ["*"]},
   "maxstacksize": 1,
   "durabilityByType": {"*-simple": 450, "*-stirrup": 900, "*-latch": 900, "*-goatsfoot": 1600, "*-windlass": 1200},

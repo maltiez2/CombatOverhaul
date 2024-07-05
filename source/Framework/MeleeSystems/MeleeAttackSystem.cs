@@ -18,7 +18,7 @@ public struct MeleeAttackPacket
 
 public abstract class MeleeSystem
 {
-    public const string NetworkChannelId = "melee-weapons-framework:damage-packets";
+    public const string NetworkChannelId = "CombatOverhaul:damage-packets";
 }
 
 public readonly struct AttackId

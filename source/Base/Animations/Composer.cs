@@ -1,10 +1,15 @@
-﻿namespace CombatOverhaul.Animations;
+﻿using CombatOverhaul.Utils;
+using Vintagestory.API.Common;
+
+namespace CombatOverhaul.Animations;
 
 internal sealed class Composer
 {
-    public Composer(SoundsSynchronizerClient soundsManager)
+    public Composer(SoundsSynchronizerClient soundsManager, ParticleEffectsManager particleEffectsManager, EntityPlayer player)
     {
         _soundsManager = soundsManager;
+        _particleEffectsManager = particleEffectsManager;
+        _player = player;
     }
 
     public PlayerItemFrame Compose(TimeSpan delta)
@@ -94,7 +99,7 @@ internal sealed class Composer
         else
         {
             string category = request.Category;
-            _animators.Add(category, new Animator(request.Animation, _soundsManager, request.AnimationSpeed));
+            _animators.Add(category, new Animator(request.Animation, _soundsManager, _particleEffectsManager, _player, request.AnimationSpeed));
             _requests.Add(category, request);
             _previousWeight[category] = 0;
             _currentWeight[category] = 0;
@@ -133,6 +138,8 @@ internal sealed class Composer
     private readonly Dictionary<string, TimeSpan> _currentTimes = new();
     private readonly Dictionary<string, bool> _callbacksCalled = new();
     private readonly SoundsSynchronizerClient _soundsManager;
+    private readonly ParticleEffectsManager _particleEffectsManager;
+    private readonly EntityPlayer _player;
 
     private void ProcessWeight(string category, AnimatorWeightState state)
     {
@@ -240,11 +247,13 @@ public readonly struct AnimationRequestByCode
 
 internal class Animator
 {
-    public Animator(Animation animation, SoundsSynchronizerClient soundsManager, float animationSpeed)
+    public Animator(Animation animation, SoundsSynchronizerClient soundsManager, ParticleEffectsManager particleEffectsManager, EntityPlayer player, float animationSpeed)
     {
         _currentAnimation = animation;
         _soundsManager = soundsManager;
         _animationSpeed = animationSpeed;
+        _player = player;
+        _particleEffectsManager = particleEffectsManager;
     }
 
     public bool FinishOverride { get; set; } = false;
@@ -265,6 +274,8 @@ internal class Animator
         TimeSpan adjustedDuration = _currentDuration * _animationSpeed;
 
         _currentAnimation.PlaySounds(_soundsManager, previousDuration, adjustedDuration);
+        _currentAnimation.SpawnParticles(_player, _particleEffectsManager, previousDuration, adjustedDuration);
+
         _lastFrame = _currentAnimation.Interpolate(_previousAnimationFrame, adjustedDuration);
         return _lastFrame;
     }
@@ -277,4 +288,6 @@ internal class Animator
     private float _animationSpeed = 1;
     private Animation _currentAnimation;
     private readonly SoundsSynchronizerClient _soundsManager;
+    private readonly ParticleEffectsManager _particleEffectsManager;
+    private readonly EntityPlayer _player;
 }

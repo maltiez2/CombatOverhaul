@@ -1,5 +1,4 @@
 ﻿using CombatOverhaul.Colliders;
-using CombatOverhaul.MeleeSystems;
 using CombatOverhaul.Utils;
 using System.Collections.Immutable;
 using Vintagestory.API.Common;

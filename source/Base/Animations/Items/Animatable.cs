@@ -164,7 +164,7 @@ public class Animatable : CollectibleBehavior
     }
     protected string GetAttachmentPointName(bool right, Entity entity)
     {
-        if (IsFirstPerson(entity) && DetachedAnchor)
+        if (DetachedAnchor)
         {
             DetachedAnchor = false;
             return "DetachedAnchor";

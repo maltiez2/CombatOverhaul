@@ -1,4 +1,5 @@
 ﻿using CombatOverhaul.Integration;
+using CombatOverhaul.Utils;
 using System.Reflection;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -25,7 +26,8 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
         _animationsManager = player.Api.ModLoader.GetModSystem<CombatOverhaulAnimationsSystem>().PlayerAnimationsManager;
 
         SoundsSynchronizerClient soundsManager = player.Api.ModLoader.GetModSystem<CombatOverhaulSystem>().ClientSoundsSynchronizer ?? throw new Exception();
-        _composer = new(soundsManager);
+        ParticleEffectsManager particleEffectsManager = player.Api.ModLoader.GetModSystem<CombatOverhaulAnimationsSystem>().ParticleEffectsManager ?? throw new Exception();
+        _composer = new(soundsManager, particleEffectsManager, player);
 
         AnimationPatch.OnBeforeFrame += OnBeforeFrame;
         AnimationPatch.OnFrame += OnFrame;

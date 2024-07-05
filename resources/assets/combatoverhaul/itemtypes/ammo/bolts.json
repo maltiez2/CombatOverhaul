@@ -48,7 +48,7 @@
     "*": {"base": "ammo/bolts/insert"}
   },
   "texturesByType": {"*-flint": {"head": {"base": "game:block/stone/flint"}}, "*": {"head": {"base": "game:block/metal/ingot/{material}"}}},
-  "creativeinventory": {"combatoverhaul-crossbows": ["*"]},
+  "creativeinventory": {"combatoverhaul": ["*"]},
   "guiTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -20, "y": -41, "z": -145}, "origin": {"x": 0.6, "y": -0.44, "z": 0}, "scale": 2.73},
   "tpHandTransform": {"translation": {"x": 0.3, "y": 0, "z": 0.5}, "rotation": {"x": 0, "y": 2, "z": 3}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
   "groundTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": -0.03, "z": 0.5}, "scale": 4},

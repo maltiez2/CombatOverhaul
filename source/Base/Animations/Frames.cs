@@ -75,12 +75,12 @@ public readonly struct SoundFrame
         Synchronize = synchronize;
     }
 
-    public SoundFrame Edit(string title)
+    public SoundFrame Edit(string title, TimeSpan totalDuration)
     {
         string code = Code;
         ImGui.InputText($"Sound code##{title}", ref code, 300);
 
-        float time = DurationFraction;
+        float time = DurationFraction * (float)totalDuration.TotalMilliseconds;
         ImGui.InputFloat($"Duration fraction##{title}", ref time);
 
         bool pitch = RandomizePitch;
@@ -95,7 +95,45 @@ public readonly struct SoundFrame
         bool sync = Synchronize;
         ImGui.Checkbox($"Randomize pitch##{title}", ref sync);
 
-        return new(code, time, pitch, range, volume, sync);
+        return new(code, time / (float)totalDuration.TotalMilliseconds, pitch, range, volume, sync);
+    }
+}
+
+public readonly struct ParticlesFrame
+{
+    public readonly string Code;
+    public readonly float DurationFraction;
+    public readonly Vector3 Position;
+    public readonly Vector3 Velocity;
+    public readonly float Intensity;
+
+    public ParticlesFrame(string code, float durationFraction, Vector3 position, Vector3 velocity, float intensity)
+    {
+        Code = code;
+        DurationFraction = durationFraction;
+        Position = position;
+        Velocity = velocity;
+        Intensity = intensity;
+    }
+
+    public ParticlesFrame Edit(string title, TimeSpan totalDuration)
+    {
+        string code = Code;
+        ImGui.InputText($"Effect code##{title}", ref code, 300);
+
+        float time = DurationFraction * (float)totalDuration.TotalMilliseconds;
+        ImGui.InputFloat($"Duration fraction##{title}", ref time);
+
+        Vector3 position = Position;
+        ImGui.DragFloat3($"Position ##{title}", ref position);
+
+        Vector3 velocity = Velocity;
+        ImGui.DragFloat3($"Velocity ##{title}", ref velocity);
+
+        float intensity = Intensity;
+        ImGui.InputFloat($"Intensity ##{title}", ref intensity, 0.1f, 1);
+
+        return new(code, time / (float)totalDuration.TotalMilliseconds, position, velocity, intensity);
     }
 }
 
@@ -730,8 +768,20 @@ public readonly struct AnimationElement
         Vector3 translation = new Vector3(OffsetX, OffsetY, OffsetZ) * multiplier;
         ImGui.DragFloat3($"Translation##{title}", ref translation, speed);
 
+        ImGui.SameLine();
+        if (ImGui.Button($"Copy##{title}"))
+        {
+            _buffer = this;
+        }
+
         Vector3 rotation = new(RotationX, RotationY, RotationZ);
         ImGui.DragFloat3($"Rotation##{title}", ref rotation, speed);
+
+        ImGui.SameLine();
+        if (ImGui.Button($"Paste##{title}"))
+        {
+            return _buffer;
+        }
 
         return new(
             translation.X / multiplier,
@@ -825,4 +875,6 @@ public readonly struct AnimationElement
             (float?)frame.RotationY ?? 0,
             (float?)frame.RotationZ ?? 0);
     }
+
+    private static AnimationElement _buffer = AnimationElement.Zero;
 }

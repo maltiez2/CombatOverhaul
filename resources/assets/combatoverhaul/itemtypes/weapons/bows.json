@@ -1,7 +1,7 @@
 ﻿{
   "code": "bow",
   "class": "CombatOverhaul:Bow",
-  "variantgroups": [{"code": "type", "states": ["simple", "crude", "long", "recurve"]}],
+  "variantgroups": [{"code": "type", "states": ["simple", "crude", "long", "recurve"]}, {"code": "subtype", "states": ["regular"]}],
   "creativeinventory": {"combatoverhaul": ["*"]},
   "maxstacksize": 1,
   "durabilityByType": {"bow-crude": 180, "bow-simple": 240, "bow-long": 750, "bow-recurve": 600},
@@ -17,7 +17,7 @@
     "DrawAnimation": "combatoverhaul:bow-draw-{type}",
     "ReleaseAnimation": "combatoverhaul:bow-release-simple",
     "AimingByType": {
-      "bow-crude": {
+      "*-crude-*": {
         "AimDifficulty": 1,
         "CursorType": "Moving",
         "AccuracyOvertimeSec": 12,
@@ -33,7 +33,7 @@
         "VerticalLimit": 0.25,
         "VerticalOffset": -0.05
       },
-      "bow-simple": {
+      "*-simple-*": {
         "AimDifficulty": 1,
         "CursorType": "Moving",
         "AccuracyOvertimeSec": 8,
@@ -49,7 +49,7 @@
         "VerticalLimit": 0.25,
         "VerticalOffset": -0.05
       },
-      "bow-long": {
+      "*-long-*": {
         "AimDifficulty": 1,
         "CursorType": "Moving",
         "AccuracyOvertimeSec": 6,
@@ -65,7 +65,7 @@
         "VerticalLimit": 0.25,
         "VerticalOffset": -0.05
       },
-      "bow-recurve": {
+      "*-recurve-*": {
         "AimDifficulty": 1,
         "CursorType": "Moving",
         "AccuracyOvertimeSec": 8,

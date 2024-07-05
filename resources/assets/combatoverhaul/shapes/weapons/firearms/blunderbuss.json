@@ -1,6 +1,6 @@
 {
 	"editor": {
-		"collapsedPaths": "Root/Arquebus_origin/Barrel,Root/Arquebus_origin/Flask_origin,Root/Flask/Bottom_plate,Root/Match,Root/Flask_origin/Flask_origin_inner/Flask,Root/Arquebus_origin/Patch,Root/Arquebus_origin/Flask_origin/Flask_origin_inner/Flask,Root/Arquebus_origin/Ramdrod_origin",
+		"collapsedPaths": "Root/Band_second,Root/Musket/Band_first,Root/Band_first,Root/Carbine/Band_third,Root/Stock,Root/Flintlock,Root/Carbine/Trigger_assembly/Trigger_assemly_base,Root/Barrel,Root/Band_third,Root/Carbine/Flintlock,Root/Musket/Trigger_assembly,Root/Musket/Band_second,Root/Carbine/Trigger_assembly/Guard,Root/Arquebus_origin,Root/Carbine,Root/Musket/Flintlock/Plate,Root/Carbine/Ramrod_origin/Ramrod,Root/Musket,Root/Musket/Flintlock,Root/Carbine/Flask_origin/Flask_origin_inner,Root/Musket/Stock,Root/origin/Bottom_plate,Root/Carbine/Flintlock/Hammer,Root/Musket/Stock/Buttstock/Buttstock_bottom/Buttstock_butt/Buttstock_butt_plate,Root/Carbine/Flintlock/Pan,Root/Musket/Band_third,Root/Carbine/Flintlock/Hammer/Hammer_arm,Root/Carbine/Ramrod_origin,Root/Carbine/Barrel,Root/Carbine/Stock,Root/Trigger_assembly,Root/Carbine/Flintlock/Frizzen,Root/Musket/Stock/Buttstock/Buttstock_butt,Root/Ramrod,Root/Carbine/Band_second,Root/Musket/Barrel,Root/Carbine/Trigger_assembly",
 		"allAngles": false,
 		"entityTextureMode": false
 	},
@@ -9,16 +9,17 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"ember": "block/coal/ember",
-		"brass": "block/metal/plate/brass",
-		"iron": "block/metal/plate/iron",
-		"kapok": "block/wood/debarked/oak"
+		"ember": "game:block/coal/ember",
+		"brass": "game:block/metal/plate/brass",
+		"iron": "game:block/metal/plate/iron",
+		"kapok": "game:block/wood/debarked/oak"
 	},
 	"elements": [
 		{
-			"name": "Arquebus_origin",
-			"from": [ 0.0, 0.0, 0.0 ],
-			"to": [ 0.0, 0.0, 0.0 ],
+			"name": "Blunderbuss",
+			"from": [ 0.0, -1.2, -2.3 ],
+			"to": [ 0.0, -1.2, -2.3 ],
+			"rotationOrigin": [ 0.0, -1.2, -2.3 ],
 			"faces": {
 				"north": { "texture": "#kapok", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
 				"east": { "texture": "#kapok", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
@@ -1041,4 +1042,39 @@
 				}
 			]
 		}
-	]}
+	],
+	"animations": [
+		{
+			"name": "Load",
+			"code": "load",
+			"quantityframes": 215,
+			"onActivityStopped": "Stop",
+			"onAnimationEnd": "Hold",
+			"keyframes": [
+
+			]
+		},
+
+		{
+			"name": "Prime",
+			"code": "prime",
+			"quantityframes": 60,
+			"onActivityStopped": "Stop",
+			"onAnimationEnd": "Hold",
+			"keyframes": [
+
+			]
+		},
+
+		{
+			"name": "Fire",
+			"code": "fire",
+			"quantityframes": 30,
+			"onActivityStopped": "Stop",
+			"onAnimationEnd": "Hold",
+			"keyframes": [
+
+			]
+		}
+	]
+}
