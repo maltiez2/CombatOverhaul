@@ -16,6 +16,12 @@ public interface IHasIdleAnimations
     AnimationRequestByCode ReadyAnimation { get; }
 }
 
+public interface IHasDynamicIdleAnimations
+{
+    AnimationRequestByCode GetIdleAnimation(bool mainHand);
+    AnimationRequestByCode GetReadyAnimation(bool mainHand);
+}
+
 public sealed class FirstPersonAnimationsBehavior : EntityBehavior
 {
     public FirstPersonAnimationsBehavior(Entity entity) : base(entity)
@@ -58,6 +64,19 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
                 Play(item.ReadyAnimation, true);
                 StartIdleTimer(item.IdleAnimation, true);
             }
+            else if (_player.RightHandItemSlot.Itemstack?.Item is IHasDynamicIdleAnimations item2)
+            {
+                string readyCategory = item2.GetReadyAnimation(mainHand: true).Category;
+
+                foreach (string category in _mainHandCategories.Where(element => element != readyCategory))
+                {
+                    _composer.Stop(category);
+                }
+                _mainHandCategories.Clear();
+
+                Play(item2.GetReadyAnimation(mainHand: true), true);
+                StartIdleTimer(item2.GetIdleAnimation(mainHand: true), true);
+            }
             else
             {
                 foreach (string category in _mainHandCategories)
@@ -85,6 +104,19 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
 
                 Play(item.ReadyAnimation, false);
                 StartIdleTimer(item.IdleAnimation, false);
+            }
+            else if (_player.RightHandItemSlot.Itemstack?.Item is IHasDynamicIdleAnimations item2)
+            {
+                string readyCategory = item2.GetReadyAnimation(mainHand: false).Category;
+
+                foreach (string category in _mainHandCategories.Where(element => element != readyCategory))
+                {
+                    _composer.Stop(category);
+                }
+                _mainHandCategories.Clear();
+
+                Play(item2.GetReadyAnimation(mainHand: false), true);
+                StartIdleTimer(item2.GetIdleAnimation(mainHand: false), true);
             }
             else
             {
