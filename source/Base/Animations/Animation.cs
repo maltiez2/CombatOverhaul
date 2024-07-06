@@ -10,13 +10,14 @@ public sealed class Animation
     public List<PLayerKeyFrame> PlayerKeyFrames { get; } = new();
     public List<ItemKeyFrame> ItemKeyFrames { get; } = new();
     public List<SoundFrame> SoundFrames { get; } = new();
+    public List<CallbackFrame> CallbackFrames { get; } = new();
     public List<ParticlesFrame> ParticlesFrames { get; } = new();
     public TimeSpan TotalDuration => PlayerKeyFrames[^1].Time;
     public TimeSpan ItemAnimationStart { get; set; } = TimeSpan.Zero;
     public TimeSpan ItemAnimationEnd { get; set; } = TimeSpan.Zero;
     public bool Hold { get; set; } = false;
 
-    public Animation(IEnumerable<PLayerKeyFrame> playerFrames, IEnumerable<ItemKeyFrame> itemFrames, IEnumerable<SoundFrame> soundFrames, IEnumerable<ParticlesFrame> particlesFrames)
+    public Animation(IEnumerable<PLayerKeyFrame> playerFrames, IEnumerable<ItemKeyFrame> itemFrames, IEnumerable<SoundFrame> soundFrames, IEnumerable<ParticlesFrame> particlesFrames, IEnumerable<CallbackFrame> callbackFrames)
     {
         if (!playerFrames.Any()) throw new ArgumentException("Frames number should be at least 1");
 
@@ -24,6 +25,7 @@ public sealed class Animation
         ItemKeyFrames = itemFrames.ToList();
         SoundFrames = soundFrames.ToList();
         ParticlesFrames = particlesFrames.ToList();
+        CallbackFrames = callbackFrames.ToList();
 
         PlayerKeyFrames.Sort((x, y) => (int)(x.Time - y.Time).TotalMilliseconds);
         ItemKeyFrames.Sort((x, y) => (int)((x.DurationFraction - y.DurationFraction) * 1E6f));
@@ -82,6 +84,10 @@ public sealed class Animation
         {
             particlesManager.Spawn(player, frame.Code, frame.Position, frame.Velocity, frame.Intensity);
         }
+    }
+    public IEnumerable<string> GetCallbacks(TimeSpan previousDuration, TimeSpan currentDuration)
+    {
+        return CallbackFrames.Where(frame => frame.DurationFraction * TotalDuration > previousDuration && frame.DurationFraction * TotalDuration <= currentDuration).Select(element => element.Code);
     }
     public PlayerItemFrame Interpolate(PlayerItemFrame previousAnimationFrame, TimeSpan currentDuration)
     {
@@ -146,6 +152,12 @@ public sealed class Animation
 
             ImGui.EndTabItem();
         }
+        if (ImGui.BeginTabItem($"Callbacks##{title}"))
+        {
+            EditCallbackFrames(title + "callbacks");
+
+            ImGui.EndTabItem();
+        }
         ImGui.EndTabBar();
 
 
@@ -187,6 +199,7 @@ public sealed class Animation
     internal bool _playerFrameEdited = true;
     internal int _soundsFrameIndex = 0;
     internal int _particlesFrameIndex = 0;
+    internal int _callbackFrameIndex = 0;
     internal float _frameProgress = 1;
 
     private ItemFrame? InterpolateItemFrame(PlayerItemFrame previousAnimationFrame, TimeSpan currentDuration)
@@ -301,7 +314,7 @@ public sealed class Animation
         {
             ImGui.SliderInt($"Key frame##{title}", ref _itemFrameIndex, 0, ItemKeyFrames.Count - 1);
 
-            ItemKeyFrame frame = ItemKeyFrames[_itemFrameIndex].Edit(title, ItemAnimationEnd - ItemAnimationStart);
+            ItemKeyFrame frame = ItemKeyFrames[_itemFrameIndex].Edit(title, ItemAnimationEnd - ItemAnimationStart, ItemAnimationStart);
             ItemKeyFrames[_itemFrameIndex] = frame;
         }
 
@@ -363,6 +376,34 @@ public sealed class Animation
             ParticlesFrames[_particlesFrameIndex] = ParticlesFrames[_particlesFrameIndex].Edit(title, TotalDuration);
         }
     }
+    private void EditCallbackFrames(string title)
+    {
+        if (ImGui.Button($"Add##{title}"))
+        {
+            CallbackFrames.Add(new("", 0));
+        }
+        ImGui.SameLine();
+
+        if (_callbackFrameIndex >= CallbackFrames.Count) _callbackFrameIndex = CallbackFrames.Count - 1;
+        if (_callbackFrameIndex < 0) _callbackFrameIndex = 0;
+
+        bool canRemove = ParticlesFrames.Any();
+        if (!canRemove) ImGui.BeginDisabled();
+        if (ImGui.Button($"Remove##{title}"))
+        {
+            CallbackFrames.RemoveAt(_callbackFrameIndex);
+        }
+        if (!canRemove) ImGui.EndDisabled();
+
+        ImGui.ListBox($"Particle effects##{title}", ref _callbackFrameIndex, CallbackFrames.Select(element => element.Code).ToArray(), CallbackFrames.Count);
+
+        ImGui.Separator();
+
+        if (_callbackFrameIndex < CallbackFrames.Count)
+        {
+            CallbackFrames[_callbackFrameIndex] = CallbackFrames[_callbackFrameIndex].Edit(title, TotalDuration);
+        }
+    }
 }
 
 public sealed class AnimationJson
@@ -372,6 +413,7 @@ public sealed class AnimationJson
     public ItemKeyFrameJson[] ItemKeyFrames { get; set; } = Array.Empty<ItemKeyFrameJson>();
     public SoundFrameJson[] SoundFrames { get; set; } = Array.Empty<SoundFrameJson>();
     public ParticlesFrameJson[] ParticlesFrames { get; set; } = Array.Empty<ParticlesFrameJson>();
+    public CallbackFrameJson[] CallbackFrames { get; set; } = Array.Empty<CallbackFrameJson>();
     public int ItemAnimationStart { get; set; }
     public int ItemAnimationEnd { get; set; }
 
@@ -381,7 +423,8 @@ public sealed class AnimationJson
             PlayerKeyFrames.Select(element => element.ToKeyFrame()),
             ItemKeyFrames.Select(element => element.ToKeyFrame()),
             SoundFrames.Select(element => element.ToSoundFrame()),
-            ParticlesFrames.Select(element => element.ToParticlesFrame()))
+            ParticlesFrames.Select(element => element.ToParticlesFrame()),
+            CallbackFrames.Select(element => element.ToCallbackFrame()))
         {
             Hold = Hold,
             ItemAnimationStart = TimeSpan.FromMilliseconds(ItemAnimationStart),
@@ -398,6 +441,7 @@ public sealed class AnimationJson
             ItemKeyFrames = animation.ItemKeyFrames.Select(ItemKeyFrameJson.FromKeyFrame).ToArray(),
             SoundFrames = animation.SoundFrames.Select(SoundFrameJson.FromSoundFrame).ToArray(),
             ParticlesFrames = animation.ParticlesFrames.Select(ParticlesFrameJson.FromParticlesFrame).ToArray(),
+            CallbackFrames = animation.CallbackFrames.Select(CallbackFrameJson.FromCallbackFrame).ToArray(),
             ItemAnimationStart = (int)animation.ItemAnimationStart.TotalMilliseconds,
             ItemAnimationEnd = (int)animation.ItemAnimationEnd.TotalMilliseconds
         };
@@ -456,6 +500,26 @@ public sealed class ParticlesFrameJson
             Position = new float[3] { frame.Position.X, frame.Position.Y, frame.Position.Z },
             Velocity = new float[3] { frame.Velocity.X, frame.Velocity.Y, frame.Velocity.Z },
             Intensity = frame.Intensity
+        };
+    }
+}
+
+public sealed class CallbackFrameJson
+{
+    public string Code { get; set; } = "";
+    public float DurationFraction { get; set; }
+
+    public CallbackFrame ToCallbackFrame()
+    {
+        return new(Code, DurationFraction);
+    }
+
+    public static CallbackFrameJson FromCallbackFrame(CallbackFrame frame)
+    {
+        return new()
+        {
+            Code = frame.Code,
+            DurationFraction = frame.DurationFraction
         };
     }
 }

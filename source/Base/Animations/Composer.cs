@@ -25,8 +25,13 @@ internal sealed class Composer
         List<(PlayerItemFrame, float)> frames = new();
         foreach ((string category, Animator? animator) in _animators)
         {
-            PlayerItemFrame frame = animator.Animate(delta);
+            PlayerItemFrame frame = animator.Animate(delta, out IEnumerable<string> callbacks);
             frames.Add((frame, _currentWeight[category]));
+
+            foreach (string callbackId in callbacks)
+            {
+                _requests[category].CallbackHandler?.Invoke(callbackId);
+            }
         }
         PlayerItemFrame result = PlayerItemFrame.Compose(frames);
 
@@ -182,9 +187,10 @@ public readonly struct AnimationRequest
     public readonly TimeSpan EaseOutDuration;
     public readonly TimeSpan EaseInDuration;
     public readonly bool EaseOut;
+    public readonly Action<string>? CallbackHandler;
     public readonly System.Func<bool>? FinishCallback;
 
-    public AnimationRequest(Animation animation, float animationSpeed, float weight, string category, TimeSpan easeOutDuration, TimeSpan easeInDuration, bool easeOut, System.Func<bool>? finishCallback = null)
+    public AnimationRequest(Animation animation, float animationSpeed, float weight, string category, TimeSpan easeOutDuration, TimeSpan easeInDuration, bool easeOut, System.Func<bool>? finishCallback = null, Action<string>? callbackHandler = null)
     {
         Animation = animation;
         AnimationSpeed = animationSpeed;
@@ -194,6 +200,7 @@ public readonly struct AnimationRequest
         EaseInDuration = easeInDuration;
         EaseOut = easeOut;
         FinishCallback = finishCallback;
+        CallbackHandler = callbackHandler;
     }
 
     public AnimationRequest(Animation animation, AnimationRequestByCode request)
@@ -206,6 +213,7 @@ public readonly struct AnimationRequest
         EaseInDuration = request.EaseInDuration;
         EaseOut = request.EaseOut;
         FinishCallback = request.FinishCallback;
+        CallbackHandler = request.CallbackHandler;
     }
 
     public AnimationRequest(System.Func<bool> callback, AnimationRequest request)
@@ -218,6 +226,7 @@ public readonly struct AnimationRequest
         EaseInDuration = request.EaseInDuration;
         EaseOut = request.EaseOut;
         FinishCallback = callback;
+        CallbackHandler = request.CallbackHandler;
     }
 }
 
@@ -230,9 +239,10 @@ public readonly struct AnimationRequestByCode
     public readonly TimeSpan EaseOutDuration;
     public readonly TimeSpan EaseInDuration;
     public readonly bool EaseOut;
+    public readonly Action<string>? CallbackHandler;
     public readonly System.Func<bool>? FinishCallback;
 
-    public AnimationRequestByCode(string animation, float animationSpeed, float weight, string category, TimeSpan easeOutDuration, TimeSpan easeInDuration, bool easeOut, System.Func<bool>? finishCallback = null)
+    public AnimationRequestByCode(string animation, float animationSpeed, float weight, string category, TimeSpan easeOutDuration, TimeSpan easeInDuration, bool easeOut, System.Func<bool>? finishCallback = null, Action<string>? callbackHandler = null)
     {
         Animation = animation;
         AnimationSpeed = animationSpeed;
@@ -242,6 +252,7 @@ public readonly struct AnimationRequestByCode
         EaseInDuration = easeInDuration;
         EaseOut = easeOut;
         FinishCallback = finishCallback;
+        CallbackHandler = callbackHandler;
     }
 }
 
@@ -267,7 +278,7 @@ internal class Animator
         _previousAnimationFrame = _lastFrame;
     }
 
-    public PlayerItemFrame Animate(TimeSpan delta)
+    public PlayerItemFrame Animate(TimeSpan delta, out IEnumerable<string> callbacks)
     {
         TimeSpan previousDuration = _currentDuration * _animationSpeed;
         _currentDuration += delta;
@@ -275,6 +286,7 @@ internal class Animator
 
         _currentAnimation.PlaySounds(_soundsManager, previousDuration, adjustedDuration);
         _currentAnimation.SpawnParticles(_player, _particleEffectsManager, previousDuration, adjustedDuration);
+        callbacks = _currentAnimation.GetCallbacks(previousDuration, adjustedDuration);
 
         _lastFrame = _currentAnimation.Interpolate(_previousAnimationFrame, adjustedDuration);
         return _lastFrame;

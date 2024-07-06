@@ -4,6 +4,7 @@ using CombatOverhaul.Inputs;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
+using Vintagestory.API.Config;
 using Vintagestory.API.Server;
 
 namespace CombatOverhaul.RangedSystems;
@@ -64,6 +65,23 @@ public class RangeWeaponClient : IClientWeaponLogic
         where TState : struct, Enum
     {
         return (TState)Enum.ToObject(typeof(TState), PlayerBehavior?.GetState(mainHand) ?? 0);
+    }
+
+    protected bool CheckForOtherHandEmpty(bool mainHand, EntityPlayer player)
+    {
+        if (mainHand && !player.LeftHandItemSlot.Empty)
+        {
+            (player.World.Api as ICoreClientAPI)?.TriggerIngameError(this, "offhandShouldBeEmpty", Lang.Get("Offhand should be empty"));
+            return false;
+        }
+
+        if (!mainHand && !player.RightHandItemSlot.Empty)
+        {
+            (player.World.Api as ICoreClientAPI)?.TriggerIngameError(this, "mainHandShouldBeEmpty", Lang.Get("Main hand should be empty"));
+            return false;
+        }
+
+        return true;
     }
 }
 

@@ -81,7 +81,7 @@ public readonly struct SoundFrame
         ImGui.InputText($"Sound code##{title}", ref code, 300);
 
         float time = DurationFraction * (float)totalDuration.TotalMilliseconds;
-        ImGui.InputFloat($"Duration fraction##{title}", ref time);
+        ImGui.InputFloat($"Time##{title}", ref time);
 
         bool pitch = RandomizePitch;
         ImGui.Checkbox($"Randomize pitch##{title}", ref pitch);
@@ -122,7 +122,7 @@ public readonly struct ParticlesFrame
         ImGui.InputText($"Effect code##{title}", ref code, 300);
 
         float time = DurationFraction * (float)totalDuration.TotalMilliseconds;
-        ImGui.InputFloat($"Duration fraction##{title}", ref time);
+        ImGui.InputFloat($"Time##{title}", ref time);
 
         Vector3 position = Position;
         ImGui.DragFloat3($"Position ##{title}", ref position);
@@ -134,6 +134,29 @@ public readonly struct ParticlesFrame
         ImGui.InputFloat($"Intensity ##{title}", ref intensity, 0.1f, 1);
 
         return new(code, time / (float)totalDuration.TotalMilliseconds, position, velocity, intensity);
+    }
+}
+
+public readonly struct CallbackFrame
+{
+    public readonly string Code;
+    public readonly float DurationFraction;
+
+    public CallbackFrame(string code, float durationFraction)
+    {
+        Code = code;
+        DurationFraction = durationFraction;
+    }
+
+    public CallbackFrame Edit(string title, TimeSpan totalDuration)
+    {
+        string code = Code;
+        ImGui.InputText($"Effect code##{title}", ref code, 300);
+
+        float time = DurationFraction * (float)totalDuration.TotalMilliseconds;
+        ImGui.InputFloat($"Time##{title}", ref time);
+
+        return new(code, time / (float)totalDuration.TotalMilliseconds);
     }
 }
 
@@ -160,20 +183,20 @@ public readonly struct ItemKeyFrame
 
     public bool Reached(float animationProgress) => animationProgress >= DurationFraction;
 
-    public ItemKeyFrame Edit(string title, TimeSpan totalDuration)
+    public ItemKeyFrame Edit(string title, TimeSpan totalDuration, TimeSpan startDuration)
     {
         float total = (float)totalDuration.TotalMilliseconds;
 
         if (total < 1E-8) return this;
 
-        float progress = DurationFraction * total;
+        float progress = (float)startDuration.TotalMilliseconds + DurationFraction * total;
         ImGui.InputFloat($"Time", ref progress, 0, 1);
 
         EasingFunctionType function = VSImGui.EnumEditor<EasingFunctionType>.Combo($"Easing function##{title}", EasingFunction);
 
         ItemFrame frame = Frame.Edit(title);
 
-        return new(frame, progress / total, function);
+        return new(frame, Math.Clamp((progress - (float)startDuration.TotalMilliseconds) / total, 0, 1), function);
     }
 
     public static List<ItemKeyFrame> FromVanillaAnimation(string code, Shape shape)

@@ -15,6 +15,7 @@ using Vintagestory.Client.NoObf;
 using CombatOverhaul.Implementations;
 using Vintagestory.GameContent;
 using CombatOverhaul.Utils;
+using CombatOverhaul.MeleeSystems;
 
 namespace CombatOverhaul;
 
@@ -42,6 +43,7 @@ public sealed class CombatOverhaulSystem : ModSystem
         api.RegisterItemClass("CombatOverhaul:Bow", typeof(BowItem));
         api.RegisterItemClass("CombatOverhaul:Crossbow", typeof(CrossbowItem));
         api.RegisterItemClass("CombatOverhaul:MagazineCrossbow", typeof(MagazineCrossbowItem));
+        api.RegisterItemClass("CombatOverhaul:Muzzleloader", typeof(MuzzleloaderItem));
 
         api.RegisterEntity("CombatOverhaul:Projectile", typeof(ProjectileEntity));
 
@@ -52,6 +54,8 @@ public sealed class CombatOverhaulSystem : ModSystem
         ServerProjectileSystem = new(api);
         ServerRangedWeaponSystem = new(api);
         ServerSoundsSynchronizer = new(api);
+        ServerMeleeSystem = new(api);
+        ServerBlockSystem = new(api);
     }
     public override void StartClientSide(ICoreClientAPI api)
     {
@@ -65,6 +69,8 @@ public sealed class CombatOverhaulSystem : ModSystem
         ClientRangedWeaponSystem = new(api);
         ClientSoundsSynchronizer = new(api);
         AimingSystem = new(api, ReticleRenderer);
+        ClientMeleeSystem = new(api);
+        ClientBlockSystem = new(api);
 
         api.Event.RegisterRenderer(ReticleRenderer, EnumRenderStage.Ortho);
         api.Event.RegisterRenderer(DirectionCursorRenderer, EnumRenderStage.Ortho);
@@ -93,6 +99,10 @@ public sealed class CombatOverhaulSystem : ModSystem
     public RangedWeaponSystemServer? ServerRangedWeaponSystem { get; private set; }
     public SoundsSynchronizerClient? ClientSoundsSynchronizer { get; private set; }
     public SoundsSynchronizerServer? ServerSoundsSynchronizer { get; private set; }
+    public MeleeSystemClient? ClientMeleeSystem { get; private set; }
+    public MeleeSystemServer? ServerMeleeSystem { get; private set; }
+    public MeleeBlockSystemClient? ClientBlockSystem { get; private set; }
+    public MeleeBlockSystemServer? ServerBlockSystem { get; private set; }
 
 
     private ICoreClientAPI? _clientApi;

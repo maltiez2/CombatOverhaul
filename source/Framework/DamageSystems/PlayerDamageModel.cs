@@ -1,10 +1,14 @@
 ﻿using CombatOverhaul.Colliders;
+using CombatOverhaul.MeleeSystems;
 using CombatOverhaul.Utils;
+using ProtoBuf;
 using System.Collections.Immutable;
+using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
+using Vintagestory.API.Server;
 using Vintagestory.GameContent;
 
 namespace CombatOverhaul.DamageSystems;
@@ -125,18 +129,9 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
             if (!CurrentDamageBlock.Directions.Check(offset)) return;
         }
 
-        DamageData data = new(damageSource.Type, 0);
-        if (damageSource is ITypedDamage typedDamage)
-        {
-            data = typedDamage.DamageTypeData;
-            typedDamage.DamageTypeData = CurrentDamageBlock.Resists.ApplyResist(typedDamage.DamageTypeData, ref damage);
-        }
-        else
-        {
-            _ = CurrentDamageBlock.Resists.ApplyResist(data, ref damage);
-        }
+        damage = 0;
 
-        CurrentDamageBlock.Callback.Invoke(data);
+        CurrentDamageBlock.Callback.Invoke();
     }
     private void ApplyArmorResists(DamageSource damageSource, DamageZone zone, ref float damage)
     {
@@ -258,14 +253,108 @@ public sealed class DamageBlockStats
 {
     public readonly DamageZone ZoneType;
     public readonly DirectionConstrain Directions;
-    public readonly DamageResistData Resists;
-    public readonly Action<DamageData> Callback;
+    public readonly Action Callback;
 
-    public DamageBlockStats(DamageZone type, DirectionConstrain directions, DamageResistData resists, Action<DamageData> callback)
+    public DamageBlockStats(DamageZone type, DirectionConstrain directions, Action callback)
     {
         ZoneType = type;
         Directions = directions;
-        Resists = resists;
         Callback = callback;
+    }
+}
+
+[ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
+public sealed class DamageBlockPacket
+{
+    public int Zones { get; set; }
+    public float[] Directions { get; set; } = Array.Empty<float>();
+    public bool MainHand { get; set; }
+
+    public DamageBlockStats ToBlockStats(Action callback)
+    {
+        return new((DamageZone)Zones, DirectionConstrain.FromArray(Directions), callback);
+    }
+}
+
+[ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
+public sealed class DamageStopBlockPacket
+{
+    public bool MainHand { get; set; }
+}
+
+public sealed class DamageBlockJson
+{
+    public string[] Zones { get; set; } = Array.Empty<string>();
+    public float[] Directions { get; set; } = Array.Empty<float>();
+
+    public DamageBlockPacket ToPacket()
+    {
+        return new()
+        {
+            Zones = (int)Zones.Select(Enum.Parse<DamageZone>).Aggregate((first, second) => first | second),
+            Directions = Directions
+        };
+    }
+}
+
+public sealed class MeleeBlockSystemClient : MeleeSystem
+{
+    public MeleeBlockSystemClient(ICoreClientAPI api)
+    {
+        _clientChannel = api.Network.RegisterChannel(NetworkChannelId)
+            .RegisterMessageType<DamageBlockPacket>()
+            .RegisterMessageType<DamageStopBlockPacket>();
+    }
+
+    public void StartBlock(DamageBlockJson block, bool mainHand)
+    {
+        DamageBlockPacket packet = block.ToPacket();
+        packet.MainHand = mainHand;
+        _clientChannel.SendPacket(packet);
+    }
+    public void StopBlock(bool mainHand)
+    {
+        _clientChannel.SendPacket(new DamageStopBlockPacket() { MainHand = mainHand });
+    }
+
+    private readonly IClientNetworkChannel _clientChannel;
+}
+
+public interface IHasServerBlockCallback
+{
+    public void BlockCallback(IServerPlayer player, ItemSlot slot, bool mainHand);
+}
+
+public sealed class MeleeBlockSystemServer : MeleeSystem
+{
+    public MeleeBlockSystemServer(ICoreServerAPI api)
+    {
+        _api = api;
+        api.Network.RegisterChannel(NetworkChannelId)
+            .RegisterMessageType<DamageBlockPacket>()
+            .RegisterMessageType<DamageStopBlockPacket>()
+            .SetMessageHandler<DamageBlockPacket>(HandlePacket)
+            .SetMessageHandler<DamageStopBlockPacket>(HandlePacket);
+    }
+
+    private readonly ICoreServerAPI _api;
+
+    private void HandlePacket(IServerPlayer player, DamageBlockPacket packet)
+    {
+        player.Entity.GetBehavior<PlayerDamageModelBehavior>().CurrentDamageBlock = packet.ToBlockStats(() => BlockCallback(player, packet.MainHand));
+    }
+
+    private void HandlePacket(IServerPlayer player, DamageStopBlockPacket packet)
+    {
+        player.Entity.GetBehavior<PlayerDamageModelBehavior>().CurrentDamageBlock = null;
+    }
+
+    private static void BlockCallback(IServerPlayer player, bool mainHand)
+    {
+        ItemSlot slot = mainHand ? player.Entity.RightHandItemSlot : player.Entity.LeftHandItemSlot;
+
+        if (slot?.Itemstack?.Item is not IHasServerBlockCallback item) return;
+
+        item.BlockCallback(player, slot, mainHand);
     }
 }

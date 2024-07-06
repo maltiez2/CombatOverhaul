@@ -248,4 +248,20 @@ public readonly struct DirectionConstrain
             offset.Yaw >= YawLeft &&
             offset.Yaw <= YawRight;
     }
+
+    public float[] ToArray()
+    {
+        return new float[4]
+        {
+            PitchTop.Degrees,
+            -PitchBottom.Degrees,
+            YawLeft.Degrees,
+            -YawRight.Degrees
+        };
+    }
+
+    public static DirectionConstrain FromArray(float[] array)
+    {
+        return new(Angle.FromDegrees(array[0]), Angle.FromDegrees(-array[1]), Angle.FromDegrees(array[2]), Angle.FromDegrees(-array[3]));
+    }
 }

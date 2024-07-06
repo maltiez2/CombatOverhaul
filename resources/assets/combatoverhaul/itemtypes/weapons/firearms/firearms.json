@@ -1,6 +1,6 @@
 ﻿{
   "code": "firearm",
-  "class": "Item",
+  "class": "CombatOverhaul:Muzzleloader",
   "variantgroups": [
     {"code": "type", "states": ["pistol", "superimposed", "handmortar", "arquebus", "blunderbuss", "carbine", "musket", "volleygun"]},
     {"code": "subtype", "states": ["regular"]}
@@ -10,7 +10,43 @@
   "durability": 600,
   "tool": "bow",
   "behaviors": [{"name": "CombatOverhaul:AnimatableAttachable", "properties": {"animated-shape": "combatoverhaul:weapons/firearms/{type}"}}],
-  "attributes": {},
+  "attributes": {
+    "BulletDamageMultiplierByType": {"*": 1},
+    "BulletDamageStrengthByType": {"*": 1},
+    "BulletVelocityByType": {"*": 4},
+    "IdleAnimation": "combatoverhaul:firearms-shoulder",
+    "ReadyAnimation": "combatoverhaul:firearms-ready",
+    "LoadAnimation": "combatoverhaul:firearms-{type}-load",
+    "PrimeAnimation": "combatoverhaul:firearms-{type}-prime",
+    "AimAnimation": "combatoverhaul:firearms-aim",
+    "ShootAnimation": "combatoverhaul:firearms-{type}-shoot",
+    "AimAnimationOffhand": "combatoverhaul:firearms-{type}-aim-offhand",
+    "ShootAnimationOffhand": "combatoverhaul:firearms-{type}-shoot-offhand",
+    "LoadedAnimation": "combatoverhaul:firearms-{type}-loaded",
+    "PrimedAnimation": "combatoverhaul:firearms-{type}-primed",
+    "MagazineSize": 1,
+    "BulletLoadedPerReload": 1,
+    "WaddingUsedPerReload": 1,
+    "LoadPowderConsumption": 3,
+    "PrimePowderConsumption": 1,
+    "LoadingRequirementWildcard": "",
+    "PrimingRequirementWildcard": "",
+    "AimingRequirementWildcard": "",
+    "Aiming": {
+      "AimDifficulty": 1,
+      "CursorType": "Fixed",
+      "AccuracyOvertimeSec": 0,
+      "ZeroingAngle": 0,
+      "AllowSprint": false,
+      "MoveSpeedPenalty": 0.1,
+      "AimDrift": 90,
+      "AimTwitch": 20,
+      "AnimationFollowX": 5.5,
+      "AnimationFollowY": 5.5,
+      "VerticalLimit": 0.25,
+      "VerticalOffset": -0.05
+    }
+  },
   "shape": {"base": "combatoverhaul:weapons/firearms/{type}"},
   "guiTransform": {
     "translation": {"x": 0, "y": 0, "z": 0},
