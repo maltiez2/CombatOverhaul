@@ -9,11 +9,11 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"blue": "block/cloth/linen/blue",
-		"gold": "block/metal/ingot/gold",
-		"tinbronze": "block/metal/ingot/tinbronze",
-		"blade": "block/metal/plate/meteoriciron",
-		"temporalgear": "item/resource/temporalgear"
+		"blue": "game:block/cloth/linen/blue",
+		"gold": "game:block/metal/ingot/gold",
+		"tinbronze": "game:block/metal/ingot/tinbronze",
+		"blade": "game:block/metal/plate/meteoriciron",
+		"temporalgear: "game:item/resource/temporalgear"
 	},
 	"elements": [
 		{

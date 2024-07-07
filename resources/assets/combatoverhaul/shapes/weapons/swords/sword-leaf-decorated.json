@@ -9,10 +9,10 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"bone": "block/creature/bone",
-		"orange": "block/leather/orange",
-		"blade": "block/metal/plate/copper",
-		"handle": "block/wood/debarked/ebony"
+		"bone": "game:block/creature/bone",
+		"orange": "game:block/leather/orange",
+		"blade": "game:block/metal/plate/copper",
+		"handle": "game:block/wood/debarked/ebony"
 	},
 	"elements": [
 		{

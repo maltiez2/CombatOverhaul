@@ -9,11 +9,11 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"plain": "block/leather/plain",
-		"blade": "block/metal/plate/iron",
-		"silver": "block/metal/plate/silver",
-		"emerald": "block/stone/gem/emerald",
-		"handle": "block/wood/debarked/ebony"
+		"plain": "game:block/leather/plain",
+		"blade": "game:block/metal/plate/iron",
+		"silver": "game:block/metal/plate/silver",
+		"emerald": "game:block/stone/gem/emerald",
+		"handle": "game:block/wood/debarked/ebony"
 	},
 	"elements": [
 		{

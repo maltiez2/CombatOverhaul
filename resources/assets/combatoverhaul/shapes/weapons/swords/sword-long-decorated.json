@@ -9,11 +9,11 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"blue": "block/cloth/linen/blue",
-		"gold": "block/metal/plate/gold",
-		"stainlesssteel": "block/metal/plate/stainlesssteel",
-		"blade": "block/metal/plate/steel",
-		"aquamarine": "block/stone/gem/aquamarine"
+		"blue": "game:block/cloth/linen/blue",
+		"gold": "game:block/metal/plate/gold",
+		"stainlesssteel": "game:block/metal/plate/stainlesssteel",
+		"blade": "game:block/metal/plate/steel",
+		"aquamarine": "game:block/stone/gem/aquamarine"
 	},
 	"elements": [
 		{

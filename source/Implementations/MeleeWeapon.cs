@@ -2,9 +2,15 @@
 using CombatOverhaul.DamageSystems;
 using CombatOverhaul.Inputs;
 using CombatOverhaul.MeleeSystems;
+using ImPlotNET;
+using System;
+using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Config;
+using Vintagestory.API.MathTools;
+using Vintagestory.GameContent;
+using VSImGui.Debug;
 
 namespace CombatOverhaul.Implementations;
 
@@ -53,17 +59,29 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
 {
     public MeleeWeaponClient(ICoreClientAPI api, Item item)
     {
+        Item = item;
+        Api = api;
+
         CombatOverhaulSystem system = api.ModLoader.GetModSystem<CombatOverhaulSystem>();
         MeleeBlockSystem = system.ClientBlockSystem ?? throw new Exception();
 
         Stats = item.Attributes.AsObject<MeleeWeaponStats>();
 
-        if (Stats.OneHandedStance?.Attack != null) OneHandedAttack = new(api, Stats.OneHandedStance.Attack);
-        if (Stats.TwoHandedStance?.Attack != null) TwoHandedAttack = new(api, Stats.TwoHandedStance.Attack);
-        if (Stats.OffHandStance?.Attack != null) OffHandAttack = new(api, Stats.OffHandStance.Attack);
-
-        Item = item;
-        Api = api;
+        if (Stats.OneHandedStance?.Attack != null)
+        {
+            OneHandedAttack = new(api, Stats.OneHandedStance.Attack);
+            DebugEditColliders(OneHandedAttack, item.Id * 100 + 0);
+        }
+        if (Stats.TwoHandedStance?.Attack != null)
+        {
+            TwoHandedAttack = new(api, Stats.TwoHandedStance.Attack);
+            DebugEditColliders(TwoHandedAttack, item.Id * 100 + 1);
+        }
+        if (Stats.OffHandStance?.Attack != null)
+        {
+            OffHandAttack = new(api, Stats.OffHandStance.Attack);
+            DebugEditColliders(OffHandAttack, item.Id * 100 + 2);
+        }
     }
 
     public int ItemId => Item.Id;
@@ -105,6 +123,46 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
         AnimationBehavior = behavior.entity.GetBehavior<FirstPersonAnimationsBehavior>();
     }
 
+    public virtual void RenderDebugCollider(ItemSlot inSlot, IClientPlayer byPlayer)
+    {
+        MeleeAttack? attack = GetStanceAttack(mainHand: true);
+        if (attack == null) return;
+
+        foreach (MeleeDamageType damageType in attack.DamageTypes)
+        {
+            damageType.RelativeCollider.Transform(byPlayer.Entity.Pos, byPlayer.Entity, inSlot, Api, right: true)?.Render(Api, byPlayer.Entity);
+        }
+    }
+
+    private void DebugEditColliders(MeleeAttack attack, int attackIndex)
+    {
+        int typeIndex = 0;
+        foreach (MeleeDamageType damageType in attack.DamageTypes)
+        {
+            int index = attackIndex * 100 + typeIndex++;
+
+            DebugWidgets.Float3Drag("test", "colliders", $"{Item.Code}: Collider {index} tail", () =>
+                {
+                    return new Vec3f(damageType.RelativeCollider.Position.X, damageType.RelativeCollider.Position.Y, damageType.RelativeCollider.Position.Z);
+                },
+                newTail =>
+                {
+                    damageType.RelativeCollider = new(new Vector3(newTail.X, newTail.Y, newTail.Z), damageType.RelativeCollider.Direction);
+                });
+            DebugWidgets.Float3Drag("test", "colliders", $"{Item.Code}: Collider {index} head", () =>
+                {
+                    return new Vec3f(
+                        damageType.RelativeCollider.Direction.X + damageType.RelativeCollider.Position.X,
+                        damageType.RelativeCollider.Direction.Y + damageType.RelativeCollider.Position.Y,
+                        damageType.RelativeCollider.Direction.Z + damageType.RelativeCollider.Position.Z);
+                },
+                newHead =>
+                {
+                    damageType.RelativeCollider = new(damageType.RelativeCollider.Position, new Vector3(newHead.X, newHead.Y, newHead.Z) - damageType.RelativeCollider.Position);
+                });
+        }
+    }
+
     protected readonly Item Item;
     protected readonly ICoreClientAPI Api;
     protected readonly MeleeBlockSystemClient MeleeBlockSystem;
@@ -117,7 +175,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
     protected MeleeAttack? TwoHandedAttack;
     protected MeleeAttack? OffHandAttack;
 
-    [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Active)]
+    [ActionEventHandler(EnumEntityAction.LeftMouseDown, ActionState.Active)]
     protected virtual bool Attack(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
         if (eventData.AltPressed) return false;
@@ -164,6 +222,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
     protected virtual bool AttackAnimationCallback(bool mainHand)
     {
         AnimationBehavior?.PlayReadyAnimation(mainHand);
+        SetState(MeleeWeaponState.Idle, mainHand);
 
         return true;
     }
@@ -175,20 +234,20 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
                 SetState(MeleeWeaponState.Attacking, mainHand);
                 break;
             case "stop":
-                SetState(MeleeWeaponState.Idle, mainHand);
+                //SetState(MeleeWeaponState.Idle, mainHand);
                 break;
         }
     }
 
-    [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Released)]
+    [ActionEventHandler(EnumEntityAction.LeftMouseDown, ActionState.Released)]
     protected virtual bool StopAttack(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
-        AnimationBehavior?.PlayReadyAnimation(mainHand);
-        SetState(MeleeWeaponState.Idle, mainHand);
+        //AnimationBehavior?.PlayReadyAnimation(mainHand);
+        //SetState(MeleeWeaponState.Idle, mainHand);
         return true;
     }
 
-    [ActionEventHandler(EnumEntityAction.LeftMouseDown, ActionState.Active)]
+    [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Active)]
     protected virtual bool Block(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
         if (eventData.AltPressed) return false;
@@ -196,7 +255,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
 
         return true;
     }
-    [ActionEventHandler(EnumEntityAction.LeftMouseDown, ActionState.Released)]
+    [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Released)]
     protected virtual bool StopBlock(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
         MeleeBlockSystem.StopBlock(mainHand);
@@ -204,7 +263,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
         return true;
     }
 
-    [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Pressed)]
+    [ActionEventHandler(EnumEntityAction.LeftMouseDown, ActionState.Pressed)]
     protected virtual bool ChangeStance(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
         if (!mainHand || !eventData.AltPressed) return false;
@@ -345,4 +404,14 @@ public class MeleeWeapon : Item, IHasWeaponLogic, IHasDynamicIdleAnimations
 
     public AnimationRequestByCode GetIdleAnimation(bool mainHand) => ((IHasDynamicIdleAnimations)ClientLogic).GetIdleAnimation(mainHand);
     public AnimationRequestByCode GetReadyAnimation(bool mainHand) => ((IHasDynamicIdleAnimations)ClientLogic).GetReadyAnimation(mainHand);
+
+    public override void OnHeldRenderOpaque(ItemSlot inSlot, IClientPlayer byPlayer)
+    {
+        base.OnHeldRenderOpaque(inSlot, byPlayer);
+
+        if (AnimationsManager.RenderDebugColliders)
+        {
+            ClientLogic?.RenderDebugCollider(inSlot, byPlayer);
+        }
+    }
 }

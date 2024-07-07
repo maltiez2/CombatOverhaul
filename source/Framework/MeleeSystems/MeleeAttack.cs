@@ -82,7 +82,7 @@ public sealed class MeleeAttack
     {
         entitiesCollisions = CollideWithEntities(player, out IEnumerable<MeleeDamagePacket> damagePackets, slot);
 
-        _meleeSystem.SendPackets(damagePackets);
+        if (damagePackets.Any()) _meleeSystem.SendPackets(damagePackets);
 
         return entitiesCollisions.Any();
     }

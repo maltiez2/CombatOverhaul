@@ -9,11 +9,11 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"plain": "block/leather/plain",
-		"gold": "block/metal/plate/gold",
-		"blade": "block/metal/plate/iron",
-		"ruby": "block/stone/gem/ruby",
-		"sapphire": "block/stone/gem/sapphire"
+		"plain": "game:block/leather/plain",
+		"gold": "game:block/metal/plate/gold",
+		"blade": "game:block/metal/plate/iron",
+		"ruby": "game:block/stone/gem/ruby",
+		"sapphire": "game:block/stone/gem/sapphire"
 	},
 	"elements": [
 		{

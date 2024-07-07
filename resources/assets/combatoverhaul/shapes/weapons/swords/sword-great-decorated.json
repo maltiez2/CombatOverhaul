@@ -9,10 +9,10 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"purple": "block/cloth/linen/purple",
-		"gold": "block/metal/plate/gold",
-		"blade": "block/metal/plate/steel",
-		"amethyst": "block/stone/gem/amethyst"
+		"purple": "game:block/cloth/linen/purple",
+		"gold": "game:block/metal/plate/gold",
+		"blade": "game:block/metal/plate/steel",
+		"amethyst": "game:block/stone/gem/amethyst"
 	},
 	"elements": [
 		{

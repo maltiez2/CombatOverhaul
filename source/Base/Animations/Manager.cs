@@ -19,6 +19,7 @@ public sealed class AnimationsManager
 {
     public Dictionary<string, Animation> Animations { get; private set; } = new();
     public static bool PlayAnimationsInThirdPerson { get; set; } = false;
+    public static bool RenderDebugColliders { get; set; } = false;
 
     public AnimationsManager(ICoreClientAPI api, ParticleEffectsManager particleEffectsManager)
     {
@@ -117,6 +118,10 @@ public sealed class AnimationsManager
                 bool collidersRender = CollidersEntityBehavior.RenderColliders;
                 ImGui.Checkbox("Render entities colliders", ref collidersRender);
                 CollidersEntityBehavior.RenderColliders = collidersRender;
+
+                bool debugColliders = RenderDebugColliders;
+                ImGui.Checkbox("Render debug colliders", ref debugColliders);
+                RenderDebugColliders = debugColliders;
 
                 ImGui.EndTabItem();
             }

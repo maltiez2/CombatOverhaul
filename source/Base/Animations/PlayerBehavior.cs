@@ -168,6 +168,11 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
                 Play(item.ReadyAnimation, mainHand);
                 StartIdleTimer(item.IdleAnimation, mainHand);
             }
+            if (_player.RightHandItemSlot.Itemstack?.Item is IHasDynamicIdleAnimations item2)
+            {
+                Play(item2.GetReadyAnimation(mainHand), mainHand);
+                StartIdleTimer(item2.GetIdleAnimation(mainHand), mainHand);
+            }
         }
         else
         {
@@ -175,6 +180,11 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
             {
                 Play(item.ReadyAnimation, mainHand);
                 StartIdleTimer(item.IdleAnimation, mainHand);
+            }
+            if (_player.RightHandItemSlot.Itemstack?.Item is IHasDynamicIdleAnimations item2)
+            {
+                Play(item2.GetReadyAnimation(mainHand), mainHand);
+                StartIdleTimer(item2.GetIdleAnimation(mainHand), mainHand);
             }
         }
     }

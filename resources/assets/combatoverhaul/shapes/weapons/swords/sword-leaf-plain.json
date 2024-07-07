@@ -9,8 +9,8 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"blade": "block/metal/plate/copper",
-		"handle": "block/wood/debarked/ebony"
+		"blade": "game:block/metal/plate/copper",
+		"handle": "game:block/wood/debarked/ebony"
 	},
 	"elements": [
 		{

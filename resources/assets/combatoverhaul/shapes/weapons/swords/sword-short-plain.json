@@ -9,8 +9,8 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"blade": "block/metal/plate/iron",
-		"handle": "block/wood/debarked/aged"
+		"blade": "game:block/metal/plate/iron",
+		"handle": "game:block/wood/debarked/aged"
 	},
 	"elements": [
 		{

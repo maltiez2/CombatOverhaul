@@ -9,11 +9,11 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"red": "block/cloth/linen/red",
-		"gold": "block/metal/plate/gold",
-		"stainlesssteel": "block/metal/plate/stainlesssteel",
-		"blade": "block/metal/plate/steel",
-		"ruby": "block/stone/gem/ruby"
+		"red": "game:block/cloth/linen/red",
+		"gold": "game:block/metal/plate/gold",
+		"stainlesssteel": "game:block/metal/plate/stainlesssteel",
+		"blade": "game:block/metal/plate/steel",
+		"ruby": "game:block/stone/gem/ruby"
 	},
 	"elements": [
 		{

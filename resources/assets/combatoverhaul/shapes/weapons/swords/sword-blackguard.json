@@ -9,9 +9,9 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"black": "block/cloth/linen/black",
-		"blade": "block/metal/plate/iron",
-		"handle": "block/wood/debarked/ebony"
+		"black": "game:block/cloth/linen/black",
+		"blade": "game:block/metal/plate/iron",
+		"handle": "game:block/wood/debarked/ebony"
 	},
 	"elements": [
 		{

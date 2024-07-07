@@ -9,8 +9,8 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"handle": "block/leather/black",
-		"blade": "block/metal/plate/steel"
+		"handle": "game:block/leather/black",
+		"blade": "game:block/metal/plate/steel"
 	},
 	"elements": [
 		{

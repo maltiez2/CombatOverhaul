@@ -9,11 +9,11 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"plain": "block/leather/plain",
-		"blade": "block/metal/plate/bismuthbronze",
-		"tinbronze": "block/metal/plate/tinbronze",
-		"quartz": "block/stone/gem/quartz",
-		"handle": "block/wood/debarked/ebony"
+		"plain": "game:block/leather/plain",
+		"blade": "game:block/metal/plate/bismuthbronze",
+		"tinbronze": "game:block/metal/plate/tinbronze",
+		"quartz": "game:block/stone/gem/quartz",
+		"handle": "game:block/wood/debarked/ebony"
 	},
 	"elements": [
 		{

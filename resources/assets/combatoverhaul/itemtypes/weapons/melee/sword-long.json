@@ -1,0 +1,46 @@
+﻿{
+  "code": "sword",
+  "behaviors": [
+    {
+      "name": "GroundStorable",
+      "properties": {
+        "layout": "WallHalves",
+        "wallOffY": 2,
+        "sprintKey": true,
+        "selectionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.1, "z2": 1},
+        "collisionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 0, "y2": 0, "z2": 0}
+      }
+    }
+  ],
+  "variantgroups": [
+    {"code": "handling", "states": ["long"]},
+    {"code": "type", "states": ["plain"]},
+    {"code": "material", "states": ["tinbronze", "bismuthbronze", "blackbronze", "iron", "steel"]}
+  ],
+  "damagedby": ["attacking"],
+  "tool": "sword",
+  "shapeByType": {
+    "*-tinbronze": {"base": "weapons/swords/sword-spatha-{type}"},
+    "*-bismuthbronze": {"base": "weapons/swords/sword-spatha-{type}"},
+    "*-blackbronze": {"base": "weapons/swords/sword-spatha-{type}"},
+    "*-iron": {"base": "weapons/swords/sword-seax-{type}"},
+    "*-steel": {"base": "weapons/swords/sword-long-{type}"}
+  },
+  "attackRange": 3,
+  "attackpowerbytype": {"*-copper": 3, "*-tinbronze": 4, "*-bismuthbronze": 4, "*-blackbronze": 4, "*-iron": 4, "*-steel": 5},
+  "attributes": {
+    "heldItemPitchFollow": 1,
+    "groundStorageTransformByType": {
+      "*-iron": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
+      "*-steel": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
+      "*": {"translation": {"x": 0.5, "y": 0.28, "z": 0.83}, "rotation": {"x": 97, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.6}
+    },
+    "handbook": {"groupBy": ["sword-long-*"]},
+    "toolrackTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8}
+  },
+  "durabilitybytype": {"*-copper": 64, "*-tinbronze": 256, "*-bismuthbronze": 256, "*-blackbronze": 256, "*-iron": 512, "*-steel": 1024},
+  "creativeinventory": {"combatoverhaul": ["*"]},
+  "guiTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 40, "y": 0, "z": -52}, "origin": {"x": 0.7, "y": -0.3, "z": 0}, "scale": 2},
+  "groundTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 4},
+  "tpHandTransform": {"translation": {"x": 0.33, "y": 0.05, "z": 0.5}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.6}
+}
