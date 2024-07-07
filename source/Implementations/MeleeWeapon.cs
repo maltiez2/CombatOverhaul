@@ -43,10 +43,14 @@ public class StanceStats
     public bool CanBlock { get; set; } = true;
     public bool CanSprint { get; set; } = true;
     public float SpeedPenalty { get; set; } = 0;
+    public float BlockSpeedPenalty { get; set; } = 0;
 
     public MeleeAttackStats? Attack { get; set; }
     public DamageBlockJson? Block { get; set; }
     public DamageBlockJson? Parry { get; set; }
+
+    public float AttackCooldownMs { get; set; } = 0;
+    public float BlockCooldownMs { get; set; } = 0;
 
     public string AttackAnimation { get; set; } = "";
     public string BlockAnimation { get; set; } = "";
@@ -76,17 +80,17 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
         if (Stats.OneHandedStance?.Attack != null)
         {
             OneHandedAttack = new(api, Stats.OneHandedStance.Attack);
-            DebugEditColliders(OneHandedAttack, item.Id * 100 + 0);
+            //DebugEditColliders(OneHandedAttack, item.Id * 100 + 0);
         }
         if (Stats.TwoHandedStance?.Attack != null)
         {
             TwoHandedAttack = new(api, Stats.TwoHandedStance.Attack);
-            DebugEditColliders(TwoHandedAttack, item.Id * 100 + 1);
+            //DebugEditColliders(TwoHandedAttack, item.Id * 100 + 1);
         }
         if (Stats.OffHandStance?.Attack != null)
         {
             OffHandAttack = new(api, Stats.OffHandStance.Attack);
-            DebugEditColliders(OffHandAttack, item.Id * 100 + 2);
+            //DebugEditColliders(OffHandAttack, item.Id * 100 + 2);
         }
     }
 
@@ -117,11 +121,17 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
 
     public virtual void OnSelected(ItemSlot slot, EntityPlayer player, bool mainHand, ref int state)
     {
-
+        EnsureStance(player, mainHand);
+        SetState(MeleeWeaponState.Idle, mainHand);
     }
     public virtual void OnDeselected(EntityPlayer player)
     {
-
+        MeleeBlockSystem.StopBlock(true);
+        MeleeBlockSystem.StopBlock(false);
+        StopAttackCooldown(true);
+        StopBlockCooldown(true);
+        StopAttackCooldown(false);
+        StopBlockCooldown(false);
     }
     public virtual void OnRegistered(ActionsManagerPlayerBehavior behavior, ICoreClientAPI api)
     {
@@ -152,6 +162,11 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
     protected const int MaxStates = 100;
     protected readonly MeleeWeaponStats Stats;
 
+    protected long MainHandAttackCooldownTimer = -1;
+    protected long OffHandAttackCooldownTimer = -1;
+    protected long MainHandBlockCooldownTimer = -1;
+    protected long OffHandBlockCooldownTimer = -1;
+
     protected MeleeAttack? OneHandedAttack;
     protected MeleeAttack? TwoHandedAttack;
     protected MeleeAttack? OffHandAttack;
@@ -160,7 +175,9 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
     protected virtual bool Attack(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
         if (eventData.AltPressed) return false;
+        if (!mainHand && CanAttackWithOtherHand(player, mainHand)) return false;
         if (!CanAttack(mainHand)) return false;
+        if (IsAttackOnCooldown(mainHand)) return false;
 
         MeleeAttack? attack = GetStanceAttack(mainHand);
         StanceStats? stats = GetStanceStats(mainHand);
@@ -171,6 +188,8 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
         {
             case MeleeWeaponState.Idle:
                 {
+                    EnsureStance(player, mainHand);
+                    MeleeBlockSystem.StopBlock(mainHand);
                     SetState(MeleeWeaponState.WindingUp, mainHand);
                     attack.Start(player.Player);
                     AnimationBehavior?.Play(mainHand, stats.AttackAnimation, callback: () => AttackAnimationCallback(mainHand), callbackHandler: code => AttackAnimationCallbackHandler(code, mainHand));
@@ -183,9 +202,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
                     TryAttack(attack, stats, slot, player, mainHand);
                 }
                 break;
-            case MeleeWeaponState.Parrying:
-                return false;
-            case MeleeWeaponState.Blocking:
+            default:
                 return false;
         }
 
@@ -223,8 +240,17 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
     [ActionEventHandler(EnumEntityAction.LeftMouseDown, ActionState.Released)]
     protected virtual bool StopAttack(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
+        if (!CheckState(mainHand, MeleeWeaponState.Attacking, MeleeWeaponState.WindingUp)) return false;
+
         AnimationBehavior?.PlayReadyAnimation(mainHand);
         SetState(MeleeWeaponState.Idle, mainHand);
+
+        float cooldown = GetStanceStats(mainHand)?.AttackCooldownMs ?? 0;
+        if (cooldown != 0)
+        {
+            StartAttackCooldown(mainHand, TimeSpan.FromMilliseconds(cooldown));
+        }
+        
         return true;
     }
 
@@ -232,46 +258,195 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
     protected virtual bool Block(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
         if (eventData.AltPressed) return false;
+        if (!CheckState(mainHand, MeleeWeaponState.Idle, MeleeWeaponState.WindingUp, MeleeWeaponState.Attacking)) return false;
+        if (IsBlockOnCooldown(mainHand)) return false;
         if (!CanBlock(mainHand) && !CanParry(mainHand)) return false;
+        if (mainHand && CanBlockWithOtherHand(player, mainHand)) return false;
+        EnsureStance(player, mainHand);
 
-        return true;
-    }
-    [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Released)]
-    protected virtual bool StopBlock(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
-    {
-        MeleeBlockSystem.StopBlock(mainHand);
-        AnimationBehavior?.PlayReadyAnimation(mainHand);
-        return true;
-    }
+        StanceStats? stats = GetStanceStats(mainHand);
+        DamageBlockJson? parryStats = stats?.Parry;
+        DamageBlockJson? blockStats = stats?.Block;
 
-    [ActionEventHandler(EnumEntityAction.LeftMouseDown, ActionState.Pressed)]
-    protected virtual bool ChangeStance(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
-    {
-        if (!mainHand || !eventData.AltPressed) return false;
-
-        MeleeWeaponStance stance = GetStance<MeleeWeaponStance>(mainHand);
-        switch (stance)
+        if (CanParry(mainHand) && parryStats != null && stats != null)
         {
-            case MeleeWeaponStance.MainHand:
-                if (Stats.TwoHandedStance != null && CheckForOtherHandEmpty(mainHand, player))
+            SetState(MeleeWeaponState.Parrying, mainHand);
+            AnimationBehavior?.Play(mainHand, stats.BlockAnimation, callback: () => BlockAnimationCallback(mainHand), callbackHandler: code => BlockAnimationCallbackHandler(code, mainHand));
+        }
+        else if (CanBlock(mainHand) && blockStats != null && stats != null)
+        {
+            SetState(MeleeWeaponState.Parrying, mainHand);
+            MeleeBlockSystem.StartBlock(blockStats, mainHand);
+            AnimationBehavior?.Play(mainHand, stats.BlockAnimation, callback: () => BlockAnimationCallback(mainHand), callbackHandler: code => BlockAnimationCallbackHandler(code, mainHand));
+        }
+
+        return true;
+    }
+    protected virtual void BlockAnimationCallbackHandler(string callbackCode, bool mainHand)
+    {
+        switch (callbackCode)
+        {
+            case "startParry":
                 {
-                    SetStance(MeleeWeaponStance.MainHand, mainHand);
-                    AnimationBehavior?.PlayReadyAnimation(mainHand);
-                    return true;
+                    StanceStats? stats = GetStanceStats(mainHand);
+                    DamageBlockJson? parryStats = stats?.Parry;
+
+                    if (CanParry(mainHand) && parryStats != null)
+                    {
+                        SetState(MeleeWeaponState.Parrying, mainHand);
+                        MeleeBlockSystem.StartBlock(parryStats, mainHand);
+                    }
                 }
                 break;
-            case MeleeWeaponStance.TwoHanded:
-                if (Stats.OneHandedStance != null)
+            case "stopParry":
                 {
-                    SetStance(MeleeWeaponStance.MainHand, mainHand);
-                    AnimationBehavior?.PlayReadyAnimation(mainHand);
-                    return true;
+                    StanceStats? stats = GetStanceStats(mainHand);
+                    DamageBlockJson? blockStats = stats?.Block;
+                    if (CanBlock(mainHand) && blockStats != null)
+                    {
+                        SetState(MeleeWeaponState.Blocking, mainHand);
+                        MeleeBlockSystem.StartBlock(blockStats, mainHand);
+                    }
+                    else
+                    {
+                        MeleeBlockSystem.StopBlock(mainHand);
+                    }
                 }
                 break;
         }
-
-        return false;
     }
+    protected virtual bool BlockAnimationCallback(bool mainHand)
+    {
+        SetState(MeleeWeaponState.Idle, mainHand);
+        AnimationBehavior?.PlayReadyAnimation(mainHand);
+
+        float cooldown = GetStanceStats(mainHand)?.BlockCooldownMs ?? 0;
+        if (cooldown != 0)
+        {
+            StartBlockCooldown(mainHand, TimeSpan.FromMilliseconds(cooldown));
+        }
+
+        return true;
+    }
+    
+    [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Released)]
+    protected virtual bool StopBlock(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
+    {
+        if (!CheckState(mainHand, MeleeWeaponState.Blocking, MeleeWeaponState.Parrying)) return false;
+        
+        MeleeBlockSystem.StopBlock(mainHand);
+        AnimationBehavior?.PlayReadyAnimation(mainHand);
+        SetState(MeleeWeaponState.Idle, mainHand);
+
+        float cooldown = GetStanceStats(mainHand)?.BlockCooldownMs ?? 0;
+        if (cooldown != 0)
+        {
+            StartBlockCooldown(mainHand, TimeSpan.FromMilliseconds(cooldown));
+        }
+
+        return true;
+    }
+
+    protected virtual void EnsureStance(EntityPlayer player, bool mainHand)
+    {
+        MeleeWeaponStance currentStance = GetStance<MeleeWeaponStance>(mainHand);
+
+        if (!mainHand)
+        {
+            SetStance(MeleeWeaponStance.OffHand, mainHand);
+            if (currentStance != MeleeWeaponStance.OffHand)
+            {
+                AnimationBehavior?.PlayReadyAnimation(mainHand);
+            }
+            return;
+        }
+
+        bool offHandEmpty = CheckForOtherHandEmpty(mainHand, player);
+        if (offHandEmpty && Stats.TwoHandedStance != null)
+        {
+            SetStance(MeleeWeaponStance.TwoHanded, mainHand);
+            if (currentStance != MeleeWeaponStance.TwoHanded)
+            {
+                AnimationBehavior?.PlayReadyAnimation(mainHand);
+            }
+        }
+        else
+        {
+            SetStance(MeleeWeaponStance.MainHand, mainHand);
+            if (currentStance != MeleeWeaponStance.MainHand)
+            {
+                AnimationBehavior?.PlayReadyAnimation(mainHand);
+            }
+        }
+    }
+
+    protected virtual void StartAttackCooldown(bool mainHand, TimeSpan time)
+    {
+        StopAttackCooldown(mainHand);
+
+        if (mainHand)
+        {
+            MainHandAttackCooldownTimer = Api.World.RegisterCallback(_ => MainHandAttackCooldownTimer = -1, (int)time.TotalMilliseconds);
+        }
+        else
+        {
+            OffHandAttackCooldownTimer = Api.World.RegisterCallback(_ => OffHandAttackCooldownTimer = -1, (int)time.TotalMilliseconds);
+        }
+    }
+    protected virtual void StopAttackCooldown(bool mainHand)
+    {
+        if (mainHand)
+        {
+            if (MainHandAttackCooldownTimer != -1)
+            {
+                Api.World.UnregisterCallback(MainHandAttackCooldownTimer);
+                MainHandAttackCooldownTimer = -1;
+            }
+        }
+        else
+        {
+            if (OffHandAttackCooldownTimer != -1)
+            {
+                Api.World.UnregisterCallback(OffHandAttackCooldownTimer);
+                OffHandAttackCooldownTimer = -1;
+            }
+        }
+    }
+    protected virtual bool IsAttackOnCooldown(bool mainHand) => mainHand ? MainHandAttackCooldownTimer != -1 : OffHandAttackCooldownTimer != -1;
+
+    protected virtual void StartBlockCooldown(bool mainHand, TimeSpan time)
+    {
+        StopBlockCooldown(mainHand);
+
+        if (mainHand)
+        {
+            MainHandBlockCooldownTimer = Api.World.RegisterCallback(_ => MainHandBlockCooldownTimer = -1, (int)time.TotalMilliseconds);
+        }
+        else
+        {
+            OffHandBlockCooldownTimer = Api.World.RegisterCallback(_ => OffHandBlockCooldownTimer = -1, (int)time.TotalMilliseconds);
+        }
+    }
+    protected virtual void StopBlockCooldown(bool mainHand)
+    {
+        if (mainHand)
+        {
+            if (MainHandBlockCooldownTimer != -1)
+            {
+                Api.World.UnregisterCallback(MainHandBlockCooldownTimer);
+                MainHandBlockCooldownTimer = -1;
+            }
+        }
+        else
+        {
+            if (OffHandBlockCooldownTimer != -1)
+            {
+                Api.World.UnregisterCallback(OffHandBlockCooldownTimer);
+                OffHandBlockCooldownTimer = -1;
+            }
+        }
+    }
+    protected virtual bool IsBlockOnCooldown(bool mainHand) => mainHand ? MainHandBlockCooldownTimer != -1 : OffHandBlockCooldownTimer != -1;
 
     protected MeleeAttack? GetStanceAttack(bool mainHand = true)
     {
@@ -435,4 +610,9 @@ public class MeleeWeapon : Item, IHasWeaponLogic, IHasDynamicIdleAnimations, IHa
 
     public bool CanAttack(bool mainHand) => ClientLogic?.CanAttack(mainHand) ?? false;
     public bool CanBlock(bool mainHand) => (ClientLogic?.CanBlock(mainHand) ?? false) || (ClientLogic?.CanParry(mainHand) ?? false);
+
+    public override void OnHeldAttackStart(ItemSlot slot, EntityAgent byEntity, BlockSelection blockSel, EntitySelection entitySel, ref EnumHandHandling handling)
+    {
+        handling = EnumHandHandling.PreventDefault;
+    }
 }

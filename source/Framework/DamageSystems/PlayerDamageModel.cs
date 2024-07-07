@@ -77,6 +77,8 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
     {
         (DamageZone damageZone, float multiplier) = DetermineHitZone(damageSource);
 
+        Console.WriteLine($"Hit zone: {damageZone}"); // @DEBUG
+
         ApplyBlock(damageSource, damageZone, ref damage);
 
         ApplyArmorResists(damageSource, damageZone, ref damage);
@@ -135,6 +137,8 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
     }
     private void ApplyArmorResists(DamageSource damageSource, DamageZone zone, ref float damage)
     {
+        if (!Resists.ContainsKey(zone)) return;
+        
         if (damageSource is ITypedDamage typedDamage)
         {
             typedDamage.DamageTypeData = Resists[zone].ApplyResist(typedDamage.DamageTypeData, ref damage);

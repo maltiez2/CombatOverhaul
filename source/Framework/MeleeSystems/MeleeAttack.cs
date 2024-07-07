@@ -66,7 +66,7 @@ public sealed class MeleeAttack
             if (collidedWithTerrain && StopOnTerrainHit) return;
         }
 
-        TryAttackEntities(player, slot, out entitiesCollisions);
+        TryAttackEntities(player, slot, out entitiesCollisions, mainHand);
     }
     public void PrepareColliders(IPlayer player, ItemSlot slot, bool mainHand)
     {
@@ -78,9 +78,9 @@ public sealed class MeleeAttack
 
         return terrainCollisions.Any();
     }
-    public bool TryAttackEntities(IPlayer player, ItemSlot slot, out IEnumerable<(Entity entity, Vector3 point)> entitiesCollisions)
+    public bool TryAttackEntities(IPlayer player, ItemSlot slot, out IEnumerable<(Entity entity, Vector3 point)> entitiesCollisions, bool mainHand)
     {
-        entitiesCollisions = CollideWithEntities(player, out IEnumerable<MeleeDamagePacket> damagePackets, slot);
+        entitiesCollisions = CollideWithEntities(player, out IEnumerable<MeleeDamagePacket> damagePackets, mainHand);
 
         if (damagePackets.Any()) _meleeSystem.SendPackets(damagePackets);
 
@@ -118,7 +118,7 @@ public sealed class MeleeAttack
 
         return _terrainCollisionsBuffer.ToImmutableHashSet();
     }
-    private IEnumerable<(Entity entity, Vector3 point)> CollideWithEntities(IPlayer player, out IEnumerable<MeleeDamagePacket> packets, ItemSlot slot)
+    private IEnumerable<(Entity entity, Vector3 point)> CollideWithEntities(IPlayer player, out IEnumerable<MeleeDamagePacket> packets, bool mainHand)
     {
         long entityId = player.Entity.EntityId;
 
@@ -134,17 +134,13 @@ public sealed class MeleeAttack
                     .Where(entity => entity != player.Entity)
                     .Where(entity => !_attackedEntities[entityId].Contains(entity.EntityId)))
             {
-                bool attacked = damageType.TryAttack(player, entity, out int collider, out Vector3 point, out MeleeDamagePacket packet);
+                bool attacked = damageType.TryAttack(player, entity, out int collider, out Vector3 point, out MeleeDamagePacket packet, mainHand);
 
                 if (!attacked) continue;
 
                 _entitiesCollisionsBuffer.Add((entity, point));
                 damagePackets.Add(packet);
 
-                if (damageType.DurabilityDamage > 0)
-                {
-                    slot.Itemstack.Collectible.DamageItem(_api.World, player.Entity, slot, damageType.DurabilityDamage);
-                }
                 if (StopOnEntityHit) break;
             }
         }

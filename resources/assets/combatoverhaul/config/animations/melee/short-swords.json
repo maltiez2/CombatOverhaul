@@ -122,5 +122,36 @@
     "CallbackFrames": [{"Code": "start", "DurationFraction": 0.25}, {"Code": "stop", "DurationFraction": 0.75}],
     "ItemAnimationStart": 0,
     "ItemAnimationEnd": 0
+  },
+  "sword-short-parry": {
+    "Hold": false,
+    "PlayerKeyFrames": [
+      {
+        "EasingTime": 300,
+        "EasingFunction": "Cubic",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {"ItemAnchor": [0, 0, 0, 0, 0, 14], "LowerArmR": [0, 0, 0, 0, 0, -55], "UpperArmR": [0, 0, 0, -62, 26, -21]}
+      },
+      {
+        "EasingTime": 500,
+        "EasingFunction": "Sin",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {"ItemAnchor": [0, 0, 0, 0, 0, -7], "LowerArmR": [0, 0, 0, 0, 0, -19], "UpperArmR": [0, 0, 0, -69, 21, -41]}
+      }
+    ],
+    "ItemKeyFrames": [],
+    "SoundFrames": [],
+    "ParticlesFrames": [],
+    "CallbackFrames": [{"Code": "startParry", "DurationFraction": 0.3}, {"Code": "stopParry", "DurationFraction": 0.9}],
+    "ItemAnimationStart": 0,
+    "ItemAnimationEnd": 0
   }
 }

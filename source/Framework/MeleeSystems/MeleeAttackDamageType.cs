@@ -1,11 +1,13 @@
 ﻿using CombatOverhaul.Colliders;
 using CombatOverhaul.DamageSystems;
+using CompactExifLib;
 using ProtoBuf;
 using System.Numerics;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
+using Vintagestory.GameContent;
 
 namespace CombatOverhaul.MeleeSystems;
 
@@ -20,6 +22,8 @@ public struct MeleeDamagePacket
     public int Collider { get; set; }
     public long AttackerEntityId { get; set; }
     public long TargetEntityId { get; set; }
+    public int DurabilityDamage { get; set; }
+    public bool MainHand { get; set; }
 
     public readonly void Attack(ICoreServerAPI api)
     {
@@ -44,6 +48,13 @@ public struct MeleeDamagePacket
 
             target.Pos.Motion.Add(knockback);
             target.ServerPos.Motion.Add(knockback);
+        }
+
+        if (DurabilityDamage > 0)
+        {
+            ItemSlot? slot = (MainHand ? (attacker as EntityAgent)?.RightHandItemSlot : (attacker as EntityAgent)?.LeftHandItemSlot);
+            slot?.Itemstack.Collectible.DamageItem(target.Api.World, attacker, slot, DurabilityDamage);
+            slot?.MarkDirty();
         }
     }
 }
@@ -78,7 +89,7 @@ public class MeleeDamageType : IHasLineCollider
         DurabilityDamage = stats.DurabilityDamage;
     }
 
-    public bool TryAttack(IPlayer attacker, Entity target, out int collider, out Vector3 collisionPoint, out MeleeDamagePacket packet)
+    public bool TryAttack(IPlayer attacker, Entity target, out int collider, out Vector3 collisionPoint, out MeleeDamagePacket packet, bool mainHand)
     {
         bool collided = Collide(target, out collider, out collisionPoint);
 
@@ -86,11 +97,11 @@ public class MeleeDamageType : IHasLineCollider
 
         if (!collided) return false;
 
-        bool received = Attack(attacker.Entity, target, collisionPoint, collider, out packet);
+        bool received = Attack(attacker.Entity, target, collisionPoint, collider, out packet, mainHand);
 
         return received;
     }
-    public bool Attack(Entity attacker, Entity target, Vector3 position, int collider, out MeleeDamagePacket packet)
+    public bool Attack(Entity attacker, Entity target, Vector3 position, int collider, out MeleeDamagePacket packet, bool mainHand)
     {
         packet = new();
 
@@ -130,7 +141,9 @@ public class MeleeDamageType : IHasLineCollider
             Position = new float[3] { position.X, position.Y, position.Z },
             Collider = collider,
             AttackerEntityId = attacker.EntityId,
-            TargetEntityId = target.EntityId
+            TargetEntityId = target.EntityId,
+            DurabilityDamage = DurabilityDamage,
+            MainHand = mainHand
         };
 
         return received;
