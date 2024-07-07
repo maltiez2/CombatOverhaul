@@ -6,7 +6,6 @@ using Newtonsoft.Json.Linq;
 using System.Reflection;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
-using Vintagestory.API.Config;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.Client.NoObf;
@@ -286,7 +285,7 @@ public sealed class AnimationsManager
         if (!canAddAnimation) ImGui.BeginDisabled();
         if (ImGui.Button($"Create##playeranimation"))
         {
-            Animations.Add(_playerAnimationKey, Animation.Zero);
+            Animations.Add(_playerAnimationKey, new Animation(new PLayerKeyFrame[] { PLayerKeyFrame.Zero }));
         }
         if (!canAddAnimation) ImGui.EndDisabled();
 

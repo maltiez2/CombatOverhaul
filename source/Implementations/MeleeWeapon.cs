@@ -30,6 +30,12 @@ public enum MeleeWeaponStance
     TwoHanded
 }
 
+public interface IHasMeleeWeaponActions
+{
+    bool CanAttack(bool mainHand);
+    bool CanBlock(bool mainHand);
+}
+
 public class StanceStats
 {
     public bool CanAttack { get; set; } = true;
@@ -86,7 +92,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
 
     public int ItemId => Item.Id;
 
-    public virtual DirectionsConfiguration DirectionsType => DirectionsConfiguration.None;
+    public virtual DirectionsConfiguration DirectionsType => DirectionsConfiguration.Eight;
 
     public AnimationRequestByCode GetIdleAnimation(bool mainHand)
     {
@@ -133,35 +139,10 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
             damageType.RelativeCollider.Transform(byPlayer.Entity.Pos, byPlayer.Entity, inSlot, Api, right: true)?.Render(Api, byPlayer.Entity);
         }
     }
-
-    private void DebugEditColliders(MeleeAttack attack, int attackIndex)
-    {
-        int typeIndex = 0;
-        foreach (MeleeDamageType damageType in attack.DamageTypes)
-        {
-            int index = attackIndex * 100 + typeIndex++;
-
-            DebugWidgets.Float3Drag("test", "colliders", $"{Item.Code}: Collider {index} tail", () =>
-                {
-                    return new Vec3f(damageType.RelativeCollider.Position.X, damageType.RelativeCollider.Position.Y, damageType.RelativeCollider.Position.Z);
-                },
-                newTail =>
-                {
-                    damageType.RelativeCollider = new(new Vector3(newTail.X, newTail.Y, newTail.Z), damageType.RelativeCollider.Direction);
-                });
-            DebugWidgets.Float3Drag("test", "colliders", $"{Item.Code}: Collider {index} head", () =>
-                {
-                    return new Vec3f(
-                        damageType.RelativeCollider.Direction.X + damageType.RelativeCollider.Position.X,
-                        damageType.RelativeCollider.Direction.Y + damageType.RelativeCollider.Position.Y,
-                        damageType.RelativeCollider.Direction.Z + damageType.RelativeCollider.Position.Z);
-                },
-                newHead =>
-                {
-                    damageType.RelativeCollider = new(damageType.RelativeCollider.Position, new Vector3(newHead.X, newHead.Y, newHead.Z) - damageType.RelativeCollider.Position);
-                });
-        }
-    }
+    
+    public bool CanAttack(bool mainHand = true) => GetStanceStats(mainHand)?.CanAttack ?? false;
+    public bool CanBlock(bool mainHand = true) => GetStanceStats(mainHand)?.CanBlock ?? false;
+    public bool CanParry(bool mainHand = true) => GetStanceStats(mainHand)?.CanParry ?? false;
 
     protected readonly Item Item;
     protected readonly ICoreClientAPI Api;
@@ -242,8 +223,8 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
     [ActionEventHandler(EnumEntityAction.LeftMouseDown, ActionState.Released)]
     protected virtual bool StopAttack(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
-        //AnimationBehavior?.PlayReadyAnimation(mainHand);
-        //SetState(MeleeWeaponState.Idle, mainHand);
+        AnimationBehavior?.PlayReadyAnimation(mainHand);
+        SetState(MeleeWeaponState.Idle, mainHand);
         return true;
     }
 
@@ -314,9 +295,6 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
             _ => Stats.OneHandedStance,
         };
     }
-    protected bool CanAttack(bool mainHand = true) => GetStanceStats(mainHand)?.CanAttack ?? false;
-    protected bool CanBlock(bool mainHand = true) => GetStanceStats(mainHand)?.CanBlock ?? false;
-    protected bool CanParry(bool mainHand = true) => GetStanceStats(mainHand)?.CanParry ?? false;
     protected static bool CheckState<TState>(int state, params TState[] statesToCheck)
         where TState : struct, Enum
     {
@@ -367,6 +345,16 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
     {
         return (TStance)Enum.ToObject(typeof(TStance), PlayerBehavior?.GetState(mainHand) / MaxStates ?? 0);
     }
+    protected bool CanAttackWithOtherHand(EntityPlayer player, bool mainHand = true)
+    {
+        ItemSlot otherHandSlot = mainHand ? player.LeftHandItemSlot : player.RightHandItemSlot;
+        return (otherHandSlot.Itemstack?.Item as IHasMeleeWeaponActions)?.CanAttack(!mainHand) ?? false;
+    }
+    protected bool CanBlockWithOtherHand(EntityPlayer player, bool mainHand = true)
+    {
+        ItemSlot otherHandSlot = mainHand ? player.LeftHandItemSlot : player.RightHandItemSlot;
+        return (otherHandSlot.Itemstack?.Item as IHasMeleeWeaponActions)?.CanBlock(!mainHand) ?? false;
+    }
 
     protected bool CheckForOtherHandEmpty(bool mainHand, EntityPlayer player)
     {
@@ -384,9 +372,39 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
 
         return true;
     }
+
+    private void DebugEditColliders(MeleeAttack attack, int attackIndex)
+    {
+        int typeIndex = 0;
+        foreach (MeleeDamageType damageType in attack.DamageTypes)
+        {
+            int index = attackIndex * 100 + typeIndex++;
+
+            DebugWidgets.Float3Drag("test", "colliders", $"{Item.Code}: Collider {index} tail", () =>
+            {
+                return new Vec3f(damageType.RelativeCollider.Position.X, damageType.RelativeCollider.Position.Y, damageType.RelativeCollider.Position.Z);
+            },
+                newTail =>
+                {
+                    damageType.RelativeCollider = new(new Vector3(newTail.X, newTail.Y, newTail.Z), damageType.RelativeCollider.Direction);
+                });
+            DebugWidgets.Float3Drag("test", "colliders", $"{Item.Code}: Collider {index} head", () =>
+            {
+                return new Vec3f(
+                    damageType.RelativeCollider.Direction.X + damageType.RelativeCollider.Position.X,
+                    damageType.RelativeCollider.Direction.Y + damageType.RelativeCollider.Position.Y,
+                    damageType.RelativeCollider.Direction.Z + damageType.RelativeCollider.Position.Z);
+            },
+                newHead =>
+                {
+                    damageType.RelativeCollider = new(damageType.RelativeCollider.Position, new Vector3(newHead.X, newHead.Y, newHead.Z) - damageType.RelativeCollider.Position);
+                });
+        }
+    }
+
 }
 
-public class MeleeWeapon : Item, IHasWeaponLogic, IHasDynamicIdleAnimations
+public class MeleeWeapon : Item, IHasWeaponLogic, IHasDynamicIdleAnimations, IHasMeleeWeaponActions
 {
     public MeleeWeaponClient? ClientLogic { get; private set; }
 
@@ -414,4 +432,7 @@ public class MeleeWeapon : Item, IHasWeaponLogic, IHasDynamicIdleAnimations
             ClientLogic?.RenderDebugCollider(inSlot, byPlayer);
         }
     }
+
+    public bool CanAttack(bool mainHand) => ClientLogic?.CanAttack(mainHand) ?? false;
+    public bool CanBlock(bool mainHand) => (ClientLogic?.CanBlock(mainHand) ?? false) || (ClientLogic?.CanParry(mainHand) ?? false);
 }
