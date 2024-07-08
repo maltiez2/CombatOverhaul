@@ -57,7 +57,7 @@
         "CanBlock": true,
         "CanSprint": true,
         "SpeedPenalty": 0,
-        "BlockSpeedPenalty": -0.10,
+        "BlockSpeedPenalty": -0.1,
         "Parry": {"Zones": ["Head", "Face", "Neck", "Torso", "Arms", "Hands", "Legs", "Feet"], "Directions": [60, 60, 60, 60]},
         "Block": {"Zones": ["Face", "Neck", "Torso", "Arms", "Hands"], "Directions": [90, 90, 90, 90]},
         "BlockCooldownMs": 300,

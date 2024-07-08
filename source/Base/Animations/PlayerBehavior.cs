@@ -7,7 +7,6 @@ using Vintagestory.API.Common.Entities;
 using Vintagestory.API.MathTools;
 using Vintagestory.Client.NoObf;
 using Vintagestory.GameContent;
-using VSImGui.Debug;
 
 namespace CombatOverhaul.Animations;
 
@@ -19,8 +18,8 @@ public interface IHasIdleAnimations
 
 public interface IHasDynamicIdleAnimations
 {
-    AnimationRequestByCode GetIdleAnimation(bool mainHand);
-    AnimationRequestByCode GetReadyAnimation(bool mainHand);
+    AnimationRequestByCode? GetIdleAnimation(bool mainHand);
+    AnimationRequestByCode? GetReadyAnimation(bool mainHand);
 }
 
 public sealed class FirstPersonAnimationsBehavior : EntityBehavior
@@ -67,16 +66,32 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
             }
             else if (_player.RightHandItemSlot.Itemstack?.Item is IHasDynamicIdleAnimations item2)
             {
-                string readyCategory = item2.GetReadyAnimation(mainHand: true).Category;
+                
 
-                foreach (string category in _mainHandCategories.Where(element => element != readyCategory))
+                AnimationRequestByCode? readyAnimation = item2.GetReadyAnimation(mainHand: true);
+                AnimationRequestByCode? idleAnimation = item2.GetIdleAnimation(mainHand: true);
+
+                if (readyAnimation == null || idleAnimation == null)
                 {
-                    _composer.Stop(category);
+                    foreach (string category in _mainHandCategories)
+                    {
+                        _composer.Stop(category);
+                    }
+                    _mainHandCategories.Clear();
                 }
-                _mainHandCategories.Clear();
+                else
+                {
+                    string readyCategory = readyAnimation.Value.Category;
 
-                Play(item2.GetReadyAnimation(mainHand: true), true);
-                StartIdleTimer(item2.GetIdleAnimation(mainHand: true), true);
+                    foreach (string category in _mainHandCategories.Where(element => element != readyCategory))
+                    {
+                        _composer.Stop(category);
+                    }
+                    _mainHandCategories.Clear();
+
+                    Play(readyAnimation.Value, true);
+                    StartIdleTimer(idleAnimation.Value, true);
+                }
             }
             else
             {
@@ -108,16 +123,30 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
             }
             else if (_player.LeftHandItemSlot.Itemstack?.Item is IHasDynamicIdleAnimations item2)
             {
-                string readyCategory = item2.GetReadyAnimation(mainHand: false).Category;
+                AnimationRequestByCode? readyAnimation = item2.GetReadyAnimation(mainHand: false);
+                AnimationRequestByCode? idleAnimation = item2.GetIdleAnimation(mainHand: false);
 
-                foreach (string category in _offhandCategories.Where(element => element != readyCategory))
+                if (readyAnimation == null || idleAnimation == null)
                 {
-                    _composer.Stop(category);
+                    foreach (string category in _offhandCategories)
+                    {
+                        _composer.Stop(category);
+                    }
+                    _offhandCategories.Clear();
                 }
-                _offhandCategories.Clear();
+                else
+                {
+                    string readyCategory = readyAnimation.Value.Category;
 
-                Play(item2.GetReadyAnimation(mainHand: false), false);
-                StartIdleTimer(item2.GetIdleAnimation(mainHand: false), false);
+                    foreach (string category in _offhandCategories.Where(element => element != readyCategory))
+                    {
+                        _composer.Stop(category);
+                    }
+                    _offhandCategories.Clear();
+
+                    Play(readyAnimation.Value, false);
+                    StartIdleTimer(idleAnimation.Value, false);
+                }
             }
             else
             {
@@ -171,8 +200,14 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
             }
             if (_player.RightHandItemSlot.Itemstack?.Item is IHasDynamicIdleAnimations item2)
             {
-                Play(item2.GetReadyAnimation(mainHand), mainHand);
-                StartIdleTimer(item2.GetIdleAnimation(mainHand), mainHand);
+                AnimationRequestByCode? readyAnimation = item2.GetReadyAnimation(mainHand: mainHand);
+                AnimationRequestByCode? idleAnimation = item2.GetIdleAnimation(mainHand: mainHand);
+
+                if (readyAnimation != null && idleAnimation != null)
+                {
+                    Play(readyAnimation.Value, mainHand);
+                    StartIdleTimer(idleAnimation.Value, mainHand);
+                }
             }
         }
         else
@@ -182,10 +217,16 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
                 Play(item.ReadyAnimation, mainHand);
                 StartIdleTimer(item.IdleAnimation, mainHand);
             }
-            if (_player.RightHandItemSlot.Itemstack?.Item is IHasDynamicIdleAnimations item2)
+            if (_player.LeftHandItemSlot.Itemstack?.Item is IHasDynamicIdleAnimations item2)
             {
-                Play(item2.GetReadyAnimation(mainHand), mainHand);
-                StartIdleTimer(item2.GetIdleAnimation(mainHand), mainHand);
+                AnimationRequestByCode? readyAnimation = item2.GetReadyAnimation(mainHand: mainHand);
+                AnimationRequestByCode? idleAnimation = item2.GetIdleAnimation(mainHand: mainHand);
+
+                if (readyAnimation != null && idleAnimation != null)
+                {
+                    Play(readyAnimation.Value, mainHand);
+                    StartIdleTimer(idleAnimation.Value, mainHand);
+                }
             }
         }
     }
@@ -313,7 +354,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
 
         CurrentFov = ClientSettings.FieldOfView * multiplier;
     }
-    
+
     private void StartIdleTimer(AnimationRequestByCode request, bool mainHand)
     {
         long timer = _api?.World.RegisterCallback(_ => PlayIdleAnimation(request, mainHand), (int)_readyTimeout.TotalMilliseconds) ?? -1;
@@ -349,7 +390,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     {
         if (mainHand)
         {
-            
+
             if (_mainHandIdleTimer != -1 && _mainHandIdleCategory == category)
             {
                 _api?.World.UnregisterCallback(_mainHandIdleTimer);
