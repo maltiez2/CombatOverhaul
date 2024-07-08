@@ -1,0 +1,23 @@
+{
+  "code": "shield",
+  "class": "CombatOverhaul:MeleeWeapon",
+  "variantgroups": [
+    {"code": "handling", "states": ["heavy"]},
+    {"code": "type", "states": ["plain"]},
+    {"code": "material", "states": ["crude", "copper", "tinbronze", "bismuthbronze", "blackbronze", "iron"]}
+  ],
+  "shapeByType": {
+    "*-crude": {"base": "weapons/shields/reed}"},
+    "*-copper": {"base": "weapons/shields/apis"},
+    "*-tinbronze": {"base": "weapons/shields/scutum"},
+    "*-bismuthbronze": {"base": "weapons/shields/scutum"},
+    "*-blackbronze": {"base": "weapons/shields/scutum"},
+    "*-iron": {"base": "weapons/shields/kite"}
+  },
+  "attributes": {},
+  "durabilitybytype": {"*-crude": 32,  "*-copper": 64, "*-tinbronze": 256, "*-bismuthbronze": 256, "*-blackbronze": 256, "*-iron": 512},
+  "creativeinventory": {"combatoverhaul": ["*"]},
+  "guiTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 40, "y": 0, "z": -52}, "origin": {"x": 0.7, "y": -0.3, "z": 0}, "scale": 2},
+  "groundTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 4},
+  "tpHandTransform": {"translation": {"x": 0.33, "y": 0.05, "z": 0.5}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.6}
+}
