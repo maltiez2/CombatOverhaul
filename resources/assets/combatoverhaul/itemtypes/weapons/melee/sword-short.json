@@ -27,7 +27,6 @@
     "*-steel": {"base": "weapons/swords/sword-arming-{type}"}
   },
   "attributes": {
-    "heldItemPitchFollow": 1,
     "groundStorageTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
     "handbook": {"groupBy": ["sword-short-*"]},
     "toolrackTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
@@ -38,7 +37,7 @@
       "CanSprint": true,
       "SpeedPenalty": 0,
       "Attack": {
-        "StopOnTerrainHit": true,
+        "StopOnTerrainHit": false,
         "StopOnEntityHit": false,
         "CollideWithTerrain": true,
         "MaxReach": 6,

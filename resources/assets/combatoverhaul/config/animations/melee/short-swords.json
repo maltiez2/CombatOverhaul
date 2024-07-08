@@ -21,7 +21,7 @@
     "ItemAnimationEnd": 0
   },
   "sword-short-idle": {
-    "Hold": false,
+    "Hold": true,
     "PlayerKeyFrames": [
       {
         "EasingTime": 300,
@@ -49,7 +49,7 @@
         "EasingFunction": "Quintic",
         "DetachedAnchor": false,
         "SwitchArms": false,
-        "PitchFollow": false,
+        "PitchFollow": true,
         "FOVMultiplier": 1,
         "BobbingAmplitude": 1,
         "Elements": {"ItemAnchor": [0, 0, 0, 0, 0, 73], "LowerArmR": [0, 0, 0, 0, 0, -3], "UpperArmR": [0, -1.6, 0, 5, -1.8, -82.2]}
@@ -59,7 +59,7 @@
         "EasingFunction": "Linear",
         "DetachedAnchor": false,
         "SwitchArms": false,
-        "PitchFollow": false,
+        "PitchFollow": true,
         "FOVMultiplier": 1,
         "BobbingAmplitude": 1,
         "Elements": {"ItemAnchor": [0, 0, 0, 0, 0, 73], "LowerArmR": [0, 0, 0, 0, 0, -3], "UpperArmR": [0, 0, 0, 13, -1.8, -82.2]}
@@ -69,7 +69,7 @@
         "EasingFunction": "CosShifted",
         "DetachedAnchor": false,
         "SwitchArms": false,
-        "PitchFollow": false,
+        "PitchFollow": true,
         "FOVMultiplier": 1,
         "BobbingAmplitude": 1,
         "Elements": {"ItemAnchor": [0, 0, 0, 0, 0, 59], "LowerArmR": [0, 0, 0, 0, 0, -68], "UpperArmR": [0, -1.6, 0, 13, -1.8, -18.2]}
@@ -90,7 +90,7 @@
         "EasingFunction": "Quintic",
         "DetachedAnchor": false,
         "SwitchArms": false,
-        "PitchFollow": false,
+        "PitchFollow": true,
         "FOVMultiplier": 1,
         "BobbingAmplitude": 1,
         "Elements": {"ItemAnchor": [0, 0, 0, 0, 0, 20], "LowerArmR": [0, -1.6, 0, 0, 0, -10], "UpperArmR": [0, 0.1, 0, -34, 4.2, -46.2]}
@@ -100,7 +100,7 @@
         "EasingFunction": "Sin",
         "DetachedAnchor": false,
         "SwitchArms": false,
-        "PitchFollow": false,
+        "PitchFollow": true,
         "FOVMultiplier": 1,
         "BobbingAmplitude": 1,
         "Elements": {"ItemAnchor": [0, 0, 0, 0, 0, 60], "LowerArmR": [0, -1.6, 0, 0, 0, 0], "UpperArmR": [0, 0, 0, -44, 2.2, -51.2]}
@@ -110,7 +110,7 @@
         "EasingFunction": "CosShifted",
         "DetachedAnchor": false,
         "SwitchArms": false,
-        "PitchFollow": false,
+        "PitchFollow": true,
         "FOVMultiplier": 1,
         "BobbingAmplitude": 1,
         "Elements": {"ItemAnchor": [0, 0, 0, 0, 0, 0], "LowerArmR": [0, 1.6, 0, 0, 0, -74], "UpperArmR": [0, -1.6, 0, -34, -1.8, -50.2]}

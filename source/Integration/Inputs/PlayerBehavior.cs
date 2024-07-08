@@ -20,6 +20,11 @@ public interface IHasWeaponLogic
     IClientWeaponLogic? ClientLogic { get; }
 }
 
+public interface ISetsRenderingOffset
+{
+    bool RenderingOffset { get; }
+}
+
 public interface IClientWeaponLogic
 {
     int ItemId { get; }
@@ -102,6 +107,8 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
     private int _currentOffHandItemId = -1;
     private int _mainHandState = 0;
     private int _offHandState = 0;
+    private bool _mainHandRenderingOffset = true;
+    private bool _offHandRenderingOffset = true;
 
     private void RegisterWeapons()
     {
@@ -244,11 +251,25 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
 
         ItemStack? stack = _player.ActiveHandItemSlot.Itemstack;
 
-        if (stack == null || stack.Item is not IHasWeaponLogic weapon)
+        if (stack != null && stack.Item is ISetsRenderingOffset offset)
+        {
+            _mainHandRenderingOffset = offset.RenderingOffset;
+        }
+        else
+        {
+            _mainHandRenderingOffset = true;
+        }
+
+        if (_mainHandRenderingOffset && _offHandRenderingOffset)
         {
             PlayerRenderingPatches.ResetOffset();
-            return;
         }
+        else
+        {
+            PlayerRenderingPatches.SetOffset(0);
+        }
+
+        if (stack == null || stack.Item is not IHasWeaponLogic weapon) return;
 
         weapon.ClientLogic?.OnSelected(_player.ActiveHandItemSlot, _player, true, ref _mainHandState);
         _currentMainHandWeapon = weapon.ClientLogic;
@@ -269,6 +290,24 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
         }
 
         ItemStack? stack = _player.ActiveHandItemSlot.Itemstack;
+
+        if (stack != null && stack.Item is ISetsRenderingOffset offset)
+        {
+            _offHandRenderingOffset = offset.RenderingOffset;
+        }
+        else
+        {
+            _offHandRenderingOffset = true;
+        }
+
+        if (_mainHandRenderingOffset && _offHandRenderingOffset)
+        {
+            PlayerRenderingPatches.ResetOffset();
+        }
+        else
+        {
+            PlayerRenderingPatches.SetOffset(0);
+        }
 
         if (stack == null || stack.Item is not IClientWeaponLogic weapon) return;
 

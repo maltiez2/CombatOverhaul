@@ -2,14 +2,12 @@
 using CombatOverhaul.DamageSystems;
 using CombatOverhaul.Inputs;
 using CombatOverhaul.MeleeSystems;
-using ImPlotNET;
-using System;
 using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Config;
 using Vintagestory.API.MathTools;
-using Vintagestory.GameContent;
+using Vintagestory.API.Server;
 using VSImGui.Debug;
 
 namespace CombatOverhaul.Implementations;
@@ -63,6 +61,7 @@ public class MeleeWeaponStats : WeaponStats
     public StanceStats? OneHandedStance { get; set; } = null;
     public StanceStats? TwoHandedStance { get; set; } = null;
     public StanceStats? OffHandStance { get; set; } = null;
+    public bool RenderingOffset { get; set; } = false;
 }
 
 public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
@@ -80,17 +79,17 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
         if (Stats.OneHandedStance?.Attack != null)
         {
             OneHandedAttack = new(api, Stats.OneHandedStance.Attack);
-            //DebugEditColliders(OneHandedAttack, item.Id * 100 + 0);
+            DebugEditColliders(OneHandedAttack, item.Id * 100 + 0);
         }
         if (Stats.TwoHandedStance?.Attack != null)
         {
             TwoHandedAttack = new(api, Stats.TwoHandedStance.Attack);
-            //DebugEditColliders(TwoHandedAttack, item.Id * 100 + 1);
+            DebugEditColliders(TwoHandedAttack, item.Id * 100 + 1);
         }
         if (Stats.OffHandStance?.Attack != null)
         {
             OffHandAttack = new(api, Stats.OffHandStance.Attack);
-            //DebugEditColliders(OffHandAttack, item.Id * 100 + 2);
+            DebugEditColliders(OffHandAttack, item.Id * 100 + 2);
         }
     }
 
@@ -100,6 +99,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
 
     public AnimationRequestByCode GetIdleAnimation(bool mainHand)
     {
+        EnsureStance(Api.World.Player.Entity, mainHand);
         return GetStance<MeleeWeaponStance>(mainHand) switch
         {
             MeleeWeaponStance.MainHand => new(Stats?.OneHandedStance?.IdleAnimation ?? "", 1, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), false),
@@ -110,6 +110,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
     }
     public AnimationRequestByCode GetReadyAnimation(bool mainHand)
     {
+        EnsureStance(Api.World.Player.Entity, mainHand);
         return GetStance<MeleeWeaponStance>(mainHand) switch
         {
             MeleeWeaponStance.MainHand => new(Stats?.OneHandedStance?.ReadyAnimation ?? "", 1, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), false),
@@ -149,7 +150,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
             damageType.RelativeCollider.Transform(byPlayer.Entity.Pos, byPlayer.Entity, inSlot, Api, right: true)?.Render(Api, byPlayer.Entity);
         }
     }
-    
+
     public bool CanAttack(bool mainHand = true) => GetStanceStats(mainHand)?.CanAttack ?? false;
     public bool CanBlock(bool mainHand = true) => GetStanceStats(mainHand)?.CanBlock ?? false;
     public bool CanParry(bool mainHand = true) => GetStanceStats(mainHand)?.CanParry ?? false;
@@ -250,7 +251,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
         {
             StartAttackCooldown(mainHand, TimeSpan.FromMilliseconds(cooldown));
         }
-        
+
         return true;
     }
 
@@ -328,12 +329,12 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
 
         return true;
     }
-    
+
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Released)]
     protected virtual bool StopBlock(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
         if (!CheckState(mainHand, MeleeWeaponState.Blocking, MeleeWeaponState.Parrying)) return false;
-        
+
         MeleeBlockSystem.StopBlock(mainHand);
         AnimationBehavior?.PlayReadyAnimation(mainHand);
         SetState(MeleeWeaponState.Idle, mainHand);
@@ -361,7 +362,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
             return;
         }
 
-        bool offHandEmpty = CheckForOtherHandEmpty(mainHand, player);
+        bool offHandEmpty = CheckForOtherHandEmptyNoError(mainHand, player);
         if (offHandEmpty && Stats.TwoHandedStance != null)
         {
             SetStance(MeleeWeaponStance.TwoHanded, mainHand);
@@ -454,8 +455,8 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
         return stance switch
         {
             MeleeWeaponStance.MainHand => OneHandedAttack,
-            MeleeWeaponStance.OffHand => TwoHandedAttack,
-            MeleeWeaponStance.TwoHanded => OffHandAttack,
+            MeleeWeaponStance.OffHand => OffHandAttack,
+            MeleeWeaponStance.TwoHanded => TwoHandedAttack,
             _ => OneHandedAttack,
         };
     }
@@ -547,6 +548,20 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
 
         return true;
     }
+    protected bool CheckForOtherHandEmptyNoError(bool mainHand, EntityPlayer player)
+    {
+        if (mainHand && !player.LeftHandItemSlot.Empty)
+        {
+            return false;
+        }
+
+        if (!mainHand && !player.RightHandItemSlot.Empty)
+        {
+            return false;
+        }
+
+        return true;
+    }
 
     private void DebugEditColliders(MeleeAttack attack, int attackIndex)
     {
@@ -579,11 +594,13 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
 
 }
 
-public class MeleeWeapon : Item, IHasWeaponLogic, IHasDynamicIdleAnimations, IHasMeleeWeaponActions
+public class MeleeWeapon : Item, IHasWeaponLogic, IHasDynamicIdleAnimations, IHasMeleeWeaponActions, IHasServerBlockCallback, ISetsRenderingOffset
 {
     public MeleeWeaponClient? ClientLogic { get; private set; }
 
     IClientWeaponLogic? IHasWeaponLogic.ClientLogic => ClientLogic;
+
+    public bool RenderingOffset { get; set; }
 
     public override void OnLoaded(ICoreAPI api)
     {
@@ -592,6 +609,8 @@ public class MeleeWeapon : Item, IHasWeaponLogic, IHasDynamicIdleAnimations, IHa
         if (api is ICoreClientAPI clientAPI)
         {
             ClientLogic = new(clientAPI, this);
+            MeleeWeaponStats Stats = Attributes.AsObject<MeleeWeaponStats>();
+            RenderingOffset = Stats.RenderingOffset;
         }
     }
 
@@ -614,5 +633,10 @@ public class MeleeWeapon : Item, IHasWeaponLogic, IHasDynamicIdleAnimations, IHa
     public override void OnHeldAttackStart(ItemSlot slot, EntityAgent byEntity, BlockSelection blockSel, EntitySelection entitySel, ref EnumHandHandling handling)
     {
         handling = EnumHandHandling.PreventDefault;
+    }
+
+    public void BlockCallback(IServerPlayer player, ItemSlot slot, bool mainHand)
+    {
+        DamageItem(player.Entity.World, player.Entity, slot);
     }
 }

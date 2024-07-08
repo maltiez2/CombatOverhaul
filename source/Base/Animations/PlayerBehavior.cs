@@ -7,6 +7,7 @@ using Vintagestory.API.Common.Entities;
 using Vintagestory.API.MathTools;
 using Vintagestory.Client.NoObf;
 using Vintagestory.GameContent;
+using VSImGui.Debug;
 
 namespace CombatOverhaul.Animations;
 
@@ -105,18 +106,18 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
                 Play(item.ReadyAnimation, false);
                 StartIdleTimer(item.IdleAnimation, false);
             }
-            else if (_player.RightHandItemSlot.Itemstack?.Item is IHasDynamicIdleAnimations item2)
+            else if (_player.LeftHandItemSlot.Itemstack?.Item is IHasDynamicIdleAnimations item2)
             {
                 string readyCategory = item2.GetReadyAnimation(mainHand: false).Category;
 
-                foreach (string category in _mainHandCategories.Where(element => element != readyCategory))
+                foreach (string category in _offhandCategories.Where(element => element != readyCategory))
                 {
                     _composer.Stop(category);
                 }
-                _mainHandCategories.Clear();
+                _offhandCategories.Clear();
 
-                Play(item2.GetReadyAnimation(mainHand: false), true);
-                StartIdleTimer(item2.GetIdleAnimation(mainHand: false), true);
+                Play(item2.GetReadyAnimation(mainHand: false), false);
+                StartIdleTimer(item2.GetIdleAnimation(mainHand: false), false);
             }
             else
             {
@@ -348,6 +349,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     {
         if (mainHand)
         {
+            
             if (_mainHandIdleTimer != -1 && _mainHandIdleCategory == category)
             {
                 _api?.World.UnregisterCallback(_mainHandIdleTimer);

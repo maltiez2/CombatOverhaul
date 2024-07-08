@@ -9,7 +9,7 @@ namespace CombatOverhaul.MeleeSystems;
 
 public class MeleeAttackStats
 {
-    public bool StopOnTerrainHit { get; set; } = true;
+    public bool StopOnTerrainHit { get; set; } = false;
     public bool StopOnEntityHit { get; set; } = false;
     public bool CollideWithTerrain { get; set; } = true;
     public float MaxReach { get; set; } = 6;
@@ -59,28 +59,30 @@ public sealed class MeleeAttack
 
         PrepareColliders(player, slot, mainHand);
 
+        float parameter = 1f;
+
         if (CollideWithTerrain)
         {
-            bool collidedWithTerrain = TryCollideWithTerrain(out terrainCollisions);
+            bool collidedWithTerrain = TryCollideWithTerrain(out terrainCollisions, out parameter);
 
             if (collidedWithTerrain && StopOnTerrainHit) return;
         }
 
-        TryAttackEntities(player, slot, out entitiesCollisions, mainHand);
+        TryAttackEntities(player, slot, out entitiesCollisions, mainHand, parameter);
     }
     public void PrepareColliders(IPlayer player, ItemSlot slot, bool mainHand)
     {
         LineSegmentCollider.Transform(DamageTypes.Select(element => element as IHasLineCollider), player.Entity, slot, _api, mainHand);
     }
-    public bool TryCollideWithTerrain(out IEnumerable<(Block block, Vector3 point)> terrainCollisions)
+    public bool TryCollideWithTerrain(out IEnumerable<(Block block, Vector3 point)> terrainCollisions, out float parameter)
     {
-        terrainCollisions = CheckTerrainCollision();
+        terrainCollisions = CheckTerrainCollision(out parameter);
 
         return terrainCollisions.Any();
     }
-    public bool TryAttackEntities(IPlayer player, ItemSlot slot, out IEnumerable<(Entity entity, Vector3 point)> entitiesCollisions, bool mainHand)
+    public bool TryAttackEntities(IPlayer player, ItemSlot slot, out IEnumerable<(Entity entity, Vector3 point)> entitiesCollisions, bool mainHand, float maximumParameter)
     {
-        entitiesCollisions = CollideWithEntities(player, out IEnumerable<MeleeDamagePacket> damagePackets, mainHand);
+        entitiesCollisions = CollideWithEntities(player, out IEnumerable<MeleeDamagePacket> damagePackets, mainHand, maximumParameter);
 
         if (damagePackets.Any()) _meleeSystem.SendPackets(damagePackets);
 
@@ -102,23 +104,26 @@ public sealed class MeleeAttack
     private readonly HashSet<(Entity entity, Vector3 point)> _entitiesCollisionsBuffer = new();
     private readonly MeleeSystemClient _meleeSystem;
 
-    private IEnumerable<(Block block, Vector3 point)> CheckTerrainCollision()
+    private IEnumerable<(Block block, Vector3 point)> CheckTerrainCollision(out float parameter)
     {
         _terrainCollisionsBuffer.Clear();
 
+        parameter = 1f;
+
         foreach (MeleeDamageType damageType in DamageTypes)
         {
-            (Block block, Vector3 position)? result = damageType.InWorldCollider.IntersectTerrain(_api);
+            (Block block, Vector3 position, float parameter)? result = damageType.InWorldCollider.IntersectTerrain(_api);
 
             if (result != null)
             {
-                _terrainCollisionsBuffer.Add(result.Value);
+                _terrainCollisionsBuffer.Add((result.Value.block, result.Value.position));
+                if (result.Value.parameter < parameter) parameter = result.Value.parameter;
             }
         }
 
         return _terrainCollisionsBuffer.ToImmutableHashSet();
     }
-    private IEnumerable<(Entity entity, Vector3 point)> CollideWithEntities(IPlayer player, out IEnumerable<MeleeDamagePacket> packets, bool mainHand)
+    private IEnumerable<(Entity entity, Vector3 point)> CollideWithEntities(IPlayer player, out IEnumerable<MeleeDamagePacket> packets, bool mainHand, float maximumParameter)
     {
         long entityId = player.Entity.EntityId;
 
@@ -132,9 +137,10 @@ public sealed class MeleeAttack
         {
             foreach (Entity entity in entities
                     .Where(entity => entity != player.Entity)
+                    .Where(entity => _attackedEntities.ContainsKey(entityId))
                     .Where(entity => !_attackedEntities[entityId].Contains(entity.EntityId)))
             {
-                bool attacked = damageType.TryAttack(player, entity, out int collider, out Vector3 point, out MeleeDamagePacket packet, mainHand);
+                bool attacked = damageType.TryAttack(player, entity, out int collider, out Vector3 point, out MeleeDamagePacket packet, mainHand, maximumParameter);
 
                 if (!attacked) continue;
 

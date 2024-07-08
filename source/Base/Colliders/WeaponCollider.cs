@@ -30,8 +30,8 @@ public interface IWeaponCollider : ICollider
 {
     bool RoughIntersect(Cuboidf collisionBox);
     Vector3? IntersectCuboids(IEnumerable<Cuboidf> collisionBoxes);
-    Vector3? IntersectCuboid(Cuboidf collisionBox);
-    (Block, Vector3)? IntersectTerrain(ICoreClientAPI api);
+    Vector3? IntersectCuboid(Cuboidf collisionBox, out float parameter);
+    (Block block, Vector3 position, float parameter)? IntersectTerrain(ICoreClientAPI api);
 }
 
 public readonly struct LineSegmentCollider : IWeaponCollider
@@ -109,18 +109,22 @@ public readonly struct LineSegmentCollider : IWeaponCollider
 
         return Position + tMin * Direction;
     }
-    public Vector3? IntersectCuboid(Cuboidf collisionBox)
+    public Vector3? IntersectCuboid(Cuboidf collisionBox, out float parameter)
     {
         float tMin = 0.0f;
         float tMax = 1.0f;
+
+        parameter = 1f;
 
         if (!CheckAxisIntersection(Direction.X, Position.X, collisionBox.MinX, collisionBox.MaxX, ref tMin, ref tMax)) return null;
         if (!CheckAxisIntersection(Direction.Y, Position.Y, collisionBox.MinY, collisionBox.MaxY, ref tMin, ref tMax)) return null;
         if (!CheckAxisIntersection(Direction.Z, Position.Z, collisionBox.MinZ, collisionBox.MaxZ, ref tMin, ref tMax)) return null;
 
+        parameter = tMin;
+
         return Position + tMin * Direction;
     }
-    public (Block, Vector3)? IntersectTerrain(ICoreClientAPI api)
+    public (Block block, Vector3 position, float parameter)? IntersectTerrain(ICoreClientAPI api)
     {
         int minX = (int)MathF.Min(Position.X, Position.X + Direction.X);
         int minY = (int)MathF.Min(Position.Y, Position.Y + Direction.Y);
@@ -148,7 +152,7 @@ public readonly struct LineSegmentCollider : IWeaponCollider
             }
         }
 
-        return closestIntersection != null ? (closestIntersection.Value.block, closestIntersection.Value.position) : null;
+        return closestIntersection;
     }
 
     public static IEnumerable<LineSegmentCollider> Transform(IEnumerable<LineSegmentCollider> segments, EntityAgent entity, ItemSlot itemSlot, ICoreClientAPI api, bool right = true)
