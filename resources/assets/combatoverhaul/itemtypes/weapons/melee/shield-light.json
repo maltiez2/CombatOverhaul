@@ -7,6 +7,80 @@
     {"code": "type", "states": ["plain"]},
     {"code": "material", "states": ["crude", "copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "steel"]}
   ],
+  "attributes": {
+    "OffHandStanceByType": {
+      "*-crude": {
+        "CanAttack": false,
+        "CanParry": true,
+        "CanBlock": true,
+        "CanSprint": true,
+        "SpeedPenalty": 0,
+        "BlockSpeedPenalty": -0.05,
+        "Parry": {"Zones": ["Head", "Face", "Neck", "Torso", "Arms", "Hands", "Legs", "Feet"], "Directions": [45, 45, 45, 45]},
+        "Block": {"Zones": ["Face", "Neck", "Torso", "Arms", "Hands"], "Directions": [60, 60, 60, 60]},
+        "BlockCooldownMs": 300,
+        "BlockAnimation": "combatoverhaul:shield-{handling}-{material}-parry",
+        "ReadyAnimation": "combatoverhaul:shield-{handling}-{material}-ready",
+        "IdleAnimation": "combatoverhaul:shield-{handling}-{material}-idle"
+      },
+      "*-copper": {
+        "CanAttack": false,
+        "CanParry": true,
+        "CanBlock": true,
+        "CanSprint": true,
+        "SpeedPenalty": 0,
+        "BlockSpeedPenalty": -0.05,
+        "Parry": {"Zones": ["Head", "Face", "Neck", "Torso", "Arms", "Hands", "Legs", "Feet"], "Directions": [60, 60, 60, 60]},
+        "Block": {"Zones": ["Face", "Neck", "Torso", "Arms", "Hands"], "Directions": [60, 60, 60, 60]},
+        "BlockCooldownMs": 300,
+        "BlockAnimation": "combatoverhaul:shield-{handling}-{material}-parry",
+        "ReadyAnimation": "combatoverhaul:shield-{handling}-{material}-ready",
+        "IdleAnimation": "combatoverhaul:shield-{handling}-{material}-idle"
+      },
+      "@.*-(tinbronze|bismuthbronze|blackbronze)": {
+        "CanAttack": false,
+        "CanParry": true,
+        "CanBlock": true,
+        "CanSprint": true,
+        "SpeedPenalty": 0,
+        "BlockSpeedPenalty": -0.05,
+        "Parry": {"Zones": ["Head", "Face", "Neck", "Torso", "Arms", "Hands", "Legs", "Feet"], "Directions": [60, 60, 60, 60]},
+        "Block": {"Zones": ["Face", "Neck", "Torso", "Arms", "Hands"], "Directions": [75, 75, 75, 75]},
+        "BlockCooldownMs": 300,
+        "BlockAnimation": "combatoverhaul:shield-{handling}-{material}-parry",
+        "ReadyAnimation": "combatoverhaul:shield-{handling}-{material}-ready",
+        "IdleAnimation": "combatoverhaul:shield-{handling}-{material}-idle"
+      },
+      "*-iron": {
+        "CanAttack": false,
+        "CanParry": true,
+        "CanBlock": true,
+        "CanSprint": true,
+        "SpeedPenalty": 0,
+        "BlockSpeedPenalty": -0.10,
+        "Parry": {"Zones": ["Head", "Face", "Neck", "Torso", "Arms", "Hands", "Legs", "Feet"], "Directions": [60, 60, 60, 60]},
+        "Block": {"Zones": ["Face", "Neck", "Torso", "Arms", "Hands"], "Directions": [90, 90, 90, 90]},
+        "BlockCooldownMs": 300,
+        "BlockAnimation": "combatoverhaul:shield-{handling}-{material}-parry",
+        "ReadyAnimation": "combatoverhaul:shield-{handling}-{material}-ready",
+        "IdleAnimation": "combatoverhaul:shield-{handling}-{material}-idle"
+      },
+      "*-steel": {
+        "CanAttack": false,
+        "CanParry": true,
+        "CanBlock": true,
+        "CanSprint": true,
+        "SpeedPenalty": 0,
+        "BlockSpeedPenalty": 0,
+        "Parry": {"Zones": ["Head", "Face", "Neck", "Torso", "Arms", "Hands", "Legs", "Feet"], "Directions": [90, 90, 90, 90]},
+        "Block": {"Zones": ["Face", "Neck", "Torso", "Hands"], "Directions": [45, 45, 45, 45]},
+        "BlockCooldownMs": 300,
+        "BlockAnimation": "combatoverhaul:shield-{handling}-{material}-parry",
+        "ReadyAnimation": "combatoverhaul:shield-{handling}-{material}-ready",
+        "IdleAnimation": "combatoverhaul:shield-{handling}-{material}-idle"
+      }
+    }
+  },
   "shapeByType": {
     "*-crude": {"base": "weapons/shields/hide"},
     "*-copper": {"base": "weapons/shields/full-copper"},
@@ -16,7 +90,6 @@
     "*-iron": {"base": "weapons/shields/round"},
     "*-steel": {"base": "weapons/shields/buckler"}
   },
-  "attributes": {},
   "textures": {"metal": {"base": "game:block/metal/plate/{material}"}},
   "durabilitybytype": {"*-crude": 32, "*-copper": 64, "*-tinbronze": 256, "*-bismuthbronze": 256, "*-blackbronze": 256, "*-iron": 512, "*-steel": 1024},
   "creativeinventory": {"combatoverhaul": ["*"]},
