@@ -20,6 +20,7 @@
   ],
   "damagedby": ["attacking"],
   "tool": "sword",
+  "textures": {"blade": {"base": "game:block/metal/plate/{material}"}},
   "shapeByType": {
     "*-tinbronze": {"base": "weapons/swords/sword-spatha-{type}"},
     "*-bismuthbronze": {"base": "weapons/swords/sword-spatha-{type}"},

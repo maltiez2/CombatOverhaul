@@ -15,6 +15,7 @@
   "variantgroups": [{"code": "handling", "states": ["great"]}, {"code": "type", "states": ["plain"]}, {"code": "material", "states": ["steel"]}],
   "damagedby": ["attacking"],
   "tool": "sword",
+  "textures": {"blade": {"base": "game:block/metal/plate/{material}"}},
   "shapeByType": {"*-steel": {"base": "weapons/swords/sword-great-{type}"}},
   "attackRange": 3,
   "attackpowerbytype": {"*-copper": 3, "*-tinbronze": 4, "*-bismuthbronze": 4, "*-blackbronze": 4, "*-iron": 4, "*-steel": 5},

@@ -1,23 +1,47 @@
-{
+﻿{
   "code": "shield",
   "class": "CombatOverhaul:MeleeWeapon",
+  "storageFlags": 257,
   "variantgroups": [
     {"code": "handling", "states": ["heavy"]},
     {"code": "type", "states": ["plain"]},
     {"code": "material", "states": ["crude", "copper", "tinbronze", "bismuthbronze", "blackbronze", "iron"]}
   ],
   "shapeByType": {
-    "*-crude": {"base": "weapons/shields/reed}"},
-    "*-copper": {"base": "weapons/shields/apis"},
+    "*-crude": {"base": "weapons/shields/reed"},
+    "*-copper": {"base": "weapons/shields/aspis"},
     "*-tinbronze": {"base": "weapons/shields/scutum"},
     "*-bismuthbronze": {"base": "weapons/shields/scutum"},
     "*-blackbronze": {"base": "weapons/shields/scutum"},
     "*-iron": {"base": "weapons/shields/kite"}
   },
   "attributes": {},
-  "durabilitybytype": {"*-crude": 32,  "*-copper": 64, "*-tinbronze": 256, "*-bismuthbronze": 256, "*-blackbronze": 256, "*-iron": 512},
+  "textures": {"metal": {"base": "game:block/metal/plate/{material}"}},
+  "durabilitybytype": {"*-crude": 32, "*-copper": 64, "*-tinbronze": 256, "*-bismuthbronze": 256, "*-blackbronze": 256, "*-iron": 512},
   "creativeinventory": {"combatoverhaul": ["*"]},
-  "guiTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 40, "y": 0, "z": -52}, "origin": {"x": 0.7, "y": -0.3, "z": 0}, "scale": 2},
   "groundTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 4},
-  "tpHandTransform": {"translation": {"x": 0.33, "y": 0.05, "z": 0.5}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.6}
+  "guiTransformByType": {
+    "*-crude": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 115, "y": -26, "z": -24}, "origin": {"x": 0.6, "y": -0.3, "z": 0.7}, "scale": 0.89},
+    "*-copper": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 113, "y": -39, "z": -33}, "origin": {"x": 0.85, "y": -0.3, "z": 0.7}, "scale": 1.18},
+    "*-tinbronze": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 115, "y": -26, "z": -24}, "origin": {"x": 0.6, "y": -0.3, "z": 0.7}, "scale": 0.89},
+    "*-bismuthbronze": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 115, "y": -26, "z": -24}, "origin": {"x": 0.6, "y": -0.3, "z": 0.7}, "scale": 0.89},
+    "*-blackbronze": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 115, "y": -26, "z": -24}, "origin": {"x": 0.6, "y": -0.3, "z": 0.7}, "scale": 0.89},
+    "*-iron": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 108, "y": 137, "z": 33}, "origin": {"x": 0.35, "y": -0.1, "z": 0.7}, "scale": 1.1}
+  },
+  "tpHandTransformByType": {
+    "*-crude": {"translation": {"x": 0.5, "y": 0.6, "z": -0.15}, "rotation": {"x": -99, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
+    "*-copper": {"translation": {"x": 0.5, "y": -0.1, "z": 0.05}, "rotation": {"x": -90, "y": 90, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.9},
+    "*-tinbronze": {"translation": {"x": 0.5, "y": 0.6, "z": -0.1}, "rotation": {"x": -95, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
+    "*-bismuthbronze": {"translation": {"x": 0.5, "y": 0.6, "z": -0.1}, "rotation": {"x": -95, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
+    "*-blackbronze": {"translation": {"x": 0.5, "y": 0.6, "z": -0.1}, "rotation": {"x": -95, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
+    "*-iron": {"translation": {"x": -0.5, "y": 0.6, "z": -0.12}, "rotation": {"x": 0, "y": -90, "z": -100}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.9}
+  },
+  "tpOffHandTransformByType": {
+    "*-crude": {"translation": {"x": 0.42, "y": -0.45, "z": -0.05}, "rotation": {"x": 99, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
+    "*-copper": {"translation": {"x": -0.58, "y": -0.15, "z": -0.1}, "rotation": {"x": 90, "y": -90, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.9},
+    "*-tinbronze": {"translation": {"x": 0.42, "y": -0.45, "z": -0.05}, "rotation": {"x": 95, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
+    "*-bismuthbronze": {"translation": {"x": 0.42, "y": -0.45, "z": -0.05}, "rotation": {"x": 95, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
+    "*-blackbronze": {"translation": {"x": 0.42, "y": -0.45, "z": -0.05}, "rotation": {"x": 95, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
+    "*-iron": {"translation": {"x": -0.58, "y": -0.45, "z": -0.12}, "rotation": {"x": 0, "y": -90, "z": 102}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.9}
+  }
 }

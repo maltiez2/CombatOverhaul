@@ -79,17 +79,17 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
         if (Stats.OneHandedStance?.Attack != null)
         {
             OneHandedAttack = new(api, Stats.OneHandedStance.Attack);
-            DebugEditColliders(OneHandedAttack, item.Id * 100 + 0);
+            //DebugEditColliders(OneHandedAttack, item.Id * 100 + 0);
         }
         if (Stats.TwoHandedStance?.Attack != null)
         {
             TwoHandedAttack = new(api, Stats.TwoHandedStance.Attack);
-            DebugEditColliders(TwoHandedAttack, item.Id * 100 + 1);
+            //DebugEditColliders(TwoHandedAttack, item.Id * 100 + 1);
         }
         if (Stats.OffHandStance?.Attack != null)
         {
             OffHandAttack = new(api, Stats.OffHandStance.Attack);
-            DebugEditColliders(OffHandAttack, item.Id * 100 + 2);
+            //DebugEditColliders(OffHandAttack, item.Id * 100 + 2);
         }
     }
 

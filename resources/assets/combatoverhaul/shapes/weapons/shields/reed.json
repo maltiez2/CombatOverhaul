@@ -9,10 +9,10 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"reedrope": "block/cloth/reedrope",
-		"steel": "block/metal/plate/steel",
-		"bamboowoven": "block/plant/bamboo/bamboowoven",
-		"oak": "block/wood/bark/oak"
+		"reedrope": "game:block/cloth/reedrope",
+		"steel": "game:block/metal/plate/steel",
+		"bamboowoven": "game:block/plant/bamboo/bamboowoven",
+		"oak": "game:block/wood/bark/oak"
 	},
 	"elements": [
 		{
@@ -21,12 +21,12 @@
 			"to": [ 8.0, 0.0, 9.0 ],
 			"rotationOrigin": [ 8.0, 0.0, 8.0 ],
 			"faces": {
-				"north": { "texture": "#null", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
-				"east": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 0.5 ] },
-				"south": { "texture": "#null", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
-				"west": { "texture": "#null", "uv": [ 0.0, 0.0, 1.0, 0.5 ] },
-				"up": { "texture": "#null", "uv": [ 0.0, 0.0, 0.5, 1.0 ] },
-				"down": { "texture": "#null", "uv": [ 0.0, 0.0, 0.5, 1.0 ] }
+				"north": { "texture": "#oak", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+				"east": { "texture": "#oak", "uv": [ 0.0, 0.0, 1.0, 0.5 ] },
+				"south": { "texture": "#oak", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+				"west": { "texture": "#oak", "uv": [ 0.0, 0.0, 1.0, 0.5 ] },
+				"up": { "texture": "#oak", "uv": [ 0.0, 0.0, 0.5, 1.0 ] },
+				"down": { "texture": "#oak", "uv": [ 0.0, 0.0, 0.5, 1.0 ] }
 			},
 			"children": [
 				{

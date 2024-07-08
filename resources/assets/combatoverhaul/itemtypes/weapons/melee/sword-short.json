@@ -18,6 +18,7 @@
     {"code": "type", "states": ["plain"]},
     {"code": "material", "states": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "steel"]}
   ],
+  "textures": {"blade": {"base": "game:block/metal/plate/{material}"}},
   "shapeByType": {
     "*-copper": {"base": "weapons/swords/sword-leaf-{type}"},
     "*-tinbronze": {"base": "weapons/swords/sword-gladius-{type}"},
