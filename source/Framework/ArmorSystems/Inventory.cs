@@ -278,7 +278,7 @@ public sealed class ArmorInventory : InventoryCharacter
         }
     }
 
-    private static bool IsVanillaArmorSlot(int index) => index >= _clothesSlotsCount && index <= _clothesSlotsCount + _clothesArmorSlots;
+    private static bool IsVanillaArmorSlot(int index) => index >= _clothesSlotsCount && index < _clothesSlotsCount + _clothesArmorSlots;
     
     private static ArmorType ArmorTypeFromIndex(int index)
     {
