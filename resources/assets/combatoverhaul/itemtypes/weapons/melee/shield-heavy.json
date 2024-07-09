@@ -85,7 +85,7 @@
   },
   "tpHandTransformByType": {
     "*-crude": {"translation": {"x": 0.5, "y": 0.6, "z": -0.15}, "rotation": {"x": -99, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
-    "*-copper": {"translation": {"x": 0.5, "y": -0.1, "z": 0.05}, "rotation": {"x": -90, "y": 90, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.9},
+    "*-copper": {"translation": {"x": 0.5, "y": -0.1, "z": 0.05}, "rotation": {"x": -90, "y": 90, "z": 3}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
     "*-tinbronze": {"translation": {"x": 0.5, "y": 0.6, "z": -0.1}, "rotation": {"x": -95, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
     "*-bismuthbronze": {"translation": {"x": 0.5, "y": 0.6, "z": -0.1}, "rotation": {"x": -95, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
     "*-blackbronze": {"translation": {"x": 0.5, "y": 0.6, "z": -0.1}, "rotation": {"x": -95, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
@@ -93,7 +93,7 @@
   },
   "tpOffHandTransformByType": {
     "*-crude": {"translation": {"x": 0.42, "y": -0.45, "z": -0.05}, "rotation": {"x": 99, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
-    "*-copper": {"translation": {"x": -0.58, "y": -0.15, "z": -0.1}, "rotation": {"x": 90, "y": -90, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.9},
+    "*-copper": {"translation": {"x": -0.58, "y": -0.15, "z": -0.1}, "rotation": {"x": 92, "y": -90, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
     "*-tinbronze": {"translation": {"x": 0.42, "y": -0.45, "z": -0.05}, "rotation": {"x": 95, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
     "*-bismuthbronze": {"translation": {"x": 0.42, "y": -0.45, "z": -0.05}, "rotation": {"x": 95, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
     "*-blackbronze": {"translation": {"x": 0.42, "y": -0.45, "z": -0.05}, "rotation": {"x": 95, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},

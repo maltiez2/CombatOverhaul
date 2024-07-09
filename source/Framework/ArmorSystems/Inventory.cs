@@ -11,6 +11,7 @@ public class ArmorSlot : ItemSlot
     public ArmorType ArmorType { get; }
     public ArmorType StoredArmoredType { get; private set; }
     public DamageZone DamageZone => ArmorType.Slots;
+    public ArmorLayers Layer => ArmorType.Layers;
     public DamageResistData Resists { get; set; } = DamageResistData.Empty;
     public override int MaxSlotStackSize => 1;
     public bool Available => _inventory.IsSlotAvailable(ArmorType);
