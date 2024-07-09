@@ -133,7 +133,7 @@ public sealed class ArmorInventory : InventoryCharacter
     }
     public override void ToTreeAttributes(ITreeAttribute tree)
     {
-        tree.SetInt("qslots", _clothesArmorSlots);
+        tree.SetInt("qslots", _vanillaSlots);
 
         TreeAttribute treeAttribute = new();
         for (int index = 0; index < _slots.Length; index++)

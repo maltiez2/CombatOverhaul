@@ -70,7 +70,7 @@ public interface IArmor
 public sealed class ArmorStatsJson
 {
     public string[] Layers { get; set; } = Array.Empty<string>();
-    public string[] Slots { get; set; } = Array.Empty<string>();
+    public string[] Zones { get; set; } = Array.Empty<string>();
     public Dictionary<string, float> Resists { get; set; } = new();
 }
 
