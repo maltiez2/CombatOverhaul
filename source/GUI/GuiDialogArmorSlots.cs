@@ -38,7 +38,7 @@ public class GuiDialogArmorSlots : GuiDialog
         {
             return;
         }
-        ComposeDialog();
+        //ComposeDialog();
     }
 
     private void GuiDialogCharacter_OnOpened(GuiDialogCharacter characterDialog)
@@ -107,32 +107,32 @@ public class GuiDialogArmorSlots : GuiDialog
                 .AddStaticCustomDraw(thirdBounds, OnDrawMiddleIcon)
                 .AddStaticCustomDraw(fourthBounds, OnDrawSkinIcon)
 
-                .AddItemSlotGrid(inv, SendInvPacket, 3, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Outer, DamageSystems.DamageZone.Head) }, BelowCopySet(ref secondBounds, fixedDeltaY: gap))
-                .AddItemSlotGrid(inv, SendInvPacket, 3, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Outer, DamageSystems.DamageZone.Face) }, BelowCopySet(ref secondBounds, fixedDeltaY: gap))
-                .AddItemSlotGrid(inv, SendInvPacket, 3, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Outer, DamageSystems.DamageZone.Neck) }, BelowCopySet(ref secondBounds, fixedDeltaY: gap))
-                .AddItemSlotGrid(inv, SendInvPacket, 3, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Outer, DamageSystems.DamageZone.Torso) }, BelowCopySet(ref secondBounds, fixedDeltaY: gap))
-                .AddItemSlotGrid(inv, SendInvPacket, 3, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Outer, DamageSystems.DamageZone.Arms) }, BelowCopySet(ref secondBounds, fixedDeltaY: gap))
-                .AddItemSlotGrid(inv, SendInvPacket, 3, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Outer, DamageSystems.DamageZone.Hands) }, BelowCopySet(ref secondBounds, fixedDeltaY: gap))
-                .AddItemSlotGrid(inv, SendInvPacket, 3, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Outer, DamageSystems.DamageZone.Legs) }, BelowCopySet(ref secondBounds, fixedDeltaY: gap))
-                .AddItemSlotGrid(inv, SendInvPacket, 3, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Outer, DamageSystems.DamageZone.Feet) }, BelowCopySet(ref secondBounds, fixedDeltaY: gap))
+                .AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Outer, DamageSystems.DamageZone.Head) }, BelowCopySet(ref secondBounds, fixedDeltaY: gap))
+                .AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Outer, DamageSystems.DamageZone.Face) }, BelowCopySet(ref secondBounds, fixedDeltaY: gap))
+                .AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Outer, DamageSystems.DamageZone.Neck) }, BelowCopySet(ref secondBounds, fixedDeltaY: gap))
+                .AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Outer, DamageSystems.DamageZone.Torso) }, BelowCopySet(ref secondBounds, fixedDeltaY: gap))
+                .AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Outer, DamageSystems.DamageZone.Arms) }, BelowCopySet(ref secondBounds, fixedDeltaY: gap))
+                .AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Outer, DamageSystems.DamageZone.Hands) }, BelowCopySet(ref secondBounds, fixedDeltaY: gap))
+                .AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Outer, DamageSystems.DamageZone.Legs) }, BelowCopySet(ref secondBounds, fixedDeltaY: gap))
+                .AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Outer, DamageSystems.DamageZone.Feet) }, BelowCopySet(ref secondBounds, fixedDeltaY: gap))
 
-                .AddItemSlotGrid(inv, SendInvPacket, 3, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Middle, DamageSystems.DamageZone.Head) }, BelowCopySet(ref thirdBounds, fixedDeltaY: gap))
-                .AddItemSlotGrid(inv, SendInvPacket, 3, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Middle, DamageSystems.DamageZone.Face) }, BelowCopySet(ref thirdBounds, fixedDeltaY: gap))
-                .AddItemSlotGrid(inv, SendInvPacket, 3, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Middle, DamageSystems.DamageZone.Neck) }, BelowCopySet(ref thirdBounds, fixedDeltaY: gap))
-                .AddItemSlotGrid(inv, SendInvPacket, 3, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Middle, DamageSystems.DamageZone.Torso) }, BelowCopySet(ref thirdBounds, fixedDeltaY: gap))
-                .AddItemSlotGrid(inv, SendInvPacket, 3, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Middle, DamageSystems.DamageZone.Arms) }, BelowCopySet(ref thirdBounds, fixedDeltaY: gap))
-                .AddItemSlotGrid(inv, SendInvPacket, 3, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Middle, DamageSystems.DamageZone.Hands) }, BelowCopySet(ref thirdBounds, fixedDeltaY: gap))
-                .AddItemSlotGrid(inv, SendInvPacket, 3, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Middle, DamageSystems.DamageZone.Legs) }, BelowCopySet(ref thirdBounds, fixedDeltaY: gap))
-                .AddItemSlotGrid(inv, SendInvPacket, 3, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Middle, DamageSystems.DamageZone.Feet) }, BelowCopySet(ref thirdBounds, fixedDeltaY: gap))
+                .AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Middle, DamageSystems.DamageZone.Head) }, BelowCopySet(ref thirdBounds, fixedDeltaY: gap))
+                .AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Middle, DamageSystems.DamageZone.Face) }, BelowCopySet(ref thirdBounds, fixedDeltaY: gap))
+                .AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Middle, DamageSystems.DamageZone.Neck) }, BelowCopySet(ref thirdBounds, fixedDeltaY: gap))
+                .AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Middle, DamageSystems.DamageZone.Torso) }, BelowCopySet(ref thirdBounds, fixedDeltaY: gap))
+                .AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Middle, DamageSystems.DamageZone.Arms) }, BelowCopySet(ref thirdBounds, fixedDeltaY: gap))
+                .AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Middle, DamageSystems.DamageZone.Hands) }, BelowCopySet(ref thirdBounds, fixedDeltaY: gap))
+                .AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Middle, DamageSystems.DamageZone.Legs) }, BelowCopySet(ref thirdBounds, fixedDeltaY: gap))
+                .AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Middle, DamageSystems.DamageZone.Feet) }, BelowCopySet(ref thirdBounds, fixedDeltaY: gap))
 
-                .AddItemSlotGrid(inv, SendInvPacket, 3, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Skin, DamageSystems.DamageZone.Head) }, BelowCopySet(ref fourthBounds, fixedDeltaY: gap))
-                .AddItemSlotGrid(inv, SendInvPacket, 3, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Skin, DamageSystems.DamageZone.Face) }, BelowCopySet(ref fourthBounds, fixedDeltaY: gap))
-                .AddItemSlotGrid(inv, SendInvPacket, 3, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Skin, DamageSystems.DamageZone.Neck) }, BelowCopySet(ref fourthBounds, fixedDeltaY: gap))
-                .AddItemSlotGrid(inv, SendInvPacket, 3, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Skin, DamageSystems.DamageZone.Torso) }, BelowCopySet(ref fourthBounds, fixedDeltaY: gap))
-                .AddItemSlotGrid(inv, SendInvPacket, 3, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Skin, DamageSystems.DamageZone.Arms) }, BelowCopySet(ref fourthBounds, fixedDeltaY: gap))
-                .AddItemSlotGrid(inv, SendInvPacket, 3, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Skin, DamageSystems.DamageZone.Hands) }, BelowCopySet(ref fourthBounds, fixedDeltaY: gap))
-                .AddItemSlotGrid(inv, SendInvPacket, 3, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Skin, DamageSystems.DamageZone.Legs) }, BelowCopySet(ref fourthBounds, fixedDeltaY: gap))
-                .AddItemSlotGrid(inv, SendInvPacket, 3, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Skin, DamageSystems.DamageZone.Feet) }, BelowCopySet(ref fourthBounds, fixedDeltaY: gap))
+                .AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Skin, DamageSystems.DamageZone.Head) }, BelowCopySet(ref fourthBounds, fixedDeltaY: gap))
+                .AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Skin, DamageSystems.DamageZone.Face) }, BelowCopySet(ref fourthBounds, fixedDeltaY: gap))
+                .AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Skin, DamageSystems.DamageZone.Neck) }, BelowCopySet(ref fourthBounds, fixedDeltaY: gap))
+                .AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Skin, DamageSystems.DamageZone.Torso) }, BelowCopySet(ref fourthBounds, fixedDeltaY: gap))
+                .AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Skin, DamageSystems.DamageZone.Arms) }, BelowCopySet(ref fourthBounds, fixedDeltaY: gap))
+                .AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Skin, DamageSystems.DamageZone.Hands) }, BelowCopySet(ref fourthBounds, fixedDeltaY: gap))
+                .AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Skin, DamageSystems.DamageZone.Legs) }, BelowCopySet(ref fourthBounds, fixedDeltaY: gap))
+                .AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Skin, DamageSystems.DamageZone.Feet) }, BelowCopySet(ref fourthBounds, fixedDeltaY: gap))
             .EndChildElements()
             .Compose();
         }
