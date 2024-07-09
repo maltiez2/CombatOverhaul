@@ -267,20 +267,18 @@ public sealed class ArmorInventory : InventoryCharacter
     private static bool IsVanillaArmorSlot(int index) => index >= _clothesSlotsCount && index <= _clothesSlotsCount + _clothesArmorSlots;
     private static int IndexFromArmorType(ArmorLayers layer, DamageZone zone)
     {
-        int defaultSlotsCount = _clothesSlotsCount + _clothesArmorSlots;
         int zonesCount = Enum.GetValues<DamageZone>().Length - 1;
 
-        return defaultSlotsCount + IndexFromArmorLayer(layer) * zonesCount + IndexFromDamageZone(zone);
+        return _vanillaSlots + IndexFromArmorLayer(layer) * zonesCount + IndexFromDamageZone(zone);
     }
     private static ArmorType ArmorTypeFromIndex(int index)
     {
-        int defaultSlotsCount = _clothesSlotsCount + _clothesArmorSlots;
         int zonesCount = Enum.GetValues<DamageZone>().Length - 1;
 
-        if (index < defaultSlotsCount) return ArmorType.Empty;
+        if (index < _vanillaSlots) return ArmorType.Empty;
 
-        ArmorLayers layer = ArmorLayerFromIndex((index - defaultSlotsCount) / zonesCount);
-        DamageZone zone = DamageZoneFromIndex(index - defaultSlotsCount - IndexFromArmorLayer(layer) * zonesCount);
+        ArmorLayers layer = ArmorLayerFromIndex((index - _vanillaSlots) / zonesCount);
+        DamageZone zone = DamageZoneFromIndex(index - _vanillaSlots - IndexFromArmorLayer(layer) * zonesCount);
 
         return new(layer, zone);
     }
