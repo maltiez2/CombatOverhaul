@@ -1,10 +1,12 @@
-﻿using CombatOverhaul.Armor;
+﻿using Cairo;
+using CombatOverhaul.Armor;
 using System.Reflection;
 using System.Resources;
 using System.Runtime.CompilerServices;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Config;
+using Vintagestory.API.MathTools;
 using Vintagestory.Client.NoObf;
 using Vintagestory.Common;
 
@@ -59,17 +61,7 @@ public class GuiDialogArmorSlots : GuiDialog
             return;
         }
 
-
-
-        //var dlg = capi.OpenedGuis.FirstOrDefault(x => x is GuiDialogCharacter) as GuiDialogCharacter;
-        //if (dlg == null)
-        //{
-        //    return;
-        //}
-        //if (characterDialog.Composers["playerstats"] is null)
-        //{
-        //    return;
-        //}
+        //if (characterDialog.Composers["playerstats"] is null){    return; }
 
         double indent = GuiElement.scaled(45);
         double gap = GuiElement.scaled(GuiElementItemSlotGridBase.unscaledSlotPadding);
@@ -96,18 +88,12 @@ public class GuiDialogArmorSlots : GuiDialog
         ElementBounds fourthBounds = thirdBounds.RightCopy(gap);
         ItemSlot slotHeadOuter = inv[ArmorInventory.IndexFromArmorType(ArmorLayers.Outer, DamageSystems.DamageZone.Head)];
 
-        // todo: fix icons
-        AssetLocation assetSkin = AssetLocation.Create("combatoverhaul:textures/icons/skin.svg");
-        AssetLocation assetMiddle = AssetLocation.Create("combatoverhaul:textures/icons/middle.svg");
-        AssetLocation assetOuter = AssetLocation.Create("combatoverhaul:textures/icons/outer.svg");
-
         try
         {
             composer = Composers[DialogName] = capi.Gui.CreateCompo(DialogName, mainBounds)
             .AddDialogBG(backgroundBounds, false)
             .AddDialogTitleBarWithBg("test", () => TryClose())
             .BeginChildElements(childBounds)
-                //.AddDynamicText("first", textFont, firstBounds)
                 .AddDynamicText("", textFont, BelowCopySet(ref firstBounds, fixedDeltaY: gap), "textHead")
                 .AddDynamicText("", textFont, BelowCopySet(ref firstBounds, fixedDeltaY: gap), "textFace")
                 .AddDynamicText("", textFont, BelowCopySet(ref firstBounds, fixedDeltaY: gap), "textNeck")
@@ -117,12 +103,9 @@ public class GuiDialogArmorSlots : GuiDialog
                 .AddDynamicText("", textFont, BelowCopySet(ref firstBounds, fixedDeltaY: gap), "textLegs")
                 .AddDynamicText("", textFont, BelowCopySet(ref firstBounds, fixedDeltaY: gap), "textFeet")
 
-                .AddImage(secondBounds, assetOuter)
-                .AddImage(thirdBounds, assetMiddle)
-                .AddImage(fourthBounds, assetSkin)
-                //.AddDynamicText("", textFont, secondBounds, "textOuter")
-                //.AddDynamicText("", textFont, thirdBounds, "textMiddle")
-                //.AddDynamicText("", textFont, fourthBounds, "textSkin")
+                .AddStaticCustomDraw(secondBounds, OnDrawOuterIcon)
+                .AddStaticCustomDraw(thirdBounds, OnDrawMiddleIcon)
+                .AddStaticCustomDraw(fourthBounds, OnDrawSkinIcon)
 
                 .AddItemSlotGrid(inv, SendInvPacket, 3, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Outer, DamageSystems.DamageZone.Head) }, BelowCopySet(ref secondBounds, fixedDeltaY: gap))
                 .AddItemSlotGrid(inv, SendInvPacket, 3, new int[] { ArmorInventory.IndexFromArmorType(ArmorLayers.Outer, DamageSystems.DamageZone.Face) }, BelowCopySet(ref secondBounds, fixedDeltaY: gap))
@@ -162,10 +145,27 @@ public class GuiDialogArmorSlots : GuiDialog
         composer?.GetDynamicText("textHands")?.SetNewText("Hands");
         composer?.GetDynamicText("textLegs")?.SetNewText("Legs");
         composer?.GetDynamicText("textFeet")?.SetNewText("Feet");
+    }
 
-        composer?.GetDynamicText("textOuter")?.SetNewText("Outer");
-        composer?.GetDynamicText("textMiddle")?.SetNewText("Middle");
-        composer?.GetDynamicText("textSkin")?.SetNewText("Skin");
+    private void OnDrawOuterIcon(Context ctx, ImageSurface surface, ElementBounds currentBounds)
+    {
+        IAsset asset = capi.Assets.TryGet(AssetLocation.Create("combatoverhaul:textures/icons/outer.svg"));
+        if (asset == null) return;
+        capi.Gui.DrawSvg(asset, surface, (int)currentBounds.drawX, (int)currentBounds.drawY, (int)currentBounds.fixedWidth, (int)currentBounds.fixedHeight, null);
+    }
+
+    private void OnDrawMiddleIcon(Context ctx, ImageSurface surface, ElementBounds currentBounds)
+    {
+        IAsset asset = capi.Assets.TryGet(AssetLocation.Create("combatoverhaul:textures/icons/middle.svg"));
+        if (asset == null) return;
+        capi.Gui.DrawSvg(asset, surface, (int)currentBounds.drawX, (int)currentBounds.drawY, (int)currentBounds.fixedWidth, (int)currentBounds.fixedHeight, null);
+    }
+
+    private void OnDrawSkinIcon(Context ctx, ImageSurface surface, ElementBounds currentBounds)
+    {
+        IAsset asset = capi.Assets.TryGet(AssetLocation.Create("combatoverhaul:textures/icons/skin.svg"));
+        if (asset == null) return;
+        capi.Gui.DrawSvg(asset, surface, (int)currentBounds.drawX, (int)currentBounds.drawY, (int)currentBounds.fixedWidth, (int)currentBounds.fixedHeight, null);
     }
 
     protected void SendInvPacket(object packet)
