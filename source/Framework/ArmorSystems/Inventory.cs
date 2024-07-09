@@ -9,51 +9,57 @@ namespace CombatOverhaul.Armor;
 public class ArmorSlot : ItemSlot
 {
     public ArmorType ArmorType { get; }
-    public override int MaxSlotStackSize { get => 1; }
-    public event Action<ArmorType, ArmorType>? ItemPut;
-    public event Action<ArmorType, ArmorType>? ItemTaken;
+    public DamageZone DamageZone => ArmorType.Slots;
+    public DamageResistData Resists { get; set; } = DamageResistData.Empty;
+    public override int MaxSlotStackSize => 1;
 
     public ArmorSlot(InventoryBase inventory, ArmorType armorType) : base(inventory)
     {
         ArmorType = armorType;
+        _inventory = inventory as ArmorInventory ?? throw new Exception();
     }
 
     public override bool CanHold(ItemSlot sourceSlot)
     {
-        if (DrawUnavailable || !base.CanHold(sourceSlot) || sourceSlot.Itemstack.Item is not IArmor armor) return false;
+        if (DrawUnavailable || !base.CanHold(sourceSlot) || IsArmor(sourceSlot.Itemstack.Item, out IArmor? armor)) return false;
 
-        return armor.ArmorType.Check(ArmorType);
+        if (armor == null || !_inventory.CanHoldArmorPiece(armor)) return false;
+
+        return armor.ArmorType.Intersect(ArmorType);
     }
 
-    public override int TryPutInto(ItemSlot sinkSlot, ref ItemStackMoveOperation op)
+    public override void OnItemSlotModified(ItemStack sinkStack)
     {
-        int result = base.TryPutInto(sinkSlot, ref op);
-
-        if (result > 0)
+        if (IsArmor(Itemstack.Item, out IArmor? armor) && armor != null)
         {
-            ArmorType? armorType = (itemstack.Item as IArmor)?.ArmorType;
-            if (armorType != null)
-            {
-                ItemPut?.Invoke(armorType.Value, ArmorType);
-            }
+            Resists = armor.Resists;
         }
-
-        return result;
+        else
+        {
+            Resists = DamageResistData.Empty;
+        }
     }
-    public override ItemStack TakeOutWhole()
-    {
-        ItemStack result = base.TakeOutWhole();
 
-        if (Itemstack == null || Itemstack?.StackSize == 0)
+    private readonly ArmorInventory _inventory;
+
+    private static bool IsArmor(CollectibleObject item, out IArmor? armor)
+    {
+        if (item is IArmor armorItem)
         {
-            ArmorType? armorType = (result.Item as IArmor)?.ArmorType;
-            if (armorType != null)
-            {
-                ItemTaken?.Invoke(armorType.Value, ArmorType);
-            }
+            armor = armorItem;
+            return true;
         }
 
-        return result;
+        CollectibleBehavior? behavior = item.CollectibleBehaviors.FirstOrDefault(x => x is IArmor);
+
+        if (behavior is not IArmor armorBehavior)
+        {
+            armor = null;
+            return false;
+        }
+
+        armor = armorBehavior;
+        return true;
     }
 }
 
@@ -62,17 +68,37 @@ public sealed class ArmorInventory : InventoryCharacter
     public ArmorInventory(string className, string playerUID, ICoreAPI api) : base(className, playerUID, api)
     {
         _slots = GenEmptySlots(_totalSlotsNumber);
+
+        for (int index = 0; index < _slots.Length; index++)
+        {
+            if (IsVanillaArmorSlot(index))
+            {
+                _slots[index].DrawUnavailable = true;
+                _slots[index].HexBackgroundColor = "#884444";
+                _slots[index].MaxSlotStackSize = 0;
+            }
+        }
     }
     public ArmorInventory(string inventoryID, ICoreAPI api) : base(inventoryID, api)
     {
         _slots = GenEmptySlots(_totalSlotsNumber);
-    }
 
+        for (int index = 0; index < _slots.Length; index++)
+        {
+            if (IsVanillaArmorSlot(index))
+            {
+                _slots[index].DrawUnavailable = true;
+                _slots[index].HexBackgroundColor = "#884444";
+                _slots[index].MaxSlotStackSize = 0;
+            }
+        }
+    }
 
     public override ItemSlot this[int slotId] { get => _slots[slotId]; set => LoggerUtil.Warn(Api, this, "Armor slots cannot be set"); }
 
     public override int Count => _totalSlotsNumber;
-    public event Action<ArmorType>? ArmorChanged;
+    public Dictionary<DamageZone, DamageResistData> Resists { get; private set; } = new();
+    public ArmorType OccupiedSlots { get; private set; } = ArmorType.Empty;
 
     public override void FromTreeAttributes(ITreeAttribute tree)
     {
@@ -80,22 +106,30 @@ public sealed class ArmorInventory : InventoryCharacter
         for (int index = 0; index < _slots.Length; index++)
         {
             ItemStack? itemStack = tree.GetTreeAttribute("slots")?.GetItemstack(index.ToString() ?? "");
-            _slots[index].Itemstack = itemStack;
-            if (itemStack != null && index >= _clothesArmorSlots)
+
+            if (itemStack != null)
             {
-                ArmorType? armorType = (itemStack.Item as IArmor)?.ArmorType;
-                if (armorType != null)
+                if (Api?.World != null) itemStack.ResolveBlockOrItem(Api.World);
+                if (IsVanillaArmorSlot(index))
                 {
-                    OnItemPut(armorType.Value, ArmorTypeFromIndex(index));
+                    Player.Entity.TryGiveItemStack(itemStack);
+                }
+                else
+                {
+                    _slots[index].Itemstack = itemStack;
                 }
             }
-            if (Api?.World == null)
-            {
-                continue;
-            }
 
-            itemStack?.ResolveBlockOrItem(Api.World);
+            if (IsVanillaArmorSlot(index))
+            {
+                _slots[index].DrawUnavailable = true;
+                _slots[index].HexBackgroundColor = "#884444";
+                _slots[index].MaxSlotStackSize = 0;
+            }
         }
+
+        RecalculateResists();
+        OccupiedSlots = CalculateOccupiedSlots();
     }
     public override void ToTreeAttributes(ITreeAttribute tree)
     {
@@ -112,6 +146,28 @@ public sealed class ArmorInventory : InventoryCharacter
 
         tree["slots"] = treeAttribute;
     }
+
+    public override void OnItemSlotModified(ItemSlot slot)
+    {
+        base.OnItemSlotModified(slot);
+
+        RecalculateResists();
+        OccupiedSlots = CalculateOccupiedSlots();
+
+        PlayerDamageModelBehavior? behavior = Player.Entity.GetBehavior<PlayerDamageModelBehavior>();
+        if (behavior != null)
+        {
+            behavior.Resists = Resists;
+        }
+    }
+
+    public bool IsArmorSlotAvailable(int index) => ArmorTypeFromIndex(index).Intersect(OccupiedSlots);
+
+    public bool CanHoldArmorPiece(ArmorType armorType)
+    {
+        return !_slotsByType.Where(entry => !entry.Value.Empty).Any(entry => entry.Key.Intersect(armorType));
+    }
+    public bool CanHoldArmorPiece(IArmor armor) => CanHoldArmorPiece(armor.ArmorType);
 
     private ItemSlot[] _slots;
     private readonly Dictionary<ArmorType, ArmorSlot> _slotsByType = new();
@@ -184,7 +240,9 @@ public sealed class ArmorInventory : InventoryCharacter
     };
     private const int _clothesArmorSlots = 3;
     private static readonly int _clothesSlotsCount = Enum.GetValues<EnumCharacterDressType>().Length - _clothesArmorSlots - 1;
-    private static readonly int _totalSlotsNumber = _clothesSlotsCount + (Enum.GetValues<ArmorLayers>().Length - 1) * (Enum.GetValues<DamageZone>().Length - 1);
+    private static readonly int _vanillaSlots = _clothesSlotsCount + _clothesArmorSlots;
+    private static readonly int _moddedArmorSlotsCount = (Enum.GetValues<ArmorLayers>().Length - 1) * (Enum.GetValues<DamageZone>().Length - 1);
+    private static readonly int _totalSlotsNumber = _clothesSlotsCount + _clothesArmorSlots + _moddedArmorSlotsCount;
 
     protected override ItemSlot NewSlot(int slotId)
     {
@@ -201,18 +259,18 @@ public sealed class ArmorInventory : InventoryCharacter
             ArmorType armorType = ArmorTypeFromIndex(slotId);
             ArmorSlot slot = new(this, armorType);
             _slotsByType[armorType] = slot;
-            slot.ItemPut += OnItemPut;
-            slot.ItemTaken += OnItemTaken;
             _armorSlotsIcons.TryGetValue(armorType, out slot.BackgroundIcon);
             return slot;
         }
     }
 
-
+    private static bool IsVanillaArmorSlot(int index) => index >= _clothesSlotsCount && index <= _clothesSlotsCount + _clothesArmorSlots;
     private static ArmorType ArmorTypeFromIndex(int index)
     {
-        int defaultSlotsCount = _clothesSlotsCount;
+        int defaultSlotsCount = _clothesSlotsCount + _clothesArmorSlots;
         int zonesCount = Enum.GetValues<DamageZone>().Length - 1;
+
+        if (index < defaultSlotsCount) return ArmorType.Empty;
 
         ArmorLayers layer = ArmorLayerFromIndex((index - defaultSlotsCount) / zonesCount);
         DamageZone zone = DamageZoneFromIndex(index - defaultSlotsCount - IndexFromArmorLayer(layer) * zonesCount);
@@ -255,58 +313,15 @@ public sealed class ArmorInventory : InventoryCharacter
             _ => DamageZone.None
         };
     }
-    private static int IndexFromDamageZone(DamageZone zone)
-    {
-        return zone switch
-        {
-            DamageZone.None => 0,
-            DamageZone.Head => 0,
-            DamageZone.Face => 1,
-            DamageZone.Neck => 2,
-            DamageZone.Torso => 3,
-            DamageZone.Arms => 4,
-            DamageZone.Hands => 5,
-            DamageZone.Legs => 6,
-            DamageZone.Feet => 7,
-            _ => 0
-        };
-    }
-    private static int IndexFromArmorType(ArmorType armorType)
-    {
-        int defaultSlotsCount = Enum.GetValues<EnumCharacterDressType>().Length - _clothesArmorSlots;
-        int layersCount = Enum.GetValues<ArmorLayers>().Length - 1;
 
-        return defaultSlotsCount + layersCount * ((int)armorType.Layers - 1) + (int)armorType.Slots - 1;
-    }
-    private void OnItemPut(ArmorType armorType, ArmorType slotType)
-    {
-        IEnumerable<KeyValuePair<ArmorType, ArmorSlot>> slots = _slotsByType
-            .Where(entry => entry.Key.Slots != slotType.Slots || entry.Key.Layers != slotType.Layers)
-            .Where(entry => (entry.Key.Slots & armorType.Slots) != 0 && (entry.Key.Layers & armorType.Layers) != 0);
 
-        foreach ((_, ArmorSlot slot) in slots)
+    private void RecalculateResists()
+    {
+        foreach (DamageZone zone in Enum.GetValues<DamageZone>())
         {
-            slot.DrawUnavailable = true;
-            ItemStack stack = slot.TakeOutWhole();
-            if (!Player.InventoryManager.TryGiveItemstack(stack))
-            {
-                spawnItemEntity(stack, Player.Entity.Pos.XYZ, (int)TimeSpan.FromMinutes(10).TotalMilliseconds);
-            }
+            DamageResistData resist = DamageResistData.Combine(_slotsByType.Where(entry => (entry.Key.Slots & zone) != 0).Select(entry =>  entry.Value.Resists));
+            Resists[zone] = resist;
         }
-
-        ArmorChanged?.Invoke(slotType);
     }
-    private void OnItemTaken(ArmorType armorType, ArmorType slotType)
-    {
-        IEnumerable<KeyValuePair<ArmorType, ArmorSlot>> slots = _slotsByType
-            .Where(entry => entry.Key.Slots != slotType.Slots || entry.Key.Layers != slotType.Layers)
-            .Where(entry => (entry.Key.Slots & armorType.Slots) != 0 && (entry.Key.Layers & armorType.Layers) != 0);
-
-        foreach ((_, ArmorSlot slot) in slots)
-        {
-            slot.DrawUnavailable = false;
-        }
-
-        ArmorChanged?.Invoke(slotType);
-    }
+    private ArmorType CalculateOccupiedSlots() => ArmorType.Combine(_slotsByType.Values.Select(x => x.ArmorType));
 }

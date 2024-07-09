@@ -16,6 +16,7 @@ using CombatOverhaul.Implementations;
 using Vintagestory.GameContent;
 using CombatOverhaul.Utils;
 using CombatOverhaul.MeleeSystems;
+using Vintagestory.Server;
 
 namespace CombatOverhaul;
 
@@ -24,6 +25,7 @@ public sealed class CombatOverhaulSystem : ModSystem
 {
     public override void StartPre(ICoreAPI api)
     {
+        (api as ServerCoreAPI)?.ClassRegistryNative.RegisterInventoryClass(GlobalConstants.characterInvClassName, typeof(ArmorInventory));
         (api as ClientCoreAPI)?.ClassRegistryNative.RegisterInventoryClass(GlobalConstants.characterInvClassName, typeof(ArmorInventory));
     }
 

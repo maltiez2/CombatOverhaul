@@ -33,7 +33,7 @@ public sealed class EntityDamageModelBehavior : EntityBehavior
         { ColliderTypes.Head, 1.0f },
         { ColliderTypes.Critical, 1.0f }
     }.ToImmutableDictionary();
-    public DamageResistData? Resists { get; set; }
+    public DamageResistData Resists { get; set; } = new();
     public ImmutableDictionary<string, DamageResistData> ResistsForColliders { get; private set; } = new Dictionary<string, DamageResistData>().ToImmutableDictionary();
 
     public override void Initialize(EntityProperties properties, JsonObject attributes)
@@ -77,7 +77,7 @@ public sealed class EntityDamageModelBehavior : EntityBehavior
             damage *= multiplier;
         }
 
-        if (Resists != null && damageSource is ITypedDamage typedDamage)
+        if (damageSource is ITypedDamage typedDamage)
         {
             if (damageSource is ILocationalDamage locationalDamage && _colliders != null)
             {

@@ -61,7 +61,7 @@ public class DirectionalTypedDamageSource : DamageSource, ILocationalDamage, ITy
     public DamageData DamageTypeData { get; set; }
 }
 
-public sealed class DamageResistData
+public readonly struct DamageResistData
 {
     public readonly ImmutableDictionary<EnumDamageType, float> Resists;
 
@@ -69,6 +69,12 @@ public sealed class DamageResistData
     {
         Resists = resists.ToImmutableDictionary();
     }
+    public DamageResistData()
+    {
+        Resists = (new Dictionary<EnumDamageType, float>()).ToImmutableDictionary();
+    }
+
+    public static DamageResistData Empty => new();
 
     public DamageData ApplyResist(DamageData damageData, ref float damage)
     {
@@ -83,6 +89,17 @@ public sealed class DamageResistData
             strength: damageData.Strength - protectionLevel
             );
     }
+
+    public static DamageResistData Combine(IEnumerable<DamageResistData> resists)
+    {
+        Dictionary<EnumDamageType, float> combinedResists = new();
+        foreach ((EnumDamageType damageType, float protectionLevel) in resists.SelectMany(element => element.Resists))
+        {
+            combinedResists[damageType] += protectionLevel;
+        }
+        return new(combinedResists);
+    }
+
 
     private static float DamageMultiplier(float protectionLevel, DamageData damageData)
     {

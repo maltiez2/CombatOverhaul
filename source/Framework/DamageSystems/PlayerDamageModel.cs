@@ -36,7 +36,7 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
     public override string PropertyName() => "PlayerDamageModel";
 
     public PlayerDamageModel DamageModel { get; private set; } = new(Array.Empty<DamageZoneStatsJson>());
-    public Dictionary<DamageZone, DamageResistData> Resists { get; private set; } = new();
+    public Dictionary<DamageZone, DamageResistData> Resists { get; set; } = new();
     public readonly ImmutableDictionary<string, DamageZone> CollidersToZones = new Dictionary<string, DamageZone>()
     {
         { "LowerTorso", DamageZone.Torso },
@@ -109,8 +109,7 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
         }
         else
         {
-            damageZone = DamageZone.None;
-            multiplier = 1.0f;
+            (damageZone, multiplier) = DamageModel.GetZone();
         }
 
         return (damageZone, multiplier);
@@ -166,9 +165,9 @@ public sealed class PlayerDamageModel
         }
     }
 
-    public (DamageZone zone, float damageMultiplier) GetZone(DirectionOffset direction, DamageZone target = DamageZone.None, float multiplier = 1f)
+    public (DamageZone zone, float damageMultiplier) GetZone(DirectionOffset? direction = null, DamageZone target = DamageZone.None, float multiplier = 1f)
     {
-        IEnumerable<DamageZoneStats> zones = DamageZones.Where(zone => zone.Directions.Check(direction));
+        IEnumerable<DamageZoneStats> zones = direction == null ? DamageZones : DamageZones.Where(zone => zone.Directions.Check(direction.Value));
 
         foreach ((DamageZone zone, _) in _weights)
         {
