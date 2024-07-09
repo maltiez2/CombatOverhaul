@@ -9,9 +9,11 @@ namespace CombatOverhaul.Armor;
 public class ArmorSlot : ItemSlot
 {
     public ArmorType ArmorType { get; }
+    public ArmorType StoredArmoredType { get; private set; }
     public DamageZone DamageZone => ArmorType.Slots;
     public DamageResistData Resists { get; set; } = DamageResistData.Empty;
     public override int MaxSlotStackSize => 1;
+    public bool Available => _inventory.IsSlotAvailable(ArmorType);
 
     public ArmorSlot(InventoryBase inventory, ArmorType armorType) : base(inventory)
     {
@@ -33,10 +35,12 @@ public class ArmorSlot : ItemSlot
         if (IsArmor(Itemstack.Item, out IArmor? armor) && armor != null)
         {
             Resists = armor.Resists;
+            StoredArmoredType = armor.ArmorType;
         }
         else
         {
             Resists = DamageResistData.Empty;
+            StoredArmoredType = ArmorType.Empty;
         }
     }
 
@@ -169,11 +173,16 @@ public sealed class ArmorInventory : InventoryCharacter
         return _vanillaSlots + IndexFromArmorLayer(layer) * zonesCount + IndexFromDamageZone(zone);
     }
 
+    public bool IsSlotAvailable(ArmorType armorType) => !_slotsByType.Where(entry => !entry.Value.Empty).Any(entry => entry.Key.Intersect(armorType));
+    public bool IsSlotAvailable(ArmorLayers layer, DamageZone zone) => IsSlotAvailable(new ArmorType(layer, zone));
+    public bool IsSlotAvailable(int index) => IsSlotAvailable(ArmorTypeFromIndex(index));
+
     public bool CanHoldArmorPiece(ArmorType armorType)
     {
         return !_slotsByType.Where(entry => !entry.Value.Empty).Any(entry => entry.Key.Intersect(armorType));
     }
     public bool CanHoldArmorPiece(IArmor armor) => CanHoldArmorPiece(armor.ArmorType);
+    public bool CanHoldArmorPiece(ArmorLayers layer, DamageZone zone) => CanHoldArmorPiece(new ArmorType(layer, zone));
 
     private ItemSlot[] _slots;
     private readonly Dictionary<ArmorType, ArmorSlot> _slotsByType = new();
