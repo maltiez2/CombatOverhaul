@@ -252,9 +252,7 @@ public sealed class ArmorInventory : InventoryCharacter
 
     protected override ItemSlot NewSlot(int slotId)
     {
-        int defaultSlotsCount = _clothesSlotsCount;
-
-        if (slotId < defaultSlotsCount)
+        if (slotId < _vanillaSlots)
         {
             ItemSlotCharacter slot = new((EnumCharacterDressType)slotId, this);
             _clothesSlotsIcons.TryGetValue((EnumCharacterDressType)slotId, out slot.BackgroundIcon);
