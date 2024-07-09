@@ -117,7 +117,7 @@ public sealed class ArmorInventory : InventoryCharacter
                 if (Api?.World != null) itemStack.ResolveBlockOrItem(Api.World);
                 if (IsVanillaArmorSlot(index))
                 {
-                    Player.Entity.TryGiveItemStack(itemStack);
+                    //Player.Entity.TryGiveItemStack(itemStack);
                 }
                 else
                 {

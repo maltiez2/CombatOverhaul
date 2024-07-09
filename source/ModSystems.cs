@@ -17,6 +17,8 @@ using Vintagestory.GameContent;
 using CombatOverhaul.Utils;
 using CombatOverhaul.MeleeSystems;
 using Vintagestory.Server;
+using CombatOverhaul.GUI;
+using static OpenTK.Graphics.OpenGL.GL;
 
 namespace CombatOverhaul;
 
@@ -79,6 +81,8 @@ public sealed class CombatOverhaulSystem : ModSystem
 
         api.Event.RegisterRenderer(ReticleRenderer, EnumRenderStage.Ortho);
         api.Event.RegisterRenderer(DirectionCursorRenderer, EnumRenderStage.Ortho);
+
+        api.Gui.RegisterDialog(new GuiDialogArmorSlots(api));
 
         AimingPatches.Patch("CombatOverhaulAiming");
     }
