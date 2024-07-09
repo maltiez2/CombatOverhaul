@@ -162,6 +162,12 @@ public sealed class ArmorInventory : InventoryCharacter
     }
 
     public bool IsArmorSlotAvailable(int index) => !ArmorTypeFromIndex(index).Intersect(OccupiedSlots);
+    public static int IndexFromArmorType(ArmorLayers layer, DamageZone zone)
+    {
+        int zonesCount = Enum.GetValues<DamageZone>().Length - 1;
+
+        return _vanillaSlots + IndexFromArmorLayer(layer) * zonesCount + IndexFromDamageZone(zone);
+    }
 
     public bool CanHoldArmorPiece(ArmorType armorType)
     {
@@ -265,12 +271,7 @@ public sealed class ArmorInventory : InventoryCharacter
     }
 
     private static bool IsVanillaArmorSlot(int index) => index >= _clothesSlotsCount && index <= _clothesSlotsCount + _clothesArmorSlots;
-    private static int IndexFromArmorType(ArmorLayers layer, DamageZone zone)
-    {
-        int zonesCount = Enum.GetValues<DamageZone>().Length - 1;
-
-        return _vanillaSlots + IndexFromArmorLayer(layer) * zonesCount + IndexFromDamageZone(zone);
-    }
+    
     private static ArmorType ArmorTypeFromIndex(int index)
     {
         int zonesCount = Enum.GetValues<DamageZone>().Length - 1;
