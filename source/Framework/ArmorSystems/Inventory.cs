@@ -161,7 +161,7 @@ public sealed class ArmorInventory : InventoryCharacter
         }
     }
 
-    public bool IsArmorSlotAvailable(int index) => ArmorTypeFromIndex(index).Intersect(OccupiedSlots);
+    public bool IsArmorSlotAvailable(int index) => !ArmorTypeFromIndex(index).Intersect(OccupiedSlots);
 
     public bool CanHoldArmorPiece(ArmorType armorType)
     {
