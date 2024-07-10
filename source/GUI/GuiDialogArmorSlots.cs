@@ -53,6 +53,8 @@ public class GuiDialogArmorSlots : GuiDialog
 
     private bool _inventoryLinked = false;
 
+
+
     private void ComposeDialog()
     {
         if (characterDialog == null)
@@ -66,7 +68,7 @@ public class GuiDialogArmorSlots : GuiDialog
         double gap = GuiElement.scaled(GuiElementItemSlotGridBase.unscaledSlotPadding);
         double textGap = gap;
         double bgPadding = GuiElement.scaled(9);
-        double textWidth = 55;// GuiElement.scaled(75);
+        double textWidth = 55;
 
         IInventory _inv = capi.World.Player.InventoryManager.GetOwnInventory(GlobalConstants.characterInvClassName);
         if (_inv is not ArmorInventory inv)
@@ -81,8 +83,6 @@ public class GuiDialogArmorSlots : GuiDialog
             inv._onSlotModified += ComposeDialog;
             _inventoryLinked = true;
         }
-
-        ElementBounds statsBoundsRightCopy = playerStatsCompo.Bounds.RightCopy();
 
         ElementBounds mainBounds = playerStatsCompo.Bounds.RightCopy(GuiElement.scaled(5));
         mainBounds.BothSizing = ElementSizing.FitToChildren;
@@ -101,8 +101,8 @@ public class GuiDialogArmorSlots : GuiDialog
             .WithFixedWidth(placeholderBounds.fixedWidth);
 
         composer = Composers[DialogName] = capi.Gui.CreateCompo(DialogName, mainBounds);
-        composer.AddShadedDialogBG(backgroundBounds, false);
-        composer.AddDialogTitleBarWithBg(DialogTitle, () => TryClose());
+        composer.AddShadedDialogBG(backgroundBounds, true);
+        composer.AddDialogTitleBar(DialogTitle, () => TryClose());
         composer.BeginChildElements(childBounds);
         composer.AddDynamicText("", textFont, textBounds, "textHead");
         composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: textGap), "textFace");
@@ -144,7 +144,16 @@ public class GuiDialogArmorSlots : GuiDialog
         AddSlot(inv, ArmorLayers.Skin, DamageZone.Feet, ref slot2Bounds, gap);
 
         composer.EndChildElements();
-        composer.Compose();
+        try
+        {
+            composer.Compose();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString()); 
+            return;
+        }
+        
 
         composer.GetDynamicText("textHead")?.SetNewText(Lang.Get("combatoverhaul:Head"));
         composer.GetDynamicText("textFace")?.SetNewText(Lang.Get("combatoverhaul:Face"));
@@ -171,7 +180,7 @@ public class GuiDialogArmorSlots : GuiDialog
         }
         else
         {
-            _dummyInventory[slotIndex].HexBackgroundColor = "#999999";
+            _dummyInventory[slotIndex].HexBackgroundColor = "#AAAAAA";
             _dummyInventory[slotIndex].Itemstack = inv[inv.GetSlotBlockingSlotIndex(layers, zone)].Itemstack;
             composer.AddItemSlotGrid(_dummyInventory, (_) => { }, 1, new int[] { slotIndex }, BelowCopySet(ref bounds, fixedDeltaY: gap));
         }
