@@ -35,6 +35,11 @@ public class ArmorSlot : ItemSlot
     {
         base.OnItemSlotModified(sinkStack);
 
+        RefreshStoredData();
+    }
+
+    public void RefreshStoredData()
+    {
         if (Itemstack?.Item != null && IsArmor(Itemstack.Item, out IArmor? armor) && armor != null)
         {
             Resists = armor.Resists;
@@ -49,7 +54,7 @@ public class ArmorSlot : ItemSlot
 
     private readonly ArmorInventory _inventory;
 
-    internal static bool IsArmor(CollectibleObject item, out IArmor? armor)
+    private static bool IsArmor(CollectibleObject item, out IArmor? armor)
     {
         if (item is IArmor armorItem)
         {
@@ -117,6 +122,7 @@ public sealed class ArmorInventory : InventoryCharacter
             if (itemStack != null)
             {
                 if (Api?.World != null) itemStack.ResolveBlockOrItem(Api.World);
+                
                 if (IsVanillaArmorSlot(index))
                 {
                     //Player.Entity.TryGiveItemStack(itemStack);
@@ -124,6 +130,7 @@ public sealed class ArmorInventory : InventoryCharacter
                 else
                 {
                     _slots[index].Itemstack = itemStack;
+                    (_slots[index] as ArmorSlot)?.RefreshStoredData();
                 }
             }
 
@@ -170,7 +177,6 @@ public sealed class ArmorInventory : InventoryCharacter
         _onSlotModified?.Invoke();
     }
 
-    public bool IsArmorSlotAvailable(int index) => !ArmorTypeFromIndex(index).Intersect(OccupiedSlots);
     public static int IndexFromArmorType(ArmorLayers layer, DamageZone zone)
     {
         int zonesCount = Enum.GetValues<DamageZone>().Length - 1;
