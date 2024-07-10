@@ -164,7 +164,7 @@ public class GuiDialogArmorSlots : GuiDialog
         {
             DummyInventory dummyInv = new DummyInventory(capi, 1);
             dummyInv[0].HexBackgroundColor = "#999999";
-            dummyInv[0].BackgroundIcon = "padlock"; // icon doesn't exist yet
+            dummyInv[0].BackgroundIcon = inv[slotIndex].BackgroundIcon;
             composer.AddItemSlotGrid(dummyInv, SendInvPacket, 1, new int[] { 0 }, BelowCopySet(ref bounds, fixedDeltaY: gap));
         }
     }
