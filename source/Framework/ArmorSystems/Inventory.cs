@@ -1,5 +1,8 @@
 ﻿using CombatOverhaul.DamageSystems;
 using CombatOverhaul.Utils;
+using CommandLine;
+using System;
+using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
 using Vintagestory.Common;
@@ -169,7 +172,7 @@ public sealed class ArmorInventory : InventoryCharacter
 
         foreach ((ArmorType type, ArmorSlot armorSlot) in _slotsByType)
         {
-            armorSlot.HexBackgroundColor = IsSlotAvailable(type) ? "#FFFFFF" : "#999999";
+            Console.WriteLine($"{type}: {GetSlotBlockingSlot(type)}");
         }
     }
 
@@ -180,6 +183,16 @@ public sealed class ArmorInventory : InventoryCharacter
 
         return _vanillaSlots + IndexFromArmorLayer(layer) * zonesCount + IndexFromDamageZone(zone);
     }
+    public static int IndexFromArmorType(ArmorType type) => IndexFromArmorType(type.Layers, type.Slots);
+
+    public ArmorType GetSlotBlockingSlot(ArmorType armorType) => _slotsByType
+        .Where(entry => !entry.Value.Empty)
+        .Where(entry => entry.Value.StoredArmoredType.Intersect(armorType))
+        .Select(entry => entry.Key)
+        .FirstOrDefault(defaultValue: ArmorType.Empty);
+    public ArmorType GetSlotBlockingSlot(ArmorLayers layer, DamageZone zone) => GetSlotBlockingSlot(new ArmorType(layer, zone));
+    public int GetSlotBlockingSlotIndex(ArmorType armorType) => IndexFromArmorType(GetSlotBlockingSlot(armorType));
+    public int GetSlotBlockingSlotIndex(ArmorLayers layer, DamageZone zone) => IndexFromArmorType(GetSlotBlockingSlot(new ArmorType(layer, zone)));
 
     public bool IsSlotAvailable(ArmorType armorType) => !_slotsByType.Where(entry => !entry.Value.Empty).Any(entry => entry.Value.StoredArmoredType.Intersect(armorType));
     public bool IsSlotAvailable(ArmorLayers layer, DamageZone zone) => IsSlotAvailable(new ArmorType(layer, zone));
