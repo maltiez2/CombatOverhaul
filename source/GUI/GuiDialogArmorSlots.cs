@@ -21,7 +21,7 @@ public class GuiDialogArmorSlots : GuiDialog
 
     public GuiDialogArmorSlots(ICoreClientAPI capi) : base(capi)
     {
-        capi.Event.RegisterGameTickListener(Every500ms, 500); // REMOVE AFTER GUI IS DONE
+        //capi.Event.RegisterGameTickListener(Every500ms, 500); // REMOVE AFTER GUI IS DONE
         foreach (GuiDialogCharacter characterDialog in capi.Gui.LoadedGuis.Where(x => x is GuiDialogCharacter).Select(x => x as GuiDialogCharacter))
         {
             characterDialog.OnOpened += () => GuiDialogCharacter_OnOpened(characterDialog);
@@ -29,14 +29,14 @@ public class GuiDialogArmorSlots : GuiDialog
         }
     }
 
-    private void Every500ms(float dt) // REMOVE AFTER GUI IS DONE
-    {
-        if (characterDialog == null || !characterDialog.IsOpened())
-        {
-            return;
-        }
-        ComposeDialog();
-    }
+    //private void Every500ms(float dt) // REMOVE AFTER GUI IS DONE
+    //{
+    //    if (characterDialog == null || !characterDialog.IsOpened())
+    //    {
+    //        return;
+    //    }
+    //    ComposeDialog();
+    //}
 
     private void GuiDialogCharacter_OnOpened(GuiDialogCharacter characterDialog)
     {
@@ -86,12 +86,12 @@ public class GuiDialogArmorSlots : GuiDialog
         //double padLeftX = playerStatsCompo.Bounds.fixedPaddingX + playerStatsCompo.Bounds.drawX;
         //double padLeftY = playerStatsCompo.Bounds.fixedPaddingY + playerStatsCompo.Bounds.drawY;
 
-        ElementBounds statsBoundsRightCopy = playerStatsCompo.Bounds.RightCopy(500);
+        ElementBounds statsBoundsRightCopy = playerStatsCompo.Bounds.RightCopy();
 
         ElementBounds mainBounds = ElementStdBounds.AutosizedMainDialog
             // todo: use playerstats borders for correct positions
             .WithFixedAlignmentOffset(50, 70);
-            //.RightOf(statsBoundsRightCopy);
+        //.RightOf(statsBoundsRightCopy, 50);
 
         ElementBounds childBounds = new ElementBounds().WithSizing(ElementSizing.FitToChildren);
         ElementBounds backgroundBounds = childBounds.WithFixedPadding(bgPadding);
