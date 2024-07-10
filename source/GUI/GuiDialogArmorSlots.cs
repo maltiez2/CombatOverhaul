@@ -67,7 +67,6 @@ public class GuiDialogArmorSlots : GuiDialog
         double offsetY = GuiElement.scaled(indent) + GuiElement.scaled(gap);
         double bgPadding = GuiElement.scaled(10);
         double firstWidth = GuiElement.scaled(100);
-        double secondWidth = GuiElement.scaled(50);
 
         IInventory _inv = capi.World.Player.InventoryManager.GetOwnInventory(GlobalConstants.characterInvClassName);
         if (_inv is not ArmorInventory inv)
@@ -88,7 +87,7 @@ public class GuiDialogArmorSlots : GuiDialog
         ElementBounds backgroundBounds = childBounds.WithFixedPadding(bgPadding);
 
         ElementBounds textBounds = ElementBounds.FixedSize(firstWidth, indent).WithFixedOffset(0, indent);
-        ElementBounds slot0Bounds = textBounds.RightCopy(gap).WithFixedWidth(secondWidth);
+        ElementBounds slot0Bounds = textBounds.RightCopy(gap).WithFixedWidth(indent);
         ElementBounds slot1Bounds = slot0Bounds.RightCopy(gap);
         ElementBounds slot2Bounds = slot1Bounds.RightCopy(gap);
  
