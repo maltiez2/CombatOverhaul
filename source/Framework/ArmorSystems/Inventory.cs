@@ -1,7 +1,10 @@
 ﻿using CombatOverhaul.DamageSystems;
 using CombatOverhaul.Utils;
+using CommandLine;
 using Vintagestory.API.Common;
+using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Datastructures;
+using Vintagestory.API.Util;
 using Vintagestory.Common;
 
 namespace CombatOverhaul.Armor;
@@ -24,16 +27,18 @@ public class ArmorSlot : ItemSlot
 
     public override bool CanHold(ItemSlot sourceSlot)
     {
-        if (DrawUnavailable || !base.CanHold(sourceSlot) || IsArmor(sourceSlot.Itemstack.Item, out IArmor? armor)) return false;
+        if (DrawUnavailable || !base.CanHold(sourceSlot) || !IsArmor(sourceSlot.Itemstack.Item, out IArmor? armor)) return false;
 
         if (armor == null || !_inventory.CanHoldArmorPiece(armor)) return false;
 
         return armor.ArmorType.Intersect(ArmorType);
     }
 
-    public override void OnItemSlotModified(ItemStack sinkStack)
+    public override void OnItemSlotModified(ItemStack? sinkStack)
     {
-        if (IsArmor(Itemstack.Item, out IArmor? armor) && armor != null)
+        base.OnItemSlotModified(sinkStack);
+        
+        if (Itemstack?.Item != null && IsArmor(Itemstack.Item, out IArmor? armor) && armor != null)
         {
             Resists = armor.Resists;
             StoredArmoredType = armor.ArmorType;
@@ -180,7 +185,7 @@ public sealed class ArmorInventory : InventoryCharacter
 
     public bool CanHoldArmorPiece(ArmorType armorType)
     {
-        return !_slotsByType.Where(entry => !entry.Value.Empty).Any(entry => entry.Key.Intersect(armorType));
+        return !_slotsByType.Where(entry => !entry.Value.Empty).Any(entry => entry.Value.StoredArmoredType.Intersect(armorType));
     }
     public bool CanHoldArmorPiece(IArmor armor) => CanHoldArmorPiece(armor.ArmorType);
     public bool CanHoldArmorPiece(ArmorLayers layer, DamageZone zone) => CanHoldArmorPiece(new ArmorType(layer, zone));
@@ -262,10 +267,16 @@ public sealed class ArmorInventory : InventoryCharacter
 
     protected override ItemSlot NewSlot(int slotId)
     {
-        if (slotId < _vanillaSlots)
+        if (slotId < _clothesSlotsCount)
         {
             ItemSlotCharacter slot = new((EnumCharacterDressType)slotId, this);
             _clothesSlotsIcons.TryGetValue((EnumCharacterDressType)slotId, out slot.BackgroundIcon);
+            return slot;
+        }
+        else if (slotId < _vanillaSlots)
+        {
+            ArmorSlot slot = new(this, ArmorType.Empty);
+            slot.DrawUnavailable = true;
             return slot;
         }
         else
@@ -278,7 +289,7 @@ public sealed class ArmorInventory : InventoryCharacter
         }
     }
 
-    private static bool IsVanillaArmorSlot(int index) => index >= _clothesSlotsCount && index <= _clothesSlotsCount + _clothesArmorSlots;
+    private static bool IsVanillaArmorSlot(int index) => index >= _clothesSlotsCount && index < _clothesSlotsCount + _clothesArmorSlots;
     
     private static ArmorType ArmorTypeFromIndex(int index)
     {

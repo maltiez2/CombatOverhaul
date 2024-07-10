@@ -62,7 +62,7 @@ public class GuiDialogArmorSlots : GuiDialog
         GuiComposer playerStatsCompo = characterDialog.Composers["playerstats"];
         if (playerStatsCompo is null) { return; }
 
-        double indent = GuiElement.scaled(45);
+        double indent = GuiElement.scaled(39);
         double gap = GuiElement.scaled(GuiElementItemSlotGridBase.unscaledSlotPadding);
         double offsetY = GuiElement.scaled(indent) + GuiElement.scaled(gap);
         double bgPadding = GuiElement.scaled(10);
@@ -75,7 +75,7 @@ public class GuiDialogArmorSlots : GuiDialog
             return;
         }
         CairoFont textFont = CairoFont.WhiteSmallText();
-
+        
         var padLeftX = playerStatsCompo.Bounds.fixedPaddingX + playerStatsCompo.Bounds.drawX;
         var padLeftY = playerStatsCompo.Bounds.fixedPaddingY + playerStatsCompo.Bounds.drawY;
 
@@ -149,6 +149,7 @@ public class GuiDialogArmorSlots : GuiDialog
         composer?.GetDynamicText("textLegs")?.SetNewText(Lang.Get("combatoverhaul:Legs"));
         composer?.GetDynamicText("textFeet")?.SetNewText(Lang.Get("combatoverhaul:Feet"));
     }
+
 
     public void AddSlot(ArmorInventory inv, ArmorLayers layers, DamageZone zone, ref ElementBounds bounds, double gap)
     {

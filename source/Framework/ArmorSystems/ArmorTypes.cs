@@ -1,6 +1,7 @@
 ﻿using CombatOverhaul.DamageSystems;
 using CombatOverhaul.Utils;
 using HarmonyLib;
+using System.Text;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
 using Vintagestory.Common;
@@ -52,10 +53,10 @@ public readonly struct ArmorType
     public override string ToString()
     {
         ArmorLayers layersValue = Layers;
-        string layers = Enum.GetValues<ArmorLayers>().Where(value => (value | layersValue) != 0).Select(value => value.ToString()).Aggregate((first, second) => $"{first}, {second}");
+        string layers = layersValue == ArmorLayers.None ? "None" : Enum.GetValues<ArmorLayers>().Where(value => (value & layersValue) != 0).Select(value => value.ToString()).Aggregate((first, second) => $"{first}, {second}");
 
         DamageZone slotsValue = Slots;
-        string slots = Enum.GetValues<DamageZone>().Where(value => (value | slotsValue) != 0).Select(value => value.ToString()).Aggregate((first, second) => $"{first}, {second}");
+        string slots = slotsValue == DamageZone.None ? "None" : Enum.GetValues<DamageZone>().Where(value => (value & slotsValue) != 0).Select(value => value.ToString()).Aggregate((first, second) => $"{first}, {second}");
 
         return $"({layers}|{slots})";
     }
@@ -85,15 +86,21 @@ public class ArmorBehavior : CollectibleBehavior, IArmor
 
     public override void Initialize(JsonObject properties)
     {
-        if (!properties.KeyExists("stats"))
+        base.Initialize(properties);
+        
+        ArmorStatsJson stats = properties.AsObject<ArmorStatsJson>();
+
+        if (!stats.Layers.Any() || !stats.Zones.Any() || !stats.Resists.Any())
         {
             return;
         }
 
-        ArmorStatsJson stats = properties["stats"].AsObject<ArmorStatsJson>();
-
-        ArmorType = new(stats.Layers.Select(Enum.Parse<ArmorLayers>).Aggregate((first, second) => first | second), stats.Layers.Select(Enum.Parse<DamageZone>).Aggregate((first, second) => first | second));
+        ArmorType = new(stats.Layers.Select(Enum.Parse<ArmorLayers>).Aggregate((first, second) => first | second), stats.Zones.Select(Enum.Parse<DamageZone>).Aggregate((first, second) => first | second));
         Resists = new(stats.Resists.ToDictionary(entry => Enum.Parse<EnumDamageType>(entry.Key), entry => entry.Value));
+    }
+
+    public override void GetHeldItemInfo(ItemSlot inSlot, StringBuilder dsc, IWorldAccessor world, bool withDebugInfo)
+    {
     }
 }
 
