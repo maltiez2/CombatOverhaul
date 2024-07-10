@@ -63,11 +63,11 @@ public class GuiDialogArmorSlots : GuiDialog
         GuiComposer playerStatsCompo = characterDialog.Composers["playerstats"];
         if (playerStatsCompo is null) { return; }
 
-        double indent = GuiElement.scaled(32);
+        double slotSize = GuiElement.scaled(32);
         double gap = GuiElement.scaled(GuiElementItemSlotGridBase.unscaledSlotPadding);
-        double offsetY = GuiElement.scaled(indent) + GuiElement.scaled(gap);
+        //double offsetY = GuiElement.scaled(indent) + GuiElement.scaled(gap);
         double bgPadding = GuiElement.scaled(5);
-        double firstWidth = GuiElement.scaled(60);
+        double textWidth = GuiElement.scaled(60);
 
         IInventory _inv = capi.World.Player.InventoryManager.GetOwnInventory(GlobalConstants.characterInvClassName);
         if (_inv is not ArmorInventory inv)
@@ -93,16 +93,15 @@ public class GuiDialogArmorSlots : GuiDialog
         ElementBounds childBounds = new ElementBounds().WithSizing(ElementSizing.FitToChildren);
         ElementBounds backgroundBounds = childBounds.WithFixedPadding(bgPadding);
 
-        ElementBounds textBounds = ElementStdBounds.Slot(0, indent).WithFixedWidth(firstWidth);
+        ElementBounds textBounds = ElementStdBounds.Slot(0, slotSize).WithFixedWidth(textWidth);
         ElementBounds slot0Bounds = ElementStdBounds.Slot(textBounds.RightCopy().fixedX, textBounds.RightCopy().fixedY);
         ElementBounds slot1Bounds = ElementStdBounds.Slot(slot0Bounds.RightCopy().fixedX, slot0Bounds.RightCopy().fixedY);
         ElementBounds slot2Bounds = ElementStdBounds.Slot(slot1Bounds.RightCopy().fixedX, slot1Bounds.RightCopy().fixedY);
-        //try
-        //{
-        composer = Composers[DialogName] = capi.Gui.CreateCompo(DialogName, mainBounds)
-        .AddDialogBG(backgroundBounds, false)
-        .AddDialogTitleBarWithBg(DialogTitle, () => TryClose())
-        .BeginChildElements(childBounds);
+
+        composer = Composers[DialogName] = capi.Gui.CreateCompo(DialogName, mainBounds);
+        composer.AddDialogBG(backgroundBounds, false);
+        composer.AddDialogTitleBarWithBg(DialogTitle, () => TryClose());
+        composer.BeginChildElements(childBounds);
         composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: gap), "textHead");
         composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: gap), "textFace");
         composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: gap), "textNeck");
@@ -144,8 +143,7 @@ public class GuiDialogArmorSlots : GuiDialog
 
         composer.EndChildElements();
         composer.Compose();
-        //}
-        //catch (Exception ex) { }
+
         composer?.GetDynamicText("textHead")?.SetNewText(Lang.Get("combatoverhaul:Head"));
         composer?.GetDynamicText("textFace")?.SetNewText(Lang.Get("combatoverhaul:Face"));
         composer?.GetDynamicText("textNeck")?.SetNewText(Lang.Get("combatoverhaul:Neck"));
@@ -155,27 +153,6 @@ public class GuiDialogArmorSlots : GuiDialog
         composer?.GetDynamicText("textLegs")?.SetNewText(Lang.Get("combatoverhaul:Legs"));
         composer?.GetDynamicText("textFeet")?.SetNewText(Lang.Get("combatoverhaul:Feet"));
     }
-
-    // breaks absolutely everything
-    //public void AddSlot(ArmorInventory inv, ArmorLayers layers, DamageZone zone, ref ElementBounds bounds, double gap)
-    //{
-    //    int slotIndex = ArmorInventory.IndexFromArmorType(layers, zone);
-    //    bool available = inv.IsSlotAvailable(layers, zone);
-    //    if (available)
-    //    {
-    //        composer.AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { slotIndex }, BelowCopySet(ref bounds, fixedDeltaY: gap));
-    //    }
-    //    else if (!available)
-    //    {
-    //        RealDummyInventory dummyInv = new RealDummyInventory(capi, 1);
-    //        dummyInv[0].HexBackgroundColor = "#999999";
-    //        if (inv[slotIndex].Itemstack != null)
-    //        {
-    //            dummyInv[0].Itemstack = inv[slotIndex].Itemstack.Clone();
-    //        }
-    //        composer.AddItemSlotGrid(dummyInv, (_) => { }, 1, new int[] { 0 }, BelowCopySet(ref bounds, fixedDeltaY: gap));
-    //    }
-    //}
 
     private RealDummyInventory? _dummyInventory;
 
