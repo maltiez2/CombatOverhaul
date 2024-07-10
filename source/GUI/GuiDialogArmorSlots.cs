@@ -29,14 +29,14 @@ public class GuiDialogArmorSlots : GuiDialog
         }
     }
 
-    private void Every500ms(float dt) // REMOVE AFTER GUI IS DONE
-    {
-        if (characterDialog == null || !characterDialog.IsOpened())
-        {
-            return;
-        }
-        ComposeDialog();
-    }
+    //private void Every500ms(float dt) // REMOVE AFTER GUI IS DONE
+    //{
+    //    if (characterDialog == null || !characterDialog.IsOpened())
+    //    {
+    //        return;
+    //    }
+    //    ComposeDialog();
+    //}
 
     private void GuiDialogCharacter_OnOpened(GuiDialogCharacter characterDialog)
     {
@@ -63,11 +63,11 @@ public class GuiDialogArmorSlots : GuiDialog
         GuiComposer playerStatsCompo = characterDialog.Composers["playerstats"];
         if (playerStatsCompo is null) { return; }
 
-        double indent = GuiElement.scaled(32);
+        double slotSize = GuiElement.scaled(32);
         double gap = GuiElement.scaled(GuiElementItemSlotGridBase.unscaledSlotPadding);
-        double offsetY = GuiElement.scaled(indent) + GuiElement.scaled(gap);
+        double textGap = gap * 9;
         double bgPadding = GuiElement.scaled(5);
-        double firstWidth = GuiElement.scaled(60);
+        double textWidth = GuiElement.scaled(60);
 
         IInventory _inv = capi.World.Player.InventoryManager.GetOwnInventory(GlobalConstants.characterInvClassName);
         if (_inv is not ArmorInventory inv)
@@ -86,31 +86,35 @@ public class GuiDialogArmorSlots : GuiDialog
         //double padLeftX = playerStatsCompo.Bounds.fixedPaddingX + playerStatsCompo.Bounds.drawX;
         //double padLeftY = playerStatsCompo.Bounds.fixedPaddingY + playerStatsCompo.Bounds.drawY;
 
+        ElementBounds statsBoundsRightCopy = playerStatsCompo.Bounds.RightCopy();
+
         ElementBounds mainBounds = ElementStdBounds.AutosizedMainDialog
             // todo: use playerstats borders for correct positions
-            .RightOf(playerStatsCompo.Bounds);
+            .WithFixedAlignmentOffset(50, 70);
+        //.RightOf(statsBoundsRightCopy, 50);
 
         ElementBounds childBounds = new ElementBounds().WithSizing(ElementSizing.FitToChildren);
         ElementBounds backgroundBounds = childBounds.WithFixedPadding(bgPadding);
 
-        ElementBounds textBounds = ElementStdBounds.Slot(0, indent).WithFixedWidth(firstWidth);
-        ElementBounds slot0Bounds = ElementStdBounds.Slot(textBounds.RightCopy().fixedX, textBounds.RightCopy().fixedY);
-        ElementBounds slot1Bounds = ElementStdBounds.Slot(slot0Bounds.RightCopy().fixedX, slot0Bounds.RightCopy().fixedY);
-        ElementBounds slot2Bounds = ElementStdBounds.Slot(slot1Bounds.RightCopy().fixedX, slot1Bounds.RightCopy().fixedY);
-        //try
-        //{
-        composer = Composers[DialogName] = capi.Gui.CreateCompo(DialogName, mainBounds)
-        .AddDialogBG(backgroundBounds, false)
-        .AddDialogTitleBarWithBg(DialogTitle, () => TryClose())
-        .BeginChildElements(childBounds);
-        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: gap), "textHead");
-        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: gap), "textFace");
-        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: gap), "textNeck");
-        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: gap), "textTorso");
-        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: gap), "textArms");
-        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: gap), "textHands");
-        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: gap), "textLegs");
-        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: gap), "textFeet");
+        ElementBounds placholderBounds = ElementStdBounds.Slot(0, slotSize).WithFixedWidth(textWidth);
+        ElementBounds slot0Bounds = ElementStdBounds.Slot(placholderBounds.RightCopy(gap).fixedX, placholderBounds.RightCopy().fixedY);
+        ElementBounds slot1Bounds = ElementStdBounds.Slot(slot0Bounds.RightCopy(gap).fixedX, slot0Bounds.RightCopy().fixedY);
+        ElementBounds slot2Bounds = ElementStdBounds.Slot(slot1Bounds.RightCopy(gap).fixedX, slot1Bounds.RightCopy().fixedY);
+
+        ElementBounds textBounds = placholderBounds.BelowCopy(fixedDeltaY: textGap / 2).WithFixedHeight(placholderBounds.fixedHeight / 2);
+
+        composer = Composers[DialogName] = capi.Gui.CreateCompo(DialogName, mainBounds);
+        composer.AddDialogBG(backgroundBounds, false);
+        composer.AddDialogTitleBarWithBg(DialogTitle, () => TryClose());
+        composer.BeginChildElements(childBounds);
+        composer.AddDynamicText("", textFont, textBounds, "textHead");
+        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: textGap), "textFace");
+        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: textGap), "textNeck");
+        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: textGap), "textTorso");
+        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: textGap), "textArms");
+        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: textGap), "textHands");
+        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: textGap), "textLegs");
+        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: textGap), "textFeet");
         composer.AddStaticCustomDraw(slot0Bounds, OnDrawOuterIcon);
         composer.AddStaticCustomDraw(slot1Bounds, OnDrawMiddleIcon);
         composer.AddStaticCustomDraw(slot2Bounds, OnDrawSkinIcon);
@@ -144,8 +148,7 @@ public class GuiDialogArmorSlots : GuiDialog
 
         composer.EndChildElements();
         composer.Compose();
-        //}
-        //catch (Exception ex) { }
+
         composer?.GetDynamicText("textHead")?.SetNewText(Lang.Get("combatoverhaul:Head"));
         composer?.GetDynamicText("textFace")?.SetNewText(Lang.Get("combatoverhaul:Face"));
         composer?.GetDynamicText("textNeck")?.SetNewText(Lang.Get("combatoverhaul:Neck"));
@@ -155,27 +158,6 @@ public class GuiDialogArmorSlots : GuiDialog
         composer?.GetDynamicText("textLegs")?.SetNewText(Lang.Get("combatoverhaul:Legs"));
         composer?.GetDynamicText("textFeet")?.SetNewText(Lang.Get("combatoverhaul:Feet"));
     }
-
-    // breaks absolutely everything
-    //public void AddSlot(ArmorInventory inv, ArmorLayers layers, DamageZone zone, ref ElementBounds bounds, double gap)
-    //{
-    //    int slotIndex = ArmorInventory.IndexFromArmorType(layers, zone);
-    //    bool available = inv.IsSlotAvailable(layers, zone);
-    //    if (available)
-    //    {
-    //        composer.AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { slotIndex }, BelowCopySet(ref bounds, fixedDeltaY: gap));
-    //    }
-    //    else if (!available)
-    //    {
-    //        RealDummyInventory dummyInv = new RealDummyInventory(capi, 1);
-    //        dummyInv[0].HexBackgroundColor = "#999999";
-    //        if (inv[slotIndex].Itemstack != null)
-    //        {
-    //            dummyInv[0].Itemstack = inv[slotIndex].Itemstack.Clone();
-    //        }
-    //        composer.AddItemSlotGrid(dummyInv, (_) => { }, 1, new int[] { 0 }, BelowCopySet(ref bounds, fixedDeltaY: gap));
-    //    }
-    //}
 
     private RealDummyInventory? _dummyInventory;
 
