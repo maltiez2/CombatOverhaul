@@ -63,11 +63,9 @@ public class GuiDialogArmorSlots : GuiDialog
         GuiComposer playerStatsCompo = characterDialog.Composers["playerstats"];
         if (playerStatsCompo is null) { return; }
 
-        double slotSize = GuiElement.scaled(32);
         double gap = GuiElement.scaled(GuiElementItemSlotGridBase.unscaledSlotPadding);
-        double textGap = gap * 9;
+        double textGap = gap;
         double bgPadding = GuiElement.scaled(5);
-        double textWidth = GuiElement.scaled(60);
 
         IInventory _inv = capi.World.Player.InventoryManager.GetOwnInventory(GlobalConstants.characterInvClassName);
         if (_inv is not ArmorInventory inv)
@@ -75,6 +73,7 @@ public class GuiDialogArmorSlots : GuiDialog
             return;
         }
         CairoFont textFont = CairoFont.WhiteSmallText();
+        textFont.Orientation = EnumTextOrientation.Right;
 
         if (!_inventoryLinked)
         {
@@ -82,29 +81,23 @@ public class GuiDialogArmorSlots : GuiDialog
             _inventoryLinked = true;
         }
 
-        // should be used for dialog position
-        //double padLeftX = playerStatsCompo.Bounds.fixedPaddingX + playerStatsCompo.Bounds.drawX;
-        //double padLeftY = playerStatsCompo.Bounds.fixedPaddingY + playerStatsCompo.Bounds.drawY;
-
         ElementBounds statsBoundsRightCopy = playerStatsCompo.Bounds.RightCopy();
 
-        ElementBounds mainBounds = ElementStdBounds.AutosizedMainDialog
-            // todo: use playerstats borders for correct positions
-            .WithFixedAlignmentOffset(50, 70);
-        //.RightOf(statsBoundsRightCopy, 50);
+        ElementBounds mainBounds = playerStatsCompo.Bounds.RightCopy(GuiElement.scaled(5));
+        mainBounds.BothSizing = ElementSizing.FitToChildren;
 
         ElementBounds childBounds = new ElementBounds().WithSizing(ElementSizing.FitToChildren);
         ElementBounds backgroundBounds = childBounds.WithFixedPadding(bgPadding);
 
-        ElementBounds placholderBounds = ElementStdBounds.Slot(0, slotSize).WithFixedWidth(textWidth);
-        ElementBounds slot0Bounds = ElementStdBounds.Slot(placholderBounds.RightCopy(gap).fixedX, placholderBounds.RightCopy().fixedY);
+        ElementBounds placeholderBounds = ElementStdBounds.Slot(0, 32);
+        ElementBounds slot0Bounds = ElementStdBounds.Slot(placeholderBounds.RightCopy(gap * 2).fixedX, placeholderBounds.RightCopy().fixedY);
         ElementBounds slot1Bounds = ElementStdBounds.Slot(slot0Bounds.RightCopy(gap).fixedX, slot0Bounds.RightCopy().fixedY);
         ElementBounds slot2Bounds = ElementStdBounds.Slot(slot1Bounds.RightCopy(gap).fixedX, slot1Bounds.RightCopy().fixedY);
 
-        ElementBounds textBounds = placholderBounds.BelowCopy(fixedDeltaY: textGap / 2).WithFixedHeight(placholderBounds.fixedHeight / 2);
+        ElementBounds textBounds = placeholderBounds.BelowCopy(fixedDeltaY: gap + GuiElement.scaled(12)).WithFixedHeight(placeholderBounds.fixedHeight);
 
         composer = Composers[DialogName] = capi.Gui.CreateCompo(DialogName, mainBounds);
-        composer.AddDialogBG(backgroundBounds, false);
+        composer.AddShadedDialogBG(backgroundBounds, false);
         composer.AddDialogTitleBarWithBg(DialogTitle, () => TryClose());
         composer.BeginChildElements(childBounds);
         composer.AddDynamicText("", textFont, textBounds, "textHead");
@@ -149,24 +142,21 @@ public class GuiDialogArmorSlots : GuiDialog
         composer.EndChildElements();
         composer.Compose();
 
-        composer?.GetDynamicText("textHead")?.SetNewText(Lang.Get("combatoverhaul:Head"));
-        composer?.GetDynamicText("textFace")?.SetNewText(Lang.Get("combatoverhaul:Face"));
-        composer?.GetDynamicText("textNeck")?.SetNewText(Lang.Get("combatoverhaul:Neck"));
-        composer?.GetDynamicText("textTorso")?.SetNewText(Lang.Get("combatoverhaul:Torso"));
-        composer?.GetDynamicText("textArms")?.SetNewText(Lang.Get("combatoverhaul:Arms"));
-        composer?.GetDynamicText("textHands")?.SetNewText(Lang.Get("combatoverhaul:Hands"));
-        composer?.GetDynamicText("textLegs")?.SetNewText(Lang.Get("combatoverhaul:Legs"));
-        composer?.GetDynamicText("textFeet")?.SetNewText(Lang.Get("combatoverhaul:Feet"));
+        composer.GetDynamicText("textHead")?.SetNewText(Lang.Get("combatoverhaul:Head"));
+        composer.GetDynamicText("textFace")?.SetNewText(Lang.Get("combatoverhaul:Face"));
+        composer.GetDynamicText("textNeck")?.SetNewText(Lang.Get("combatoverhaul:Neck"));
+        composer.GetDynamicText("textTorso")?.SetNewText(Lang.Get("combatoverhaul:Torso"));
+        composer.GetDynamicText("textArms")?.SetNewText(Lang.Get("combatoverhaul:Arms"));
+        composer.GetDynamicText("textHands")?.SetNewText(Lang.Get("combatoverhaul:Hands"));
+        composer.GetDynamicText("textLegs")?.SetNewText(Lang.Get("combatoverhaul:Legs"));
+        composer.GetDynamicText("textFeet")?.SetNewText(Lang.Get("combatoverhaul:Feet"));
     }
 
     private RealDummyInventory? _dummyInventory;
 
     public void AddSlot(ArmorInventory inv, ArmorLayers layers, DamageZone zone, ref ElementBounds bounds, double gap)
     {
-        if (_dummyInventory == null)
-        {
-            _dummyInventory = new(capi, ArmorInventory._totalSlotsNumber);
-        }
+        _dummyInventory ??= new(capi, ArmorInventory._totalSlotsNumber);
         
         int slotIndex = ArmorInventory.IndexFromArmorType(layers, zone);
         bool available = inv.IsSlotAvailable(slotIndex) || !inv[slotIndex].Empty;
@@ -187,21 +177,21 @@ public class GuiDialogArmorSlots : GuiDialog
     {
         IAsset asset = capi.Assets.TryGet(AssetLocation.Create("combatoverhaul:textures/icons/outer.svg"));
         if (asset == null) return;
-        capi.Gui.DrawSvg(asset, surface, (int)currentBounds.drawX, (int)currentBounds.drawY, (int)currentBounds.fixedWidth, (int)currentBounds.fixedHeight, null);
+        capi.Gui.DrawSvg(asset, surface, (int)currentBounds.drawX, (int)currentBounds.drawY, (int)GuiElement.scaled(currentBounds.fixedWidth), (int)GuiElement.scaled(currentBounds.fixedHeight), null);
     }
 
     private void OnDrawMiddleIcon(Context ctx, ImageSurface surface, ElementBounds currentBounds)
     {
         IAsset asset = capi.Assets.TryGet(AssetLocation.Create("combatoverhaul:textures/icons/middle.svg"));
         if (asset == null) return;
-        capi.Gui.DrawSvg(asset, surface, (int)currentBounds.drawX, (int)currentBounds.drawY, (int)currentBounds.fixedWidth, (int)currentBounds.fixedHeight, null);
+        capi.Gui.DrawSvg(asset, surface, (int)currentBounds.drawX, (int)currentBounds.drawY, (int)GuiElement.scaled(currentBounds.fixedWidth), (int)GuiElement.scaled(currentBounds.fixedHeight), null);
     }
 
     private void OnDrawSkinIcon(Context ctx, ImageSurface surface, ElementBounds currentBounds)
     {
         IAsset asset = capi.Assets.TryGet(AssetLocation.Create("combatoverhaul:textures/icons/skin.svg"));
         if (asset == null) return;
-        capi.Gui.DrawSvg(asset, surface, (int)currentBounds.drawX, (int)currentBounds.drawY, (int)currentBounds.fixedWidth, (int)currentBounds.fixedHeight, null);
+        capi.Gui.DrawSvg(asset, surface, (int)currentBounds.drawX, (int)currentBounds.drawY, (int)GuiElement.scaled(currentBounds.fixedWidth), (int)GuiElement.scaled(currentBounds.fixedHeight), null);
     }
 
     protected void SendInvPacket(object packet)

@@ -1,13 +1,13 @@
 {
   "game:tabname-combatoverhaul": "Combat Overhaul",
-  "armorslotsdialog-title": "Armor Slots",
-  "Head": "Head",
-  "Face": "Face",
-  "Neck": "Neck",
-  "Torso": "Torso",
-  "Arms": "Arms",
-  "Hands": "Hands",
-  "Legs": "Legs",
-  "Feet": "Feet",
+  "armorslotsdialog-title": "Armor inventory",
+  "Head": "Head:",
+  "Face": "Face:",
+  "Neck": "Neck:",
+  "Torso": "Torso:",
+  "Arms": "Arms:",
+  "Hands": "Hands:",
+  "Legs": "Legs:",
+  "Feet": "Feet:",
 
 }

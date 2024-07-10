@@ -9,10 +9,10 @@ namespace CombatOverhaul.Armor;
 public class ArmorSlot : ItemSlot
 {
     public ArmorType ArmorType { get; }
-    public ArmorType StoredArmoredType { get; private set; }
+    public ArmorType StoredArmoredType => GetStoredArmorType();
     public DamageZone DamageZone => ArmorType.Slots;
     public ArmorLayers Layer => ArmorType.Layers;
-    public DamageResistData Resists { get; set; } = DamageResistData.Empty;
+    public DamageResistData Resists => GetResists();
     public override int MaxSlotStackSize => 1;
     public bool Available => _inventory.IsSlotAvailable(ArmorType);
 
@@ -31,28 +31,30 @@ public class ArmorSlot : ItemSlot
         return armor.ArmorType.Intersect(ArmorType);
     }
 
-    public override void OnItemSlotModified(ItemStack? sinkStack)
-    {
-        base.OnItemSlotModified(sinkStack);
+    private readonly ArmorInventory _inventory;
 
-        RefreshStoredData();
-    }
-
-    public void RefreshStoredData()
+    private ArmorType GetStoredArmorType()
     {
         if (Itemstack?.Item != null && IsArmor(Itemstack.Item, out IArmor? armor) && armor != null)
         {
-            Resists = armor.Resists;
-            StoredArmoredType = armor.ArmorType;
+            return armor.ArmorType;
         }
         else
         {
-            Resists = DamageResistData.Empty;
-            StoredArmoredType = ArmorType.Empty;
+            return ArmorType.Empty;
         }
     }
-
-    private readonly ArmorInventory _inventory;
+    private DamageResistData GetResists()
+    {
+        if (Itemstack?.Item != null && IsArmor(Itemstack.Item, out IArmor? armor) && armor != null)
+        {
+            return armor.Resists;
+        }
+        else
+        {
+            return DamageResistData.Empty;
+        }
+    }
 
     private static bool IsArmor(CollectibleObject item, out IArmor? armor)
     {
@@ -110,7 +112,6 @@ public sealed class ArmorInventory : InventoryCharacter
 
     public override int Count => _totalSlotsNumber;
     public Dictionary<DamageZone, DamageResistData> Resists { get; private set; } = new();
-    public ArmorType OccupiedSlots { get; private set; } = ArmorType.Empty;
 
     public override void FromTreeAttributes(ITreeAttribute tree)
     {
@@ -130,7 +131,6 @@ public sealed class ArmorInventory : InventoryCharacter
                 else
                 {
                     _slots[index].Itemstack = itemStack;
-                    (_slots[index] as ArmorSlot)?.RefreshStoredData();
                 }
             }
 
@@ -143,7 +143,6 @@ public sealed class ArmorInventory : InventoryCharacter
         }
 
         RecalculateResists();
-        OccupiedSlots = CalculateOccupiedSlots();
     }
     public override void ToTreeAttributes(ITreeAttribute tree)
     {
@@ -166,7 +165,6 @@ public sealed class ArmorInventory : InventoryCharacter
         base.OnItemSlotModified(slot);
 
         RecalculateResists();
-        OccupiedSlots = CalculateOccupiedSlots();
 
         PlayerDamageModelBehavior? behavior = Player.Entity.GetBehavior<PlayerDamageModelBehavior>();
         if (behavior != null)
