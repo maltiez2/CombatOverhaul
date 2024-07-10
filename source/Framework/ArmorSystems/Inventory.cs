@@ -1,10 +1,7 @@
 ﻿using CombatOverhaul.DamageSystems;
 using CombatOverhaul.Utils;
-using CommandLine;
 using Vintagestory.API.Common;
-using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Datastructures;
-using Vintagestory.API.Util;
 using Vintagestory.Common;
 
 namespace CombatOverhaul.Armor;
@@ -37,7 +34,7 @@ public class ArmorSlot : ItemSlot
     public override void OnItemSlotModified(ItemStack? sinkStack)
     {
         base.OnItemSlotModified(sinkStack);
-        
+
         if (Itemstack?.Item != null && IsArmor(Itemstack.Item, out IArmor? armor) && armor != null)
         {
             Resists = armor.Resists;
@@ -169,6 +166,11 @@ public sealed class ArmorInventory : InventoryCharacter
         {
             behavior.Resists = Resists;
         }
+
+        foreach ((ArmorType type, ArmorSlot armorSlot) in _slotsByType)
+        {
+            armorSlot.HexBackgroundColor = IsSlotAvailable(type) ? "#FFFFFF" : "#999999";
+        }
     }
 
     public bool IsArmorSlotAvailable(int index) => !ArmorTypeFromIndex(index).Intersect(OccupiedSlots);
@@ -179,7 +181,7 @@ public sealed class ArmorInventory : InventoryCharacter
         return _vanillaSlots + IndexFromArmorLayer(layer) * zonesCount + IndexFromDamageZone(zone);
     }
 
-    public bool IsSlotAvailable(ArmorType armorType) => !_slotsByType.Where(entry => !entry.Value.Empty).Any(entry => entry.Key.Intersect(armorType));
+    public bool IsSlotAvailable(ArmorType armorType) => !_slotsByType.Where(entry => !entry.Value.Empty).Any(entry => entry.Value.StoredArmoredType.Intersect(armorType));
     public bool IsSlotAvailable(ArmorLayers layer, DamageZone zone) => IsSlotAvailable(new ArmorType(layer, zone));
     public bool IsSlotAvailable(int index) => IsSlotAvailable(ArmorTypeFromIndex(index));
 
@@ -290,7 +292,7 @@ public sealed class ArmorInventory : InventoryCharacter
     }
 
     private static bool IsVanillaArmorSlot(int index) => index >= _clothesSlotsCount && index < _clothesSlotsCount + _clothesArmorSlots;
-    
+
     private static ArmorType ArmorTypeFromIndex(int index)
     {
         int zonesCount = Enum.GetValues<DamageZone>().Length - 1;
@@ -359,7 +361,7 @@ public sealed class ArmorInventory : InventoryCharacter
     {
         foreach (DamageZone zone in Enum.GetValues<DamageZone>())
         {
-            DamageResistData resist = DamageResistData.Combine(_slotsByType.Where(entry => (entry.Key.Slots & zone) != 0).Select(entry =>  entry.Value.Resists));
+            DamageResistData resist = DamageResistData.Combine(_slotsByType.Where(entry => (entry.Key.Slots & zone) != 0).Select(entry => entry.Value.Resists));
             Resists[zone] = resist;
         }
     }
