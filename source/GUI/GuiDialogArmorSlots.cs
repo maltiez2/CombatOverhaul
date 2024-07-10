@@ -75,9 +75,10 @@ public class GuiDialogArmorSlots : GuiDialog
             return;
         }
         CairoFont textFont = CairoFont.WhiteSmallText();
-        
-        var padLeftX = playerStatsCompo.Bounds.fixedPaddingX + playerStatsCompo.Bounds.drawX;
-        var padLeftY = playerStatsCompo.Bounds.fixedPaddingY + playerStatsCompo.Bounds.drawY;
+
+        // should be used for dialog position
+        //double padLeftX = playerStatsCompo.Bounds.fixedPaddingX + playerStatsCompo.Bounds.drawX;
+        //double padLeftY = playerStatsCompo.Bounds.fixedPaddingY + playerStatsCompo.Bounds.drawY;
 
         ElementBounds mainBounds = ElementStdBounds.AutosizedMainDialog
             // todo: use playerstats borders for correct positions
@@ -153,18 +154,8 @@ public class GuiDialogArmorSlots : GuiDialog
 
     public void AddSlot(ArmorInventory inv, ArmorLayers layers, DamageZone zone, ref ElementBounds bounds, double gap)
     {
-        var available = inv.IsArmorSlotAvailable(ArmorInventory.IndexFromArmorType(layers, zone));
-        if (available)
-        {
-            composer.AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { ArmorInventory.IndexFromArmorType(layers, zone) }, BelowCopySet(ref bounds, fixedDeltaY: gap));
-        }
-        else if (!available)
-        {
-            DummyInventory dummyInv = new DummyInventory(capi, 1);
-            dummyInv[0].HexBackgroundColor = "#999999";
-            dummyInv[0].BackgroundIcon = "padlock"; // icon doesn't exist yet
-            composer.AddItemSlotGrid(dummyInv, SendInvPacket, 1, new int[] { 0 }, BelowCopySet(ref bounds, fixedDeltaY: gap));
-        }
+        int slotIndex = ArmorInventory.IndexFromArmorType(layers, zone);
+        composer.AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { slotIndex }, BelowCopySet(ref bounds, fixedDeltaY: gap));
     }
 
     private void OnDrawOuterIcon(Context ctx, ImageSurface surface, ElementBounds currentBounds)
