@@ -21,7 +21,7 @@ public class GuiDialogArmorSlots : GuiDialog
 
     public GuiDialogArmorSlots(ICoreClientAPI capi) : base(capi)
     {
-        capi.Event.RegisterGameTickListener(Every500ms, 500); // REMOVE AFTER GUI IS DONE
+        //capi.Event.RegisterGameTickListener(Every500ms, 500); // REMOVE AFTER GUI IS DONE
         foreach (GuiDialogCharacter characterDialog in capi.Gui.LoadedGuis.Where(x => x is GuiDialogCharacter).Select(x => x as GuiDialogCharacter))
         {
             characterDialog.OnOpened += () => GuiDialogCharacter_OnOpened(characterDialog);
@@ -187,12 +187,13 @@ public class GuiDialogArmorSlots : GuiDialog
         }
         
         int slotIndex = ArmorInventory.IndexFromArmorType(layers, zone);
-        bool available = inv.IsArmorSlotAvailable(slotIndex) || !inv[slotIndex].Empty;
+        bool available = inv.IsSlotAvailable(slotIndex) || !inv[slotIndex].Empty;
+
         if (available)
         {
             composer.AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { slotIndex }, BelowCopySet(ref bounds, fixedDeltaY: gap));
         }
-        else if (!available)
+        else
         {
             _dummyInventory[slotIndex].HexBackgroundColor = "#999999";
             _dummyInventory[slotIndex].Itemstack = inv[inv.GetSlotBlockingSlotIndex(layers, zone)].Itemstack;
