@@ -49,7 +49,7 @@ public class ArmorSlot : ItemSlot
 
     private readonly ArmorInventory _inventory;
 
-    private static bool IsArmor(CollectibleObject item, out IArmor? armor)
+    internal static bool IsArmor(CollectibleObject item, out IArmor? armor)
     {
         if (item is IArmor armorItem)
         {
