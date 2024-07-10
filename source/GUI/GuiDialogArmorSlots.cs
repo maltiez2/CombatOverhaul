@@ -64,8 +64,8 @@ public class GuiDialogArmorSlots : GuiDialog
         double indent = GuiElement.scaled(32);
         double gap = GuiElement.scaled(GuiElementItemSlotGridBase.unscaledSlotPadding);
         double offsetY = GuiElement.scaled(indent) + GuiElement.scaled(gap);
-        double bgPadding = GuiElement.scaled(10);
-        double firstWidth = GuiElement.scaled(100);
+        double bgPadding = GuiElement.scaled(5);
+        double firstWidth = GuiElement.scaled(60);
 
         IInventory _inv = capi.World.Player.InventoryManager.GetOwnInventory(GlobalConstants.characterInvClassName);
         if (_inv is not ArmorInventory inv)
@@ -147,6 +147,28 @@ public class GuiDialogArmorSlots : GuiDialog
         composer?.GetDynamicText("textLegs")?.SetNewText(Lang.Get("combatoverhaul:Legs"));
         composer?.GetDynamicText("textFeet")?.SetNewText(Lang.Get("combatoverhaul:Feet"));
     }
+
+    // breaks absolutely everything
+    //public void AddSlot(ArmorInventory inv, ArmorLayers layers, DamageZone zone, ref ElementBounds bounds, double gap)
+    //{
+    //    int slotIndex = ArmorInventory.IndexFromArmorType(layers, zone);
+    //    bool available = inv.IsSlotAvailable(layers, zone);
+    //    if (available)
+    //    {
+    //        composer.AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { slotIndex }, BelowCopySet(ref bounds, fixedDeltaY: gap));
+    //    }
+    //    else if (!available)
+    //    {
+    //        RealDummyInventory dummyInv = new RealDummyInventory(capi, 1);
+    //        dummyInv[0].HexBackgroundColor = "#999999";
+    //        if (inv[slotIndex].Itemstack != null)
+    //        {
+    //            dummyInv[0].Itemstack = inv[slotIndex].Itemstack.Clone();
+    //        }
+    //        composer.AddItemSlotGrid(dummyInv, (_) => { }, 1, new int[] { 0 }, BelowCopySet(ref bounds, fixedDeltaY: gap));
+    //    }
+    //}
+
 
     public void AddSlot(ArmorInventory inv, ArmorLayers layers, DamageZone zone, ref ElementBounds bounds, double gap)
     {
