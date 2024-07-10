@@ -116,7 +116,7 @@
 
   <!-- Formats asssets files -->
   <Target Name="Format" AfterTargets="ModInfo" BeforeTargets="CopyFilesToOutput">
-    <Exec Command="python $(Formatter) -a -d %(AssetsToFormat.Identity)" />
+    <!-- <Exec Command="python $(Formatter) -a -d %(AssetsToFormat.Identity)" /> -->
   </Target>
 
   <!-- Copies modicon, assets folder and native libraries if they exist into output directory -->

@@ -144,9 +144,11 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
         }
         else
         {
-            DamageData data = new(damageSource.Type, 0);
+            DamageData data = new(damageSource.Type, damageSource.DamageTier);
             _ = Resists[zone].ApplyResist(data, ref damage);
         }
+
+        EntityProjectile
     }
 }
 public sealed class PlayerDamageModel

@@ -1,5 +1,4 @@
 ﻿using CombatOverhaul.Colliders;
-using CombatOverhaul.MeleeSystems;
 using System.Collections.Immutable;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -38,7 +37,7 @@ public sealed class EntityDamageModelBehavior : EntityBehavior
 
     public override void Initialize(EntityProperties properties, JsonObject attributes)
     {
-        
+
         if (attributes.KeyExists("damageModel"))
         {
             EntityDamageModelJson stats = attributes["damageModel"].AsObject<EntityDamageModelJson>();
@@ -96,6 +95,11 @@ public sealed class EntityDamageModelBehavior : EntityBehavior
             {
                 typedDamage.DamageTypeData = Resists.ApplyResist(typedDamage.DamageTypeData, ref damage);
             }
+        }
+        else
+        {
+            DamageData damageData = new(damageSource.Type, damageSource.DamageTier);
+            Resists.ApplyResist(damageData, ref damage);
         }
 
         return damage;

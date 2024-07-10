@@ -1,8 +1,5 @@
 ﻿using CombatOverhaul.DamageSystems;
 using CombatOverhaul.Utils;
-using CommandLine;
-using System;
-using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
 using Vintagestory.Common;
@@ -373,5 +370,5 @@ public sealed class ArmorInventory : InventoryCharacter
             Resists[zone] = resist;
         }
     }
-    private ArmorType CalculateOccupiedSlots() => ArmorType.Combine(_slotsByType.Values.Select(x => x.ArmorType));
+    private ArmorType CalculateOccupiedSlots() => ArmorType.Combine(_slotsByType.Values.Select(x => x.StoredArmoredType));
 }
