@@ -155,18 +155,7 @@ public class GuiDialogArmorSlots : GuiDialog
     public void AddSlot(ArmorInventory inv, ArmorLayers layers, DamageZone zone, ref ElementBounds bounds, double gap)
     {
         int slotIndex = ArmorInventory.IndexFromArmorType(layers, zone);
-        bool available = inv.IsArmorSlotAvailable(slotIndex);
-        if (available)
-        {
-            composer.AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { slotIndex }, BelowCopySet(ref bounds, fixedDeltaY: gap));
-        }
-        else if (!available)
-        {
-            DummyInventory dummyInv = new DummyInventory(capi, 1);
-            dummyInv[0].HexBackgroundColor = "#999999";
-            dummyInv[0].BackgroundIcon = inv[slotIndex].BackgroundIcon;
-            composer.AddItemSlotGrid(dummyInv, SendInvPacket, 1, new int[] { 0 }, BelowCopySet(ref bounds, fixedDeltaY: gap));
-        }
+        composer.AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { slotIndex }, BelowCopySet(ref bounds, fixedDeltaY: gap));
     }
 
     private void OnDrawOuterIcon(Context ctx, ImageSurface surface, ElementBounds currentBounds)
