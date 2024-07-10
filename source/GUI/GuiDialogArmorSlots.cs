@@ -65,7 +65,7 @@ public class GuiDialogArmorSlots : GuiDialog
 
         double slotSize = GuiElement.scaled(32);
         double gap = GuiElement.scaled(GuiElementItemSlotGridBase.unscaledSlotPadding);
-        //double offsetY = GuiElement.scaled(indent) + GuiElement.scaled(gap);
+        double textGap = gap * 9;
         double bgPadding = GuiElement.scaled(5);
         double textWidth = GuiElement.scaled(60);
 
@@ -86,30 +86,35 @@ public class GuiDialogArmorSlots : GuiDialog
         //double padLeftX = playerStatsCompo.Bounds.fixedPaddingX + playerStatsCompo.Bounds.drawX;
         //double padLeftY = playerStatsCompo.Bounds.fixedPaddingY + playerStatsCompo.Bounds.drawY;
 
+        ElementBounds statsBoundsRightCopy = playerStatsCompo.Bounds.RightCopy(500);
+
         ElementBounds mainBounds = ElementStdBounds.AutosizedMainDialog
             // todo: use playerstats borders for correct positions
-            .RightOf(playerStatsCompo.Bounds);
+            .WithFixedAlignmentOffset(50, 70);
+            //.RightOf(statsBoundsRightCopy);
 
         ElementBounds childBounds = new ElementBounds().WithSizing(ElementSizing.FitToChildren);
         ElementBounds backgroundBounds = childBounds.WithFixedPadding(bgPadding);
 
-        ElementBounds textBounds = ElementStdBounds.Slot(0, slotSize).WithFixedWidth(textWidth);
-        ElementBounds slot0Bounds = ElementStdBounds.Slot(textBounds.RightCopy().fixedX, textBounds.RightCopy().fixedY);
-        ElementBounds slot1Bounds = ElementStdBounds.Slot(slot0Bounds.RightCopy().fixedX, slot0Bounds.RightCopy().fixedY);
-        ElementBounds slot2Bounds = ElementStdBounds.Slot(slot1Bounds.RightCopy().fixedX, slot1Bounds.RightCopy().fixedY);
+        ElementBounds placholderBounds = ElementStdBounds.Slot(0, slotSize).WithFixedWidth(textWidth);
+        ElementBounds slot0Bounds = ElementStdBounds.Slot(placholderBounds.RightCopy(gap).fixedX, placholderBounds.RightCopy().fixedY);
+        ElementBounds slot1Bounds = ElementStdBounds.Slot(slot0Bounds.RightCopy(gap).fixedX, slot0Bounds.RightCopy().fixedY);
+        ElementBounds slot2Bounds = ElementStdBounds.Slot(slot1Bounds.RightCopy(gap).fixedX, slot1Bounds.RightCopy().fixedY);
+
+        ElementBounds textBounds = placholderBounds.BelowCopy(fixedDeltaY: textGap / 2).WithFixedHeight(placholderBounds.fixedHeight / 2);
 
         composer = Composers[DialogName] = capi.Gui.CreateCompo(DialogName, mainBounds);
         composer.AddDialogBG(backgroundBounds, false);
         composer.AddDialogTitleBarWithBg(DialogTitle, () => TryClose());
         composer.BeginChildElements(childBounds);
-        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: gap), "textHead");
-        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: gap), "textFace");
-        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: gap), "textNeck");
-        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: gap), "textTorso");
-        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: gap), "textArms");
-        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: gap), "textHands");
-        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: gap), "textLegs");
-        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: gap), "textFeet");
+        composer.AddDynamicText("", textFont, textBounds, "textHead");
+        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: textGap), "textFace");
+        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: textGap), "textNeck");
+        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: textGap), "textTorso");
+        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: textGap), "textArms");
+        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: textGap), "textHands");
+        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: textGap), "textLegs");
+        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: textGap), "textFeet");
         composer.AddStaticCustomDraw(slot0Bounds, OnDrawOuterIcon);
         composer.AddStaticCustomDraw(slot1Bounds, OnDrawMiddleIcon);
         composer.AddStaticCustomDraw(slot2Bounds, OnDrawSkinIcon);
