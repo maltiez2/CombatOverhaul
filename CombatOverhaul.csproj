@@ -121,6 +121,11 @@
       <HintPath>$(GameDirectory)/Lib/Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
+	  <Reference Include="cairo-sharp">
+		  <HintPath>$(VINTAGE_STORY)/Lib/cairo-sharp.dll</HintPath>
+		  <Private>False</Private>
+	  </Reference>	
+	  
     <!-- Vintage Story own libraries: wont be copied into output directory -->
     <Reference Include="VintagestoryAPI">
       <HintPath>$(GameDirectory)/VintagestoryAPI.dll</HintPath>
