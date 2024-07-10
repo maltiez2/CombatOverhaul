@@ -1,5 +1,4 @@
 ﻿using Cairo;
-using CombatOverhaul.Animations;
 using CombatOverhaul.Armor;
 using CombatOverhaul.DamageSystems;
 using Vintagestory.API.Client;
@@ -62,11 +61,11 @@ public class GuiDialogArmorSlots : GuiDialog
         GuiComposer playerStatsCompo = characterDialog.Composers["playerstats"];
         if (playerStatsCompo is null) { return; }
 
-        double indent = GuiElement.scaled(39);
+        double indent = GuiElement.scaled(32);
         double gap = GuiElement.scaled(GuiElementItemSlotGridBase.unscaledSlotPadding);
         double offsetY = GuiElement.scaled(indent) + GuiElement.scaled(gap);
-        double bgPadding = GuiElement.scaled(10);
-        double firstWidth = GuiElement.scaled(100);
+        double bgPadding = GuiElement.scaled(5);
+        double firstWidth = GuiElement.scaled(60);
 
         IInventory _inv = capi.World.Player.InventoryManager.GetOwnInventory(GlobalConstants.characterInvClassName);
         if (_inv is not ArmorInventory inv)
@@ -86,11 +85,10 @@ public class GuiDialogArmorSlots : GuiDialog
         ElementBounds childBounds = new ElementBounds().WithSizing(ElementSizing.FitToChildren);
         ElementBounds backgroundBounds = childBounds.WithFixedPadding(bgPadding);
 
-        ElementBounds textBounds = ElementBounds.FixedSize(firstWidth, indent).WithFixedOffset(0, indent);
-        ElementBounds slot0Bounds = textBounds.RightCopy(gap).WithFixedWidth(indent);
-        ElementBounds slot1Bounds = slot0Bounds.RightCopy(gap);
-        ElementBounds slot2Bounds = slot1Bounds.RightCopy(gap);
- 
+        ElementBounds textBounds = ElementStdBounds.Slot(0, indent).WithFixedWidth(firstWidth);
+        ElementBounds slot0Bounds = ElementStdBounds.Slot(textBounds.RightCopy().fixedX, textBounds.RightCopy().fixedY);
+        ElementBounds slot1Bounds = ElementStdBounds.Slot(slot0Bounds.RightCopy().fixedX, slot0Bounds.RightCopy().fixedY);
+        ElementBounds slot2Bounds = ElementStdBounds.Slot(slot1Bounds.RightCopy().fixedX, slot1Bounds.RightCopy().fixedY);
         //try
         //{
         composer = Composers[DialogName] = capi.Gui.CreateCompo(DialogName, mainBounds)
@@ -109,32 +107,32 @@ public class GuiDialogArmorSlots : GuiDialog
         composer.AddStaticCustomDraw(slot1Bounds, OnDrawMiddleIcon);
         composer.AddStaticCustomDraw(slot2Bounds, OnDrawSkinIcon);
 
-        AddSlot(inv, ArmorLayers.Outer, DamageSystems.DamageZone.Head, ref slot0Bounds, gap);
-        AddSlot(inv, ArmorLayers.Outer, DamageSystems.DamageZone.Face, ref slot0Bounds, gap);
-        AddSlot(inv, ArmorLayers.Outer, DamageSystems.DamageZone.Neck, ref slot0Bounds, gap);
-        AddSlot(inv, ArmorLayers.Outer, DamageSystems.DamageZone.Torso, ref slot0Bounds, gap);
-        AddSlot(inv, ArmorLayers.Outer, DamageSystems.DamageZone.Arms, ref slot0Bounds, gap);
-        AddSlot(inv, ArmorLayers.Outer, DamageSystems.DamageZone.Hands, ref slot0Bounds, gap);
-        AddSlot(inv, ArmorLayers.Outer, DamageSystems.DamageZone.Legs, ref slot0Bounds, gap);
-        AddSlot(inv, ArmorLayers.Outer, DamageSystems.DamageZone.Feet, ref slot0Bounds, gap);
+        AddSlot(inv, ArmorLayers.Outer, DamageZone.Head, ref slot0Bounds, gap);
+        AddSlot(inv, ArmorLayers.Outer, DamageZone.Face, ref slot0Bounds, gap);
+        AddSlot(inv, ArmorLayers.Outer, DamageZone.Neck, ref slot0Bounds, gap);
+        AddSlot(inv, ArmorLayers.Outer, DamageZone.Torso, ref slot0Bounds, gap);
+        AddSlot(inv, ArmorLayers.Outer, DamageZone.Arms, ref slot0Bounds, gap);
+        AddSlot(inv, ArmorLayers.Outer, DamageZone.Hands, ref slot0Bounds, gap);
+        AddSlot(inv, ArmorLayers.Outer, DamageZone.Legs, ref slot0Bounds, gap);
+        AddSlot(inv, ArmorLayers.Outer, DamageZone.Feet, ref slot0Bounds, gap);
 
-        AddSlot(inv, ArmorLayers.Middle, DamageSystems.DamageZone.Head, ref slot1Bounds, gap);
-        AddSlot(inv, ArmorLayers.Middle, DamageSystems.DamageZone.Face, ref slot1Bounds, gap);
-        AddSlot(inv, ArmorLayers.Middle, DamageSystems.DamageZone.Neck, ref slot1Bounds, gap);
-        AddSlot(inv, ArmorLayers.Middle, DamageSystems.DamageZone.Torso, ref slot1Bounds, gap);
-        AddSlot(inv, ArmorLayers.Middle, DamageSystems.DamageZone.Arms, ref slot1Bounds, gap);
-        AddSlot(inv, ArmorLayers.Middle, DamageSystems.DamageZone.Hands, ref slot1Bounds, gap);
-        AddSlot(inv, ArmorLayers.Middle, DamageSystems.DamageZone.Legs, ref slot1Bounds, gap);
-        AddSlot(inv, ArmorLayers.Middle, DamageSystems.DamageZone.Feet, ref slot1Bounds, gap);
+        AddSlot(inv, ArmorLayers.Middle, DamageZone.Head, ref slot1Bounds, gap);
+        AddSlot(inv, ArmorLayers.Middle, DamageZone.Face, ref slot1Bounds, gap);
+        AddSlot(inv, ArmorLayers.Middle, DamageZone.Neck, ref slot1Bounds, gap);
+        AddSlot(inv, ArmorLayers.Middle, DamageZone.Torso, ref slot1Bounds, gap);
+        AddSlot(inv, ArmorLayers.Middle, DamageZone.Arms, ref slot1Bounds, gap);
+        AddSlot(inv, ArmorLayers.Middle, DamageZone.Hands, ref slot1Bounds, gap);
+        AddSlot(inv, ArmorLayers.Middle, DamageZone.Legs, ref slot1Bounds, gap);
+        AddSlot(inv, ArmorLayers.Middle, DamageZone.Feet, ref slot1Bounds, gap);
 
-        AddSlot(inv, ArmorLayers.Skin, DamageSystems.DamageZone.Head, ref slot2Bounds, gap);
-        AddSlot(inv, ArmorLayers.Skin, DamageSystems.DamageZone.Face, ref slot2Bounds, gap);
-        AddSlot(inv, ArmorLayers.Skin, DamageSystems.DamageZone.Neck, ref slot2Bounds, gap);
-        AddSlot(inv, ArmorLayers.Skin, DamageSystems.DamageZone.Torso, ref slot2Bounds, gap);
-        AddSlot(inv, ArmorLayers.Skin, DamageSystems.DamageZone.Arms, ref slot2Bounds, gap);
-        AddSlot(inv, ArmorLayers.Skin, DamageSystems.DamageZone.Hands, ref slot2Bounds, gap);
-        AddSlot(inv, ArmorLayers.Skin, DamageSystems.DamageZone.Legs, ref slot2Bounds, gap);
-        AddSlot(inv, ArmorLayers.Skin, DamageSystems.DamageZone.Feet, ref slot2Bounds, gap);
+        AddSlot(inv, ArmorLayers.Skin, DamageZone.Head, ref slot2Bounds, gap);
+        AddSlot(inv, ArmorLayers.Skin, DamageZone.Face, ref slot2Bounds, gap);
+        AddSlot(inv, ArmorLayers.Skin, DamageZone.Neck, ref slot2Bounds, gap);
+        AddSlot(inv, ArmorLayers.Skin, DamageZone.Torso, ref slot2Bounds, gap);
+        AddSlot(inv, ArmorLayers.Skin, DamageZone.Arms, ref slot2Bounds, gap);
+        AddSlot(inv, ArmorLayers.Skin, DamageZone.Hands, ref slot2Bounds, gap);
+        AddSlot(inv, ArmorLayers.Skin, DamageZone.Legs, ref slot2Bounds, gap);
+        AddSlot(inv, ArmorLayers.Skin, DamageZone.Feet, ref slot2Bounds, gap);
 
         composer.EndChildElements();
         composer.Compose();
@@ -150,11 +148,42 @@ public class GuiDialogArmorSlots : GuiDialog
         composer?.GetDynamicText("textFeet")?.SetNewText(Lang.Get("combatoverhaul:Feet"));
     }
 
+    // breaks absolutely everything
+    //public void AddSlot(ArmorInventory inv, ArmorLayers layers, DamageZone zone, ref ElementBounds bounds, double gap)
+    //{
+    //    int slotIndex = ArmorInventory.IndexFromArmorType(layers, zone);
+    //    bool available = inv.IsSlotAvailable(layers, zone);
+    //    if (available)
+    //    {
+    //        composer.AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { slotIndex }, BelowCopySet(ref bounds, fixedDeltaY: gap));
+    //    }
+    //    else if (!available)
+    //    {
+    //        RealDummyInventory dummyInv = new RealDummyInventory(capi, 1);
+    //        dummyInv[0].HexBackgroundColor = "#999999";
+    //        if (inv[slotIndex].Itemstack != null)
+    //        {
+    //            dummyInv[0].Itemstack = inv[slotIndex].Itemstack.Clone();
+    //        }
+    //        composer.AddItemSlotGrid(dummyInv, (_) => { }, 1, new int[] { 0 }, BelowCopySet(ref bounds, fixedDeltaY: gap));
+    //    }
+    //}
+
 
     public void AddSlot(ArmorInventory inv, ArmorLayers layers, DamageZone zone, ref ElementBounds bounds, double gap)
     {
         int slotIndex = ArmorInventory.IndexFromArmorType(layers, zone);
-        composer.AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { slotIndex }, BelowCopySet(ref bounds, fixedDeltaY: gap));
+        bool available = inv.IsArmorSlotAvailable(slotIndex);
+        if (available)
+        {
+            composer.AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { slotIndex }, BelowCopySet(ref bounds, fixedDeltaY: gap));
+        }
+        else if (!available)
+        {
+            RealDummyInventory dummyInv = new RealDummyInventory(capi, 1);
+            dummyInv[0].HexBackgroundColor = "#999999";
+            composer.AddItemSlotGrid(dummyInv, (_) => { }, 1, new int[] { 0 }, BelowCopySet(ref bounds, fixedDeltaY: gap));
+        }
     }
 
     private void OnDrawOuterIcon(Context ctx, ImageSurface surface, ElementBounds currentBounds)
