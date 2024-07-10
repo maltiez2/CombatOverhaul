@@ -166,6 +166,8 @@ public sealed class ArmorInventory : InventoryCharacter
         {
             behavior.Resists = Resists;
         }
+
+        _onSlotModified?.Invoke();
     }
 
     public bool IsArmorSlotAvailable(int index) => !ArmorTypeFromIndex(index).Intersect(OccupiedSlots);
@@ -266,11 +268,12 @@ public sealed class ArmorInventory : InventoryCharacter
     {
 
     };
-    private const int _clothesArmorSlots = 3;
-    private static readonly int _clothesSlotsCount = Enum.GetValues<EnumCharacterDressType>().Length - _clothesArmorSlots - 1;
-    private static readonly int _vanillaSlots = _clothesSlotsCount + _clothesArmorSlots;
-    private static readonly int _moddedArmorSlotsCount = (Enum.GetValues<ArmorLayers>().Length - 1) * (Enum.GetValues<DamageZone>().Length - 1);
-    private static readonly int _totalSlotsNumber = _clothesSlotsCount + _clothesArmorSlots + _moddedArmorSlotsCount;
+    internal const int _clothesArmorSlots = 3;
+    internal static readonly int _clothesSlotsCount = Enum.GetValues<EnumCharacterDressType>().Length - _clothesArmorSlots - 1;
+    internal static readonly int _vanillaSlots = _clothesSlotsCount + _clothesArmorSlots;
+    internal static readonly int _moddedArmorSlotsCount = (Enum.GetValues<ArmorLayers>().Length - 1) * (Enum.GetValues<DamageZone>().Length - 1);
+    internal static readonly int _totalSlotsNumber = _clothesSlotsCount + _clothesArmorSlots + _moddedArmorSlotsCount;
+    internal event Action? _onSlotModified;
 
     protected override ItemSlot NewSlot(int slotId)
     {

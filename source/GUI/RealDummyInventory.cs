@@ -26,8 +26,18 @@ public class RealDummyInventory : DummyInventory
 
     protected override ItemSlot NewSlot(int i)
     {
-        ItemSlot slot = base.NewSlot(i);
+        RealDummySlot slot = new(this);
         slot.DrawUnavailable = false;
         return slot;
     }
+}
+
+public class RealDummySlot : ItemSlot
+{
+    public RealDummySlot(InventoryBase inventory) : base(inventory)
+    {
+    }
+
+    public override bool CanTake() => false;
+    public override bool CanHold(ItemSlot sourceSlot) => false;
 }

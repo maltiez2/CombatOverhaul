@@ -51,6 +51,8 @@ public class GuiDialogArmorSlots : GuiDialog
         composer?.Dispose();
     }
 
+    private bool _inventoryLinked = false;
+
     private void ComposeDialog()
     {
         if (characterDialog == null)
@@ -73,6 +75,12 @@ public class GuiDialogArmorSlots : GuiDialog
             return;
         }
         CairoFont textFont = CairoFont.WhiteSmallText();
+
+        if (!_inventoryLinked)
+        {
+            inv._onSlotModified += ComposeDialog;
+            _inventoryLinked = true;
+        }
 
         // should be used for dialog position
         //double padLeftX = playerStatsCompo.Bounds.fixedPaddingX + playerStatsCompo.Bounds.drawX;
@@ -169,20 +177,26 @@ public class GuiDialogArmorSlots : GuiDialog
     //    }
     //}
 
+    private RealDummyInventory? _dummyInventory;
 
     public void AddSlot(ArmorInventory inv, ArmorLayers layers, DamageZone zone, ref ElementBounds bounds, double gap)
     {
+        if (_dummyInventory == null)
+        {
+            _dummyInventory = new(capi, ArmorInventory._totalSlotsNumber);
+        }
+        
         int slotIndex = ArmorInventory.IndexFromArmorType(layers, zone);
-        bool available = inv.IsArmorSlotAvailable(slotIndex);
+        bool available = inv.IsArmorSlotAvailable(slotIndex) || !inv[slotIndex].Empty;
         if (available)
         {
             composer.AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { slotIndex }, BelowCopySet(ref bounds, fixedDeltaY: gap));
         }
         else if (!available)
         {
-            RealDummyInventory dummyInv = new RealDummyInventory(capi, 1);
-            dummyInv[0].HexBackgroundColor = "#999999";
-            composer.AddItemSlotGrid(dummyInv, (_) => { }, 1, new int[] { 0 }, BelowCopySet(ref bounds, fixedDeltaY: gap));
+            _dummyInventory[slotIndex].HexBackgroundColor = "#999999";
+            _dummyInventory[slotIndex].Itemstack = inv[inv.GetSlotBlockingSlotIndex(layers, zone)].Itemstack;
+            composer.AddItemSlotGrid(_dummyInventory, (_) => { }, 1, new int[] { slotIndex }, BelowCopySet(ref bounds, fixedDeltaY: gap));
         }
     }
 
