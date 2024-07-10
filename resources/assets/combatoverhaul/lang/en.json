@@ -1,6 +1,6 @@
 {
   "game:tabname-combatoverhaul": "Combat Overhaul",
-  "armorslotsdialog-title": "Armor inventory",
+  "armorslotsdialog-title": "Armor",
   "Head": "Head:",
   "Face": "Face:",
   "Neck": "Neck:",
@@ -8,6 +8,5 @@
   "Arms": "Arms:",
   "Hands": "Hands:",
   "Legs": "Legs:",
-  "Feet": "Feet:",
-
+  "Feet": "Feet:"
 }

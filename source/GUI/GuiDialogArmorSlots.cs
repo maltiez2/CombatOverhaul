@@ -65,7 +65,8 @@ public class GuiDialogArmorSlots : GuiDialog
 
         double gap = GuiElement.scaled(GuiElementItemSlotGridBase.unscaledSlotPadding);
         double textGap = gap;
-        double bgPadding = GuiElement.scaled(5);
+        double bgPadding = GuiElement.scaled(9);
+        double textWidth = 55;// GuiElement.scaled(75);
 
         IInventory _inv = capi.World.Player.InventoryManager.GetOwnInventory(GlobalConstants.characterInvClassName);
         if (_inv is not ArmorInventory inv)
@@ -89,12 +90,15 @@ public class GuiDialogArmorSlots : GuiDialog
         ElementBounds childBounds = new ElementBounds().WithSizing(ElementSizing.FitToChildren);
         ElementBounds backgroundBounds = childBounds.WithFixedPadding(bgPadding);
 
-        ElementBounds placeholderBounds = ElementStdBounds.Slot(0, 32);
-        ElementBounds slot0Bounds = ElementStdBounds.Slot(placeholderBounds.RightCopy(gap * 2).fixedX, placeholderBounds.RightCopy().fixedY);
+        ElementBounds placeholderBounds = ElementStdBounds.Slot(0, 32).WithFixedWidth(textWidth);
+        ElementBounds slot0Bounds = ElementStdBounds.Slot(placeholderBounds.RightCopy(gap + GuiElement.scaled(5)).fixedX, placeholderBounds.RightCopy().fixedY);
         ElementBounds slot1Bounds = ElementStdBounds.Slot(slot0Bounds.RightCopy(gap).fixedX, slot0Bounds.RightCopy().fixedY);
         ElementBounds slot2Bounds = ElementStdBounds.Slot(slot1Bounds.RightCopy(gap).fixedX, slot1Bounds.RightCopy().fixedY);
 
-        ElementBounds textBounds = placeholderBounds.BelowCopy(fixedDeltaY: gap + GuiElement.scaled(12)).WithFixedHeight(placeholderBounds.fixedHeight);
+        ElementBounds textBounds = placeholderBounds
+            .BelowCopy(fixedDeltaY: gap + GuiElement.scaled(12))
+            .WithFixedHeight(placeholderBounds.fixedHeight)
+            .WithFixedWidth(placeholderBounds.fixedWidth);
 
         composer = Composers[DialogName] = capi.Gui.CreateCompo(DialogName, mainBounds);
         composer.AddShadedDialogBG(backgroundBounds, false);
