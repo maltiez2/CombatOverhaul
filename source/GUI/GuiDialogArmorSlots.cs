@@ -75,9 +75,10 @@ public class GuiDialogArmorSlots : GuiDialog
             return;
         }
         CairoFont textFont = CairoFont.WhiteSmallText();
-        
-        var padLeftX = playerStatsCompo.Bounds.fixedPaddingX + playerStatsCompo.Bounds.drawX;
-        var padLeftY = playerStatsCompo.Bounds.fixedPaddingY + playerStatsCompo.Bounds.drawY;
+
+        // should be used for dialog position
+        //double padLeftX = playerStatsCompo.Bounds.fixedPaddingX + playerStatsCompo.Bounds.drawX;
+        //double padLeftY = playerStatsCompo.Bounds.fixedPaddingY + playerStatsCompo.Bounds.drawY;
 
         ElementBounds mainBounds = ElementStdBounds.AutosizedMainDialog
             // todo: use playerstats borders for correct positions
@@ -153,10 +154,11 @@ public class GuiDialogArmorSlots : GuiDialog
 
     public void AddSlot(ArmorInventory inv, ArmorLayers layers, DamageZone zone, ref ElementBounds bounds, double gap)
     {
-        var available = inv.IsArmorSlotAvailable(ArmorInventory.IndexFromArmorType(layers, zone));
+        int slotIndex = ArmorInventory.IndexFromArmorType(layers, zone);
+        bool available = inv.IsArmorSlotAvailable(slotIndex);
         if (available)
         {
-            composer.AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { ArmorInventory.IndexFromArmorType(layers, zone) }, BelowCopySet(ref bounds, fixedDeltaY: gap));
+            composer.AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { slotIndex }, BelowCopySet(ref bounds, fixedDeltaY: gap));
         }
         else if (!available)
         {
