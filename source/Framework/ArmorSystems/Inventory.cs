@@ -36,6 +36,8 @@ public class ArmorSlot : ItemSlot
 
     public override void OnItemSlotModified(ItemStack? sinkStack)
     {
+        base.OnItemSlotModified(sinkStack);
+        
         if (Itemstack?.Item != null && IsArmor(Itemstack.Item, out IArmor? armor) && armor != null)
         {
             Resists = armor.Resists;

@@ -63,7 +63,7 @@ public class GuiDialogArmorSlots : GuiDialog
 
         //if (characterDialog.Composers["playerstats"] is null){    return; }
 
-        double indent = GuiElement.scaled(45);
+        double indent = GuiElement.scaled(39);
         double gap = GuiElement.scaled(GuiElementItemSlotGridBase.unscaledSlotPadding);
         double offsetY = indent + gap;
 
@@ -72,7 +72,7 @@ public class GuiDialogArmorSlots : GuiDialog
         {
             return;
         }
-        CairoFont textFont = CairoFont.WhiteMediumText();
+        CairoFont textFont = CairoFont.WhiteSmallText();
 
         ElementBounds mainBounds = ElementStdBounds.AutosizedMainDialog
             .WithAlignment(EnumDialogArea.CenterMiddle)
@@ -80,9 +80,9 @@ public class GuiDialogArmorSlots : GuiDialog
             .WithFixedAlignmentOffset(50, 22.5);
 
         ElementBounds childBounds = new ElementBounds().WithSizing(ElementSizing.FitToChildren);
-        ElementBounds backgroundBounds = childBounds.WithFixedPadding(GuiElement.scaled(15));
+        ElementBounds backgroundBounds = childBounds.WithFixedPadding(GuiElement.scaled(5));
 
-        ElementBounds firstBounds = ElementBounds.FixedSize(indent * 10, indent).WithFixedOffset(0, indent).WithFixedWidth(100);
+        ElementBounds firstBounds = ElementBounds.FixedSize(indent * 10, indent).WithFixedOffset(0, indent).WithFixedWidth(50);
         ElementBounds secondBounds = firstBounds.RightCopy(gap).WithFixedWidth(50);
         ElementBounds thirdBounds = secondBounds.RightCopy(gap);
         ElementBounds fourthBounds = thirdBounds.RightCopy(gap);

@@ -1,6 +1,7 @@
 ﻿using CombatOverhaul.DamageSystems;
 using CombatOverhaul.Utils;
 using HarmonyLib;
+using System.Text;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
 using Vintagestory.Common;
@@ -96,6 +97,10 @@ public class ArmorBehavior : CollectibleBehavior, IArmor
 
         ArmorType = new(stats.Layers.Select(Enum.Parse<ArmorLayers>).Aggregate((first, second) => first | second), stats.Zones.Select(Enum.Parse<DamageZone>).Aggregate((first, second) => first | second));
         Resists = new(stats.Resists.ToDictionary(entry => Enum.Parse<EnumDamageType>(entry.Key), entry => entry.Value));
+    }
+
+    public override void GetHeldItemInfo(ItemSlot inSlot, StringBuilder dsc, IWorldAccessor world, bool withDebugInfo)
+    {
     }
 }
 

@@ -95,7 +95,14 @@ public readonly struct DamageResistData
         Dictionary<EnumDamageType, float> combinedResists = new();
         foreach ((EnumDamageType damageType, float protectionLevel) in resists.SelectMany(element => element.Resists))
         {
-            combinedResists[damageType] += protectionLevel;
+            if (!combinedResists.ContainsKey(damageType))
+            {
+                combinedResists[damageType] = protectionLevel;
+            }
+            else
+            {
+                combinedResists[damageType] += protectionLevel;
+            }
         }
         return new(combinedResists);
     }
