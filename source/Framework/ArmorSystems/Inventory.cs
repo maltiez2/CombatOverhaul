@@ -169,11 +169,6 @@ public sealed class ArmorInventory : InventoryCharacter
         {
             behavior.Resists = Resists;
         }
-
-        foreach ((ArmorType type, ArmorSlot armorSlot) in _slotsByType)
-        {
-            Console.WriteLine($"{type}: {GetSlotBlockingSlot(type)}");
-        }
     }
 
     public bool IsArmorSlotAvailable(int index) => !ArmorTypeFromIndex(index).Intersect(OccupiedSlots);
