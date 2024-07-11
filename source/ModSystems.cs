@@ -1,21 +1,22 @@
-﻿using CombatOverhaul.Armor;
+﻿using CombatOverhaul.Animations;
+using CombatOverhaul.Armor;
 using CombatOverhaul.Colliders;
 using CombatOverhaul.DamageSystems;
+using CombatOverhaul.Implementations;
 using CombatOverhaul.Inputs;
 using CombatOverhaul.Integration;
-using CombatOverhaul.Animations;
+using CombatOverhaul.MeleeSystems;
 using CombatOverhaul.RangedSystems;
 using CombatOverhaul.RangedSystems.Aiming;
+using CombatOverhaul.Utils;
 using HarmonyLib;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
+using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
 using Vintagestory.API.Server;
 using Vintagestory.Client.NoObf;
-using CombatOverhaul.Implementations;
 using Vintagestory.GameContent;
-using CombatOverhaul.Utils;
-using CombatOverhaul.MeleeSystems;
 using Vintagestory.Server;
 
 namespace CombatOverhaul;
@@ -129,7 +130,7 @@ public sealed class CombatOverhaulAnimationsSystem : ModSystem
         _api = api;
 
         AnimationPatch.Patch("CombatOverhaul");
-        
+
     }
 
     public override void StartClientSide(ICoreClientAPI api)

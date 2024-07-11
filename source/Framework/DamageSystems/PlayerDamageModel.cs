@@ -81,13 +81,25 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
 
         Console.WriteLine($"Hit zone: {damageZone}"); // @DEBUG
 
-        ApplyBlock(damageSource, damageZone, ref damage);
+        ApplyBlock(damageSource, damageZone, ref damage, out string blockDamageLogMessage);
+        PrintToDamageLog(blockDamageLogMessage);
 
-        ApplyArmorResists(damageSource, damageZone, ref damage);
+        ApplyArmorResists(damageSource, damageZone, ref damage, out string armorDamageLogMessage);
+        PrintToDamageLog(armorDamageLogMessage);
 
         damage *= multiplier;
 
+        if (damage != 0)
+        {
+            string damageLogMessage = Lang.Get("combatoverhaul:damagelog-received-damage", damage, Lang.Get($"combatoverhaul:damage-zone-{damageZone}"));
+            PrintToDamageLog(damageLogMessage);
+        }
+
         return damage;
+    }
+    private void PrintToDamageLog(string message)
+    {
+        if (message != "") ((entity as EntityPlayer)?.Player as IServerPlayer)?.SendMessage(GlobalConstants.DamageLogChatGroup, message, EnumChatType.Notification);
     }
 
     private (DamageZone zone, float multiplier) DetermineHitZone(DamageSource damageSource)
@@ -116,28 +128,47 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
 
         return (damageZone, multiplier);
     }
-    private void ApplyBlock(DamageSource damageSource, DamageZone zone, ref float damage)
+    private void ApplyBlock(DamageSource damageSource, DamageZone zone, ref float damage, out string damageLogMessage)
     {
+        damageLogMessage = "";
+
         if (CurrentDamageBlock == null) return;
-        if ((zone & CurrentDamageBlock.ZoneType) == 0) return;
+        
+        if ((zone & CurrentDamageBlock.ZoneType) == 0)
+        {
+            damageLogMessage = Lang.Get("combatoverhaul:damagelog-missed-block-zone", Lang.Get($"combatoverhaul:damage-zone-{zone}"));
+            return;
+        }
 
         if (damageSource is IDirectionalDamage directionalDamage)
         {
-            if (!CurrentDamageBlock.Directions.Check(directionalDamage.Direction)) return;
+            if (!CurrentDamageBlock.Directions.Check(directionalDamage.Direction))
+            {
+                damageLogMessage = Lang.Get("combatoverhaul:damagelog-missed-block-direction", directionalDamage.Direction);
+                return;
+            }
         }
         else if (damageSource.SourceEntity != null)
         {
             DirectionOffset offset = DirectionOffset.GetDirection(entity, damageSource.SourceEntity);
 
-            if (!CurrentDamageBlock.Directions.Check(offset)) return;
+            if (!CurrentDamageBlock.Directions.Check(offset))
+            {
+                damageLogMessage = Lang.Get("combatoverhaul:damagelog-missed-block-direction", offset);
+                return;
+            }
         }
 
         damage = 0;
 
+        damageLogMessage = Lang.Get("combatoverhaul:damagelog-success-block", Lang.Get($"combatoverhaul:damage-zone-{zone}"));
+
         CurrentDamageBlock.Callback.Invoke();
     }
-    private void ApplyArmorResists(DamageSource damageSource, DamageZone zone, ref float damage)
+    private void ApplyArmorResists(DamageSource damageSource, DamageZone zone, ref float damage, out string damageLogMessage)
     {
+        damageLogMessage = "";
+
         if ((entity as EntityPlayer)?.Player.InventoryManager.GetOwnInventory(GlobalConstants.characterInvClassName) is not ArmorInventory inventory) return;
 
         if (zone == DamageZone.None) return;
@@ -147,6 +178,8 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
         DamageData data = new(damageSource.Type, damageSource.DamageTier);
         foreach (ArmorSlot slot in slots)
         {
+            float previousDamage = damage;
+            
             if (damageSource is ITypedDamage typedDamage)
             {
                 data = slot.Resists.ApplyResist(typedDamage.DamageTypeData, ref damage);
@@ -159,6 +192,17 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
 
             slot.Itemstack.Item.DamageItem(entity.Api.World, entity, slot);
             slot.MarkDirty();
+
+            if (previousDamage != damage)
+            {
+                string armorPieceName = slot.Itemstack.Item.GetHeldItemName(slot.Itemstack) ?? string.Empty;
+                if (damageLogMessage != "")
+                {
+                    damageLogMessage += "\n";
+                }
+
+                damageLogMessage += Lang.Get("combatoverhaul:damagelog-armor-damage-negation", armorPieceName, previousDamage - damage, Lang.Get($"combatoverhaul:damage-zone-{zone}"));
+            }
 
             if (data.Strength <= 0) break;
         }

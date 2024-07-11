@@ -63,10 +63,30 @@ public readonly struct DirectionOffset
     }
     public DirectionOffset(Vec3f direction, Vec3f reference)
     {
+        
+        // (x1 * z2 - x2 * z1) / sqrt( (x2^2 + z2^2) * (x1^2 + z1^2) )
         float yawSin = (reference.Z * direction.X - reference.X * direction.Z) / MathF.Sqrt((reference.X * reference.X + reference.Z * reference.Z) * (direction.X * direction.X + direction.Z * direction.Z));
         float pitchSin = (reference.Z * direction.Y - reference.Y * direction.Z) / MathF.Sqrt((reference.Y * reference.Y + reference.Z * reference.Z) * (direction.Y * direction.Y + direction.Z * direction.Z));
+
+        float yawCos = (reference.Z * direction.X - reference.X * direction.Z) / MathF.Sqrt((reference.X * reference.X + reference.Z * reference.Z) * (direction.X * direction.X + direction.Z * direction.Z));
+        float pitchCos = (reference.Z * direction.Y - reference.Y * direction.Z) / MathF.Sqrt((reference.Y * reference.Y + reference.Z * reference.Z) * (direction.Y * direction.Y + direction.Z * direction.Z));
+
         Yaw = Angle.FromRadians(MathF.Asin(yawSin));
         Pitch = Angle.FromRadians(MathF.Asin(pitchSin));
+    }
+    public DirectionOffset(Vec3f direction)
+    {
+        float yawSin = direction.X / MathF.Sqrt(direction.X * direction.X + direction.Z * direction.Z);
+        float pitchSin = direction.Y / MathF.Sqrt(direction.X * direction.X + direction.Y * direction.Y + direction.Z * direction.Z);
+
+        float yawCos = direction.Z / MathF.Sqrt(direction.X * direction.X + direction.Z * direction.Z);
+
+        Angle yawSinAngle = Angle.FromRadians(MathF.Asin(yawSin));
+        Angle pitchSinAngle = Angle.FromRadians(MathF.Asin(pitchSin));
+        Angle yawCosAngle = Angle.FromRadians(MathF.Acos(yawCos));
+
+        Yaw = yawCosAngle * Math.Sign(yawSinAngle.Degrees);
+        Pitch = pitchSinAngle;
     }
     public DirectionOffset(Angle pitch, Angle yaw)
     {
@@ -196,11 +216,22 @@ public readonly struct DirectionOffset
 
     public static DirectionOffset GetDirection(Entity receiver, Entity source)
     {
-        Vec3f sourceEyesPosition = source.ServerPos.XYZFloat.Add(0, (float)source.LocalEyePos.Y, 0);
-        Vec3f attackDirection = sourceEyesPosition - receiver.LocalEyePos.ToVec3f();
+        Vec3f sourceEyesPosition = source.SidedPos.XYZFloat.Add(0, (float)source.LocalEyePos.Y, 0);
+        Vec3f receiverEyesPosition = receiver.SidedPos.XYZFloat.Add(0, (float)receiver.LocalEyePos.Y, 0);
+        Vec3f attackDirection = sourceEyesPosition - receiverEyesPosition;
+        Vec3f playerViewDirection = EntityPos.GetViewVector(receiver.SidedPos.Pitch, receiver.SidedPos.Yaw);
+        playerViewDirection.Y = 0;
+        Vec3f direction = ToReferenceFrame(playerViewDirection, attackDirection);
+        return new(direction);
+    }
+    public static DirectionOffset GetDirectionWithRespectToCamera(Entity receiver, Entity source)
+    {
+        Vec3f sourceEyesPosition = source.SidedPos.XYZFloat.Add(0, (float)source.LocalEyePos.Y, 0);
+        Vec3f receiverEyesPosition = receiver.SidedPos.XYZFloat.Add(0, (float)receiver.LocalEyePos.Y, 0);
+        Vec3f attackDirection = sourceEyesPosition - receiverEyesPosition;
         Vec3f playerViewDirection = EntityPos.GetViewVector(receiver.SidedPos.Pitch, receiver.SidedPos.Yaw);
         Vec3f direction = ToReferenceFrame(playerViewDirection, attackDirection);
-        return new(direction, new Vec3f(0, 0, 1));
+        return new(direction);
     }
 }
 

@@ -8,5 +8,21 @@
   "armor-inventory-dialog-arms": "Arms:",
   "armor-inventory-dialog-hands": "Hands:",
   "armor-inventory-dialog-legs": "Legs:",
-  "armor-inventory-dialog-feet": "Feet:"
+  "armor-inventory-dialog-feet": "Feet:",
+
+  "damage-zone-None": "None",
+  "damage-zone-Head": "Head",
+  "damage-zone-Face": "Face",
+  "damage-zone-Neck": "Neck",
+  "damage-zone-Torso": "Torso",
+  "damage-zone-Arms": "Arms",
+  "damage-zone-Hands": "Hands",
+  "damage-zone-Legs": "Legs",
+  "damage-zone-Feet": "Feet",
+
+  "damagelog-missed-block-zone": "Player tried blocking, but {0} was not protected by block",
+  "damagelog-missed-block-direction": "Player tried blocking, but directon ({0}) of incomming attack was not covered by block",
+  "damagelog-success-block": "Player successfully blocked damage to {0}",
+  "damagelog-armor-damage-negation": "Armor piece \"{0}\" negated {1} amount of damage to {2}",
+  "damagelog-received-damage": "Player receives {0} damage to {1}"
 }
