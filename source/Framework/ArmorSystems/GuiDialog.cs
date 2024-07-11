@@ -1,68 +1,57 @@
 ﻿using Cairo;
-using CombatOverhaul.Armor;
 using CombatOverhaul.DamageSystems;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
+using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
 using Vintagestory.Client.NoObf;
 
-namespace CombatOverhaul.GUI;
+namespace CombatOverhaul.Armor;
 
-public class GuiDialogArmorSlots : GuiDialog
+public sealed class GuiDialogArmorInventory : GuiDialog
 {
-    private bool recompose;
-    private GuiComposer composer;
-    private GuiDialogCharacter characterDialog;
-
-    public const string DialogName = "combatoverhaul:armorslotsdialog";
-    public readonly string DialogTitle = Lang.Get("combatoverhaul:armorslotsdialog-title");
-
-    public override string ToggleKeyCombinationCode => null;
-
-    public GuiDialogArmorSlots(ICoreClientAPI capi) : base(capi)
+    public GuiDialogArmorInventory(ICoreClientAPI api) : base(api)
     {
-        //capi.Event.RegisterGameTickListener(Every500ms, 500); // REMOVE AFTER GUI IS DONE
-        foreach (GuiDialogCharacter characterDialog in capi.Gui.LoadedGuis.Where(x => x is GuiDialogCharacter).Select(x => x as GuiDialogCharacter))
+        foreach (GuiDialogCharacter characterDialog in api.Gui.LoadedGuis.OfType<GuiDialogCharacter>())
         {
-            characterDialog.OnOpened += () => GuiDialogCharacter_OnOpened(characterDialog);
-            characterDialog.OnClosed += () => GuiDialogCharacter_OnClose(characterDialog);
+            characterDialog.OnOpened += OnOpenedEvent;
+            characterDialog.OnClosed += OnClosedEvent;
+            _characterDialog = characterDialog;
         }
+
+        _dummyInventory = new(api, ArmorInventory._totalSlotsNumber);
     }
 
-    //private void Every500ms(float dt) // REMOVE AFTER GUI IS DONE
-    //{
-    //    if (characterDialog == null || !characterDialog.IsOpened())
-    //    {
-    //        return;
-    //    }
-    //    ComposeDialog();
-    //}
+    public const string DialogName = "CombatOverhaul:armor-inventory-dialog";
+    public readonly string DialogTitle = Lang.Get("combatoverhaul:armor-inventory-dialog-title");
 
-    private void GuiDialogCharacter_OnOpened(GuiDialogCharacter characterDialog)
+    public override string? ToggleKeyCombinationCode => null;
+
+
+    private readonly RealDummyInventory _dummyInventory;
+    private bool _inventoryLinked = false;
+    private GuiComposer? _composer;
+    private readonly GuiDialogCharacter? _characterDialog;
+
+    private void OnOpenedEvent()
     {
-        this.characterDialog = characterDialog;
         TryOpen();
         ComposeDialog();
     }
-
-    private void GuiDialogCharacter_OnClose(GuiDialogCharacter characterDialog)
+    private void OnClosedEvent()
     {
         TryClose();
-        composer?.Dispose();
+        _composer?.Dispose();
     }
-
-    private bool _inventoryLinked = false;
-
-
 
     private void ComposeDialog()
     {
-        if (characterDialog == null)
+        if (_characterDialog == null)
         {
             return;
         }
 
-        GuiComposer playerStatsCompo = characterDialog.Composers["playerstats"];
+        GuiComposer playerStatsCompo = _characterDialog.Composers["playerstats"];
         if (playerStatsCompo is null) { return; }
 
         double gap = GuiElement.scaled(GuiElementItemSlotGridBase.unscaledSlotPadding);
@@ -100,21 +89,21 @@ public class GuiDialogArmorSlots : GuiDialog
             .WithFixedHeight(placeholderBounds.fixedHeight)
             .WithFixedWidth(placeholderBounds.fixedWidth);
 
-        composer = Composers[DialogName] = capi.Gui.CreateCompo(DialogName, mainBounds);
-        composer.AddShadedDialogBG(backgroundBounds, true);
-        composer.AddDialogTitleBar(DialogTitle, () => TryClose());
-        composer.BeginChildElements(childBounds);
-        composer.AddDynamicText("", textFont, textBounds, "textHead");
-        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: textGap), "textFace");
-        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: textGap), "textNeck");
-        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: textGap), "textTorso");
-        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: textGap), "textArms");
-        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: textGap), "textHands");
-        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: textGap), "textLegs");
-        composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: textGap), "textFeet");
-        composer.AddStaticCustomDraw(slot0Bounds, OnDrawOuterIcon);
-        composer.AddStaticCustomDraw(slot1Bounds, OnDrawMiddleIcon);
-        composer.AddStaticCustomDraw(slot2Bounds, OnDrawSkinIcon);
+        _composer = Composers[DialogName] = capi.Gui.CreateCompo(DialogName, mainBounds);
+        _composer.AddShadedDialogBG(backgroundBounds, true);
+        _composer.AddDialogTitleBar(DialogTitle, () => TryClose());
+        _composer.BeginChildElements(childBounds);
+        _composer.AddDynamicText("", textFont, textBounds, "textHead");
+        _composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: textGap), "textFace");
+        _composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: textGap), "textNeck");
+        _composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: textGap), "textTorso");
+        _composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: textGap), "textArms");
+        _composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: textGap), "textHands");
+        _composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: textGap), "textLegs");
+        _composer.AddDynamicText("", textFont, BelowCopySet(ref textBounds, fixedDeltaY: textGap), "textFeet");
+        _composer.AddStaticCustomDraw(slot0Bounds, OnDrawOuterIcon);
+        _composer.AddStaticCustomDraw(slot1Bounds, OnDrawMiddleIcon);
+        _composer.AddStaticCustomDraw(slot2Bounds, OnDrawSkinIcon);
 
         AddSlot(inv, ArmorLayers.Outer, DamageZone.Head, ref slot0Bounds, gap);
         AddSlot(inv, ArmorLayers.Outer, DamageZone.Face, ref slot0Bounds, gap);
@@ -143,46 +132,42 @@ public class GuiDialogArmorSlots : GuiDialog
         AddSlot(inv, ArmorLayers.Skin, DamageZone.Legs, ref slot2Bounds, gap);
         AddSlot(inv, ArmorLayers.Skin, DamageZone.Feet, ref slot2Bounds, gap);
 
-        composer.EndChildElements();
+        _composer.EndChildElements();
         try
         {
-            composer.Compose();
+            _composer.Compose();
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.ToString()); 
+            Console.WriteLine(ex.ToString());
             return;
         }
-        
 
-        composer.GetDynamicText("textHead")?.SetNewText(Lang.Get("combatoverhaul:Head"));
-        composer.GetDynamicText("textFace")?.SetNewText(Lang.Get("combatoverhaul:Face"));
-        composer.GetDynamicText("textNeck")?.SetNewText(Lang.Get("combatoverhaul:Neck"));
-        composer.GetDynamicText("textTorso")?.SetNewText(Lang.Get("combatoverhaul:Torso"));
-        composer.GetDynamicText("textArms")?.SetNewText(Lang.Get("combatoverhaul:Arms"));
-        composer.GetDynamicText("textHands")?.SetNewText(Lang.Get("combatoverhaul:Hands"));
-        composer.GetDynamicText("textLegs")?.SetNewText(Lang.Get("combatoverhaul:Legs"));
-        composer.GetDynamicText("textFeet")?.SetNewText(Lang.Get("combatoverhaul:Feet"));
+
+        _composer.GetDynamicText("textHead")?.SetNewText(Lang.Get("combatoverhaul:Head"));
+        _composer.GetDynamicText("textFace")?.SetNewText(Lang.Get("combatoverhaul:Face"));
+        _composer.GetDynamicText("textNeck")?.SetNewText(Lang.Get("combatoverhaul:Neck"));
+        _composer.GetDynamicText("textTorso")?.SetNewText(Lang.Get("combatoverhaul:Torso"));
+        _composer.GetDynamicText("textArms")?.SetNewText(Lang.Get("combatoverhaul:Arms"));
+        _composer.GetDynamicText("textHands")?.SetNewText(Lang.Get("combatoverhaul:Hands"));
+        _composer.GetDynamicText("textLegs")?.SetNewText(Lang.Get("combatoverhaul:Legs"));
+        _composer.GetDynamicText("textFeet")?.SetNewText(Lang.Get("combatoverhaul:Feet"));
     }
 
-    private RealDummyInventory? _dummyInventory;
-
-    public void AddSlot(ArmorInventory inv, ArmorLayers layers, DamageZone zone, ref ElementBounds bounds, double gap)
+    private void AddSlot(ArmorInventory inv, ArmorLayers layers, DamageZone zone, ref ElementBounds bounds, double gap)
     {
-        _dummyInventory ??= new(capi, ArmorInventory._totalSlotsNumber);
-        
         int slotIndex = ArmorInventory.IndexFromArmorType(layers, zone);
         bool available = inv.IsSlotAvailable(slotIndex) || !inv[slotIndex].Empty;
 
         if (available)
         {
-            composer.AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { slotIndex }, BelowCopySet(ref bounds, fixedDeltaY: gap));
+            _composer.AddItemSlotGrid(inv, SendInvPacket, 1, new int[] { slotIndex }, BelowCopySet(ref bounds, fixedDeltaY: gap));
         }
         else
         {
             _dummyInventory[slotIndex].HexBackgroundColor = "#AAAAAA";
             _dummyInventory[slotIndex].Itemstack = inv[inv.GetSlotBlockingSlotIndex(layers, zone)].Itemstack;
-            composer.AddItemSlotGrid(_dummyInventory, (_) => { }, 1, new int[] { slotIndex }, BelowCopySet(ref bounds, fixedDeltaY: gap));
+            _composer.AddItemSlotGrid(_dummyInventory, (_) => { }, 1, new int[] { slotIndex }, BelowCopySet(ref bounds, fixedDeltaY: gap));
         }
     }
 
@@ -192,14 +177,12 @@ public class GuiDialogArmorSlots : GuiDialog
         if (asset == null) return;
         capi.Gui.DrawSvg(asset, surface, (int)currentBounds.drawX, (int)currentBounds.drawY, (int)GuiElement.scaled(currentBounds.fixedWidth), (int)GuiElement.scaled(currentBounds.fixedHeight), null);
     }
-
     private void OnDrawMiddleIcon(Context ctx, ImageSurface surface, ElementBounds currentBounds)
     {
         IAsset asset = capi.Assets.TryGet(AssetLocation.Create("combatoverhaul:textures/icons/middle.svg"));
         if (asset == null) return;
         capi.Gui.DrawSvg(asset, surface, (int)currentBounds.drawX, (int)currentBounds.drawY, (int)GuiElement.scaled(currentBounds.fixedWidth), (int)GuiElement.scaled(currentBounds.fixedHeight), null);
     }
-
     private void OnDrawSkinIcon(Context ctx, ImageSurface surface, ElementBounds currentBounds)
     {
         IAsset asset = capi.Assets.TryGet(AssetLocation.Create("combatoverhaul:textures/icons/skin.svg"));
@@ -207,13 +190,38 @@ public class GuiDialogArmorSlots : GuiDialog
         capi.Gui.DrawSvg(asset, surface, (int)currentBounds.drawX, (int)currentBounds.drawY, (int)GuiElement.scaled(currentBounds.fixedWidth), (int)GuiElement.scaled(currentBounds.fixedHeight), null);
     }
 
-    protected void SendInvPacket(object packet)
+    private void SendInvPacket(object packet)
     {
         capi.Network.SendPacketClient(packet);
     }
-
-    public static ElementBounds BelowCopySet(ref ElementBounds bounds, double fixedDeltaX = 0.0, double fixedDeltaY = 0.0, double fixedDeltaWidth = 0.0, double fixedDeltaHeight = 0.0)
+    private static ElementBounds BelowCopySet(ref ElementBounds bounds, double fixedDeltaX = 0.0, double fixedDeltaY = 0.0, double fixedDeltaWidth = 0.0, double fixedDeltaHeight = 0.0)
     {
         return bounds = bounds.BelowCopy(fixedDeltaX, fixedDeltaY, fixedDeltaWidth, fixedDeltaHeight);
     }
+}
+
+public class RealDummyInventory : DummyInventory
+{
+    public RealDummyInventory(ICoreAPI api, int quantitySlots = 1) : base(api, quantitySlots)
+    {
+    }
+
+    public override bool CanContain(ItemSlot sinkSlot, ItemSlot sourceSlot) => false;
+    public override bool CanPlayerAccess(IPlayer player, EntityPos position) => false;
+    public override bool CanPlayerModify(IPlayer player, EntityPos position) => false;
+
+    protected override ItemSlot NewSlot(int i) => new RealDummySlot(this)
+    {
+        DrawUnavailable = false
+    };
+}
+
+public class RealDummySlot : ItemSlot
+{
+    public RealDummySlot(InventoryBase inventory) : base(inventory)
+    {
+    }
+
+    public override bool CanTake() => false;
+    public override bool CanHold(ItemSlot sourceSlot) => false;
 }
