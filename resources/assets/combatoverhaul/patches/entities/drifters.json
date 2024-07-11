@@ -1,0 +1,102 @@
+﻿[
+  {
+    "side": "Server",
+    "file": "game:entities/land/drifter",
+    "op": "add",
+    "path": "/client/behaviors/0",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*-double-headed": {
+          "Torso": ["Body", "Abdomen", "Kupris"],
+          "Head": ["Extra neck", "Extra head", "Neck 1", "Head 1", "Neck 2", "Head 2"],
+          "Arm": ["L shoulder", "L upper arm", "L lower arm", "R shoulder", "R upper arm", "R lower arm"],
+          "Leg": ["L thigh", "L feet", "R thigh", "R feet"],
+          "Critical": [],
+          "Resistant": []
+        },
+        "*": {
+          "Torso": ["Body", "Abdomen", "Kupris"],
+          "Head": ["Neck", "Head"],
+          "Arm": ["L shoulder", "L upper arm", "L lower arm", "R shoulder", "R upper arm", "R lower arm"],
+          "Leg": ["L thigh", "L feet", "R thigh", "R feet"],
+          "Critical": [],
+          "Resistant": []
+        }
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/drifter",
+    "op": "add",
+    "path": "/server/behaviors/0",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*-double-headed": {
+          "Torso": ["Body", "Abdomen", "Kupris"],
+          "Head": ["Extra neck", "Extra head", "Neck 1", "Head 1", "Neck 2", "Head 2"],
+          "Arm": ["L shoulder", "L upper arm", "L lower arm", "R shoulder", "R upper arm", "R lower arm"],
+          "Leg": ["L thigh", "L feet", "R thigh", "R feet"],
+          "Critical": [],
+          "Resistant": []
+        },
+        "*": {
+          "Torso": ["Body", "Abdomen", "Kupris"],
+          "Head": ["Neck", "Head"],
+          "Arm": ["L shoulder", "L upper arm", "L lower arm", "R shoulder", "R upper arm", "R lower arm"],
+          "Leg": ["L thigh", "L feet", "R thigh", "R feet"],
+          "Critical": [],
+          "Resistant": []
+        }
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/drifter",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.5,
+        "HeadDamageMultiplier": 1.25,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResistsByType": {
+          "*-normal": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0},
+          "*-deep": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 1},
+          "*-tainted": {"BluntAttack": 0, "SlashingAttack": 1, "PiercingAttack": 2},
+          "*-corrupt": {"BluntAttack": 1, "SlashingAttack": 2, "PiercingAttack": 3},
+          "*-nightmare": {"BluntAttack": 1, "SlashingAttack": 3, "PiercingAttack": 4},
+          "*-double-headed": {"BluntAttack": 1, "SlashingAttack": 5, "PiercingAttack": 5}
+        }
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/drifter",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.5,
+        "HeadDamageMultiplier": 1.25,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResistsByType": {
+          "*-normal": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0},
+          "*-deep": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 1},
+          "*-tainted": {"BluntAttack": 0, "SlashingAttack": 1, "PiercingAttack": 2},
+          "*-corrupt": {"BluntAttack": 1, "SlashingAttack": 2, "PiercingAttack": 3},
+          "*-nightmare": {"BluntAttack": 1, "SlashingAttack": 3, "PiercingAttack": 4},
+          "*-double-headed": {"BluntAttack": 1, "SlashingAttack": 5, "PiercingAttack": 5}
+        }
+      }
+    }
+  }
+]

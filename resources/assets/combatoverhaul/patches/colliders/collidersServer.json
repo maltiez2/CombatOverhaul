@@ -1,37 +1,6 @@
 ﻿[
   {
     "side": "Server",
-    "file": "game:entities/land/drifter",
-    "op": "add",
-    "path": "/server/behaviors/0",
-    "value": {
-      "code": "CombatOverhaul:EntityColliders",
-      "colliderShapeElementsByType": {
-        "*-double-headed": [
-          "Body",
-          "Kupris",
-          "Neck 1",
-          "Head 1",
-          "Neck 2",
-          "Head 2",
-          "Extra neck",
-          "Extra head",
-          "Abdomen",
-          "L thigh",
-          "R thigh",
-          "L shoulder",
-          "R shoulder",
-          "L lower arm",
-          "R lower arm",
-          "L feet",
-          "R feet"
-        ],
-        "*": ["Head", "Body", "Kupris", "Neck", "Abdomen", "L thigh", "R thigh", "L shoulder", "R shoulder", "L lower arm", "R lower arm", "L feet", "R feet"]
-      }
-    }
-  },
-  {
-    "side": "Server",
     "file": "game:entities/land/bell",
     "op": "add",
     "path": "/server/behaviors/0",
@@ -384,17 +353,6 @@
     "op": "add",
     "path": "/server/behaviors/0",
     "value": {"code": "CombatOverhaul:EntityColliders", "colliderShapeElements": ["Body", "head", "mouth", "R front foot", "L front foot", "R back foot", "L back foot"]}
-  },
-  {
-    "side": "Server",
-    "file": "game:entities/land/strawdummy",
-    "op": "add",
-    "path": "/server/behaviors/0",
-    "value": {
-      "code": "CombatOverhaul:EntityColliders",
-      "colliderShapeElements": ["body", "upper body", "hands", "Head"],
-      "elementsTypes": {"Torso": ["upper body", "body"], "Head": ["Head"], "Arm": ["hands"], "Leg": [], "Critical": []}
-    }
   },
   {
     "side": "Server",

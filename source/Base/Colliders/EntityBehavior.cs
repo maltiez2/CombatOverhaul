@@ -76,38 +76,39 @@ public sealed class CollidersEntityBehavior : EntityBehavior
 
     public override void Initialize(EntityProperties properties, JsonObject attributes)
     {
-        if (attributes.KeyExists("colliderShapeElements"))
+        if (attributes.KeyExists("elements"))
         {
-            HasOBBCollider = true;
-            ShapeElementsToProcess = new(attributes["colliderShapeElements"].AsArray(Array.Empty<string>()));
-            UnprocessedElementsLeft = true;
-        }
-
-        if (attributes.KeyExists("elementsTypes"))
-        {
-            ColliderTypesJson types = attributes["elementsTypes"].AsObject<ColliderTypesJson>();
+            ColliderTypesJson types = attributes["elements"].AsObject<ColliderTypesJson>();
             foreach (string collider in types.Torso)
             {
                 CollidersTypes.Add(collider, ColliderTypes.Torso);
+                ShapeElementsToProcess.Add(collider);
             }
             foreach (string collider in types.Head)
             {
                 CollidersTypes.Add(collider, ColliderTypes.Head);
+                ShapeElementsToProcess.Add(collider);
             }
             foreach (string collider in types.Arm)
             {
                 CollidersTypes.Add(collider, ColliderTypes.Arm);
+                ShapeElementsToProcess.Add(collider);
             }
             foreach (string collider in types.Leg)
             {
                 CollidersTypes.Add(collider, ColliderTypes.Leg);
+                ShapeElementsToProcess.Add(collider);
             }
             foreach (string collider in types.Critical)
             {
                 CollidersTypes.Add(collider, ColliderTypes.Critical);
+                ShapeElementsToProcess.Add(collider);
             }
-        }
 
+            UnprocessedElementsLeft = true;
+            HasOBBCollider = true;
+        }
+        
         foreach (string element in ShapeElementsToProcess)
         {
             CollidersIds.Add(element);

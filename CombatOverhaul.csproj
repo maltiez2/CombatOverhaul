@@ -78,9 +78,6 @@
     <PackageReference Include="VSImGui" Version="0.0.6" />
     <Reference Include="$(GameDirectory)/**/*.dll" Private="false" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="resources\assets\combatoverhaul\patches\weapons\" />
-  </ItemGroup>
 
   <!-- Forces rebuild -->
   <Target Name="ForceRebuild" BeforeTargets="BeforeBuild">

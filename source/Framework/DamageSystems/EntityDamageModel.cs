@@ -1,8 +1,11 @@
 ﻿using CombatOverhaul.Colliders;
 using System.Collections.Immutable;
+using System.Text;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
+using Vintagestory.API.Config;
 using Vintagestory.API.Datastructures;
+using Vintagestory.API.Server;
 using Vintagestory.GameContent;
 
 namespace CombatOverhaul.DamageSystems;
@@ -58,15 +61,32 @@ public sealed class EntityDamageModelBehavior : EntityBehavior
             }.ToImmutableDictionary();
         }
     }
+    public override void GetInfoText(StringBuilder infotext)
+    {
+        if (!Resists.Resists.Values.Any(x => x > 0)) return;
 
+        infotext.AppendLine(Lang.Get($"combatoverhaul:damage-protection-info"));
+        foreach ((EnumDamageType type, float value) in Resists.Resists)
+        {
+            if (value <= 0) continue;
+
+            string damageType = Lang.Get($"combatoverhaul:damage-type-{type}");
+            infotext.AppendLine($"  {damageType}: {value}");
+        }
+    }
     public override void AfterInitialized(bool onFirstSpawn)
     {
         _colliders = entity.GetBehavior<CollidersEntityBehavior>();
-        entity.GetBehavior<EntityBehaviorHealth>().onDamaged += OnReceiveDamage;
+        EntityBehaviorHealth? healthBehavior = entity.GetBehavior<EntityBehaviorHealth>();
+        if (healthBehavior != null) healthBehavior.onDamaged += OnReceiveDamage;
     }
 
     private CollidersEntityBehavior? _colliders;
 
+    private void PrintToDamageLog(string message, DamageSource damageSource)
+    {
+        if (message != "") ((damageSource.CauseEntity as EntityPlayer)?.Player as IServerPlayer)?.SendMessage(GlobalConstants.DamageLogChatGroup, message, EnumChatType.Notification);
+    }
     private float OnReceiveDamage(float damage, DamageSource damageSource)
     {
         if (_colliders != null && damageSource is ILocationalDamage locationalDamageSource)

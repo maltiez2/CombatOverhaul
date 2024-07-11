@@ -20,6 +20,23 @@
   "damage-zone-Legs": "Legs",
   "damage-zone-Feet": "Feet",
 
+  "damage-type-Gravity": "Gravity",
+  "damage-type-Fire": "Fire",
+  "damage-type-BluntAttack": "Blunt",
+  "damage-type-SlashingAttack": "Slashing",
+  "damage-type-PiercingAttack": "Piercing",
+  "damage-type-Suffocation": "Suffocation",
+  "damage-type-Heal": "Heal",
+  "damage-type-Poison": "Poison",
+  "damage-type-Hunger": "Hunger",
+  "damage-type-Crushing": "Crushing",
+  "damage-type-Frost": "Frost",
+  "damage-type-Electricity": "Electricity",
+  "damage-type-Heat": "Heat",
+  "damage-type-Injury": "Injury",
+
+  "damage-protection-info": "Protection levels:",
+
   "damagelog-missed-block-zone": "Player tried blocking, but {0} was not protected by block",
   "damagelog-missed-block-direction": "Player tried blocking, but directon ({0}) of incomming attack was not covered by block",
   "damagelog-success-block": "Player successfully blocked damage to {0}",
