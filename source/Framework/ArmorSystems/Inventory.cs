@@ -111,7 +111,6 @@ public sealed class ArmorInventory : InventoryCharacter
     public override ItemSlot this[int slotId] { get => _slots[slotId]; set => LoggerUtil.Warn(Api, this, "Armor slots cannot be set"); }
 
     public override int Count => _totalSlotsNumber;
-    public Dictionary<DamageZone, DamageResistData> Resists { get; private set; } = new();
 
     public override void FromTreeAttributes(ITreeAttribute tree)
     {
@@ -141,8 +140,6 @@ public sealed class ArmorInventory : InventoryCharacter
                 _slots[index].MaxSlotStackSize = 0;
             }
         }
-
-        RecalculateResists();
     }
     public override void ToTreeAttributes(ITreeAttribute tree)
     {
@@ -163,14 +160,6 @@ public sealed class ArmorInventory : InventoryCharacter
     public override void OnItemSlotModified(ItemSlot slot)
     {
         base.OnItemSlotModified(slot);
-
-        RecalculateResists();
-
-        PlayerDamageModelBehavior? behavior = Player.Entity.GetBehavior<PlayerDamageModelBehavior>();
-        if (behavior != null)
-        {
-            behavior.Resists = Resists;
-        }
 
         _onSlotModified?.Invoke();
     }
@@ -202,6 +191,21 @@ public sealed class ArmorInventory : InventoryCharacter
     }
     public bool CanHoldArmorPiece(IArmor armor) => CanHoldArmorPiece(armor.ArmorType);
     public bool CanHoldArmorPiece(ArmorLayers layer, DamageZone zone) => CanHoldArmorPiece(new ArmorType(layer, zone));
+
+    public IEnumerable<ArmorSlot> GetNotEmptyZoneSlots(DamageZone zone)
+    {
+        List<ArmorSlot> slots = new();
+
+        ArmorSlot? outer = GetSlotForArmorType(ArmorLayers.Outer, zone);
+        ArmorSlot? middle = GetSlotForArmorType(ArmorLayers.Middle, zone);
+        ArmorSlot? skin = GetSlotForArmorType(ArmorLayers.Skin, zone);
+
+        if (outer != null && !outer.Empty) slots.Add(outer);
+        if (middle != null && !middle.Empty && middle != outer) slots.Add(middle);
+        if (skin != null && !skin.Empty && skin != outer && skin != middle) slots.Add(skin);
+
+        return slots;
+    }
 
     private ItemSlot[] _slots;
     private readonly Dictionary<ArmorType, ArmorSlot> _slotsByType = new();
@@ -368,14 +372,16 @@ public sealed class ArmorInventory : InventoryCharacter
         };
     }
 
-
-    private void RecalculateResists()
+    private ArmorSlot? GetSlotForArmorType(ArmorLayers layer, DamageZone zone)
     {
-        foreach (DamageZone zone in Enum.GetValues<DamageZone>())
+        ArmorType skinSlotType = GetSlotBlockingSlot(layer, zone);
+        if (skinSlotType.Slots != DamageZone.None && skinSlotType.Layers != ArmorLayers.None)
         {
-            DamageResistData resist = DamageResistData.Combine(_slotsByType.Where(entry => (entry.Key.Slots & zone) != 0).Select(entry => entry.Value.Resists));
-            Resists[zone] = resist;
+            return _slotsByType[GetSlotBlockingSlot(layer, zone)];
+        }
+        else
+        {
+            return null;
         }
     }
-    private ArmorType CalculateOccupiedSlots() => ArmorType.Combine(_slotsByType.Values.Select(x => x.StoredArmoredType));
 }

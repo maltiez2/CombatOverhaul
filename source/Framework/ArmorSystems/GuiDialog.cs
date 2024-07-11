@@ -144,14 +144,14 @@ public sealed class GuiDialogArmorInventory : GuiDialog
         }
 
 
-        _composer.GetDynamicText("textHead")?.SetNewText(Lang.Get("combatoverhaul:Head"));
-        _composer.GetDynamicText("textFace")?.SetNewText(Lang.Get("combatoverhaul:Face"));
-        _composer.GetDynamicText("textNeck")?.SetNewText(Lang.Get("combatoverhaul:Neck"));
-        _composer.GetDynamicText("textTorso")?.SetNewText(Lang.Get("combatoverhaul:Torso"));
-        _composer.GetDynamicText("textArms")?.SetNewText(Lang.Get("combatoverhaul:Arms"));
-        _composer.GetDynamicText("textHands")?.SetNewText(Lang.Get("combatoverhaul:Hands"));
-        _composer.GetDynamicText("textLegs")?.SetNewText(Lang.Get("combatoverhaul:Legs"));
-        _composer.GetDynamicText("textFeet")?.SetNewText(Lang.Get("combatoverhaul:Feet"));
+        _composer.GetDynamicText("textHead")?.SetNewText(Lang.Get("combatoverhaul:armor-inventory-dialog-head"));
+        _composer.GetDynamicText("textFace")?.SetNewText(Lang.Get("combatoverhaul:armor-inventory-dialog-face"));
+        _composer.GetDynamicText("textNeck")?.SetNewText(Lang.Get("combatoverhaul:armor-inventory-dialog-neck"));
+        _composer.GetDynamicText("textTorso")?.SetNewText(Lang.Get("combatoverhaul:armor-inventory-dialog-torso"));
+        _composer.GetDynamicText("textArms")?.SetNewText(Lang.Get("combatoverhaul:armor-inventory-dialog-arms"));
+        _composer.GetDynamicText("textHands")?.SetNewText(Lang.Get("combatoverhaul:armor-inventory-dialog-hands"));
+        _composer.GetDynamicText("textLegs")?.SetNewText(Lang.Get("combatoverhaul:armor-inventory-dialog-legs"));
+        _composer.GetDynamicText("textFeet")?.SetNewText(Lang.Get("combatoverhaul:armor-inventory-dialog-feet"));
     }
 
     private void AddSlot(ArmorInventory inv, ArmorLayers layers, DamageZone zone, ref ElementBounds bounds, double gap)

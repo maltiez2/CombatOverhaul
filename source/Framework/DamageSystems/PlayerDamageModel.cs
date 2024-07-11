@@ -1,4 +1,5 @@
-﻿using CombatOverhaul.Colliders;
+﻿using CombatOverhaul.Armor;
+using CombatOverhaul.Colliders;
 using CombatOverhaul.MeleeSystems;
 using CombatOverhaul.Utils;
 using ProtoBuf;
@@ -6,9 +7,11 @@ using System.Collections.Immutable;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
+using Vintagestory.API.Config;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
+using Vintagestory.Common;
 using Vintagestory.GameContent;
 
 namespace CombatOverhaul.DamageSystems;
@@ -36,7 +39,6 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
     public override string PropertyName() => "PlayerDamageModel";
 
     public PlayerDamageModel DamageModel { get; private set; } = new(Array.Empty<DamageZoneStatsJson>());
-    public Dictionary<DamageZone, DamageResistData> Resists { get; set; } = new();
     public readonly ImmutableDictionary<string, DamageZone> CollidersToZones = new Dictionary<string, DamageZone>()
     {
         { "LowerTorso", DamageZone.Torso },
@@ -136,16 +138,29 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
     }
     private void ApplyArmorResists(DamageSource damageSource, DamageZone zone, ref float damage)
     {
-        if (!Resists.ContainsKey(zone)) return;
-        
-        if (damageSource is ITypedDamage typedDamage)
+        if ((entity as EntityPlayer)?.Player.InventoryManager.GetOwnInventory(GlobalConstants.characterInvClassName) is not ArmorInventory inventory) return;
+
+        if (zone == DamageZone.None) return;
+
+        IEnumerable<ArmorSlot> slots = inventory.GetNotEmptyZoneSlots(zone);
+
+        DamageData data = new(damageSource.Type, damageSource.DamageTier);
+        foreach (ArmorSlot slot in slots)
         {
-            typedDamage.DamageTypeData = Resists[zone].ApplyResist(typedDamage.DamageTypeData, ref damage);
-        }
-        else
-        {
-            DamageData data = new(damageSource.Type, damageSource.DamageTier);
-            _ = Resists[zone].ApplyResist(data, ref damage);
+            if (damageSource is ITypedDamage typedDamage)
+            {
+                data = slot.Resists.ApplyResist(typedDamage.DamageTypeData, ref damage);
+                typedDamage.DamageTypeData = data;
+            }
+            else
+            {
+                data = slot.Resists.ApplyResist(data, ref damage);
+            }
+
+            slot.Itemstack.Item.DamageItem(entity.Api.World, entity, slot);
+            slot.MarkDirty();
+
+            if (data.Strength <= 0) break;
         }
     }
 }
