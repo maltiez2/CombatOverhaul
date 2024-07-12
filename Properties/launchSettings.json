@@ -11,18 +11,6 @@
       "executablePath": "dotnet",
       "commandLineArgs": "\"$(VINTAGE_STORY)/VintagestoryServer.dll\" --tracelog --dataPath \"$(DataFolder)\" --addModPath \"$(AditionalModsFolder)\" \"$(ModDir)\" \"-o\" \"$(WorldName)\"",
       "workingDirectory": "$(VINTAGE_STORY)"
-    },
-    "Client-Dana": {
-      "commandName": "Executable",
-      "executablePath": "dotnet",
-      "commandLineArgs": "\"$(VINTAGE_STORY)/Vintagestory.dll\" --tracelog --addModPath \"$(ModDir)\" \"-o\" \"$(WorldName)\"",
-      "workingDirectory": "$(VINTAGE_STORY)"
-    },
-    "Server-Dana": {
-      "commandName": "Executable",
-      "executablePath": "dotnet",
-      "commandLineArgs": "\"$(VINTAGE_STORY)/VintagestoryServer.dll\" --tracelog --addModPath \"$(ModDir)\" \"-o\" \"$(WorldName)\"",
-      "workingDirectory": "$(VINTAGE_STORY)"
     }
   }
 }

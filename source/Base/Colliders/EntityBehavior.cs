@@ -137,7 +137,7 @@ public sealed class CollidersEntityBehavior : EntityBehavior
         IShaderProgram? currentShader = api.Render.CurrentActiveShader;
         currentShader?.Stop();
 
-        foreach (ShapeElementCollider collider in Colliders.Values)
+        foreach ((int id, ShapeElementCollider collider) in Colliders)
         {
             if (!collider.HasRenderer)
             {
@@ -145,7 +145,7 @@ public sealed class CollidersEntityBehavior : EntityBehavior
                 collider.HasRenderer = true;
             }
 
-            if (RenderColliders) collider.Render(api, entityPlayer, color);
+            if (RenderColliders) collider.Render(api, entityPlayer, _colliderColors[CollidersTypes[CollidersIds[id]]]);
         }
 
         currentShader?.Use();
@@ -217,6 +217,16 @@ public sealed class CollidersEntityBehavior : EntityBehavior
     }
 
     public ColliderTypes GetColliderType(int colliderId) => CollidersTypes[CollidersIds[colliderId]];
+
+    private readonly Dictionary<ColliderTypes, int> _colliderColors = new()
+    {
+        { ColliderTypes.Torso, ColorUtil.WhiteArgb },
+        { ColliderTypes.Head, ColorUtil.ColorFromRgba(255, 0, 0, 255 ) }, // Red
+        { ColliderTypes.Arm, ColorUtil.ColorFromRgba(0, 255, 0, 255 ) }, // Green
+        { ColliderTypes.Leg, ColorUtil.ColorFromRgba(0, 0, 255, 255 ) }, // Blue
+        { ColliderTypes.Critical, ColorUtil.ColorFromRgba(255, 255, 0, 255 ) }, // Yellow
+        { ColliderTypes.Resistant, ColorUtil.ColorFromRgba(255, 0, 255, 255 ) } // Magenta
+    };
 
     private void RecalculateColliders(ProceduralClientAnimator animator, ICoreClientAPI clientApi)
     {

@@ -98,5 +98,63 @@
         }
       }
     }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/drifter",
+    "op": "replace",
+    "path": "/server/behaviors/9/aitasks/2",
+    "value": {
+      "code": "meleeattack",
+      "entityCodes": ["player"],
+      "priority": 2,
+      "damageByType": {"*-normal": 2, "*-deep": 4, "*-tainted": 8, "*-corrupt": 12, "*-nightmare": 20, "*-double-headed": 24},
+      "damageTierByType": {"*-normal": 1, "*-deep": 2, "*-tainted": 3, "*-corrupt": 4, "*-nightmare": 5, "*-double-headed": 6},
+      "damageTypeByType": {
+        "*-normal": "BluntAttack",
+        "*-deep": "BluntAttack",
+        "*-tainted": "PiercingAttack",
+        "*-corrupt": "PiercingAttack",
+        "*-nightmare": "PiercingAttack",
+        "*-double-headed": "PiercingAttack"
+      },
+      "mincooldown": 500,
+      "maxcooldown": 1750,
+      "damagePlayerAtMs": 800,
+      "attackDurationMs": 2000,
+      "animation": "standattackslash",
+      "animationSpeed": 1.5,
+      "sound": "creature/drifter-hit",
+      "soundStartMs": 800
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/drifter",
+    "op": "add",
+    "path": "/server/behaviors/9/aitasks/-",
+    "value": {
+      "code": "meleeattack",
+      "entityCodes": ["player"],
+      "priority": 2,
+      "damageByType": {"*-normal": 2, "*-deep": 4, "*-tainted": 8, "*-corrupt": 12, "*-nightmare": 20, "*-double-headed": 24},
+      "damageTierByType": {"*-normal": 1, "*-deep": 2, "*-tainted": 3, "*-corrupt": 4, "*-nightmare": 5, "*-double-headed": 6},
+      "damageTypeByType": {
+        "*-normal": "BluntAttack",
+        "*-deep": "BluntAttack",
+        "*-tainted": "PiercingAttack",
+        "*-corrupt": "BluntAttack",
+        "*-nightmare": "BluntAttack",
+        "*-double-headed": "BluntAttack"
+      },
+      "mincooldown": 500,
+      "maxcooldown": 1750,
+      "damagePlayerAtMs": 800,
+      "attackDurationMs": 2000,
+      "animationByType": {"*-tainted": "standattackslash", "*": "standattackpunch"},
+      "animationSpeed": 1.5,
+      "sound": "creature/drifter-hit",
+      "soundStartMs": 800
+    }
   }
 ]
