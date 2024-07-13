@@ -20,6 +20,11 @@
   "damage-zone-Legs": "Legs",
   "damage-zone-Feet": "Feet",
 
+  "armor-layer-None": "None",
+  "armor-layer-Skin": "Skin",
+  "armor-layer-Middle": "Middle",
+  "armor-layer-Outer": "Outer",
+
   "damage-type-Gravity": "Gravity",
   "damage-type-Fire": "Fire",
   "damage-type-BluntAttack": "Blunt",
@@ -36,6 +41,10 @@
   "damage-type-Injury": "Injury",
 
   "damage-protection-info": "Protection levels:",
+  "armor-layers-info": "Layers: {0}",
+  "armor-zones-info": "Body parts: {0}",
+  "armor-fraction-protection": "Protection levels:",
+  "armor-flat-protection": "Flat damage reduction:",
 
   "damagelog-missed-block-zone": "Player tried blocking, but {0} was not protected by block",
   "damagelog-missed-block-direction": "Player tried blocking, but directon ({0}) of incomming attack was not covered by block",

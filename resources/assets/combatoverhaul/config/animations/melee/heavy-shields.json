@@ -1,0 +1,86 @@
+﻿{
+  "shield-heavy-ready": {
+    "Hold": true,
+    "PlayerKeyFrames": [
+      {
+        "EasingTime": 300,
+        "EasingFunction": "Sin",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {"ItemAnchorL": [0, 0, 0, 0, 0, 0], "LowerArmL": [0, 0, 0, 0, 0, 0], "UpperArmL": [0, 0, 0, -5, 0, 0]}
+      }
+    ],
+    "ItemKeyFrames": [],
+    "SoundFrames": [],
+    "ParticlesFrames": [],
+    "CallbackFrames": [],
+    "ItemAnimationStart": 0,
+    "ItemAnimationEnd": 0
+  },
+  "shield-heavy-block": {
+    "Hold": true,
+    "PlayerKeyFrames": [
+      {
+        "EasingTime": 300,
+        "EasingFunction": "Sin",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 0.651,
+        "Elements": {"ItemAnchorL": [0, 2, 0, 20, -40, 40], "LowerArmL": [0, 0, 0, 0, 0, -15], "UpperArmL": [0, 0, 0, 7, -44, -20]}
+      }
+    ],
+    "ItemKeyFrames": [],
+    "SoundFrames": [],
+    "ParticlesFrames": [],
+    "CallbackFrames": [],
+    "ItemAnimationStart": 0,
+    "ItemAnimationEnd": 0
+  },
+  "shield-heavy-block-aspis": {
+    "Hold": true,
+    "PlayerKeyFrames": [
+      {
+        "EasingTime": 300,
+        "EasingFunction": "Sin",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 0.651,
+        "Elements": {"ItemAnchorL": [0, 0, 0, 0, 0, 0], "LowerArmL": [0, 0, 0, 38, -43, 3], "UpperArmL": [0, 0, 0, 3, -27, -41]}
+      }
+    ],
+    "ItemKeyFrames": [],
+    "SoundFrames": [],
+    "ParticlesFrames": [],
+    "CallbackFrames": [],
+    "ItemAnimationStart": 0,
+    "ItemAnimationEnd": 0
+  },
+  "shield-heavy-block-kite": {
+    "Hold": true,
+    "PlayerKeyFrames": [
+      {
+        "EasingTime": 300,
+        "EasingFunction": "Sin",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 0.651,
+        "Elements": {"ItemAnchorL": [0, 0, 0, 0, 0, 0], "LowerArmL": [0, 0, 0, 86, -50, -2], "UpperArmL": [0, 0, 0, -4, 21, -37], "UpperTorso": [0, 0, 0, 0, 0, 0]}
+      }
+    ],
+    "ItemKeyFrames": [],
+    "SoundFrames": [],
+    "ParticlesFrames": [],
+    "CallbackFrames": [],
+    "ItemAnimationStart": 0,
+    "ItemAnimationEnd": 0
+  }
+}

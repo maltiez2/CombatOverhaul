@@ -1,0 +1,28 @@
+﻿{
+  "code": "spear",
+  "class": "Spears:SpearItem",
+  "behaviors": [
+    {
+      "name": "GroundStorable",
+      "properties": {
+        "layout": "WallHalves",
+        "wallOffY": 3,
+        "sprintKey": true,
+        "selectionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.1, "z2": 1},
+        "collisionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 0, "y2": 0, "z2": 0}
+      }
+    }
+  ],
+  "variantgroups": [{"code": "type", "states": ["plain"]}, {"code": "material", "states": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "steel"]}],
+  "tool": "spear",
+  "shape": {"base": "weapons/spears/spear-{material}-{type}"},
+  "attributes": {
+    "groundStorageTransform": {"translation": {"x": 0.5, "y": 2, "z": 0.41}, "rotation": {"x": 12, "y": 0, "z": 90}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
+    "damageByType": {"*-copper": 2, "*-tinbronze": 3, "*-bismuthbronze": 3, "*-blackbronze": 3, "*-iron": 3, "*-steel": 4}
+  },
+  "durabilitybytype": {"*-copper": 300, "*-tinbronze": 600, "*-bismuthbronze": 400, "*-blackbronze": 500, "*-iron": 400, "*-steel": 1250},
+  "creativeinventory": {"combatoverhaul": ["*"]},
+  "guiTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 39, "y": 0, "z": -130}, "origin": {"x": 1, "y": 0.1, "z": 0.3}, "scale": 2},
+  "groundTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 4},
+  "tpHandTransform": {"translation": {"x": -2.5, "y": 0.05, "z": 0.5}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8}
+}

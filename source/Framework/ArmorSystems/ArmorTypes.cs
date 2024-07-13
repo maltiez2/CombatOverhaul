@@ -1,11 +1,9 @@
 ﻿using CombatOverhaul.DamageSystems;
 using CombatOverhaul.Utils;
-using HarmonyLib;
 using System.Text;
 using Vintagestory.API.Common;
+using Vintagestory.API.Config;
 using Vintagestory.API.Datastructures;
-using Vintagestory.Common;
-using static OpenTK.Graphics.OpenGL.GL;
 
 namespace CombatOverhaul.Armor;
 
@@ -48,7 +46,7 @@ public readonly struct ArmorType
 
     public static ArmorType Combine(ArmorType first, ArmorType second) => new(first.Layers | second.Layers, first.Slots | second.Slots);
     public static ArmorType Combine(IEnumerable<ArmorType> armorTypes) => armorTypes.Aggregate(Combine);
-    public static ArmorType Empty => new ArmorType(ArmorLayers.None, DamageZone.None);
+    public static ArmorType Empty => new(ArmorLayers.None, DamageZone.None);
 
     public override string ToString()
     {
@@ -59,6 +57,17 @@ public readonly struct ArmorType
         string slots = slotsValue == DamageZone.None ? "None" : Enum.GetValues<DamageZone>().Where(value => (value & slotsValue) != 0).Select(value => value.ToString()).Aggregate((first, second) => $"{first}, {second}");
 
         return $"({layers}|{slots})";
+    }
+
+    public string LayersToTranslatedString()
+    {
+        ArmorLayers layersValue = Layers;
+        return layersValue == ArmorLayers.None ? Lang.Get("combatoverhaul:armor-layer-None") : Enum.GetValues<ArmorLayers>().Where(value => (value & layersValue) != 0).Select(value => Lang.Get($"combatoverhaul:armor-layer-{value}")).Aggregate((first, second) => $"{first}, {second}");
+    }
+    public string ZonesToTranslatedString()
+    {
+        DamageZone slotsValue = Slots;
+        return slotsValue == DamageZone.None ? Lang.Get("combatoverhaul:damage-zone-None") : Enum.GetValues<DamageZone>().Where(value => (value & slotsValue) != 0).Select(value => Lang.Get($"combatoverhaul:damage-zone-{value}")).Aggregate((first, second) => $"{first}, {second}");
     }
 }
 
@@ -73,6 +82,7 @@ public sealed class ArmorStatsJson
     public string[] Layers { get; set; } = Array.Empty<string>();
     public string[] Zones { get; set; } = Array.Empty<string>();
     public Dictionary<string, float> Resists { get; set; } = new();
+    public Dictionary<string, float> FlatReduction { get; set; } = new();
 }
 
 public class ArmorBehavior : CollectibleBehavior, IArmor
@@ -82,32 +92,49 @@ public class ArmorBehavior : CollectibleBehavior, IArmor
     }
 
     public ArmorType ArmorType { get; protected set; } = new(ArmorLayers.None, DamageZone.None);
-    public DamageResistData Resists { get; protected set; } = new(new Dictionary<EnumDamageType, float>());
+    public DamageResistData Resists { get; protected set; } = new();
 
     public override void Initialize(JsonObject properties)
     {
         base.Initialize(properties);
-        
+
         ArmorStatsJson stats = properties.AsObject<ArmorStatsJson>();
 
-        if (!stats.Layers.Any() || !stats.Zones.Any() || !stats.Resists.Any())
+        if (!stats.Layers.Any() || !stats.Zones.Any())
         {
             return;
         }
 
         ArmorType = new(stats.Layers.Select(Enum.Parse<ArmorLayers>).Aggregate((first, second) => first | second), stats.Zones.Select(Enum.Parse<DamageZone>).Aggregate((first, second) => first | second));
-        Resists = new(stats.Resists.ToDictionary(entry => Enum.Parse<EnumDamageType>(entry.Key), entry => entry.Value));
+        Resists = new(
+            stats.Resists.ToDictionary(entry => Enum.Parse<EnumDamageType>(entry.Key), entry => entry.Value),
+            stats.FlatReduction.ToDictionary(entry => Enum.Parse<EnumDamageType>(entry.Key), entry => entry.Value));
     }
 
     public override void GetHeldItemInfo(ItemSlot inSlot, StringBuilder dsc, IWorldAccessor world, bool withDebugInfo)
     {
+        dsc.AppendLine(Lang.Get("combatoverhaul:armor-layers-info", ArmorType.LayersToTranslatedString()));
+        dsc.AppendLine(Lang.Get("combatoverhaul:armor-zones-info", ArmorType.ZonesToTranslatedString()));
+        dsc.AppendLine(Lang.Get("combatoverhaul:armor-fraction-protection"));
+        foreach ((EnumDamageType type, float level) in Resists.Resists)
+        {
+            string damageType = Lang.Get($"combatoverhaul:damage-type-{type}");
+            dsc.AppendLine($"  {damageType}: {level}");
+        }
+        dsc.AppendLine(Lang.Get("combatoverhaul:armor-flat-protection"));
+        foreach ((EnumDamageType type, float level) in Resists.FlatDamageReduction)
+        {
+            string damageType = Lang.Get($"combatoverhaul:damage-type-{type}");
+            dsc.AppendLine($"  {damageType}: {level}");
+        }
+        dsc.AppendLine();
     }
 }
 
 public class ArmorItem : Item, IArmor
 {
     public ArmorType ArmorType { get; protected set; } = new(ArmorLayers.None, DamageZone.None);
-    public DamageResistData Resists { get; protected set; } = new(new Dictionary<EnumDamageType, float>());
+    public DamageResistData Resists { get; protected set; } = new();
 
     public override void OnLoaded(ICoreAPI api)
     {
@@ -122,6 +149,8 @@ public class ArmorItem : Item, IArmor
         ArmorStatsJson stats = Attributes["stats"].AsObject<ArmorStatsJson>();
 
         ArmorType = new(stats.Layers.Select(Enum.Parse<ArmorLayers>).Aggregate((first, second) => first | second), stats.Layers.Select(Enum.Parse<DamageZone>).Aggregate((first, second) => first | second));
-        Resists = new(stats.Resists.ToDictionary(entry => Enum.Parse<EnumDamageType>(entry.Key), entry => entry.Value));
+        Resists = new(
+            stats.Resists.ToDictionary(entry => Enum.Parse<EnumDamageType>(entry.Key), entry => entry.Value),
+            stats.FlatReduction.ToDictionary(entry => Enum.Parse<EnumDamageType>(entry.Key), entry => entry.Value));
     }
 }

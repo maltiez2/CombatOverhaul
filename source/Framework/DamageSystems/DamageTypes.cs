@@ -64,25 +64,62 @@ public class DirectionalTypedDamageSource : DamageSource, ILocationalDamage, ITy
 public readonly struct DamageResistData
 {
     public readonly ImmutableDictionary<EnumDamageType, float> Resists;
+    public readonly ImmutableDictionary<EnumDamageType, float> FlatDamageReduction;
 
+    public DamageResistData(Dictionary<EnumDamageType, float> resists, Dictionary<EnumDamageType, float> flatDamageReduction)
+    {
+        Resists = resists.ToImmutableDictionary();
+        FlatDamageReduction = flatDamageReduction.ToImmutableDictionary();
+    }
     public DamageResistData(Dictionary<EnumDamageType, float> resists)
     {
         Resists = resists.ToImmutableDictionary();
+        FlatDamageReduction = (new Dictionary<EnumDamageType, float>()).ToImmutableDictionary();
     }
     public DamageResistData()
     {
         Resists = (new Dictionary<EnumDamageType, float>()).ToImmutableDictionary();
+        FlatDamageReduction = (new Dictionary<EnumDamageType, float>()).ToImmutableDictionary();
     }
 
     public static DamageResistData Empty => new();
 
     public DamageData ApplyResist(DamageData damageData, ref float damage)
     {
-        if (!Resists.TryGetValue(damageData.DamageType, out float value)) return damageData;
+        float protectionLevel = 0;
+        if (Resists.TryGetValue(damageData.DamageType, out float value))
+        {
+            protectionLevel = value;
+            damage *= DamageMultiplier(protectionLevel, damageData);
+        }
 
-        float protectionLevel = value;
+        if (FlatDamageReduction.TryGetValue(damageData.DamageType, out float flatReduction))
+        {
+            damage = Math.Clamp(damage - flatReduction, 0, damage);
+        } 
 
-        damage *= DamageMultiplier(protectionLevel, damageData);
+        return new(
+            damageType: damageData.DamageType,
+            strength: damageData.Strength - protectionLevel
+            );
+    }
+    public DamageData ApplyResist(DamageData damageData, ref float damage, out int durabilityDamage)
+    {
+        float protectionLevel = 0;
+        float initialDamage = damage;
+        
+        if (Resists.TryGetValue(damageData.DamageType, out float value))
+        {
+            protectionLevel = value;
+            damage *= DamageMultiplier(protectionLevel, damageData);
+        }
+
+        if (FlatDamageReduction.TryGetValue(damageData.DamageType, out float flatReduction))
+        {
+            damage = Math.Clamp(damage - flatReduction, 0, damage);
+        }
+
+        durabilityDamage = (int)Math.Clamp(initialDamage - flatReduction, 0, initialDamage);
 
         return new(
             damageType: damageData.DamageType,
@@ -107,6 +144,8 @@ public readonly struct DamageResistData
         return new(combinedResists);
     }
 
+    private const float _damageReductionPower = 2;
+    private const float _damageReductionThreshold = 0.05f;
 
     private static float DamageMultiplier(float protectionLevel, DamageData damageData)
     {
@@ -114,9 +153,9 @@ public readonly struct DamageResistData
         {
             EnumDamageType.Gravity => Percentage(protectionLevel, damageData.Strength),
             EnumDamageType.Fire => Percentage(protectionLevel, damageData.Strength),
-            EnumDamageType.BluntAttack => PenetrationPercentage(protectionLevel, damageData.Strength, 2),
-            EnumDamageType.SlashingAttack => PenetrationPercentage(protectionLevel, damageData.Strength, 2),
-            EnumDamageType.PiercingAttack => PenetrationPercentage(protectionLevel, damageData.Strength, 2),
+            EnumDamageType.BluntAttack => PenetrationPercentage(protectionLevel, damageData.Strength, _damageReductionPower, _damageReductionThreshold),
+            EnumDamageType.SlashingAttack => PenetrationPercentage(protectionLevel, damageData.Strength, _damageReductionPower, _damageReductionThreshold),
+            EnumDamageType.PiercingAttack => PenetrationPercentage(protectionLevel, damageData.Strength, _damageReductionPower, _damageReductionThreshold),
             EnumDamageType.Suffocation => Percentage(protectionLevel, damageData.Strength),
             EnumDamageType.Heal => 1 + damageData.Strength + protectionLevel,
             EnumDamageType.Poison => Percentage(protectionLevel, damageData.Strength),
@@ -132,10 +171,12 @@ public readonly struct DamageResistData
 
     private static float Percentage(float protection, float strength) => Math.Clamp(1 + strength - protection, 0, 1);
     private static float PenetrationCheck(float protection, float strength) => protection > strength ? 0 : 1;
-    private static float PenetrationPercentage(float protection, float strength, float power)
+    private static float PenetrationPercentage(float protection, float strength, float power, float threshold)
     {
         if (protection == 0 || protection <= strength) return 1;
 
-        return Math.Clamp(MathF.Pow(strength / protection, power), 0, 1);
+        float multiplier = Math.Clamp(MathF.Pow(strength / protection, power), 0, 1);
+
+        return multiplier <= threshold ? 0 : multiplier;
     }
 }

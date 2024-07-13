@@ -212,12 +212,12 @@ public sealed class AnimationsManager
 
         ImGui.ListBox("Animations", ref _selectedAnimationIndex, Animations.Keys.ToArray(), Animations.Count);
 
-        if (ImGui.Button("Remove##animations"))
+        /*if (ImGui.Button("Remove##animations"))
         {
             Animations.Remove(Animations.Keys.ToArray()[_selectedAnimationIndex]);
             _selectedAnimationIndex--;
             if (_selectedAnimationIndex < 0) _selectedAnimationIndex = 0;
-        }
+        }*/
 
         codes = Animations.Keys.ToArray();
 

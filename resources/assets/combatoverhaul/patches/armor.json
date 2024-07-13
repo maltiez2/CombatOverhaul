@@ -10,17 +10,20 @@
           "*-head-*": {
             "LayersByType": {"*-sewn-*": ["Skin"], "*-tailored*": ["Skin"], "*-chain-*": ["Middle"], "*-scale-*": ["Outer", "Middle"], "*": ["Outer"]},
             "Zones": ["Head", "Face"],
-            "Resists": {"PiercingAttack": 1}
+            "Resists": {},
+            "FlatReduction": {}
           },
           "*-body-*": {
             "LayersByType": {"*-sewn-*": ["Skin"], "*-tailored*": ["Skin"], "*-chain-*": ["Middle"], "*-scale-*": ["Outer", "Middle"], "*": ["Outer"]},
             "Zones": ["Torso", "Arms", "Hands"],
-            "Resists": {"PiercingAttack": 1}
+            "Resists": {},
+            "FlatReduction": {}
           },
           "*-legs-*": {
             "LayersByType": {"*-sewn-*": ["Skin"], "*-tailored*": ["Skin"], "*-chain-*": ["Middle"], "*-scale-*": ["Outer", "Middle"], "*": ["Outer"]},
             "Zones": ["Legs", "Feet"],
-            "Resists": {"PiercingAttack": 1}
+            "Resists": {},
+            "FlatReduction": {}
           }
         }
       }

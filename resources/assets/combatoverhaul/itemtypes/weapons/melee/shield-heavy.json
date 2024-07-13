@@ -31,9 +31,9 @@
         "BlockSpeedPenalty": -0.15,
         "Block": {"Zones": ["Face", "Neck", "Torso", "Arms", "Hands", "Legs"], "Directions": [90, 90, 90, 90]},
         "BlockCooldownMs": 300,
-        "BlockAnimation": "combatoverhaul:shield-{handling}-{material}-parry",
-        "ReadyAnimation": "combatoverhaul:shield-{handling}-{material}-ready",
-        "IdleAnimation": "combatoverhaul:shield-{handling}-{material}-ready"
+        "BlockAnimation": "combatoverhaul:shield-{handling}-block-aspis",
+        "ReadyAnimation": "combatoverhaul:shield-{handling}-ready",
+        "IdleAnimation": "combatoverhaul:shield-{handling}-ready"
       },
       "@.*-(tinbronze|bismuthbronze|blackbronze)": {
         "CanAttack": false,
@@ -57,9 +57,9 @@
         "BlockSpeedPenalty": -0.15,
         "Block": {"Zones": ["Face", "Neck", "Torso", "Arms", "Hands", "Legs"], "Directions": [90, 90, 90, 90]},
         "BlockCooldownMs": 300,
-        "BlockAnimation": "combatoverhaul:shield-{handling}-{material}-parry",
-        "ReadyAnimation": "combatoverhaul:shield-{handling}-{material}-ready",
-        "IdleAnimation": "combatoverhaul:shield-{handling}-{material}-ready"
+        "BlockAnimation": "combatoverhaul:shield-{handling}-block-kite",
+        "ReadyAnimation": "combatoverhaul:shield-{handling}-ready",
+        "IdleAnimation": "combatoverhaul:shield-{handling}-ready"
       }
     }
   },

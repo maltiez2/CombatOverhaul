@@ -150,7 +150,7 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
         }
         else if (damageSource.SourceEntity != null)
         {
-            DirectionOffset offset = DirectionOffset.GetDirection(entity, damageSource.SourceEntity);
+            DirectionOffset offset = DirectionOffset.GetDirectionWithRespectToCamera(entity, damageSource.SourceEntity);
 
             if (!CurrentDamageBlock.Directions.Check(offset))
             {
@@ -179,19 +179,23 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
         foreach (ArmorSlot slot in slots)
         {
             float previousDamage = damage;
-            
+            int durabilityDamage = 0;
+
             if (damageSource is ITypedDamage typedDamage)
             {
-                data = slot.Resists.ApplyResist(typedDamage.DamageTypeData, ref damage);
+                data = slot.Resists.ApplyResist(typedDamage.DamageTypeData, ref damage, out durabilityDamage);
                 typedDamage.DamageTypeData = data;
             }
             else
             {
-                data = slot.Resists.ApplyResist(data, ref damage);
+                data = slot.Resists.ApplyResist(data, ref damage, out durabilityDamage);
             }
 
-            slot.Itemstack.Item.DamageItem(entity.Api.World, entity, slot);
-            slot.MarkDirty();
+            if (durabilityDamage > 0)
+            {
+                slot.Itemstack.Item.DamageItem(entity.Api.World, entity, slot, durabilityDamage);
+                slot.MarkDirty();
+            }
 
             if (previousDamage != damage)
             {
