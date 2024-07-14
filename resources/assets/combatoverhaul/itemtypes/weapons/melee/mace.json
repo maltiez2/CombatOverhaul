@@ -1,0 +1,61 @@
+﻿{
+  "code": "mace",
+  "class": "CombatOverhaul:MeleeWeapon",
+  "behaviors": [
+    {
+      "name": "GroundStorable",
+      "properties": {
+        "layout": "WallHalves",
+        "wallOffY": 2,
+        "sprintKey": true,
+        "selectionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.1, "z2": 1},
+        "collisionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 0, "y2": 0, "z2": 0}
+      }
+    }
+  ],
+  "variantgroups": [{"code": "type", "states": ["plain"]}, {"code": "material", "states": ["stone", "copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "steel"]}],
+  "textures": {"metal": {"base": "game:block/metal/plate/{material}"}},
+  "shapeByType": {
+    "*-stone": {"base": "weapons/blunt/mace-stone"},
+    "*-copper": {"base": "weapons/blunt/mace-copper"},
+    "*-tinbronze": {"base": "weapons/blunt/mace-bronze"},
+    "*-bismuthbronze": {"base": "weapons/blunt/mace-bronze"},
+    "*-blackbronze": {"base": "weapons/blunt/mace-bronze"},
+    "*-iron": {"base": "weapons/blunt/mace-iron"},
+    "*-steel": {"base": "weapons/blunt/warhammer-steel"}
+  },
+  "attributes": {
+    "groundStorageTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
+    "toolrackTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
+    "OneHandedStance": {
+      "CanAttack": true,
+      "CanParry": false,
+      "CanBlock": false,
+      "CanSprint": true,
+      "SpeedPenalty": 0,
+      "Attack": {
+        "StopOnTerrainHit": false,
+        "StopOnEntityHit": false,
+        "CollideWithTerrain": true,
+        "MaxReach": 6,
+        "DamageTypesByType": {
+          "*-copper": [{"Damage": {"DamageType": "BluntAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2, 0, 0.5]}],
+          "*-tinbronze": [{"Damage": {"DamageType": "BluntAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.1, 0, 0.5]}],
+          "*-bismuthbronze": [{"Damage": {"DamageType": "BluntAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.1, 0, 0.5]}],
+          "*-blackbronze": [{"Damage": {"DamageType": "BluntAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.1, 0, 0.5]}],
+          "*-iron": [{"Damage": {"DamageType": "BluntAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.5, 0, 0.5]}],
+          "*-steel": [{"Damage": {"DamageType": "BluntAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.6, 0, 0.5]}]
+        }
+      },
+      "AttackCooldownMs": 300,
+      "AttackAnimationByType": {"*": "combatoverhaul:sword-short-slash"},
+      "ReadyAnimation": "combatoverhaul:sword-short-ready",
+      "IdleAnimation": "combatoverhaul:sword-short-idle"
+    }
+  },
+  "durabilitybytype": {"*-stone": 32, "*-copper": 64, "*-tinbronze": 256, "*-bismuthbronze": 256, "*-blackbronze": 256, "*-iron": 512, "*-steel": 1024},
+  "creativeinventory": {"combatoverhaul": ["*"]},
+  "guiTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 40, "y": 0, "z": -52}, "origin": {"x": 1.7, "y": -0.3, "z": 0}, "scale": 2},
+  "groundTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 4},
+  "tpHandTransform": {"translation": {"x": 0.33, "y": 0.05, "z": 0.5}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.6}
+}

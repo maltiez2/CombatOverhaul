@@ -1,6 +1,6 @@
 ﻿{
   "code": "javelin",
-  "class": "Spears:JavelinItem",
+  "class": "CombatOverhaul:Javelin",
   "behaviors": [
     {
       "name": "GroundStorable",
@@ -11,6 +11,31 @@
         "selectionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.1, "z2": 1},
         "collisionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 0, "y2": 0, "z2": 0}
       }
+    },
+    {
+      "name": "CombatOverhaul:Projectile",
+      "properties": {
+        "stats": {
+          "AdditionalDurabilityCost": 0,
+          "CollisionRadius": 0.05,
+          "DamageStatsByType": {
+            "*-crude": {"DamageType": "PiercingAttack", "Damage": 3.5},
+            "*-flint": {"DamageType": "PiercingAttack", "Damage": 4},
+            "*-copper": {"DamageType": "PiercingAttack", "Damage": 4.5},
+            "*-tinbronze": {"DamageType": "PiercingAttack", "Damage": 5},
+            "*-bismuthbronze": {"DamageType": "PiercingAttack", "Damage": 5},
+            "*-blackbronze": {"DamageType": "PiercingAttack", "Damage": 5},
+            "*-iron": {"DamageType": "PiercingAttack", "Damage": 5.6},
+            "*-meteoriciron": {"DamageType": "PiercingAttack", "Damage": 5.6},
+            "*-steel": {"DamageType": "PiercingAttack", "Damage": 6}
+          },
+          "SpeedThreshold": 0.3,
+          "Knockback": 0.1,
+          "EntityCode": "combatoverhaul:javelin-{material}",
+          "DurabilityDamage": 1,
+          "DropChance": 1
+        }
+      }
     }
   ],
   "variantgroups": [{"code": "type", "states": ["plain"]}, {"code": "material", "states": ["flint", "copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "steel"]}],
@@ -18,11 +43,50 @@
   "shape": {"base": "weapons/spears/javelin-{material}-{type}"},
   "attributes": {
     "groundStorageTransform": {"translation": {"x": 0.5, "y": 1, "z": 0.44}, "rotation": {"x": 10, "y": 0, "z": 90}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
-    "damageByType": {"*-flint": 2, "*-copper": 3, "*-tinbronze": 4, "*-bismuthbronze": 4, "*-blackbronze": 4, "*-iron": 4, "*-steel": 5}
+    "damageByType": {"*-flint": 2, "*-copper": 3, "*-tinbronze": 4, "*-bismuthbronze": 4, "*-blackbronze": 4, "*-iron": 4, "*-steel": 5},
+    "ReadyAnimation": "combatoverhaul:javelin-ready",
+    "IdleAnimation": "combatoverhaul:javelin-idle",
+    "AttackAnimation": "combatoverhaul:javelin-attack",
+    "AimAnimation": "combatoverhaul:javelin-aim",
+    "ThrowAnimation": "combatoverhaul:javelin-throw",
+    "AttackCooldownMs": 500,
+    "Attack": {
+      "StopOnTerrainHit": false,
+      "StopOnEntityHit": false,
+      "CollideWithTerrain": true,
+      "MaxReach": 6,
+      "DamageTypesByType": {
+        "*-flint": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [-0.7, 0, 0.5, 1.3, 0, 0.5]}],
+        "*-copper": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [-0.7, 0, 0.5, 1.3, 0, 0.5]}],
+        "*-*bronze": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [-0.7, 0, 0.5, 1.3, 0, 0.5]}],
+        "*-iron": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [-0.7, 0, 0.5, 1.3, 0, 0.5]}],
+        "*-steel": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [-0.7, 0, 0.5, 1.3, 0, 0.5]}]
+      }
+    },
+    "Aiming": {
+      "AimDifficulty": 1,
+      "CursorType": "Fixed",
+      "AccuracyOvertimeSec": 0,
+      "ZeroingAngle": 1,
+      "CursorTextureReady": "combatoverhaul:gui/aiming/arrow-full.png",
+      "CursorTextureNotReady": "combatoverhaul:gui/aiming/arrow-part.png",
+      "AllowSprint": true,
+      "MoveSpeedPenalty": 0.1,
+      "AimDrift": 60,
+      "AimTwitch": 4,
+      "AnimationFollowX": 5.5,
+      "AnimationFollowY": 5.5,
+      "VerticalLimit": 0.25,
+      "VerticalOffset": -0.05
+    },
+    "DamageStrengthByType": {"*-flint": 1, "*-copper": 2, "*-*bronze": 3, "*-iron": 4, "*-steel": 5},
+    "Velocity": 0.5,
+    "Zeroing": 1.5,
+    "RenderingOffset": false
   },
   "durabilitybytype": {"*-flint": 64, "*-copper": 128, "*-tinbronze": 256, "*-bismuthbronze": 256, "*-blackbronze": 256, "*-iron": 512, "*-steel": 1024},
   "creativeinventory": {"combatoverhaul": ["*"]},
   "guiTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 39, "y": 0, "z": -130}, "origin": {"x": 1, "y": 0.1, "z": 0.3}, "scale": 2},
   "groundTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 4},
-  "tpHandTransform": {"translation": {"x": -1.5, "y": 0.05, "z": 0.5}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8}
+  "tpHandTransform": {"translation": {"x": -1, "y": 0.05, "z": 0.5}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8}
 }

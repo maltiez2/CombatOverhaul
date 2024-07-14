@@ -6,13 +6,6 @@ using Vintagestory.API.MathTools;
 
 namespace CombatOverhaul.Animations;
 
-public enum AnimationAnchor
-{
-    Default = 0,
-    Switched,
-    Detached
-}
-
 public enum TorsoAnimationType
 {
     None,
@@ -746,14 +739,14 @@ public readonly struct LeftHandFrame
 
 public readonly struct AnimationElement
 {
-    public readonly float OffsetX;
-    public readonly float OffsetY;
-    public readonly float OffsetZ;
-    public readonly float RotationX;
-    public readonly float RotationY;
-    public readonly float RotationZ;
+    public readonly float? OffsetX;
+    public readonly float? OffsetY;
+    public readonly float? OffsetZ;
+    public readonly float? RotationX;
+    public readonly float? RotationY;
+    public readonly float? RotationZ;
 
-    public AnimationElement(float[] values)
+    public AnimationElement(float?[] values)
     {
         OffsetX = values[0];
         OffsetY = values[1];
@@ -762,7 +755,7 @@ public readonly struct AnimationElement
         RotationY = values[4];
         RotationZ = values[5];
     }
-    public AnimationElement(float offsetX, float offsetY, float offsetZ, float rotationX, float rotationY, float rotationZ)
+    public AnimationElement(float? offsetX, float? offsetY, float? offsetZ, float? rotationX, float? rotationY, float? rotationZ)
     {
         OffsetX = offsetX;
         OffsetY = offsetY;
@@ -774,12 +767,12 @@ public readonly struct AnimationElement
 
     public void Apply(ElementPose pose)
     {
-        pose.translateX = OffsetX / 16;
-        pose.translateY = OffsetY / 16;
-        pose.translateZ = OffsetZ / 16;
-        pose.degX = RotationX;
-        pose.degY = RotationY;
-        pose.degZ = RotationZ;
+        pose.translateX = OffsetX / 16 ?? 0;
+        pose.translateY = OffsetY / 16 ?? 0;
+        pose.translateZ = OffsetZ / 16 ?? 0;
+        pose.degX = RotationX ?? 0;
+        pose.degY = RotationY ?? 0;
+        pose.degZ = RotationZ ?? 0;
     }
 
     public static readonly AnimationElement Zero = new(0, 0, 0, 0, 0, 0);
@@ -788,8 +781,10 @@ public readonly struct AnimationElement
     {
         float speed = ImGui.GetIO().KeysDown[(int)ImGuiKey.LeftShift] ? 0.1f : 1;
 
-        Vector3 translation = new Vector3(OffsetX, OffsetY, OffsetZ) * multiplier;
-        ImGui.DragFloat3($"Translation##{title}", ref translation, speed);
+        float? offsetX = EditValue(OffsetX, multiplier, speed, $"X##translation{title}"); ImGui.SameLine();
+        float? offsetY = EditValue(OffsetY, multiplier, speed, $"Y##translation{title}"); ImGui.SameLine();
+        float? offsetZ = EditValue(OffsetZ, multiplier, speed, $"Z##translation{title}"); ImGui.SameLine();
+        ImGui.Text("Translation"); ImGui.SameLine();
 
         ImGui.SameLine();
         if (ImGui.Button($"Copy##{title}"))
@@ -797,8 +792,10 @@ public readonly struct AnimationElement
             _buffer = this;
         }
 
-        Vector3 rotation = new(RotationX, RotationY, RotationZ);
-        ImGui.DragFloat3($"Rotation##{title}", ref rotation, speed);
+        float? rotationX = EditValue(RotationX, 1, speed, $"X##rotation{title}"); ImGui.SameLine();
+        float? rotationY = EditValue(RotationY, 1, speed, $"Y##rotation{title}"); ImGui.SameLine();
+        float? rotationZ = EditValue(RotationZ, 1, speed, $"Z##rotation{title}"); ImGui.SameLine();
+        ImGui.Text("Rotation     "); ImGui.SameLine();
 
         ImGui.SameLine();
         if (ImGui.Button($"Paste##{title}"))
@@ -807,17 +804,17 @@ public readonly struct AnimationElement
         }
 
         return new(
-            translation.X / multiplier,
-            translation.Y / multiplier,
-            translation.Z / multiplier,
-            rotation.X,
-            rotation.Y,
-            rotation.Z
+            offsetX,
+            offsetY,
+            offsetZ,
+            rotationX,
+            rotationY,
+            rotationZ
             );
     }
 
 
-    public float[] ToArray() => new float[]
+    public float?[] ToArray() => new float?[]
             {
                 OffsetX,
                 OffsetY,
@@ -851,12 +848,12 @@ public readonly struct AnimationElement
         foreach ((AnimationElement element, float weight) in elements.Where(entry => entry.weight > 0))
         {
             totalWeight += weight;
-            offsetX += element.OffsetX * weight;
-            offsetY += element.OffsetY * weight;
-            offsetZ += element.OffsetZ * weight;
-            rotationX += element.RotationX * weight;
-            rotationY += element.RotationY * weight;
-            rotationZ += element.RotationZ * weight;
+            offsetX += element.OffsetX * weight ?? 0;
+            offsetY += element.OffsetY * weight ?? 0;
+            offsetZ += element.OffsetZ * weight ?? 0;
+            rotationX += element.RotationX * weight ?? 0;
+            rotationY += element.RotationY * weight ?? 0;
+            rotationZ += element.RotationZ * weight ?? 0;
         }
 
         if (totalWeight != 0)
@@ -871,12 +868,12 @@ public readonly struct AnimationElement
 
         foreach ((AnimationElement element, _) in elements.Where(entry => entry.weight <= 0))
         {
-            offsetX += element.OffsetX;
-            offsetY += element.OffsetY;
-            offsetZ += element.OffsetZ;
-            rotationX += element.RotationX;
-            rotationY += element.RotationY;
-            rotationZ += element.RotationZ;
+            offsetX += element.OffsetX ?? 0;
+            offsetY += element.OffsetY ?? 0;
+            offsetZ += element.OffsetZ ?? 0;
+            rotationX += element.RotationX ?? 0;
+            rotationY += element.RotationY ?? 0;
+            rotationZ += element.RotationZ ?? 0;
         }
 
         return new(
@@ -898,6 +895,25 @@ public readonly struct AnimationElement
             (float?)frame.RotationY ?? 0,
             (float?)frame.RotationZ ?? 0);
     }
-
+    
+    private static float? EditValue(float? value, float multiplier, float speed, string title)
+    {
+        bool enabled = value != null;
+        if (enabled)
+        {
+            float valueValue = value.Value * multiplier;
+            ImGui.SetNextItemWidth(90);
+            ImGui.DragFloat($"##{title}value", ref valueValue, speed); ImGui.SameLine();
+            
+            ImGui.Checkbox($"##{title}checkbox", ref enabled);
+            value = enabled ? valueValue / multiplier : null;
+        }
+        else
+        {
+            ImGui.Checkbox($"{title}##checkbox", ref enabled);
+            value = enabled ? 0 : value;
+        }
+        return value;
+    }
     private static AnimationElement _buffer = AnimationElement.Zero;
 }

@@ -9,9 +9,9 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"iron": "block/metal/plate/iron",
-		"metal": "block/metal/plate/steel",
-		"handle": "block/wood/debarked/walnut"
+		"iron": "game:block/metal/plate/iron",
+		"metal": "game:block/metal/plate/steel",
+		"handle": "game:block/wood/debarked/walnut"
 	},
 	"elements": [
 		{
@@ -19,6 +19,7 @@
 			"from": [ 8.0, 0.0, 8.0 ],
 			"to": [ 8.0, 0.0, 8.0 ],
 			"rotationOrigin": [ 8.0, 0.0, 8.0 ],
+			"rotationX": -90.0,
 			"faces": {
 				"north": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
 				"east": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
@@ -182,9 +183,7 @@
 											"from": [ 0.0, 0.0, -0.5 ],
 											"to": [ 1.0, 1.2, 0.0 ],
 											"rotationOrigin": [ 1.0, 0.5, 0.0 ],
-											"rotationX": 0.0,
 											"rotationY": 30.0,
-											"rotationZ": 0.0,
 											"faces": {
 												"north": { "texture": "#metal", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
 												"east": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 1.0 ] },
@@ -217,9 +216,7 @@
 											"from": [ 0.0, 0.0, -0.5 ],
 											"to": [ 1.0, 1.2, 0.0 ],
 											"rotationOrigin": [ 1.0, 0.5, 0.0 ],
-											"rotationX": 0.0,
 											"rotationY": 30.0,
-											"rotationZ": 0.0,
 											"faces": {
 												"north": { "texture": "#metal", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
 												"east": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 1.0 ] },
@@ -252,9 +249,7 @@
 											"from": [ 0.0, 0.0, -0.5 ],
 											"to": [ 1.0, 1.2, 0.0 ],
 											"rotationOrigin": [ 1.0, 0.5, 0.0 ],
-											"rotationX": 0.0,
 											"rotationY": 30.0,
-											"rotationZ": 0.0,
 											"faces": {
 												"north": { "texture": "#metal", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
 												"east": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 1.0 ] },

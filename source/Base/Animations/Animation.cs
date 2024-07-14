@@ -528,7 +528,7 @@ public sealed class ItemKeyFrameJson
 {
     public float DurationFraction { get; set; }
     public string EasingFunction { get; set; } = "Linear";
-    public Dictionary<string, float[]> Elements { get; set; } = new();
+    public Dictionary<string, float?[]> Elements { get; set; } = new();
 
     public ItemKeyFrame ToKeyFrame()
     {
@@ -563,7 +563,7 @@ public sealed class PLayerKeyFrameJson
     public bool PitchFollow { get; set; } = false;
     public float FOVMultiplier { get; set; } = 1;
     public float BobbingAmplitude { get; set; } = 1;
-    public Dictionary<string, float[]> Elements { get; set; } = new();
+    public Dictionary<string, float?[]> Elements { get; set; } = new();
 
     public PLayerKeyFrame ToKeyFrame()
     {

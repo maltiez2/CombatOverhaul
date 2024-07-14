@@ -6,7 +6,6 @@ using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Config;
-using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
 using VSImGui.Debug;
@@ -161,7 +160,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
     protected readonly MeleeBlockSystemClient MeleeBlockSystem;
     protected FirstPersonAnimationsBehavior? AnimationBehavior;
     protected ActionsManagerPlayerBehavior? PlayerBehavior;
-    protected const int MaxStates = 100;
+    internal const int MaxStates = 100;
     protected readonly MeleeWeaponStats Stats;
 
     protected long MainHandAttackCooldownTimer = -1;
