@@ -8,6 +8,7 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Config;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
+using Vintagestory.GameContent;
 using VSImGui.Debug;
 
 namespace CombatOverhaul.Implementations;
@@ -42,6 +43,10 @@ public class StanceStats
     public bool CanSprint { get; set; } = true;
     public float SpeedPenalty { get; set; } = 0;
     public float BlockSpeedPenalty { get; set; } = 0;
+
+    public float GripLengthFactor { get; set; } = 0;
+    public float GripMinLength { get; set; } = 0;
+    public float GripMaxLength { get; set; } = 0;
 
     public MeleeAttackStats? Attack { get; set; }
     public DamageBlockJson? Block { get; set; }
@@ -133,11 +138,14 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
         StopBlockCooldown(true);
         StopAttackCooldown(false);
         StopBlockCooldown(false);
+        GripController?.ResetGrip(true);
+        GripController?.ResetGrip(false);
     }
     public virtual void OnRegistered(ActionsManagerPlayerBehavior behavior, ICoreClientAPI api)
     {
         PlayerBehavior = behavior;
         AnimationBehavior = behavior.entity.GetBehavior<FirstPersonAnimationsBehavior>();
+        GripController = new(AnimationBehavior);
     }
 
     public virtual void RenderDebugCollider(ItemSlot inSlot, IClientPlayer byPlayer)
@@ -151,6 +159,26 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
         }
     }
 
+    public virtual bool OnMouseWheel(ItemSlot slot, IClientPlayer byPlayer, float delta)
+    {
+        if (PlayerBehavior?._actionListener.IsActive(EnumEntityAction.RightMouseDown) == false) return false;
+
+        bool mainHand = byPlayer.Entity.RightHandItemSlot == slot;
+        StanceStats? stance = GetStanceStats(mainHand);
+        float canChangeGrip = stance?.GripLengthFactor ?? 0;
+
+        if (canChangeGrip != 0 && stance != null)
+        {
+            GripController?.ChangeGrip(delta, mainHand, canChangeGrip, stance.GripMinLength, stance.GripMaxLength);
+            return true;
+        }
+        else
+        {
+            GripController?.ResetGrip(mainHand);
+            return false;
+        }
+    }
+
     public bool CanAttack(bool mainHand = true) => GetStanceStats(mainHand)?.CanAttack ?? false;
     public bool CanBlock(bool mainHand = true) => GetStanceStats(mainHand)?.CanBlock ?? false;
     public bool CanParry(bool mainHand = true) => GetStanceStats(mainHand)?.CanParry ?? false;
@@ -160,6 +188,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
     protected readonly MeleeBlockSystemClient MeleeBlockSystem;
     protected FirstPersonAnimationsBehavior? AnimationBehavior;
     protected ActionsManagerPlayerBehavior? PlayerBehavior;
+    private GripController? GripController;
     internal const int MaxStates = 100;
     protected readonly MeleeWeaponStats Stats;
 
@@ -599,10 +628,9 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
                 });
         }
     }
-
 }
 
-public class MeleeWeapon : Item, IHasWeaponLogic, IHasDynamicIdleAnimations, IHasMeleeWeaponActions, IHasServerBlockCallback, ISetsRenderingOffset
+public class MeleeWeapon : Item, IHasWeaponLogic, IHasDynamicIdleAnimations, IHasMeleeWeaponActions, IHasServerBlockCallback, ISetsRenderingOffset, IMouseWheelInput
 {
     public MeleeWeaponClient? ClientLogic { get; private set; }
 
@@ -646,5 +674,57 @@ public class MeleeWeapon : Item, IHasWeaponLogic, IHasDynamicIdleAnimations, IHa
     public void BlockCallback(IServerPlayer player, ItemSlot slot, bool mainHand)
     {
         DamageItem(player.Entity.World, player.Entity, slot);
+    }
+
+    public bool OnMouseWheel(ItemSlot slot, IClientPlayer byPlayer, float delta) => ClientLogic?.OnMouseWheel(slot, byPlayer, delta) ?? false;
+}
+
+public interface IMouseWheelInput
+{
+    bool OnMouseWheel(ItemSlot slot, IClientPlayer byPlayer, float delta);
+}
+
+public sealed class GripController
+{
+    public GripController(FirstPersonAnimationsBehavior? animationBehavior)
+    {
+        _animationBehavior = animationBehavior;
+    }
+
+
+    public void ChangeGrip(float delta, bool mainHand, float gripFactor, float min, float max)
+    {
+        _grip = GameMath.Clamp(_grip + delta * gripFactor, min, max);
+
+        PlayAnimation(mainHand);
+
+    }
+    public void ResetGrip(bool mainHand)
+    {
+        _grip = 0;
+
+        PlayAnimation(mainHand);
+    }
+
+    private float _grip = 0;
+    private readonly Animations.Animation _gripAnimation = Animations.Animation.Zero;
+    private readonly FirstPersonAnimationsBehavior? _animationBehavior;
+
+    private PLayerKeyFrame GetAimingFrame()
+    {
+        AnimationElement element = new(_grip, null, null, null, null, null);
+        AnimationElement nullElement = new(null, null, null, null, null, null);
+
+        PlayerFrame frame = new(rightHand: new(element, nullElement, nullElement));
+
+        return new PLayerKeyFrame(frame, TimeSpan.Zero, EasingFunctionType.Linear);
+    }
+    private void PlayAnimation(bool mainHand)
+    {
+        _gripAnimation.PlayerKeyFrames[0] = GetAimingFrame();
+        _gripAnimation.Hold = true;
+
+        AnimationRequest request = new(_gripAnimation, 1.0f, 0, "grip", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true);
+        _animationBehavior?.Play(request, mainHand);
     }
 }

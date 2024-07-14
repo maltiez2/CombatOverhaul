@@ -85,6 +85,7 @@ public sealed class CombatOverhaulSystem : ModSystem
         api.Gui.RegisterDialog(new GuiDialogArmorInventory(api));
 
         AimingPatches.Patch("CombatOverhaulAiming");
+        MouseWheelPatch.Patch("CombatOverhaul", api);
     }
 
     public override void Dispose()
@@ -95,6 +96,7 @@ public sealed class CombatOverhaulSystem : ModSystem
         _clientApi?.Event.UnregisterRenderer(DirectionCursorRenderer, EnumRenderStage.Ortho);
 
         AimingPatches.Unpatch("CombatOverhaulAiming");
+        MouseWheelPatch.Unpatch("CombatOverhaul");
     }
 
     public ProjectileSystemClient? ClientProjectileSystem { get; private set; }

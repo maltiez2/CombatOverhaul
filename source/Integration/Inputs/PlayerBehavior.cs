@@ -98,7 +98,7 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
     private readonly HashSet<string> _currentMainHandPlayerStats = new();
     private readonly HashSet<string> _currentOffHandPlayerStats = new();
     private const string _statCategory = "melee-weapon-player-behavior";
-    private readonly ActionListener _actionListener;
+    internal readonly ActionListener _actionListener;
     private readonly DirectionController _directionController;
 
     private IClientWeaponLogic? _currentMainHandWeapon;
