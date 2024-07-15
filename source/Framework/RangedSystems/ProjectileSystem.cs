@@ -11,7 +11,7 @@ using Vintagestory.GameContent;
 
 namespace CombatOverhaul.RangedSystems;
 
-public struct ProjectileStats
+public class ProjectileStats
 {
     public int AdditionalDurabilityCost { get; set; } = 0;
     public AssetLocation ImpactSound { get; set; } = new("game:sounds/arrow-impact");
@@ -25,6 +25,20 @@ public struct ProjectileStats
     public float DropChance { get; set; } = 0;
 
     public ProjectileStats() { }
+}
+
+public class ExplosiveProjectileStack
+{
+    public AssetLocation ExplosionSound { get; set; } = new("game:sounds/effect/smallexplosion");
+    public float MaxRadius { get; set; } = 0;
+    public string DamageType { get; set; } = "BluntAttack";
+    public float DamageStrength { get; set; } = 0;
+    public float Damage { get; set; } = 0;
+    public string ParticlesEffect { get; set; } = "";
+    public float ParticlesIntensity { get; set; } = 1;
+    public float FuseTimeMs { get; set; } = 0;
+
+    public ExplosiveProjectileStack() { }
 }
 
 public struct ProjectileSpawnStats

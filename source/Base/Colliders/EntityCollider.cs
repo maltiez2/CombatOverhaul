@@ -175,7 +175,7 @@ public readonly struct CuboidAABBCollider
         return true;
     }
 
-    public bool Collide(Vector3 thisTickOrigin, Vector3 previousTickOrigin, float radius, out Vector3 intersection)
+    public bool CollideRough(Vector3 thisTickOrigin, Vector3 previousTickOrigin, float radius, out Vector3 intersection)
     {
         Vector3 origin = (thisTickOrigin + previousTickOrigin) / 2;
         float maxRadius = (thisTickOrigin - previousTickOrigin).Length() / 2f + radius;
@@ -189,6 +189,28 @@ public readonly struct CuboidAABBCollider
         float distanceSquared = Vector3.DistanceSquared(thisTickOrigin, intersection);
 
         return distanceSquared <= maxRadius * maxRadius;
+    }
+    public bool Collide(Vector3 thisTickOrigin, Vector3 previousTickOrigin, float radius, out Vector3 intersection)
+    {
+        intersection = new(
+            Math.Clamp(thisTickOrigin.X, Math.Min(VertexA.X, VertexB.X), Math.Max(VertexA.X, VertexB.X)),
+            Math.Clamp(thisTickOrigin.Y, Math.Min(VertexA.Y, VertexB.Y), Math.Max(VertexA.Y, VertexB.Y)),
+            Math.Clamp(thisTickOrigin.Z, Math.Min(VertexA.Z, VertexB.Z), Math.Max(VertexA.Z, VertexB.Z))
+        );
+
+        Vector3 origin = ClosestPointOnSegment(thisTickOrigin, previousTickOrigin, intersection);
+
+        float distanceSquared = Vector3.DistanceSquared(origin, intersection);
+
+        return distanceSquared <= radius * radius;
+    }
+
+    public static Vector3 ClosestPointOnSegment(Vector3 a, Vector3 b, Vector3 p)
+    {
+        Vector3 ab = b - a;
+        float t = Vector3.Dot(p - a, ab) / ab.LengthSquared();
+        t = Math.Clamp(t, 0.0f, 1.0f);
+        return a + ab * t;
     }
 }
 

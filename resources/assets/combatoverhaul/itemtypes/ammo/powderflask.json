@@ -16,7 +16,7 @@
   ],
   "attributes": {
     "groundStorageTransform": {"rotation": {"x": 0, "y": -28, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 0.5},
-    "attachedShape": "combatoverhaul:shapes/ammo/powderflask-small-opened.json"
+    "attachableShape": "combatoverhaul:shapes/firearms/powder/powderflask-opened"
   },
   "guiTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 163, "y": 56, "z": 0}, "origin": {"x": -0.1, "y": 0.1, "z": 0.8}, "scale": 2.19},
   "fpHandTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0.3, "y": 0.9, "z": 0.8}, "scale": 1.8},

@@ -300,7 +300,7 @@ public sealed class BowServer : RangeWeaponServer
             Velocity = Vector3.Normalize(new Vector3(packet.Velocity[0], packet.Velocity[1], packet.Velocity[2])) * _stats.ArrowVelocity
         };
 
-        _projectileSystem.Spawn(packet.ProjectileId, stats.Value, spawnStats, arrowSlot.TakeOut(1), shooter);
+        _projectileSystem.Spawn(packet.ProjectileId, stats, spawnStats, arrowSlot.TakeOut(1), shooter);
 
         arrowSlot.MarkDirty();
         return true;

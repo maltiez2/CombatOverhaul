@@ -193,8 +193,7 @@ public sealed class CollidersEntityBehavior : EntityBehavior
         if (!HasOBBCollider)
         {
             CuboidAABBCollider AABBCollider = new(entity.CollisionBox);
-            AABBCollider.Collide(thisTickOrigin, previousTickOrigin, radius, out intersection);
-            return true;
+            return AABBCollider.Collide(thisTickOrigin, previousTickOrigin, radius, out intersection);
         }
 
         if (!BoundingBox.Collide(thisTickOrigin, previousTickOrigin, radius, out intersection))

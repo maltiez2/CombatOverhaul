@@ -1,4 +1,5 @@
-﻿using Vintagestory.API.Client;
+﻿using CombatOverhaul.Utils;
+using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.MathTools;
@@ -103,8 +104,16 @@ public sealed class Attachment : IDisposable
             _shape = AnimatableShape.Create(api, attachment.Attributes.GetAsString("attachableShape"), attachment.Item);
             _disposeShape = true;
         }
-        else if (attachment.Item.Attributes.KeyExists("attachableShape"))
+        else if (attachment.Item?.Attributes?.KeyExists("attachableShape") == true)
         {
+            string shapePath = attachment.Item.Attributes["attachableShape"].AsString();
+
+            if (!_api.Assets.Exists(new(shapePath + ".json")))
+            {
+                LoggerUtil.Warn(_api, this, $"Shape was not found: {shapePath}");
+                return;
+            }
+
             _shape = AnimatableShape.Create(api, attachment.Item.Attributes["attachableShape"].AsString(), attachment.Item);
             _disposeShape = true;
         }
@@ -126,7 +135,7 @@ public sealed class Attachment : IDisposable
         AttachmentPointAndPose? attachmentPointAndPose = parentShape.GetAnimator(entity.EntityId)?.GetAttachmentPointPose(_attachmentPointCode);
         if (attachmentPointAndPose == null)
         {
-            _api.Logger.VerboseDebug($"[Animation Manager lib] [Attachment] [Render()] Attachment point '{_attachmentPointCode}' not found");
+            LoggerUtil.Warn(_api, this, $"Attachment point '{_attachmentPointCode}' not found");
             return;
         }
         AttachmentPoint attachmentPoint = attachmentPointAndPose.AttachPoint;

@@ -8,7 +8,7 @@
     "renderer": "Shape",
     "shape": {"base": "weapons/spears/javelin-{material}-plain"},
     "texturesByType": {"*-crude": {}, "*-flint": {"material": {"base": "game:block/stone/flint"}}, "*": {"material": {"base": "game:block/metal/ingot/{material}"}}},
-    "behaviors": [{"code": "passivephysics", "groundDragFactor": 1, "airDragFactor": 0.25, "gravityFactor": 0.75}, {"code": "interpolateposition"}]
+    "behaviors": [{"code": "passivephysics", "groundDragFactor": 1, "airDragFactor": 1, "gravityFactor": 1}, {"code": "interpolateposition"}]
   },
   "server": {"behaviors": [{"code": "passivephysics", "groundDragFactor": 1, "airDragFactor": 1, "gravityFactor": 1}, {"code": "despawn", "minSeconds": 600}]},
   "sounds": {}

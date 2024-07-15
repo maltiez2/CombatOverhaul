@@ -82,6 +82,11 @@ public class ParticleEffectsManager
             SpawnParticleEffect(packet, null);
         }
     }
+    public void Spawn(string code, Vector3 position, Vector3 velocity, float intensity)
+    {
+        ParticleEffectsPacket packet = PreparePacket(code, position, velocity, intensity);
+        SpawnParticleEffect(packet, null);
+    }
 
     public void Draw(string id)
     {
@@ -113,6 +118,16 @@ public class ParticleEffectsManager
             Code = code,
             Position = new float[] { effectPosition.X, effectPosition.Y, effectPosition.Z },
             Velocity = new float[] { worldVelocity.X, worldVelocity.Y, worldVelocity.Z },
+            Intensity = intensity
+        };
+    }
+    private static ParticleEffectsPacket PreparePacket(string code, Vector3 position, Vector3 velocity, float intensity)
+    {
+        return new ParticleEffectsPacket()
+        {
+            Code = code,
+            Position = new float[] { position.X, position.Y, position.Z },
+            Velocity = new float[] { velocity.X, velocity.Y, velocity.Z },
             Intensity = intensity
         };
     }

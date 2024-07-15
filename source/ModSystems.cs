@@ -42,6 +42,7 @@ public sealed class CombatOverhaulSystem : ModSystem
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:Animatable", typeof(Animatable));
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:AnimatableAttachable", typeof(AnimatableAttachable));
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:Projectile", typeof(ProjectileBehavior));
+        api.RegisterCollectibleBehaviorClass("CombatOverhaul:ExplosiveProjectile", typeof(ProjectileExplosiveBehavior));
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:Armor", typeof(ArmorBehavior));
 
         api.RegisterItemClass("CombatOverhaul:Bow", typeof(BowItem));
@@ -53,6 +54,10 @@ public sealed class CombatOverhaulSystem : ModSystem
         api.RegisterItemClass("CombatOverhaul:Javelin", typeof(JavelinItem));
 
         api.RegisterEntity("CombatOverhaul:Projectile", typeof(ProjectileEntity));
+        api.RegisterEntity("CombatOverhaul:ProjectileExplosive", typeof(ProjectileExplosive));
+        api.RegisterEntity("CombatOverhaul:ProjectileFragmentation", typeof(ProjectileFragmentation));
+        api.RegisterEntity("CombatOverhaul:ProjectileOreBomb", typeof(ProjectileOreBomb));
+        api.RegisterEntity("CombatOverhaul:ProjectileFirework", typeof(ProjectileFirework));
 
         new Harmony("CombatOverhaulAuto").PatchAll();
     }

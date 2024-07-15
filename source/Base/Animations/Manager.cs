@@ -13,6 +13,7 @@ using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
+using Vintagestory.API.Util;
 using Vintagestory.Client.NoObf;
 using VSImGui;
 using VSImGui.API;
@@ -65,6 +66,7 @@ public sealed class AnimationsManager
 
     private bool _showAnimationEditor = false;
     private int _selectedAnimationIndex = 0;
+    private int _selectedAnimationIndexFiltered = 0;
     private bool _overwriteFrame = false;
     private FirstPersonAnimationsBehavior? _behavior;
     private readonly ICoreClientAPI _api;
@@ -78,6 +80,7 @@ public sealed class AnimationsManager
     private AnimationJson _animationBuffer;
     private static AnimationsManager _instance;
 
+    private string _animationsFilter = "";
     private string _filter = "";
     private int _transformIndex = 0;
     private readonly Dictionary<string, ModelTransform> _transforms = new();
@@ -236,7 +239,14 @@ public sealed class AnimationsManager
         ImGui.Checkbox("Third person animations", ref tpAnimations);
         PlayAnimationsInThirdPerson = tpAnimations;
 
-        ImGui.ListBox("Animations", ref _selectedAnimationIndex, Animations.Keys.ToArray(), Animations.Count);
+        ImGui.InputTextWithHint("Filter##" + "animations", "supports wildcards", ref _animationsFilter, 200);
+        EditorsUtils.FilterElements(_animationsFilter, Animations.Keys, out IEnumerable<string> filtered, out IEnumerable<int> indexes);
+
+        ImGui.ListBox("transforms", ref _selectedAnimationIndexFiltered, filtered.ToArray(), filtered.Count());
+
+        if (!filtered.Any()) return;
+
+        _selectedAnimationIndex = Animations.Keys.ToArray().IndexOf(filtered.ToArray()[_selectedAnimationIndexFiltered]);
 
         /*if (ImGui.Button("Remove##animations"))
         {

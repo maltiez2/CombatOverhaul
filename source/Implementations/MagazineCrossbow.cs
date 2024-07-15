@@ -311,7 +311,7 @@ public class MagazineCrossbowServer : RangeWeaponServer
             Velocity = Vector3.Normalize(new Vector3(packet.Velocity[0], packet.Velocity[1], packet.Velocity[2])) * _stats.BoltVelocity
         };
 
-        _projectileSystem.Spawn(packet.ProjectileId, stats.Value, spawnStats, ammo, shooter);
+        _projectileSystem.Spawn(packet.ProjectileId, stats, spawnStats, ammo, shooter);
 
         return true;
     }

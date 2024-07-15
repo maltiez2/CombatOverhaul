@@ -94,7 +94,7 @@ public sealed class ProjectileServer
     }
 }
 
-public sealed class ProjectileEntity : Entity
+public class ProjectileEntity : Entity
 {
     public ProjectileServer? ServerProjectile { get; set; }
     public Guid ProjectileId { get; set; }
@@ -108,24 +108,24 @@ public sealed class ProjectileEntity : Entity
     public List<long> CollidedWith { get; set; } = new();
     public bool Stuck
     {
-        get => _stuck;
+        get => StuckInternal;
         set
         {
-            _stuck = value;
-            if (Api.Side == EnumAppSide.Server) WatchedAttributes.SetBool("stuck", _stuck);
+            StuckInternal = value;
+            if (Api.Side == EnumAppSide.Server) WatchedAttributes.SetBool("stuck", StuckInternal);
         }
     }
 
-    public override bool ApplyGravity => !_stuck;
+    public override bool ApplyGravity => !Stuck;
     public override bool IsInteractable => false;
 
     public override void Initialize(EntityProperties properties, ICoreAPI api, long InChunkIndex3d)
     {
         base.Initialize(properties, api, InChunkIndex3d);
 
-        _spawnTime = TimeSpan.FromMilliseconds(World.ElapsedMilliseconds);
+        SpawnTime = TimeSpan.FromMilliseconds(World.ElapsedMilliseconds);
 
-        _collisionTestBox = SelectionBox.Clone().OmniGrowBy(0.05f);
+        CollisionTestBox = SelectionBox.Clone().OmniGrowBy(0.05f);
 
         GetBehavior<EntityBehaviorPassivePhysics>().OnPhysicsTickCallback = OnPhysicsTickCallback;
         GetBehavior<EntityBehaviorPassivePhysics>().collisionYExtra = 0f; // Slightly cheap hax so that stones/arrows don't collid with fences
@@ -140,16 +140,16 @@ public sealed class ProjectileEntity : Entity
 
         EntityPos pos = SidedPos;
 
-        _stuck = Collided || _collTester.IsColliding(World.BlockAccessor, _collisionTestBox, pos.XYZ) || WatchedAttributes.GetBool("stuck");
-        if (Api.Side == EnumAppSide.Server) WatchedAttributes.SetBool("stuck", _stuck);
+        Stuck = Collided || CollTester.IsColliding(World.BlockAccessor, CollisionTestBox, pos.XYZ) || WatchedAttributes.GetBool("stuck");
+        if (Api.Side == EnumAppSide.Server) WatchedAttributes.SetBool("stuck", Stuck);
 
-        if (!_stuck)
+        if (!Stuck)
         {
             SetRotation();
         }
 
-        double impactSpeed = Math.Max(_motionBeforeCollide.Length(), SidedPos.Motion.Length());
-        if (_stuck)
+        double impactSpeed = Math.Max(MotionBeforeCollide.Length(), SidedPos.Motion.Length());
+        if (Stuck)
         {
             if (Api.Side == EnumAppSide.Client)
             {
@@ -159,12 +159,12 @@ public sealed class ProjectileEntity : Entity
             OnTerrainCollision(SidedPos, impactSpeed);
         }
 
-        _beforeCollided = false;
-        _motionBeforeCollide.Set(SidedPos.Motion.X, SidedPos.Motion.Y, SidedPos.Motion.Z);
+        BeforeCollided = false;
+        MotionBeforeCollide.Set(SidedPos.Motion.X, SidedPos.Motion.Y, SidedPos.Motion.Z);
     }
     public override bool CanCollect(Entity byEntity)
     {
-        return Alive && TimeSpan.FromMilliseconds(World.ElapsedMilliseconds) - _spawnTime > _collisionDelay && ServerPos.Motion.Length() < 0.01;
+        return Alive && TimeSpan.FromMilliseconds(World.ElapsedMilliseconds) - SpawnTime > CollisionDelay && ServerPos.Motion.Length() < 0.01;
     }
     public override ItemStack? OnCollected(Entity byEntity)
     {
@@ -175,8 +175,8 @@ public sealed class ProjectileEntity : Entity
     public override void OnCollided()
     {
         EntityPos sidedPos = base.SidedPos;
-        OnTerrainCollision(base.SidedPos, Math.Max(_motionBeforeCollide.Length(), sidedPos.Motion.Length()));
-        _motionBeforeCollide.Set(sidedPos.Motion.X, sidedPos.Motion.Y, sidedPos.Motion.Z);
+        OnTerrainCollision(base.SidedPos, Math.Max(MotionBeforeCollide.Length(), sidedPos.Motion.Length()));
+        MotionBeforeCollide.Set(sidedPos.Motion.X, sidedPos.Motion.Y, sidedPos.Motion.Z);
     }
     public override void ToBytes(BinaryWriter writer, bool forClient)
     {
@@ -208,11 +208,11 @@ public sealed class ProjectileEntity : Entity
             pos.Pitch = 0;
             pos.Yaw =
                 GameMath.PI + (float)Math.Atan2(pos.Motion.X / speed, pos.Motion.Z / speed)
-                + GameMath.Cos((float)(TimeSpan.FromMilliseconds(World.ElapsedMilliseconds) - _spawnTime).TotalMilliseconds / 200f) * 0.03f
+                + GameMath.Cos((float)(TimeSpan.FromMilliseconds(World.ElapsedMilliseconds) - SpawnTime).TotalMilliseconds / 200f) * 0.03f
             ;
             pos.Roll =
                 -(float)Math.Asin(GameMath.Clamp(-pos.Motion.Y / speed, -1, 1))
-                + GameMath.Sin((float)(TimeSpan.FromMilliseconds(World.ElapsedMilliseconds) - _spawnTime).TotalMilliseconds / 200f) * 0.03f
+                + GameMath.Sin((float)(TimeSpan.FromMilliseconds(World.ElapsedMilliseconds) - SpawnTime).TotalMilliseconds / 200f) * 0.03f
             ;
         }
     }
@@ -222,32 +222,31 @@ public sealed class ProjectileEntity : Entity
         WatchedAttributes.MarkAllDirty();
     }
 
-    private readonly TimeSpan _collisionDelay = TimeSpan.FromMilliseconds(500);
-    private TimeSpan _spawnTime = TimeSpan.Zero;
+    protected readonly TimeSpan CollisionDelay = TimeSpan.FromMilliseconds(500);
+    protected TimeSpan SpawnTime = TimeSpan.Zero;
+    protected bool StuckInternal;
+    protected readonly CollisionTester CollTester = new();
+    protected Cuboidf? CollisionTestBox;
+    protected Vec3d MotionBeforeCollide = new();
+    protected bool BeforeCollided = false;
+    protected long MsCollide = 0;
 
-    private bool _stuck;
-    private readonly CollisionTester _collTester = new();
-    private Cuboidf? _collisionTestBox;
-    private Vec3d _motionBeforeCollide = new();
-    private bool _beforeCollided = false;
-    private long _msCollide = 0;
-
-    private void OnPhysicsTickCallback(float dtFac)
+    protected void OnPhysicsTickCallback(float dtFac)
     {
         if (ShouldDespawn || !Alive) return;
 
-        if (!_stuck && ServerProjectile != null)
+        if (!Stuck && ServerProjectile != null)
         {
             ServerProjectile.TryCollide();
         }
-        
+
         PreviousPosition = SidedPos.XYZ.Clone();
         PreviousVelocity = SidedPos.Motion.Clone();
     }
-    private void OnTerrainCollision(EntityPos pos, double impactSpeed)
+    protected void OnTerrainCollision(EntityPos pos, double impactSpeed)
     {
         pos.Motion.Set(0.0, 0.0, 0.0);
-        if (_beforeCollided || !(World is IServerWorldAccessor) || World.ElapsedMilliseconds <= _msCollide + 500)
+        if (BeforeCollided || !(World is IServerWorldAccessor) || World.ElapsedMilliseconds <= MsCollide + 500)
         {
             return;
         }
@@ -258,8 +257,8 @@ public sealed class ProjectileEntity : Entity
             WatchedAttributes.MarkAllDirty();
         }
 
-        _msCollide = World.ElapsedMilliseconds;
-        _beforeCollided = true;
+        MsCollide = World.ElapsedMilliseconds;
+        BeforeCollided = true;
     }
 }
 
@@ -275,4 +274,120 @@ public class ProjectileBehavior : CollectibleBehavior
     {
         Stats = properties["stats"].AsObject<ProjectileStats>();
     }
+}
+
+public class ProjectileExplosiveBehavior : CollectibleBehavior
+{
+    public ExplosiveProjectileStack Stats { get; private set; }
+
+    public ProjectileExplosiveBehavior(CollectibleObject collObj) : base(collObj)
+    {
+    }
+
+    public override void Initialize(JsonObject properties)
+    {
+        Stats = properties["stats"].AsObject<ExplosiveProjectileStack>();
+    }
+}
+
+public class ProjectileExplosive : ProjectileEntity
+{
+
+    public ExplosiveProjectileStack ExplosiveStats { get; set; } = new();
+    public TimeSpan FuseTimer { get; set; } = TimeSpan.Zero;
+
+    public override void Initialize(EntityProperties properties, ICoreAPI api, long InChunkIndex3d)
+    {
+        base.Initialize(properties, api, InChunkIndex3d);
+
+        if (Api.Side != EnumAppSide.Server) return;
+
+        ProjectileStack?.ResolveBlockOrItem(Api.World);
+
+        Item item = ProjectileStack?.Item ?? throw new Exception();
+
+        if (item.GetBehavior<ProjectileExplosiveBehavior>() is not ProjectileExplosiveBehavior behavior) throw new Exception();
+
+        ExplosiveStats = behavior.Stats;
+
+        FuseTimer = TimeSpan.FromMilliseconds(ExplosiveStats.FuseTimeMs);
+    }
+
+    public override void ToBytes(BinaryWriter writer, bool forClient)
+    {
+        base.ToBytes(writer, forClient);
+
+        byte[] data = JsonUtil.ToBytes(ExplosiveStats);
+        writer.Write(data.Length);
+        writer.Write(data);
+        writer.Write(FuseTimer.TotalMilliseconds);
+    }
+
+    public override void FromBytes(BinaryReader reader, bool fromServer)
+    {
+        base.FromBytes(reader, fromServer);
+
+        ExplosiveStats = JsonUtil.FromBytes<ExplosiveProjectileStack>(reader.ReadBytes(reader.ReadInt32()));
+        FuseTimer = TimeSpan.FromMilliseconds((float)reader.ReadDouble());
+    }
+
+    public override void OnGameTick(float dt)
+    {
+        base.OnGameTick(dt);
+
+        if (Api.Side != EnumAppSide.Server) return;
+
+        FuseTimer -= TimeSpan.FromSeconds(dt);
+
+        if (FuseTimer > TimeSpan.Zero) return;
+
+        Explode();
+        Die();
+    }
+
+    protected void Explode()
+    {
+        Entity[] entities = Api.World.GetEntitiesAround(ServerPos.XYZ, ExplosiveStats.MaxRadius, ExplosiveStats.MaxRadius, entity => entity.IsCreature && entity.Alive);
+
+        Entity shooter = Api.World.GetEntityById(ShooterId);
+
+        Api.World.PlaySoundAt(ExplosiveStats.ExplosionSound, this);
+
+        EnumDamageType damageType = Enum.Parse<EnumDamageType>(ExplosiveStats.DamageType);
+
+        Utils.ParticleEffectsManager? particlesEffectsManager = Api.ModLoader.GetModSystem<CombatOverhaulAnimationsSystem>().ParticleEffectsManager;
+
+        particlesEffectsManager?.Spawn(ExplosiveStats.ParticlesEffect, new((float)ServerPos.X, (float)ServerPos.Y, (float)ServerPos.Z), Vector3.Zero, ExplosiveStats.ParticlesIntensity);
+
+        foreach (Entity entity in entities)
+        {
+            float damage = Math.Clamp((float)(entity.Pos.XYZ - ServerPos.XYZ).Length() / ExplosiveStats.MaxRadius, 0, 1) * ExplosiveStats.Damage;
+
+            _ = entity.ReceiveDamage(new TypedDamageSource()
+            {
+                Source = EnumDamageSource.Entity,
+                SourceEntity = this,
+                CauseEntity = shooter,
+                Type = damageType,
+                DamageTier = (int)ExplosiveStats.DamageStrength,
+                DamageTypeData = new(damageType, ExplosiveStats.DamageStrength)
+
+            }, damage);
+        }
+    }
+}
+
+public class ProjectileFragmentation : ProjectileEntity
+{
+
+}
+
+public class ProjectileOreBomb : ProjectileEntity
+{
+
+}
+
+public class ProjectileFirework : ProjectileEntity
+{
+
 }

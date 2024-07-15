@@ -61,6 +61,11 @@ public class DirectionalTypedDamageSource : DamageSource, ILocationalDamage, ITy
     public DamageData DamageTypeData { get; set; }
 }
 
+public class TypedDamageSource : DamageSource, ITypedDamage
+{
+    public DamageData DamageTypeData { get; set; }
+}
+
 public readonly struct DamageResistData
 {
     public readonly ImmutableDictionary<EnumDamageType, float> Resists;

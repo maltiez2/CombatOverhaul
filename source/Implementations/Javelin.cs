@@ -361,7 +361,7 @@ public class JavelinServer : RangeWeaponServer
             Velocity = Vector3.Normalize(new Vector3(packet.Velocity[0], packet.Velocity[1], packet.Velocity[2])) * _stats.Velocity
         };
 
-        _projectileSystem.Spawn(packet.ProjectileId, stats.Value, spawnStats, slot.TakeOut(1), shooter);
+        _projectileSystem.Spawn(packet.ProjectileId, stats, spawnStats, slot.TakeOut(1), shooter);
 
         slot.MarkDirty();
 
