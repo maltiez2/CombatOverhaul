@@ -1,6 +1,11 @@
 ﻿{
   "code": "bomb",
-  "class": "CombatOverhaul:ProjectileExplosive",
+  "classByType": {
+    "*-highexplosive": "CombatOverhaul:ProjectileExplosive",
+    "*-fragmentation": "CombatOverhaul:ProjectileFragmentation",
+    "*-ore": "CombatOverhaul:ProjectileExplosive",
+    "*-firework": "CombatOverhaul:ProjectileExplosive"
+  },
   "variantgroups": [{"code": "type", "states": ["highexplosive", "fragmentation", "ore", "firework"]}],
   "hitboxSize": {"x": 0.25, "y": 0.25},
   "client": {

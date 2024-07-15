@@ -43,6 +43,7 @@ public sealed class CombatOverhaulSystem : ModSystem
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:AnimatableAttachable", typeof(AnimatableAttachable));
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:Projectile", typeof(ProjectileBehavior));
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:ExplosiveProjectile", typeof(ProjectileExplosiveBehavior));
+        api.RegisterCollectibleBehaviorClass("CombatOverhaul:FragmentationProjectile", typeof(ProjectileFragmentationBehavior)); 
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:Armor", typeof(ArmorBehavior));
 
         api.RegisterItemClass("CombatOverhaul:Bow", typeof(BowItem));

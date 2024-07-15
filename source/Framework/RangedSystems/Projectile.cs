@@ -1,4 +1,6 @@
-﻿using CombatOverhaul.DamageSystems;
+﻿using Cairo;
+using CombatOverhaul.DamageSystems;
+using System;
 using System.Numerics;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -278,7 +280,7 @@ public class ProjectileBehavior : CollectibleBehavior
 
 public class ProjectileExplosiveBehavior : CollectibleBehavior
 {
-    public ExplosiveProjectileStack Stats { get; private set; }
+    public ExplosiveProjectileStats Stats { get; private set; }
 
     public ProjectileExplosiveBehavior(CollectibleObject collObj) : base(collObj)
     {
@@ -286,14 +288,27 @@ public class ProjectileExplosiveBehavior : CollectibleBehavior
 
     public override void Initialize(JsonObject properties)
     {
-        Stats = properties["stats"].AsObject<ExplosiveProjectileStack>();
+        Stats = properties["stats"].AsObject<ExplosiveProjectileStats>();
+    }
+}
+
+public class ProjectileFragmentationBehavior : CollectibleBehavior
+{
+    public FragmentationProjectileStats Stats { get; private set; }
+
+    public ProjectileFragmentationBehavior(CollectibleObject collObj) : base(collObj)
+    {
+    }
+
+    public override void Initialize(JsonObject properties)
+    {
+        Stats = properties["stats"].AsObject<FragmentationProjectileStats>();
     }
 }
 
 public class ProjectileExplosive : ProjectileEntity
 {
-
-    public ExplosiveProjectileStack ExplosiveStats { get; set; } = new();
+    public ExplosiveProjectileStats ExplosiveStats { get; set; } = new();
     public TimeSpan FuseTimer { get; set; } = TimeSpan.Zero;
 
     public override void Initialize(EntityProperties properties, ICoreAPI api, long InChunkIndex3d)
@@ -327,7 +342,7 @@ public class ProjectileExplosive : ProjectileEntity
     {
         base.FromBytes(reader, fromServer);
 
-        ExplosiveStats = JsonUtil.FromBytes<ExplosiveProjectileStack>(reader.ReadBytes(reader.ReadInt32()));
+        ExplosiveStats = JsonUtil.FromBytes<ExplosiveProjectileStats>(reader.ReadBytes(reader.ReadInt32()));
         FuseTimer = TimeSpan.FromMilliseconds((float)reader.ReadDouble());
     }
 
@@ -379,7 +394,103 @@ public class ProjectileExplosive : ProjectileEntity
 
 public class ProjectileFragmentation : ProjectileEntity
 {
+    public FragmentationProjectileStats FragmentationStats { get; set; } = new();
+    public TimeSpan FuseTimer { get; set; } = TimeSpan.Zero;
 
+    public override void Initialize(EntityProperties properties, ICoreAPI api, long InChunkIndex3d)
+    {
+        base.Initialize(properties, api, InChunkIndex3d);
+
+        if (Api.Side != EnumAppSide.Server) return;
+
+        ProjectileStack?.ResolveBlockOrItem(Api.World);
+
+        Item item = ProjectileStack?.Item ?? throw new Exception();
+
+        if (item.GetBehavior<ProjectileFragmentationBehavior>() is not ProjectileFragmentationBehavior behavior) throw new Exception();
+
+        FragmentationStats = behavior.Stats;
+
+        FuseTimer = TimeSpan.FromMilliseconds(FragmentationStats.FuseTimeMs);
+    }
+
+    public override void ToBytes(BinaryWriter writer, bool forClient)
+    {
+        base.ToBytes(writer, forClient);
+
+        FragmentationStats.FragmentStack.ResolvedItemstack = null;
+
+        byte[] data = JsonUtil.ToBytes(FragmentationStats);
+        writer.Write(data.Length);
+        writer.Write(data);
+        writer.Write(FuseTimer.TotalMilliseconds);
+    }
+
+    public override void FromBytes(BinaryReader reader, bool fromServer)
+    {
+        base.FromBytes(reader, fromServer);
+
+        FragmentationStats = JsonUtil.FromBytes<FragmentationProjectileStats>(reader.ReadBytes(reader.ReadInt32()));
+        FuseTimer = TimeSpan.FromMilliseconds((float)reader.ReadDouble());
+    }
+
+    public override void OnGameTick(float dt)
+    {
+        base.OnGameTick(dt);
+
+        if (Api.Side != EnumAppSide.Server) return;
+
+        FuseTimer -= TimeSpan.FromSeconds(dt);
+
+        if (FuseTimer > TimeSpan.Zero) return;
+
+        Explode();
+        Die();
+    }
+
+    protected readonly NatFloat Rand = new(0, 1, EnumDistribution.UNIFORM);
+
+    protected void Explode()
+    {
+        Entity shooter = Api.World.GetEntityById(ShooterId);
+
+        Api.World.PlaySoundAt(FragmentationStats.ExplosionSound, this);
+
+        Utils.ParticleEffectsManager? particlesEffectsManager = Api.ModLoader.GetModSystem<CombatOverhaulAnimationsSystem>().ParticleEffectsManager;
+        ProjectileSystemServer? projectileSystem = Api.ModLoader.GetModSystem<CombatOverhaulSystem>().ServerProjectileSystem;
+
+        FragmentationStats.FragmentStack.Resolve(Api.World, "", false);
+
+        particlesEffectsManager?.Spawn(FragmentationStats.ParticlesEffect, new((float)ServerPos.X, (float)ServerPos.Y, (float)ServerPos.Z), Vector3.Zero, FragmentationStats.ParticlesIntensity);
+
+        for (int count = 0; count < FragmentationStats.FragmentsNumber; count++)
+        {
+            Guid guid = Guid.NewGuid();
+            ProjectileStats stats = FragmentationStats.FragmentStats;
+            ProjectileSpawnStats spawnStats = new()
+            {
+                ProducerEntityId = shooter.EntityId,
+                DamageMultiplier = 1,
+                DamageStrength = FragmentationStats.FragmentDamageStrength,
+                Position = new Vector3((float)ServerPos.X, (float)ServerPos.Y, (float)ServerPos.Z),
+                Velocity = Vector3.Normalize(GenerateRandomDirection()) * FragmentationStats.FragmentVelocity
+            };
+
+            projectileSystem?.Spawn(guid, stats, spawnStats, FragmentationStats.FragmentStack.ResolvedItemstack, shooter);
+        }
+    }
+
+    protected Vector3 GenerateRandomDirection()
+    {
+        double theta = Rand.nextFloat() * 2 * Math.PI;
+        double phi = Rand.nextFloat() * Math.PI;
+
+        float x = (float)(Math.Sin(phi) * Math.Cos(theta));
+        float y = (float)(Math.Sin(phi) * Math.Sin(theta));
+        float z = (float)(Math.Cos(phi));
+
+        return new(x, y, z);
+    }
 }
 
 public class ProjectileOreBomb : ProjectileEntity

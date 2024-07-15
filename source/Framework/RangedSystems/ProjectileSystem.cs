@@ -27,7 +27,7 @@ public class ProjectileStats
     public ProjectileStats() { }
 }
 
-public class ExplosiveProjectileStack
+public class ExplosiveProjectileStats
 {
     public AssetLocation ExplosionSound { get; set; } = new("game:sounds/effect/smallexplosion");
     public float MaxRadius { get; set; } = 0;
@@ -38,7 +38,22 @@ public class ExplosiveProjectileStack
     public float ParticlesIntensity { get; set; } = 1;
     public float FuseTimeMs { get; set; } = 0;
 
-    public ExplosiveProjectileStack() { }
+    public ExplosiveProjectileStats() { }
+}
+
+public class FragmentationProjectileStats
+{
+    public AssetLocation ExplosionSound { get; set; } = new("game:sounds/effect/smallexplosion");
+    public int FragmentsNumber { get; set; } = 1;
+    public ProjectileStats FragmentStats { get; set; } = new();
+    public float FragmentVelocity { get; set; } = 1;
+    public float FragmentDamageStrength { get; set; } = 1;
+    public JsonItemStack FragmentStack { get; set; } = new();
+    public string ParticlesEffect { get; set; } = "";
+    public float ParticlesIntensity { get; set; } = 1;
+    public float FuseTimeMs { get; set; } = 0;
+
+    public FragmentationProjectileStats() { }
 }
 
 public struct ProjectileSpawnStats
