@@ -98,7 +98,17 @@ public sealed class Attachment : IDisposable
         _attachedTransform = transform;
         _attachmentPointCode = attachmentPointCode;
 
-        if (!newAnimatableShape && attachment.Item.HasBehavior(typeof(Animatable), true) && attachment.Item.GetCollectibleBehavior(typeof(Animatable), true) is Animatable behavior)
+        if (attachment.Attributes.HasAttribute("attachableShape"))
+        {
+            _shape = AnimatableShape.Create(api, attachment.Attributes.GetAsString("attachableShape"), attachment.Item);
+            _disposeShape = true;
+        }
+        else if (attachment.Item.Attributes.KeyExists("attachableShape"))
+        {
+            _shape = AnimatableShape.Create(api, attachment.Item.Attributes["attachableShape"].AsString(), attachment.Item);
+            _disposeShape = true;
+        }
+        else if (!newAnimatableShape && attachment.Item.HasBehavior(typeof(Animatable), true) && attachment.Item.GetCollectibleBehavior(typeof(Animatable), true) is Animatable behavior)
         {
             _behavior = behavior;
             _disposeShape = false;

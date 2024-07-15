@@ -1,0 +1,30 @@
+﻿{
+  "code": "bomb",
+  "class": "Item",
+  "variantgroups": [{"code": "type", "states": ["highexplosive", "fragmentation", "ore", "firework"]}],
+  "behaviors": [
+    {
+      "name": "CombatOverhaul:Projectile",
+      "properties": {
+        "stats": {
+          "AdditionalDurabilityCost": 0,
+          "CollisionRadius": 0.25,
+          "DamageStats": {"DamageType": "PiercingAttack", "Damage": 5},
+          "SpeedThreshold": 0.3,
+          "Knockback": 0.2,
+          "EntityCode": "combatoverhaul:bolt-{material}",
+          "DurabilityDamage": 0,
+          "DropChance": 1
+        }
+      }
+    }
+  ],
+  "maxstacksize": 8,
+  "storageFlags": 513,
+  "shape": {"base": "ammo/bombs/bomb-{type}"},
+  "creativeinventory": {"combatoverhaul": ["*"]},
+  "guiTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -20, "y": -41, "z": -145}, "origin": {"x": 0.6, "y": -0.44, "z": 0}, "scale": 2.73},
+  "tpHandTransform": {"translation": {"x": 0.3, "y": 0, "z": 0.5}, "rotation": {"x": 0, "y": 2, "z": 3}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
+  "groundTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": -0.03, "z": 0.5}, "scale": 4},
+  "attributes": {"handbook": {"groupBy": ["arrow-*"]}}
+}

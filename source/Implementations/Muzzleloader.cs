@@ -8,6 +8,7 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Server;
 using Vintagestory.API.Util;
+using VSImGui.Debug;
 
 
 namespace CombatOverhaul.Implementations;
@@ -65,8 +66,12 @@ public class MuzzleloaderClient : RangeWeaponClient
     {
         Attachable = item.GetCollectibleBehavior<AnimatableAttachable>(withInheritance: true) ?? throw new Exception("Firearm should have AnimatableAttachable behavior.");
         AimingSystem = api.ModLoader.GetModSystem<CombatOverhaulSystem>().AimingSystem ?? throw new Exception();
+        BulletTransform = new(item.Attributes["BulletTransform"].AsObject<ModelTransformNoDefaults>(), ModelTransform.BlockDefaultTp());
+        FlaskTransform = new(item.Attributes["FlaskTransform"].AsObject<ModelTransformNoDefaults>(), ModelTransform.BlockDefaultTp());
         Stats = item.Attributes.AsObject<MuzzleloaderStats>();
         AimingStats = Stats.Aiming.ToStats();
+
+        AnimationsManager.RegisterTransformByCode(BulletTransform, $"Bullet - {item.Code}");
     }
 
     public override void OnSelected(ItemSlot slot, EntityPlayer player, bool mainHand, ref int state)
@@ -111,6 +116,8 @@ public class MuzzleloaderClient : RangeWeaponClient
     protected readonly MuzzleloaderStats Stats;
     protected readonly AimingStats AimingStats;
     protected readonly ItemInventoryBuffer Inventory = new();
+    protected readonly ModelTransform BulletTransform;
+    protected readonly ModelTransform FlaskTransform;
     protected const string InventoryId = "magazine";
     protected const string LoadingStageAttribute = "CombatOverhaul:loading-stage";
     protected ItemSlot? BulletSlot;
@@ -140,21 +147,36 @@ public class MuzzleloaderClient : RangeWeaponClient
             return true;
         });
 
-        if (ammoSlot == null) return false;
+        if (ammoSlot == null)
+        {
+
+            return false;
+        }
 
         SetState(MuzzleloaderState.Loading);
         AnimationBehavior?.Stop("item");
-        AnimationBehavior?.Play(mainHand, Stats.LoadAnimation, callback: () => LoadCallback(slot, ammoSlot, mainHand));
+        AnimationBehavior?.Play(mainHand, Stats.LoadAnimation, callback: () => LoadCallback(slot, ammoSlot, player, mainHand));
+
+        /*DebugWidgets.FloatDrag("test", "test", "arrow trnasform x", () => BulletTransform.Translation.X, value => BulletTransform.Translation.X = value);
+        DebugWidgets.FloatDrag("test", "test", "arrow trnasform y", () => BulletTransform.Translation.Y, value => BulletTransform.Translation.Y = value);
+        DebugWidgets.FloatDrag("test", "test", "arrow trnasform z", () => BulletTransform.Translation.Z, value => BulletTransform.Translation.Z = value);
+        DebugWidgets.FloatDrag("test", "test", "arrow trnasform rotation x", () => BulletTransform.Rotation.X, value => BulletTransform.Rotation.X = value);
+        DebugWidgets.FloatDrag("test", "test", "arrow trnasform rotation y", () => BulletTransform.Rotation.Y, value => BulletTransform.Rotation.Y = value);
+        DebugWidgets.FloatDrag("test", "test", "arrow trnasform rotation z", () => BulletTransform.Rotation.Z, value => BulletTransform.Rotation.Z = value);
+        DebugWidgets.FloatDrag("test", "test", "arrow trnasform scale", () => BulletTransform.ScaleXYZ.X, value => BulletTransform.Scale = value);*/
+
+        Attachable.SetAttachment(player.EntityId, "bullet", ammoSlot.Itemstack, BulletTransform);
 
         return true;
     }
-    protected virtual bool LoadCallback(ItemSlot slot, ItemSlot ammoSlot, bool mainHand)
+    protected virtual bool LoadCallback(ItemSlot slot, ItemSlot ammoSlot, EntityPlayer player, bool mainHand)
     {
         if (CheckState(mainHand, MuzzleloaderState.Loading))
         {
             SetState(MuzzleloaderState.Loaded);
             RangedWeaponSystem.Reload(slot, ammoSlot, Stats.BulletLoadedPerReload, mainHand, LoadServerCallback, data: SerializeLoadingStage(MuzzleloaderLoadingStage.Loading));
         }
+        Attachable.ClearAttachments(player.EntityId);
         return true;
     }
     protected virtual void LoadServerCallback(bool success)

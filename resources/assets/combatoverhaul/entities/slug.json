@@ -4,7 +4,7 @@
   "variantgroups": [{"code": "material", "states": ["lead", "copper", "steel"]}],
   "hitboxSize": {"x": 0.125, "y": 0.125},
   "client": {
-    "size": 1,
+    "size": 0.6,
     "renderer": "Shape",
     "shape": {"base": "ammo/bullets/slug"},
     "textures": {"metal": {"base": "game:block/metal/plate/{material}"}},

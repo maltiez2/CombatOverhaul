@@ -1,10 +1,7 @@
 ﻿{
   "code": "firearm",
   "class": "CombatOverhaul:Muzzleloader",
-  "variantgroups": [
-    {"code": "type", "states": ["pistol", "superimposed", "arquebus", "blunderbuss", "carbine", "musket", "volleygun"]},
-    {"code": "subtype", "states": ["regular"]}
-  ],
+  "variantgroups": [{"code": "type", "states": ["handmortar"]}, {"code": "subtype", "states": ["regular"]}],
   "creativeinventory": {"combatoverhaul": ["*"]},
   "maxstacksize": 1,
   "durability": 600,
@@ -14,7 +11,7 @@
     "BulletDamageMultiplierByType": {"*": 1},
     "BulletDamageStrengthByType": {"*": 1},
     "BulletVelocityByType": {"*": 4},
-    "BulletTransform": {"translation": {"x": -2.2, "y": 0.2, "z": -2.3}, "rotation": {"x": 0, "y": 0, "z": 0}, "scale": 0.3},
+    "BulletTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "scale": 1},
     "FlaskTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "scale": 1},
     "WaddingTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "scale": 1},
     "IdleAnimation": "combatoverhaul:firearms-shoulder",

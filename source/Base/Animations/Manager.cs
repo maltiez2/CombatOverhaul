@@ -1,9 +1,14 @@
-﻿using CombatOverhaul.Colliders;
+﻿using Cairo;
+using CombatOverhaul.Colliders;
 using CombatOverhaul.Integration;
 using CombatOverhaul.Utils;
 using ImGuiNET;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.ObjectModel;
+using System.Numerics;
 using System.Reflection;
+using System.Xml.Linq;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
@@ -11,6 +16,7 @@ using Vintagestory.API.MathTools;
 using Vintagestory.Client.NoObf;
 using VSImGui;
 using VSImGui.API;
+using static Microsoft.WindowsAPICodePack.Shell.PropertySystem.SystemProperties.System;
 
 namespace CombatOverhaul.Animations;
 
@@ -25,6 +31,7 @@ public sealed class AnimationsManager
         api.ModLoader.GetModSystem<ImGuiModSystem>().Draw += DrawEditor;
         api.Input.RegisterHotKey("combatOverhaul_editor", "Show animation editor", GlKeys.L, ctrlPressed: true);
         api.Input.SetHotKeyHandler("combatOverhaul_editor", keys => _showAnimationEditor = !_showAnimationEditor);
+        _instance = this;
 
         _api = api;
         _particleEffectsManager = particleEffectsManager;
@@ -47,6 +54,15 @@ public sealed class AnimationsManager
         _behavior = _api.World.Player.Entity.GetBehavior<FirstPersonAnimationsBehavior>();
     }
 
+    public static void RegisterTransformByCode(ModelTransform transform, string code)
+    {
+        _instance.RegisterTransform(transform, code);
+    }
+    public void RegisterTransform(ModelTransform transform, string code)
+    {
+        _transforms[code] = transform;
+    }
+
     private bool _showAnimationEditor = false;
     private int _selectedAnimationIndex = 0;
     private bool _overwriteFrame = false;
@@ -60,6 +76,11 @@ public sealed class AnimationsManager
     private float _animationSpeed = 1;
     private ParticleEffectsManager _particleEffectsManager;
     private AnimationJson _animationBuffer;
+    private static AnimationsManager _instance;
+
+    private string _filter = "";
+    private int _transformIndex = 0;
+    private readonly Dictionary<string, ModelTransform> _transforms = new();
 
     private CallbackGUIStatus DrawEditor(float deltaSeconds)
     {
@@ -71,6 +92,11 @@ public sealed class AnimationsManager
             if (ImGui.BeginTabItem($"Animations"))
             {
                 AnimationsTab();
+                ImGui.EndTabItem();
+            }
+            if (ImGui.BeginTabItem($"Transforms"))
+            {
+                TransformEditorTab();
                 ImGui.EndTabItem();
             }
             if (ImGui.BeginTabItem($"Camera movement effects"))
@@ -272,6 +298,51 @@ public sealed class AnimationsManager
                 _behavior.FrameOverride = null;
             }
         }
+    }
+
+    private void TransformEditorTab()
+    {
+        ImGui.InputTextWithHint("Filter##" + "transforms", "supports wildcards", ref _filter, 200);
+        EditorsUtils.FilterElements(_filter, _transforms.Keys, out IEnumerable<string> filtered, out IEnumerable<int> indexes);
+
+        ImGui.ListBox("transforms", ref _transformIndex, filtered.ToArray(), filtered.Count());
+
+        if (!filtered.Any()) return;
+
+        string currentTransform = filtered.ElementAt(_transformIndex);
+
+        if (!_transforms.ContainsKey(currentTransform)) return;
+
+        ModelTransform transform = _transforms[currentTransform];
+
+        if (ImGui.Button($"Export to clipboard"))
+        {
+            ImGui.SetClipboardText(JsonUtil.ToPrettyString(transform));
+        }
+
+        float speed = ImGui.GetIO().KeysDown[(int)ImGuiKey.LeftShift] ? 0.1f : 1;
+
+        float scale = transform.ScaleXYZ.X;
+        ImGui.DragFloat("Scale##transform", ref scale);
+        transform.Scale = scale;
+
+        Vector3 translation = new(transform.Translation.X, transform.Translation.Y, transform.Translation.Z);
+        Vector3 origin = new(transform.Origin.X, transform.Origin.Y, transform.Origin.Z);
+        Vector3 rotation = new(transform.Rotation.X, transform.Rotation.Y, transform.Rotation.Z);
+
+        ImGui.DragFloat3("Translation##transform", ref translation, speed);
+        ImGui.DragFloat3("Origin##transform", ref origin, speed);
+        ImGui.DragFloat3("Rotation##transform", ref rotation, speed);
+
+        transform.Translation.X = translation.X;
+        transform.Translation.Y = translation.Y;
+        transform.Translation.Z = translation.Z;
+        transform.Origin.X = origin.X;
+        transform.Origin.Y = origin.Y;
+        transform.Origin.Z = origin.Z;
+        transform.Rotation.X = rotation.X;
+        transform.Rotation.Y = rotation.Y;
+        transform.Rotation.Z = rotation.Z;
     }
 
     private void CreateAnimationGui()
