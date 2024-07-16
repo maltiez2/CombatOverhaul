@@ -42,7 +42,7 @@
       "CanBlock": false,
       "CanSprint": true,
       "SpeedPenalty": 0,
-      "AttackCooldownMs": 450,
+      "AttackCooldownMs": 650,
       "Attack": {
         "StopOnTerrainHit": false,
         "StopOnEntityHit": false,
@@ -68,7 +68,8 @@
       "CanBlock": false,
       "CanSprint": true,
       "SpeedPenalty": 0,
-      "AttackCooldownMs": 300,
+      "AttackCooldownMs": 500,
+      "BlockCooldownMs": 500,
       "Attack": {
         "StopOnTerrainHit": false,
         "StopOnEntityHit": false,
@@ -86,6 +87,7 @@
       },
       "Parry": {"Zones": ["Head", "Face", "Neck", "Torso", "Arms", "Hands"], "Directions": [90, 90, 90, 90]},
       "AttackAnimationByType": {"*-steel": "combatoverhaul:sword-long-thrust-2h", "*": "combatoverhaul:sword-long-slash-2h"},
+      "BlockAnimation": "combatoverhaul:sword-long-parry",
       "ReadyAnimation": "combatoverhaul:sword-long-ready",
       "IdleAnimation": "combatoverhaul:sword-long-idle"
     }
