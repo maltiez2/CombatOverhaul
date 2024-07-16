@@ -147,6 +147,8 @@ public sealed class MeleeAttack
                 _entitiesCollisionsBuffer.Add((entity, point));
                 damagePackets.Add(packet);
 
+                _attackedEntities[entityId].Add(entity.EntityId);
+
                 if (StopOnEntityHit) break;
             }
         }

@@ -1,6 +1,4 @@
-﻿using Cairo;
-using CombatOverhaul.DamageSystems;
-using System;
+﻿using CombatOverhaul.DamageSystems;
 using System.Numerics;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;

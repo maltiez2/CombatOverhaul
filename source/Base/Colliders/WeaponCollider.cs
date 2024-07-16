@@ -143,6 +143,7 @@ public readonly struct LineSegmentCollider : IWeaponCollider
                 for (int z = minZ; z <= maxZ; z++)
                 {
                     (Block, Vector3, float parameter)? intersection = IntersectBlock(api.World.BlockAccessor, x, y, z);
+                    
                     closestIntersection ??= intersection;
                     if (closestIntersection != null && intersection != null && closestIntersection.Value.parameter > intersection.Value.parameter)
                     {
@@ -238,7 +239,7 @@ public readonly struct LineSegmentCollider : IWeaponCollider
         Cuboidf[] collisionBoxes = block.GetCollisionBoxes(blockAccessor, _blockPosBuffer);
         if (collisionBoxes == null || collisionBoxes.Length == 0) return null;
 
-        float closestIntersectionParameter = 0;
+        float closestIntersectionParameter = 1;
         Vector3? closestIntersection = null;
 
         _blockPosVecBuffer.Set(x, y, z);

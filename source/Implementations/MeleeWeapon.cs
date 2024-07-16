@@ -8,7 +8,6 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Config;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
-using Vintagestory.GameContent;
 using VSImGui.Debug;
 
 namespace CombatOverhaul.Implementations;
@@ -19,7 +18,8 @@ public enum MeleeWeaponState
     WindingUp,
     Attacking,
     Parrying,
-    Blocking
+    Blocking,
+    Cooldown
 }
 
 public enum MeleeWeaponStance
@@ -229,6 +229,8 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
                 break;
             case MeleeWeaponState.WindingUp:
                 break;
+            case MeleeWeaponState.Cooldown:
+                break;
             case MeleeWeaponState.Attacking:
                 {
                     TryAttack(attack, stats, slot, player, mainHand);
@@ -264,7 +266,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
                 SetState(MeleeWeaponState.Attacking, mainHand);
                 break;
             case "stop":
-                //SetState(MeleeWeaponState.Idle, mainHand);
+                //SetState(MeleeWeaponState.Cooldown, mainHand);
                 break;
         }
     }
