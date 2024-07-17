@@ -160,10 +160,10 @@ public sealed class CollidersEntityBehavior : EntityBehavior
 
         if (!HasOBBCollider)
         {
-            CuboidAABBCollider AABBCollider = new(entity.CollisionBox);
-            AABBCollider.Collide(segmentStart, segmentDirection, out parameter);
+            CuboidAABBCollider AABBCollider = new(entity);
+            bool collided = AABBCollider.Collide(segmentStart, segmentDirection, out parameter);
             intersection = segmentStart + parameter * segmentDirection;
-            return true;
+            return collided;
         }
 
         if (!BoundingBox.Collide(segmentStart, segmentDirection, out _))
@@ -192,7 +192,7 @@ public sealed class CollidersEntityBehavior : EntityBehavior
 
         if (!HasOBBCollider)
         {
-            CuboidAABBCollider AABBCollider = new(entity.CollisionBox);
+            CuboidAABBCollider AABBCollider = new(entity);
             return AABBCollider.Collide(thisTickOrigin, previousTickOrigin, radius, out intersection);
         }
 

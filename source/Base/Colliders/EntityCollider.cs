@@ -113,6 +113,21 @@ public readonly struct CuboidAABBCollider
         VertexB = new(cuboid.X2, cuboid.Y2, cuboid.Z2);
     }
 
+    public CuboidAABBCollider(Entity entity)
+    {
+        Cuboidf collisionBox = entity.CollisionBox.Clone();
+        EntityPos position = entity.Pos;
+        collisionBox.X1 += (float)position.X;
+        collisionBox.Y1 += (float)position.Y;
+        collisionBox.Z1 += (float)position.Z;
+        collisionBox.X2 += (float)position.X;
+        collisionBox.Y2 += (float)position.Y;
+        collisionBox.Z2 += (float)position.Z;
+
+        VertexA = new(collisionBox.X1, collisionBox.Y1, collisionBox.Z1);
+        VertexB = new(collisionBox.X2, collisionBox.Y2, collisionBox.Z2);
+    }
+
     public bool Collide(Vector3 segmentStart, Vector3 segmentDirection, out float parameter)
     {
         Vector3 min = Vector3.Min(VertexA, VertexB);

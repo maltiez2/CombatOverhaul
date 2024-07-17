@@ -78,6 +78,9 @@
     <PackageReference Include="VSImGui" Version="0.0.6" />
     <Reference Include="$(GameDirectory)/**/*.dll" Private="false" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Releases\" />
+  </ItemGroup>
 
   <!-- Forces rebuild -->
   <Target Name="ForceRebuild" BeforeTargets="BeforeBuild">

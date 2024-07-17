@@ -31,7 +31,12 @@ internal static class AnimationPatch
             );
 
         new Harmony(harmonyId).Patch(
-                typeof(EntityPlayer).GetMethod("OnSelfBeforeRender", AccessTools.all),
+                typeof(EntityPlayerShapeRenderer).GetMethod("DoRender3DOpaque", AccessTools.all),
+                prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimationPatch), nameof(DoRender3DOpaquePlayer)))
+            );
+
+        new Harmony(harmonyId).Patch(
+                typeof(EntityShapeRenderer).GetMethod("BeforeRender", AccessTools.all),
                 prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimationPatch), nameof(BeforeRender)))
             );
 
@@ -59,9 +64,9 @@ internal static class AnimationPatch
 
     private static readonly FieldInfo? _entity = typeof(Vintagestory.API.Common.AnimationManager).GetField("entity", BindingFlags.NonPublic | BindingFlags.Instance);
 
-    private static void BeforeRender(EntityPlayer __instance, float dt)
+    private static void BeforeRender(EntityShapeRenderer __instance, float dt)
     {
-        OnBeforeFrame?.Invoke(__instance, dt);
+        OnBeforeFrame?.Invoke(__instance.entity, dt);
     }
 
     private static void DoRender3DOpaque(EntityShapeRenderer __instance, float dt, bool isShadowPass)
@@ -70,9 +75,17 @@ internal static class AnimationPatch
         behavior?.Render(__instance.entity.Api as ICoreClientAPI, __instance.entity as EntityAgent, __instance);
     }
 
+    private static void DoRender3DOpaquePlayer(EntityPlayerShapeRenderer __instance, float dt, bool isShadowPass)
+    {
+        var behavior = __instance.entity.GetBehavior<CollidersEntityBehavior>();
+        behavior?.Render(__instance.entity.Api as ICoreClientAPI, __instance.entity as EntityAgent, __instance);
+    }
+
     private static void ReplaceAnimator(Vintagestory.API.Common.AnimationManager __instance, float dt)
     {
         EntityAgent? entity = (Entity?)_entity?.GetValue(__instance) as EntityAgent;
+
+        if (entity?.Api?.Side != EnumAppSide.Client) return;
 
         ClientAnimator? animator = __instance.Animator as ClientAnimator;
         if (__instance.Animator is not ProceduralClientAnimator && animator != null)

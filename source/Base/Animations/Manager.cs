@@ -1,14 +1,10 @@
-﻿using Cairo;
-using CombatOverhaul.Colliders;
+﻿using CombatOverhaul.Colliders;
 using CombatOverhaul.Integration;
 using CombatOverhaul.Utils;
 using ImGuiNET;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.ObjectModel;
 using System.Numerics;
 using System.Reflection;
-using System.Xml.Linq;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
@@ -17,7 +13,6 @@ using Vintagestory.API.Util;
 using Vintagestory.Client.NoObf;
 using VSImGui;
 using VSImGui.API;
-using static Microsoft.WindowsAPICodePack.Shell.PropertySystem.SystemProperties.System;
 
 namespace CombatOverhaul.Animations;
 

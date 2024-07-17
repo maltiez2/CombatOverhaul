@@ -6,21 +6,7 @@
     "path": "/client/behaviors/0",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
-      "colliderShapeElements": [
-        "LowerTorso",
-        "UpperTorso",
-        "Head",
-        "Neck",
-        "UpperArmR",
-        "UpperArmL",
-        "LowerArmR",
-        "LowerArmL",
-        "UpperFootL",
-        "UpperFootR",
-        "LowerFootL",
-        "LowerFootR"
-      ],
-      "elementsTypes": {
+      "elements": {
         "Torso": ["LowerTorso", "UpperTorso"],
         "Head": ["Head"],
         "Arm": ["UpperArmR", "UpperArmL", "LowerArmR", "LowerArmL"],
@@ -36,21 +22,7 @@
     "path": "/server/behaviors/0",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
-      "colliderShapeElements": [
-        "LowerTorso",
-        "UpperTorso",
-        "Head",
-        "Neck",
-        "UpperArmR",
-        "UpperArmL",
-        "LowerArmR",
-        "LowerArmL",
-        "UpperFootL",
-        "UpperFootR",
-        "LowerFootL",
-        "LowerFootR"
-      ],
-      "elementsTypes": {
+      "elements": {
         "Torso": ["LowerTorso", "UpperTorso"],
         "Head": ["Head"],
         "Arm": ["UpperArmR", "UpperArmL", "LowerArmR", "LowerArmL"],

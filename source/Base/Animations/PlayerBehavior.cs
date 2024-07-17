@@ -1,5 +1,6 @@
 ﻿using CombatOverhaul.Integration;
 using CombatOverhaul.Utils;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 using System.Reflection;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -37,12 +38,16 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
 
         AnimationPatch.OnBeforeFrame += OnBeforeFrame;
         AnimationPatch.OnFrame += OnFrame;
+
+        _mainPlayer = (entity as EntityPlayer)?.PlayerUID == _api?.Settings.String["playeruid"];
     }
 
     public override string PropertyName() => "FirstPersonAnimations";
 
     public override void OnGameTick(float deltaTime) // @TODO refactor this brunching hell
     {
+        if (!_mainPlayer || _player.RightHandItemSlot == null || _player.LeftHandItemSlot == null) return;
+        
         int mainHandItemId = _player.RightHandItemSlot.Itemstack?.Item?.Id ?? 0;
         int offhandItemId = _player.LeftHandItemSlot.Itemstack?.Item?.Id ?? 0;
 
@@ -241,6 +246,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     private PlayerItemFrame _lastFrame = PlayerItemFrame.Zero;
     private readonly List<string> _offhandCategories = new();
     private readonly List<string> _mainHandCategories = new();
+    private bool _mainPlayer = false;
     private int _offHandItemId = 0;
     private int _mainHandItemId = 0;
     private long _mainHandIdleTimer = -1;
@@ -259,7 +265,9 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     {
         if (!IsOwner(entity)) return;
 
-        _lastFrame = _composer.Compose(TimeSpan.FromSeconds(dt / 2));
+        float factor = (entity.Api as ICoreClientAPI)?.IsSinglePlayer == true ? 0.5f : 1;
+
+        _lastFrame = _composer.Compose(TimeSpan.FromSeconds(dt * factor));
     }
     private void OnFrame(Entity entity, ElementPose pose)
     {

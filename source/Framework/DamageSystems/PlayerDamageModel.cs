@@ -106,8 +106,14 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
     {
         DamageZone damageZone;
         float multiplier;
-        if (_colliders != null && damageSource is ILocationalDamage locationalDamageSource)
+        if (_colliders != null && damageSource is ILocationalDamage locationalDamageSource && locationalDamageSource.Collider >= 0)
         {
+            if (_colliders.CollidersIds.Count <= locationalDamageSource.Collider)
+            {
+                LoggerUtil.Error(entity.Api, this, $"Collider with id '{locationalDamageSource.Collider}' from ILocationalDamage is not present in list of colliders (list size: {_colliders.CollidersIds}).");
+                return DamageModel.GetZone();
+            }
+            
             damageZone = CollidersToZones[_colliders.CollidersIds[locationalDamageSource.Collider]];
             multiplier = DamageModel.GetMultiplier(damageZone);
         }
