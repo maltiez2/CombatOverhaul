@@ -30,25 +30,24 @@ public enum DamageZone
     Feet = 128
 }
 
-[Flags]
-public enum BodyParts
+public enum PlayerBodyPart
 {
-    None = 0,
-    Head = 1,
-    Face = 2,
-    Neck = 4,
-    Torso = 8,
-    LeftArm = 16,
-    RightArm = 32,
-    LeftHand = 64,
-    RightHand = 128,
-    LeftLeg = 256,
-    RightLeg = 512,
-    LeftFoot = 1024,
-    RightFoot = 2048
+    None,
+    Head,
+    Face,
+    Neck,
+    Torso,
+    LeftArm,
+    RightArm,
+    LeftHand,
+    RightHand,
+    LeftLeg,
+    RightLeg,
+    LeftFoot,
+    RightFoot
 }
 
-public delegate void OnPlayerReceiveDamageDelegate(ref float damage, DamageSource damageSource, BodyParts damageZone);
+public delegate void OnPlayerReceiveDamageDelegate(ref float damage, DamageSource damageSource, PlayerBodyPart bodyPart);
 
 public sealed class PlayerDamageModelBehavior : EntityBehavior
 {
@@ -61,36 +60,36 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
     public override string PropertyName() => "PlayerDamageModel";
 
     public PlayerDamageModel DamageModel { get; private set; } = new(Array.Empty<DamageZoneStatsJson>());
-    public readonly ImmutableDictionary<string, BodyParts> CollidersToZones = new Dictionary<string, BodyParts>()
+    public readonly ImmutableDictionary<string, PlayerBodyPart> CollidersToBodyParts = new Dictionary<string, PlayerBodyPart>()
     {
-        { "LowerTorso", BodyParts.Torso },
-        { "UpperTorso", BodyParts.Torso },
-        { "Head", BodyParts.Head },
-        { "Neck", BodyParts.Neck },
-        { "UpperArmR", BodyParts.RightArm },
-        { "UpperArmL", BodyParts.LeftArm },
-        { "LowerArmR", BodyParts.RightHand },
-        { "LowerArmL", BodyParts.LeftHand },
-        { "UpperFootL", BodyParts.LeftLeg },
-        { "UpperFootR", BodyParts.RightLeg },
-        { "LowerFootL", BodyParts.LeftFoot },
-        { "LowerFootR", BodyParts.RightFoot }
+        { "LowerTorso", PlayerBodyPart.Torso },
+        { "UpperTorso", PlayerBodyPart.Torso },
+        { "Head", PlayerBodyPart.Head },
+        { "Neck", PlayerBodyPart.Neck },
+        { "UpperArmR", PlayerBodyPart.RightArm },
+        { "UpperArmL", PlayerBodyPart.LeftArm },
+        { "LowerArmR", PlayerBodyPart.RightHand },
+        { "LowerArmL", PlayerBodyPart.LeftHand },
+        { "UpperFootL", PlayerBodyPart.LeftLeg },
+        { "UpperFootR", PlayerBodyPart.RightLeg },
+        { "LowerFootL", PlayerBodyPart.LeftFoot },
+        { "LowerFootR", PlayerBodyPart.RightFoot }
     }.ToImmutableDictionary();
-    public readonly ImmutableDictionary<BodyParts, DamageZone> DetailedToZones = new Dictionary<BodyParts, DamageZone>()
+    public readonly ImmutableDictionary<PlayerBodyPart, DamageZone> BodyPartsToZones = new Dictionary<PlayerBodyPart, DamageZone>()
     {
-        { BodyParts.None, DamageZone.None },
-        { BodyParts.Head, DamageZone.Head },
-        { BodyParts.Face, DamageZone.Face },
-        { BodyParts.Neck, DamageZone.Neck },
-        { BodyParts.Torso, DamageZone.Torso },
-        { BodyParts.LeftArm, DamageZone.Arms },
-        { BodyParts.RightArm, DamageZone.Arms },
-        { BodyParts.LeftHand, DamageZone.Hands },
-        { BodyParts.RightHand, DamageZone.Hands },
-        { BodyParts.LeftLeg, DamageZone.Legs },
-        { BodyParts.RightLeg, DamageZone.Legs },
-        { BodyParts.LeftFoot, DamageZone.Feet },
-        { BodyParts.RightFoot, DamageZone.Feet }
+        { PlayerBodyPart.None, DamageZone.None },
+        { PlayerBodyPart.Head, DamageZone.Head },
+        { PlayerBodyPart.Face, DamageZone.Face },
+        { PlayerBodyPart.Neck, DamageZone.Neck },
+        { PlayerBodyPart.Torso, DamageZone.Torso },
+        { PlayerBodyPart.LeftArm, DamageZone.Arms },
+        { PlayerBodyPart.RightArm, DamageZone.Arms },
+        { PlayerBodyPart.LeftHand, DamageZone.Hands },
+        { PlayerBodyPart.RightHand, DamageZone.Hands },
+        { PlayerBodyPart.LeftLeg, DamageZone.Legs },
+        { PlayerBodyPart.RightLeg, DamageZone.Legs },
+        { PlayerBodyPart.LeftFoot, DamageZone.Feet },
+        { PlayerBodyPart.RightFoot, DamageZone.Feet }
 
     }.ToImmutableDictionary();
 
@@ -116,9 +115,9 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
 
     private float OnReceiveDamageHandler(float damage, DamageSource damageSource)
     {
-        (BodyParts detailedDamageZone, float multiplier) = DetermineHitZone(damageSource);
+        (PlayerBodyPart detailedDamageZone, float multiplier) = DetermineHitZone(damageSource);
 
-        DamageZone damageZone = DetailedToZones[detailedDamageZone];
+        DamageZone damageZone = BodyPartsToZones[detailedDamageZone];
 
         ApplyBlock(damageSource, detailedDamageZone, ref damage, out string blockDamageLogMessage);
         PrintToDamageLog(blockDamageLogMessage);
@@ -143,9 +142,9 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
         if (message != "") ((entity as EntityPlayer)?.Player as IServerPlayer)?.SendMessage(GlobalConstants.DamageLogChatGroup, message, EnumChatType.Notification);
     }
 
-    private (BodyParts zone, float multiplier) DetermineHitZone(DamageSource damageSource)
+    private (PlayerBodyPart zone, float multiplier) DetermineHitZone(DamageSource damageSource)
     {
-        BodyParts damageZone;
+        PlayerBodyPart damageZone;
         float multiplier;
         if (_colliders != null && damageSource is ILocationalDamage locationalDamageSource && locationalDamageSource.Collider >= 0)
         {
@@ -155,7 +154,7 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
                 return DamageModel.GetZone();
             }
 
-            damageZone = CollidersToZones[_colliders.CollidersIds[locationalDamageSource.Collider]];
+            damageZone = CollidersToBodyParts[_colliders.CollidersIds[locationalDamageSource.Collider]];
             multiplier = DamageModel.GetMultiplier(damageZone);
         }
         else if (damageSource is IDirectionalDamage directionalDamage)
@@ -175,7 +174,7 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
 
         return (damageZone, multiplier);
     }
-    private void ApplyBlock(DamageSource damageSource, BodyParts zone, ref float damage, out string damageLogMessage)
+    private void ApplyBlock(DamageSource damageSource, PlayerBodyPart zone, ref float damage, out string damageLogMessage)
     {
         damageLogMessage = "";
 
@@ -265,21 +264,21 @@ public sealed class PlayerDamageModel
 
     public PlayerDamageModel(DamageZoneStatsJson[] zones)
     {
-        DamageZones = zones.Select(zone => zone.ToStats()).Where(zone => zone.ZoneType != BodyParts.None).ToImmutableArray();
+        DamageZones = zones.Select(zone => zone.ToStats()).Where(zone => zone.ZoneType != PlayerBodyPart.None).ToImmutableArray();
         _random = new(0.5f, 0.5f, EnumDistribution.UNIFORM);
 
         _weights = new();
-        foreach (BodyParts zone in Enum.GetValues<BodyParts>())
+        foreach (PlayerBodyPart zone in Enum.GetValues<PlayerBodyPart>())
         {
             _weights[zone] = 0;
         }
     }
 
-    public (BodyParts zone, float damageMultiplier) GetZone(DirectionOffset? direction = null, BodyParts target = BodyParts.None, float multiplier = 1f)
+    public (PlayerBodyPart zone, float damageMultiplier) GetZone(DirectionOffset? direction = null, PlayerBodyPart target = PlayerBodyPart.None, float multiplier = 1f)
     {
         IEnumerable<DamageZoneStats> zones = direction == null ? DamageZones : DamageZones.Where(zone => zone.Directions.Check(direction.Value));
 
-        foreach ((BodyParts zone, _) in _weights)
+        foreach ((PlayerBodyPart zone, _) in _weights)
         {
             _weights[zone] = 0;
         }
@@ -292,7 +291,7 @@ public sealed class PlayerDamageModel
             _weights[zone.ZoneType] += zone.Coverage * zoneMultiplier;
         }
 
-        foreach ((BodyParts zone, _) in _weights)
+        foreach ((PlayerBodyPart zone, _) in _weights)
         {
             _weights[zone] /= sum;
         }
@@ -300,7 +299,7 @@ public sealed class PlayerDamageModel
         float randomValue = _random.nextFloat();
 
         sum = 0;
-        foreach ((BodyParts zone, float weight) in _weights)
+        foreach ((PlayerBodyPart zone, float weight) in _weights)
         {
             sum += weight;
             if (sum >= randomValue)
@@ -309,16 +308,16 @@ public sealed class PlayerDamageModel
             }
         }
 
-        return (BodyParts.None, 1.0f);
+        return (PlayerBodyPart.None, 1.0f);
     }
 
-    public float GetMultiplier(BodyParts zone)
+    public float GetMultiplier(PlayerBodyPart zone)
     {
         return DamageZones.Where(element => (element.ZoneType & zone) != 0).Select(element => element.DamageMultiplier).Average();
     }
 
     private readonly NatFloat _random;
-    private readonly Dictionary<BodyParts, float> _weights;
+    private readonly Dictionary<PlayerBodyPart, float> _weights;
 }
 
 public sealed class PlayerDamageModelJson
@@ -329,7 +328,7 @@ public sealed class PlayerDamageModelJson
 public interface IDirectionalDamage
 {
     DirectionOffset Direction { get; }
-    BodyParts Target { get; }
+    PlayerBodyPart Target { get; }
     float WeightMultiplier { get; }
 }
 
@@ -343,17 +342,17 @@ public sealed class DamageZoneStatsJson
     public float Right { get; set; } = 0;
     public float DamageMultiplier { get; set; } = 1;
 
-    public DamageZoneStats ToStats() => new(Enum.Parse<BodyParts>(Zone), Coverage, DirectionConstrain.FromDegrees(Top, Bottom, Right, Left), DamageMultiplier);
+    public DamageZoneStats ToStats() => new(Enum.Parse<PlayerBodyPart>(Zone), Coverage, DirectionConstrain.FromDegrees(Top, Bottom, Right, Left), DamageMultiplier);
 }
 
 public readonly struct DamageZoneStats
 {
-    public readonly BodyParts ZoneType;
+    public readonly PlayerBodyPart ZoneType;
     public readonly float Coverage;
     public readonly DirectionConstrain Directions;
     public readonly float DamageMultiplier;
 
-    public DamageZoneStats(BodyParts type, float coverage, DirectionConstrain directions, float damageMultiplier)
+    public DamageZoneStats(PlayerBodyPart type, float coverage, DirectionConstrain directions, float damageMultiplier)
     {
         ZoneType = type;
         Coverage = coverage;
@@ -364,11 +363,11 @@ public readonly struct DamageZoneStats
 
 public sealed class DamageBlockStats
 {
-    public readonly BodyParts ZoneType;
+    public readonly PlayerBodyPart ZoneType;
     public readonly DirectionConstrain Directions;
     public readonly Action Callback;
 
-    public DamageBlockStats(BodyParts type, DirectionConstrain directions, Action callback)
+    public DamageBlockStats(PlayerBodyPart type, DirectionConstrain directions, Action callback)
     {
         ZoneType = type;
         Directions = directions;
@@ -385,7 +384,7 @@ public sealed class DamageBlockPacket
 
     public DamageBlockStats ToBlockStats(Action callback)
     {
-        return new((BodyParts)Zones, DirectionConstrain.FromArray(Directions), callback);
+        return new((PlayerBodyPart)Zones, DirectionConstrain.FromArray(Directions), callback);
     }
 }
 
@@ -404,7 +403,7 @@ public sealed class DamageBlockJson
     {
         return new()
         {
-            Zones = (int)Zones.Select(Enum.Parse<BodyParts>).Aggregate((first, second) => first | second),
+            Zones = (int)Zones.Select(Enum.Parse<PlayerBodyPart>).Aggregate((first, second) => first | second),
             Directions = Directions
         };
     }

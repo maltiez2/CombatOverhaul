@@ -41,8 +41,8 @@
       "damageModel": {
         "Zones": [
           {"Zone": "Torso", "Coverage": 70, "Top": 90, "Bottom": 90, "Left": 180, "Right": 180, "DamageMultiplier": 1},
-          {"Zone": "Head", "Coverage": 40, "Top": 90, "Bottom": 30, "Left": 180, "Right": 180, "DamageMultiplier": 2},
-          {"Zone": "Neck", "Coverage": 5, "Top": 15, "Bottom": 15, "Left": 180, "Right": 180, "DamageMultiplier": 3},
+          {"Zone": "Head", "Coverage": 40, "Top": 90, "Bottom": 15, "Left": 180, "Right": 180, "DamageMultiplier": 2},
+          {"Zone": "Neck", "Coverage": 5, "Top": 30, "Bottom": 15, "Left": 180, "Right": 180, "DamageMultiplier": 3},
           {"Zone": "Face", "Coverage": 10, "Top": 60, "Bottom": 60, "Left": 60, "Right": 60, "DamageMultiplier": 1.5},
           {"Zone": "LeftArm", "Coverage": 15, "Top": 90, "Bottom": 90, "Left": 180, "Right": 0, "DamageMultiplier": 0.5},
           {"Zone": "RightArm", "Coverage": 15, "Top": 90, "Bottom": 90, "Left": 0, "Right": 180, "DamageMultiplier": 0.5},

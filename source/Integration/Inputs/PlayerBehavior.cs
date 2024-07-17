@@ -168,32 +168,6 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
 
         return handlers;
     }
-    private static IEnumerable<Type> GetClassesWithAttribute<TAttribute>() where TAttribute : Attribute
-    {
-        Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
-        List<Type> typesWithAttribute = new();
-
-        foreach (Assembly assembly in assemblies)
-        {
-            try
-            {
-                Type[] types = assembly.GetTypes();
-                foreach (Type type in types)
-                {
-                    if (type.GetCustomAttributes(typeof(TAttribute), true).Length > 0)
-                    {
-                        typesWithAttribute.Add(type);
-                    }
-                }
-            }
-            catch (ReflectionTypeLoadException ex)
-            {
-                Exception?[] loaderExceptions = ex.LoaderExceptions;
-            }
-        }
-
-        return typesWithAttribute;
-    }
     private bool HandleActionEvent(ActionEventData eventData, int itemId, ActionEventCallbackDelegate callback)
     {
         int mainHandId = _player.ActiveHandItemSlot.Itemstack?.Id ?? -1;
