@@ -39,6 +39,7 @@ public class MagazineCrossbowStats : WeaponStats
     public float BoltVelocity { get; set; } = 1;
     public string BoltWildcard { get; set; } = "@.*(bolt-copper|bolt-flint)";
     public float Zeroing { get; set; } = 1.5f;
+    public float[] DispersionMOA { get; set; } = new float[] { 0, 0 };
 
     public int MagazineSize { get; set; } = 5;
 }
@@ -308,7 +309,7 @@ public class MagazineCrossbowServer : RangeWeaponServer
             DamageMultiplier = _stats.BoltDamageMultiplier,
             DamageStrength = _stats.BoltDamageStrength,
             Position = new Vector3(packet.Position[0], packet.Position[1], packet.Position[2]),
-            Velocity = Vector3.Normalize(new Vector3(packet.Velocity[0], packet.Velocity[1], packet.Velocity[2])) * _stats.BoltVelocity
+            Velocity = GetDirectionWithDispersion(packet.Velocity, _stats.DispersionMOA) * _stats.BoltVelocity
         };
 
         _projectileSystem.Spawn(packet.ProjectileId, stats, spawnStats, ammo, shooter);

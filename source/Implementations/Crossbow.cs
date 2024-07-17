@@ -38,6 +38,7 @@ public class CrossbowStats : WeaponStats
     public float BoltVelocity { get; set; } = 1;
     public string BoltWildcard { get; set; } = "*bolt-*";
     public float Zeroing { get; set; } = 1.5f;
+    public float[] DispersionMOA { get; set; } = new float[] { 0, 0 };
 }
 
 public class CrossbowClient : RangeWeaponClient
@@ -241,7 +242,11 @@ public class CrossbowClient : RangeWeaponClient
 
         targetDirection = ClientAimingSystem.Zeroing(targetDirection, Stats.Zeroing);
 
-        RangedWeaponSystem.Shoot(slot, 1, new((float)position.X, (float)position.Y, (float)position.Z), new(targetDirection.X, targetDirection.Y, targetDirection.Z), mainHand, ShootCallback);
+        for (int count = 0; count < 60; count++)
+        {
+            RangedWeaponSystem.Shoot(slot, 1, new((float)position.X, (float)position.Y, (float)position.Z), new(targetDirection.X, targetDirection.Y, targetDirection.Z), mainHand, ShootCallback);
+        }
+            
 
         Attachable.ClearAttachments(player.EntityId);
         return true;
@@ -297,7 +302,7 @@ public class CrossbowServer : RangeWeaponServer
             DamageMultiplier = _stats.BoltDamageMultiplier,
             DamageStrength = _stats.BoltDamageStrength,
             Position = new Vector3(packet.Position[0], packet.Position[1], packet.Position[2]),
-            Velocity = Vector3.Normalize(new Vector3(packet.Velocity[0], packet.Velocity[1], packet.Velocity[2])) * _stats.BoltVelocity
+            Velocity = GetDirectionWithDispersion(packet.Velocity, _stats.DispersionMOA) * _stats.BoltVelocity
         };
 
         _projectileSystem.Spawn(packet.ProjectileId, stats, spawnStats, boltSlot.TakeOut(1), shooter);

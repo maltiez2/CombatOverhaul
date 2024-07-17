@@ -1,4 +1,5 @@
-﻿using CombatOverhaul.Animations;
+﻿using Cairo;
+using CombatOverhaul.Animations;
 using CombatOverhaul.Armor;
 using CombatOverhaul.Inputs;
 using CombatOverhaul.RangedSystems;
@@ -45,6 +46,7 @@ public class MuzzleloaderStats : WeaponStats
     public string PrimedAnimation { get; set; } = "";
 
     public AimingStatsJson Aiming { get; set; } = new();
+    public float[] DispersionMOA { get; set; } = new float[] { 0, 0 };
     public float BulletDamageMultiplier { get; set; } = 1;
     public float BulletDamageStrength { get; set; } = 1;
     public float BulletVelocity { get; set; } = 1;
@@ -582,7 +584,7 @@ public class MuzzleloaderServer : RangeWeaponServer
             DamageMultiplier = Stats.BulletDamageMultiplier,
             DamageStrength = Stats.BulletDamageStrength,
             Position = new Vector3(packet.Position[0], packet.Position[1], packet.Position[2]),
-            Velocity = Vector3.Normalize(new Vector3(packet.Velocity[0], packet.Velocity[1], packet.Velocity[2])) * Stats.BulletVelocity
+            Velocity = GetDirectionWithDispersion(packet.Velocity, Stats.DispersionMOA) * Stats.BulletVelocity
         };
 
         ProjectileSystem.Spawn(packet.ProjectileId, stats, spawnStats, ammo, shooter);

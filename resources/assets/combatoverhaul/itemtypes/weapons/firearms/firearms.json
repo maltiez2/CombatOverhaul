@@ -36,6 +36,7 @@
     "PrimingRequirementWildcard": "",
     "AimingRequirementWildcard": "",
     "BulletWildcard": "*slug-*",
+    "DispersionMOA": [0, 0],
     "Aiming": {
       "AimDifficulty": 1,
       "CursorType": "Fixed",

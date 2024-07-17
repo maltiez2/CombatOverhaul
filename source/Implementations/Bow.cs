@@ -6,6 +6,7 @@ using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
+using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
 using Vintagestory.API.Util;
 
@@ -36,6 +37,7 @@ public sealed class BowStats : WeaponStats
     public float ArrowVelocity { get; set; } = 1;
     public string ArrowWildcard { get; set; } = "*arrow-*";
     public float Zeroing { get; set; } = 1.5f;
+    public float[] DispersionMOA { get; set; } = new float[] { 0, 0 };
 }
 
 public sealed class BowClient : RangeWeaponClient
@@ -297,7 +299,7 @@ public sealed class BowServer : RangeWeaponServer
             DamageMultiplier = _stats.ArrowDamageMultiplier,
             DamageStrength = _stats.ArrowDamageStrength,
             Position = new Vector3(packet.Position[0], packet.Position[1], packet.Position[2]),
-            Velocity = Vector3.Normalize(new Vector3(packet.Velocity[0], packet.Velocity[1], packet.Velocity[2])) * _stats.ArrowVelocity
+            Velocity = GetDirectionWithDispersion(packet.Velocity, _stats.DispersionMOA) * _stats.ArrowVelocity
         };
 
         _projectileSystem.Spawn(packet.ProjectileId, stats, spawnStats, arrowSlot.TakeOut(1), shooter);

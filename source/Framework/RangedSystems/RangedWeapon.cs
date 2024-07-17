@@ -1,10 +1,13 @@
 ﻿using CombatOverhaul.Animations;
 using CombatOverhaul.Implementations;
 using CombatOverhaul.Inputs;
+using System;
+using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
+using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
 
 namespace CombatOverhaul.RangedSystems;
@@ -107,4 +110,33 @@ public class RangeWeaponServer : IServerRangedWeaponLogic
     protected ProjectileSystemServer ProjectileSystem;
     protected readonly Item Item;
     protected readonly ICoreServerAPI Api;
+    protected readonly NatFloat RandomFloat = new(0, 1, EnumDistribution.GAUSSIAN);
+    protected const float MinutesInRadian = 180f * 60f;
+
+    protected Vector3 GetDirectionWithDispersion(float[] direction, float[] dispersionMOA)
+    {
+        Vector3 directionVector = new(direction);
+        Vector2 dispersionVector = new(dispersionMOA);
+
+        return GetDirectionWithDispersion(directionVector, dispersionVector);
+    }
+
+    protected Vector3 GetDirectionWithDispersion(Vector3 direction, Vector2 dispersionMOA)
+    {
+        float randomPitch = RandomFloat.nextFloat() * dispersionMOA.Y * MathF.PI / MinutesInRadian;
+        float randomYaw = RandomFloat.nextFloat() * dispersionMOA.X * MathF.PI / MinutesInRadian;
+
+        Vector3 verticalAxis = new(0, 0, 1);
+        bool directionIsVertical = (verticalAxis - direction).Length() < 1E6 || (verticalAxis + direction).Length() < 1E6;
+        if (directionIsVertical) verticalAxis = new(0, 1, 0);
+
+        Vector3 forwardAxis = Vector3.Normalize(direction);
+        Vector3 yawAxis = Vector3.Normalize(Vector3.Cross(forwardAxis, verticalAxis));
+        Vector3 pitchAxis = Vector3.Normalize(Vector3.Cross(yawAxis, forwardAxis));
+
+        Vector3 yawComponent = yawAxis * MathF.Tan(randomYaw);
+        Vector3 pitchComponent = pitchAxis * MathF.Tan(randomPitch);
+
+        return Vector3.Normalize(forwardAxis + yawComponent + pitchComponent);
+    }
 }

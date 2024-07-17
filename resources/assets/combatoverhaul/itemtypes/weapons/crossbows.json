@@ -37,7 +37,8 @@
         "VerticalLimit": 0.25,
         "VerticalOffset": -0.05
       }
-    }
+    },
+    "DispersionMOAByType": {"*": [30, 30]}
   },
   "shapeByType": {
     "*-goatsfoot": {"base": "combatoverhaul:weapons/crossbows/{type}-tp"},
