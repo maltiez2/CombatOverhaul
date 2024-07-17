@@ -20,11 +20,15 @@ public sealed class EntityDamageModelJson
     public Dictionary<string, Dictionary<string, float>> ResistsForColliders { get; set; } = new();
 }
 
+public delegate void OnEntityReceiveDamageDelegate(ref float damage, DamageSource damageSource, ColliderTypes damageZone);
+
 public sealed class EntityDamageModelBehavior : EntityBehavior
 {
     public EntityDamageModelBehavior(Entity entity) : base(entity)
     {
     }
+
+    public event OnEntityReceiveDamageDelegate? OnReceiveDamage;
 
     public override string PropertyName() => "EntityDamageModel";
     public ImmutableDictionary<ColliderTypes, float> DamageMultipliers { get; private set; } = new Dictionary<ColliderTypes, float>()
@@ -78,7 +82,7 @@ public sealed class EntityDamageModelBehavior : EntityBehavior
     {
         _colliders = entity.GetBehavior<CollidersEntityBehavior>();
         EntityBehaviorHealth? healthBehavior = entity.GetBehavior<EntityBehaviorHealth>();
-        if (healthBehavior != null) healthBehavior.onDamaged += OnReceiveDamage;
+        if (healthBehavior != null) healthBehavior.onDamaged += OnReceiveDamageHandler;
     }
 
     private CollidersEntityBehavior? _colliders;
@@ -87,11 +91,13 @@ public sealed class EntityDamageModelBehavior : EntityBehavior
     {
         if (message != "") ((damageSource.CauseEntity as EntityPlayer)?.Player as IServerPlayer)?.SendMessage(GlobalConstants.DamageLogChatGroup, message, EnumChatType.Notification);
     }
-    private float OnReceiveDamage(float damage, DamageSource damageSource)
+    private float OnReceiveDamageHandler(float damage, DamageSource damageSource)
     {
+        ColliderTypes colliderType = ColliderTypes.Torso;
+
         if (_colliders != null && damageSource is ILocationalDamage locationalDamageSource)
         {
-            ColliderTypes colliderType = _colliders.GetColliderType(locationalDamageSource.Collider);
+            colliderType = _colliders.GetColliderType(locationalDamageSource.Collider);
             float multiplier = DamageMultipliers[colliderType];
             damage *= multiplier;
         }
@@ -121,6 +127,8 @@ public sealed class EntityDamageModelBehavior : EntityBehavior
             DamageData damageData = new(damageSource.Type, damageSource.DamageTier);
             Resists.ApplyResist(damageData, ref damage);
         }
+
+        OnReceiveDamage?.Invoke(ref damage, damageSource, colliderType);
 
         return damage;
     }

@@ -30,29 +30,68 @@ public enum DamageZone
     Feet = 128
 }
 
+[Flags]
+public enum BodyParts
+{
+    None = 0,
+    Head = 1,
+    Face = 2,
+    Neck = 4,
+    Torso = 8,
+    LeftArm = 16,
+    RightArm = 32,
+    LeftHand = 64,
+    RightHand = 128,
+    LeftLeg = 256,
+    RightLeg = 512,
+    LeftFoot = 1024,
+    RightFoot = 2048
+}
+
+public delegate void OnPlayerReceiveDamageDelegate(ref float damage, DamageSource damageSource, BodyParts damageZone);
+
 public sealed class PlayerDamageModelBehavior : EntityBehavior
 {
     public PlayerDamageModelBehavior(Entity entity) : base(entity)
     {
     }
 
+    public event OnPlayerReceiveDamageDelegate? OnReceiveDamage;
+
     public override string PropertyName() => "PlayerDamageModel";
 
     public PlayerDamageModel DamageModel { get; private set; } = new(Array.Empty<DamageZoneStatsJson>());
-    public readonly ImmutableDictionary<string, DamageZone> CollidersToZones = new Dictionary<string, DamageZone>()
+    public readonly ImmutableDictionary<string, BodyParts> CollidersToZones = new Dictionary<string, BodyParts>()
     {
-        { "LowerTorso", DamageZone.Torso },
-        { "UpperTorso", DamageZone.Torso },
-        { "Head", DamageZone.Head },
-        { "Neck", DamageZone.Neck },
-        { "UpperArmR", DamageZone.Arms },
-        { "UpperArmL", DamageZone.Arms },
-        { "LowerArmR", DamageZone.Hands },
-        { "LowerArmL", DamageZone.Hands },
-        { "UpperFootL", DamageZone.Legs },
-        { "UpperFootR", DamageZone.Legs },
-        { "LowerFootL", DamageZone.Feet },
-        { "LowerFootR", DamageZone.Feet }
+        { "LowerTorso", BodyParts.Torso },
+        { "UpperTorso", BodyParts.Torso },
+        { "Head", BodyParts.Head },
+        { "Neck", BodyParts.Neck },
+        { "UpperArmR", BodyParts.RightArm },
+        { "UpperArmL", BodyParts.LeftArm },
+        { "LowerArmR", BodyParts.RightHand },
+        { "LowerArmL", BodyParts.LeftHand },
+        { "UpperFootL", BodyParts.LeftLeg },
+        { "UpperFootR", BodyParts.RightLeg },
+        { "LowerFootL", BodyParts.LeftFoot },
+        { "LowerFootR", BodyParts.RightFoot }
+    }.ToImmutableDictionary();
+    public readonly ImmutableDictionary<BodyParts, DamageZone> DetailedToZones = new Dictionary<BodyParts, DamageZone>()
+    {
+        { BodyParts.None, DamageZone.None },
+        { BodyParts.Head, DamageZone.Head },
+        { BodyParts.Face, DamageZone.Face },
+        { BodyParts.Neck, DamageZone.Neck },
+        { BodyParts.Torso, DamageZone.Torso },
+        { BodyParts.LeftArm, DamageZone.Arms },
+        { BodyParts.RightArm, DamageZone.Arms },
+        { BodyParts.LeftHand, DamageZone.Hands },
+        { BodyParts.RightHand, DamageZone.Hands },
+        { BodyParts.LeftLeg, DamageZone.Legs },
+        { BodyParts.RightLeg, DamageZone.Legs },
+        { BodyParts.LeftFoot, DamageZone.Feet },
+        { BodyParts.RightFoot, DamageZone.Feet }
+
     }.ToImmutableDictionary();
 
     public DamageBlockStats? CurrentDamageBlock { get; set; } = null;
@@ -70,18 +109,18 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
     public override void AfterInitialized(bool onFirstSpawn)
     {
         _colliders = entity.GetBehavior<CollidersEntityBehavior>();
-        entity.GetBehavior<EntityBehaviorHealth>().onDamaged += OnReceiveDamage;
+        entity.GetBehavior<EntityBehaviorHealth>().onDamaged += OnReceiveDamageHandler;
     }
 
     private CollidersEntityBehavior? _colliders;
 
-    private float OnReceiveDamage(float damage, DamageSource damageSource)
+    private float OnReceiveDamageHandler(float damage, DamageSource damageSource)
     {
-        (DamageZone damageZone, float multiplier) = DetermineHitZone(damageSource);
+        (BodyParts detailedDamageZone, float multiplier) = DetermineHitZone(damageSource);
 
-        Console.WriteLine($"Hit zone: {damageZone}"); // @DEBUG
+        DamageZone damageZone = DetailedToZones[detailedDamageZone];
 
-        ApplyBlock(damageSource, damageZone, ref damage, out string blockDamageLogMessage);
+        ApplyBlock(damageSource, detailedDamageZone, ref damage, out string blockDamageLogMessage);
         PrintToDamageLog(blockDamageLogMessage);
 
         ApplyArmorResists(damageSource, damageZone, ref damage, out string armorDamageLogMessage);
@@ -89,9 +128,11 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
 
         damage *= multiplier;
 
+        OnReceiveDamage?.Invoke(ref damage, damageSource, detailedDamageZone);
+
         if (damage != 0)
         {
-            string damageLogMessage = Lang.Get("combatoverhaul:damagelog-received-damage", damage, Lang.Get($"combatoverhaul:damage-zone-{damageZone}"));
+            string damageLogMessage = Lang.Get("combatoverhaul:damagelog-received-damage", damage, Lang.Get($"combatoverhaul:detailed-damage-zone-{detailedDamageZone}"));
             PrintToDamageLog(damageLogMessage);
         }
 
@@ -102,9 +143,9 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
         if (message != "") ((entity as EntityPlayer)?.Player as IServerPlayer)?.SendMessage(GlobalConstants.DamageLogChatGroup, message, EnumChatType.Notification);
     }
 
-    private (DamageZone zone, float multiplier) DetermineHitZone(DamageSource damageSource)
+    private (BodyParts zone, float multiplier) DetermineHitZone(DamageSource damageSource)
     {
-        DamageZone damageZone;
+        BodyParts damageZone;
         float multiplier;
         if (_colliders != null && damageSource is ILocationalDamage locationalDamageSource && locationalDamageSource.Collider >= 0)
         {
@@ -113,7 +154,7 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
                 LoggerUtil.Error(entity.Api, this, $"Collider with id '{locationalDamageSource.Collider}' from ILocationalDamage is not present in list of colliders (list size: {_colliders.CollidersIds}).");
                 return DamageModel.GetZone();
             }
-            
+
             damageZone = CollidersToZones[_colliders.CollidersIds[locationalDamageSource.Collider]];
             multiplier = DamageModel.GetMultiplier(damageZone);
         }
@@ -134,7 +175,7 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
 
         return (damageZone, multiplier);
     }
-    private void ApplyBlock(DamageSource damageSource, DamageZone zone, ref float damage, out string damageLogMessage)
+    private void ApplyBlock(DamageSource damageSource, BodyParts zone, ref float damage, out string damageLogMessage)
     {
         damageLogMessage = "";
 
@@ -142,7 +183,7 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
         
         if ((zone & CurrentDamageBlock.ZoneType) == 0)
         {
-            damageLogMessage = Lang.Get("combatoverhaul:damagelog-missed-block-zone", Lang.Get($"combatoverhaul:damage-zone-{zone}"));
+            damageLogMessage = Lang.Get("combatoverhaul:damagelog-missed-block-zone", Lang.Get($"combatoverhaul:detailed-damage-zone-{zone}"));
             return;
         }
 
@@ -167,7 +208,7 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
 
         damage = 0;
 
-        damageLogMessage = Lang.Get("combatoverhaul:damagelog-success-block", Lang.Get($"combatoverhaul:damage-zone-{zone}"));
+        damageLogMessage = Lang.Get("combatoverhaul:damagelog-success-block", Lang.Get($"combatoverhaul:detailed-damage-zone-{zone}"));
 
         CurrentDamageBlock.Callback.Invoke();
     }
@@ -224,21 +265,21 @@ public sealed class PlayerDamageModel
 
     public PlayerDamageModel(DamageZoneStatsJson[] zones)
     {
-        DamageZones = zones.Select(zone => zone.ToStats()).Where(zone => zone.ZoneType != DamageZone.None).ToImmutableArray();
+        DamageZones = zones.Select(zone => zone.ToStats()).Where(zone => zone.ZoneType != BodyParts.None).ToImmutableArray();
         _random = new(0.5f, 0.5f, EnumDistribution.UNIFORM);
 
         _weights = new();
-        foreach (DamageZone zone in Enum.GetValues<DamageZone>())
+        foreach (BodyParts zone in Enum.GetValues<BodyParts>())
         {
             _weights[zone] = 0;
         }
     }
 
-    public (DamageZone zone, float damageMultiplier) GetZone(DirectionOffset? direction = null, DamageZone target = DamageZone.None, float multiplier = 1f)
+    public (BodyParts zone, float damageMultiplier) GetZone(DirectionOffset? direction = null, BodyParts target = BodyParts.None, float multiplier = 1f)
     {
         IEnumerable<DamageZoneStats> zones = direction == null ? DamageZones : DamageZones.Where(zone => zone.Directions.Check(direction.Value));
 
-        foreach ((DamageZone zone, _) in _weights)
+        foreach ((BodyParts zone, _) in _weights)
         {
             _weights[zone] = 0;
         }
@@ -251,7 +292,7 @@ public sealed class PlayerDamageModel
             _weights[zone.ZoneType] += zone.Coverage * zoneMultiplier;
         }
 
-        foreach ((DamageZone zone, _) in _weights)
+        foreach ((BodyParts zone, _) in _weights)
         {
             _weights[zone] /= sum;
         }
@@ -259,7 +300,7 @@ public sealed class PlayerDamageModel
         float randomValue = _random.nextFloat();
 
         sum = 0;
-        foreach ((DamageZone zone, float weight) in _weights)
+        foreach ((BodyParts zone, float weight) in _weights)
         {
             sum += weight;
             if (sum >= randomValue)
@@ -268,16 +309,16 @@ public sealed class PlayerDamageModel
             }
         }
 
-        return (DamageZone.None, 1.0f);
+        return (BodyParts.None, 1.0f);
     }
 
-    public float GetMultiplier(DamageZone zone)
+    public float GetMultiplier(BodyParts zone)
     {
         return DamageZones.Where(element => (element.ZoneType & zone) != 0).Select(element => element.DamageMultiplier).Average();
     }
 
     private readonly NatFloat _random;
-    private readonly Dictionary<DamageZone, float> _weights;
+    private readonly Dictionary<BodyParts, float> _weights;
 }
 
 public sealed class PlayerDamageModelJson
@@ -288,7 +329,7 @@ public sealed class PlayerDamageModelJson
 public interface IDirectionalDamage
 {
     DirectionOffset Direction { get; }
-    DamageZone Target { get; }
+    BodyParts Target { get; }
     float WeightMultiplier { get; }
 }
 
@@ -302,17 +343,17 @@ public sealed class DamageZoneStatsJson
     public float Right { get; set; } = 0;
     public float DamageMultiplier { get; set; } = 1;
 
-    public DamageZoneStats ToStats() => new(Enum.Parse<DamageZone>(Zone), Coverage, DirectionConstrain.FromDegrees(Top, Bottom, Right, Left), DamageMultiplier);
+    public DamageZoneStats ToStats() => new(Enum.Parse<BodyParts>(Zone), Coverage, DirectionConstrain.FromDegrees(Top, Bottom, Right, Left), DamageMultiplier);
 }
 
 public readonly struct DamageZoneStats
 {
-    public readonly DamageZone ZoneType;
+    public readonly BodyParts ZoneType;
     public readonly float Coverage;
     public readonly DirectionConstrain Directions;
     public readonly float DamageMultiplier;
 
-    public DamageZoneStats(DamageZone type, float coverage, DirectionConstrain directions, float damageMultiplier)
+    public DamageZoneStats(BodyParts type, float coverage, DirectionConstrain directions, float damageMultiplier)
     {
         ZoneType = type;
         Coverage = coverage;
@@ -323,11 +364,11 @@ public readonly struct DamageZoneStats
 
 public sealed class DamageBlockStats
 {
-    public readonly DamageZone ZoneType;
+    public readonly BodyParts ZoneType;
     public readonly DirectionConstrain Directions;
     public readonly Action Callback;
 
-    public DamageBlockStats(DamageZone type, DirectionConstrain directions, Action callback)
+    public DamageBlockStats(BodyParts type, DirectionConstrain directions, Action callback)
     {
         ZoneType = type;
         Directions = directions;
@@ -344,7 +385,7 @@ public sealed class DamageBlockPacket
 
     public DamageBlockStats ToBlockStats(Action callback)
     {
-        return new((DamageZone)Zones, DirectionConstrain.FromArray(Directions), callback);
+        return new((BodyParts)Zones, DirectionConstrain.FromArray(Directions), callback);
     }
 }
 
@@ -363,7 +404,7 @@ public sealed class DamageBlockJson
     {
         return new()
         {
-            Zones = (int)Zones.Select(Enum.Parse<DamageZone>).Aggregate((first, second) => first | second),
+            Zones = (int)Zones.Select(Enum.Parse<BodyParts>).Aggregate((first, second) => first | second),
             Directions = Directions
         };
     }
