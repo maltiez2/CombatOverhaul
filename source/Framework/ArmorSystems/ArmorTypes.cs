@@ -77,15 +77,21 @@ public interface IArmor
     public DamageResistData Resists { get; }
 }
 
+public interface IAffectsPlayerStats
+{
+    public Dictionary<string, float> PlayerStats { get; }
+}
+
 public sealed class ArmorStatsJson
 {
     public string[] Layers { get; set; } = Array.Empty<string>();
     public string[] Zones { get; set; } = Array.Empty<string>();
     public Dictionary<string, float> Resists { get; set; } = new();
     public Dictionary<string, float> FlatReduction { get; set; } = new();
+    public Dictionary<string, float> PlayerStats { get; set; } = new();
 }
 
-public class ArmorBehavior : CollectibleBehavior, IArmor
+public class ArmorBehavior : CollectibleBehavior, IArmor, IAffectsPlayerStats
 {
     public ArmorBehavior(CollectibleObject collObj) : base(collObj)
     {
@@ -93,12 +99,15 @@ public class ArmorBehavior : CollectibleBehavior, IArmor
 
     public ArmorType ArmorType { get; protected set; } = new(ArmorLayers.None, DamageZone.None);
     public DamageResistData Resists { get; protected set; } = new();
+    public Dictionary<string, float> PlayerStats { get; set; } = new();
 
     public override void Initialize(JsonObject properties)
     {
         base.Initialize(properties);
 
         ArmorStatsJson stats = properties.AsObject<ArmorStatsJson>();
+
+        PlayerStats = stats.PlayerStats;
 
         if (!stats.Layers.Any() || !stats.Zones.Any())
         {

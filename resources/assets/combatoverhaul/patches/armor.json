@@ -11,22 +11,37 @@
             "LayersByType": {"*-sewn-*": ["Skin"], "*-tailored*": ["Skin"], "*-chain-*": ["Middle"], "*-scale-*": ["Outer", "Middle"], "*": ["Outer"]},
             "Zones": ["Head", "Face"],
             "Resists": {},
-            "FlatReduction": {}
+            "FlatReduction": {},
+            "PlayerStats": {"walkspeed": -0.1, "healingeffectivness": -0.1, "hungerrate": 0.1}
           },
           "*-body-*": {
             "LayersByType": {"*-sewn-*": ["Skin"], "*-tailored*": ["Skin"], "*-chain-*": ["Middle"], "*-scale-*": ["Outer", "Middle"], "*": ["Outer"]},
             "Zones": ["Torso", "Arms", "Hands"],
             "Resists": {},
-            "FlatReduction": {}
+            "FlatReduction": {},
+            "PlayerStats": {"walkspeed": -0.1, "healingeffectivness": -0.1, "hungerrate": 0.1}
           },
           "*-legs-*": {
             "LayersByType": {"*-sewn-*": ["Skin"], "*-tailored*": ["Skin"], "*-chain-*": ["Middle"], "*-scale-*": ["Outer", "Middle"], "*": ["Outer"]},
             "Zones": ["Legs", "Feet"],
             "Resists": {},
-            "FlatReduction": {}
+            "FlatReduction": {},
+            "PlayerStats": {"walkspeed": -0.1, "healingeffectivness": -0.1, "hungerrate": 0.1}
           }
         }
       }
     ]
+  },
+  {
+    "file": "game:itemtypes/wearable/armor",
+    "op": "replace",
+    "path": "/attributes/protectionModifiersByType",
+    "value": {"*": {"relativeProtection": 0, "flatDamageReduction": 0, "protectionTier": 0}}
+  },
+  {
+    "file": "game:itemtypes/wearable/armor",
+    "op": "replace",
+    "path": "/attributes/statModifiersByType",
+    "value": {"*": {"rangedWeaponsAcc": 0, "rangedWeaponsSpeed": 0, "walkSpeed": 0, "healingeffectivness": 0, "hungerrate": 0}}
   }
 ]
