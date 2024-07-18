@@ -122,7 +122,7 @@ public sealed class BowClient : RangeWeaponClient
     {
         if (state != (int)BowState.Loaded || eventData.AltPressed) return false;
 
-        AnimationRequestByCode request = new(_stats.DrawAnimation, 1.0f, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true, FullLoadCallback);
+        AnimationRequestByCode request = new(_stats.DrawAnimation, PlayerBehavior?.ManipulationSpeed ?? 1, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true, FullLoadCallback);
         AnimationBehavior?.Play(request, mainHand);
 
         state = (int)BowState.Draw;

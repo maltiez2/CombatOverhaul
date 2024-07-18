@@ -93,7 +93,7 @@ public class CrossbowClient : RangeWeaponClient
     {
         if (state != (int)CrossbowState.Unloaded || eventData.AltPressed) return false;
 
-        AnimationBehavior?.Play(mainHand, Stats.DrawAnimation, callback: () => DrawAnimationCallback(slot, mainHand), animationSpeed: 1.0f);
+        AnimationBehavior?.Play(mainHand, Stats.DrawAnimation, callback: () => DrawAnimationCallback(slot, mainHand), animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1);
 
         state = (int)CrossbowState.Draw;
 
@@ -130,7 +130,7 @@ public class CrossbowClient : RangeWeaponClient
 
         Attachable.SetAttachment(player.EntityId, "bolt", BoltSlot.Itemstack, BoltTransform);
 
-        AnimationBehavior?.Play(mainHand, Stats.LoadAnimation, callback: () => LoadAnimationCallback(slot, mainHand, BoltSlot));
+        AnimationBehavior?.Play(mainHand, Stats.LoadAnimation, animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1, callback: () => LoadAnimationCallback(slot, mainHand, BoltSlot));
 
         state = (int)CrossbowState.Load;
 

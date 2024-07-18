@@ -124,7 +124,7 @@ public class JavelinClient : IClientWeaponLogic
                 {
                     SetState(MeleeWeaponState.WindingUp, mainHand);
                     MeleeAttack.Start(player.Player);
-                    AnimationBehavior?.Play(mainHand, Stats.AttackAnimation, callback: () => AttackAnimationCallback(mainHand), callbackHandler: code => AttackAnimationCallbackHandler(code, mainHand));
+                    AnimationBehavior?.Play(mainHand, Stats.AttackAnimation, animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1, callback: () => AttackAnimationCallback(mainHand), callbackHandler: code => AttackAnimationCallbackHandler(code, mainHand));
                 }
                 break;
             case MeleeWeaponState.WindingUp:
@@ -196,7 +196,7 @@ public class JavelinClient : IClientWeaponLogic
         AimingAnimationController?.Play(mainHand);
         AimingSystem.StartAiming(AimingStats);
 
-        AnimationBehavior?.Play(mainHand, Stats.AimAnimation, callback: () => AimAnimationCallback(slot, mainHand));
+        AnimationBehavior?.Play(mainHand, Stats.AimAnimation, animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1, callback: () => AimAnimationCallback(slot, mainHand));
 
         return true;
     }
@@ -214,7 +214,7 @@ public class JavelinClient : IClientWeaponLogic
         if (!CheckState(mainHand, JavelinState.Aiming)) return false;
 
         SetState(JavelinState.Throwing, mainHand);
-        AnimationBehavior?.Play(mainHand, Stats.ThrowAnimation, callback: () => ThrowAnimationCallback(slot, player, mainHand));
+        AnimationBehavior?.Play(mainHand, Stats.ThrowAnimation, animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1, callback: () => ThrowAnimationCallback(slot, player, mainHand));
 
         return true;
     }
@@ -254,11 +254,11 @@ public class JavelinClient : IClientWeaponLogic
 
         if (mainHand)
         {
-            MainHandAttackCooldownTimer = Api.World.RegisterCallback(_ => MainHandAttackCooldownTimer = -1, (int)time.TotalMilliseconds);
+            MainHandAttackCooldownTimer = Api.World.RegisterCallback(_ => MainHandAttackCooldownTimer = -1, (int)(time.TotalMilliseconds / PlayerBehavior?.ManipulationSpeed ?? 1));
         }
         else
         {
-            OffHandAttackCooldownTimer = Api.World.RegisterCallback(_ => OffHandAttackCooldownTimer = -1, (int)time.TotalMilliseconds);
+            OffHandAttackCooldownTimer = Api.World.RegisterCallback(_ => OffHandAttackCooldownTimer = -1, (int)(time.TotalMilliseconds / PlayerBehavior?.ManipulationSpeed ?? 1));
         }
     }
     protected virtual void StopAttackCooldown(bool mainHand)

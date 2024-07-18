@@ -209,7 +209,7 @@ public class MuzzleloaderClient : RangeWeaponClient
 
         SetState(MuzzleloaderState.Loading);
         AnimationBehavior?.Stop("item");
-        AnimationBehavior?.Play(mainHand, Stats.LoadAnimation, callback: () => LoadCallback(slot, ammoSlot, player, mainHand), callbackHandler: callback => LoadAnimationCallback(callback, ammoSlot, player));
+        AnimationBehavior?.Play(mainHand, Stats.LoadAnimation, animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1, callback: () => LoadCallback(slot, ammoSlot, player, mainHand), callbackHandler: callback => LoadAnimationCallback(callback, ammoSlot, player));
 
         /*DebugWidgets.FloatDrag("test", "test", "arrow trnasform x", () => BulletTransform.Translation.X, value => BulletTransform.Translation.X = value);
         DebugWidgets.FloatDrag("test", "test", "arrow trnasform y", () => BulletTransform.Translation.Y, value => BulletTransform.Translation.Y = value);
@@ -293,7 +293,7 @@ public class MuzzleloaderClient : RangeWeaponClient
 
         SetState(MuzzleloaderState.Priming);
         AnimationBehavior?.Stop("item");
-        AnimationBehavior?.Play(mainHand, Stats.PrimeAnimation, callback: () => PrimeCallback(mainHand, slot), callbackHandler: callback => PrimeAnimationCallback(callback, player));
+        AnimationBehavior?.Play(mainHand, Stats.PrimeAnimation, animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1, callback: () => PrimeCallback(mainHand, slot), callbackHandler: callback => PrimeAnimationCallback(callback, player));
 
         return true;
     }

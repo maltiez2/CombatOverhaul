@@ -39,6 +39,7 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
 {
     public bool SuppressLMB { get; set; } = false;
     public bool SuppressRMB { get; set; } = false;
+    public float ManipulationSpeed => Math.Clamp(entity.Stats.GetBlended("manipulationSpeed"), 0.5f, 2.0f);
 
     public delegate bool ActionEventCallbackDelegate(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction);
 

@@ -12,14 +12,14 @@
             "Zones": ["Head", "Face"],
             "Resists": {},
             "FlatReduction": {},
-            "PlayerStats": {"walkspeed": -0.1, "healingeffectivness": -0.1, "hungerrate": 0.1}
+            "PlayerStats": {"walkspeed": -0.1, "healingeffectivness": -0.1, "hungerrate": 0.1, "steadyAim": -0.2}
           },
           "*-body-*": {
             "LayersByType": {"*-sewn-*": ["Skin"], "*-tailored*": ["Skin"], "*-chain-*": ["Middle"], "*-scale-*": ["Outer", "Middle"], "*": ["Outer"]},
             "Zones": ["Torso", "Arms", "Hands"],
             "Resists": {},
             "FlatReduction": {},
-            "PlayerStats": {"walkspeed": -0.1, "healingeffectivness": -0.1, "hungerrate": 0.1}
+            "PlayerStats": {"walkspeed": -0.1, "healingeffectivness": -0.1, "hungerrate": 0.1, "steadyAim": -0.2, "manipulationSpeed": -0.2}
           },
           "*-legs-*": {
             "LayersByType": {"*-sewn-*": ["Skin"], "*-tailored*": ["Skin"], "*-chain-*": ["Middle"], "*-scale-*": ["Outer", "Middle"], "*": ["Outer"]},

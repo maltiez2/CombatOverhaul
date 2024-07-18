@@ -24,12 +24,14 @@ public sealed class AimingAccuracyBehavior : EntityBehavior
 
         if (!_mainPlayer) return;
 
-        ClientAimingSystem clientAimingSystem = system.AimingSystem ?? throw new Exception();
+        _clientAimingSystem = system.AimingSystem ?? throw new Exception();
         clientApi.Input.InWorldAction += InWorldAction;
-        _modifiers.Add(new BaseAimingAccuracy(_player, clientAimingSystem));
-        _modifiers.Add(new MovingAimingAccuracy(_player, clientAimingSystem));
-        _modifiers.Add(new MountedAimingAccuracy(_player, clientAimingSystem));
-        _modifiers.Add(new OnHurtAimingAccuracy(_player, clientAimingSystem));
+        _modifiers.Add(new BaseAimingAccuracy(_player, _clientAimingSystem));
+        _modifiers.Add(new MovingAimingAccuracy(_player, _clientAimingSystem));
+        _modifiers.Add(new MountedAimingAccuracy(_player, _clientAimingSystem));
+        _modifiers.Add(new OnHurtAimingAccuracy(_player, _clientAimingSystem));
+
+        _player.Stats.Register("steadyAim", EnumStatBlendType.WeightedSum);
     }
 
     public override void OnGameTick(float deltaTime)
@@ -53,6 +55,9 @@ public sealed class AimingAccuracyBehavior : EntityBehavior
         {
             _modifiers[i].Update(deltaTime, _stats);
         }
+
+        _clientAimingSystem.DriftMultiplier *= 1 / Math.Clamp(entity.Stats.GetBlended("steadyAim"), 0.25f, 4f);
+        _clientAimingSystem.TwitchMultiplier *= 1 / Math.Clamp(entity.Stats.GetBlended("steadyAim"), 0.25f, 4f);
     }
     public override void OnEntityReceiveDamage(DamageSource damageSource, ref float damage)
     {
@@ -95,6 +100,7 @@ public sealed class AimingAccuracyBehavior : EntityBehavior
     private readonly List<AccuracyModifier> _modifiers = new();
     private readonly EntityAgent _player;
     private readonly bool _mainPlayer = false;
+    private ClientAimingSystem _clientAimingSystem;
 
     private AimingStats _stats = new();
     private bool _isAiming = false;

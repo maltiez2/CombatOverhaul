@@ -224,7 +224,13 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
                     MeleeBlockSystem.StopBlock(mainHand);
                     SetState(MeleeWeaponState.WindingUp, mainHand);
                     attack.Start(player.Player);
-                    AnimationBehavior?.Play(mainHand, stats.AttackAnimation, category: AnimationCategory(mainHand), callback: () => AttackAnimationCallback(mainHand), callbackHandler: code => AttackAnimationCallbackHandler(code, mainHand));
+                    AnimationBehavior?.Play(
+                        mainHand,
+                        stats.AttackAnimation,
+                        animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1,
+                        category: AnimationCategory(mainHand),
+                        callback: () => AttackAnimationCallback(mainHand),
+                        callbackHandler: code => AttackAnimationCallbackHandler(code, mainHand));
                 }
                 break;
             case MeleeWeaponState.WindingUp:
@@ -307,13 +313,25 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
         if (CanParry(mainHand) && parryStats != null && stats != null)
         {
             SetState(MeleeWeaponState.Parrying, mainHand);
-            AnimationBehavior?.Play(mainHand, stats.BlockAnimation, category: AnimationCategory(mainHand), callback: () => BlockAnimationCallback(mainHand), callbackHandler: code => BlockAnimationCallbackHandler(code, mainHand));
+            AnimationBehavior?.Play(
+                mainHand,
+                stats.BlockAnimation,
+                animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1,
+                category: AnimationCategory(mainHand),
+                callback: () => BlockAnimationCallback(mainHand),
+                callbackHandler: code => BlockAnimationCallbackHandler(code, mainHand));
         }
         else if (CanBlock(mainHand) && blockStats != null && stats != null)
         {
             SetState(MeleeWeaponState.Blocking, mainHand);
             MeleeBlockSystem.StartBlock(blockStats, mainHand);
-            AnimationBehavior?.Play(mainHand, stats.BlockAnimation, category: AnimationCategory(mainHand), callback: () => BlockAnimationCallback(mainHand), callbackHandler: code => BlockAnimationCallbackHandler(code, mainHand));
+            AnimationBehavior?.Play(
+                mainHand,
+                stats.BlockAnimation,
+                animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1,
+                category: AnimationCategory(mainHand),
+                callback: () => BlockAnimationCallback(mainHand),
+                callbackHandler: code => BlockAnimationCallbackHandler(code, mainHand));
         }
 
         return true;
@@ -424,11 +442,11 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
 
         if (mainHand)
         {
-            MainHandAttackCooldownTimer = Api.World.RegisterCallback(_ => MainHandAttackCooldownTimer = -1, (int)time.TotalMilliseconds);
+            MainHandAttackCooldownTimer = Api.World.RegisterCallback(_ => MainHandAttackCooldownTimer = -1, (int)(time.TotalMilliseconds / PlayerBehavior?.ManipulationSpeed ?? 1));
         }
         else
         {
-            OffHandAttackCooldownTimer = Api.World.RegisterCallback(_ => OffHandAttackCooldownTimer = -1, (int)time.TotalMilliseconds);
+            OffHandAttackCooldownTimer = Api.World.RegisterCallback(_ => OffHandAttackCooldownTimer = -1, (int))(time.TotalMilliseconds / PlayerBehavior?.ManipulationSpeed ?? 1));
         }
     }
     protected virtual void StopAttackCooldown(bool mainHand)
@@ -458,11 +476,11 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
 
         if (mainHand)
         {
-            MainHandBlockCooldownTimer = Api.World.RegisterCallback(_ => MainHandBlockCooldownTimer = -1, (int)time.TotalMilliseconds);
+            MainHandBlockCooldownTimer = Api.World.RegisterCallback(_ => MainHandBlockCooldownTimer = -1, (int)(time.TotalMilliseconds / PlayerBehavior?.ManipulationSpeed ?? 1));
         }
         else
         {
-            OffHandBlockCooldownTimer = Api.World.RegisterCallback(_ => OffHandBlockCooldownTimer = -1, (int)time.TotalMilliseconds);
+            OffHandBlockCooldownTimer = Api.World.RegisterCallback(_ => OffHandBlockCooldownTimer = -1, (int)(time.TotalMilliseconds / PlayerBehavior?.ManipulationSpeed ?? 1));
         }
     }
     protected virtual void StopBlockCooldown(bool mainHand)
