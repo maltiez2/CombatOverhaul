@@ -446,7 +446,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
         }
         else
         {
-            OffHandAttackCooldownTimer = Api.World.RegisterCallback(_ => OffHandAttackCooldownTimer = -1, (int))(time.TotalMilliseconds / PlayerBehavior?.ManipulationSpeed ?? 1));
+            OffHandAttackCooldownTimer = Api.World.RegisterCallback(_ => OffHandAttackCooldownTimer = -1, (int)(time.TotalMilliseconds / PlayerBehavior?.ManipulationSpeed ?? 1));
         }
     }
     protected virtual void StopAttackCooldown(bool mainHand)

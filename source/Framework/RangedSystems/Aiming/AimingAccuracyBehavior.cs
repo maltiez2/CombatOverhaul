@@ -56,8 +56,8 @@ public sealed class AimingAccuracyBehavior : EntityBehavior
             _modifiers[i].Update(deltaTime, _stats);
         }
 
-        _clientAimingSystem.DriftMultiplier *= 1 / Math.Clamp(entity.Stats.GetBlended("steadyAim"), 0.25f, 4f);
-        _clientAimingSystem.TwitchMultiplier *= 1 / Math.Clamp(entity.Stats.GetBlended("steadyAim"), 0.25f, 4f);
+        _clientAimingSystem.DriftMultiplier *= 1 / Math.Clamp(entity.Stats.GetBlended("steadyAim") * entity.Stats.GetBlended("steadyAim"), 0.25f, 4f);
+        _clientAimingSystem.TwitchMultiplier *= 1 / Math.Clamp(entity.Stats.GetBlended("steadyAim") * entity.Stats.GetBlended("steadyAim"), 0.25f, 4f);
     }
     public override void OnEntityReceiveDamage(DamageSource damageSource, ref float damage)
     {

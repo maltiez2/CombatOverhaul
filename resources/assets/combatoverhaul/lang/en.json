@@ -63,6 +63,6 @@
   "damagelog-missed-block-zone": "Player tried blocking, but {0} was not protected by block",
   "damagelog-missed-block-direction": "Player tried blocking, but directon ({0}) of incomming attack was not covered by block",
   "damagelog-success-block": "Player successfully blocked damage to {0}",
-  "damagelog-armor-damage-negation": "Armor piece \"{0}\" negated {1} amount of damage to {2}",
+  "damagelog-armor-damage-negation": "Armor negated {0} amount of damage to {1} and lost {2} durability",
   "damagelog-received-damage": "Player receives {0} damage to {1}"
 }

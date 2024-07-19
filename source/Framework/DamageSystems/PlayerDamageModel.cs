@@ -222,39 +222,31 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
         IEnumerable<ArmorSlot> slots = inventory.GetNotEmptyZoneSlots(zone);
 
         DamageData data = new(damageSource.Type, damageSource.DamageTier);
-        foreach (ArmorSlot slot in slots)
+
+        DamageResistData resists = DamageResistData.Combine(slots.Select(slot => slot.Resists));
+
+        float previousDamage = damage;
+        int durabilityDamage = 0;
+
+        if (damageSource is ITypedDamage typedDamage)
         {
-            float previousDamage = damage;
-            int durabilityDamage = 0;
+            data = resists.ApplyResist(typedDamage.DamageTypeData, ref damage, out durabilityDamage);
+            typedDamage.DamageTypeData = data;
+        }
+        else
+        {
+            data = resists.ApplyResist(data, ref damage, out durabilityDamage);
+        }
 
-            if (damageSource is ITypedDamage typedDamage)
-            {
-                data = slot.Resists.ApplyResist(typedDamage.DamageTypeData, ref damage, out durabilityDamage);
-                typedDamage.DamageTypeData = data;
-            }
-            else
-            {
-                data = slot.Resists.ApplyResist(data, ref damage, out durabilityDamage);
-            }
+        foreach (var slot in slots)
+        {
+            slot.Itemstack.Item.DamageItem(entity.Api.World, entity, slot, durabilityDamage);
+            slot.MarkDirty();
+        }
 
-            if (durabilityDamage > 0)
-            {
-                slot.Itemstack.Item.DamageItem(entity.Api.World, entity, slot, durabilityDamage);
-                slot.MarkDirty();
-            }
-
-            if (previousDamage != damage)
-            {
-                string armorPieceName = slot.Itemstack.Item.GetHeldItemName(slot.Itemstack) ?? string.Empty;
-                if (damageLogMessage != "")
-                {
-                    damageLogMessage += "\n";
-                }
-
-                damageLogMessage += Lang.Get("combatoverhaul:damagelog-armor-damage-negation", armorPieceName, previousDamage - damage, Lang.Get($"combatoverhaul:damage-zone-{zone}"));
-            }
-
-            if (data.Strength <= 0) break;
+        if (previousDamage - damage > 0)
+        {
+            damageLogMessage = Lang.Get("combatoverhaul:damagelog-armor-damage-negation", previousDamage - damage, Lang.Get($"combatoverhaul:damage-zone-{zone}"), durabilityDamage);
         }
     }
 }

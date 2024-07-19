@@ -242,11 +242,7 @@ public class CrossbowClient : RangeWeaponClient
 
         targetDirection = ClientAimingSystem.Zeroing(targetDirection, Stats.Zeroing);
 
-        for (int count = 0; count < 60; count++)
-        {
-            RangedWeaponSystem.Shoot(slot, 1, new((float)position.X, (float)position.Y, (float)position.Z), new(targetDirection.X, targetDirection.Y, targetDirection.Z), mainHand, ShootCallback);
-        }
-            
+        RangedWeaponSystem.Shoot(slot, 1, new((float)position.X, (float)position.Y, (float)position.Z), new(targetDirection.X, targetDirection.Y, targetDirection.Z), mainHand, ShootCallback);
 
         Attachable.ClearAttachments(player.EntityId);
         return true;

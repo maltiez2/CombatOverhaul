@@ -146,7 +146,21 @@ public readonly struct DamageResistData
                 combinedResists[damageType] += protectionLevel;
             }
         }
-        return new(combinedResists);
+
+        Dictionary<EnumDamageType, float> combinedFlat = new();
+        foreach ((EnumDamageType damageType, float protectionLevel) in resists.SelectMany(element => element.FlatDamageReduction))
+        {
+            if (!combinedFlat.ContainsKey(damageType))
+            {
+                combinedFlat[damageType] = protectionLevel;
+            }
+            else
+            {
+                combinedFlat[damageType] += protectionLevel;
+            }
+        }
+
+        return new(combinedResists, combinedFlat);
     }
 
     private const float _damageReductionPower = 2;
