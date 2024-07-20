@@ -83,7 +83,7 @@ public sealed class BowClient : RangeWeaponClient
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Pressed)]
     private bool Load(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
-        if (state != (int)BowState.Unloaded || eventData.AltPressed) return false;
+        if (state != (int)BowState.Unloaded || eventData.AltPressed || !CheckForOtherHandEmpty(mainHand, player)) return false;
 
         /*DebugWidgets.FloatDrag("test", "test", "arrow trnasform x", () => _arrowTransform.Translation.X, value => _arrowTransform.Translation.X = value);
         DebugWidgets.FloatDrag("test", "test", "arrow trnasform y", () => _arrowTransform.Translation.Y, value => _arrowTransform.Translation.Y = value);
@@ -119,7 +119,7 @@ public sealed class BowClient : RangeWeaponClient
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Active)]
     private bool Aim(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
-        if (state != (int)BowState.Loaded || eventData.AltPressed) return false;
+        if (state != (int)BowState.Loaded || eventData.AltPressed || !CheckForOtherHandEmpty(mainHand, player)) return false;
 
         AnimationRequestByCode request = new(_stats.DrawAnimation, PlayerBehavior?.ManipulationSpeed ?? 1, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true, FullLoadCallback);
         AnimationBehavior?.Play(request, mainHand);

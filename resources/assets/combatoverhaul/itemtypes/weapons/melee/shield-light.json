@@ -3,8 +3,8 @@
   "class": "CombatOverhaul:MeleeWeapon",
   "storageFlags": 257,
   "variantgroups": [
-    {"code": "handling", "states": ["light"]},
-    {"code": "type", "states": ["plain"]},
+    {"code": "type", "states": ["light"]},
+    {"code": "subtype", "states": ["regular"]},
     {"code": "material", "states": ["crude", "copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "steel"]}
   ],
   "attributes": {
@@ -15,16 +15,16 @@
         "CanBlock": true,
         "CanSprint": true,
         "SpeedPenalty": 0,
-        "BlockSpeedPenalty": -0.05,
+        "BlockSpeedPenalty": -0.1,
         "Parry": {
           "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
           "Directions": [45, 45, 45, 45]
         },
         "Block": {"Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand"], "Directions": [60, 60, 60, 60]},
         "BlockCooldownMs": 300,
-        "BlockAnimation": "combatoverhaul:shield-{handling}-parry",
-        "ReadyAnimation": "combatoverhaul:shield-{handling}-ready",
-        "IdleAnimation": "combatoverhaul:shield-{handling}-ready"
+        "BlockAnimation": "combatoverhaul:shield-{type}-parry",
+        "ReadyAnimation": "combatoverhaul:shield-{type}-ready",
+        "IdleAnimation": "combatoverhaul:shield-{type}-ready"
       },
       "*-copper": {
         "CanAttack": false,
@@ -39,11 +39,11 @@
         },
         "Block": {"Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand"], "Directions": [60, 60, 60, 60]},
         "BlockCooldownMs": 300,
-        "BlockAnimation": "combatoverhaul:shield-{handling}-parry",
-        "ReadyAnimation": "combatoverhaul:shield-{handling}-ready",
-        "IdleAnimation": "combatoverhaul:shield-{handling}-ready"
+        "BlockAnimation": "combatoverhaul:shield-{type}-parry",
+        "ReadyAnimation": "combatoverhaul:shield-{type}-ready",
+        "IdleAnimation": "combatoverhaul:shield-{type}-ready"
       },
-      "@.*-(tinbronze|bismuthbronze|blackbronze)": {
+      "*-*bronze": {
         "CanAttack": false,
         "CanParry": true,
         "CanBlock": true,
@@ -56,9 +56,9 @@
         },
         "Block": {"Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand"], "Directions": [75, 75, 75, 75]},
         "BlockCooldownMs": 300,
-        "BlockAnimation": "combatoverhaul:shield-{handling}-parry",
-        "ReadyAnimation": "combatoverhaul:shield-{handling}-ready",
-        "IdleAnimation": "combatoverhaul:shield-{handling}-ready"
+        "BlockAnimation": "combatoverhaul:shield-{type}-parry",
+        "ReadyAnimation": "combatoverhaul:shield-{type}-ready",
+        "IdleAnimation": "combatoverhaul:shield-{type}-ready"
       },
       "*-iron": {
         "CanAttack": false,
@@ -73,9 +73,9 @@
         },
         "Block": {"Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand"], "Directions": [90, 90, 90, 90]},
         "BlockCooldownMs": 300,
-        "BlockAnimation": "combatoverhaul:shield-{handling}-parry",
-        "ReadyAnimation": "combatoverhaul:shield-{handling}-ready",
-        "IdleAnimation": "combatoverhaul:shield-{handling}-ready"
+        "BlockAnimation": "combatoverhaul:shield-{type}-parry",
+        "ReadyAnimation": "combatoverhaul:shield-{type}-ready",
+        "IdleAnimation": "combatoverhaul:shield-{type}-ready"
       },
       "*-steel": {
         "CanAttack": false,
@@ -90,9 +90,9 @@
         },
         "Block": {"Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand"], "Directions": [45, 45, 45, 45]},
         "BlockCooldownMs": 300,
-        "BlockAnimation": "combatoverhaul:shield-{handling}-parry",
-        "ReadyAnimation": "combatoverhaul:shield-{handling}-ready",
-        "IdleAnimation": "combatoverhaul:shield-{handling}-ready"
+        "BlockAnimation": "combatoverhaul:shield-{type}-parry",
+        "ReadyAnimation": "combatoverhaul:shield-{type}-ready",
+        "IdleAnimation": "combatoverhaul:shield-{type}-ready"
       }
     }
   },
@@ -106,8 +106,8 @@
     "*-steel": {"base": "weapons/shields/buckler"}
   },
   "textures": {"metal": {"base": "game:block/metal/plate/{material}"}},
-  "durabilitybytype": {"*-crude": 32, "*-copper": 64, "*-tinbronze": 256, "*-bismuthbronze": 256, "*-blackbronze": 256, "*-iron": 512, "*-steel": 1024},
-  "creativeinventory": {"combatoverhaul": ["*"]},
+  "durabilitybytype": {"*-crude": 128, "*-copper": 512, "*-tinbronze": 512, "*-bismuthbronze": 512, "*-blackbronze": 512, "*-iron": 512, "*-steel": 2048},
+  "creativeinventory": {"combatoverhaul": ["*"], "combatoverhaul-test": ["*"]},
   "guiTransformByType": {
     "*-crude": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 113, "y": -39, "z": -33}, "origin": {"x": 0.8, "y": -0.3, "z": 0.7}, "scale": 0.97},
     "*-copper": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 121, "y": 0, "z": -30}, "origin": {"x": 0.46, "y": 0, "z": 0.5}, "scale": 1.6},

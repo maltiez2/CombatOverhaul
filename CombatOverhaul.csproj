@@ -4,7 +4,7 @@
     <ModName>Combat Overhaul</ModName>
     <ModType>code</ModType>
     <GameVersion>1.19.4</GameVersion>
-    <ModVersion>0.0.3</ModVersion>
+    <ModVersion>0.0.4</ModVersion>
     <ModId>combatoverhaul</ModId>
     <Description></Description>
     <Side>Universal</Side>
@@ -15,6 +15,7 @@
   <!-- Authors -->
   <ItemGroup>
     <ModInfoAuthors Include="Maltiez" />
+    <ModInfoAuthors Include="Raccoon" />
     <ModInfoAuthors Include="Craluminum2413" />
   </ItemGroup>
 

@@ -1,5 +1,7 @@
 {
   "game:tabname-combatoverhaul": "Combat Overhaul",
+  "game:tabname-combatoverhaul-test": "CO - Test",
+
   "armor-inventory-dialog-title": "Armor",
   "armor-inventory-dialog-head": "Head:",
   "armor-inventory-dialog-face": "Face:",
@@ -64,5 +66,28 @@
   "damagelog-missed-block-direction": "Player tried blocking, but directon ({0}) of incomming attack was not covered by block",
   "damagelog-success-block": "Player successfully blocked damage to {0}",
   "damagelog-armor-damage-negation": "Armor negated {0} amount of damage to {1} and lost {2} durability",
-  "damagelog-received-damage": "Player receives {0} damage to {1}"
+  "damagelog-received-damage": "Player receives {0} damage to {1}",
+
+  "item-bow-crude-regular": "Crude bow",
+  "item-bow-simple-regular": "Simple bow",
+  "item-bow-long-regular": "Long bow",
+  "item-bow-recurve-regular": "Recurve bow",
+  "item-sword-long-regular-*bronze": "Long sword (Bronze)",
+  "item-sword-long-regular-iron": "Long sword (Iron)",
+  "item-sword-long-regular-steel": "Long sword (Steel)",
+  "item-shield-light-*-crude": "Light shield (Hide)",
+  "item-shield-light-*-copper": "Light shield (Copper)",
+  "item-shield-light-*-*bronze": "Light shield (Bronze)",
+  "item-shield-light-*-iron": "Light shield (Iron)",
+  "item-shield-light-*-steel": "Light shield (Steel)",
+  "item-shield-heavy-*-crude": "Heavy shield (Wicker)",
+  "item-shield-heavy-*-copper": "Heavy shield (Copper)",
+  "item-shield-heavy-*-*bronze": "Heavy shield (Bronze)",
+  "item-shield-heavy-*-iron": "Heavy shield (Iron)",
+  "item-arrow-crude": "Arrow (Crude)",
+  "item-arrow-flint": "Arrow (Flint)",
+  "item-arrow-copper": "Arrow (Copper)",
+  "item-arrow-*bronze": "Arrow (Bronze)",
+  "item-arrow-*iron": "Arrow (Iron)",
+  "item-arrow-steel": "Arrow (Steel)"
 }

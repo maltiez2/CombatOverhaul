@@ -50,7 +50,7 @@
     "*": {"base": "ammo/arrows/insert"}
   },
   "texturesByType": {"*-crude": {}, "*-flint": {"material": {"base": "game:block/stone/flint"}}, "*": {"material": {"base": "game:block/metal/ingot/{material}"}}},
-  "creativeinventory": {"combatoverhaul": ["*"]},
+  "creativeinventory": {"combatoverhaul": ["*"], "combatoverhaul-test": ["*"]},
   "guiTransform": {"rotation": {"x": -18, "y": -39, "z": -145}, "origin": {"x": 0.3, "y": -0.35, "z": 0}, "scale": 1.63},
   "fpHandTransform": {"translation": {"x": 0.35, "y": 0, "z": 0}, "rotation": {"x": 87, "y": 90, "z": -30}, "scale": 1.14},
   "tpHandTransform": {"translation": {"x": -1.05, "y": -0.4599, "z": -0.87}, "rotation": {"x": 0, "y": 2, "z": 3}, "scale": 0.55},

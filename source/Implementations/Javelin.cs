@@ -115,7 +115,7 @@ public class JavelinClient : IClientWeaponLogic
         {
             return false;
         }
-        if (PlayerBehavior?.GetState(!mainHand) % MeleeWeaponClient.MaxStates != 0) return false;
+        if (PlayerBehavior?.GetState(!mainHand) % MeleeWeaponClient._maxStates != 0) return false;
 
         switch (GetState<MeleeWeaponState>(mainHand))
         {
