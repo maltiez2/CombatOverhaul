@@ -151,10 +151,10 @@ public class MuzzleloaderClient : RangeWeaponClient
         if (ammoSlot3 != null) Attachable.SetAttachment(player.EntityId, "wadding", ammoSlot3.Itemstack, WaddingTransform);*/
 
     }
-    public override void OnDeselected(EntityPlayer player)
+    public override void OnDeselected(EntityPlayer player, bool mainHand, ref int state)
     {
         Attachable.ClearAttachments(player.EntityId);
-        AimingAnimationController?.Stop(true);
+        AimingAnimationController?.Stop(mainHand);
         AimingSystem.StopAiming();
     }
     public override void OnRegistered(ActionsManagerPlayerBehavior behavior, ICoreClientAPI api)
@@ -166,7 +166,6 @@ public class MuzzleloaderClient : RangeWeaponClient
     protected AimingAnimationController? AimingAnimationController;
     protected readonly AnimatableAttachable Attachable;
     protected readonly ClientAimingSystem AimingSystem;
-    protected readonly ModelTransform BoltTransform;
     protected readonly MuzzleloaderStats Stats;
     protected readonly AimingStats AimingStats;
     protected readonly ItemInventoryBuffer Inventory = new();

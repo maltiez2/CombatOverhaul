@@ -8,6 +8,7 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Config;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
+using Vintagestory.GameContent;
 using VSImGui.Debug;
 
 namespace CombatOverhaul.Implementations;
@@ -129,17 +130,16 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
     {
         EnsureStance(player, mainHand);
         SetState(MeleeWeaponState.Idle, mainHand);
+        SetSpeedPenalty(mainHand, player);
     }
-    public virtual void OnDeselected(EntityPlayer player)
+    public virtual void OnDeselected(EntityPlayer player, bool mainHand, ref int state)
     {
-        MeleeBlockSystem.StopBlock(true);
-        MeleeBlockSystem.StopBlock(false);
-        StopAttackCooldown(true);
-        StopBlockCooldown(true);
-        StopAttackCooldown(false);
-        StopBlockCooldown(false);
-        GripController?.ResetGrip(true);
-        GripController?.ResetGrip(false);
+        MeleeBlockSystem.StopBlock(mainHand);
+        StopAttackCooldown(mainHand);
+        StopBlockCooldown(mainHand);
+        GripController?.ResetGrip(mainHand);
+
+        PlayerBehavior?.SetStat("walkspeed", mainHand ? PlayerStatsMainHandCategory : PlayerStatsOffHandCategory);
     }
     public virtual void OnRegistered(ActionsManagerPlayerBehavior behavior, ICoreClientAPI api)
     {
@@ -191,6 +191,8 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
     private GripController? GripController;
     internal const int MaxStates = 100;
     protected readonly MeleeWeaponStats Stats;
+    protected const string PlayerStatsMainHandCategory = "CombatOverhaul:held-item-mainhand";
+    protected const string PlayerStatsOffHandCategory = "CombatOverhaul:held-item-offhand";
 
     protected long MainHandAttackCooldownTimer = -1;
     protected long OffHandAttackCooldownTimer = -1;
@@ -318,7 +320,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
                 stats.BlockAnimation,
                 animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1,
                 category: AnimationCategory(mainHand),
-                callback: () => BlockAnimationCallback(mainHand),
+                callback: () => BlockAnimationCallback(mainHand, player),
                 callbackHandler: code => BlockAnimationCallbackHandler(code, mainHand));
         }
         else if (CanBlock(mainHand) && blockStats != null && stats != null)
@@ -330,9 +332,11 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
                 stats.BlockAnimation,
                 animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1,
                 category: AnimationCategory(mainHand),
-                callback: () => BlockAnimationCallback(mainHand),
+                callback: () => BlockAnimationCallback(mainHand, player),
                 callbackHandler: code => BlockAnimationCallbackHandler(code, mainHand));
         }
+
+        SetSpeedPenalty(mainHand, player);
 
         return true;
     }
@@ -369,7 +373,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
                 break;
         }
     }
-    protected virtual bool BlockAnimationCallback(bool mainHand)
+    protected virtual bool BlockAnimationCallback(bool mainHand, EntityPlayer player)
     {
         if (!CheckState(mainHand, MeleeWeaponState.Parrying)) return true;
 
@@ -381,6 +385,8 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
         {
             StartBlockCooldown(mainHand, TimeSpan.FromMilliseconds(cooldown));
         }
+
+        SetSpeedPenalty(mainHand, player);
 
         return true;
     }
@@ -399,6 +405,8 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
         {
             StartBlockCooldown(mainHand, TimeSpan.FromMilliseconds(cooldown));
         }
+
+        SetSpeedPenalty(mainHand, player);
 
         return true;
     }
@@ -618,6 +626,38 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
         }
 
         return true;
+    }
+
+    protected void SetSpeedPenalty(bool mainHand, EntityPlayer player)
+    {
+        Console.WriteLine("SetSpeedPenalty");
+        if (HasSpeedPenalty(mainHand, out float penalty))
+        {
+            PlayerBehavior?.SetStat("walkspeed", mainHand ? PlayerStatsMainHandCategory : PlayerStatsOffHandCategory, penalty);
+        }
+        else
+        {
+            PlayerBehavior?.SetStat("walkspeed", mainHand ? PlayerStatsMainHandCategory : PlayerStatsOffHandCategory);
+        }
+    }
+    protected bool HasSpeedPenalty(bool mainHand, out float penalty)
+    {
+        penalty = 0;
+
+        StanceStats? stance = GetStanceStats(mainHand);
+
+        if (stance == null) return false;
+
+        if (CheckState(mainHand, MeleeWeaponState.Blocking, MeleeWeaponState.Parrying))
+        {
+            penalty = Math.Min(stance.BlockSpeedPenalty, stance.SpeedPenalty);
+        }
+        else
+        {
+            penalty = stance.SpeedPenalty;
+        }
+
+        return MathF.Abs(penalty) > 1E-9f; // just some epsilon
     }
 
     private void DebugEditColliders(MeleeAttack attack, int attackIndex)

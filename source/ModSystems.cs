@@ -70,6 +70,7 @@ public sealed class CombatOverhaulSystem : ModSystem
         ServerSoundsSynchronizer = new(api);
         ServerMeleeSystem = new(api);
         ServerBlockSystem = new(api);
+        ServerStatsSystem = new(api);
     }
     public override void StartClientSide(ICoreClientAPI api)
     {
@@ -85,6 +86,7 @@ public sealed class CombatOverhaulSystem : ModSystem
         AimingSystem = new(api, ReticleRenderer);
         ClientMeleeSystem = new(api);
         ClientBlockSystem = new(api);
+        ClientStatsSystem = new(api);
 
         api.Event.RegisterRenderer(ReticleRenderer, EnumRenderStage.Ortho);
         api.Event.RegisterRenderer(DirectionCursorRenderer, EnumRenderStage.Ortho);
@@ -121,6 +123,8 @@ public sealed class CombatOverhaulSystem : ModSystem
     public MeleeSystemServer? ServerMeleeSystem { get; private set; }
     public MeleeBlockSystemClient? ClientBlockSystem { get; private set; }
     public MeleeBlockSystemServer? ServerBlockSystem { get; private set; }
+    public StatsSystemClient? ClientStatsSystem { get; private set; }
+    public StatsSystemServer? ServerStatsSystem { get; private set; }
 
 
     private ICoreClientAPI? _clientApi;

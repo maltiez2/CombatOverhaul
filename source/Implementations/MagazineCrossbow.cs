@@ -77,10 +77,10 @@ public class MagazineCrossbowClient : RangeWeaponClient
 
         Inventory.Clear();
     }
-    public override void OnDeselected(EntityPlayer player)
+    public override void OnDeselected(EntityPlayer player, bool mainHand, ref int state)
     {
         Attachable.ClearAttachments(player.EntityId);
-        AimingAnimationController?.Stop(true);
+        AimingAnimationController?.Stop(mainHand);
         AimingSystem.StopAiming();
     }
     public override void OnRegistered(ActionsManagerPlayerBehavior behavior, ICoreClientAPI api)

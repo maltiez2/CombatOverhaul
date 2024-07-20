@@ -6,7 +6,6 @@ using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
-using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
 using Vintagestory.API.Util;
 
@@ -58,7 +57,7 @@ public sealed class BowClient : RangeWeaponClient
         _attachable.ClearAttachments(player.EntityId);
     }
 
-    public override void OnDeselected(EntityPlayer player)
+    public override void OnDeselected(EntityPlayer player, bool mainHand, ref int state)
     {
         _arrowSlot = null;
         _attachable.ClearAttachments(player.EntityId);

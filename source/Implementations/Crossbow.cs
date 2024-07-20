@@ -67,10 +67,10 @@ public class CrossbowClient : RangeWeaponClient
             state = (int)CrossbowState.Unloaded;
         }
     }
-    public override void OnDeselected(EntityPlayer player)
+    public override void OnDeselected(EntityPlayer player, bool mainHand, ref int state)
     {
         Attachable.ClearAttachments(player.EntityId);
-        AimingAnimationController?.Stop(true);
+        AimingAnimationController?.Stop(mainHand);
         AimingSystem.StopAiming();
         BoltSlot = null;
     }

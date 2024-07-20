@@ -170,7 +170,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     public void Play(AnimationRequest request, bool mainHand = true)
     {
         _composer.Play(request);
-        StopIdleTimer(mainHand, request.Category);
+        StopIdleTimer(mainHand);
         if (mainHand)
         {
             _mainHandCategories.Add(request.Category);
@@ -246,20 +246,18 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     private PlayerItemFrame _lastFrame = PlayerItemFrame.Zero;
     private readonly List<string> _offhandCategories = new();
     private readonly List<string> _mainHandCategories = new();
-    private bool _mainPlayer = false;
+    private readonly bool _mainPlayer = false;
     private int _offHandItemId = 0;
     private int _mainHandItemId = 0;
     private long _mainHandIdleTimer = -1;
     private long _offHandIdleTimer = -1;
-    private string _mainHandIdleCategory = "";
-    private string _offHandIdleCategory = "";
     private bool _resetFov = false;
-    private ICoreClientAPI? _api;
+    private readonly ICoreClientAPI? _api;
 
     private static readonly TimeSpan _readyTimeout = TimeSpan.FromSeconds(5);
 
-    private readonly FieldInfo _mainCameraInfo = typeof(ClientMain).GetField("MainCamera", BindingFlags.NonPublic | BindingFlags.Instance);
-    private readonly FieldInfo _cameraFov = typeof(Camera).GetField("Fov", BindingFlags.NonPublic | BindingFlags.Instance);
+    private readonly FieldInfo _mainCameraInfo = typeof(ClientMain).GetField("MainCamera", BindingFlags.NonPublic | BindingFlags.Instance) ?? throw new Exception();
+    private readonly FieldInfo _cameraFov = typeof(Camera).GetField("Fov", BindingFlags.NonPublic | BindingFlags.Instance) ?? throw new Exception();
 
     private void OnBeforeFrame(Entity entity, float dt)
     {
@@ -394,37 +392,15 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
             }
         }
     }
-    private void StopIdleTimer(bool mainHand, string category)
-    {
-        if (mainHand)
-        {
-
-            if (_mainHandIdleTimer != -1 && _mainHandIdleCategory == category)
-            {
-                _api?.World.UnregisterCallback(_mainHandIdleTimer);
-                _mainHandIdleTimer = -1;
-            }
-        }
-        else
-        {
-            if (_offHandIdleTimer != -1 && _offHandIdleCategory == category)
-            {
-                _api?.World.UnregisterCallback(_offHandIdleTimer);
-                _offHandIdleTimer = -1;
-            }
-        }
-    }
     private void PlayIdleAnimation(AnimationRequestByCode request, bool mainHand)
     {
         if (mainHand)
         {
             _mainHandIdleTimer = -1;
-            _mainHandIdleCategory = request.Category;
         }
         else
         {
             _offHandIdleTimer = -1;
-            _offHandIdleCategory = request.Category;
         }
 
         Play(request, mainHand);

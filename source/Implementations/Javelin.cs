@@ -70,11 +70,10 @@ public class JavelinClient : IClientWeaponLogic
     {
         SetState(MeleeWeaponState.Idle, mainHand);
     }
-    public virtual void OnDeselected(EntityPlayer player)
+    public virtual void OnDeselected(EntityPlayer player, bool mainHand, ref int state)
     {
-        StopAttackCooldown(true);
-        StopAttackCooldown(false);
-        AimingAnimationController?.Stop(true);
+        StopAttackCooldown(mainHand);
+        AimingAnimationController?.Stop(mainHand);
         AimingSystem.StopAiming();
     }
     public virtual void OnRegistered(ActionsManagerPlayerBehavior behavior, ICoreClientAPI api)

@@ -11,7 +11,6 @@ using Vintagestory.API.Config;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
-using Vintagestory.Common;
 using Vintagestory.GameContent;
 
 namespace CombatOverhaul.DamageSystems;
@@ -179,7 +178,7 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
         damageLogMessage = "";
 
         if (CurrentDamageBlock == null) return;
-        
+
         if ((zone & CurrentDamageBlock.ZoneType) == 0)
         {
             damageLogMessage = Lang.Get("combatoverhaul:damagelog-missed-block-zone", Lang.Get($"combatoverhaul:detailed-damage-zone-{zone}"));
@@ -221,8 +220,6 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
 
         IEnumerable<ArmorSlot> slots = inventory.GetNotEmptyZoneSlots(zone);
 
-        DamageData data = new(damageSource.Type, damageSource.DamageTier);
-
         DamageResistData resists = DamageResistData.Combine(slots.Select(slot => slot.Resists));
 
         float previousDamage = damage;
@@ -230,15 +227,14 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
 
         if (damageSource is ITypedDamage typedDamage)
         {
-            data = resists.ApplyResist(typedDamage.DamageTypeData, ref damage, out durabilityDamage);
-            typedDamage.DamageTypeData = data;
+            typedDamage.DamageTypeData = resists.ApplyResist(typedDamage.DamageTypeData, ref damage, out durabilityDamage);
         }
         else
         {
-            data = resists.ApplyResist(data, ref damage, out durabilityDamage);
+            _ = resists.ApplyResist(new(damageSource.Type, damageSource.DamageTier), ref damage, out durabilityDamage);
         }
 
-        foreach (var slot in slots)
+        foreach (ArmorSlot slot in slots)
         {
             slot.Itemstack.Item.DamageItem(entity.Api.World, entity, slot, durabilityDamage);
             slot.MarkDirty();

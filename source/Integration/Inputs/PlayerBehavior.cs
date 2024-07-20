@@ -31,7 +31,7 @@ public interface IClientWeaponLogic
     DirectionsConfiguration DirectionsType { get; }
 
     void OnSelected(ItemSlot slot, EntityPlayer player, bool mainHand, ref int state);
-    void OnDeselected(EntityPlayer player);
+    void OnDeselected(EntityPlayer player, bool mainHand, ref int state);
     void OnRegistered(ActionsManagerPlayerBehavior behavior, ICoreClientAPI api);
 }
 
@@ -63,6 +63,7 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
 
         _actionListener = system.ActionListener ?? throw new Exception();
         _directionController = system.DirectionController ?? throw new Exception();
+        _statsSystem = system.ClientStatsSystem ?? throw new Exception();
 
         if (_mainPlayer)
         {
@@ -92,15 +93,20 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
             _offHandState = state;
         }
     }
+    public void SetStat(string stat, string category, float value = 0)
+    {
+        _statsSystem.SetStat(stat, category, value);
+    }
 
     private readonly bool _mainPlayer = false;
     private readonly ICoreClientAPI _api;
     private readonly EntityPlayer _player;
     private readonly HashSet<string> _currentMainHandPlayerStats = new();
     private readonly HashSet<string> _currentOffHandPlayerStats = new();
-    private const string _statCategory = "melee-weapon-player-behavior";
+    private const string _statCategory = "CombatOverhaul:melee-weapon-player-behavior";
     internal readonly ActionListener _actionListener;
     private readonly DirectionController _directionController;
+    private readonly StatsSystemClient _statsSystem;
 
     private IClientWeaponLogic? _currentMainHandWeapon;
     private IClientWeaponLogic? _currentOffHandWeapon;
@@ -216,7 +222,7 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
     }
     private void ProcessMainHandItemChanged()
     {
-        _currentMainHandWeapon?.OnDeselected(_player);
+        _currentMainHandWeapon?.OnDeselected(_player, true, ref _mainHandState);
         _currentMainHandWeapon = null;
 
         foreach (string stat in _currentMainHandPlayerStats)
@@ -256,7 +262,7 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
     }
     private void ProcessOffHandItemChanged()
     {
-        _currentOffHandWeapon?.OnDeselected(_player);
+        _currentOffHandWeapon?.OnDeselected(_player, false, ref _mainHandState);
         _currentOffHandWeapon = null;
 
         foreach (string stat in _currentOffHandPlayerStats)
@@ -264,7 +270,7 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
             _player.Stats.Remove(_statCategory, stat);
         }
 
-        ItemStack? stack = _player.ActiveHandItemSlot.Itemstack;
+        ItemStack? stack = _player.LeftHandItemSlot.Itemstack;
 
         if (stack != null && stack.Item is ISetsRenderingOffset offset)
         {
@@ -284,10 +290,15 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
             PlayerRenderingPatches.SetOffset(0);
         }
 
-        if (stack == null || stack.Item is not IClientWeaponLogic weapon) return;
+        if (stack == null || stack.Item is not IHasWeaponLogic weapon) return;
 
-        weapon.OnSelected(_player.LeftHandItemSlot, _player, false, ref _offHandState);
-        _currentOffHandWeapon = weapon;
+        weapon.ClientLogic?.OnSelected(_player.LeftHandItemSlot, _player, false, ref _mainHandState);
+        _currentOffHandWeapon = weapon.ClientLogic;
+
+        if (stack.Item.Attributes?["fpHandsOffset"].Exists == true)
+        {
+            PlayerRenderingPatches.SetOffset(stack.Item.Attributes["fpHandsOffset"].AsFloat());
+        }
     }
     private void SetRenderDirectionCursorForMainHand()
     {
