@@ -346,7 +346,7 @@ public class BowItem : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasIdleAni
 
         if (_stats == null) return;
 
-        dsc.AppendLine(Lang.Get("combatoverhaul:iteminfo-bow", _stats.ArrowDamageMultiplier, _stats.ArrowDamageStrength, _stats.ArrowVelocity));
+        dsc.AppendLine(Lang.Get("combatoverhaul:iteminfo-range-weapon-damage", _stats.ArrowDamageMultiplier, _stats.ArrowDamageStrength));
     }
 
     private BowStats? _stats;

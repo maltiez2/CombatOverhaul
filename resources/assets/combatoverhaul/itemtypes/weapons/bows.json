@@ -85,16 +85,16 @@
   },
   "shape": {"base": "combatoverhaul:weapons/bows/{type}"},
   "guiTransformByType": {
-    "*-crude-*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -95, "y": 45, "z": 37}, "origin": {"x": 0.47, "y": 0, "z": 0.55}, "scale": 2.35},
-    "*-long-*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -135, "y": 25, "z": 41}, "origin": {"x": 0.47, "y": 0, "z": 0.59}, "scale": 1.35},
-    "*-recurve-*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -129, "y": 25, "z": 41}, "origin": {"x": 0.47, "y": 0, "z": 0.55}, "scale": 1.36},
-    "*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -129, "y": 25, "z": 41}, "origin": {"x": 0.47, "y": 0, "z": 0.55}, "scale": 1.64}
+    "*-crude-*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -95, "y": 45, "z": 37}, "origin": {"x": 0.47, "y": 0, "z": 0.55}, "scale": 2},
+    "*-simple-*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -129, "y": 25, "z": 41}, "origin": {"x": 0.47, "y": 0, "z": 0.55}, "scale": 1.26},
+    "*-long-*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -135, "y": 25, "z": 41}, "origin": {"x": 0.47, "y": 0, "z": 0.59}, "scale": 0.92},
+    "*-recurve-*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -129, "y": 25, "z": 41}, "origin": {"x": 0.47, "y": 0, "z": 0.55}, "scale": 1.19}
   },
   "groundTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 4},
   "tpHandTransformByType": {
     "*-recurve-*": {"translation": {"x": -0.58, "y": 0.03, "z": -0.5}, "rotation": {"x": 90, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 1},
     "*-long-*": {"translation": {"x": -0.58, "y": 0.03, "z": -0.5}, "rotation": {"x": 90, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 1},
     "*-simple-*": {"translation": {"x": -0.58, "y": 0.03, "z": -0.5}, "rotation": {"x": 90, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 1},
-    "*": {"translation": {"x": -0.58, "y": 0.03, "z": -0.5}, "rotation": {"x": 90, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 1}
+    "*-crude-*": {"translation": {"x": -0.58, "y": 0.03, "z": -0.5}, "rotation": {"x": 90, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 1}
   }
 }
