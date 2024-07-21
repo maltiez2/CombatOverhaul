@@ -71,6 +71,9 @@
   "damagelog-armor-damage-negation": "Armor negated {0} amount of damage to {1} and lost {2} durability",
   "damagelog-received-damage": "Player receives {0} damage to {1}",
 
+  "iteminfo-bow": "Damage multiplier: {0}\nDamage strength: {1}\nArrow speed: {2}",
+  "iteminfo-projectile": "Damage: {0}\nDamage type: {1}\nBreak chance: {2}%",
+
   "item-bow-crude-regular": "Crude bow",
   "item-bow-simple-regular": "Simple bow",
   "item-bow-long-regular": "Long bow",

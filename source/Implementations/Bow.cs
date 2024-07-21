@@ -3,9 +3,11 @@ using CombatOverhaul.Inputs;
 using CombatOverhaul.RangedSystems;
 using CombatOverhaul.RangedSystems.Aiming;
 using System.Numerics;
+using System.Text;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
+using Vintagestory.API.Config;
 using Vintagestory.API.Server;
 using Vintagestory.API.Util;
 
@@ -329,6 +331,7 @@ public class BowItem : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasIdleAni
             BowStats stats = Attributes.AsObject<BowStats>();
             IdleAnimation = new(stats.IdleAnimation, 1, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), false);
             ReadyAnimation = new(stats.ReadyAnimation, 1, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), false);
+            _stats = stats;
         }
 
         if (api is ICoreServerAPI serverAPI)
@@ -336,4 +339,15 @@ public class BowItem : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasIdleAni
             ServerLogic = new(serverAPI, this);
         }
     }
+
+    public override void GetHeldItemInfo(ItemSlot inSlot, StringBuilder dsc, IWorldAccessor world, bool withDebugInfo)
+    {
+        base.GetHeldItemInfo(inSlot, dsc, world, withDebugInfo);
+
+        if (_stats == null) return;
+
+        dsc.AppendLine(Lang.Get("combatoverhaul:iteminfo-bow", _stats.ArrowDamageMultiplier, _stats.ArrowDamageStrength, _stats.ArrowVelocity));
+    }
+
+    private BowStats? _stats;
 }

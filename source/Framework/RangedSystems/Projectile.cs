@@ -1,7 +1,9 @@
 ﻿using CombatOverhaul.DamageSystems;
 using System.Numerics;
+using System.Text;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
+using Vintagestory.API.Config;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
@@ -264,7 +266,7 @@ public class ProjectileEntity : Entity
 
 public class ProjectileBehavior : CollectibleBehavior
 {
-    public ProjectileStats Stats { get; private set; }
+    public ProjectileStats? Stats { get; private set; }
 
     public ProjectileBehavior(CollectibleObject collObj) : base(collObj)
     {
@@ -272,7 +274,23 @@ public class ProjectileBehavior : CollectibleBehavior
 
     public override void Initialize(JsonObject properties)
     {
+        base.Initialize(properties);
+        
         Stats = properties["stats"].AsObject<ProjectileStats>();
+    }
+
+    public override void GetHeldItemInfo(ItemSlot inSlot, StringBuilder dsc, IWorldAccessor world, bool withDebugInfo)
+    {
+        if (Stats != null)
+        {
+            dsc.AppendLine(Lang.Get(
+            "combatoverhaul:iteminfo-projectile",
+            Stats.DamageStats.Damage,
+            Lang.Get($"combatoverhaul:damage-type-{Stats.DamageStats.DamageType}"),
+            $"{(1 - Stats.DropChance) * 100:F1}"));
+        }
+
+        base.GetHeldItemInfo(inSlot, dsc, world, withDebugInfo);
     }
 }
 
