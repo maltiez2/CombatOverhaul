@@ -471,7 +471,6 @@ public sealed class ShapeElementCollider
         return closest;
     }
 
-#if DEBUG
     public void Render(ICoreClientAPI api, EntityAgent entityPlayer, int color = ColorUtil.WhiteArgb)
     {
         EntityAgent player = api.World.Player.Entity;
@@ -499,5 +498,4 @@ public sealed class ShapeElementCollider
     {
         api.Render.RenderLine(playerPos, start.X + deltaPos.X, start.Y + deltaPos.Y, start.Z + deltaPos.Z, end.X + deltaPos.X, end.Y + deltaPos.Y, end.Z + deltaPos.Z, color);
     }
-#endif
 }

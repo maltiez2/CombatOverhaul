@@ -148,21 +148,25 @@ public sealed class BowClient : RangeWeaponClient
 
         if (state != (int)BowState.Drawn) return false;
 
-        AnimationBehavior?.PlayReadyAnimation(mainHand);
+        AnimationBehavior?.Play(mainHand, _stats.ReleaseAnimation, callback: () => ShootCallback(slot, player, mainHand));
 
-        state = 0;
+        return true;
+    }
+
+    private bool ShootCallback(ItemSlot slot, EntityPlayer player, bool mainHand)
+    {
+        PlayerBehavior?.SetState(0, mainHand);
+        _arrowSlot = null;
 
         Vintagestory.API.MathTools.Vec3d position = player.LocalEyePos + player.Pos.XYZ;
         Vector3 targetDirection = _aimingSystem.TargetVec;
-
         targetDirection = ClientAimingSystem.Zeroing(targetDirection, _stats.Zeroing);
-
-        _arrowSlot = null;
+        
+        RangedWeaponSystem.Shoot(slot, 1, new((float)position.X, (float)position.Y, (float)position.Z), new(targetDirection.X, targetDirection.Y, targetDirection.Z), mainHand, _ => { });
         _attachable.ClearAttachments(player.EntityId);
-
-        RangedWeaponSystem.Shoot(slot, 1, new((float)position.X, (float)position.Y, (float)position.Z), new(targetDirection.X, targetDirection.Y, targetDirection.Z), mainHand, ShootCallback);
-
         _aimingAnimationController?.Stop(mainHand);
+
+        AnimationBehavior?.PlayReadyAnimation(mainHand);
 
         return true;
     }
@@ -179,19 +183,10 @@ public sealed class BowClient : RangeWeaponClient
             PlayerBehavior?.SetState(0);
         }
     }
-    private void ShootCallback(bool success)
-    {
-
-    }
     private bool FullLoadCallback()
     {
         PlayerBehavior?.SetState((int)BowState.Drawn);
         _aimingSystem.AimingState = WeaponAimingState.FullCharge;
-        return true;
-    }
-    private bool ReleasedAnimationCallback()
-    {
-        AnimationBehavior?.PlayReadyAnimation(true);
         return true;
     }
 }

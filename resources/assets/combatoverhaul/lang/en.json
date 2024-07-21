@@ -2,6 +2,9 @@
   "game:tabname-combatoverhaul": "Combat Overhaul",
   "game:tabname-combatoverhaul-test": "CO - Test",
 
+  "message-mainhand-empty": "Main hand should be empty",
+  "message-offhand-empty":  "Offhand should be empty",
+
   "armor-inventory-dialog-title": "Armor",
   "armor-inventory-dialog-head": "Head:",
   "armor-inventory-dialog-face": "Face:",

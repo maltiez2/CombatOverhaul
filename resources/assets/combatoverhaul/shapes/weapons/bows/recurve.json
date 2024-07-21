@@ -474,6 +474,66 @@
 					}
 				}
 			]
+		},
+		
+		{
+			"name": "Release",
+			"code": "release",
+			"quantityframes": 15,
+			"onActivityStopped": "Rewind",
+			"onAnimationEnd": "Hold",
+			"keyframes": [
+				{
+					"frame": 0,
+					"elements": {
+						"Bow_String": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 10.5 },
+						"Bpw_String_left": { "rotationX": 0.0, "rotationY": -20.0, "rotationZ": 0.0 },
+						"String_9": { "rotationX": 0.0, "rotationY": -14.6, "rotationZ": 0.0 },
+						"Bpw_String_right": { "rotationX": 0.0, "rotationY": 20.0, "rotationZ": 0.0 },
+						"String_8": { "rotationX": 0.0, "rotationY": -14.6, "rotationZ": 0.0 },
+						"Bow_right_limb_16": { "rotationX": 0.0, "rotationY": -2.0, "rotationZ": 0.0 },
+						"Bow_right_limb_17": { "rotationX": 0.0, "rotationY": -10.0, "rotationZ": 0.0 },
+						"Bow_right_limb_25": { "rotationX": 0.0, "rotationY": -15.0, "rotationZ": 0.0 },
+						"Bow_right_limb_14": { "rotationX": 0.0, "rotationY": -2.0, "rotationZ": 0.0 },
+						"Bow_right_limb_15": { "rotationX": 0.0, "rotationY": -10.0, "rotationZ": 0.0 },
+						"Bow_right_limb_24": { "rotationX": 0.0, "rotationY": -15.0, "rotationZ": 0.0 }
+					}
+				},
+				{
+					"frame": 9,
+					"elements": {
+						"Bow_String": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 5.0 },
+						"String_9": { "rotationX": 0.0, "rotationY": -10.0, "rotationZ": 0.0 },
+						"String_8": { "rotationX": 0.0, "rotationY": -10.0, "rotationZ": 0.0 }
+					}
+				},
+				{
+					"frame": 11,
+					"elements": {
+						"Bow_String": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 3.7 },
+						"String_9": { "rotationX": 0.0, "rotationY": -9.3, "rotationZ": 0.0 },
+						"String_8": { "rotationX": 0.0, "rotationY": -9.3, "rotationZ": 0.0 }
+					}
+				},
+				{
+					"frame": 14,
+					"elements": {
+						"Bow_String": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0 },
+						"Bpw_String_left": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+						"String_9": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+						"Bpw_String_right": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+						"String_8": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+						"Bow_right_limb": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+						"Bow_right_limb_14": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+						"Bow_right_limb_15": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+						"Bow_right_limb_24": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+						"Bow_left_limb": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+						"Bow_right_limb_16": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+						"Bow_right_limb_17": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+						"Bow_right_limb_25": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 }
+					}
+				}
+			]
 		}
 	]
 }

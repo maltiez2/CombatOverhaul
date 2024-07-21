@@ -15,7 +15,7 @@
     "ReadyAnimation": "combatoverhaul:bow-ready",
     "IdleAnimation": "combatoverhaul:bow-idle",
     "DrawAnimation": "combatoverhaul:bow-draw-{type}",
-    "ReleaseAnimation": "combatoverhaul:bow-release-simple",
+    "ReleaseAnimation": "combatoverhaul:bow-release-{type}",
     "AimingByType": {
       "*-crude-*": {
         "AimDifficulty": 1,

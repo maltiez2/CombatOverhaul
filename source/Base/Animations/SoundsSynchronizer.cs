@@ -1,5 +1,6 @@
 ﻿using ProtoBuf;
 using Vintagestory.API.Client;
+using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
 
 namespace CombatOverhaul.Animations;
@@ -7,14 +8,18 @@ namespace CombatOverhaul.Animations;
 [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
 public class SoundPacket
 {
-    public string Code { get; set; }
+    public string Code { get; set; } = "";
     public bool RandomizePitch { get; set; }
     public float Range { get; set; }
     public float Volume { get; set; }
 
-    public SoundPacket(SoundFrame frame)
+    public SoundPacket()
     {
-        Code = frame.Code;
+    }
+
+    public SoundPacket(SoundFrame frame, int index)
+    {
+        Code = frame.Code[index];
         Range = frame.Range;
         Volume = frame.Volume;
         Range = frame.Range;
@@ -32,13 +37,16 @@ public class SoundsSynchronizerClient
 
     public void Play(SoundFrame frame)
     {
-        _api.World.PlaySoundFor(new(frame.Code), _api.World.Player, frame.RandomizePitch, frame.Range, frame.Volume);
-        
-        if (frame.Synchronize) _channel.SendPacket(new SoundPacket(frame));
+        int index = Math.Clamp((int)Math.Floor(_random.nextFloat(frame.Code.Length)), 0, frame.Code.Length - 1);
+
+        _api.World.PlaySoundFor(new(frame.Code[index]), _api.World.Player, frame.RandomizePitch, frame.Range, frame.Volume);
+
+        if (frame.Synchronize) _channel.SendPacket(new SoundPacket(frame, index));
     }
 
     private readonly ICoreClientAPI _api;
     private readonly IClientNetworkChannel _channel;
+    private readonly NatFloat _random = new(0.5f, 0.5f, EnumDistribution.UNIFORM);
 }
 
 public class SoundsSynchronizerServer

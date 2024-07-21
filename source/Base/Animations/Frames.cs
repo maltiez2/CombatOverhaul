@@ -51,16 +51,16 @@ public readonly struct PlayerItemFrame
 
 public readonly struct SoundFrame
 {
-    public readonly string Code;
+    public readonly ImmutableArray<string> Code;
     public readonly float DurationFraction;
     public readonly bool RandomizePitch;
     public readonly float Range;
     public readonly float Volume;
     public readonly bool Synchronize;
 
-    public SoundFrame(string code, float durationFraction, bool randomizePitch = false, float range = 32, float volume = 1, bool synchronize = true)
+    public SoundFrame(string[] code, float durationFraction, bool randomizePitch = false, float range = 32, float volume = 1, bool synchronize = true)
     {
-        Code = code;
+        Code = code.ToImmutableArray();
         DurationFraction = durationFraction;
         RandomizePitch = randomizePitch;
         Range = range;
@@ -70,8 +70,9 @@ public readonly struct SoundFrame
 
     public SoundFrame Edit(string title, TimeSpan totalDuration)
     {
-        string code = Code;
+        string code = Code.Aggregate((first, second) => $"{first},{second}") ?? "";
         ImGui.InputText($"Sound code##{title}", ref code, 300);
+        string[] codes = code.Split(',');
 
         float time = DurationFraction * (float)totalDuration.TotalMilliseconds;
         ImGui.InputFloat($"Time##{title}", ref time);
@@ -88,7 +89,7 @@ public readonly struct SoundFrame
         bool sync = Synchronize;
         ImGui.Checkbox($"Randomize pitch##{title}", ref sync);
 
-        return new(code, time / (float)totalDuration.TotalMilliseconds, pitch, range, volume, sync);
+        return new(codes, time / (float)totalDuration.TotalMilliseconds, pitch, range, volume, sync);
     }
 }
 

@@ -73,6 +73,11 @@ public sealed class Animation
 
     public void PlaySounds(SoundsSynchronizerClient soundsManager, TimeSpan previousDuration, TimeSpan currentDuration)
     {
+        if (previousDuration == TimeSpan.Zero)
+        {
+            previousDuration = TimeSpan.FromMilliseconds(-1); // to fix sounds at 0 progress not playing
+        }
+        
         foreach (SoundFrame frame in SoundFrames.Where(frame => frame.DurationFraction * TotalDuration > previousDuration && frame.DurationFraction * TotalDuration <= currentDuration))
         {
             soundsManager.Play(frame);
@@ -324,7 +329,7 @@ public sealed class Animation
     {
         if (ImGui.Button($"Add##{title}"))
         {
-            SoundFrames.Add(new("", 0));
+            SoundFrames.Add(new(new string[] { "" }, 0));
         }
         ImGui.SameLine();
 
@@ -339,7 +344,7 @@ public sealed class Animation
         }
         if (!canRemove) ImGui.EndDisabled();
 
-        ImGui.ListBox($"Sounds##{title}", ref _soundsFrameIndex, SoundFrames.Select(element => element.Code).ToArray(), SoundFrames.Count);
+        ImGui.ListBox($"Sounds##{title}", ref _soundsFrameIndex, SoundFrames.Select(element => element.Code.FirstOrDefault("")).ToArray(), SoundFrames.Count);
 
         ImGui.Separator();
 
@@ -452,7 +457,7 @@ public sealed class AnimationJson
 
 public sealed class SoundFrameJson
 {
-    public string Code { get; set; } = "";
+    public string[] Code { get; set; } = Array.Empty<string>();
     public float DurationFraction { get; set; }
     public bool RandomizePitch { get; set; }
     public float Range { get; set; }
@@ -468,7 +473,7 @@ public sealed class SoundFrameJson
     {
         return new()
         {
-            Code = frame.Code,
+            Code = frame.Code.ToArray(),
             DurationFraction = frame.DurationFraction,
             RandomizePitch = frame.RandomizePitch,
             Range = frame.Range,

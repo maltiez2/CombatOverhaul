@@ -1,6 +1,4 @@
-﻿using Cairo;
-using CombatOverhaul.Animations;
-using CombatOverhaul.Armor;
+﻿using CombatOverhaul.Animations;
 using CombatOverhaul.Inputs;
 using CombatOverhaul.RangedSystems;
 using CombatOverhaul.RangedSystems.Aiming;
@@ -10,8 +8,6 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Server;
 using Vintagestory.API.Util;
-using Vintagestory.GameContent;
-using VSImGui.Debug;
 
 
 namespace CombatOverhaul.Implementations;
