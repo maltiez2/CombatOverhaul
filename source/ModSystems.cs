@@ -135,6 +135,8 @@ public sealed class CombatOverhaulAnimationsSystem : ModSystem
 {
     public AnimationsManager? PlayerAnimationsManager { get; private set; }
     public ParticleEffectsManager? ParticleEffectsManager { get; private set; }
+    public VanillaAnimationsSystemClient? ClientVanillaAnimations {  get; private set; }
+    public VanillaAnimationsSystemServer? ServerVanillaAnimations { get; private set; }
 
     public IShaderProgram? AnimatedItemShaderProgram => _shaderProgram;
     public IShaderProgram? AnimatedItemShaderProgramFirstPerson => _shaderProgramFirstPerson;
@@ -153,11 +155,13 @@ public sealed class CombatOverhaulAnimationsSystem : ModSystem
         LoadAnimatedItemShaders();
         ParticleEffectsManager = new(api);
         PlayerAnimationsManager = new(api, ParticleEffectsManager);
+        ClientVanillaAnimations = new(api);
     }
 
     public override void StartServerSide(ICoreServerAPI api)
     {
         ParticleEffectsManager = new(api);
+        ServerVanillaAnimations = new(api);
     }
 
     public override void AssetsFinalize(ICoreAPI api)

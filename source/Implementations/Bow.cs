@@ -32,6 +32,7 @@ public sealed class BowStats : WeaponStats
 {
     public string DrawAnimation { get; set; } = "";
     public string ReleaseAnimation { get; set; } = "";
+    public string TpAimAnimation { get; set; } = "";
     public AimingStatsJson Aiming { get; set; } = new();
     public float ArrowDamageMultiplier { get; set; } = 1;
     public float ArrowDamageStrength { get; set; } = 1;
@@ -65,6 +66,8 @@ public sealed class BowClient : RangeWeaponClient
         _attachable.ClearAttachments(player.EntityId);
         PlayerBehavior?.SetState((int)BowState.Unloaded);
         _aimingSystem.StopAiming();
+
+        AnimationBehavior?.StopVanillaAnimation(_stats.TpAimAnimation);
     }
 
     public override void OnRegistered(ActionsManagerPlayerBehavior behavior, ICoreClientAPI api)
@@ -133,6 +136,8 @@ public sealed class BowClient : RangeWeaponClient
 
         _aimingAnimationController?.Play(mainHand);
 
+        AnimationBehavior?.PlayVanillaAnimation(_stats.TpAimAnimation);
+
         return true;
     }
 
@@ -140,6 +145,8 @@ public sealed class BowClient : RangeWeaponClient
     private bool Shoot(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
         _aimingSystem.StopAiming();
+
+        AnimationBehavior?.StopVanillaAnimation(_stats.TpAimAnimation);
 
         if (state == (int)BowState.Draw)
         {

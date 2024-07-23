@@ -16,6 +16,7 @@
     "IdleAnimation": "combatoverhaul:bow-idle",
     "DrawAnimation": "combatoverhaul:bow-draw-{type}",
     "ReleaseAnimation": "combatoverhaul:bow-release-{type}",
+    "TpAimAnimationByType": {"*-crude-*": "bowaimcrude", "*-simple-*": "bowaim", "*-long-*": "bowaimlong", "*-recurve-*": "bowaimrecurve"},
     "AimingByType": {
       "*-crude-*": {
         "AimDifficulty": 1,

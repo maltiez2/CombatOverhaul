@@ -31,6 +31,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
         _player = player;
         _api = player.Api as ICoreClientAPI;
         _animationsManager = player.Api.ModLoader.GetModSystem<CombatOverhaulAnimationsSystem>().PlayerAnimationsManager;
+        _vanillaAnimationsManager = player.Api.ModLoader.GetModSystem<CombatOverhaulAnimationsSystem>().ClientVanillaAnimations;
 
         SoundsSynchronizerClient soundsManager = player.Api.ModLoader.GetModSystem<CombatOverhaulSystem>().ClientSoundsSynchronizer ?? throw new Exception();
         ParticleEffectsManager particleEffectsManager = player.Api.ModLoader.GetModSystem<CombatOverhaulAnimationsSystem>().ParticleEffectsManager ?? throw new Exception();
@@ -239,10 +240,13 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     {
         _composer.Stop(category);
     }
+    public void PlayVanillaAnimation(string code) => _vanillaAnimationsManager?.StartAnimation(code);
+    public void StopVanillaAnimation(string code) => _vanillaAnimationsManager?.StopAnimation(code);
 
     private readonly Composer _composer;
     private readonly EntityPlayer _player;
     private readonly AnimationsManager? _animationsManager;
+    private readonly VanillaAnimationsSystemClient? _vanillaAnimationsManager;
     private PlayerItemFrame _lastFrame = PlayerItemFrame.Zero;
     private readonly List<string> _offhandCategories = new();
     private readonly List<string> _mainHandCategories = new();
