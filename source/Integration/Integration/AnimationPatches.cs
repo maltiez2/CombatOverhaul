@@ -132,9 +132,7 @@ internal static class AnimationPatch
                                           .GetField("lightrgbs", BindingFlags.NonPublic | BindingFlags.Instance)
                                           ?.GetValue(__instance);
 
-        behavior.RenderHeldItem(__instance.ModelMat, __instance.capi, slot, __instance.entity, lightrgbs, dt, isShadowPass, right, renderInfo);
-
-        return false;
+        return !behavior.RenderHeldItem(__instance.ModelMat, __instance.capi, slot, __instance.entity, lightrgbs, dt, isShadowPass, right, renderInfo);
     }
 }
 

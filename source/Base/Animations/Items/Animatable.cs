@@ -50,18 +50,18 @@ public class Animatable : CollectibleBehavior
 
         if (CurrentAnimatableShape != null) CalculateAnimation(CurrentAnimatableShape.GetAnimator(player.EntityId), CurrentAnimatableShape.Shape, clientApi, player, target, dt);
     }
-    public void RenderHeldItem(float[] modelMat, ICoreClientAPI api, ItemSlot itemSlot, Entity entity, Vec4f lightrgbs, float dt, bool isShadowPass, bool right, ItemRenderInfo renderInfo)
+    public bool RenderHeldItem(float[] modelMat, ICoreClientAPI api, ItemSlot itemSlot, Entity entity, Vec4f lightrgbs, float dt, bool isShadowPass, bool right, ItemRenderInfo renderInfo)
     {
-        if (CurrentAnimatableShape == null || itemSlot.Itemstack == null || ModSystem?.AnimatedItemShaderProgram == null) return;
+        if (CurrentAnimatableShape == null || itemSlot.Itemstack == null || ModSystem?.AnimatedItemShaderProgram == null) return false;
 
         ItemRenderInfo? itemStackRenderInfo = PrepareShape(api, ItemModelMat, modelMat, itemSlot, entity, right, dt);
 
-        if (itemStackRenderInfo == null) return;
+        if (itemStackRenderInfo == null) return false;
 
-        if (!IsOwner(entity))
+        if (!IsOwner(entity) || !IsFirstPerson(entity))
         {
-            ClientApi?.Render.RenderMultiTextureMesh(renderInfo.ModelRef);
-            return;
+            //ClientApi?.Render.RenderMultiTextureMesh(renderInfo.ModelRef);
+            return false;
         }
 
         if (isShadowPass)
@@ -75,11 +75,13 @@ public class Animatable : CollectibleBehavior
             if (shader == null)
             {
                 ClientApi?.Logger.Debug("[Animation manager] Shader is null");
-                return;
+                return false;
             }
 
             RenderShape(shader, api.World, CurrentAnimatableShape, itemStackRenderInfo, api.Render, itemSlot.Itemstack, lightrgbs, ItemModelMat, itemSlot, entity, dt);
         }
+
+        return true;
     }
 
 
