@@ -35,7 +35,7 @@ public class Animatable : CollectibleBehavior
         {
             if (collObj is not Item)
             {
-                throw new InvalidOperationException("CollectibleBehaviorAnimatable can only be used on Items, not Blocks!");
+                throw new InvalidOperationException("CollectibleBehavior Animatable can only be used on Items, not Blocks!");
             }
 
             ClientApi = clientApi;
@@ -74,7 +74,6 @@ public class Animatable : CollectibleBehavior
 
             if (shader == null)
             {
-                ClientApi?.Logger.Debug("[Animation manager] Shader is null");
                 return false;
             }
 

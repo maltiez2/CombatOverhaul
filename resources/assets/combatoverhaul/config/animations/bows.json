@@ -732,7 +732,7 @@
     "SoundFrames": [
       {
         "Code": ["combatoverhaul:sounds/bows/simple-0", "combatoverhaul:sounds/bows/simple-1", "combatoverhaul:sounds/bows/simple-2"],
-        "DurationFraction": 0.5,
+        "DurationFraction": 0,
         "RandomizePitch": false,
         "Range": 32,
         "Volume": 1,
@@ -864,7 +864,7 @@
     "SoundFrames": [
       {
         "Code": ["combatoverhaul:sounds/bows/simple-0", "combatoverhaul:sounds/bows/simple-1", "combatoverhaul:sounds/bows/simple-2"],
-        "DurationFraction": 0.5,
+        "DurationFraction": 0,
         "RandomizePitch": false,
         "Range": 32,
         "Volume": 1,
@@ -996,7 +996,7 @@
     "SoundFrames": [
       {
         "Code": ["combatoverhaul:sounds/bows/long-0", "combatoverhaul:sounds/bows/long-1", "combatoverhaul:sounds/bows/long-2"],
-        "DurationFraction": 0.5,
+        "DurationFraction": 0,
         "RandomizePitch": false,
         "Range": 32,
         "Volume": 1,

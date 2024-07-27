@@ -242,6 +242,10 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     }
     public void PlayVanillaAnimation(string code) => _vanillaAnimationsManager?.StartAnimation(code);
     public void StopVanillaAnimation(string code) => _vanillaAnimationsManager?.StopAnimation(code);
+    public void SetSpeedModifier(AnimationSpeedModifierDelegate modifier) => _composer.SetSpeedModifier(modifier);
+    public void StopSpeedModifier() => _composer.StopSpeedModifier();
+    public bool IsSpeedModifierActive() => _composer.IsSpeedModifierActive();
+
 
     private readonly Composer _composer;
     private readonly EntityPlayer _player;

@@ -3,7 +3,9 @@ using Vintagestory.API.Common;
 
 namespace CombatOverhaul.Animations;
 
-internal sealed class Composer
+public delegate bool AnimationSpeedModifierDelegate(TimeSpan duration, ref TimeSpan delta);
+
+public sealed class Composer
 {
     public Composer(SoundsSynchronizerClient soundsManager, ParticleEffectsManager particleEffectsManager, EntityPlayer player)
     {
@@ -14,6 +16,15 @@ internal sealed class Composer
 
     public PlayerItemFrame Compose(TimeSpan delta)
     {
+        if (_speedModifierDelegate != null)
+        {
+            _speedModifierDuration += delta;
+            if (!_speedModifierDelegate.Invoke(_speedModifierDuration, ref delta))
+            {
+                _speedModifierDelegate = null;
+            }
+        }
+
         if (!_requests.Any() || !_animators.Any()) return PlayerItemFrame.Empty;
 
         foreach ((string category, AnimatorWeightState state) in _weightState)
@@ -127,6 +138,19 @@ internal sealed class Composer
 
     public bool AnyActiveAnimations() => _animators.Any();
 
+    public void SetSpeedModifier(AnimationSpeedModifierDelegate modifier)
+    {
+        _speedModifierDuration = TimeSpan.Zero;
+        _speedModifierDelegate = modifier;
+    }
+
+    public void StopSpeedModifier()
+    {
+        _speedModifierDelegate = null;
+    }
+
+    public bool IsSpeedModifierActive() => _speedModifierDelegate != null;
+
     private enum AnimatorWeightState
     {
         EaseIn,
@@ -145,6 +169,8 @@ internal sealed class Composer
     private readonly SoundsSynchronizerClient _soundsManager;
     private readonly ParticleEffectsManager _particleEffectsManager;
     private readonly EntityPlayer _player;
+    private TimeSpan _speedModifierDuration = TimeSpan.Zero;
+    private AnimationSpeedModifierDelegate? _speedModifierDelegate;
 
     private void ProcessWeight(string category, AnimatorWeightState state)
     {

@@ -67,6 +67,7 @@ public class MeleeWeaponStats : WeaponStats
     public StanceStats? TwoHandedStance { get; set; } = null;
     public StanceStats? OffHandStance { get; set; } = null;
     public bool RenderingOffset { get; set; } = false;
+    public float AnimationStaggerOnHitDurationMs { get; set; } = 150;
 }
 
 public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
@@ -257,6 +258,21 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
             mainHand,
             out IEnumerable<(Block block, System.Numerics.Vector3 point)> terrainCollision,
             out IEnumerable<(Vintagestory.API.Common.Entities.Entity entity, System.Numerics.Vector3 point)> entitiesCollision);
+
+        if (entitiesCollision.Any() && Stats.AnimationStaggerOnHitDurationMs > 0)
+        {
+            AnimationBehavior?.SetSpeedModifier(AttackImpactFunction);
+        }
+    }
+    protected virtual bool AttackImpactFunction(TimeSpan duration, ref TimeSpan delta)
+    {
+        TimeSpan totalDuration = TimeSpan.FromMilliseconds(Stats.AnimationStaggerOnHitDurationMs);
+
+        double multiplier = duration / totalDuration;
+        multiplier = Math.Pow(multiplier, 3);
+        delta = delta * multiplier;
+
+        return duration < totalDuration;
     }
     protected virtual bool AttackAnimationCallback(bool mainHand)
     {
