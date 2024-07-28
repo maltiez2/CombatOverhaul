@@ -80,7 +80,7 @@
       "VerticalOffset": -0.05
     },
     "DamageStrengthByType": {"*-flint": 1, "*-copper": 2, "*-*bronze": 3, "*-iron": 4, "*-steel": 5},
-    "Velocity": 0.5,
+    "Velocity": 0.7,
     "Zeroing": 1.5,
     "RenderingOffset": false
   },

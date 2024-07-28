@@ -45,6 +45,16 @@
     "Hold": false,
     "PlayerKeyFrames": [
       {
+        "EasingTime": 100,
+        "EasingFunction": "Sin",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": true,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {"ItemAnchor": [0, 0, 0, 0, 0, 75], "LowerArmR": [0, 0, 0, 0, 0, -55], "UpperArmR": [1.6, 0, 0, 45, -0.8, -38.2]}
+      },
+      {
         "EasingTime": 300,
         "EasingFunction": "Quintic",
         "DetachedAnchor": false,
@@ -52,10 +62,10 @@
         "PitchFollow": true,
         "FOVMultiplier": 1,
         "BobbingAmplitude": 1,
-        "Elements": {"ItemAnchor": [0, 0, 0, 0, 0, 73], "LowerArmR": [0, 0, 0, 0, 0, -3], "UpperArmR": [0, -1.6, 0, 5, -1.8, -82.2]}
+        "Elements": {"ItemAnchor": [0, 0, 0, 0, 0, 73], "LowerArmR": [0, 0, 0, 0, 0, -3], "UpperArmR": [0, -1.6, 0, 5.6, -2.4, -81]}
       },
       {
-        "EasingTime": 450,
+        "EasingTime": 500,
         "EasingFunction": "Linear",
         "DetachedAnchor": false,
         "SwitchArms": false,
@@ -65,7 +75,7 @@
         "Elements": {"ItemAnchor": [0, 0, 0, 0, 0, 73], "LowerArmR": [0, 0, 0, 0, 0, -3], "UpperArmR": [0, 0, 0, 13, -1.8, -82.2]}
       },
       {
-        "EasingTime": 600,
+        "EasingTime": 900,
         "EasingFunction": "CosShifted",
         "DetachedAnchor": false,
         "SwitchArms": false,
@@ -78,13 +88,23 @@
     "ItemKeyFrames": [],
     "SoundFrames": [],
     "ParticlesFrames": [],
-    "CallbackFrames": [{"Code": "start", "DurationFraction": 0.25}, {"Code": "stop", "DurationFraction": 0.75}],
+    "CallbackFrames": [{"Code": "start", "DurationFraction": 0.083333336}, {"Code": "stop", "DurationFraction": 0.5}],
     "ItemAnimationStart": 0,
     "ItemAnimationEnd": 0
   },
   "sword-short-slash": {
     "Hold": false,
     "PlayerKeyFrames": [
+      {
+        "EasingTime": 100,
+        "EasingFunction": "Sin",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": true,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {"ItemAnchor": [0, 0, 0, 0, -6, 5], "LowerArmR": [0, 0, 0, 0, 0, -70], "UpperArmR": [1.6, 0, 0, -8, 0, -57.2]}
+      },
       {
         "EasingTime": 300,
         "EasingFunction": "Quintic",
@@ -93,33 +113,33 @@
         "PitchFollow": true,
         "FOVMultiplier": 1,
         "BobbingAmplitude": 1,
-        "Elements": {"ItemAnchor": [0, 0, 0, 0, 0, 20], "LowerArmR": [0, -1.6, 0, 0, 0, -10], "UpperArmR": [0, 0.1, 0, -34, 4.2, -46.2]}
+        "Elements": {"ItemAnchor": [0, 0, 0, 0, 0, 67], "LowerArmR": [0, 0, 0, 0, 0, -3], "UpperArmR": [0, -1.6, 0, -34.4, -1.1, -75.1]}
       },
       {
-        "EasingTime": 450,
-        "EasingFunction": "Sin",
+        "EasingTime": 500,
+        "EasingFunction": "Linear",
         "DetachedAnchor": false,
         "SwitchArms": false,
         "PitchFollow": true,
         "FOVMultiplier": 1,
         "BobbingAmplitude": 1,
-        "Elements": {"ItemAnchor": [0, 0, 0, 0, 0, 60], "LowerArmR": [0, -1.6, 0, 0, 0, 0], "UpperArmR": [0, 0, 0, -44, 2.2, -51.2]}
+        "Elements": {"ItemAnchor": [0, 0, 0, 0, 0, 73], "LowerArmR": [0, 0, 0, 0, 0, 10], "UpperArmR": [0, 0, 0, -24, -0.8, -65.2]}
       },
       {
-        "EasingTime": 600,
+        "EasingTime": 900,
         "EasingFunction": "CosShifted",
         "DetachedAnchor": false,
         "SwitchArms": false,
         "PitchFollow": true,
         "FOVMultiplier": 1,
         "BobbingAmplitude": 1,
-        "Elements": {"ItemAnchor": [0, 0, 0, 0, 0, 0], "LowerArmR": [0, 1.6, 0, 0, 0, -74], "UpperArmR": [0, -1.6, 0, -34, -1.8, -50.2]}
+        "Elements": {"ItemAnchor": [0, 0, 0, 0, 0, 16], "LowerArmR": [0, 0, 0, 0, 0, -74], "UpperArmR": [0, -1.6, 0, -18, -1.8, -30.2]}
       }
     ],
     "ItemKeyFrames": [],
     "SoundFrames": [],
     "ParticlesFrames": [],
-    "CallbackFrames": [{"Code": "start", "DurationFraction": 0.25}, {"Code": "stop", "DurationFraction": 0.75}],
+    "CallbackFrames": [{"Code": "start", "DurationFraction": 0.11111111}, {"Code": "stop", "DurationFraction": 0.5555556}],
     "ItemAnimationStart": 0,
     "ItemAnimationEnd": 0
   },
@@ -150,7 +170,7 @@
     "ItemKeyFrames": [],
     "SoundFrames": [],
     "ParticlesFrames": [],
-    "CallbackFrames": [{"Code": "startParry", "DurationFraction": 0.3}, {"Code": "stopParry", "DurationFraction": 0.9}],
+    "CallbackFrames": [{"Code": "start", "DurationFraction": 0.11111111}, {"Code": "stop", "DurationFraction": 0.5555556}],
     "ItemAnimationStart": 0,
     "ItemAnimationEnd": 0
   }

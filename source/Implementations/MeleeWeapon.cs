@@ -67,7 +67,7 @@ public class MeleeWeaponStats : WeaponStats
     public StanceStats? TwoHandedStance { get; set; } = null;
     public StanceStats? OffHandStance { get; set; } = null;
     public bool RenderingOffset { get; set; } = false;
-    public float AnimationStaggerOnHitDurationMs { get; set; } = 150;
+    public float AnimationStaggerOnHitDurationMs { get; set; } = 100;
 }
 
 public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
@@ -268,9 +268,11 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
     {
         TimeSpan totalDuration = TimeSpan.FromMilliseconds(Stats.AnimationStaggerOnHitDurationMs);
 
-        double multiplier = duration / totalDuration;
+        /*double multiplier = duration / totalDuration;
         multiplier = Math.Pow(multiplier, 3);
-        delta = delta * multiplier;
+        delta = delta * multiplier;*/
+
+        delta = TimeSpan.Zero;
 
         return duration < totalDuration;
     }
