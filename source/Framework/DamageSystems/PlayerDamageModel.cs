@@ -29,21 +29,22 @@ public enum DamageZone
     Feet = 128
 }
 
+[Flags]
 public enum PlayerBodyPart
 {
-    None,
-    Head,
-    Face,
-    Neck,
-    Torso,
-    LeftArm,
-    RightArm,
-    LeftHand,
-    RightHand,
-    LeftLeg,
-    RightLeg,
-    LeftFoot,
-    RightFoot
+    None = 0,
+    Head = 1,
+    Face = 2,
+    Neck = 4,
+    Torso = 8,
+    LeftArm = 16,
+    RightArm = 32,
+    LeftHand = 64,
+    RightHand = 128,
+    LeftLeg = 256,
+    RightLeg = 512,
+    LeftFoot = 1024,
+    RightFoot = 2048
 }
 
 public delegate void OnPlayerReceiveDamageDelegate(ref float damage, DamageSource damageSource, PlayerBodyPart bodyPart);
@@ -209,6 +210,8 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
         damageLogMessage = Lang.Get("combatoverhaul:damagelog-success-block", Lang.Get($"combatoverhaul:detailed-damage-zone-{zone}"));
 
         CurrentDamageBlock.Callback.Invoke();
+
+        if (CurrentDamageBlock.Sound != null) entity.Api.World.PlaySoundAt(new(CurrentDamageBlock.Sound), entity);
     }
     private void ApplyArmorResists(DamageSource damageSource, DamageZone zone, ref float damage, out string damageLogMessage)
     {
@@ -354,12 +357,14 @@ public sealed class DamageBlockStats
     public readonly PlayerBodyPart ZoneType;
     public readonly DirectionConstrain Directions;
     public readonly Action Callback;
+    public readonly string? Sound;
 
-    public DamageBlockStats(PlayerBodyPart type, DirectionConstrain directions, Action callback)
+    public DamageBlockStats(PlayerBodyPart type, DirectionConstrain directions, Action callback, string? sound)
     {
         ZoneType = type;
         Directions = directions;
         Callback = callback;
+        Sound = sound;
     }
 }
 
@@ -369,10 +374,11 @@ public sealed class DamageBlockPacket
     public int Zones { get; set; }
     public float[] Directions { get; set; } = Array.Empty<float>();
     public bool MainHand { get; set; }
+    public string? Sound { get; set; } = null;
 
     public DamageBlockStats ToBlockStats(Action callback)
     {
-        return new((PlayerBodyPart)Zones, DirectionConstrain.FromArray(Directions), callback);
+        return new((PlayerBodyPart)Zones, DirectionConstrain.FromArray(Directions), callback, Sound);
     }
 }
 
@@ -386,13 +392,15 @@ public sealed class DamageBlockJson
 {
     public string[] Zones { get; set; } = Array.Empty<string>();
     public float[] Directions { get; set; } = Array.Empty<float>();
+    public string? Sound { get; set; } = null;
 
     public DamageBlockPacket ToPacket()
     {
         return new()
         {
             Zones = (int)Zones.Select(Enum.Parse<PlayerBodyPart>).Aggregate((first, second) => first | second),
-            Directions = Directions
+            Directions = Directions,
+            Sound = Sound
         };
     }
 }

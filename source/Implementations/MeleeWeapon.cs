@@ -51,6 +51,10 @@ public class StanceStats
     public MeleeAttackStats? Attack { get; set; }
     public DamageBlockJson? Block { get; set; }
     public DamageBlockJson? Parry { get; set; }
+    public MeleeAttackStats? HandleAttack { get; set; }
+
+    public string? AttackHitSound { get; set; } = null;
+    public string? HandleHitSound { get; set; } = null;
 
     public float AttackCooldownMs { get; set; } = 0;
     public float BlockCooldownMs { get; set; } = 0;
@@ -79,6 +83,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
 
         CombatOverhaulSystem system = api.ModLoader.GetModSystem<CombatOverhaulSystem>();
         MeleeBlockSystem = system.ClientBlockSystem ?? throw new Exception();
+        SoundsSystem = system.ClientSoundsSynchronizer ?? throw new Exception();
 
         Stats = item.Attributes.AsObject<MeleeWeaponStats>();
 
@@ -96,6 +101,22 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
         {
             OffHandAttack = new(api, Stats.OffHandStance.Attack);
             //DebugEditColliders(OffHandAttack, item.Id * 100 + 2);
+        }
+
+        if (Stats.OneHandedStance?.HandleAttack != null)
+        {
+            OneHandedHandleAttack = new(api, Stats.OneHandedStance.HandleAttack);
+            //DebugEditColliders(OneHandedHandleAttack, item.Id * 100 + 3);
+        }
+        if (Stats.TwoHandedStance?.HandleAttack != null)
+        {
+            TwoHandedHandleAttack = new(api, Stats.TwoHandedStance.HandleAttack);
+            //DebugEditColliders(TwoHandedHandleAttack, item.Id * 100 + 4);
+        }
+        if (Stats.OffHandStance?.HandleAttack != null)
+        {
+            OffHandHandleAttack = new(api, Stats.OffHandStance.HandleAttack);
+            //DebugEditColliders(OffHandHandleAttack, item.Id * 100 + 5);
         }
     }
 
@@ -188,6 +209,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
     protected readonly MeleeBlockSystemClient MeleeBlockSystem;
     protected FirstPersonAnimationsBehavior? AnimationBehavior;
     protected ActionsManagerPlayerBehavior? PlayerBehavior;
+    protected SoundsSynchronizerClient SoundsSystem;
     protected GripController? GripController;
     internal const int _maxStates = 100;
     protected readonly MeleeWeaponStats Stats;
@@ -203,6 +225,10 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
     protected MeleeAttack? TwoHandedAttack;
     protected MeleeAttack? OffHandAttack;
 
+    protected MeleeAttack? OneHandedHandleAttack;
+    protected MeleeAttack? TwoHandedHandleAttack;
+    protected MeleeAttack? OffHandHandleAttack;
+
     [ActionEventHandler(EnumEntityAction.LeftMouseDown, ActionState.Active)]
     protected virtual bool Attack(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
@@ -216,6 +242,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
 
         MeleeAttack? attack = GetStanceAttack(mainHand);
         StanceStats? stats = GetStanceStats(mainHand);
+        MeleeAttack? handle = GetStanceHandleAttack(mainHand);
 
         if (attack == null || stats == null) return false;
 
@@ -226,6 +253,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
                     MeleeBlockSystem.StopBlock(mainHand);
                     SetState(MeleeWeaponState.WindingUp, mainHand);
                     attack.Start(player.Player);
+                    handle?.Start(player.Player);
                     AnimationBehavior?.Play(
                         mainHand,
                         stats.AttackAnimation,
@@ -241,7 +269,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
                 break;
             case MeleeWeaponState.Attacking:
                 {
-                    TryAttack(attack, stats, slot, player, mainHand);
+                    TryAttack(attack, handle, stats, slot, player, mainHand);
                 }
                 break;
             default:
@@ -250,14 +278,36 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
 
         return true;
     }
-    protected virtual void TryAttack(MeleeAttack attack, StanceStats stats, ItemSlot slot, EntityPlayer player, bool mainHand)
+    protected virtual void TryAttack(MeleeAttack attack, MeleeAttack? handle, StanceStats stats, ItemSlot slot, EntityPlayer player, bool mainHand)
     {
+        if (handle != null)
+        {
+            handle.Attack(
+                        player.Player,
+                        slot,
+                        mainHand,
+                        out IEnumerable<(Block block, System.Numerics.Vector3 point)> handleTerrainCollision,
+                        out IEnumerable<(Vintagestory.API.Common.Entities.Entity entity, System.Numerics.Vector3 point)> handleEntitiesCollision);
+
+            if (handleTerrainCollision.Any())
+            {
+                if (stats.HandleHitSound != null) SoundsSystem.Play(stats.HandleHitSound);
+                return;
+            }
+        }
+
         attack.Attack(
             player.Player,
             slot,
             mainHand,
             out IEnumerable<(Block block, System.Numerics.Vector3 point)> terrainCollision,
             out IEnumerable<(Vintagestory.API.Common.Entities.Entity entity, System.Numerics.Vector3 point)> entitiesCollision);
+
+        if (entitiesCollision.Any())
+        {
+            if (stats.AttackHitSound != null) SoundsSystem.Play(stats.AttackHitSound);
+            return;
+        }
 
         if (entitiesCollision.Any() && Stats.AnimationStaggerOnHitDurationMs > 0)
         {
@@ -540,6 +590,17 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
             MeleeWeaponStance.OffHand => OffHandAttack,
             MeleeWeaponStance.TwoHanded => TwoHandedAttack,
             _ => OneHandedAttack,
+        };
+    }
+    protected MeleeAttack? GetStanceHandleAttack(bool mainHand = true)
+    {
+        MeleeWeaponStance stance = GetStance<MeleeWeaponStance>(mainHand);
+        return stance switch
+        {
+            MeleeWeaponStance.MainHand => OneHandedHandleAttack,
+            MeleeWeaponStance.OffHand => OffHandHandleAttack,
+            MeleeWeaponStance.TwoHanded => TwoHandedHandleAttack,
+            _ => OneHandedHandleAttack,
         };
     }
     protected StanceStats? GetStanceStats(bool mainHand = true)

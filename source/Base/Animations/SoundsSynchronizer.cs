@@ -44,6 +44,21 @@ public class SoundsSynchronizerClient
         if (frame.Synchronize) _channel.SendPacket(new SoundPacket(frame, index));
     }
 
+    public void Play(string code, bool randomizedPitch = false, float range = 32, float volume = 1, bool synchronize = true)
+    {
+        _api.World.PlaySoundFor(new(code), _api.World.Player, randomizedPitch, range, volume);
+
+        SoundPacket packet = new()
+        {
+            Code = code,
+            RandomizePitch = randomizedPitch,
+            Range = range,
+            Volume = volume
+        };
+
+        if (synchronize) _channel.SendPacket(packet);
+    }
+
     private readonly ICoreClientAPI _api;
     private readonly IClientNetworkChannel _channel;
     private readonly NatFloat _random = new(0.5f, 0.5f, EnumDistribution.UNIFORM);

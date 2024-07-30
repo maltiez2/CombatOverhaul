@@ -45,7 +45,7 @@
         "StopOnEntityHit": false,
         "CollideWithTerrain": true,
         "MaxReach": 9,
-        "DamageTypes": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 6.5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 3.8, 0, 0.5]}]
+        "DamageTypes": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 6.5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.6, 0, 0.5]}]
       },
       "Parry": {"Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand"], "Directions": [90, 90, 90, 90]},
       "Block": {"Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand"], "Directions": [60, 60, 60, 60]},

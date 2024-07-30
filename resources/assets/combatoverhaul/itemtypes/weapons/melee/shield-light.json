@@ -18,9 +18,10 @@
         "BlockSpeedPenalty": -0.1,
         "Parry": {
           "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
-          "Directions": [45, 45, 45, 45]
+          "Directions": [45, 45, 45, 45],
+          "Sound": "game:sounds/held/shieldblock"
         },
-        "Block": {"Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand"], "Directions": [60, 60, 60, 60]},
+        "Block": {"Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand"], "Directions": [60, 60, 60, 60], "Sound": "game:sounds/held/shieldblock"},
         "BlockCooldownMs": 300,
         "BlockAnimation": "combatoverhaul:shield-{type}-parry",
         "ReadyAnimation": "combatoverhaul:shield-{type}-ready",
@@ -35,9 +36,10 @@
         "BlockSpeedPenalty": -0.05,
         "Parry": {
           "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
-          "Directions": [60, 60, 60, 60]
+          "Directions": [60, 60, 60, 60],
+          "Sound": "game:sounds/held/shieldblock"
         },
-        "Block": {"Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand"], "Directions": [60, 60, 60, 60]},
+        "Block": {"Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand"], "Directions": [60, 60, 60, 60], "Sound": "game:sounds/held/shieldblock"},
         "BlockCooldownMs": 300,
         "BlockAnimation": "combatoverhaul:shield-{type}-parry",
         "ReadyAnimation": "combatoverhaul:shield-{type}-ready",
@@ -52,9 +54,10 @@
         "BlockSpeedPenalty": -0.05,
         "Parry": {
           "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
-          "Directions": [60, 60, 60, 60]
+          "Directions": [60, 60, 60, 60],
+          "Sound": "game:sounds/held/shieldblock"
         },
-        "Block": {"Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand"], "Directions": [75, 75, 75, 75]},
+        "Block": {"Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand"], "Directions": [75, 75, 75, 75], "Sound": "game:sounds/held/shieldblock"},
         "BlockCooldownMs": 300,
         "BlockAnimation": "combatoverhaul:shield-{type}-parry",
         "ReadyAnimation": "combatoverhaul:shield-{type}-ready",
@@ -69,9 +72,10 @@
         "BlockSpeedPenalty": -0.1,
         "Parry": {
           "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
-          "Directions": [60, 60, 60, 60]
+          "Directions": [60, 60, 60, 60],
+          "Sound": "game:sounds/held/shieldblock"
         },
-        "Block": {"Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand"], "Directions": [90, 90, 90, 90]},
+        "Block": {"Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand"], "Directions": [90, 90, 90, 90], "Sound": "game:sounds/held/shieldblock"},
         "BlockCooldownMs": 300,
         "BlockAnimation": "combatoverhaul:shield-{type}-parry",
         "ReadyAnimation": "combatoverhaul:shield-{type}-ready",
@@ -86,9 +90,10 @@
         "BlockSpeedPenalty": 0,
         "Parry": {
           "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
-          "Directions": [90, 90, 90, 90]
+          "Directions": [90, 90, 90, 90],
+          "Sound": "game:sounds/held/shieldblock"
         },
-        "Block": {"Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand"], "Directions": [45, 45, 45, 45]},
+        "Block": {"Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand"], "Directions": [45, 45, 45, 45], "Sound": "game:sounds/held/shieldblock"},
         "BlockCooldownMs": 300,
         "BlockAnimation": "combatoverhaul:shield-{type}-parry",
         "ReadyAnimation": "combatoverhaul:shield-{type}-ready",

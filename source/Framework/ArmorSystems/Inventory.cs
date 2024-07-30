@@ -1,5 +1,7 @@
-﻿using CombatOverhaul.DamageSystems;
+﻿using Cairo;
+using CombatOverhaul.DamageSystems;
 using CombatOverhaul.Utils;
+using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
 using Vintagestory.Common;
@@ -81,6 +83,8 @@ public sealed class ArmorInventory : InventoryCharacter
 {
     public ArmorInventory(string className, string playerUID, ICoreAPI api) : base(className, playerUID, api)
     {
+        FillArmorIconsDict(api);
+
         _slots = GenEmptySlots(_totalSlotsNumber);
 
         for (int index = 0; index < _slots.Length; index++)
@@ -95,6 +99,8 @@ public sealed class ArmorInventory : InventoryCharacter
     }
     public ArmorInventory(string inventoryID, ICoreAPI api) : base(inventoryID, api)
     {
+        FillArmorIconsDict(api);
+
         _slots = GenEmptySlots(_totalSlotsNumber);
 
         for (int index = 0; index < _slots.Length; index++)
@@ -304,6 +310,25 @@ public sealed class ArmorInventory : InventoryCharacter
             _slotsByType[armorType] = slot;
             _armorSlotsIcons.TryGetValue(armorType, out slot.BackgroundIcon);
             return slot;
+        }
+    }
+
+    private void FillArmorIconsDict(ICoreAPI api)
+    {
+        foreach (ArmorLayers layer in Enum.GetValues<ArmorLayers>())
+        {
+            foreach (DamageZone zone in Enum.GetValues<DamageZone>())
+            {
+                string iconPath = $"combatoverhaul:textures/gui/icons/armor-{layer}-{zone}.svg";
+                string iconCode = $"combatoverhaul-armor-{layer}-{zone}";
+
+                if (api.Assets.Exists(new AssetLocation(iconPath)))
+                {
+                    Console.WriteLine($"Add {layer}-{zone}");
+                    
+                    _armorSlotsIcons.Add(new(layer, zone), iconCode);
+                }
+            }
         }
     }
 

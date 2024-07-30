@@ -1,4 +1,5 @@
-﻿using CombatOverhaul.Animations;
+﻿using Cairo;
+using CombatOverhaul.Animations;
 using CombatOverhaul.Armor;
 using CombatOverhaul.Colliders;
 using CombatOverhaul.DamageSystems;
@@ -12,8 +13,8 @@ using CombatOverhaul.Utils;
 using HarmonyLib;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
-using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
+using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
 using Vintagestory.Client.NoObf;
 using Vintagestory.GameContent;
@@ -44,7 +45,7 @@ public sealed class CombatOverhaulSystem : ModSystem
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:AnimatableAttachable", typeof(AnimatableAttachable));
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:Projectile", typeof(ProjectileBehavior));
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:ExplosiveProjectile", typeof(ProjectileExplosiveBehavior));
-        api.RegisterCollectibleBehaviorClass("CombatOverhaul:FragmentationProjectile", typeof(ProjectileFragmentationBehavior)); 
+        api.RegisterCollectibleBehaviorClass("CombatOverhaul:FragmentationProjectile", typeof(ProjectileFragmentationBehavior));
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:Armor", typeof(ArmorBehavior));
 
         api.RegisterItemClass("CombatOverhaul:Bow", typeof(BowItem));
@@ -97,6 +98,36 @@ public sealed class CombatOverhaulSystem : ModSystem
         MouseWheelPatch.Patch("CombatOverhaul", api);
     }
 
+    public override void AssetsLoaded(ICoreAPI api)
+    {
+        if (api is not ICoreClientAPI clientApi) return;
+
+        foreach (ArmorLayers layer in Enum.GetValues<ArmorLayers>())
+        {
+            foreach (DamageZone zone in Enum.GetValues<DamageZone>())
+            {
+                string iconPath = $"combatoverhaul:textures/gui/icons/armor-{layer}-{zone}.svg";
+                string iconCode = $"combatoverhaul-armor-{layer}-{zone}";
+
+                if (!clientApi.Assets.Exists(new AssetLocation(iconPath))) continue;
+
+                RegisterCustomIcon(clientApi, iconCode, iconPath);
+            }
+        }
+    }
+
+    private void RegisterCustomIcon(ICoreClientAPI api, string key, string path)
+    {
+        api.Gui.Icons.CustomIcons[key] = delegate (Context ctx, int x, int y, float w, float h, double[] rgba)
+        {
+            AssetLocation location = new(path);
+            IAsset svgAsset = api.Assets.TryGet(location);
+            int value = ColorUtil.ColorFromRgba(75, 75, 75, 125);
+            Surface target = ctx.GetTarget();
+            api.Gui.DrawSvg(svgAsset, (ImageSurface)(object)((target is ImageSurface) ? target : null), x, y, (int)w, (int)h, value);
+        };
+    }
+
     public override void Dispose()
     {
         new Harmony("CombatOverhaulAuto").UnpatchAll();
@@ -135,7 +166,7 @@ public sealed class CombatOverhaulAnimationsSystem : ModSystem
 {
     public AnimationsManager? PlayerAnimationsManager { get; private set; }
     public ParticleEffectsManager? ParticleEffectsManager { get; private set; }
-    public VanillaAnimationsSystemClient? ClientVanillaAnimations {  get; private set; }
+    public VanillaAnimationsSystemClient? ClientVanillaAnimations { get; private set; }
     public VanillaAnimationsSystemServer? ServerVanillaAnimations { get; private set; }
 
     public IShaderProgram? AnimatedItemShaderProgram => _shaderProgram;
