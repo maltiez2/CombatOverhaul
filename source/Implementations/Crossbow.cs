@@ -31,6 +31,8 @@ public class CrossbowStats : WeaponStats
     public string ReleaseAnimation { get; set; } = "";
     public string AimAnimation { get; set; } = "";
     public string LoadedAnimation { get; set; } = "";
+    public float DrawSpeedPenalty { get; set; } = -0.1f;
+    public float LoadSpeedPenalty { get; set; } = -0.1f;
 
     public AimingStatsJson Aiming { get; set; } = new();
     public float BoltDamageMultiplier { get; set; } = 1;
@@ -88,6 +90,9 @@ public class CrossbowClient : RangeWeaponClient
     protected readonly AimingStats AimingStats;
     protected ItemSlot? BoltSlot;
 
+    protected const string PlayerStatsMainHandCategory = "CombatOverhaul:held-item-mainhand";
+    protected const string PlayerStatsOffHandCategory = "CombatOverhaul:held-item-offhand";
+
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Active)]
     protected virtual bool Draw(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
@@ -96,6 +101,8 @@ public class CrossbowClient : RangeWeaponClient
         AnimationBehavior?.Play(mainHand, Stats.DrawAnimation, callback: () => DrawAnimationCallback(slot, mainHand), animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1);
 
         state = (int)CrossbowState.Draw;
+
+        PlayerBehavior?.SetStat("walkspeed", mainHand ? PlayerStatsMainHandCategory : PlayerStatsOffHandCategory, Stats.DrawSpeedPenalty);
 
         return true;
     }
@@ -134,6 +141,8 @@ public class CrossbowClient : RangeWeaponClient
 
         state = (int)CrossbowState.Load;
 
+        PlayerBehavior?.SetStat("walkspeed", mainHand ? PlayerStatsMainHandCategory : PlayerStatsOffHandCategory, Stats.LoadSpeedPenalty);
+
         return true;
     }
 
@@ -157,6 +166,8 @@ public class CrossbowClient : RangeWeaponClient
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Released)]
     protected virtual bool Ease(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
+        PlayerBehavior?.SetStat("walkspeed", mainHand ? PlayerStatsMainHandCategory : PlayerStatsOffHandCategory);
+
         switch ((CrossbowState)state)
         {
             case CrossbowState.Draw:
@@ -217,6 +228,7 @@ public class CrossbowClient : RangeWeaponClient
         RangedWeaponSystem.Load(slot, mainHand, DrawCallback);
         AnimationBehavior?.PlayReadyAnimation();
         AnimationBehavior?.Play(mainHand, Stats.LoadedAnimation, category: "string", weight: 0.001f);
+        PlayerBehavior?.SetStat("walkspeed", mainHand ? PlayerStatsMainHandCategory : PlayerStatsOffHandCategory);
         return true;
     }
     protected virtual void LoadCallback(bool success)
@@ -234,6 +246,7 @@ public class CrossbowClient : RangeWeaponClient
     {
         RangedWeaponSystem.Reload(slot, boltSlot, 1, mainHand, LoadCallback);
         AnimationBehavior?.PlayReadyAnimation();
+        PlayerBehavior?.SetStat("walkspeed", mainHand ? PlayerStatsMainHandCategory : PlayerStatsOffHandCategory);
         return true;
     }
     protected virtual void ShootCallback(bool success)

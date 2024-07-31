@@ -508,7 +508,21 @@
         }
       }
     ],
-    "SoundFrames": [],
+    "SoundFrames": [
+      {
+        "Code": [
+          "combatoverhaul:sounds/crossbows/release/simple-0",
+          "combatoverhaul:sounds/crossbows/release/simple-1",
+          "combatoverhaul:sounds/crossbows/release/simple-2",
+          "combatoverhaul:sounds/crossbows/release/simple-3"
+        ],
+        "DurationFraction": 0.5,
+        "RandomizePitch": false,
+        "Range": 32,
+        "Volume": 1,
+        "Synchronize": true
+      }
+    ],
     "ItemAnimationStart": 0,
     "ItemAnimationEnd": 600
   },

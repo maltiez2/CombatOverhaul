@@ -712,6 +712,28 @@
         }
       },
       {
+        "DurationFraction": 0.99999999,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "Bow_right_limb_4": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, 0, 0],
+          "String_6": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, 0, 0],
+          "Lever": [0, 0, 0, 0, 0, 0],
+          "Wheel": [0, 0, 0, -2520, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, 0, 0],
+          "String_2": [0, 0, 0, 0, 0, 0],
+          "Attachment_bolt": [0, 0, -256, 0, 0, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 0, 0],
+          "String": [0, 0, 0, 0, 0, 0]
+        }
+      },
+      {
         "DurationFraction": 1,
         "EasingFunction": "Linear",
         "Elements": {
