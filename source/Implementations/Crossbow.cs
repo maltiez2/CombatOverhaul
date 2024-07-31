@@ -8,8 +8,6 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Server;
 using Vintagestory.API.Util;
-using Vintagestory.GameContent;
-using VSImGui.Debug;
 
 namespace CombatOverhaul.Implementations;
 
@@ -124,14 +122,6 @@ public class CrossbowClient : RangeWeaponClient
 
             return true;
         });
-
-        /*DebugWidgets.FloatDrag("test", "test", "bolt trnasform x", () => BoltTransform.Translation.X, value => BoltTransform.Translation.X = value);
-        DebugWidgets.FloatDrag("test", "test", "bolt trnasform y", () => BoltTransform.Translation.Y, value => BoltTransform.Translation.Y = value);
-        DebugWidgets.FloatDrag("test", "test", "bolt trnasform z", () => BoltTransform.Translation.Z, value => BoltTransform.Translation.Z = value);
-        DebugWidgets.FloatDrag("test", "test", "bolt trnasform rotation x", () => BoltTransform.Rotation.X, value => BoltTransform.Rotation.X = value);
-        DebugWidgets.FloatDrag("test", "test", "bolt trnasform rotation y", () => BoltTransform.Rotation.Y, value => BoltTransform.Rotation.Y = value);
-        DebugWidgets.FloatDrag("test", "test", "bolt trnasform rotation z", () => BoltTransform.Rotation.Z, value => BoltTransform.Rotation.Z = value);
-        DebugWidgets.FloatDrag("test", "test", "bolt trnasform scale", () => BoltTransform.ScaleXYZ.X, value => BoltTransform.Scale = value);*/
 
         if (BoltSlot == null) return false;
 
