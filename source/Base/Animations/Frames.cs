@@ -513,6 +513,9 @@ public readonly struct PlayerFrame
         bool pitchFollow = Math.Abs(PitchFollow - PerfectPitchFollow) < Epsilon;
         ImGui.Checkbox($"Pitch follow##{title}", ref pitchFollow);
 
+        bool pitchDontFollow = Math.Abs(PitchFollow - 0) < Epsilon && !pitchFollow;
+        ImGui.Checkbox($"Pitch dont follow##{title}", ref pitchDontFollow);
+
         float fov = FovMultiplier;
         ImGui.SliderFloat($"FOV multiplier##{title}", ref fov, 0.1f, 2.0f);
 
@@ -548,7 +551,11 @@ public readonly struct PlayerFrame
         if (DetachedAnchorFrame == null && detachedAnchorFrame) anchor = AnimationElement.Zero;
         if (DetachedAnchorFrame != null && !detachedAnchorFrame) anchor = null;
 
-        return new(right, left, torso, anchor, detachedAnchor, switchArms, pitchFollow ? PerfectPitchFollow : DefaultPitchFollow, fov, bobbing);
+        float pitch = DefaultPitchFollow;
+        if (pitchFollow) pitch = PerfectPitchFollow;
+        if (pitchDontFollow) pitch = 0;
+
+        return new(right, left, torso, anchor, detachedAnchor, switchArms, pitch, fov, bobbing);
     }
 
     public static PlayerFrame Interpolate(PlayerFrame from, PlayerFrame to, float progress)
@@ -603,7 +610,7 @@ public readonly struct PlayerFrame
             AnimationElement.Compose(frames.Where(entry => entry.element.DetachedAnchorFrame != null).Select(entry => (entry.element.DetachedAnchorFrame.Value, entry.weight))),
             frames.Select(entry => entry.element.DetachedAnchor).Aggregate((first, second) => first || second),
             frames.Select(entry => entry.element.SwitchArms).Aggregate((first, second) => first || second),
-            frames.Select(entry => entry.element.PitchFollow).Max(),
+            frames.Select(entry => entry.element.PitchFollow).Where(value => Math.Abs(value - DefaultPitchFollow) > 1E-6f).FirstOrDefault(DefaultPitchFollow),
             frames.Select(entry => entry.element.FovMultiplier).Min(),
             frames.Select(entry => entry.element.BobbingAmplitude).Min()
             );

@@ -317,7 +317,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
             animatable.SwitchArms = true;
         }
 
-        if ((frame.Player.PitchFollow - PlayerFrame.DefaultPitchFollow) >= PlayerFrame.Epsilon)
+        if (Math.Abs(frame.Player.PitchFollow - PlayerFrame.DefaultPitchFollow) >= PlayerFrame.Epsilon)
         {
             if (entity.Properties.Client.Renderer is EntityPlayerShapeRenderer renderer)
             {

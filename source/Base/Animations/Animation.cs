@@ -566,6 +566,7 @@ public sealed class PLayerKeyFrameJson
     public bool DetachedAnchor { get; set; } = false;
     public bool SwitchArms { get; set; } = false;
     public bool PitchFollow { get; set; } = false;
+    public bool PitchDontFollow { get; set; } = false;
     public float FOVMultiplier { get; set; } = 1;
     public float BobbingAmplitude { get; set; } = 1;
     public Dictionary<string, float?[]> Elements { get; set; } = new();
@@ -599,6 +600,7 @@ public sealed class PLayerKeyFrameJson
         AnimationElement? anchor = Elements.ContainsKey("DetachedAnchor") ? new(Elements["DetachedAnchor"]) : null;
 
         float pitch = PitchFollow ? PlayerFrame.PerfectPitchFollow : PlayerFrame.DefaultPitchFollow;
+        pitch = PitchDontFollow ? 0 : pitch;
 
         PlayerFrame frame = new(rightHand, leftHand, torso, anchor, DetachedAnchor, SwitchArms, pitch, FOVMultiplier, BobbingAmplitude);
 
@@ -618,6 +620,7 @@ public sealed class PLayerKeyFrameJson
             DetachedAnchor = frame.Frame.DetachedAnchor,
             SwitchArms = frame.Frame.SwitchArms,
             PitchFollow = Math.Abs(frame.Frame.PitchFollow - PlayerFrame.PerfectPitchFollow) < PlayerFrame.Epsilon,
+            PitchDontFollow = Math.Abs(frame.Frame.PitchFollow - 0) < PlayerFrame.Epsilon,
             FOVMultiplier = frame.Frame.FovMultiplier,
             BobbingAmplitude = frame.Frame.BobbingAmplitude
         };

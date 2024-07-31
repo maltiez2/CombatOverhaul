@@ -115,6 +115,8 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
 
     private float OnReceiveDamageHandler(float damage, DamageSource damageSource)
     {
+        if (damageSource.Type == EnumDamageType.Heal) return damage;
+
         (PlayerBodyPart detailedDamageZone, float multiplier) = DetermineHitZone(damageSource);
 
         DamageZone damageZone = BodyPartsToZones[detailedDamageZone];

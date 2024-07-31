@@ -159,7 +159,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
         StopAttackCooldown(mainHand);
         StopBlockCooldown(mainHand);
         GripController?.ResetGrip(mainHand);
-
+        AnimationBehavior?.StopSpeedModifier();
         PlayerBehavior?.SetStat("walkspeed", mainHand ? PlayerStatsMainHandCategory : PlayerStatsOffHandCategory);
     }
     public virtual void OnRegistered(ActionsManagerPlayerBehavior behavior, ICoreClientAPI api)
@@ -303,10 +303,9 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
             out IEnumerable<(Block block, System.Numerics.Vector3 point)> terrainCollision,
             out IEnumerable<(Vintagestory.API.Common.Entities.Entity entity, System.Numerics.Vector3 point)> entitiesCollision);
 
-        if (entitiesCollision.Any())
+        if (entitiesCollision.Any() && stats.AttackHitSound != null)
         {
-            if (stats.AttackHitSound != null) SoundsSystem.Play(stats.AttackHitSound);
-            return;
+            SoundsSystem.Play(stats.AttackHitSound);
         }
 
         if (entitiesCollision.Any() && Stats.AnimationStaggerOnHitDurationMs > 0)

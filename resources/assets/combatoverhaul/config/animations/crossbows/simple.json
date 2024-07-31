@@ -547,6 +547,7 @@
         }
       }
     ],
+    "CallbackFrames": [{"Code": "shoot", "DurationFraction": 1}],
     "SoundFrames": [],
     "ItemAnimationStart": 0,
     "ItemAnimationEnd": 300

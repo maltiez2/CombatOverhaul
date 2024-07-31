@@ -188,7 +188,12 @@ public class CrossbowClient : RangeWeaponClient
         if (state != (int)CrossbowState.Aimed || eventData.AltPressed || BoltSlot == null) return false;
 
         AnimationBehavior?.Stop("string");
-        AnimationBehavior?.Play(mainHand, Stats.ReleaseAnimation, weight: 1000, callback: () => ReleaseAnimationCallback(slot, mainHand, player));
+        AnimationBehavior?.Play(
+            mainHand,
+            Stats.ReleaseAnimation,
+            weight: 1000,
+            callback: () => ReleaseAnimationCallback(slot, mainHand, player),
+            callbackHandler: callbackCode => ReleaseAnimationCallbackHandler(callbackCode, slot, mainHand, player));
 
         BoltSlot = null;
 
@@ -235,16 +240,26 @@ public class CrossbowClient : RangeWeaponClient
     {
 
     }
+    protected virtual void ReleaseAnimationCallbackHandler(string callbackCode, ItemSlot slot, bool mainHand, EntityPlayer player)
+    {
+        switch (callbackCode)
+        {
+            case "shoot":
+                {
+                    Vintagestory.API.MathTools.Vec3d position = player.LocalEyePos + player.Pos.XYZ;
+                    Vector3 targetDirection = AimingSystem.TargetVec;
+
+                    targetDirection = ClientAimingSystem.Zeroing(targetDirection, Stats.Zeroing);
+
+                    RangedWeaponSystem.Shoot(slot, 1, new((float)position.X, (float)position.Y, (float)position.Z), new(targetDirection.X, targetDirection.Y, targetDirection.Z), mainHand, ShootCallback);
+
+                    Attachable.ClearAttachments(player.EntityId);
+                }
+                break;
+        }
+    }
     protected virtual bool ReleaseAnimationCallback(ItemSlot slot, bool mainHand, EntityPlayer player)
     {
-        Vintagestory.API.MathTools.Vec3d position = player.LocalEyePos + player.Pos.XYZ;
-        Vector3 targetDirection = AimingSystem.TargetVec;
-
-        targetDirection = ClientAimingSystem.Zeroing(targetDirection, Stats.Zeroing);
-
-        RangedWeaponSystem.Shoot(slot, 1, new((float)position.X, (float)position.Y, (float)position.Z), new(targetDirection.X, targetDirection.Y, targetDirection.Z), mainHand, ShootCallback);
-
-        Attachable.ClearAttachments(player.EntityId);
         return true;
     }
 }
