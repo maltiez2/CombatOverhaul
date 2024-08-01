@@ -1,6 +1,6 @@
 {
 	"editor": {
-		"collapsedPaths": "Root/Crossbow/Latch,Root/Crossbow/Wheel/Cube2,Root/lever_1,Root/Bow/Bow_right_limb_19,Root/Crossbow/Wheel/Cube3,Root/Crossbow/Wheel,Root/Bow/Bow_right_limb_13,Root/Bow,Root/Stock,Root/Stock/Stock_front_1,Root/Bow/Bow_right_limb_7,Root/Crossbow/Latch/latch_4/Wheel/Cube5,Root/String,Root/Crossbow/Plate,Root/Crossbow/Latch/latch_4/Wheel/Cube6,Root/Crossbow/Latch/latch_4/Wheel,Root/Plate,Root/Crossbow/Lever,Root/Crossbow/String,Root/Bow_holder_1,Root/Bow_holder_4,Root/Bow_right_limb_7,Root/Bow_right_limb_1,Root/Cube12,Root/Crossbow/Bow,Root/Stock/Stock_back_1,Root/Crossbow/Wheel/Cube12,Root/Crossbow/Stock/Stock_front_1/Stock_front_26,Root/Bow/Bow_right_limb_19/Bow_right_limb_7,Root/Cube2,Root/Cube3,Root/Wheel,Root/Crossbow/lever_1,Root/Crossbow/Stock/Front_0",
+		"collapsedPaths": "Root/Crossbow/Latch,Root/Crossbow/Wheel/Cube2,Root/lever_1,Root/Bow/Bow_right_limb_19,Root/Crossbow/Wheel/Cube3,Root/Crossbow/Wheel,Root/Bow/Bow_right_limb_13,Root/Bow,Root/Stock,Root/Stock/Stock_front_1,Root/Bow/Bow_right_limb_7,Root/Crossbow/Latch/latch_4/Wheel/Cube5,Root/String,Root/Crossbow/Plate,Root/Crossbow/Latch/latch_4/Wheel/Cube6,Root/Crossbow/Latch/latch_4/Wheel,Root/Plate,Root/Crossbow/Lever,Root/Crossbow/String,Root/Bow_holder_1,Root/Bow_holder_4,Root/Bow_right_limb_7,Root/Bow_right_limb_1,Root/Cube12,Root/Crossbow/Stock,Root/Crossbow/Bow,Root/Stock/Stock_back_1,Root/Crossbow/Wheel/Cube12,Root/Crossbow/Stock/Stock_front_1/Stock_front_26,Root/Bow/Bow_right_limb_19/Bow_right_limb_7,Root/Cube2,Root/Cube3,Root/Wheel,Root/Crossbow/lever_1,Root/Crossbow/Stock/Front_0",
 		"allAngles": false,
 		"entityTextureMode": false
 	},
@@ -788,7 +788,7 @@
 					]
 				},
 				{
-					"name": "Bolt_point",
+					"name": "Attachment_bolt",
 					"from": [ 0.25, 2.55, -3.1 ],
 					"to": [ 0.25, 2.55, -3.1 ],
 					"rotationOrigin": [ 0.25, 2.55, -3.1 ],
@@ -1142,7 +1142,7 @@
 						"Trigger": { "rotationX": 12.0, "rotationY": 0.0, "rotationZ": 0.0 },
 						"latch_16": { "rotationX": -24.0, "rotationY": 0.0, "rotationZ": 0.0 },
 						"Stock_front_22": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
-						"Bolt_point": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0 }
+						"Attachment_bolt": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0 }
 					}
 				},
 				{
@@ -1211,7 +1211,7 @@
 						"Bow_right_limb_11": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
 						"Bow_right_limb_14": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
 						"Stock_front_22": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
-						"Bolt_point": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0 },
+						"Attachment_bolt": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0 },
 						"Latch": { "rotationX": -95.0, "rotationY": 0.0, "rotationZ": 0.0 },
 						"Trigger_mechanism": { "rotationX": 53.5, "rotationY": 0.0, "rotationZ": 0.0 },
 						"Wheel": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
@@ -1319,7 +1319,7 @@
 				{
 					"frame": 0,
 					"elements": {
-						"Bolt_point": { "offsetX": 0.0, "offsetY": 25.0, "offsetZ": 7.0, "rotationX": 90.0, "rotationY": 0.0, "rotationZ": 0.0 },
+						"Attachment_bolt": { "offsetX": 0.0, "offsetY": 25.0, "offsetZ": 7.0, "rotationX": 90.0, "rotationY": 0.0, "rotationZ": 0.0 },
 						"String": { "offsetX": 0.0, "offsetY": 0.3, "offsetZ": 4.0 },
 						"String_2": { "rotationX": 0.0, "rotationY": 20.0, "rotationZ": -1.5 },
 						"String_6": { "rotationX": 0.0, "rotationY": -20.0, "rotationZ": -1.5 },
@@ -1345,13 +1345,13 @@
 				{
 					"frame": 15,
 					"elements": {
-						"Bolt_point": { "offsetX": 0.0, "offsetY": 3.0, "offsetZ": -2.0, "rotationX": 28.0, "rotationY": 0.0, "rotationZ": 0.0 }
+						"Attachment_bolt": { "offsetX": 0.0, "offsetY": 3.0, "offsetZ": -2.0, "rotationX": 28.0, "rotationY": 0.0, "rotationZ": 0.0 }
 					}
 				},
 				{
 					"frame": 29,
 					"elements": {
-						"Bolt_point": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+						"Attachment_bolt": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
 						"String": { "offsetX": 0.0, "offsetY": 0.3, "offsetZ": 4.0 },
 						"String_2": { "rotationX": 0.0, "rotationY": 20.0, "rotationZ": -1.5 },
 						"String_6": { "rotationX": 0.0, "rotationY": -20.0, "rotationZ": -1.5 },
@@ -1433,7 +1433,7 @@
 						"Wheel": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
 						"Trigger": { "rotationX": 4.0, "rotationY": 0.0, "rotationZ": 0.0 },
 						"latch_16": { "rotationX": -8.0, "rotationY": 0.0, "rotationZ": 0.0 },
-						"Bolt_point": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0 }
+						"Attachment_bolt": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0 }
 					}
 				},
 				{
@@ -1442,7 +1442,7 @@
 						"Wheel": { "rotationX": -90.0, "rotationY": 0.0, "rotationZ": 0.0 },
 						"Trigger": { "rotationX": 20.0, "rotationY": 0.0, "rotationZ": 0.0 },
 						"latch_16": { "rotationX": -42.0, "rotationY": 0.0, "rotationZ": 0.0 },
-						"Bolt_point": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": -2.0 }
+						"Attachment_bolt": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": -2.0 }
 					}
 				},
 				{
@@ -1469,13 +1469,13 @@
 						"Wheel": { "rotationX": -78.0, "rotationY": 0.0, "rotationZ": 0.0 },
 						"Trigger": { "rotationX": 12.0, "rotationY": 0.0, "rotationZ": 0.0 },
 						"latch_16": { "rotationX": -24.0, "rotationY": 0.0, "rotationZ": 0.0 },
-						"Bolt_point": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": -4.0 }
+						"Attachment_bolt": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": -4.0 }
 					}
 				},
 				{
 					"frame": 15,
 					"elements": {
-						"Bolt_point": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": -25.0 },
+						"Attachment_bolt": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": -25.0 },
 						"Trigger": { "rotationX": 12.0, "rotationY": 0.0, "rotationZ": 0.0 },
 						"latch_16": { "rotationX": -24.0, "rotationY": 0.0, "rotationZ": 0.0 },
 						"String": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0 },
