@@ -4,9 +4,21 @@
   "variantgroups": [{"code": "type", "states": ["simple", "stirrup", "latch", "goatsfoot", "windlass"]}, {"code": "subtype", "states": ["regular"]}],
   "creativeinventory": {"combatoverhaul": ["*"]},
   "maxstacksize": 1,
-  "durabilityByType": {"*-simple": 450, "*-stirrup": 900, "*-latch": 900, "*-goatsfoot": 1600, "*-windlass": 1200},
+  "durabilityByType": {"*-simple-*": 450, "*-stirrup-*": 900, "*-latch-*": 900, "*-goatsfoot-*": 1600, "*-windlass-*": 1200},
   "tool": "bow",
-  "behaviors": [{"name": "CombatOverhaul:AnimatableAttachable", "properties": {"animated-shape": "combatoverhaul:weapons/crossbows/{type}"}}],
+  "behaviors": [
+    {
+      "name": "CombatOverhaul:AnimatableAttachable",
+      "properties": {
+        "animated-shapeByType": {
+          "*-goatsfoot-*": "combatoverhaul:weapons/crossbows/{type}-tp",
+          "*-windlass-*": "combatoverhaul:weapons/crossbows/{type}-tp",
+          "*": "combatoverhaul:weapons/crossbows/{type}"
+        },
+        "animated-shape-fp": "combatoverhaul:weapons/crossbows/{type}"
+      }
+    }
+  ],
   "attributes": {
     "BoltTransform": {"translation": {"x": -5.65, "y": 0.2, "z": -1}, "rotation": {"x": 0, "y": 0, "z": 1}, "scale": 0.75},
     "BoltDamageMultiplierByType": {"*": 1},
@@ -21,6 +33,7 @@
     "ReleaseAnimation": "combatoverhaul:crossbow-{type}-release",
     "AimAnimation": "combatoverhaul:crossbow-{type}-aim",
     "LoadedAnimation": "combatoverhaul:crossbow-{type}-loaded",
+    "DrawRequirementByType": {"*-goatsfoot-*": "", "*-windlass-*": "", "*": ""},
     "AimingByType": {
       "*": {
         "AimDifficulty": 1,
@@ -42,8 +55,8 @@
     "DispersionMOAByType": {"*": [30, 30]}
   },
   "shapeByType": {
-    "*-goatsfoot": {"base": "combatoverhaul:weapons/crossbows/{type}-tp"},
-    "*-windlass": {"base": "combatoverhaul:weapons/crossbows/{type}-tp"},
+    "*-goatsfoot-*": {"base": "combatoverhaul:weapons/crossbows/{type}-tp"},
+    "*-windlass-*": {"base": "combatoverhaul:weapons/crossbows/{type}-tp"},
     "*": {"base": "combatoverhaul:weapons/crossbows/{type}"}
   },
   "guiTransformByType": {

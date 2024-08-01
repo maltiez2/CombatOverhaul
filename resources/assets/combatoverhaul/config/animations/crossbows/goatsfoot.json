@@ -1,0 +1,1538 @@
+﻿{
+  "crossbow-goatsfoot-draw": {
+    "Hold": false,
+    "PlayerKeyFrames": [
+      {
+        "EasingTime": 300,
+        "EasingFunction": "Linear",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": false,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {
+          "ItemAnchor": [0.6, 1.2, 1.6, -17, -10, 106],
+          "LowerArmR": [0, 0, 0, 0, 0, -86],
+          "UpperArmR": [0, 0, 0, 0, 16, -34],
+          "ItemAnchorL": [2.7, 0.7, -1.6, -47, -16, 100],
+          "LowerArmL": [0, 0, 0, 0, 0, -77],
+          "UpperArmL": [0, 0, 0, 0, -6, -39]
+        }
+      },
+      {
+        "EasingTime": 500,
+        "EasingFunction": "Linear",
+        "DetachedAnchor": false,
+        "SwitchArms": true,
+        "PitchFollow": false,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {
+          "ItemAnchor": [0.6, 1.2, 1.6, -17, -10, 106],
+          "LowerArmR": [0, 0, 0, 0, 0, -31],
+          "UpperArmR": [0, 0, 0, 60, 5, 47],
+          "ItemAnchorL": [2.7, 0.7, -1.6, -47, -16, 100],
+          "LowerArmL": [0, 0, 0, 0, 0, -77],
+          "UpperArmL": [0, 0, 0, 0, -6, -39]
+        }
+      },
+      {
+        "EasingTime": 1004,
+        "EasingFunction": "Linear",
+        "DetachedAnchor": false,
+        "SwitchArms": true,
+        "PitchFollow": false,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {
+          "ItemAnchor": [0.6, 1.2, 1.6, -17, -10, 106],
+          "LowerArmR": [0, 0, 0, 0, 0, -67],
+          "UpperArmR": [0, 0, 0, 60, 5, -49],
+          "ItemAnchorL": [2.7, 0.7, -1.6, -47, -16, 100],
+          "LowerArmL": [0, 0, 0, 0, 0, -77],
+          "UpperArmL": [0, 0, 0, 0, -6, -39]
+        }
+      },
+      {
+        "EasingTime": 1508,
+        "EasingFunction": "Linear",
+        "DetachedAnchor": false,
+        "SwitchArms": true,
+        "PitchFollow": false,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {
+          "ItemAnchor": [0.6, 1.2, 1.6, -17, -10, 106],
+          "LowerArmR": [0, 0, 0, 0, 0, -91],
+          "UpperArmR": [0.6, -2.3, 0, 81, 4, -45],
+          "ItemAnchorL": [2.7, 0.7, -1.6, -47, -16, 100],
+          "LowerArmL": [0, 0, 0, 0, 0, -77],
+          "UpperArmL": [0, 0, 0, 0, -6, -39]
+        }
+      },
+      {
+        "EasingTime": 1760,
+        "EasingFunction": "Linear",
+        "DetachedAnchor": false,
+        "SwitchArms": true,
+        "PitchFollow": false,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {
+          "ItemAnchor": [0.6, 1.2, 1.6, -17, -10, 106],
+          "LowerArmR": [0, 0, 0, 0, 0, -66],
+          "UpperArmR": [0.6, -2.3, 0, 81, -12, -63],
+          "ItemAnchorL": [2.7, 0.7, -1.6, -47, -16, 100],
+          "LowerArmL": [0, 0, 0, 0, 0, -77],
+          "UpperArmL": [0, 0, 0, 0, -6, -39]
+        }
+      },
+      {
+        "EasingTime": 2012,
+        "EasingFunction": "Linear",
+        "DetachedAnchor": false,
+        "SwitchArms": true,
+        "PitchFollow": false,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {
+          "ItemAnchor": [0.6, 1.2, 1.6, -17, -10, 106],
+          "LowerArmR": [0, 0, 0, 0, 0, -53],
+          "UpperArmR": [0.6, 0, 0, 81, -12, -76],
+          "ItemAnchorL": [2.7, 0.7, -1.6, -47, -16, 100],
+          "LowerArmL": [0, 0, 0, 0, 0, -77],
+          "UpperArmL": [0, 0, 0, 0, -6, -39]
+        }
+      },
+      {
+        "EasingTime": 2264,
+        "EasingFunction": "Linear",
+        "DetachedAnchor": false,
+        "SwitchArms": true,
+        "PitchFollow": false,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {
+          "ItemAnchor": [0.6, 1.2, 1.6, -17, -10, 106],
+          "LowerArmR": [0, 0, 0, 0, 0, -53],
+          "UpperArmR": [0.6, 0, 0, 73, -12, -81],
+          "ItemAnchorL": [2.7, 0.7, -1.6, -47, -16, 100],
+          "LowerArmL": [0, 0, 0, 0, 0, -77],
+          "UpperArmL": [0, 0, 0, 0, -6, -39]
+        }
+      },
+      {
+        "EasingTime": 2768,
+        "EasingFunction": "Linear",
+        "DetachedAnchor": false,
+        "SwitchArms": true,
+        "PitchFollow": false,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {
+          "ItemAnchor": [0.6, 1.2, 1.6, -17, -10, 106],
+          "LowerArmR": [0, 0, 0, 0, 0, -34],
+          "UpperArmR": [0.6, 0, 0, 73, -2, -91],
+          "ItemAnchorL": [2.7, 0.7, -1.6, -47, -16, 100],
+          "LowerArmL": [0, 0, 0, 0, 0, -77],
+          "UpperArmL": [0, 0, 0, 0, -6, -39]
+        }
+      },
+      {
+        "EasingTime": 3273,
+        "EasingFunction": "Linear",
+        "DetachedAnchor": false,
+        "SwitchArms": true,
+        "PitchFollow": false,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {
+          "ItemAnchor": [0.6, 1.2, 1.6, -17, -10, 106],
+          "LowerArmR": [0, 0, 0, 0, 0, -14],
+          "UpperArmR": [3.4, -2.3, 0, 73, -14, -112],
+          "ItemAnchorL": [2.7, 0.7, -1.6, -47, -16, 100],
+          "LowerArmL": [0, 0, 0, 0, 0, -89],
+          "UpperArmL": [0, 0, 0, 0, -29, -34]
+        }
+      },
+      {
+        "EasingTime": 3676,
+        "EasingFunction": "Linear",
+        "DetachedAnchor": false,
+        "SwitchArms": true,
+        "PitchFollow": false,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {
+          "ItemAnchor": [0.6, 1.2, 1.6, -17, -10, 106],
+          "LowerArmR": [0, 0, 0, 0, 0, -14],
+          "UpperArmR": [3.4, -0.1, 0, 73, -19, -112],
+          "ItemAnchorL": [2.7, 0.7, -1.6, -47, -16, 100],
+          "LowerArmL": [0, 0, 0, 0, 0, -89],
+          "UpperArmL": [0, 0, 0, 0, -29, -34]
+        }
+      },
+      {
+        "EasingTime": 4029,
+        "EasingFunction": "Linear",
+        "DetachedAnchor": false,
+        "SwitchArms": true,
+        "PitchFollow": false,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {
+          "ItemAnchor": [0.6, 1.2, 1.6, -17, -10, 106],
+          "LowerArmR": [0, 0, 0, 0, 0, -26],
+          "UpperArmR": [3.4, 0, 0, 73, -33, -108],
+          "ItemAnchorL": [2.7, 0.7, -1.6, -47, -16, 100],
+          "LowerArmL": [0, 0, 0, 0, 0, -89],
+          "UpperArmL": [0, 0, 0, 0, -29, -34]
+        }
+      },
+      {
+        "EasingTime": 4281,
+        "EasingFunction": "Linear",
+        "DetachedAnchor": false,
+        "SwitchArms": true,
+        "PitchFollow": false,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {
+          "ItemAnchor": [0.6, 1.2, 1.6, -17, -10, 106],
+          "LowerArmR": [0, 0, 0, 0, 0, -48],
+          "UpperArmR": [3.4, 0, 0, 73, -44, -94],
+          "ItemAnchorL": [2.7, 0.7, -1.6, -47, -16, 100],
+          "LowerArmL": [0, 0, 0, 0, 0, -89],
+          "UpperArmL": [0, 0, 0, 0, -29, -34]
+        }
+      },
+      {
+        "EasingTime": 4553,
+        "EasingFunction": "Linear",
+        "DetachedAnchor": false,
+        "SwitchArms": true,
+        "PitchFollow": false,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {
+          "ItemAnchor": [0.6, 1.2, 1.6, -17, -10, 106],
+          "LowerArmR": [0, 0, 0, 0, 0, -81],
+          "UpperArmR": [3.4, 0, 0, 73, -53, -73],
+          "ItemAnchorL": [2.7, 0.7, -1.6, -47, -16, 100],
+          "LowerArmL": [0, 0, 0, 0, 0, -89],
+          "UpperArmL": [0, 0, 0, 0, -29, -34]
+        }
+      },
+      {
+        "EasingTime": 4785,
+        "EasingFunction": "Linear",
+        "DetachedAnchor": false,
+        "SwitchArms": true,
+        "PitchFollow": false,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {
+          "ItemAnchor": [0.6, 1.2, 1.6, -17, -10, 106],
+          "LowerArmR": [0, 0, 0, 0, 0, -81],
+          "UpperArmR": [3.4, 0, 0, 73, 3, -74],
+          "ItemAnchorL": [2.7, 0.7, -1.6, -47, -16, 100],
+          "LowerArmL": [0, 0, 0, 0, 0, -77],
+          "UpperArmL": [0, 0, 0, 0, -6, -39]
+        }
+      },
+      {
+        "EasingTime": 5289,
+        "EasingFunction": "Linear",
+        "DetachedAnchor": false,
+        "SwitchArms": true,
+        "PitchFollow": false,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {
+          "ItemAnchor": [0.6, 1.2, 1.6, -17, -10, 106],
+          "LowerArmR": [0, 0, 0, 0, 0, -60],
+          "UpperArmR": [3.4, 0, 0, 73, -59, -84],
+          "ItemAnchorL": [2.7, 0.7, -1.6, -47, -16, 100],
+          "LowerArmL": [0, 0, 0, 0, 0, -77],
+          "UpperArmL": [0, 0, 0, 0, -6, -39]
+        }
+      },
+      {
+        "EasingTime": 5542,
+        "EasingFunction": "Linear",
+        "DetachedAnchor": false,
+        "SwitchArms": true,
+        "PitchFollow": false,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {
+          "ItemAnchor": [0.6, 1.2, 1.6, -17, -10, 106],
+          "LowerArmR": [0, 0, 0, 0, 0, -60],
+          "UpperArmR": [3.4, 0, 0, 73, -55, -84],
+          "ItemAnchorL": [2.7, 0.7, -1.6, -47, -16, 100],
+          "LowerArmL": [0, 0, 0, 0, 0, -77],
+          "UpperArmL": [0, 0, 0, 0, -6, -39]
+        }
+      },
+      {
+        "EasingTime": 5794,
+        "EasingFunction": "Linear",
+        "DetachedAnchor": false,
+        "SwitchArms": true,
+        "PitchFollow": false,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {
+          "ItemAnchor": [0.6, 1.2, 1.6, -17, -10, 106],
+          "LowerArmR": [0, 0, 0, 0, 0, -60],
+          "UpperArmR": [3.4, 0, 0, 73, -13, -64],
+          "ItemAnchorL": [2.7, 0.7, -1.6, -47, -16, 100],
+          "LowerArmL": [0, 0, 0, 0, 0, -77],
+          "UpperArmL": [0, 0, 0, 0, -6, -39]
+        }
+      },
+      {
+        "EasingTime": 6500,
+        "EasingFunction": "Linear",
+        "DetachedAnchor": false,
+        "SwitchArms": true,
+        "PitchFollow": false,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {
+          "ItemAnchor": [0.6, 1.2, 1.6, -17, -10, 106],
+          "LowerArmR": [0, 0, 0, 0, 0, 11],
+          "UpperArmR": [0, 0, 0, 50, 2, 64],
+          "ItemAnchorL": [2.7, 0.7, -1.6, -47, -16, 100],
+          "LowerArmL": [0, 0, 0, 0, 0, -77],
+          "UpperArmL": [0, 0, 0, 0, -6, -39]
+        }
+      },
+      {
+        "EasingTime": 7000,
+        "EasingFunction": "Linear",
+        "DetachedAnchor": false,
+        "SwitchArms": true,
+        "PitchFollow": false,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {
+          "ItemAnchor": [0.6, 1.2, 1.6, -17, -10, 106],
+          "LowerArmR": [0, 0, 0, 0, 0, -86],
+          "UpperArmR": [0, 0, 0, 0, 16, -34],
+          "ItemAnchorL": [2.7, 0.7, -1.6, -47, -16, 100],
+          "LowerArmL": [0, 0, 0, 0, 0, -77],
+          "UpperArmL": [0, 0, 0, 0, -6, -39]
+        }
+      }
+    ],
+    "ItemKeyFrames": [
+      {
+        "DurationFraction": 0,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "origin": [0, 0, 0, 67.5, 0, 0],
+          "String_6": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_4": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, 0, 0],
+          "Goatleg_short_2": [0, 0, 0, -157.5, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, 0, 0],
+          "Goatleg_short_1": [0, 0, 0, -157.5, 0, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, 0, 0],
+          "String": [0, 0, 0, 0, 0, 0],
+          "String_2": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 0, 0],
+          "Goatleg_Handle": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, 0, 0],
+          "Goatleg": [-17, -18, 6, 0, 0, 0],
+          "Wheel": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, 0, 0]
+        }
+      },
+      {
+        "DurationFraction": 0.008403361,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "origin": [0, 0, 0, 240, 0, 0],
+          "String_6": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_4": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, 0, 0],
+          "Goatleg_short_2": [0, 0, 0, -157.5, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, 0, 0],
+          "Goatleg_short_1": [0, 0, 0, -157.5, 0, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, 0, 0],
+          "String": [0, 0, 0, 0, 0, 0],
+          "String_2": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 0, 0],
+          "Goatleg_Handle": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, 0, 0],
+          "Goatleg": [11, -18, 6, 0, 0, 0],
+          "Wheel": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, 0, 0]
+        }
+      },
+      {
+        "DurationFraction": 0.08403361,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "origin": [0, 0, 0, 240, 0, 0],
+          "String_6": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_4": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, 0, 0],
+          "Goatleg_short_2": [0, 0, 0, -157.5, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, 0, 0],
+          "Goatleg_short_1": [0, 0, 0, -157.5, 0, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, 0, 0],
+          "String": [0, 0, 0, 0, 0, 0],
+          "String_2": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 0, 0],
+          "Goatleg_Handle": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, 0, 0],
+          "Goatleg": [4, -16, -24, 0, 0, 0],
+          "Wheel": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, 0, 0]
+        }
+      },
+      {
+        "DurationFraction": 0.16806722,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "origin": [0, 0, 0, 22.5, 0, 0],
+          "String_6": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_4": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, 0, 0],
+          "Goatleg_short_2": [0, 0, 0, -112.5, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, 0, 0],
+          "Goatleg_short_1": [0, 0, 0, -112.5, 0, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, 0, 0],
+          "String": [0, 0, 0, 0, 0, 0],
+          "String_2": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 0, 0],
+          "Goatleg_Handle": [0, 0, 0, 180, 0, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, 0, 0],
+          "Goatleg": [3, -14, -22, 0, 0, 0],
+          "Wheel": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, 0, 0]
+        }
+      },
+      {
+        "DurationFraction": 0.21008405,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "origin": [0, 0, 0, 22.5, 0, 0],
+          "String_6": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_4": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, 0, 0],
+          "Goatleg_short_2": [0, 0, 0, -112.5, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, 0, 0],
+          "Goatleg_short_1": [0, 0, 0, -112.5, 0, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, 0, 0],
+          "String": [0, 0, 0, 0, 0, 0],
+          "String_2": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 0, 0],
+          "Goatleg_Handle": [0, 0, 0, 180, 0, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, 0, 0],
+          "Goatleg": [3, -11, -26, 0, 0, 0],
+          "Wheel": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, 0, 0]
+        }
+      },
+      {
+        "DurationFraction": 0.25210086,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "origin": [0, 0, 0, 22.5, 0, 0],
+          "String_6": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_4": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, 0, 0],
+          "Goatleg_short_2": [0, 0, 0, -112.5, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, 0, 0],
+          "Goatleg_short_1": [0, 0, 0, -112.5, 0, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, 0, 0],
+          "String": [0, 0, 0, 0, 0, 0],
+          "String_2": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 0, 0],
+          "Goatleg_Handle": [0, 0, 0, 180, 0, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, 0, 0],
+          "Goatleg": [0, -11, -27, 0, 0, 0],
+          "Wheel": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, 0, 0]
+        }
+      },
+      {
+        "DurationFraction": 0.2941177,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "origin": [0, 0, 0, 22.5, 0, 0],
+          "String_6": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_4": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, 0, 0],
+          "Goatleg_short_2": [0, 0, 0, -22.5, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, 0, 0],
+          "Goatleg_short_1": [0, 0, 0, -22.5, 0, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, 0, 0],
+          "String": [0, 0, 0, 0, 0, 0],
+          "String_2": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 0, 0],
+          "Goatleg_Handle": [0, 0, 0, 180, 0, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, 0, 0],
+          "Goatleg": [0, -11, -27, 0, 0, 0],
+          "Wheel": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, 0, 0]
+        }
+      },
+      {
+        "DurationFraction": 0.3781513,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "origin": [0, 0, 0, 7, 0, 0],
+          "String_6": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_4": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, 0, 0],
+          "Goatleg_short_2": [0, 0, 0, -7, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, 0, 0],
+          "Goatleg_short_1": [0, 0, 0, -7, 0, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, 0, 0],
+          "String": [0, 0, 0, 0, 0, 0],
+          "String_2": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 0, 0],
+          "Goatleg_Handle": [0, 0, 0, 182, 0, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, 0, 0],
+          "Goatleg": [0, -14.2, -28.8, 0, 0, 0],
+          "Wheel": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, 0, 0]
+        }
+      },
+      {
+        "DurationFraction": 0.4621849,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "origin": [0, 0, 0, 7, 0, 0],
+          "String_6": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_4": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, 0, 0],
+          "Goatleg_short_2": [0, 0, 0, -7, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, 0, 0],
+          "Goatleg_short_1": [0, 0, 0, -7, 0, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, 0, 0],
+          "String": [0, 0, 0, 0, 0, 0],
+          "String_2": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 0, 0],
+          "Goatleg_Handle": [0, 0, 0, 182, 0, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, 0, 0],
+          "Goatleg": [0, -14.2, -28.8, 0, 0, 0],
+          "Wheel": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, 0, 0]
+        }
+      },
+      {
+        "DurationFraction": 0.5294118,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "origin": [0, 0, 0, 21, 0, 0],
+          "String_6": [0, 0, 0, 0.64, -9.28, 0],
+          "Bow_right_limb_4": [0, 0, 0, 0, -1.28, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, -1.28, 0],
+          "Goatleg_short_2": [0, 0, 0, -21, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, -1.28, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, -1.28, 0],
+          "Goatleg_short_1": [0, 0, 0, -21, 0, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, -1.28, 0],
+          "String": [0, 0, 2.016, 0, 0, 0],
+          "String_2": [0, 0, 0, 0.64, 9.28, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 0.96, 0],
+          "Goatleg_Handle": [0, 0, 0, 182, 0, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, -1.28, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, -1.28, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, -0.96, 0],
+          "Goatleg": [0, -14.2, -26.97, 0, 0, 0],
+          "Wheel": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, -1.28, 0]
+        }
+      },
+      {
+        "DurationFraction": 0.5882353,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "origin": [0, 0, 0, 45, 0, 0],
+          "String_6": [0, 0, 0, 1.2, -17.400002, 0],
+          "Bow_right_limb_4": [0, 0, 0, 0, -2.4, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, -2.4, 0],
+          "Goatleg_short_2": [0, 0, 0, -45, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, -2.4, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, -2.4, 0],
+          "Goatleg_short_1": [0, 0, 0, -45, 0, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, -2.4, 0],
+          "String": [0, 0, 3.7800002, 0, 0, 0],
+          "String_2": [0, 0, 0, 1.2, 17.400002, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 1.8000001, 0],
+          "Goatleg_Handle": [0, 0, 0, 182, 0, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, -2.4, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, -2.4, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, -1.8000001, 0],
+          "Goatleg": [0, -14.2, -25.36, 0, 0, 0],
+          "Wheel": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, -2.4, 0]
+        }
+      },
+      {
+        "DurationFraction": 0.6302521,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "origin": [0, 0, 0, 61, 0, 0],
+          "String_6": [0, 0, 0, 1.6, -23.2, 0],
+          "Bow_right_limb_4": [0, 0, 0, 0, -3.2, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, -3.2, 0],
+          "Goatleg_short_2": [0, 0, 0, -61, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, -3.2, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, -3.2, 0],
+          "Goatleg_short_1": [0, 0, 0, -61, 0, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, -3.2, 0],
+          "String": [0, 0, 5.0400004, 0, 0, 0],
+          "String_2": [0, 0, 0, 1.6, 23.2, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 2.4, 0],
+          "Goatleg_Handle": [0, 0, 0, 182, 0, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, -3.2, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, -3.2, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, -2.4, 0],
+          "Goatleg": [0, -14.2, -24.25, 0, 0, 0],
+          "Wheel": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, -3.2, 0]
+        }
+      },
+      {
+        "DurationFraction": 0.64705884,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "origin": [0, 0, 0, 70, 0, 0],
+          "String_6": [0, 0, 0, 1.76, -25.52, 0],
+          "Bow_right_limb_4": [0, 0, 0, 0, -3.52, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, -3.52, 0],
+          "Goatleg_short_2": [0, 0, 0, -70, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, -3.52, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, -3.52, 0],
+          "Goatleg_short_1": [0, 0, 0, -70, 0, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, -3.52, 0],
+          "String": [0, 0, 5.544, 0, 0, 0],
+          "String_2": [0, 0, 0, 1.76, 25.52, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 2.6399999, 0],
+          "Goatleg_Handle": [0, 0, 0, 182, 0, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, -3.52, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, -3.52, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, -2.6399999, 0],
+          "Goatleg": [0, -14.2, -23.8, 0, 0, 0],
+          "Wheel": [0, 0, 0, -10, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, -3.52, 0]
+        }
+      },
+      {
+        "DurationFraction": 0.67226887,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "origin": [0, 0, 0, 86, 0, 0],
+          "String_6": [0, 0, 0, 2, -29, 0],
+          "Bow_right_limb_4": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, -4, 0],
+          "Goatleg_short_2": [0, 0, 0, -86, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, -4, 0],
+          "Goatleg_short_1": [0, 0, 0, -86, 0, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, -4, 0],
+          "String": [0, 0, 6.3, 0, 0, 0],
+          "String_2": [0, 0, 0, 2, 29, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 3, 0],
+          "Goatleg_Handle": [0, 0, 0, 182, 0, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, -3, 0],
+          "Goatleg": [0, -14.2, -23.13, 0, 0, 0],
+          "Wheel": [0, 0, 0, 65, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, -4, 0]
+        }
+      },
+      {
+        "DurationFraction": 0.71428573,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "origin": [0, 0, 0, 86, 0, 0],
+          "String_6": [0, 0, 0, 2, -29, 0],
+          "Bow_right_limb_4": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, -4, 0],
+          "Goatleg_short_2": [0, 0, 0, -86, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, -4, 0],
+          "Goatleg_short_1": [0, 0, 0, -86, 0, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, -4, 0],
+          "String": [0, 0, 6.3, 0, 0, 0],
+          "String_2": [0, 0, 0, 2, 29, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 3, 0],
+          "Goatleg_Handle": [0, 0, 0, 182, 0, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, -3, 0],
+          "Goatleg": [0, -14.2, -23.13, 0, 0, 0],
+          "Wheel": [0, 0, 0, 65, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, -4, 0]
+        }
+      },
+      {
+        "DurationFraction": 0.79831934,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "origin": [0, 0, 0, 53, 0, 0],
+          "String_6": [0, 0, 0, 2, -29, 0],
+          "Bow_right_limb_4": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, -4, 0],
+          "Goatleg_short_2": [0, 0, 0, -135, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, -4, 0],
+          "Goatleg_short_1": [0, 0, 0, -135, 0, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, -4, 0],
+          "String": [0, 0, 6.3, 0, 0, 0],
+          "String_2": [0, 0, 0, 2, 29, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 3, 0],
+          "Goatleg_Handle": [0, 0, 0, 60, 0, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, -3, 0],
+          "Goatleg": [0, -3, -23, 0, 0, 0],
+          "Wheel": [0, 0, 0, 65, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, -4, 0]
+        }
+      },
+      {
+        "DurationFraction": 0.8403362,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "origin": [0, 0, 0, 53, 0, 0],
+          "String_6": [0, 0, 0, 2, -29, 0],
+          "Bow_right_limb_4": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, -4, 0],
+          "Goatleg_short_2": [0, 0, 0, -135, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, -4, 0],
+          "Goatleg_short_1": [0, 0, 0, -135, 0, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, -4, 0],
+          "String": [0, 0, 6.3, 0, 0, 0],
+          "String_2": [0, 0, 0, 2, 29, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 3, 0],
+          "Goatleg_Handle": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, -3, 0],
+          "Goatleg": [0, -4, -23, 0, 0, 0],
+          "Wheel": [0, 0, 0, 65, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, -4, 0]
+        }
+      },
+      {
+        "DurationFraction": 0.88235295,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "origin": [0, 0, 0, 53, 0, 0],
+          "String_6": [0, 0, 0, 2, -29, 0],
+          "Bow_right_limb_4": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, -4, 0],
+          "Goatleg_short_2": [0, 0, 0, -135, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, -4, 0],
+          "Goatleg_short_1": [0, 0, 0, -135, 0, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, -4, 0],
+          "String": [0, 0, 6.3, 0, 0, 0],
+          "String_2": [0, 0, 0, 2, 29, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 3, 0],
+          "Goatleg_Handle": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, -3, 0],
+          "Goatleg": [5, -11, -23, 0, 0, 0],
+          "Wheel": [0, 0, 0, 65, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, -4, 0]
+        }
+      },
+      {
+        "DurationFraction": 1,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "origin": [0, 0, 0, 67.5, 0, 0],
+          "String_6": [0, 0, 0, 2, -29, 0],
+          "Bow_right_limb_4": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, -4, 0],
+          "Goatleg_short_2": [0, 0, 0, -135, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, -4, 0],
+          "Goatleg_short_1": [0, 0, 0, -135, 0, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, -4, 0],
+          "String": [0, 0, 6.3, 0, 0, 0],
+          "String_2": [0, 0, 0, 2, 29, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 3, 0],
+          "Goatleg_Handle": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, -3, 0],
+          "Goatleg": [14, -16, 7, 0, 0, 0],
+          "Wheel": [0, 0, 0, 65, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, -4, 0]
+        }
+      }
+    ],
+    "SoundFrames": [],
+    "ParticlesFrames": [],
+    "CallbackFrames": [],
+    "ItemAnimationStart": 500,
+    "ItemAnimationEnd": 6500
+  },
+  "crossbow-goatsfoot-drawn": {
+    "Hold": false,
+    "PlayerKeyFrames": [
+      {
+        "EasingTime": 300,
+        "EasingFunction": "Linear",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {
+          "ItemAnchor": [0, 0, 0, 0, 0, 0],
+          "LowerArmR": [0, 0, 0, 0, 0, 0],
+          "UpperArmR": [0, 0, 0, 0, 0, 0],
+          "ItemAnchorL": [0, 0, 0, 0, 0, 0],
+          "LowerArmL": [0, 0, 0, 0, 0, 0],
+          "UpperArmL": [0, 0, 0, 0, 0, 0],
+          "UpperTorso": [0, 0, 0, 0, 0, 0],
+          "DetachedAnchor": [0, 0, 0, 0, 0, 0]
+        }
+      }
+    ],
+    "ItemKeyFrames": [
+      {
+        "DurationFraction": 0,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "Bolt_point": [0, 0, 0, 0, 0, 0],
+          "String_6": [0, 0, 0, 2, -29, 0],
+          "Bow_right_limb_4": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, -4, 0],
+          "Goatleg_short_2": [0, 0, 0, -135, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, -4, 0],
+          "String": [0, 0, 6.3, 0, 0, 0],
+          "String_2": [0, 0, 0, 2, 29, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 3, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, -3, 0],
+          "Wheel": [0, 0, 0, 65, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, -4, 0]
+        }
+      },
+      {
+        "DurationFraction": 1,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "Bolt_point": [0, 0, 0, 0, 0, 0],
+          "String_6": [0, 0, 0, 2, -29, 0],
+          "Bow_right_limb_4": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, -4, 0],
+          "Goatleg_short_2": [0, 0, 0, -135, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, -4, 0],
+          "String": [0, 0, 6.3, 0, 0, 0],
+          "String_2": [0, 0, 0, 2, 29, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 3, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, -3, 0],
+          "Wheel": [0, 0, 0, 65, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, -4, 0]
+        }
+      }
+    ],
+    "SoundFrames": [],
+    "ItemAnimationStart": 0,
+    "ItemAnimationEnd": 300
+  },
+  "crossbow-goatsfoot-aim": {
+    "Hold": true,
+    "PlayerKeyFrames": [
+      {
+        "EasingTime": 500,
+        "EasingFunction": "Sin",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": true,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 0.95,
+        "BobbingAmplitude": 0.65,
+        "Elements": {
+          "ItemAnchor": [-0.9, 0.4, 1.5, 16.7, 15, 133.9],
+          "LowerArmR": [0, 0, 0, 0, 0, -117],
+          "UpperArmR": [0, 0, 0, 0, 20, -24],
+          "ItemAnchorL": [0, 0, 0, 0, 0, 0],
+          "LowerArmL": [0, 0, 0, 0, 0, -9],
+          "UpperArmL": [0, 0, 0, 0, -10, -85],
+          "UpperTorso": [0, 0, 0, 0, 0, 0],
+          "DetachedAnchor": [0, 0, 0, 0, 0, 0]
+        }
+      }
+    ],
+    "ItemKeyFrames": [
+      {
+        "DurationFraction": 1,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "Bolt_point": [0, 0, 0, 0, 0, 0],
+          "String_6": [0, 0, 0, 2, -29, 0],
+          "Bow_right_limb_4": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, -4, 0],
+          "Goatleg_short_2": [0, 0, 0, -135, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, -4, 0],
+          "String": [0, 0, 6.3, 0, 0, 0],
+          "String_2": [0, 0, 0, 2, 29, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 3, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, -3, 0],
+          "Wheel": [0, 0, 0, 65, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, -4, 0]
+        }
+      }
+    ],
+    "SoundFrames": [],
+    "ParticlesFrames": [],
+    "CallbackFrames": [],
+    "ItemAnimationStart": 0,
+    "ItemAnimationEnd": 500
+  },
+  "crossbow-goatsfoot-release": {
+    "Hold": true,
+    "PlayerKeyFrames": [
+      {
+        "EasingTime": 50,
+        "EasingFunction": "Quadratic",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": true,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 0.95,
+        "BobbingAmplitude": 0.65,
+        "Elements": {
+          "ItemAnchor": [-0.9, 0.4, 1.5, 16.7, 15, 133.9],
+          "LowerArmR": [0, 0, 0, 0, 0, -117],
+          "UpperArmR": [0, 0, 0, 0, 20, -24],
+          "ItemAnchorL": [0, 0, 0, 0, 0, 0],
+          "LowerArmL": [0, 0, 0, 0, 0, -9],
+          "UpperArmL": [0, 0, 0, 0, -10, -85],
+          "UpperTorso": [0, 0, 0, 0, 0, 0],
+          "DetachedAnchor": [0, 0, 0, 0, 0, 0]
+        }
+      },
+      {
+        "EasingTime": 1000,
+        "EasingFunction": "Sin",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": true,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 0.95,
+        "BobbingAmplitude": 0.65,
+        "Elements": {
+          "ItemAnchor": [-0.9, 0.4, 1.5, 16.7, 15, 133.9],
+          "LowerArmR": [0, 0, 0, 0, 0, -117],
+          "UpperArmR": [0, 0, 0, 0, 20, -24],
+          "ItemAnchorL": [0, 0, 0, 0, 0, 0],
+          "LowerArmL": [0, 0, 0, 0, 0, -9],
+          "UpperArmL": [0, 0, 0, 0, -10, -85],
+          "UpperTorso": [0, 0, 0, 0, 0, 0],
+          "DetachedAnchor": [0, 0, 0, 0, 0, 0]
+        }
+      }
+    ],
+    "ItemKeyFrames": [
+      {
+        "DurationFraction": 0,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "Bow_right_limb_4": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, -3, 0],
+          "String_6": [0, 0, 0, 2, -29, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, -4, 0],
+          "Lever": [0, 0, 0, 0, 0, 0],
+          "Wheel": [0, 0, 0, 65, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, -4, 0],
+          "String_2": [0, 0, 0, 2, 29, 0],
+          "Attachment_bolt": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 3, 0],
+          "String": [0, 0, 6.3, 0, 0, 0]
+        }
+      },
+      {
+        "DurationFraction": 0.009345794,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "Bow_right_limb_4": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, -3, 0],
+          "String_6": [0, 0, 0, 2, -29, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, -4, 0],
+          "Lever": [0, 0, 0, -14.5, 0, 0],
+          "Wheel": [0, 0, 0, 65, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, -4, 0],
+          "String_2": [0, 0, 0, 2, 29, 0],
+          "Attachment_bolt": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 3, 0],
+          "String": [0, 0, 6.3, 0, 0, 0]
+        }
+      },
+      {
+        "DurationFraction": 0.028037382,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "Bow_right_limb_4": [0, 0, 0, 0, -2.4, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, -1.8, 0],
+          "String_6": [0, 0, 0, 1.2, -17.4, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, -2.4, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, -2.4, 0],
+          "Lever": [0, 0, 0, -13.119047, 0, 0],
+          "Wheel": [0, 0, 0, -20, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, -2.4, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, -2.4, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, -2.4, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, -2.4, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, -2.4, 0],
+          "String_2": [0, 0, 0, 1.2, 17.4, 0],
+          "Attachment_bolt": [0, 0, -2.5200002, 0, 0, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 1.8, 0],
+          "String": [0, 0, 3.78, 0, 0, 0]
+        }
+      },
+      {
+        "DurationFraction": 0.056074765,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "Bow_right_limb_4": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, 0, 0],
+          "String_6": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, 0, 0],
+          "Lever": [0, 0, 0, -11.047619, 0, 0],
+          "Wheel": [0, 0, 0, -97.78351, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, 0, 0],
+          "String_2": [0, 0, 0, 0, 0, 0],
+          "Attachment_bolt": [0, 0, -6.3, 0, 0, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 0, 0],
+          "String": [0, 0, 0, 0, 0, 0]
+        }
+      },
+      {
+        "DurationFraction": 0.084112145,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "Bow_right_limb_4": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, 0, 0],
+          "String_6": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, 0, 0],
+          "Lever": [0, 0, 0, -8.976191, 0, 0],
+          "Wheel": [0, 0, 0, -175.56702, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, 0, 0],
+          "String_2": [0, 0, 0, 0, 0, 0],
+          "Attachment_bolt": [0, 0, -14.269149, 0, 0, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 0, 0],
+          "String": [0, 0, 0, 0, 0, 0]
+        }
+      },
+      {
+        "DurationFraction": 0.11214953,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "Bow_right_limb_4": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, 0, 0],
+          "String_6": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, 0, 0],
+          "Lever": [0, 0, 0, -6.9047613, 0, 0],
+          "Wheel": [0, 0, 0, -253.35051, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, 0, 0],
+          "String_2": [0, 0, 0, 0, 0, 0],
+          "Attachment_bolt": [0, 0, -22.238297, 0, 0, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 0, 0],
+          "String": [0, 0, 0, 0, 0, 0]
+        }
+      },
+      {
+        "DurationFraction": 0.14018692,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "Bow_right_limb_4": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, 0, 0],
+          "String_6": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, 0, 0],
+          "Lever": [0, 0, 0, -4.833333, 0, 0],
+          "Wheel": [0, 0, 0, -331.13403, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, 0, 0],
+          "String_2": [0, 0, 0, 0, 0, 0],
+          "Attachment_bolt": [0, 0, -30.207447, 0, 0, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 0, 0],
+          "String": [0, 0, 0, 0, 0, 0]
+        }
+      },
+      {
+        "DurationFraction": 0.1682243,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "Bow_right_limb_4": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, 0, 0],
+          "String_6": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, 0, 0],
+          "Lever": [0, 0, 0, -2.7619047, 0, 0],
+          "Wheel": [0, 0, 0, -408.9175, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, 0, 0],
+          "String_2": [0, 0, 0, 0, 0, 0],
+          "Attachment_bolt": [0, 0, -38.176594, 0, 0, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 0, 0],
+          "String": [0, 0, 0, 0, 0, 0]
+        }
+      },
+      {
+        "DurationFraction": 0.20560747,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "Bow_right_limb_4": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, 0, 0],
+          "String_6": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, 0, 0],
+          "Lever": [0, 0, 0, 0, 0, 0],
+          "Wheel": [0, 0, 0, -512.62885, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, 0, 0],
+          "String_2": [0, 0, 0, 0, 0, 0],
+          "Attachment_bolt": [0, 0, -48.802124, 0, 0, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 0, 0],
+          "String": [0, 0, 0, 0, 0, 0]
+        }
+      },
+      {
+        "DurationFraction": 0.9345795,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "Bow_right_limb_4": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, 0, 0],
+          "String_6": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, 0, 0],
+          "Lever": [0, 0, 0, 0, 0, 0],
+          "Wheel": [0, 0, 0, -2535, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, 0, 0],
+          "String_2": [0, 0, 0, 0, 0, 0],
+          "Attachment_bolt": [0, 0, -256, 0, 0, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 0, 0],
+          "String": [0, 0, 0, 0, 0, 0]
+        }
+      },
+      {
+        "DurationFraction": 0.9906542,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "Bow_right_limb_4": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, 0, 0],
+          "String_6": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, 0, 0],
+          "Lever": [0, 0, 0, 0, 0, 0],
+          "Wheel": [0, 0, 0, -2520, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, 0, 0],
+          "String_2": [0, 0, 0, 0, 0, 0],
+          "Attachment_bolt": [0, 0, -256, 0, 0, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 0, 0],
+          "String": [0, 0, 0, 0, 0, 0]
+        }
+      },
+      {
+        "DurationFraction": 0.99999999,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "Bow_right_limb_4": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, 0, 0],
+          "String_6": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, 0, 0],
+          "Lever": [0, 0, 0, 0, 0, 0],
+          "Wheel": [0, 0, 0, -2520, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, 0, 0],
+          "String_2": [0, 0, 0, 0, 0, 0],
+          "Attachment_bolt": [0, 0, -256, 0, 0, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 0, 0],
+          "String": [0, 0, 0, 0, 0, 0]
+        }
+      },
+      {
+        "DurationFraction": 1,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "Bow_right_limb_4": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, 0, 0],
+          "String_6": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, 0, 0],
+          "Lever": [0, 0, 0, 0, 0, 0],
+          "Wheel": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, 0, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, 0, 0],
+          "String_2": [0, 0, 0, 0, 0, 0],
+          "Attachment_bolt": [0, 0, -256, 0, 0, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 0, 0],
+          "String": [0, 0, 0, 0, 0, 0]
+        }
+      }
+    ],
+    "SoundFrames": [
+      {
+        "Code": [
+          "combatoverhaul:sounds/crossbows/release/goatsfoot-0",
+          "combatoverhaul:sounds/crossbows/release/goatsfoot-1",
+          "combatoverhaul:sounds/crossbows/release/goatsfoot-2",
+          "combatoverhaul:sounds/crossbows/release/goatsfoot-3"
+        ],
+        "DurationFraction": 0,
+        "RandomizePitch": false,
+        "Range": 32,
+        "Volume": 1,
+        "Synchronize": true
+      },
+      {"Code": ["combatoverhaul:sounds/crossbows/release/lock-spinning"], "DurationFraction": 0.05, "RandomizePitch": false, "Range": 32, "Volume": 1, "Synchronize": true}
+    ],
+    "ParticlesFrames": [],
+    "CallbackFrames": [{"Code": "shoot", "DurationFraction": 0.05}],
+    "ItemAnimationStart": 0,
+    "ItemAnimationEnd": 1000
+  },
+  "crossbow-goatsfoot-load": {
+    "Hold": false,
+    "PlayerKeyFrames": [
+      {
+        "EasingTime": 300,
+        "EasingFunction": "Linear",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": true,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {
+          "ItemAnchor": [3.6, 1.3, 0.4, 18, -3, 86],
+          "LowerArmR": [0, 0, 0, 0, 0, -34],
+          "UpperArmR": [0, 0, 0, 0, 11, -67],
+          "ItemAnchorL": [0, 0, 0, 0, 0, 0],
+          "LowerArmL": [0, 0, 0, 0, 0, -29],
+          "UpperArmL": [0, 0, 0, -45, -38, -51]
+        }
+      },
+      {
+        "EasingTime": 672,
+        "EasingFunction": "Linear",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": true,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {
+          "ItemAnchor": [3.6, 1.3, 0.4, 18, -3, 86],
+          "LowerArmR": [0, 0, 0, 0, 0, -34],
+          "UpperArmR": [0, 0, 0, 0, 11, -67],
+          "ItemAnchorL": [0, 0, 0, 0, 0, 0],
+          "LowerArmL": [0, 0, 0, 0, 0, -90],
+          "UpperArmL": [0, 0, 0, -45, 6, -41]
+        }
+      },
+      {
+        "EasingTime": 920,
+        "EasingFunction": "Linear",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": true,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {
+          "ItemAnchor": [3.6, 1.3, 0.4, 18, -3, 86],
+          "LowerArmR": [0, 0, 0, 0, 0, -34],
+          "UpperArmR": [0, 0, 0, 0, 11, -67],
+          "ItemAnchorL": [0, 0, 0, 0, 0, 0],
+          "LowerArmL": [0, 0, 0, 0, 0, -15],
+          "UpperArmL": [0, 0, 0, -45, 11, -103]
+        }
+      },
+      {
+        "EasingTime": 1200,
+        "EasingFunction": "Linear",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": true,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {
+          "ItemAnchor": [3.6, 1.3, 0.4, 18, -3, 86],
+          "LowerArmR": [0, 0, 0, 0, 0, -34],
+          "UpperArmR": [0, 0, 0, 0, 11, -67],
+          "ItemAnchorL": [0, 0, 0, 0, 0, 0],
+          "LowerArmL": [0, 0, 0, 0, 0, -15],
+          "UpperArmL": [0, 0, 0, -47, -3, -92]
+        }
+      }
+    ],
+    "ItemKeyFrames": [
+      {
+        "DurationFraction": 0,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "Bolt_point": [-4, -12, 6, 0, 0, 0],
+          "String_6": [0, 0, 0, 2, -29, 0],
+          "Bow_right_limb_4": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, -4, 0],
+          "Goatleg_short_2": [0, 0, 0, -135, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, -4, 0],
+          "String": [0, 0, 6.3, 0, 0, 0],
+          "String_2": [0, 0, 0, 2, 29, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 3, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, -3, 0],
+          "Wheel": [0, 0, 0, 65, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, -4, 0]
+        }
+      },
+      {
+        "DurationFraction": 0.41379312,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "Bolt_point": [-4, 3, 6, 0, 0, 0],
+          "String_6": [0, 0, 0, 2, -29, 0],
+          "Bow_right_limb_4": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, -4, 0],
+          "Goatleg_short_2": [0, 0, 0, -135, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, -4, 0],
+          "String": [0, 0, 6.3, 0, 0, 0],
+          "String_2": [0, 0, 0, 2, 29, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 3, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, -3, 0],
+          "Wheel": [0, 0, 0, 65, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, -4, 0]
+        }
+      },
+      {
+        "DurationFraction": 0.6896551,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "Bolt_point": [0, 3, -2, 28, 0, 0],
+          "String_6": [0, 0, 0, 2, -29, 0],
+          "Bow_right_limb_4": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, -4, 0],
+          "Goatleg_short_2": [0, 0, 0, -135, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, -4, 0],
+          "String": [0, 0, 6.3, 0, 0, 0],
+          "String_2": [0, 0, 0, 2, 29, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 3, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, -3, 0],
+          "Wheel": [0, 0, 0, 65, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, -4, 0]
+        }
+      },
+      {
+        "DurationFraction": 1,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "Bolt_point": [0, 0, 0, 0, 0, 0],
+          "String_6": [0, 0, 0, 2, -29, 0],
+          "Bow_right_limb_4": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, -4, 0],
+          "Goatleg_short_2": [0, 0, 0, -135, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, -4, 0],
+          "String": [0, 0, 6.3, 0, 0, 0],
+          "String_2": [0, 0, 0, 2, 29, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 3, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, -3, 0],
+          "Wheel": [0, 0, 0, 65, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, -4, 0]
+        }
+      }
+    ],
+    "SoundFrames": [],
+    "ParticlesFrames": [],
+    "CallbackFrames": [],
+    "ItemAnimationStart": 300,
+    "ItemAnimationEnd": 1200
+  },
+  "crossbow-goatsfoot-loaded": {
+    "Hold": true,
+    "PlayerKeyFrames": [
+      {"EasingTime": 1, "EasingFunction": "Linear", "DetachedAnchor": false, "SwitchArms": false, "PitchFollow": false, "FOVMultiplier": 1, "BobbingAmplitude": 1, "Elements": {}}
+    ],
+    "ItemKeyFrames": [
+      {
+        "DurationFraction": 0,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "Bolt_point": [0, 0, 0, 0, 0, 0],
+          "String_6": [0, 0, 0, 2, -29, 0],
+          "Bow_right_limb_4": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, -4, 0],
+          "Goatleg_short_2": [0, 0, 0, -135, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, -4, 0],
+          "String": [0, 0, 6.3, 0, 0, 0],
+          "String_2": [0, 0, 0, 2, 29, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 3, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, -3, 0],
+          "Wheel": [0, 0, 0, 65, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, -4, 0]
+        }
+      },
+      {
+        "DurationFraction": 1,
+        "EasingFunction": "Linear",
+        "Elements": {
+          "Bolt_point": [0, 0, 0, 0, 0, 0],
+          "String_6": [0, 0, 0, 2, -29, 0],
+          "Bow_right_limb_4": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_3": [0, 0, 0, 0, -4, 0],
+          "Goatleg_short_2": [0, 0, 0, -135, 0, 0],
+          "Bow_right_limb_8": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_10": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_9": [0, 0, 0, 0, -4, 0],
+          "String": [0, 0, 6.3, 0, 0, 0],
+          "String_2": [0, 0, 0, 2, 29, 0],
+          "Bow_right_limb_7": [0, 0, 0, 0, 3, 0],
+          "Bow_right_limb_5": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_2": [0, 0, 0, 0, -4, 0],
+          "Bow_right_limb_1": [0, 0, 0, 0, -3, 0],
+          "Wheel": [0, 0, 0, 65, 0, 0],
+          "Bow_right_limb_11": [0, 0, 0, 0, -4, 0]
+        }
+      }
+    ],
+    "SoundFrames": [],
+    "ItemAnimationStart": 0,
+    "ItemAnimationEnd": 1
+  }
+}

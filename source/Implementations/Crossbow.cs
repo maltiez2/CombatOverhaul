@@ -37,6 +37,7 @@ public class CrossbowStats : WeaponStats
     public float BoltDamageStrength { get; set; } = 1;
     public float BoltVelocity { get; set; } = 1;
     public string BoltWildcard { get; set; } = "*bolt-*";
+    public string DrawRequirement { get; set; } = "";
     public float Zeroing { get; set; } = 1.5f;
     public float[] DispersionMOA { get; set; } = new float[] { 0, 0 };
 }
@@ -109,6 +110,7 @@ public class CrossbowClient : RangeWeaponClient
     protected virtual bool Load(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
         if (state != (int)CrossbowState.Drawn || eventData.AltPressed) return false;
+        if (!CheckDrawRequirement(player)) return false;
 
         player.WalkInventory(slot =>
         {
@@ -264,6 +266,27 @@ public class CrossbowClient : RangeWeaponClient
     protected virtual bool ReleaseAnimationCallback(ItemSlot slot, bool mainHand, EntityPlayer player)
     {
         return true;
+    }
+    protected virtual bool CheckDrawRequirement(EntityPlayer player)
+    {
+        if (Stats.DrawRequirement == "") return true;
+        
+        ItemSlot? requirement = null;
+        
+        player.WalkInventory(slot =>
+        {
+            if (slot?.Itemstack?.Item == null) return true;
+
+            if (slot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(Stats.DrawRequirement, slot.Itemstack.Item.Code.Path))
+            {
+                requirement = slot;
+                return false;
+            }
+
+            return true;
+        });
+
+        return requirement != null;
     }
 }
 
