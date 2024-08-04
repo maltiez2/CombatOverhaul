@@ -5,6 +5,8 @@
   "message-mainhand-empty": "Main hand should be empty",
   "message-offhand-empty":  "Offhand should be empty",
 
+  "toolmode-noselection": "None",
+
   "armor-inventory-dialog-title": "Armor",
   "armor-inventory-dialog-head": "Head:",
   "armor-inventory-dialog-face": "Face:",

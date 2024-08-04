@@ -2,14 +2,18 @@
 using CombatOverhaul.Inputs;
 using CombatOverhaul.RangedSystems;
 using CombatOverhaul.RangedSystems.Aiming;
+using CombatOverhaul.Utils;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 using System.Numerics;
 using System.Text;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
+using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
 using Vintagestory.API.Util;
+using Vintagestory.GameContent;
 
 namespace CombatOverhaul.Implementations;
 
@@ -44,7 +48,7 @@ public sealed class BowStats : WeaponStats
 
 public sealed class BowClient : RangeWeaponClient
 {
-    public BowClient(ICoreClientAPI api, Item item) : base(api, item)
+    public BowClient(ICoreClientAPI api, Item item, AmmoSelector ammoSelector) : base(api, item)
     {
         _api = api;
         _attachable = item.GetCollectibleBehavior<AnimatableAttachable>(withInheritance: true) ?? throw new Exception("Bow should have AnimatableAttachable behavior.");
@@ -53,6 +57,7 @@ public sealed class BowClient : RangeWeaponClient
 
         _stats = item.Attributes.AsObject<BowStats>();
         _aimingStats = _stats.Aiming.ToStats();
+        _ammoSelector = ammoSelector;
     }
 
     public override void OnSelected(ItemSlot slot, EntityPlayer player, bool mainHand, ref int state)
@@ -83,6 +88,7 @@ public sealed class BowClient : RangeWeaponClient
     private ItemSlot? _arrowSlot = null;
     private readonly BowStats _stats;
     private readonly AimingStats _aimingStats;
+    private readonly AmmoSelector _ammoSelector;
     private AimingAnimationController? _aimingAnimationController;
 
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Pressed)]
@@ -102,7 +108,7 @@ public sealed class BowClient : RangeWeaponClient
         {
             if (slot?.Itemstack?.Item == null) return true;
 
-            if (slot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(_stats.ArrowWildcard, slot.Itemstack.Item.Code.Path))
+            if (slot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(_ammoSelector.SelectedAmmo, slot.Itemstack.Item.Code.ToString()))
             {
                 _arrowSlot = slot;
                 return false;
@@ -110,6 +116,22 @@ public sealed class BowClient : RangeWeaponClient
 
             return true;
         });
+
+        if (_arrowSlot == null)
+        {
+            player.WalkInventory(slot =>
+            {
+                if (slot?.Itemstack?.Item == null) return true;
+
+                if (slot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(_stats.ArrowWildcard, slot.Itemstack.Item.Code.ToString()))
+                {
+                    _arrowSlot = slot;
+                    return false;
+                }
+
+                return true;
+            });
+        }
 
         if (_arrowSlot == null) return false;
 
@@ -316,6 +338,114 @@ public sealed class BowServer : RangeWeaponServer
     private readonly BowStats _stats;
 }
 
+public class AmmoSelector
+{
+    public AmmoSelector(ICoreClientAPI api, string ammoWildcard)
+    {
+        _api = api;
+        _ammoWildcard = ammoWildcard;
+        SelectedAmmo = ammoWildcard;
+    }
+
+    public string SelectedAmmo { get; private set; }
+
+    public int GetToolMode(ItemSlot slot, IPlayer byPlayer, BlockSelection blockSelection)
+    {
+        if (_ammoSlots.Count == 0) UpdateAmmoSlots(byPlayer);
+
+        return GetSelectedModeIndex();
+    }
+    public SkillItem[] GetToolModes(ItemSlot slot, IClientPlayer forPlayer, BlockSelection blockSel)
+    {
+        UpdateAmmoSlots(forPlayer);
+
+
+        return GetOrGenerateModes();
+    }
+    public void SetToolMode(ItemSlot slot, IPlayer byPlayer, BlockSelection blockSelection, int toolMode)
+    {
+        if (toolMode == 0 || _ammoSlots.Count < toolMode)
+        {
+            SelectedAmmo = _ammoWildcard;
+            return;
+        }
+
+        SelectedAmmo = _ammoSlots[toolMode - 1].Itemstack.Collectible.Code.ToString();
+    }
+
+    private readonly ICoreClientAPI _api;
+    private readonly string _ammoWildcard;
+    private readonly List<ItemSlot> _ammoSlots = new();
+    private readonly TimeSpan _generationTimeout = TimeSpan.FromSeconds(1);
+    private TimeSpan _lastGenerationTime = TimeSpan.Zero;
+    private SkillItem[] _modesCache = Array.Empty<SkillItem>();
+
+    private int GetSelectedModeIndex()
+    {
+        if (SelectedAmmo == _ammoWildcard) return 0;
+
+        for (int index = 0; index < _ammoSlots.Count; index++)
+        {
+            if (WildcardUtil.Match(_ammoWildcard, _ammoSlots[index].Itemstack.Item.Code.ToString()))
+            {
+                return index + 1;
+            }
+        }
+
+        return 0;
+    }
+    private void UpdateAmmoSlots(IPlayer player)
+    {
+        _ammoSlots.Clear();
+
+        player.Entity.WalkInventory(slot =>
+        {
+            if (slot?.Itemstack?.Item == null) return true;
+
+            if (slot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(_ammoWildcard, slot.Itemstack.Item.Code.ToString()))
+            {
+                AddAmmoStackToList(slot.Itemstack.Clone());
+            }
+
+            return true;
+        });
+    }
+    private void AddAmmoStackToList(ItemStack stack)
+    {
+        foreach (ItemSlot slot in _ammoSlots.Where(slot => slot.Itemstack.Collectible.Code.ToString() == stack.Collectible.Code.ToString()))
+        {
+            slot.Itemstack.StackSize += stack.StackSize;
+            return;
+        }
+
+        _ammoSlots.Add(new DummySlot(stack));
+    }
+    private SkillItem[] GetOrGenerateModes()
+    {
+        TimeSpan currentTime = TimeSpan.FromMilliseconds(_api.World.ElapsedMilliseconds);
+        if (currentTime - _lastGenerationTime < _generationTimeout)
+        {
+            return _modesCache;
+        }
+
+        _lastGenerationTime = currentTime;
+        _modesCache = GenerateToolModes();
+        return _modesCache;
+    }
+    private SkillItem[] GenerateToolModes()
+    {
+        SkillItem[] modes = ToolModesUtils.GetModesFromSlots(_api, _ammoSlots, slot => slot.Itemstack.Collectible.GetHeldItemName(slot.Itemstack));
+
+        SkillItem mode = new()
+        {
+            Code = new("none-0"),
+            Name = Lang.Get("combatoverhaul:toolmode-noselection")
+        };
+
+        return modes.Prepend(mode).ToArray();
+    }
+}
+
 public class BowItem : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasIdleAnimations
 {
     public BowClient? ClientLogic { get; private set; }
@@ -333,12 +463,14 @@ public class BowItem : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasIdleAni
 
         if (api is ICoreClientAPI clientAPI)
         {
-            ClientLogic = new(clientAPI, this);
-
             BowStats stats = Attributes.AsObject<BowStats>();
             IdleAnimation = new(stats.IdleAnimation, 1, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), false);
             ReadyAnimation = new(stats.ReadyAnimation, 1, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), false);
             _stats = stats;
+            _ammoSelector = new(clientAPI, _stats.ArrowWildcard);
+            _clientApi = clientAPI;
+
+            ClientLogic = new(clientAPI, this, _ammoSelector);
         }
 
         if (api is ICoreServerAPI serverAPI)
@@ -356,5 +488,33 @@ public class BowItem : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasIdleAni
         dsc.AppendLine(Lang.Get("combatoverhaul:iteminfo-range-weapon-damage", _stats.ArrowDamageMultiplier, _stats.ArrowDamageStrength));
     }
 
+    public override int GetToolMode(ItemSlot slot, IPlayer byPlayer, BlockSelection blockSelection)
+    {
+        if (_clientApi?.World.Player.Entity.EntityId == byPlayer.Entity.EntityId)
+        {
+            return _ammoSelector?.GetToolMode(slot, byPlayer, blockSelection) ?? 0;
+        }
+        
+        return 0;
+    }
+    public override SkillItem[] GetToolModes(ItemSlot slot, IClientPlayer forPlayer, BlockSelection blockSel)
+    {
+        if (_clientApi?.World.Player.Entity.EntityId == forPlayer.Entity.EntityId)
+        {
+            return _ammoSelector?.GetToolModes(slot, forPlayer, blockSel) ?? Array.Empty<SkillItem>();
+        }
+
+        return Array.Empty<SkillItem>();
+    }
+    public override void SetToolMode(ItemSlot slot, IPlayer byPlayer, BlockSelection blockSelection, int toolMode)
+    {
+        if (_clientApi?.World.Player.Entity.EntityId == byPlayer.Entity.EntityId)
+        {
+            _ammoSelector?.SetToolMode(slot, byPlayer, blockSelection, toolMode);
+        }
+    }
+
     private BowStats? _stats;
+    private AmmoSelector? _ammoSelector;
+    private ICoreClientAPI? _clientApi;
 }

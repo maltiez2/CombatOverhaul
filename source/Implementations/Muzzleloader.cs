@@ -206,14 +206,6 @@ public class MuzzleloaderClient : RangeWeaponClient
         AnimationBehavior?.Stop("item");
         AnimationBehavior?.Play(mainHand, Stats.LoadAnimation, animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1, callback: () => LoadCallback(slot, ammoSlot, player, mainHand), callbackHandler: callback => LoadAnimationCallback(callback, ammoSlot, player));
 
-        /*DebugWidgets.FloatDrag("test", "test", "arrow trnasform x", () => BulletTransform.Translation.X, value => BulletTransform.Translation.X = value);
-        DebugWidgets.FloatDrag("test", "test", "arrow trnasform y", () => BulletTransform.Translation.Y, value => BulletTransform.Translation.Y = value);
-        DebugWidgets.FloatDrag("test", "test", "arrow trnasform z", () => BulletTransform.Translation.Z, value => BulletTransform.Translation.Z = value);
-        DebugWidgets.FloatDrag("test", "test", "arrow trnasform rotation x", () => BulletTransform.Rotation.X, value => BulletTransform.Rotation.X = value);
-        DebugWidgets.FloatDrag("test", "test", "arrow trnasform rotation y", () => BulletTransform.Rotation.Y, value => BulletTransform.Rotation.Y = value);
-        DebugWidgets.FloatDrag("test", "test", "arrow trnasform rotation z", () => BulletTransform.Rotation.Z, value => BulletTransform.Rotation.Z = value);
-        DebugWidgets.FloatDrag("test", "test", "arrow trnasform scale", () => BulletTransform.ScaleXYZ.X, value => BulletTransform.Scale = value);*/
-
         //Attachable.SetAttachment(player.EntityId, "bullet", ammoSlot.Itemstack, BulletTransform);
 
         return true;

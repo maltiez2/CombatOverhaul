@@ -24,7 +24,7 @@
     "BoltDamageMultiplierByType": {"*": 1},
     "BoltDamageStrengthByType": {"*": 1},
     "BoltVelocityByType": {"*": 1.3},
-    "DrawSpeedPenaltyByType": {"*-simple-*": -0.1, "*-stirrup-*": -1.0, "*-latch-*": -0.1, "*-goatsfoot-*": -0.2, "*-windlass-*": -1.0},
+    "DrawSpeedPenaltyByType": {"*-simple-*": -0.1, "*-stirrup-*": -1, "*-latch-*": -0.1, "*-goatsfoot-*": -0.2, "*-windlass-*": -1},
     "IdleAnimation": "combatoverhaul:crossbow-idle",
     "ReadyAnimation": "combatoverhaul:crossbow-ready",
     "DrawAnimation": "combatoverhaul:crossbow-{type}-draw",
