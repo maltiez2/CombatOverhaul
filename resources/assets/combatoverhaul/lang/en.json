@@ -6,6 +6,7 @@
   "message-offhand-empty":  "Offhand should be empty",
 
   "toolmode-noselection": "None",
+  "interaction-ammoselection": "Select ammo type",
 
   "armor-inventory-dialog-title": "Armor",
   "armor-inventory-dialog-head": "Head:",

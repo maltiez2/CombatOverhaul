@@ -3,17 +3,14 @@ using CombatOverhaul.Inputs;
 using CombatOverhaul.RangedSystems;
 using CombatOverhaul.RangedSystems.Aiming;
 using CombatOverhaul.Utils;
-using OpenTK.Windowing.GraphicsLibraryFramework;
 using System.Numerics;
 using System.Text;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
-using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
 using Vintagestory.API.Util;
-using Vintagestory.GameContent;
 
 namespace CombatOverhaul.Implementations;
 
@@ -95,14 +92,6 @@ public sealed class BowClient : RangeWeaponClient
     private bool Load(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
         if (state != (int)BowState.Unloaded || eventData.AltPressed || !CheckForOtherHandEmpty(mainHand, player)) return false;
-
-        /*DebugWidgets.FloatDrag("test", "test", "arrow trnasform x", () => _arrowTransform.Translation.X, value => _arrowTransform.Translation.X = value);
-        DebugWidgets.FloatDrag("test", "test", "arrow trnasform y", () => _arrowTransform.Translation.Y, value => _arrowTransform.Translation.Y = value);
-        DebugWidgets.FloatDrag("test", "test", "arrow trnasform z", () => _arrowTransform.Translation.Z, value => _arrowTransform.Translation.Z = value);
-        DebugWidgets.FloatDrag("test", "test", "arrow trnasform rotation x", () => _arrowTransform.Rotation.X, value => _arrowTransform.Rotation.X = value);
-        DebugWidgets.FloatDrag("test", "test", "arrow trnasform rotation y", () => _arrowTransform.Rotation.Y, value => _arrowTransform.Rotation.Y = value);
-        DebugWidgets.FloatDrag("test", "test", "arrow trnasform rotation z", () => _arrowTransform.Rotation.Z, value => _arrowTransform.Rotation.Z = value);
-        DebugWidgets.FloatDrag("test", "test", "arrow trnasform scale", () => _arrowTransform.ScaleXYZ.X, value => _arrowTransform.Scale = value);*/
 
         player.WalkInventory(slot =>
         {
@@ -192,7 +181,7 @@ public sealed class BowClient : RangeWeaponClient
         Vintagestory.API.MathTools.Vec3d position = player.LocalEyePos + player.Pos.XYZ;
         Vector3 targetDirection = _aimingSystem.TargetVec;
         targetDirection = ClientAimingSystem.Zeroing(targetDirection, _stats.Zeroing);
-        
+
         RangedWeaponSystem.Shoot(slot, 1, new((float)position.X, (float)position.Y, (float)position.Z), new(targetDirection.X, targetDirection.Y, targetDirection.Z), mainHand, _ => { });
         _attachable.ClearAttachments(player.EntityId);
         _aimingAnimationController?.Stop(mainHand);
@@ -488,13 +477,27 @@ public class BowItem : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasIdleAni
         dsc.AppendLine(Lang.Get("combatoverhaul:iteminfo-range-weapon-damage", _stats.ArrowDamageMultiplier, _stats.ArrowDamageStrength));
     }
 
+    public override WorldInteraction[] GetHeldInteractionHelp(ItemSlot inSlot)
+    {
+        WorldInteraction[] interactions = base.GetHeldInteractionHelp(inSlot);
+
+        WorldInteraction ammoSelection = new()
+        {
+            ActionLangCode = Lang.Get("combatoverhaul:interaction-ammoselection"),
+            HotKeyCodes = new string[1] { "toolmodeselect" },
+            MouseButton = EnumMouseButton.None
+        };
+
+        return interactions.Append(ammoSelection).ToArray();
+    }
+
     public override int GetToolMode(ItemSlot slot, IPlayer byPlayer, BlockSelection blockSelection)
     {
         if (_clientApi?.World.Player.Entity.EntityId == byPlayer.Entity.EntityId)
         {
             return _ammoSelector?.GetToolMode(slot, byPlayer, blockSelection) ?? 0;
         }
-        
+
         return 0;
     }
     public override SkillItem[] GetToolModes(ItemSlot slot, IClientPlayer forPlayer, BlockSelection blockSel)
