@@ -11,6 +11,7 @@ using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
 using Vintagestory.API.Server;
 using Vintagestory.API.Util;
+using Vintagestory.GameContent;
 using VSImGui.Debug;
 
 namespace CombatOverhaul.Implementations;
@@ -19,6 +20,7 @@ public enum BowState
 {
     Unloaded,
     Load,
+    PreLoaded,
     Loaded,
     Draw,
     Drawn
@@ -32,6 +34,7 @@ public class WeaponStats
 
 public sealed class BowStats : WeaponStats
 {
+    public string LoadAnimation { get; set; } = "";
     public string DrawAnimation { get; set; } = "";
     public string ReleaseAnimation { get; set; } = "";
     public string TpAimAnimation { get; set; } = "";
@@ -128,7 +131,47 @@ public sealed class BowClient : RangeWeaponClient
         _attachable.SetAttachment(player.EntityId, "Arrow", _arrowSlot.Itemstack, _arrowTransform);
         RangedWeaponSystem.Reload(slot, _arrowSlot, 1, mainHand, ReloadCallback);
 
+        AnimationBehavior?.Play(mainHand, _stats.LoadAnimation, animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1, callback: LoadAnimationCallback);
+
         state = (int)BowState.Load;
+
+        return true;
+    }
+    private void ReloadCallback(bool success)
+    {
+        BowState state = GetState<BowState>(mainHand: true);
+
+        if (success)
+        {
+            switch (state)
+            {
+                case BowState.PreLoaded:
+                    SetState(BowState.Loaded, mainHand: true);
+                    break;
+                case BowState.Load:
+                    SetState(BowState.PreLoaded, mainHand: true);
+                    break;
+            }
+        }
+        else
+        {
+            AnimationBehavior?.PlayReadyAnimation(true);
+            SetState(BowState.Unloaded, mainHand: true);
+        }
+    }
+    private bool LoadAnimationCallback()
+    {
+        BowState state = GetState<BowState>(mainHand: true);
+
+        switch (state)
+        {
+            case BowState.PreLoaded:
+                SetState(BowState.Loaded, mainHand: true);
+                break;
+            case BowState.Load:
+                SetState(BowState.PreLoaded, mainHand: true);
+                break;
+        }
 
         return true;
     }
@@ -160,7 +203,15 @@ public sealed class BowClient : RangeWeaponClient
 
         AnimationBehavior?.StopVanillaAnimation(_stats.TpAimAnimation);
 
-        if (state == (int)BowState.Draw)
+        if (CheckState(state, BowState.Load, BowState.PreLoaded))
+        {
+            AnimationBehavior?.PlayReadyAnimation(mainHand);
+            _attachable.ClearAttachments(player.EntityId);
+            state = (int)BowState.Unloaded;
+            return true;
+        }
+
+        if (CheckState(state, BowState.Draw, BowState.Loaded))
         {
             AnimationBehavior?.PlayReadyAnimation(mainHand);
             state = (int)BowState.Loaded;
@@ -191,19 +242,7 @@ public sealed class BowClient : RangeWeaponClient
 
         return true;
     }
-
-    private void ReloadCallback(bool success)
-    {
-        if (success)
-        {
-            PlayerBehavior?.SetState((int)BowState.Loaded);
-        }
-        else
-        {
-            AnimationBehavior?.PlayReadyAnimation(true);
-            PlayerBehavior?.SetState(0);
-        }
-    }
+    
     private bool FullLoadCallback()
     {
         PlayerBehavior?.SetState((int)BowState.Drawn);

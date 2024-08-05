@@ -14,6 +14,7 @@
     "ArrowVelocityByType": {"*-crude-*": 0.9, "*-simple-*": 1, "*-long-*": 1.6, "*-recurve-*": 1.3},
     "ReadyAnimation": "combatoverhaul:bow-ready",
     "IdleAnimation": "combatoverhaul:bow-idle",
+    "LoadAnimation": "combatoverhaul:bow-load-{type}",
     "DrawAnimation": "combatoverhaul:bow-draw-{type}",
     "ReleaseAnimation": "combatoverhaul:bow-release-{type}",
     "TpAimAnimationByType": {"*-crude-*": "bowaimcrude", "*-simple-*": "bowaim", "*-long-*": "bowaimlong", "*-recurve-*": "bowaimrecurve"},

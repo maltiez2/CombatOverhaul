@@ -362,11 +362,26 @@
 								"up": { "texture": "#string", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
 								"down": { "texture": "#string", "uv": [ 0.0, 0.0, 0.5, 0.5 ] }
 							},
-							"attachmentpoints": [
+							"children": [
 								{
-									"code": "Arrow",
-									"posX": "0.0","posY": "0.0","posZ": "0.0",
-									"rotationX": "0.0","rotationY": "0.0","rotationZ": "0.0"
+									"name": "arrow_origin",
+									"from": [ 0.0, 0.0, 0.0 ],
+									"to": [ 0.0, 0.0, 0.0 ],
+									"faces": {
+										"north": { "texture": "#string", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+										"east": { "texture": "#string", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+										"south": { "texture": "#string", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+										"west": { "texture": "#string", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+										"up": { "texture": "#string", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+										"down": { "texture": "#string", "uv": [ 0.0, 0.0, 0.5, 0.5 ] }
+									},
+									"attachmentpoints": [
+										{
+											"code": "Arrow",
+											"posX": "0.0","posY": "0.0","posZ": "0.0",
+											"rotationX": "0.0","rotationY": "0.0","rotationZ": "0.0"
+										}
+									]
 								}
 							]
 						}
@@ -525,6 +540,51 @@
 						"Bpw_String_left": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
 						"String_5": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
 						"String_6": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 }
+					}
+				}
+			]
+		},
+
+		{
+			"name": "Load",
+			"code": "load",
+			"quantityframes": 30,
+			"onActivityStopped": "EaseOut",
+			"onAnimationEnd": "Stop",
+			"keyframes": [
+				{
+					"frame": 0,
+					"elements": {
+						"Arrow": { "offsetX": -10.0, "offsetY": -6.0, "offsetZ": -8.0 },
+						"arrow_origin": { "rotationX": 0.0, "rotationY": 90.0, "rotationZ": 0.0 }
+					}
+				},
+				{
+					"frame": 6,
+					"elements": {
+						"Arrow": { "offsetX": -11.0, "offsetY": -9.0, "offsetZ": 0.0 },
+						"arrow_origin": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 34.0 }
+					}
+				},
+				{
+					"frame": 14,
+					"elements": {
+						"Arrow": { "offsetX": -11.0, "offsetY": -9.0, "offsetZ": 0.0 },
+						"arrow_origin": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 34.0 }
+					}
+				},
+				{
+					"frame": 24,
+					"elements": {
+						"Arrow": { "offsetX": 0.8, "offsetY": -0.5, "offsetZ": 0.0 },
+						"arrow_origin": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 34.0 }
+					}
+				},
+				{
+					"frame": 29,
+					"elements": {
+						"Arrow": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0 },
+						"arrow_origin": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 }
 					}
 				}
 			]
