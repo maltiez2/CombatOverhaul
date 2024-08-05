@@ -133,6 +133,11 @@ public sealed class BowClient : RangeWeaponClient
 
         AnimationBehavior?.Play(mainHand, _stats.LoadAnimation, animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1, callback: LoadAnimationCallback);
 
+        _aimingSystem.StartAiming(_aimingStats);
+        _aimingSystem.AimingState = WeaponAimingState.Blocked;
+
+        _aimingAnimationController?.Play(mainHand);
+
         state = (int)BowState.Load;
 
         return true;
@@ -186,10 +191,13 @@ public sealed class BowClient : RangeWeaponClient
 
         state = (int)BowState.Draw;
 
-        _aimingSystem.StartAiming(_aimingStats);
-        _aimingSystem.AimingState = WeaponAimingState.Blocked;
+        if (!_aimingSystem.Aiming)
+        {
+            _aimingSystem.StartAiming(_aimingStats);
+            _aimingSystem.AimingState = WeaponAimingState.Blocked;
 
-        _aimingAnimationController?.Play(mainHand);
+            _aimingAnimationController?.Play(mainHand);
+        }
 
         AnimationBehavior?.PlayVanillaAnimation(_stats.TpAimAnimation);
 
