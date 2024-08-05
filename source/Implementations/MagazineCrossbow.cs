@@ -6,6 +6,7 @@ using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
+using Vintagestory.API.Config;
 using Vintagestory.API.Server;
 using Vintagestory.API.Util;
 
@@ -46,13 +47,14 @@ public class MagazineCrossbowStats : WeaponStats
 
 public class MagazineCrossbowClient : RangeWeaponClient
 {
-    public MagazineCrossbowClient(ICoreClientAPI api, Item item) : base(api, item)
+    public MagazineCrossbowClient(ICoreClientAPI api, Item item, AmmoSelector ammoSelector) : base(api, item)
     {
         Attachable = item.GetCollectibleBehavior<AnimatableAttachable>(withInheritance: true) ?? throw new Exception("Crossbow should have AnimatableAttachable behavior.");
         BoltTransform = new(item.Attributes["BoltTransform"].AsObject<ModelTransformNoDefaults>(), ModelTransform.BlockDefaultTp());
         AimingSystem = api.ModLoader.GetModSystem<CombatOverhaulSystem>().AimingSystem ?? throw new Exception();
         Stats = item.Attributes.AsObject<MagazineCrossbowStats>();
         AimingStats = Stats.Aiming.ToStats();
+        AmmoSelector = ammoSelector;
     }
 
     public override void OnSelected(ItemSlot slot, EntityPlayer player, bool mainHand, ref int state)
@@ -95,6 +97,7 @@ public class MagazineCrossbowClient : RangeWeaponClient
     protected readonly ModelTransform BoltTransform;
     protected readonly MagazineCrossbowStats Stats;
     protected readonly AimingStats AimingStats;
+    protected readonly AmmoSelector AmmoSelector;
     protected readonly ItemInventoryBuffer Inventory = new();
     protected const string InventoryId = "magazine";
 
@@ -146,7 +149,7 @@ public class MagazineCrossbowClient : RangeWeaponClient
         {
             if (slot?.Itemstack?.Item == null) return true;
 
-            if (slot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(Stats.BoltWildcard, slot.Itemstack.Item.Code.Path))
+            if (slot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(AmmoSelector.SelectedAmmo, slot.Itemstack.Item.Code.ToString()))
             {
                 ammoSlot = slot;
                 return false;
@@ -154,6 +157,23 @@ public class MagazineCrossbowClient : RangeWeaponClient
 
             return true;
         });
+        
+        if (ammoSlot == null)
+        {
+            player.WalkInventory(slot =>
+            {
+                if (slot?.Itemstack?.Item == null) return true;
+
+                if (slot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(Stats.BoltWildcard, slot.Itemstack.Item.Code.ToString()))
+                {
+                    ammoSlot = slot;
+                    return false;
+                }
+
+                return true;
+            });
+        }
+        
         if (ammoSlot == null) return false;
 
         Attachable.SetAttachment(player.EntityId, "bolt", ammoSlot.Itemstack, BoltTransform);
@@ -340,11 +360,13 @@ public class MagazineCrossbowItem : Item, IHasWeaponLogic, IHasRangedWeaponLogic
 
         if (api is ICoreClientAPI clientAPI)
         {
-            ClientLogic = new(clientAPI, this);
-
             MagazineCrossbowStats stats = Attributes.AsObject<MagazineCrossbowStats>();
             IdleAnimation = new(stats.IdleAnimation, 1, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), false);
             ReadyAnimation = new(stats.ReadyAnimation, 1, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), false);
+            _clientApi = clientAPI;
+            _ammoSelector = new(clientAPI, stats.BoltWildcard);
+
+            ClientLogic = new(clientAPI, this, _ammoSelector);
         }
 
         if (api is ICoreServerAPI serverAPI)
@@ -352,4 +374,47 @@ public class MagazineCrossbowItem : Item, IHasWeaponLogic, IHasRangedWeaponLogic
             ServerLogic = new(serverAPI, this);
         }
     }
+
+    public override WorldInteraction[] GetHeldInteractionHelp(ItemSlot inSlot)
+    {
+        WorldInteraction[] interactions = base.GetHeldInteractionHelp(inSlot);
+
+        WorldInteraction ammoSelection = new()
+        {
+            ActionLangCode = Lang.Get("combatoverhaul:interaction-ammoselection"),
+            HotKeyCodes = new string[1] { "toolmodeselect" },
+            MouseButton = EnumMouseButton.None
+        };
+
+        return interactions.Append(ammoSelection).ToArray();
+    }
+
+    public override int GetToolMode(ItemSlot slot, IPlayer byPlayer, BlockSelection blockSelection)
+    {
+        if (_clientApi?.World.Player.Entity.EntityId == byPlayer.Entity.EntityId)
+        {
+            return _ammoSelector?.GetToolMode(slot, byPlayer, blockSelection) ?? 0;
+        }
+
+        return 0;
+    }
+    public override SkillItem[] GetToolModes(ItemSlot slot, IClientPlayer forPlayer, BlockSelection blockSel)
+    {
+        if (_clientApi?.World.Player.Entity.EntityId == forPlayer.Entity.EntityId)
+        {
+            return _ammoSelector?.GetToolModes(slot, forPlayer, blockSel) ?? Array.Empty<SkillItem>();
+        }
+
+        return Array.Empty<SkillItem>();
+    }
+    public override void SetToolMode(ItemSlot slot, IPlayer byPlayer, BlockSelection blockSelection, int toolMode)
+    {
+        if (_clientApi?.World.Player.Entity.EntityId == byPlayer.Entity.EntityId)
+        {
+            _ammoSelector?.SetToolMode(slot, byPlayer, blockSelection, toolMode);
+        }
+    }
+
+    private AmmoSelector? _ammoSelector;
+    private ICoreClientAPI? _clientApi;
 }

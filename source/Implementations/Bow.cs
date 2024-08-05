@@ -11,6 +11,7 @@ using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
 using Vintagestory.API.Server;
 using Vintagestory.API.Util;
+using VSImGui.Debug;
 
 namespace CombatOverhaul.Implementations;
 
