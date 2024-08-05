@@ -206,7 +206,7 @@ public class MuzzleloaderClient : RangeWeaponClient
         AnimationBehavior?.Stop("item");
         AnimationBehavior?.Play(mainHand, Stats.LoadAnimation, animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1, callback: () => LoadCallback(slot, ammoSlot, player, mainHand), callbackHandler: callback => LoadAnimationCallback(callback, ammoSlot, player));
 
-        //Attachable.SetAttachment(player.EntityId, "bullet", ammoSlot.Itemstack, BulletTransform);
+        Attachable.SetAttachment(player.EntityId, "bullet", ammoSlot.Itemstack, BulletTransform);
 
         return true;
     }
