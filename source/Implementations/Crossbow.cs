@@ -368,6 +368,7 @@ public class CrossbowServer : RangeWeaponServer
 
         boltSlot.MarkDirty();
 
+        slot.Itemstack.Item.DamageItem(player.Entity.World, player.Entity, slot, 1 + stats.AdditionalDurabilityCost);
         slot.Itemstack.Attributes.SetBool("crossbow-drawn", false);
         slot.MarkDirty();
         return true;

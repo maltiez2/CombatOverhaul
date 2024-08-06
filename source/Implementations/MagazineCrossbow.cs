@@ -334,6 +334,9 @@ public class MagazineCrossbowServer : RangeWeaponServer
 
         _projectileSystem.Spawn(packet.ProjectileId, stats, spawnStats, ammo, shooter);
 
+        slot.Itemstack.Item.DamageItem(player.Entity.World, player.Entity, slot, 1 + stats.AdditionalDurabilityCost);
+        slot.MarkDirty();
+
         return true;
     }
 

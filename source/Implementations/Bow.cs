@@ -366,6 +366,9 @@ public sealed class BowServer : RangeWeaponServer
 
         _projectileSystem.Spawn(packet.ProjectileId, stats, spawnStats, arrowSlot.TakeOut(1), shooter);
 
+        slot.Itemstack.Item.DamageItem(player.Entity.World, player.Entity, slot, 1 + stats.AdditionalDurabilityCost);
+
+        slot.MarkDirty();
         arrowSlot.MarkDirty();
         return true;
     }

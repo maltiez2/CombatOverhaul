@@ -576,6 +576,9 @@ public class MuzzleloaderServer : RangeWeaponServer
 
         ProjectileSystem.Spawn(packet.ProjectileId, stats, spawnStats, ammo, shooter);
 
+        slot.Itemstack.Item.DamageItem(player.Entity.World, player.Entity, slot, 1 + stats.AdditionalDurabilityCost);
+        slot.MarkDirty();
+
         if (ammoLeft == 0) SetLoadingStage(slot, MuzzleloaderLoadingStage.Unloaded);
 
         return true;

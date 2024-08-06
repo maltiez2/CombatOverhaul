@@ -58,7 +58,7 @@ public class Animatable : CollectibleBehavior
 
         if (itemStackRenderInfo == null) return false;
 
-        if (!IsOwner(entity) || !IsFirstPerson(entity))
+        if (!AnimationsManager.PlayAnimationsInThirdPerson && (!IsOwner(entity) || !IsFirstPerson(entity)))
         {
             //ClientApi?.Render.RenderMultiTextureMesh(renderInfo.ModelRef);
             return false;
