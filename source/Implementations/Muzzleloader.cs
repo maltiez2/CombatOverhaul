@@ -8,6 +8,7 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Server;
 using Vintagestory.API.Util;
+using Vintagestory.GameContent;
 
 
 namespace CombatOverhaul.Implementations;
@@ -66,15 +67,19 @@ public class MuzzleloaderClient : RangeWeaponClient
     {
         Attachable = item.GetCollectibleBehavior<AnimatableAttachable>(withInheritance: true) ?? throw new Exception("Firearm should have AnimatableAttachable behavior.");
         AimingSystem = api.ModLoader.GetModSystem<CombatOverhaulSystem>().AimingSystem ?? throw new Exception();
-        BulletTransform = new(item.Attributes["BulletTransform"].AsObject<ModelTransformNoDefaults>(), ModelTransform.BlockDefaultTp());
-        FlaskTransform = new(item.Attributes["FlaskTransform"].AsObject<ModelTransformNoDefaults>(), ModelTransform.BlockDefaultTp());
-        WaddingTransform = new(item.Attributes["WaddingTransform"].AsObject<ModelTransformNoDefaults>(), ModelTransform.BlockDefaultTp());
+        BulletTransform = new(item.Attributes["BulletTransform"].AsObject<ModelTransformNoDefaults>() ?? new ModelTransformNoDefaults(), ModelTransform.BlockDefaultTp());
+        FlaskTransform = new(item.Attributes["FlaskTransform"].AsObject<ModelTransformNoDefaults>() ?? new ModelTransformNoDefaults(), ModelTransform.BlockDefaultTp());
+        //WaddingTransform = new(item.Attributes["WaddingTransform"].AsObject<ModelTransformNoDefaults>() ?? new ModelTransformNoDefaults(), ModelTransform.BlockDefaultTp());
+        PrimingEquipmentTransform = new(item.Attributes["PrimingEquipmentTransform"].AsObject<ModelTransformNoDefaults>() ?? new ModelTransformNoDefaults(), ModelTransform.BlockDefaultTp());
+        LoadingEquipmentTransform = new(item.Attributes["LoadingEquipmentTransform"].AsObject<ModelTransformNoDefaults>() ?? new ModelTransformNoDefaults(), ModelTransform.BlockDefaultTp());
         Stats = item.Attributes.AsObject<MuzzleloaderStats>();
         AimingStats = Stats.Aiming.ToStats();
 
         AnimationsManager.RegisterTransformByCode(BulletTransform, $"Bullet - {item.Code}");
         AnimationsManager.RegisterTransformByCode(FlaskTransform, $"Flask - {item.Code}");
-        AnimationsManager.RegisterTransformByCode(WaddingTransform, $"Wadding - {item.Code}");
+        //AnimationsManager.RegisterTransformByCode(WaddingTransform, $"Wadding - {item.Code}");
+        AnimationsManager.RegisterTransformByCode(LoadingEquipmentTransform, $"Loading - {item.Code}");
+        AnimationsManager.RegisterTransformByCode(PrimingEquipmentTransform, $"Priming - {item.Code}");
     }
 
     public override void OnSelected(ItemSlot slot, EntityPlayer player, bool mainHand, ref int state)
@@ -101,51 +106,7 @@ public class MuzzleloaderClient : RangeWeaponClient
         }
 
         // DEBUG
-        /*ItemSlot? ammoSlot1 = null;
-        player.WalkInventory(slot =>
-        {
-            if (slot?.Itemstack?.Item == null) return true;
-
-            if (WildcardUtil.Match(Stats.BulletWildcard, slot.Itemstack.Item.Code.Path))
-            {
-                ammoSlot1 = slot;
-                return false;
-            }
-
-            return true;
-        });
-        if (ammoSlot1 != null) Attachable.SetAttachment(player.EntityId, "bullet", ammoSlot1.Itemstack, BulletTransform);
-
-        ItemSlot? ammoSlot2 = null;
-        player.WalkInventory(slot =>
-        {
-            if (slot?.Itemstack?.Item == null) return true;
-
-            if (WildcardUtil.Match(Stats.FlaskWildcard, slot.Itemstack.Item.Code.Path))
-            {
-                ammoSlot2 = slot;
-                return false;
-            }
-
-            return true;
-        });
-        if (ammoSlot2 != null) Attachable.SetAttachment(player.EntityId, "flask", ammoSlot2.Itemstack, FlaskTransform);
-
-        ItemSlot? ammoSlot3 = null;
-        player.WalkInventory(slot =>
-        {
-            if (slot?.Itemstack?.Item == null) return true;
-
-            if (WildcardUtil.Match(Stats.WaddingWildcard, slot.Itemstack.Item.Code.Path))
-            {
-                ammoSlot3 = slot;
-                return false;
-            }
-
-            return true;
-        });
-        if (ammoSlot3 != null) Attachable.SetAttachment(player.EntityId, "wadding", ammoSlot3.Itemstack, WaddingTransform);*/
-
+        DebugAttach(player);
     }
     public override void OnDeselected(EntityPlayer player, bool mainHand, ref int state)
     {
@@ -167,7 +128,9 @@ public class MuzzleloaderClient : RangeWeaponClient
     protected readonly ItemInventoryBuffer Inventory = new();
     protected readonly ModelTransform BulletTransform;
     protected readonly ModelTransform FlaskTransform;
-    protected readonly ModelTransform WaddingTransform;
+    //protected readonly ModelTransform WaddingTransform;
+    protected readonly ModelTransform LoadingEquipmentTransform;
+    protected readonly ModelTransform PrimingEquipmentTransform;
     protected const string InventoryId = "magazine";
     protected const string LoadingStageAttribute = "CombatOverhaul:loading-stage";
     protected ItemSlot? BulletSlot;
@@ -187,7 +150,7 @@ public class MuzzleloaderClient : RangeWeaponClient
             if (
                 slot.Itemstack?.Item != null &&
                 slot.Itemstack.Item.HasBehavior<ProjectileBehavior>() &&
-                WildcardUtil.Match(Stats.BulletWildcard, slot.Itemstack.Item.Code.Path) &&
+                WildcardUtil.Match(Stats.BulletWildcard, slot.Itemstack.Item.Code.ToString()) &&
                 slot.Itemstack.StackSize >= Stats.BulletLoadedPerReload)
             {
                 ammoSlot = slot;
@@ -218,12 +181,12 @@ public class MuzzleloaderClient : RangeWeaponClient
                 {
                     Attachable.SetAttachment(player.EntityId, "bullet", bulletSlot.Itemstack, BulletTransform);
 
-                    ItemSlot? waddingSlot = null;
+                    /*ItemSlot? waddingSlot = null;
                     player.WalkInventory(slot =>
                     {
                         if (slot?.Itemstack?.Item == null) return true;
 
-                        if (WildcardUtil.Match(Stats.WaddingWildcard, slot.Itemstack.Item.Code.Path))
+                        if (WildcardUtil.Match(Stats.WaddingWildcard, slot.Itemstack.Item.Code.ToString()))
                         {
                             waddingSlot = slot;
                             return false;
@@ -231,14 +194,14 @@ public class MuzzleloaderClient : RangeWeaponClient
 
                         return true;
                     });
-                    if (waddingSlot != null) Attachable.SetAttachment(player.EntityId, "wadding", waddingSlot.Itemstack, WaddingTransform);
+                    if (waddingSlot != null) Attachable.SetAttachment(player.EntityId, "wadding", waddingSlot.Itemstack, WaddingTransform);*/
 
                     ItemSlot? flaskSlot = null;
                     player.WalkInventory(slot =>
                     {
                         if (slot?.Itemstack?.Item == null) return true;
 
-                        if (WildcardUtil.Match(Stats.FlaskWildcard, slot.Itemstack.Item.Code.Path))
+                        if (WildcardUtil.Match(Stats.FlaskWildcard, slot.Itemstack.Item.Code.ToString()))
                         {
                             flaskSlot = slot;
                             return false;
@@ -247,6 +210,21 @@ public class MuzzleloaderClient : RangeWeaponClient
                         return true;
                     });
                     if (flaskSlot != null) Attachable.SetAttachment(player.EntityId, "flask", flaskSlot.Itemstack, FlaskTransform);
+
+                    ItemSlot? loadingSlot = null;
+                    player.WalkInventory(slot =>
+                    {
+                        if (slot?.Itemstack?.Item == null) return true;
+
+                        if (WildcardUtil.Match(Stats.LoadingRequirementWildcard, slot.Itemstack.Item.Code.ToString()))
+                        {
+                            loadingSlot = slot;
+                            return false;
+                        }
+
+                        return true;
+                    });
+                    if (loadingSlot != null) Attachable.SetAttachment(player.EntityId, "loading", loadingSlot.Itemstack, LoadingEquipmentTransform);
                 }
                 break;
             case "detach":
@@ -290,12 +268,12 @@ public class MuzzleloaderClient : RangeWeaponClient
         {
             case "attach":
                 {
-                    ItemSlot? waddingSlot = null;
+                    /*ItemSlot? waddingSlot = null;
                     player.WalkInventory(slot =>
                     {
                         if (slot?.Itemstack?.Item == null) return true;
 
-                        if (WildcardUtil.Match(Stats.WaddingWildcard, slot.Itemstack.Item.Code.Path))
+                        if (WildcardUtil.Match(Stats.WaddingWildcard, slot.Itemstack.Item.Code.ToString()))
                         {
                             waddingSlot = slot;
                             return false;
@@ -303,14 +281,14 @@ public class MuzzleloaderClient : RangeWeaponClient
 
                         return true;
                     });
-                    if (waddingSlot != null) Attachable.SetAttachment(player.EntityId, "wadding", waddingSlot.Itemstack, WaddingTransform);
+                    if (waddingSlot != null) Attachable.SetAttachment(player.EntityId, "wadding", waddingSlot.Itemstack, WaddingTransform);*/
 
                     ItemSlot? flaskSlot = null;
                     player.WalkInventory(slot =>
                     {
                         if (slot?.Itemstack?.Item == null) return true;
 
-                        if (WildcardUtil.Match(Stats.FlaskWildcard, slot.Itemstack.Item.Code.Path))
+                        if (WildcardUtil.Match(Stats.FlaskWildcard, slot.Itemstack.Item.Code.ToString()))
                         {
                             flaskSlot = slot;
                             return false;
@@ -319,6 +297,21 @@ public class MuzzleloaderClient : RangeWeaponClient
                         return true;
                     });
                     if (flaskSlot != null) Attachable.SetAttachment(player.EntityId, "flask", flaskSlot.Itemstack, FlaskTransform);
+
+                    ItemSlot? primingSlot = null;
+                    player.WalkInventory(slot =>
+                    {
+                        if (slot?.Itemstack?.Item == null) return true;
+
+                        if (WildcardUtil.Match(Stats.PrimingRequirementWildcard, slot.Itemstack.Item.Code.ToString()))
+                        {
+                            primingSlot = slot;
+                            return false;
+                        }
+
+                        return true;
+                    });
+                    if (primingSlot != null) Attachable.SetAttachment(player.EntityId, "priming", primingSlot.Itemstack, PrimingEquipmentTransform);
                 }
                 break;
             case "detach":
@@ -464,7 +457,7 @@ public class MuzzleloaderClient : RangeWeaponClient
             if (slot?.Itemstack?.Item == null) return true;
 
             if (
-                WildcardUtil.Match(requirementWildcard, slot.Itemstack.Item.Code.Path))
+                WildcardUtil.Match(requirementWildcard, slot.Itemstack.Item.Code.ToString()))
             {
                 flaskSlot = slot;
                 return false;
@@ -473,6 +466,69 @@ public class MuzzleloaderClient : RangeWeaponClient
             return true;
         });
         return flaskSlot != null;
+    }
+
+    protected void DebugAttach(EntityPlayer player)
+    {
+        ItemSlot? ammoSlot1 = null;
+        player.WalkInventory(slot =>
+        {
+            if (slot?.Itemstack?.Item == null) return true;
+
+            if (WildcardUtil.Match(Stats.BulletWildcard, slot.Itemstack.Item.Code.ToString()))
+            {
+                ammoSlot1 = slot;
+                return false;
+            }
+
+            return true;
+        });
+        if (ammoSlot1 != null) Attachable.SetAttachment(player.EntityId, "bullet", ammoSlot1.Itemstack, BulletTransform);
+
+        ItemSlot? ammoSlot2 = null;
+        player.WalkInventory(slot =>
+        {
+            if (slot?.Itemstack?.Item == null) return true;
+
+            if (WildcardUtil.Match(Stats.FlaskWildcard, slot.Itemstack.Item.Code.ToString()))
+            {
+                ammoSlot2 = slot;
+                return false;
+            }
+
+            return true;
+        });
+        if (ammoSlot2 != null) Attachable.SetAttachment(player.EntityId, "flask", ammoSlot2.Itemstack, FlaskTransform);
+
+        /*ItemSlot? ammoSlot3 = null;
+        player.WalkInventory(slot =>
+        {
+            if (slot?.Itemstack?.Item == null) return true;
+
+            if (WildcardUtil.Match(Stats.WaddingWildcard, slot.Itemstack.Item.Code.ToString()))
+            {
+                ammoSlot3 = slot;
+                return false;
+            }
+
+            return true;
+        });
+        if (ammoSlot3 != null) Attachable.SetAttachment(player.EntityId, "wadding", ammoSlot3.Itemstack, WaddingTransform);*/
+
+        ItemSlot? ammoSlot4 = null;
+        player.WalkInventory(slot =>
+        {
+            if (slot?.Itemstack?.Item == null) return true;
+
+            if (WildcardUtil.Match(Stats.PrimingRequirementWildcard, slot.Itemstack.Item.Code.ToString()))
+            {
+                ammoSlot4 = slot;
+                return false;
+            }
+
+            return true;
+        });
+        if (ammoSlot4 != null) Attachable.SetAttachment(player.EntityId, "priming", ammoSlot4.Itemstack, PrimingEquipmentTransform);
     }
 }
 
@@ -618,7 +674,7 @@ public class MuzzleloaderServer : RangeWeaponServer
             if (slot?.Itemstack?.Item == null) return true;
 
             if (
-                WildcardUtil.Match(Stats.FlaskWildcard, slot.Itemstack.Item.Code.Path) &&
+                WildcardUtil.Match(Stats.FlaskWildcard, slot.Itemstack.Item.Code.ToString()) &&
                 slot.Itemstack.Item.GetRemainingDurability(slot.Itemstack) > powderNeeded)
             {
                 flaskSlot = slot;
@@ -637,7 +693,7 @@ public class MuzzleloaderServer : RangeWeaponServer
             if (slot?.Itemstack?.Item == null) return true;
 
             if (
-                WildcardUtil.Match(Stats.WaddingWildcard, slot.Itemstack.Item.Code.Path) &&
+                WildcardUtil.Match(Stats.WaddingWildcard, slot.Itemstack.Item.Code.ToString()) &&
                 slot.Itemstack.StackSize > Stats.WaddingUsedPerReload)
             {
                 waddingSlot = slot;
