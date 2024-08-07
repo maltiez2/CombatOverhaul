@@ -416,20 +416,33 @@ public class MuzzleloaderClient : RangeWeaponClient
 
         SetState(MuzzleloaderState.Shoot);
         AnimationBehavior?.Stop("item");
-        AnimationBehavior?.Play(mainHand, mainHand ? Stats.ShootAnimation : Stats.ShootAnimationOffhand, callback: () => ShootCallback(slot, player, mainHand));
+        AnimationBehavior?.Play(
+            mainHand,
+            mainHand ? Stats.ShootAnimation : Stats.ShootAnimationOffhand,
+            callback: () => ShootCallback(slot, player, mainHand),
+            callbackHandler: callback => ShootAnimationCallback(callback, slot, player, mainHand));
 
         return true;
     }
     protected virtual bool ShootCallback(ItemSlot slot, EntityPlayer player, bool mainHand)
     {
-        Vintagestory.API.MathTools.Vec3d position = player.LocalEyePos + player.Pos.XYZ;
-        Vector3 targetDirection = AimingSystem.TargetVec;
-
-        targetDirection = ClientAimingSystem.Zeroing(targetDirection, Stats.Aiming.ZeroingAngle);
-
-        RangedWeaponSystem.Shoot(slot, 1, new((float)position.X, (float)position.Y, (float)position.Z), new(targetDirection.X, targetDirection.Y, targetDirection.Z), mainHand, ShootServerCallback);
+        AnimationBehavior?.Play(mainHand, mainHand ? Stats.AimAnimation : Stats.AimAnimationOffhand);
 
         return true;
+    }
+    protected virtual void ShootAnimationCallback(string callback, ItemSlot slot, EntityPlayer player, bool mainHand)
+    {
+        switch (callback)
+        {
+            case "shoot":
+                Vintagestory.API.MathTools.Vec3d position = player.LocalEyePos + player.Pos.XYZ;
+                Vector3 targetDirection = AimingSystem.TargetVec;
+
+                targetDirection = ClientAimingSystem.Zeroing(targetDirection, Stats.Aiming.ZeroingAngle);
+
+                RangedWeaponSystem.Shoot(slot, 1, new((float)position.X, (float)position.Y, (float)position.Z), new(targetDirection.X, targetDirection.Y, targetDirection.Z), mainHand, ShootServerCallback);
+                break;
+        }
     }
     protected virtual void ShootServerCallback(bool success)
     {
