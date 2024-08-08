@@ -106,7 +106,7 @@ public class MuzzleloaderClient : RangeWeaponClient
         }
 
         // DEBUG
-        DebugAttach(player);
+        //DebugAttach(player);
     }
     public override void OnDeselected(EntityPlayer player, bool mainHand, ref int state)
     {
@@ -688,7 +688,7 @@ public class MuzzleloaderServer : RangeWeaponServer
 
             if (
                 WildcardUtil.Match(Stats.FlaskWildcard, slot.Itemstack.Item.Code.ToString()) &&
-                slot.Itemstack.Item.GetRemainingDurability(slot.Itemstack) > powderNeeded)
+                slot.Itemstack.Item.GetRemainingDurability(slot.Itemstack) >= powderNeeded)
             {
                 flaskSlot = slot;
                 return false;
@@ -707,7 +707,7 @@ public class MuzzleloaderServer : RangeWeaponServer
 
             if (
                 WildcardUtil.Match(Stats.WaddingWildcard, slot.Itemstack.Item.Code.ToString()) &&
-                slot.Itemstack.StackSize > Stats.WaddingUsedPerReload)
+                slot.Itemstack.StackSize >= Stats.WaddingUsedPerReload)
             {
                 waddingSlot = slot;
                 return false;

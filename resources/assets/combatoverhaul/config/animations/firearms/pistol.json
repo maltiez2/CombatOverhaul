@@ -76,7 +76,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [3.69, -0.29000002, 0.4, 54, 0, 0],
           "LowerArmR": [0, 0, 0, 0, 0, -63],
@@ -94,7 +94,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [3.69, -0.29000002, 0.4, 54, 0, 0],
           "LowerArmR": [0, 0, 0, 0, 0, -105],
@@ -112,7 +112,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [3.69, -0.29000002, 0.4, 54, 0, 0],
           "LowerArmR": [0, 0, 0, 0, 0, -106],
@@ -130,7 +130,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [3.69, -0.29000002, 0.4, 54, 0, 0],
           "LowerArmR": [0, 0, 0, 0, 0, -88],
@@ -148,7 +148,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [3.69, -0.29000002, 0.4, 54, 0, 0],
           "LowerArmR": [0, 0, 0, 0, 0, -88],
@@ -166,7 +166,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [3.69, -0.29000002, 0.4, 54, 0, 0],
           "LowerArmR": [0, 0, 0, 0, 0, -88],
@@ -184,7 +184,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [3.69, -0.29000002, 0.4, 54, 0, 0],
           "LowerArmR": [0, 0, 0, 0, 0, -95],
@@ -202,7 +202,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [3.69, -0.29000002, 0.4, 54, 0, 0],
           "LowerArmR": [0, 0, 0, 0, 0, -105],
@@ -220,7 +220,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [3.69, -0.29000002, 0.4, 54, 0, 0],
           "LowerArmR": [0, 0, 0, 0, 0, -71],
@@ -238,7 +238,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [3.69, -0.29000002, 0.4, 54, 0, 0],
           "LowerArmR": [0, 0, 0, 0, 0, -71],
@@ -256,7 +256,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [3.69, -0.29000002, 0.4, 54, 0, 0],
           "LowerArmR": [0, 0, 0, 0, 0, -77],
@@ -274,7 +274,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [3.69, -0.29000002, 0.4, 54, 0, 0],
           "LowerArmR": [0, 0, 0, 0, 0, -79.2],
@@ -292,7 +292,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [3.69, -0.29000002, 0.4, 54, 0, 0],
           "LowerArmR": [0, 0, 0, 0, 0, -72.2],
@@ -310,7 +310,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [3.69, -0.29000002, 0.4, 54, 0, 0],
           "LowerArmR": [0, 0, 0, 0, 0, -51.2],
@@ -328,7 +328,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [3.69, -0.29000002, 0.4, 54, 0, 0],
           "LowerArmR": [0, 0, 0, 0, 0, -51.2],
@@ -346,7 +346,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [3.69, -0.29000002, 0.4, 54, 0, 0],
           "LowerArmR": [0, 0, 0, 0, 0, -31.2],
@@ -364,7 +364,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [3.69, -0.29000002, 0.4, 54, 0, 0],
           "LowerArmR": [0, 0, 0, 0, 0, -50.2],
@@ -382,7 +382,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [3.69, -0.29000002, 0.4, 54, 0, 0],
           "LowerArmR": [0, 0, 0, 0, 0, -76.2],
@@ -400,7 +400,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [3.69, -0.29000002, 0.4, 54, 0, 0],
           "LowerArmR": [0, 0, 0, 0, 0, -72.2],
@@ -418,7 +418,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [3.69, -0.29000002, 0.4, 54, 0, 0],
           "LowerArmR": [0, 0, 0, 0, 0, -76.2],
@@ -436,7 +436,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [3.69, -0.29000002, 0.4, 54, 0, 0],
           "LowerArmR": [0, 0, 0, 0, 0, -51.2],
@@ -454,7 +454,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [3.69, -0.29000002, 0.4, 54, 0, 0],
           "LowerArmR": [0, 0, 0, 0, 0, -51.2],
@@ -472,7 +472,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [3.69, -0.29000002, 0.4, 54, 0, 0],
           "LowerArmR": [0, 0, 0, 0, 0, -51.2],
@@ -490,7 +490,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [3.69, -0.29000002, 0.4, 54, 0, 0],
           "LowerArmR": [0, 0, 0, 0, 0, -73.2],
@@ -508,7 +508,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [3.69, -0.29000002, 0.4, 54, 0, 0],
           "LowerArmR": [0, 0, 0, 0, 0, -63],
@@ -934,7 +934,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [1.5, 1.8, 0.1, 38, 15, 110],
           "LowerArmR": [0, 0, 0, 0, 0, -80],
@@ -952,7 +952,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [1.5, 1.8, 0.1, 38, 15, 110],
           "LowerArmR": [0, 0, 0, 0, 0, -82],
@@ -970,7 +970,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [1.5, 1.8, 0.1, 38, 15, 110],
           "LowerArmR": [0, 0, 0, 0, 0, -72],
@@ -988,7 +988,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [1.5, 1.8, 0.1, 38, 15, 110],
           "LowerArmR": [0, 0, 0, 0, 0, -65],
@@ -1006,7 +1006,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [1.5, 1.8, 0.1, 38, 15, 110],
           "LowerArmR": [0, 0, 0, 0, 0, -92],
@@ -1024,7 +1024,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [1.5, 1.8, 0.1, 38, 15, 110],
           "LowerArmR": [0, 0, 0, 0, 0, -89],
@@ -1042,7 +1042,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [1.5, 1.8, 0.1, 38, 15, 110],
           "LowerArmR": [0, 0, 0, 0, 0, -92],
@@ -1060,7 +1060,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [1.5, 1.8, 0.1, 38, 15, 110],
           "LowerArmR": [0, 0, 0, 0, 0, -65],
@@ -1078,7 +1078,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [1.5, 1.8, 0.1, 38, 15, 110],
           "LowerArmR": [0, 0, 0, 0, 0, -86],
@@ -1096,7 +1096,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [1.5, 1.8, 0.1, 38, 15, 110],
           "LowerArmR": [0, 0, 0, 0, 0, -74],
@@ -1114,7 +1114,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [1.5, 1.8, 0.1, 38, 15, 110],
           "LowerArmR": [0, 0, 0, 0, 0, -84],
@@ -1132,7 +1132,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [1.5, 1.8, 0.1, 38, 15, 110],
           "LowerArmR": [0, 0, 0, 0, 0, -65],
@@ -1150,7 +1150,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [1.5, 1.8, 0.1, 38, 15, 110],
           "LowerArmR": [0, 0, 0, 0, 0, -97],
@@ -1168,7 +1168,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [1.5, 1.8, 0.1, 38, 15, 110],
           "LowerArmR": [0, 0, 0, 0, 0, -97],
@@ -1186,7 +1186,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [1.5, 1.8, 0.1, 38, 15, 110],
           "LowerArmR": [0, 0, 0, 0, 0, -97],
@@ -1204,7 +1204,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [1.5, 1.8, 0.1, 38, 15, 110],
           "LowerArmR": [0, 0, 0, 0, 0, -73],
@@ -1222,7 +1222,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [1.5, 1.8, 0.1, 38, 15, 110],
           "LowerArmR": [0, 0, 0, 0, 0, -58],
@@ -1240,7 +1240,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [1.5, 1.8, 0.1, 38, 15, 110],
           "LowerArmR": [0, 0, 0, 0, 0, -69],
@@ -1258,7 +1258,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [1.5, 1.8, 0.1, 38, 15, 110],
           "LowerArmR": [0, 0, 0, 0, 0, -65],
@@ -1276,7 +1276,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 1,
+        "BobbingAmplitude": 0.8,
         "Elements": {
           "ItemAnchor": [1.5, 1.8, 0.1, 38, 15, 110],
           "LowerArmR": [0, 0, 0, 0, 0, -80],
@@ -1589,12 +1589,19 @@
       {"DurationFraction": 1, "EasingFunction": "Linear", "Elements": {"Trigger": [0, 0, 0, 0, 0, 0], "Pan_cover": [0, 0, 0, 0, 0, 0], "Flint_arm": [0, 0, 0, 0, 0, 0]}}
     ],
     "SoundFrames": [
-      {"Code": [
-         "combatoverhaul:sounds/firearms/pistol/pistol-fire-1",
-         "combatoverhaul:sounds/firearms/pistol/pistol-fire-2",
-         "combatoverhaul:sounds/firearms/pistol/pistol-fire-3",
-         "combatoverhaul:sounds/firearms/pistol/pistol-fire-4"
-       ], "DurationFraction": 0.25, "RandomizePitch": true, "Range": 32, "Volume": 1, "Synchronize": true}
+      {
+        "Code": [
+          "combatoverhaul:sounds/firearms/pistol/pistol-fire-1",
+          "combatoverhaul:sounds/firearms/pistol/pistol-fire-2",
+          "combatoverhaul:sounds/firearms/pistol/pistol-fire-3",
+          "combatoverhaul:sounds/firearms/pistol/pistol-fire-4"
+        ],
+        "DurationFraction": 0.25,
+        "RandomizePitch": true,
+        "Range": 32,
+        "Volume": 1,
+        "Synchronize": true
+      }
     ],
     "ParticlesFrames": [
       {"Code": "combatoverhaul:smoke-1", "DurationFraction": 0.5, "Position": [0, 0, 3], "Velocity": [0, 0, 1], "Intensity": 0.5},
@@ -1612,7 +1619,7 @@
       {"EasingTime": 200, "EasingFunction": "Linear", "DetachedAnchor": false, "SwitchArms": false, "PitchFollow": false, "FOVMultiplier": 1, "BobbingAmplitude": 1, "Elements": {}}
     ],
     "ItemKeyFrames": [
-      {"DurationFraction": 1, "EasingFunction": "Linear", "Elements": {"Trigger": [0, 0, 0, 0, 0, 0], "Frizzen": [0, 0, 0, 90, 0, 0], "Hammer": [0, 0, 0, 70, 0, 0]}}
+      {"DurationFraction": 1, "EasingFunction": "Linear", "Elements": {"Trigger": [0, 0, 0, 0, 0, 0], "Pan_cover": [0, 0, 0, 0, 0, 0], "Flint_arm": [0, 0, 0, 0, 0, 0]}}
     ],
     "SoundFrames": [],
     "ParticlesFrames": [],
@@ -1629,19 +1636,7 @@
       {
         "DurationFraction": 1,
         "EasingFunction": "Linear",
-        "Elements": {
-          "Flask_origin": [0, 0, 0, 0, 0, 0],
-          "Linen_0": [0, 0, 0, 0, 0, 0],
-          "Linen_1": [0, 0, 0, 0, 0, 0],
-          "Bullet": [0, 0, 0.2, 0, 0, 0],
-          "Ramrod_origin": [0, 0, 0, 0, 0, 0],
-          "Linen_2": [0, 0, 0, 0, 0, 0],
-          "Linen_3": [0, 0, 0, 0, 0, 0],
-          "Ramrod": [0, 0, 0, 0, 0, 0],
-          "Plug": [0, 0, 0, 0, 0, 0],
-          "Patch": [0, 0, -0.6, 0, 0, 0],
-          "Flask_origin_inner": [0, 0, 0, -90, 0, 0]
-        }
+        "Elements": {"Trigger": [0, 0, 0, 0, 0, 0], "Pan_cover": [0, 0, -0.6, 0, 0, 0], "Flint_arm": [0, 0, 0, -11, 0, 0]}
       }
     ],
     "SoundFrames": [],

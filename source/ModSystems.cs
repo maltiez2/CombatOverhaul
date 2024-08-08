@@ -11,6 +11,7 @@ using CombatOverhaul.RangedSystems;
 using CombatOverhaul.RangedSystems.Aiming;
 using CombatOverhaul.Utils;
 using HarmonyLib;
+using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Config;
@@ -116,6 +117,8 @@ public sealed class CombatOverhaulSystem : ModSystem
         }
     }
 
+    private readonly Vector4 _iconScale = new(-0.1f, -0.1f, 1.2f, 1.2f);
+
     private void RegisterCustomIcon(ICoreClientAPI api, string key, string path)
     {
         api.Gui.Icons.CustomIcons[key] = delegate (Context ctx, int x, int y, float w, float h, double[] rgba)
@@ -124,7 +127,13 @@ public sealed class CombatOverhaulSystem : ModSystem
             IAsset svgAsset = api.Assets.TryGet(location);
             int value = ColorUtil.ColorFromRgba(75, 75, 75, 125);
             Surface target = ctx.GetTarget();
-            api.Gui.DrawSvg(svgAsset, (ImageSurface)(object)((target is ImageSurface) ? target : null), x, y, (int)w, (int)h, value);
+
+            int xNew = x + (int)(w * _iconScale.X);
+            int yNew = y + (int)(h * _iconScale.Y);
+            int wNew = (int)(w * _iconScale.W);
+            int hNew = (int)(h * _iconScale.Z);
+
+            api.Gui.DrawSvg(svgAsset, (ImageSurface)(object)((target is ImageSurface) ? target : null), xNew, yNew, wNew, hNew, value);
         };
     }
 
