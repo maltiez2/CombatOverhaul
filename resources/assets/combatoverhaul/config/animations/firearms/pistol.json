@@ -1597,7 +1597,7 @@
           "combatoverhaul:sounds/firearms/pistol/pistol-fire-4"
         ],
         "DurationFraction": 0.25,
-        "RandomizePitch": true,
+        "RandomizePitch": false,
         "Range": 32,
         "Volume": 1,
         "Synchronize": true
@@ -1633,11 +1633,7 @@
       {"EasingTime": 200, "EasingFunction": "Linear", "DetachedAnchor": false, "SwitchArms": false, "PitchFollow": false, "FOVMultiplier": 1, "BobbingAmplitude": 1, "Elements": {}}
     ],
     "ItemKeyFrames": [
-      {
-        "DurationFraction": 1,
-        "EasingFunction": "Linear",
-        "Elements": {"Trigger": [0, 0, 0, 0, 0, 0], "Pan_cover": [0, 0, -0.6, 0, 0, 0], "Flint_arm": [0, 0, 0, -11, 0, 0]}
-      }
+      {"DurationFraction": 1, "EasingFunction": "Linear", "Elements": {"Trigger": [0, 0, 0, 0, 0, 0], "Pan_cover": [0, 0, -0.6, 0, 0, 0], "Flint_arm": [0, 0, 0, -11, 0, 0]}}
     ],
     "SoundFrames": [],
     "ParticlesFrames": [],
