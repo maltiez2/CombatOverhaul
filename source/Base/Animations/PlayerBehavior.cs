@@ -72,8 +72,6 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
             }
             else if (_player.RightHandItemSlot.Itemstack?.Item is IHasDynamicIdleAnimations item2)
             {
-                
-
                 AnimationRequestByCode? readyAnimation = item2.GetReadyAnimation(mainHand: true);
                 AnimationRequestByCode? idleAnimation = item2.GetIdleAnimation(mainHand: true);
 

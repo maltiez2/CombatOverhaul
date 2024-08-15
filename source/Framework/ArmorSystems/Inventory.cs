@@ -324,8 +324,6 @@ public sealed class ArmorInventory : InventoryCharacter
 
                 if (api.Assets.Exists(new AssetLocation(iconPath)))
                 {
-                    Console.WriteLine($"Add {layer}-{zone}");
-                    
                     _armorSlotsIcons.Add(new(layer, zone), iconCode);
                 }
             }

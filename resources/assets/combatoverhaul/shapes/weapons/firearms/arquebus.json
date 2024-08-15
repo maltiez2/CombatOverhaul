@@ -9,14 +9,14 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"plain": "game:block/cloth/linen/plain",
-		"ropedcloth": "game:block/cloth/ropedcloth",
-		"ember": "game:block/coal/ember",
-		"brass": "game:block/metal/plate/brass",
-		"metal": "game:block/metal/plate/iron",
-		"lead": "game:block/metal/plate/lead",
-		"flaskwood": "game:block/wood/debarked/oak",
-		"wood": "game:block/wood/debarked/oak"
+		"plain": "block/cloth/linen/plain",
+		"ropedcloth": "block/cloth/ropedcloth",
+		"ember": "block/coal/ember",
+		"brass": "block/metal/plate/brass",
+		"metal": "block/metal/plate/iron",
+		"lead": "block/metal/plate/lead",
+		"flaskwood": "block/wood/debarked/oak",
+		"wood": "block/wood/debarked/oak"
 	},
 	"elements": [
 		{

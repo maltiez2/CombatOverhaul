@@ -68,6 +68,7 @@ public readonly struct SoundFrame
         Synchronize = synchronize;
     }
 
+#if DEBUG
     public SoundFrame Edit(string title, TimeSpan totalDuration)
     {
         string code = Code.Aggregate((first, second) => $"{first},{second}") ?? "";
@@ -91,6 +92,7 @@ public readonly struct SoundFrame
 
         return new(codes, time / (float)totalDuration.TotalMilliseconds, pitch, range, volume, sync);
     }
+#endif
 }
 
 public readonly struct ParticlesFrame
@@ -110,6 +112,7 @@ public readonly struct ParticlesFrame
         Intensity = intensity;
     }
 
+#if DEBUG
     public ParticlesFrame Edit(string title, TimeSpan totalDuration)
     {
         string code = Code;
@@ -129,6 +132,7 @@ public readonly struct ParticlesFrame
 
         return new(code, time / (float)totalDuration.TotalMilliseconds, position, velocity, intensity);
     }
+#endif
 }
 
 public readonly struct CallbackFrame
@@ -142,6 +146,7 @@ public readonly struct CallbackFrame
         DurationFraction = durationFraction;
     }
 
+#if DEBUG
     public CallbackFrame Edit(string title, TimeSpan totalDuration)
     {
         string code = Code;
@@ -152,6 +157,7 @@ public readonly struct CallbackFrame
 
         return new(code, time / (float)totalDuration.TotalMilliseconds);
     }
+#endif
 }
 
 public readonly struct ItemKeyFrame
@@ -177,6 +183,7 @@ public readonly struct ItemKeyFrame
 
     public bool Reached(float animationProgress) => animationProgress >= DurationFraction;
 
+#if DEBUG
     public ItemKeyFrame Edit(string title, TimeSpan totalDuration, TimeSpan startDuration)
     {
         float total = (float)totalDuration.TotalMilliseconds;
@@ -192,6 +199,7 @@ public readonly struct ItemKeyFrame
 
         return new(frame, Math.Clamp((progress - (float)startDuration.TotalMilliseconds) / total, 0, 1), function);
     }
+#endif
 
     public static List<ItemKeyFrame> FromVanillaAnimation(string code, Shape shape)
     {
@@ -379,6 +387,8 @@ public readonly struct ItemFrame
 
         return new(elements);
     }
+
+#if DEBUG
     public ItemFrame Edit(string title)
     {
         Dictionary<string, AnimationElement> newElements = new();
@@ -390,6 +400,7 @@ public readonly struct ItemFrame
         }
         return new(newElements);
     }
+#endif
 }
 
 public readonly struct PLayerKeyFrame
@@ -415,6 +426,7 @@ public readonly struct PLayerKeyFrame
 
     public bool Reached(TimeSpan currentDuration) => currentDuration >= Time;
 
+#if DEBUG
     public PLayerKeyFrame Edit(string title)
     {
         int milliseconds = (int)Time.TotalMilliseconds;
@@ -428,6 +440,7 @@ public readonly struct PLayerKeyFrame
 
         return new(frame, TimeSpan.FromMilliseconds(milliseconds), function);
     }
+#endif
 }
 
 public readonly struct PlayerFrame
@@ -502,6 +515,7 @@ public readonly struct PlayerFrame
         }
     }
 
+#if DEBUG
     public PlayerFrame Edit(string title)
     {
         bool detachedAnchor = DetachedAnchor;
@@ -557,6 +571,7 @@ public readonly struct PlayerFrame
 
         return new(right, left, torso, anchor, detachedAnchor, switchArms, pitch, fov, bobbing);
     }
+#endif
 
     public static PlayerFrame Interpolate(PlayerFrame from, PlayerFrame to, float progress)
     {
@@ -652,6 +667,7 @@ public readonly struct RightHandFrame
 
     public static readonly RightHandFrame Zero = new(AnimationElement.Zero, AnimationElement.Zero, AnimationElement.Zero);
 
+#if DEBUG
     public RightHandFrame Edit(string title)
     {
         ImGui.SeparatorText($"ItemAnchor");
@@ -663,6 +679,7 @@ public readonly struct RightHandFrame
 
         return new(anchor, lower, upper);
     }
+#endif
 
     public static RightHandFrame Interpolate(RightHandFrame from, RightHandFrame to, float progress)
     {
@@ -714,6 +731,7 @@ public readonly struct LeftHandFrame
 
     public static readonly LeftHandFrame Zero = new(AnimationElement.Zero, AnimationElement.Zero, AnimationElement.Zero);
 
+#if DEBUG
     public LeftHandFrame Edit(string title)
     {
         ImGui.SeparatorText($"ItemAnchorL");
@@ -725,6 +743,7 @@ public readonly struct LeftHandFrame
 
         return new(anchor, lower, upper);
     }
+#endif
 
     public static LeftHandFrame Interpolate(LeftHandFrame from, LeftHandFrame to, float progress)
     {
@@ -785,6 +804,7 @@ public readonly struct AnimationElement
 
     public static readonly AnimationElement Zero = new(0, 0, 0, 0, 0, 0);
 
+#if DEBUG
     public AnimationElement Edit(string title, float multiplier = 10)
     {
         float speed = ImGui.GetIO().KeysDown[(int)ImGuiKey.LeftShift] ? 0.1f : 1;
@@ -820,7 +840,7 @@ public readonly struct AnimationElement
             rotationZ
             );
     }
-
+#endif
 
     public float?[] ToArray() => new float?[]
             {
@@ -903,7 +923,8 @@ public readonly struct AnimationElement
             (float?)frame.RotationY ?? 0,
             (float?)frame.RotationZ ?? 0);
     }
-    
+
+#if DEBUG
     private static float? EditValue(float? value, float multiplier, float speed, string title)
     {
         bool enabled = value != null;
@@ -924,4 +945,5 @@ public readonly struct AnimationElement
         return value;
     }
     private static AnimationElement _buffer = AnimationElement.Zero;
+#endif
 }

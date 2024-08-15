@@ -24,7 +24,9 @@ public sealed class AnimationsManager
 
     public AnimationsManager(ICoreClientAPI api, ParticleEffectsManager particleEffectsManager)
     {
+#if DEBUG
         api.ModLoader.GetModSystem<ImGuiModSystem>().Draw += DrawEditor;
+#endif
         api.Input.RegisterHotKey("combatOverhaul_editor", "Show animation editor", GlKeys.L, ctrlPressed: true);
         api.Input.SetHotKeyHandler("combatOverhaul_editor", keys => _showAnimationEditor = !_showAnimationEditor);
         _instance = this;
@@ -79,7 +81,26 @@ public sealed class AnimationsManager
     private string _filter = "";
     private int _transformIndex = 0;
     private readonly Dictionary<string, ModelTransform> _transforms = new();
+    private static Dictionary<string, Animation> FromAsset(IAsset asset)
+    {
+        Dictionary<string, Animation> result = new();
 
+        string domain = asset.Location.Domain;
+        JsonObject json = JsonObject.FromJson(asset.ToText());
+        foreach (KeyValuePair<string, JToken?> entry in json.Token as JObject)
+        {
+            string code = entry.Key;
+            JsonObject animationJson = new(entry.Value);
+
+            Animation animation = animationJson.AsObject<AnimationJson>().ToAnimation();
+
+            result.Add($"{domain}:{code}", animation);
+        }
+
+        return result;
+    }
+
+#if DEBUG
     private CallbackGUIStatus DrawEditor(float deltaSeconds)
     {
         if (!_showAnimationEditor) return CallbackGUIStatus.Closed;
@@ -155,24 +176,7 @@ public sealed class AnimationsManager
 
         return _showAnimationEditor ? CallbackGUIStatus.GrabMouse : CallbackGUIStatus.Closed;
     }
-    private static Dictionary<string, Animation> FromAsset(IAsset asset)
-    {
-        Dictionary<string, Animation> result = new();
-
-        string domain = asset.Location.Domain;
-        JsonObject json = JsonObject.FromJson(asset.ToText());
-        foreach (KeyValuePair<string, JToken?> entry in json.Token as JObject)
-        {
-            string code = entry.Key;
-            JsonObject animationJson = new(entry.Value);
-
-            Animation animation = animationJson.AsObject<AnimationJson>().ToAnimation();
-
-            result.Add($"{domain}:{code}", animation);
-        }
-
-        return result;
-    }
+    
     private void EditFov()
     {
         ClientMain? client = _api.World as ClientMain;
@@ -413,4 +417,5 @@ public sealed class AnimationsManager
         }
         if (!canCreate) ImGui.EndDisabled();
     }
+#endif
 }
