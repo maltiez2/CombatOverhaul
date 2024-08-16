@@ -36,6 +36,7 @@ public sealed class BowStats : WeaponStats
 {
     public string LoadAnimation { get; set; } = "";
     public string DrawAnimation { get; set; } = "";
+    public string DrawAfterLoadAnimation { get; set; } = "";
     public string ReleaseAnimation { get; set; } = "";
     public string TpAimAnimation { get; set; } = "";
     public AimingStatsJson Aiming { get; set; } = new();
@@ -91,6 +92,7 @@ public sealed class BowClient : RangeWeaponClient
     private readonly AimingStats _aimingStats;
     private readonly AmmoSelector _ammoSelector;
     private AimingAnimationController? _aimingAnimationController;
+    private bool _afterLoad = false;
 
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Pressed)]
     private bool Load(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
@@ -140,6 +142,8 @@ public sealed class BowClient : RangeWeaponClient
 
         state = (int)BowState.Load;
 
+        _afterLoad = true;
+
         return true;
     }
     private void ReloadCallback(bool success)
@@ -186,8 +190,10 @@ public sealed class BowClient : RangeWeaponClient
     {
         if (state != (int)BowState.Loaded || eventData.AltPressed || !CheckForOtherHandEmpty(mainHand, player)) return false;
 
-        AnimationRequestByCode request = new(_stats.DrawAnimation, PlayerBehavior?.ManipulationSpeed ?? 1, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true, FullLoadCallback);
+        AnimationRequestByCode request = new(_afterLoad ? _stats.DrawAfterLoadAnimation : _stats.DrawAnimation, PlayerBehavior?.ManipulationSpeed ?? 1, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true, FullLoadCallback);
         AnimationBehavior?.Play(request, mainHand);
+
+        _afterLoad = false;
 
         state = (int)BowState.Draw;
 
@@ -223,6 +229,7 @@ public sealed class BowClient : RangeWeaponClient
         {
             AnimationBehavior?.PlayReadyAnimation(mainHand);
             state = (int)BowState.Loaded;
+            _afterLoad = false;
             return true;
         }
 
