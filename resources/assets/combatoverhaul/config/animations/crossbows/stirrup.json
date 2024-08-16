@@ -42,7 +42,7 @@
         }
       },
       {
-        "EasingTime": 931,
+        "EasingTime": 1069,
         "EasingFunction": "Linear",
         "DetachedAnchor": true,
         "SwitchArms": false,
@@ -61,7 +61,7 @@
         }
       },
       {
-        "EasingTime": 1362,
+        "EasingTime": 1638,
         "EasingFunction": "Linear",
         "DetachedAnchor": true,
         "SwitchArms": false,
@@ -80,7 +80,7 @@
         }
       },
       {
-        "EasingTime": 2051,
+        "EasingTime": 2547,
         "EasingFunction": "Linear",
         "DetachedAnchor": true,
         "SwitchArms": false,
@@ -99,7 +99,7 @@
         }
       },
       {
-        "EasingTime": 2396,
+        "EasingTime": 3003,
         "EasingFunction": "Linear",
         "DetachedAnchor": true,
         "SwitchArms": false,
@@ -118,7 +118,7 @@
         }
       },
       {
-        "EasingTime": 3000,
+        "EasingTime": 3800,
         "EasingFunction": "Linear",
         "DetachedAnchor": true,
         "SwitchArms": false,
@@ -297,7 +297,7 @@
     "ParticlesFrames": [],
     "CallbackFrames": [],
     "ItemAnimationStart": 500,
-    "ItemAnimationEnd": 3000
+    "ItemAnimationEnd": 3800
   },
   "crossbow-stirrup-drawn": {
     "Hold": false,

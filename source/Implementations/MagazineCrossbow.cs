@@ -254,6 +254,7 @@ public class MagazineCrossbowClient : RangeWeaponClient
         Vintagestory.API.MathTools.Vec3d position = player.LocalEyePos + player.Pos.XYZ;
         Vector3 targetDirection = AimingSystem.TargetVec;
         targetDirection = ClientAimingSystem.Zeroing(targetDirection, Stats.Zeroing);
+
         RangedWeaponSystem.Shoot(slot, 1, new((float)position.X, (float)position.Y, (float)position.Z), new(targetDirection.X, targetDirection.Y, targetDirection.Z), true, _ => { });
 
         PlayerBehavior?.SetState((int)MagazineCrossbowState.Shot, mainHand: true);

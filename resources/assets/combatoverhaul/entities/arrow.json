@@ -4,7 +4,7 @@
   "variantgroups": [{"code": "material", "states": ["crude", "flint", "copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "steel", "meteoriciron"]}],
   "hitboxSize": {"x": 0.125, "y": 0.125},
   "client": {
-    "size": 0.75,
+    "size": 0.55,
     "renderer": "Shape",
     "shapeByType": {
       "*-crude": {"base": "ammo/arrows/crude"},
