@@ -176,8 +176,8 @@ public class ProjectileEntity : Entity
     }
     public override void OnCollided()
     {
-        EntityPos sidedPos = base.SidedPos;
-        OnTerrainCollision(base.SidedPos, Math.Max(MotionBeforeCollide.Length(), sidedPos.Motion.Length()));
+        EntityPos sidedPos = SidedPos;
+        OnTerrainCollision(SidedPos, Math.Max(MotionBeforeCollide.Length(), sidedPos.Motion.Length()));
         MotionBeforeCollide.Set(sidedPos.Motion.X, sidedPos.Motion.Y, sidedPos.Motion.Z);
     }
     public override void ToBytes(BinaryWriter writer, bool forClient)
@@ -222,6 +222,7 @@ public class ProjectileEntity : Entity
     public void OnCollisionWithEntity()
     {
         WatchedAttributes.MarkAllDirty();
+        TryDestroyOnCollision();
     }
 
     protected readonly TimeSpan CollisionDelay = TimeSpan.FromMilliseconds(500);
@@ -232,6 +233,7 @@ public class ProjectileEntity : Entity
     protected Vec3d MotionBeforeCollide = new();
     protected bool BeforeCollided = false;
     protected long MsCollide = 0;
+    protected Random Rand = new();
 
     protected void OnPhysicsTickCallback(float dtFac)
     {
@@ -256,11 +258,21 @@ public class ProjectileEntity : Entity
         if (impactSpeed >= 0.07)
         {
             World.PlaySoundAt(new AssetLocation("sounds/arrow-impact"), this, null, randomizePitch: false);
+            TryDestroyOnCollision();
             WatchedAttributes.MarkAllDirty();
         }
 
         MsCollide = World.ElapsedMilliseconds;
         BeforeCollided = true;
+    }
+    protected virtual void TryDestroyOnCollision()
+    {
+        float random = (float)Rand.NextDouble();
+        if (DropOnImpactChance >= random)
+        {
+            World.PlaySoundAt(new AssetLocation("sounds/effect/toolbreak"), this, null, randomizePitch: true, volume: 0.5f);
+            Die();
+        }
     }
 }
 
