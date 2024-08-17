@@ -45,6 +45,7 @@ public class MuzzleloaderStats : WeaponStats
     public string[] ShootAnimationOffhand { get; set; } = Array.Empty<string>();
     public string LoadedAnimation { get; set; } = "";
     public string PrimedAnimation { get; set; } = "";
+    public string CockedAnimation { get; set; } = "";
 
     public AimingStatsJson Aiming { get; set; } = new();
     public float[] DispersionMOA { get; set; } = new float[] { 0, 0 };
@@ -109,7 +110,7 @@ public class MuzzleloaderClient : RangeWeaponClient
         }
 
         // DEBUG
-        DebugAttach(player);
+        //DebugAttach(player);
     }
     public override void OnDeselected(EntityPlayer player, bool mainHand, ref int state)
     {
@@ -397,6 +398,11 @@ public class MuzzleloaderClient : RangeWeaponClient
                     Attachable.ClearAttachments(player.EntityId);
                 }
                 break;
+            case MuzzleloaderState.Cocking:
+                {
+                    SetState(MuzzleloaderState.Primed);
+                }
+                break;
             case MuzzleloaderState.Aim:
             case MuzzleloaderState.Shoot:
                 {
@@ -407,8 +413,8 @@ public class MuzzleloaderClient : RangeWeaponClient
                     }
                     else
                     {
-                        SetState(MuzzleloaderState.Primed);
-                        AnimationBehavior?.Play(mainHand, Stats.PrimedAnimation, category: "item", weight: 0.001f);
+                        SetState(MuzzleloaderState.Cocked);
+                        AnimationBehavior?.Play(mainHand, Stats.CockedAnimation != "" ? Stats.CockedAnimation : Stats.PrimedAnimation, category: "item", weight: 0.001f);
                     }
                     Inventory.Clear();
                 }

@@ -245,7 +245,7 @@ public sealed class AnimationsManager
 
         if (!filtered.Any()) return;
 
-        if (_selectedAnimationIndexFiltered > filtered.Count()) _selectedAnimationIndexFiltered = 0;
+        if (_selectedAnimationIndexFiltered >= filtered.Count()) _selectedAnimationIndexFiltered = 0;
 
         _selectedAnimationIndex = Animations.Keys.ToArray().IndexOf(filtered.ToArray()[_selectedAnimationIndexFiltered]);
 
