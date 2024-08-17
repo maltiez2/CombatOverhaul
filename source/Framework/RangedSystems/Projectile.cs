@@ -258,7 +258,7 @@ public class ProjectileEntity : Entity
         if (impactSpeed >= 0.07)
         {
             World.PlaySoundAt(new AssetLocation("sounds/arrow-impact"), this, null, randomizePitch: false);
-            TryDestroyOnCollision();
+            //TryDestroyOnCollision(); // Projectile can collide with terrain before packet of entity collision arrives
             WatchedAttributes.MarkAllDirty();
         }
 
@@ -268,7 +268,7 @@ public class ProjectileEntity : Entity
     protected virtual void TryDestroyOnCollision()
     {
         float random = (float)Rand.NextDouble();
-        if (DropOnImpactChance >= random)
+        if (DropOnImpactChance <= random)
         {
             World.PlaySoundAt(new AssetLocation("sounds/effect/toolbreak"), this, null, randomizePitch: true, volume: 0.5f);
             Die();
