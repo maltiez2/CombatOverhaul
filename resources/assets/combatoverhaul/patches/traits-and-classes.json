@@ -14,7 +14,7 @@
       {"code": "macesProficiency", "type": "positive", "attributes": {"macesProficiency": 0.3}},
       {"code": "clubsProficiency", "type": "positive", "attributes": {"clubsProficiency": 0.3}},
       {"code": "steadyAim", "type": "positive", "attributes": {"steadyAim": 0.5}},
-      {"code": "tremblingAim", "type": "positive", "attributes": {"steadyAim": -0.5}}
+      {"code": "tremblingAim", "type": "negative", "attributes": {"steadyAim": -0.5}}
     ]
   },
   {"file": "game:config/characterclasses", "op": "addeach", "path": "/1/traits/-", "value": ["bowsProficiency", "crossbowsProficiency", "steadyAim", "spearsProficiency"]},
