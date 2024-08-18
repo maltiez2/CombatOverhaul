@@ -1,0 +1,24 @@
+﻿[
+  {
+    "file": "game:config/traits",
+    "op": "addeach",
+    "path": "/-",
+    "value": [
+      {"code": "bowsProficiency", "type": "positive", "attributes": {"bowsProficiency": 0.3}},
+      {"code": "crossbowsProficiency", "type": "positive", "attributes": {"crossbowsProficiency": 0.3}},
+      {"code": "firearmsProficiency", "type": "positive", "attributes": {"firearmsProficiency": 0.3}},
+      {"code": "oneHandedSwordsProficiency", "type": "positive", "attributes": {"oneHandedSwordsProficiency": 0.3}},
+      {"code": "twoHandedSwordsProficiency", "type": "positive", "attributes": {"twoHandedSwordsProficiency": 0.3}},
+      {"code": "spearsProficiency", "type": "positive", "attributes": {"spearsProficiency": 0.3}},
+      {"code": "javelinsProficiency", "type": "positive", "attributes": {"javelinsProficiency": 0.3}},
+      {"code": "macesProficiency", "type": "positive", "attributes": {"macesProficiency": 0.3}},
+      {"code": "clubsProficiency", "type": "positive", "attributes": {"clubsProficiency": 0.3}},
+      {"code": "steadyAim", "type": "positive", "attributes": {"steadyAim": 0.5}},
+      {"code": "tremblingAim", "type": "positive", "attributes": {"steadyAim": -0.5}}
+    ]
+  },
+  {"file": "game:config/characterclasses", "op": "addeach", "path": "/1/traits/-", "value": ["bowsProficiency", "crossbowsProficiency", "steadyAim"]},
+  {"file": "game:config/characterclasses", "op": "addeach", "path": "/2/traits/-", "value": ["javelinsProficiency"]},
+  {"file": "game:config/characterclasses", "op": "addeach", "path": "/3/traits/-", "value": ["firearmsProficiency"]},
+  {"file": "game:config/characterclasses", "op": "addeach", "path": "/4/traits/-", "value": ["oneHandedSwordsProficiency", "macesProficiency", "tremblingAim"]}
+]

@@ -5,6 +5,7 @@ using CombatOverhaul.MeleeSystems;
 using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
+using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
@@ -257,7 +258,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
                     AnimationBehavior?.Play(
                         mainHand,
                         stats.AttackAnimation,
-                        animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1,
+                        animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat),
                         category: AnimationCategory(mainHand),
                         callback: () => AttackAnimationCallback(mainHand),
                         callbackHandler: code => AttackAnimationCallbackHandler(code, mainHand));
@@ -396,7 +397,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
             AnimationBehavior?.Play(
                 mainHand,
                 stats.BlockAnimation,
-                animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1,
+                animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat),
                 category: AnimationCategory(mainHand),
                 callback: () => BlockAnimationCallback(mainHand, player),
                 callbackHandler: code => BlockAnimationCallbackHandler(code, mainHand));
@@ -734,6 +735,12 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
         }
 
         return MathF.Abs(penalty) > 1E-9f; // just some epsilon
+    }
+    protected float GetAnimationSpeed(Entity player, string proficiencyStat, float min = 0.5f, float max = 2f)
+    {
+        float manipulationSpeed = PlayerBehavior?.ManipulationSpeed ?? 1;
+        float proficiencyBonus = proficiencyStat == "" ? 0 : player.Stats.GetBlended(proficiencyStat) - 1;
+        return Math.Clamp(manipulationSpeed + proficiencyBonus, min, max);
     }
 
     private void DebugEditColliders(MeleeAttack attack, int attackIndex)

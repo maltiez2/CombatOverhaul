@@ -1548,7 +1548,26 @@
       },
       {
         "EasingTime": 300,
-        "EasingFunction": "Linear",
+        "EasingFunction": "Sin",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": true,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 0.88,
+        "BobbingAmplitude": 0.655,
+        "Elements": {
+          "ItemAnchor": [-1.1, 1.11, 1.3, 15, 22, 153],
+          "LowerArmR": [0, 0, 0, 0, 0, -121],
+          "UpperArmR": [0, 0, 0, 0, 22.2, -38],
+          "ItemAnchorL": [0, 0, 0, 0, 0, 0],
+          "LowerArmL": [0, 0, 0, 0, 0, -17],
+          "UpperArmL": [0, 0, 0, 0, -9, -87],
+          "UpperTorso": [0, 0, 0, 0, 0, 0]
+        }
+      },
+      {
+        "EasingTime": 500,
+        "EasingFunction": "Sin",
         "DetachedAnchor": false,
         "SwitchArms": false,
         "PitchFollow": true,
@@ -1557,11 +1576,11 @@
         "BobbingAmplitude": 0.655,
         "Elements": {
           "ItemAnchor": [-1.8, 1.11, 1.3, 15, 22, 153],
-          "LowerArmR": [0, 0, 0, 0, 0, -122],
-          "UpperArmR": [0, 0, 0, 0, 22.2, -40],
+          "LowerArmR": [0, 0, 0, 0, 0, -120],
+          "UpperArmR": [0, 0, 0, 0, 22.2, -38],
           "ItemAnchorL": [0, 0, 0, 0, 0, 0],
           "LowerArmL": [0, 0, 0, 0, 0, -15],
-          "UpperArmL": [0, 0, 0, 0, -9, -92],
+          "UpperArmL": [0, 0, 0, 0, -9, -87],
           "UpperTorso": [0, 0, 0, 0, 0, 0]
         }
       }
@@ -1571,70 +1590,70 @@
         "DurationFraction": 0,
         "EasingFunction": "Linear",
         "Elements": {
-          "Match_2": [0, 0, 0, -1, 0, 0],
-          "Match_origin": [-60, -60, -98, 0, 0, 0],
-          "Match_3": [0, 0, 0, 22, 0, 0],
-          "Lever": [0, 0, 0, 10, 0, 0],
-          "Match": [0, 0, 0, 0, 0, 0],
-          "Lock_lever": [0, 0, 0, -35, 0, 0],
           "Pan_cover": [0, 0, 0, 0, 0, 0],
-          "Match_1": [0, 0, 0, 1, 0, 0]
+          "Match": [0, 0, 0, 0, 0, 0],
+          "Lever": [0, 0, 0, 10, 0, 0],
+          "Match_origin": [-60, -60, -98, 0, 0, 0],
+          "Lock_lever": [0, 0, 0, -35, 0, 0],
+          "Match_2": [0, 0, 0, -1, 0, 0],
+          "Match_1": [0, 0, 0, 1, 0, 0],
+          "Match_3": [0, 0, 0, 22, 0, 0]
         }
       },
       {
         "DurationFraction": 0.2631579,
         "EasingFunction": "Linear",
         "Elements": {
-          "Match_2": [0, 0, 0, -10, 0, 0],
-          "Match_origin": [-60, -60, -98, 0, 0, 0],
-          "Match_3": [0, 0, 0, 16, 0, 0],
-          "Lever": [0, 0, 0, 5, 0, 0],
-          "Match": [0, 0, 0, 0, 0, 0],
-          "Lock_lever": [0, 0, 0, -20, 0, 0],
           "Pan_cover": [0, 0, 0, 0, 0, 0],
-          "Match_1": [0, 0, 0, 1, 0, 0]
+          "Match": [0, 0, 0, 0, 0, 0],
+          "Lever": [0, 0, 0, 5, 0, 0],
+          "Match_origin": [-60, -60, -98, 0, 0, 0],
+          "Lock_lever": [0, 0, 0, -20, 0, 0],
+          "Match_2": [0, 0, 0, -10, 0, 0],
+          "Match_1": [0, 0, 0, 1, 0, 0],
+          "Match_3": [0, 0, 0, 16, 0, 0]
         }
       },
       {
         "DurationFraction": 0.5263158,
         "EasingFunction": "Linear",
         "Elements": {
-          "Match_2": [0, 0, 0, -29, 0, 0],
-          "Match_origin": [-60, -60, -98, 0, 0, 0],
-          "Match_3": [0, 0, 0, 13, 0, 0],
-          "Lever": [0, 0, 0, 0, 0, 0],
-          "Match": [0, 0, 0, -3, 0, 0],
-          "Lock_lever": [0, 0, 0, 0, 0, 0],
           "Pan_cover": [0, 0, 0, 0, 0, 0],
-          "Match_1": [0, 0, 0, 3, 0, 0]
+          "Match": [0, 0, 0, -3, 0, 0],
+          "Lever": [0, 0, 0, 0, 0, 0],
+          "Match_origin": [-60, -60, -98, 0, 0, 0],
+          "Lock_lever": [0, 0, 0, 0, 0, 0],
+          "Match_2": [0, 0, 0, -29, 0, 0],
+          "Match_1": [0, 0, 0, 3, 0, 0],
+          "Match_3": [0, 0, 0, 13, 0, 0]
         }
       },
       {
         "DurationFraction": 0.7894737,
         "EasingFunction": "Linear",
         "Elements": {
-          "Match_2": [0, 0, 0, -33, 0, 0],
-          "Match_origin": [-60, -60, -98, 0, 0, 0],
-          "Match_3": [0, 0, 0, 20, 0, 0],
-          "Lever": [0, 0, 0, 0, 0, 0],
-          "Match": [0, 0, 0, -3, 0, 0],
-          "Lock_lever": [0, 0, 0, 0, 0, 0],
           "Pan_cover": [0, 0, 0, 0, 0, 0],
-          "Match_1": [0, 0, 0, 3, 0, 0]
+          "Match": [0, 0, 0, -3, 0, 0],
+          "Lever": [0, 0, 0, 0, 0, 0],
+          "Match_origin": [-60, -60, -98, 0, 0, 0],
+          "Lock_lever": [0, 0, 0, 0, 0, 0],
+          "Match_2": [0, 0, 0, -33, 0, 0],
+          "Match_1": [0, 0, 0, 3, 0, 0],
+          "Match_3": [0, 0, 0, 20, 0, 0]
         }
       },
       {
         "DurationFraction": 1,
         "EasingFunction": "Linear",
         "Elements": {
-          "Match_2": [0, 0, 0, -35, 0, 0],
-          "Match_origin": [-60, -60, -98, 0, 0, 0],
-          "Match_3": [0, 0, 0, 22, 0, 0],
-          "Lever": [0, 0, 0, 0, 0, 0],
-          "Match": [0, 0, 0, -3, 0, 0],
-          "Lock_lever": [0, 0, 0, 0, 0, 0],
           "Pan_cover": [0, 0, 0, 0, 0, 0],
-          "Match_1": [0, 0, 0, 3, 0, 0]
+          "Match": [0, 0, 0, -3, 0, 0],
+          "Lever": [0, 0, 0, 0, 0, 0],
+          "Match_origin": [-60, -60, -98, 0, 0, 0],
+          "Lock_lever": [0, 0, 0, 0, 0, 0],
+          "Match_2": [0, 0, 0, -35, 0, 0],
+          "Match_1": [0, 0, 0, 3, 0, 0],
+          "Match_3": [0, 0, 0, 22, 0, 0]
         }
       }
     ],
@@ -1645,17 +1664,22 @@
           "combatoverhaul:sounds/firearms/arquebus/arquebus-fire-2",
           "combatoverhaul:sounds/firearms/arquebus/arquebus-fire-3"
         ],
-        "DurationFraction": 0.25,
+        "DurationFraction": 0.1,
         "RandomizePitch": false,
         "Range": 32,
         "Volume": 1,
         "Synchronize": true
       }
     ],
-    "ParticlesFrames": [],
-    "CallbackFrames": [{"Code": "shoot", "DurationFraction": 0.6666667}],
+    "ParticlesFrames": [
+      {"Code": "combatoverhaul:smoke-1", "DurationFraction": 0.4, "Position": [0, 0, 3], "Velocity": [0, 0, 1], "Intensity": 0.5},
+      {"Code": "combatoverhaul:smoke-2", "DurationFraction": 0.4, "Position": [0, 0, 2], "Velocity": [0, 0, 3], "Intensity": 0.3},
+      {"Code": "combatoverhaul:smoke-3", "DurationFraction": 0.4, "Position": [0, 0, 1], "Velocity": [0, 0, 6], "Intensity": 0.3},
+      {"Code": "combatoverhaul:fireblast-1", "DurationFraction": 0.4, "Position": [0, 0, 1], "Velocity": [0, 5, 40], "Intensity": 0.3}
+    ],
+    "CallbackFrames": [{"Code": "shoot", "DurationFraction": 0.4}],
     "ItemAnimationStart": 0,
-    "ItemAnimationEnd": 75
+    "ItemAnimationEnd": 100
   },
   "firearms-arquebus-primed": {
     "Hold": true,

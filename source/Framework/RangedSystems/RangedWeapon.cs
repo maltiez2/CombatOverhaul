@@ -1,7 +1,5 @@
 ﻿using CombatOverhaul.Animations;
-using CombatOverhaul.Implementations;
 using CombatOverhaul.Inputs;
-using System;
 using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -68,7 +66,13 @@ public class RangeWeaponClient : IClientWeaponLogic
     {
         return (TState)Enum.ToObject(typeof(TState), PlayerBehavior?.GetState(mainHand) ?? 0);
     }
-
+    protected float GetAnimationSpeed(Entity player, string proficiencyStat, float min = 0.5f, float max = 2f)
+    {
+        float manipulationSpeed = PlayerBehavior?.ManipulationSpeed ?? 1;
+        float proficiencyBonus = proficiencyStat == "" ? 0 : player.Stats.GetBlended(proficiencyStat) - 1;
+        Console.WriteLine($"Stat '{proficiencyStat}': {player.Stats.GetBlended(proficiencyStat)}");
+        return Math.Clamp(manipulationSpeed + proficiencyBonus, min, max);
+    }
     protected bool CheckForOtherHandEmpty(bool mainHand, EntityPlayer player)
     {
         if (mainHand && !player.LeftHandItemSlot.Empty)

@@ -117,7 +117,7 @@ public class MagazineCrossbowClient : RangeWeaponClient
 
         state = (int)MagazineCrossbowState.OpenLid;
 
-        AnimationBehavior?.Play(mainHand, Stats.OpenLidAnimation, callback: OpenLidCallback);
+        AnimationBehavior?.Play(mainHand, Stats.OpenLidAnimation, callback: OpenLidCallback, animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat));
         AimingSystem.StopAiming();
 
         return true;
@@ -178,7 +178,7 @@ public class MagazineCrossbowClient : RangeWeaponClient
 
         Attachable.SetAttachment(player.EntityId, "bolt", ammoSlot.Itemstack, BoltTransform);
 
-        AnimationBehavior?.Play(mainHand, Stats.LoadBoltAnimation, animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1, callback: () => LoadBoltCallback(slot, ammoSlot, player));
+        AnimationBehavior?.Play(mainHand, Stats.LoadBoltAnimation, animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat), callback: () => LoadBoltCallback(slot, ammoSlot, player));
         state = (int)MagazineCrossbowState.Load;
 
         return true;
@@ -205,7 +205,7 @@ public class MagazineCrossbowClient : RangeWeaponClient
         if (!CheckState(state, MagazineCrossbowState.ReadyToLoad, MagazineCrossbowState.Load, MagazineCrossbowState.OpenLid)) return false;
         if (eventData.AltPressed) return false;
 
-        AnimationBehavior?.Play(mainHand, Stats.CloseLidAnimation, callback: () => CloseLidCallback(slot));
+        AnimationBehavior?.Play(mainHand, Stats.CloseLidAnimation, callback: () => CloseLidCallback(slot), animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat));
         state = (int)MagazineCrossbowState.CloseLid;
 
         return true;
@@ -244,7 +244,7 @@ public class MagazineCrossbowClient : RangeWeaponClient
         Inventory.Clear();
         AimingSystem.AimingState = WeaponAimingState.FullCharge;
 
-        AnimationBehavior?.Play(mainHand, Stats.ShootAnimation, animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1, callback: () => ShootCallback(slot, player));
+        AnimationBehavior?.Play(mainHand, Stats.ShootAnimation, animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat), callback: () => ShootCallback(slot, player));
         state = (int)MagazineCrossbowState.Shoot;
 
         return true;
@@ -267,7 +267,7 @@ public class MagazineCrossbowClient : RangeWeaponClient
     {
         if (state != (int)MagazineCrossbowState.Shot || eventData.AltPressed) return false;
 
-        AnimationBehavior?.Play(mainHand, Stats.ReturnAnimation, animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1, callback: ReturnCallback);
+        AnimationBehavior?.Play(mainHand, Stats.ReturnAnimation, animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat), callback: ReturnCallback);
         state = (int)MagazineCrossbowState.Return;
 
         return true;

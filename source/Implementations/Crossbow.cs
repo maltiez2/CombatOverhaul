@@ -3,7 +3,6 @@ using CombatOverhaul.Animations;
 using CombatOverhaul.Inputs;
 using CombatOverhaul.RangedSystems;
 using CombatOverhaul.RangedSystems.Aiming;
-using OpenTK.Windowing.GraphicsLibraryFramework;
 using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -11,7 +10,6 @@ using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
 using Vintagestory.API.Server;
 using Vintagestory.API.Util;
-using Xceed.Wpf.Toolkit.Primitives;
 
 namespace CombatOverhaul.Implementations;
 
@@ -103,7 +101,7 @@ public class CrossbowClient : RangeWeaponClient
     {
         if (state != (int)CrossbowState.Unloaded || eventData.AltPressed) return false;
 
-        AnimationBehavior?.Play(mainHand, Stats.DrawAnimation, callback: () => DrawAnimationCallback(slot, mainHand), animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1);
+        AnimationBehavior?.Play(mainHand, Stats.DrawAnimation, callback: () => DrawAnimationCallback(slot, mainHand), animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat));
 
         state = (int)CrossbowState.Draw;
 
@@ -151,7 +149,7 @@ public class CrossbowClient : RangeWeaponClient
 
         Attachable.SetAttachment(player.EntityId, "bolt", BoltSlot.Itemstack, BoltTransform);
 
-        AnimationBehavior?.Play(mainHand, Stats.LoadAnimation, animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1, callback: () => LoadAnimationCallback(slot, mainHand, BoltSlot));
+        AnimationBehavior?.Play(mainHand, Stats.LoadAnimation, animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat), callback: () => LoadAnimationCallback(slot, mainHand, BoltSlot));
 
         state = (int)CrossbowState.Load;
 
@@ -292,9 +290,9 @@ public class CrossbowClient : RangeWeaponClient
     protected virtual bool CheckDrawRequirement(EntityPlayer player)
     {
         if (Stats.DrawRequirement == "") return true;
-        
+
         ItemSlot? requirement = null;
-        
+
         player.WalkInventory(slot =>
         {
             if (slot?.Itemstack?.Item == null) return true;

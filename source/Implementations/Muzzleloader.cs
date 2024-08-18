@@ -8,7 +8,6 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Server;
 using Vintagestory.API.Util;
-using Vintagestory.GameContent;
 
 
 namespace CombatOverhaul.Implementations;
@@ -176,7 +175,7 @@ public class MuzzleloaderClient : RangeWeaponClient
         AnimationBehavior?.Play(
             mainHand,
             GetLoadingAnimation(slot),
-            animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1,
+            animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat),
             callback: () => LoadCallback(slot, ammoSlot, player, mainHand, lastAmmoToLoad),
             callbackHandler: callback => LoadAnimationCallback(callback, ammoSlot, player));
 
@@ -273,7 +272,7 @@ public class MuzzleloaderClient : RangeWeaponClient
 
         SetState(MuzzleloaderState.Priming);
         AnimationBehavior?.Stop("item");
-        AnimationBehavior?.Play(mainHand, Stats.PrimeAnimation, animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1, callback: () => PrimeCallback(mainHand, slot), callbackHandler: callback => PrimeAnimationCallback(callback, player));
+        AnimationBehavior?.Play(mainHand, Stats.PrimeAnimation, animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat), callback: () => PrimeCallback(mainHand, slot), callbackHandler: callback => PrimeAnimationCallback(callback, player));
 
         return true;
     }
@@ -355,7 +354,7 @@ public class MuzzleloaderClient : RangeWeaponClient
             return false;
         }
 
-        AnimationBehavior?.Play(mainHand, mainHand ? Stats.CockingAnimation : Stats.CockingAnimationOffhand, callback: () => CockingCallback(mainHand));
+        AnimationBehavior?.Play(mainHand, mainHand ? Stats.CockingAnimation : Stats.CockingAnimationOffhand, animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat), callback: () => CockingCallback(mainHand));
         SetState(MuzzleloaderState.Cocking, mainHand);
 
         return true;

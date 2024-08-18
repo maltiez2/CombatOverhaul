@@ -30,6 +30,7 @@ public class WeaponStats
 {
     public string ReadyAnimation { get; set; } = "";
     public string IdleAnimation { get; set; } = "";
+    public string ProficiencyStat { get; set; } = "";
 }
 
 public sealed class BowStats : WeaponStats
@@ -133,7 +134,7 @@ public sealed class BowClient : RangeWeaponClient
         _attachable.SetAttachment(player.EntityId, "Arrow", _arrowSlot.Itemstack, _arrowTransform);
         RangedWeaponSystem.Reload(slot, _arrowSlot, 1, mainHand, ReloadCallback);
 
-        AnimationBehavior?.Play(mainHand, _stats.LoadAnimation, animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1, callback: LoadAnimationCallback);
+        AnimationBehavior?.Play(mainHand, _stats.LoadAnimation, animationSpeed: GetAnimationSpeed(player, _stats.ProficiencyStat), callback: LoadAnimationCallback);
 
         _aimingSystem.StartAiming(_aimingStats);
         _aimingSystem.AimingState = WeaponAimingState.Blocked;
@@ -190,7 +191,7 @@ public sealed class BowClient : RangeWeaponClient
     {
         if (state != (int)BowState.Loaded || eventData.AltPressed || !CheckForOtherHandEmpty(mainHand, player)) return false;
 
-        AnimationRequestByCode request = new(_afterLoad ? _stats.DrawAfterLoadAnimation : _stats.DrawAnimation, PlayerBehavior?.ManipulationSpeed ?? 1, 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true, FullLoadCallback);
+        AnimationRequestByCode request = new(_afterLoad ? _stats.DrawAfterLoadAnimation : _stats.DrawAnimation, GetAnimationSpeed(player, _stats.ProficiencyStat), 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true, FullLoadCallback);
         AnimationBehavior?.Play(request, mainHand);
 
         _afterLoad = false;

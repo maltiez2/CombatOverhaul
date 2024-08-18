@@ -123,7 +123,7 @@ public class JavelinClient : IClientWeaponLogic
                 {
                     SetState(MeleeWeaponState.WindingUp, mainHand);
                     MeleeAttack.Start(player.Player);
-                    AnimationBehavior?.Play(mainHand, Stats.AttackAnimation, animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1, callback: () => AttackAnimationCallback(mainHand), callbackHandler: code => AttackAnimationCallbackHandler(code, mainHand));
+                    AnimationBehavior?.Play(mainHand, Stats.AttackAnimation, animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat), callback: () => AttackAnimationCallback(mainHand), callbackHandler: code => AttackAnimationCallbackHandler(code, mainHand));
                 }
                 break;
             case MeleeWeaponState.WindingUp:
@@ -178,7 +178,7 @@ public class JavelinClient : IClientWeaponLogic
 
         if (Stats.AttackCooldownMs != 0)
         {
-            StartAttackCooldown(mainHand, TimeSpan.FromMilliseconds(Stats.AttackCooldownMs));
+            StartAttackCooldown(player, mainHand, TimeSpan.FromMilliseconds(Stats.AttackCooldownMs));
         }
 
         return true;
@@ -195,7 +195,7 @@ public class JavelinClient : IClientWeaponLogic
         AimingAnimationController?.Play(mainHand);
         AimingSystem.StartAiming(AimingStats);
 
-        AnimationBehavior?.Play(mainHand, Stats.AimAnimation, animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1, callback: () => AimAnimationCallback(slot, mainHand));
+        AnimationBehavior?.Play(mainHand, Stats.AimAnimation, animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat), callback: () => AimAnimationCallback(slot, mainHand));
 
         return true;
     }
@@ -213,7 +213,7 @@ public class JavelinClient : IClientWeaponLogic
         if (!CheckState(mainHand, JavelinState.Aiming)) return false;
 
         SetState(JavelinState.Throwing, mainHand);
-        AnimationBehavior?.Play(mainHand, Stats.ThrowAnimation, animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1, callback: () => ThrowAnimationCallback(slot, player, mainHand));
+        AnimationBehavior?.Play(mainHand, Stats.ThrowAnimation, animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat), callback: () => ThrowAnimationCallback(slot, player, mainHand));
 
         return true;
     }
@@ -247,17 +247,17 @@ public class JavelinClient : IClientWeaponLogic
         return true;
     }
 
-    protected virtual void StartAttackCooldown(bool mainHand, TimeSpan time)
+    protected virtual void StartAttackCooldown(EntityPlayer player, bool mainHand, TimeSpan time)
     {
         StopAttackCooldown(mainHand);
 
         if (mainHand)
         {
-            MainHandAttackCooldownTimer = Api.World.RegisterCallback(_ => MainHandAttackCooldownTimer = -1, (int)(time.TotalMilliseconds / PlayerBehavior?.ManipulationSpeed ?? 1));
+            MainHandAttackCooldownTimer = Api.World.RegisterCallback(_ => MainHandAttackCooldownTimer = -1, (int)(time.TotalMilliseconds / GetAnimationSpeed(player, Stats.ProficiencyStat)));
         }
         else
         {
-            OffHandAttackCooldownTimer = Api.World.RegisterCallback(_ => OffHandAttackCooldownTimer = -1, (int)(time.TotalMilliseconds / PlayerBehavior?.ManipulationSpeed ?? 1));
+            OffHandAttackCooldownTimer = Api.World.RegisterCallback(_ => OffHandAttackCooldownTimer = -1, (int)(time.TotalMilliseconds / GetAnimationSpeed(player, Stats.ProficiencyStat)));
         }
     }
     protected virtual void StopAttackCooldown(bool mainHand)
@@ -300,6 +300,12 @@ public class JavelinClient : IClientWeaponLogic
         where TState : struct, Enum
     {
         return (TState)Enum.ToObject(typeof(TState), PlayerBehavior?.GetState(mainHand) ?? 0);
+    }
+    protected float GetAnimationSpeed(Entity player, string proficiencyStat, float min = 0.5f, float max = 2f)
+    {
+        float manipulationSpeed = PlayerBehavior?.ManipulationSpeed ?? 1;
+        float proficiencyBonus = proficiencyStat == "" ? 0 : player.Stats.GetBlended(proficiencyStat) - 1;
+        return Math.Clamp(manipulationSpeed + proficiencyBonus, min, max);
     }
 
     private void DebugEditColliders(MeleeAttack attack, int attackIndex)

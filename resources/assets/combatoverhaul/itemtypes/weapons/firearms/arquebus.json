@@ -1,6 +1,6 @@
 ﻿{
   "code": "firearm",
-  "class": "CombatOverhaul:Muzzleloader",
+  "class": "CombatOverhaul:Matchlock",
   "variantgroups": [{"code": "type", "states": ["arquebus"]}, {"code": "subtype", "states": ["regular"]}],
   "creativeinventory": {"combatoverhaul": ["*"]},
   "maxstacksize": 1,
