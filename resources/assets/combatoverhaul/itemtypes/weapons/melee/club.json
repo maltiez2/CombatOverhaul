@@ -25,6 +25,7 @@
   "attributes": {
     "groundStorageTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
     "toolrackTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
+    "ProficiencyStat": "clubsProficiency",
     "OneHandedStance": {
       "CanAttack": false,
       "CanParry": false,

@@ -12,6 +12,7 @@
     "BoltDamageMultiplierByType": {"*": 1},
     "BoltDamageStrengthByType": {"*": 1},
     "BoltVelocityByType": {"*": 1.3},
+    "ProficiencyStat": "crossbowsProficiency",
     "IdleAnimation": "combatoverhaul:crossbow-{type}-ready",
     "ReadyAnimation": "combatoverhaul:crossbow-{type}-ready",
     "OpenLidAnimation": "combatoverhaul:crossbow-{type}-open",

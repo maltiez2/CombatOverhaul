@@ -33,6 +33,7 @@
       "*": {"translation": {"x": 0.5, "y": 0.28, "z": 0.83}, "rotation": {"x": 97, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.6}
     },
     "toolrackTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
+    "ProficiencyStat": "twoHandedSwordsProficiency",
     "OneHandedStance": {
       "CanAttack": true,
       "CanParry": false,

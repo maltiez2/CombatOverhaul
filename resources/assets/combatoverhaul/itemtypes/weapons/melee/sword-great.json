@@ -24,6 +24,7 @@
     "groundStorageTransform": {"translation": {"x": 0.5, "y": 1.84, "z": 0.88}, "rotation": {"x": -80, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.6},
     "handbook": {"groupBy": ["sword-long-*"]},
     "toolrackTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
+    "ProficiencyStat": "twoHandedSwordsProficiency",
     "OneHandedStance": {
       "CanAttack": false,
       "CanParry": false,

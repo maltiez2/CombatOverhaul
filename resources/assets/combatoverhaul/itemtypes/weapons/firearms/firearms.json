@@ -14,6 +14,7 @@
     "BulletTransform": {"translation": {"x": -2.2, "y": 0.2, "z": -2.3}, "rotation": {"x": 0, "y": 0, "z": 0}, "scale": 0.3},
     "FlaskTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "scale": 1},
     "WaddingTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "scale": 1},
+    "ProficiencyStat": "firearmsProficiency",
     "IdleAnimation": "combatoverhaul:firearms-shoulder",
     "ReadyAnimation": "combatoverhaul:firearms-ready",
     "LoadAnimation": ["combatoverhaul:firearms-{type}-load"],

@@ -44,6 +44,7 @@
   "attributes": {
     "groundStorageTransform": {"translation": {"x": 0.5, "y": 1, "z": 0.44}, "rotation": {"x": 10, "y": 0, "z": 90}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
     "damageByType": {"*-flint": 2, "*-copper": 3, "*-tinbronze": 4, "*-bismuthbronze": 4, "*-blackbronze": 4, "*-iron": 4, "*-steel": 5},
+    "ProficiencyStat": "javelinsProficiency",
     "ReadyAnimation": "combatoverhaul:javelin-ready",
     "IdleAnimation": "combatoverhaul:javelin-idle",
     "AttackAnimation": "combatoverhaul:javelin-attack",

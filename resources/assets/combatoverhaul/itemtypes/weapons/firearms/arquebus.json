@@ -14,6 +14,7 @@
     "FlaskTransform": {"Translation": {"X": 0, "Y": 0, "Z": 0}, "Rotation": {"X": 0, "Y": 0, "Z": 0}, "Origin": {"X": 0, "Y": 0, "Z": 0}, "Scale": 1},
     "WaddingTransform": {"Translation": {"x": 0, "y": 0, "z": 0}, "Rotation": {"x": 0, "y": 0, "z": 0}, "Origin": {"X": 0, "Y": 0, "Z": 0}, "scale": 1},
     "PrimingEquipmentTransform": {"Translation": {"X": 0, "Y": 0, "Z": 0}, "Rotation": {"X": 0, "Y": 0, "Z": 0}, "Origin": {"X": 0, "Y": 0, "Z": 0}, "Scale": 1},
+    "ProficiencyStat": "firearmsProficiency",
     "IdleAnimation": "combatoverhaul:firearms-shoulder",
     "ReadyAnimation": "combatoverhaul:firearms-ready",
     "LoadAnimation": ["combatoverhaul:firearms-{type}-load"],
