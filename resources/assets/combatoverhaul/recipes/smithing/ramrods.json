@@ -1,0 +1,34 @@
+[
+  {
+    "ingredient": {"type": "item", "code": "game:ingot-*bronze"},
+    "pattern": [
+      ["######"]
+    ],
+    "name": "Ramrod (pistol)",
+    "output": {"type": "item", "code": "combatoverhaul:ramrod-pistol"}
+  },
+  {
+    "ingredient": {"type": "item", "code": "game:ingot-iron"},
+    "pattern": [
+      ["########"]
+    ],
+    "name": "Ramrod (arquebus)",
+    "output": {"type": "item", "code": "combatoverhaul:ramrod-arquebus"}
+  },
+  {
+    "ingredient": {"type": "item", "code": "game:ingot-steel"},
+    "pattern": [
+      ["############"]
+    ],
+    "name": "Ramrod (carbine)",
+    "output": {"type": "item", "code": "combatoverhaul:ramrod-carbine"}
+  },
+  {
+    "ingredient": {"type": "item", "code": "game:ingot-steel"},
+    "pattern": [
+      ["################"]
+    ],
+    "name": "Ramrod (musket)",
+    "output": {"type": "item", "code": "combatoverhaul:ramrod-musket"}
+  }
+]

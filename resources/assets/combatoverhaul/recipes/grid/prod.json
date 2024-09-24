@@ -1,0 +1,15 @@
+[
+	{
+		"ingredientPattern": "BLB,MSM",
+		"ingredients": {
+			"L": { "type": "item", "code": "game:leather-plain", "name": "metal" },
+			"B": { "type": "item", "code": "game:bone" },
+			"M": { "type": "item", "code": "game:bushmeat-raw" },
+			"S": { "type": "item", "code": "game:bowstave-recurve-dry" }
+		},
+		"width": 3,
+		"height": 2,
+		"requiresTrait": "bowyer",
+		"output": { "type": "item", "code": "combatoverhaul:prod-composite-heavy", "quantity": 1  }
+	},
+]

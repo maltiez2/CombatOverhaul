@@ -17,7 +17,7 @@
       "properties": {
         "layout": "Stacking",
         "placeRemoveSound": "game:sounds/block/ceramicplace",
-        "stackingModel": "maltiezfirearms:piles/slugs",
+        "stackingModel": "combatoverhaul:piles/slugs",
         "modelItemsToStackSizeRatio": 1,
         "stackingCapacity": 64,
         "upSolid": false,

@@ -1,0 +1,26 @@
+﻿[
+  {
+    "ingredientPattern": "HCB,PAP",
+    "ingredients": {
+      "A": {"type": "item", "code": "combatoverhaul:parts-windlass-steel", "quantity": 1},
+      "B": {"type": "item", "code": "game:metalnailsandstrips-iron", "quantity": 1},
+      "C": {"type": "item", "code": "game:flaxtwine", "quantity": 16},
+      "P": {"type": "item", "code": "game:plank-*", "quantity": 1},
+      "H": {"type": "item", "code": "game:hammer-*", "quantity": 1, "isTool": true}
+    },
+    "width": 3,
+    "height": 2,
+    "output": {"type": "item", "code": "combatoverhaul:spanningtool-windlass"}
+  },
+  {
+    "ingredientPattern": "HAB",
+    "ingredients": {
+      "A": {"type": "item", "code": "combatoverhaul:parts-goatfoot-steel", "quantity": 1},
+      "B": {"type": "item", "code": "game:metalnailsandstrips-iron", "quantity": 1},
+      "H": {"type": "item", "code": "game:hammer-*", "quantity": 1, "isTool": true}
+    },
+    "width": 3,
+    "height": 1,
+    "output": {"type": "item", "code": "combatoverhaul:spanningtool-goatsfoot"}
+  }
+]

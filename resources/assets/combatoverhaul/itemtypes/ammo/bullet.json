@@ -12,7 +12,7 @@
       "properties": {
         "layout": "Stacking",
         "placeRemoveSound": "game:sounds/block/ceramicplace",
-        "stackingModel": "maltiezfirearms:piles/bullets",
+        "stackingModel": "combatoverhaul:piles/bullets",
         "modelItemsToStackSizeRatio": 1.125,
         "stackingCapacity": 128,
         "upSolid": false,

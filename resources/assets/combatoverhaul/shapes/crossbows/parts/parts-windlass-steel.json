@@ -1,0 +1,326 @@
+{
+	"editor": {
+		"collapsedPaths": "Root/Crossbow/Stock/Stock_back_1/WIndlass_0/Windlass_front/Frame_front/Windlass_wheel_front_small,Root/Crossbow/Stock/Stock_back_1/WIndlass_0/Windlass_front/Windlass_string_8,Root/lever_1,Root/String_3,Root/Bow/Bow_holder_1,Root/Crossbow/Wheel,Root/Crossbow/Stock/Stock_back_1/WIndlass_0/Windlass_front/Windlass_string_4,Root/Crossbow/Stock/Stock_back_1/WIndlass_0/Cube10/Windlass_handles,Root/Bow,Root/Bow/Bow_holder_4,Root/Bow/Bow_right_limb_1,Root/Crossbow/Stock/Stock_back_1/WIndlass_0/Windlass_back/Windlass_wheel_2,Root/Crossbow/Stock/Stock_back_1/WIndlass_0/Cube10/Windlass_handles/Cube21,Root/Bow/Bow_right_limb_7,Root/Crossbow/Stock/Stock_back_1/WIndlass_0/Cube10/Windlass_handles/Cube23,Root/Crossbow/Plate,Root/Crossbow/Stock/Stock_back_1/WIndlass_0/Windlass_front,Root/Stock/Stock_back_1/WIndlass_0,Root/Crossbow/Stock/Stock_back_1/WIndlass_0/Windlass_front/Windlass_string,Root/WIndlass_0/Windlass_front,Root/Crossbow/Stock/Stock_back_1/WIndlass_0/Windlass_back,Root/Plate,Root/Crossbow/Lever,Root/Crossbow/String,Root/Crossbow/Stock/Stock_back_1/WIndlass_0/Cube11/Cube26,Root/Bow_holder_1,Root/Bow_holder_4,Root/Bow_right_limb_7,Root/Crossbow/Stock/Stock_back_1/WIndlass_0/Cube11/Cube25,Root/Crossbow/Stock/Stock_back_1/WIndlass_0/Cube10/Windlass_wheel_2,Root/Bow_right_limb_1,Root/Cube12,Root/Crossbow/Stock/Stock_back_1/WIndlass_0/Windlass_front/Frame_front,Root/WIndlass_0/Windlass_handles,Root/Crossbow/Bow,Root/Stock/Stock_back_1/WIndlass_0/String_7/String_13,Root/Crossbow/Stock/Stock_back_1/WIndlass_0/String_17,Root/Crossbow/Stock/Stock_back_1/WIndlass_0/String_7,Root/Crossbow/Stock/Stock_front_1,Root/Cube2,Root/Cube3,Root/WIndlass_0/Windlass_back,Root/WIndlass_0/wheels,Root/Wheel,Root/Stock/Stock_back_1/WIndlass_0/String_7/String_6,Root/WIndlass_0/Cube10,Root/Crossbow/Stock/Stock_back_1/WIndlass_0/Cube10",
+		"allAngles": false,
+		"entityTextureMode": false
+	},
+	"textureWidth": 16,
+	"textureHeight": 16,
+	"textureSizes": {
+	},
+	"textures": {
+		"metal": "game:block/metal/plate/steel"
+	},
+	"elements": [
+		{
+			"name": "WIndlass_0",
+			"from": [ -1.0, 0.0, -3.0 ],
+			"to": [ 0.9, 1.2, -0.5 ],
+			"rotationOrigin": [ 8.0, 0.0, -3.0 ],
+			"faces": {
+				"north": { "texture": "#metal", "uv": [ 0.0, 0.0, 1.5, 1.0 ] },
+				"east": { "texture": "#metal", "uv": [ 0.0, 0.0, 2.5, 1.0 ] },
+				"south": { "texture": "#metal", "uv": [ 0.0, 0.0, 1.5, 1.0 ] },
+				"west": { "texture": "#metal", "uv": [ 0.0, 0.0, 2.5, 1.0 ] },
+				"up": { "texture": "#metal", "uv": [ 0.0, 0.0, 1.5, 2.5 ] },
+				"down": { "texture": "#metal", "uv": [ 0.0, 0.0, 1.5, 2.5 ] }
+			},
+			"children": [
+				{
+					"name": "Windlass_back",
+					"from": [ -1.0, 0.1, 2.5 ],
+					"to": [ 3.0, 1.0, 3.0 ],
+					"rotationOrigin": [ -1.0, 0.1, 2.5 ],
+					"faces": {
+						"north": { "texture": "#metal", "uv": [ 0.0, 0.0, 4.0, 0.5 ] },
+						"east": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+						"south": { "texture": "#metal", "uv": [ 0.0, 0.0, 4.0, 0.5 ] },
+						"west": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+						"up": { "texture": "#metal", "uv": [ 0.0, 0.0, 4.0, 0.5 ] },
+						"down": { "texture": "#metal", "uv": [ 0.0, 0.0, 4.0, 0.5 ] }
+					},
+					"children": [
+						{
+							"name": "Cube17",
+							"from": [ -0.5, 0.0, 0.0 ],
+							"to": [ 0.0, 1.1, 2.1 ],
+							"rotationOrigin": [ -0.5, 0.0, 0.0 ],
+							"faces": {
+								"north": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 1.0 ] },
+								"east": { "texture": "#metal", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
+								"south": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 1.0 ] },
+								"west": { "texture": "#metal", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
+								"up": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 2.0 ] },
+								"down": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 2.0 ] }
+							}
+						},
+						{
+							"name": "Cube18",
+							"from": [ 4.0, 0.0, 0.0 ],
+							"to": [ 4.5, 1.1, 2.1 ],
+							"rotationOrigin": [ 4.0, 0.0, 0.0 ],
+							"faces": {
+								"north": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 1.0 ] },
+								"east": { "texture": "#metal", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
+								"south": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 1.0 ] },
+								"west": { "texture": "#metal", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
+								"up": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 2.0 ] },
+								"down": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 2.0 ] }
+							}
+						}
+					]
+				},
+				{
+					"name": "Windlass_front",
+					"from": [ -1.0, 0.55, -0.4 ],
+					"to": [ 2.9, 1.05, 0.1 ],
+					"rotationOrigin": [ -1.0, 0.9, -0.8 ],
+					"rotationX": -11.0,
+					"rotationY": 9.0,
+					"rotationZ": 3.0,
+					"faces": {
+						"north": { "texture": "#metal", "uv": [ 0.0, 0.0, 3.5, 0.5 ] },
+						"east": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+						"south": { "texture": "#metal", "uv": [ 0.0, 0.0, 3.5, 0.5 ] },
+						"west": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+						"up": { "texture": "#metal", "uv": [ 0.0, 0.0, 3.5, 0.5 ] },
+						"down": { "texture": "#metal", "uv": [ 0.0, 0.0, 3.5, 0.5 ] }
+					},
+					"children": [
+						{
+							"name": "Frame_front",
+							"from": [ 0.0, -0.2, 0.5 ],
+							"to": [ 0.3, 0.3, 3.5 ],
+							"rotationOrigin": [ 0.0, -0.2, 0.5 ],
+							"faces": {
+								"north": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+								"east": { "texture": "#metal", "uv": [ 0.0, 0.0, 3.0, 0.5 ] },
+								"south": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+								"west": { "texture": "#metal", "uv": [ 0.0, 0.0, 3.0, 0.5 ] },
+								"up": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 3.0 ] },
+								"down": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 3.0 ] }
+							},
+							"children": [
+								{
+									"name": "Cube20",
+									"from": [ 3.6, 0.0, 0.0 ],
+									"to": [ 3.9, 0.5, 3.0 ],
+									"rotationOrigin": [ 3.6, 0.0, 0.0 ],
+									"faces": {
+										"north": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+										"east": { "texture": "#metal", "uv": [ 0.0, 0.0, 3.0, 0.5 ] },
+										"south": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+										"west": { "texture": "#metal", "uv": [ 0.0, 0.0, 3.0, 0.5 ] },
+										"up": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 3.0 ] },
+										"down": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 3.0 ] }
+									}
+								},
+								{
+									"name": "Cube25",
+									"from": [ 0.7, 0.3, -1.5 ],
+									"to": [ 1.2, 0.7, -0.5 ],
+									"rotationOrigin": [ 0.7, 0.3, -1.5 ],
+									"faces": {
+										"north": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+										"east": { "texture": "#metal", "uv": [ 0.0, 0.0, 1.0, 0.5 ] },
+										"south": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+										"west": { "texture": "#metal", "uv": [ 0.0, 0.0, 1.0, 0.5 ] },
+										"up": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 1.0 ] },
+										"down": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 1.0 ] }
+									},
+									"children": [
+										{
+											"name": "Cube27",
+											"from": [ 0.0, -0.6, 0.0 ],
+											"to": [ 0.5, 0.0, 0.4 ],
+											"rotationOrigin": [ 0.0, -0.6, 0.0 ],
+											"faces": {
+												"north": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+												"east": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+												"south": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+												"west": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+												"up": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+												"down": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] }
+											}
+										}
+									]
+								},
+								{
+									"name": "Cube26",
+									"from": [ 2.7, 0.3, -1.5 ],
+									"to": [ 3.2, 0.7, -0.5 ],
+									"rotationOrigin": [ 2.7, 0.3, -1.5 ],
+									"faces": {
+										"north": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+										"east": { "texture": "#metal", "uv": [ 0.0, 0.0, 1.0, 0.5 ] },
+										"south": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+										"west": { "texture": "#metal", "uv": [ 0.0, 0.0, 1.0, 0.5 ] },
+										"up": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 1.0 ] },
+										"down": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 1.0 ] }
+									},
+									"children": [
+										{
+											"name": "Cube28",
+											"from": [ 0.0, -0.6, 0.0 ],
+											"to": [ 0.5, 0.0, 0.4 ],
+											"rotationOrigin": [ 0.0, -0.6, 0.0 ],
+											"faces": {
+												"north": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+												"east": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+												"south": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+												"west": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+												"up": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+												"down": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] }
+											}
+										}
+									]
+								},
+								{
+									"name": "Windlass_front2",
+									"from": [ 0.0, -0.2, -0.5 ],
+									"to": [ 1.1, 0.2, 0.0 ],
+									"rotationOrigin": [ 0.0, 0.15, -0.9 ],
+									"faces": {
+										"north": { "texture": "#metal", "uv": [ 0.0, 0.0, 1.0, 0.5 ] },
+										"east": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+										"south": { "texture": "#metal", "uv": [ 0.0, 0.0, 1.0, 0.5 ] },
+										"west": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+										"up": { "texture": "#metal", "uv": [ 0.0, 0.0, 1.0, 0.5 ] },
+										"down": { "texture": "#metal", "uv": [ 0.0, 0.0, 1.0, 0.5 ] }
+									}
+								},
+								{
+									"name": "Windlass_front3",
+									"from": [ 2.8, -0.2, -0.5 ],
+									"to": [ 3.9, 0.2, 0.0 ],
+									"rotationOrigin": [ 2.8, 0.15, -0.9 ],
+									"faces": {
+										"north": { "texture": "#metal", "uv": [ 0.0, 0.0, 1.0, 0.5 ] },
+										"east": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+										"south": { "texture": "#metal", "uv": [ 0.0, 0.0, 1.0, 0.5 ] },
+										"west": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+										"up": { "texture": "#metal", "uv": [ 0.0, 0.0, 1.0, 0.5 ] },
+										"down": { "texture": "#metal", "uv": [ 0.0, 0.0, 1.0, 0.5 ] }
+									}
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Windlass_handles",
+					"from": [ -0.5, 0.2, 4.2 ],
+					"to": [ 4.5, 0.7, 4.7 ],
+					"rotationOrigin": [ -0.4, 0.45, 4.45 ],
+					"rotationY": -22.5,
+					"faces": {
+						"north": { "texture": "#metal", "uv": [ 0.0, 0.0, 5.0, 0.5 ] },
+						"east": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+						"south": { "texture": "#metal", "uv": [ 0.0, 0.0, 5.0, 0.5 ] },
+						"west": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+						"up": { "texture": "#metal", "uv": [ 0.0, 0.0, 5.0, 0.5 ] },
+						"down": { "texture": "#metal", "uv": [ 0.0, 0.0, 5.0, 0.5 ] }
+					},
+					"children": [
+						{
+							"name": "Cube21",
+							"from": [ -0.5, 0.0, 0.0 ],
+							"to": [ 0.0, 0.5, 5.0 ],
+							"rotationOrigin": [ -0.5, 0.0, 0.0 ],
+							"faces": {
+								"north": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+								"east": { "texture": "#metal", "uv": [ 0.0, 0.0, 5.0, 0.5 ] },
+								"south": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+								"west": { "texture": "#metal", "uv": [ 0.0, 0.0, 5.0, 0.5 ] },
+								"up": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 5.0 ] },
+								"down": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 5.0 ] }
+							},
+							"children": [
+								{
+									"name": "Cube22",
+									"from": [ -4.0, -0.1, 4.4 ],
+									"to": [ 0.0, 0.6, 5.1 ],
+									"rotationOrigin": [ -4.0, -0.1, 4.4 ],
+									"faces": {
+										"north": { "texture": "#metal", "uv": [ 0.0, 0.0, 4.0, 0.5 ] },
+										"east": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+										"south": { "texture": "#metal", "uv": [ 0.0, 0.0, 4.0, 0.5 ] },
+										"west": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+										"up": { "texture": "#metal", "uv": [ 0.0, 0.0, 4.0, 0.5 ] },
+										"down": { "texture": "#metal", "uv": [ 0.0, 0.0, 4.0, 0.5 ] }
+									}
+								}
+							]
+						},
+						{
+							"name": "Cube23",
+							"from": [ 5.5, 0.0, 0.5 ],
+							"to": [ 6.0, 0.5, 5.5 ],
+							"rotationOrigin": [ 5.5, 0.0, 0.5 ],
+							"rotationX": 180.0,
+							"rotationZ": -180.0,
+							"faces": {
+								"north": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+								"east": { "texture": "#metal", "uv": [ 0.0, 0.0, 5.0, 0.5 ] },
+								"south": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+								"west": { "texture": "#metal", "uv": [ 0.0, 0.0, 5.0, 0.5 ] },
+								"up": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 5.0 ] },
+								"down": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 5.0 ] }
+							},
+							"children": [
+								{
+									"name": "Cube24",
+									"from": [ -4.0, -0.1, 4.4 ],
+									"to": [ 0.0, 0.6, 5.1 ],
+									"rotationOrigin": [ -4.0, -0.1, 4.4 ],
+									"faces": {
+										"north": { "texture": "#metal", "uv": [ 0.0, 0.0, 4.0, 0.5 ] },
+										"east": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+										"south": { "texture": "#metal", "uv": [ 0.0, 0.0, 4.0, 0.5 ] },
+										"west": { "texture": "#metal", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+										"up": { "texture": "#metal", "uv": [ 0.0, 0.0, 4.0, 0.5 ] },
+										"down": { "texture": "#metal", "uv": [ 0.0, 0.0, 4.0, 0.5 ] }
+									}
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"animations": [
+		{
+			"name": "draw",
+			"code": "draw",
+			"quantityframes": 160,
+			"onActivityStopped": "Rewind",
+			"onAnimationEnd": "Hold",
+			"keyframes": [
+
+			]
+		},
+
+		{
+			"name": "load",
+			"code": "load",
+			"quantityframes": 30,
+			"onActivityStopped": "Rewind",
+			"onAnimationEnd": "Hold",
+			"keyframes": [
+
+			]
+		},
+
+		{
+			"name": "release",
+			"code": "release",
+			"quantityframes": 60,
+			"onActivityStopped": "PlayTillEnd",
+			"onAnimationEnd": "Hold",
+			"keyframes": [
+
+			]
+		}
+	]
+}

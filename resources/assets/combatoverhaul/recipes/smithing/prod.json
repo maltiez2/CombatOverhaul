@@ -1,0 +1,28 @@
+[
+  {
+    "ingredient": {"type": "item", "code": "game:ingot-steel"},
+    "pattern": [
+      [
+        "___##########___",
+        "################",
+        "___##########___"
+      ],
+      [
+        "________________",
+        "___##########___",
+        "________________"
+      ]
+    ],
+    "output": {"type": "item", "code": "combatoverhaul:prod-steel-heavy"}
+  },
+  {
+    "ingredient": {"type": "item", "code": "game:ingot-steel"},
+    "pattern": [
+      [
+        "__############__",
+        "################"
+      ]
+    ],
+    "output": {"type": "item", "code": "combatoverhaul:prod-steel-light"}
+  }
+]

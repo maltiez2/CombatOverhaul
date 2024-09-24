@@ -1,0 +1,33 @@
+﻿[
+	{
+		"ingredientPattern": "HSP",
+		"ingredients": {
+			"H": { "type": "item", "code": "game:arrowhead-*", "name": "metal", "allowedVariants": ["tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel"] },
+			"S": { "type": "item", "code": "game:stick" },
+			"P": { "type": "item", "code": "game:plank-*" }
+		},
+		"width": 3,
+		"height": 1,
+		"output": { "type": "item", "code": "combatoverhaul:bolt-{metal}", "quantity": 1  }
+	},
+	{
+		"ingredientPattern": "HS",
+		"ingredients": {
+			"H": { "type": "item", "code": "game:arrowhead-flint" },
+			"S": { "type": "item", "code": "game:stick" }
+		},
+		"width": 2,
+		"height": 1,
+		"output": { "type": "item", "code": "combatoverhaul:bolt-flint", "quantity": 1  }
+	},
+	{
+		"ingredientPattern": "HS",
+		"ingredients": {
+			"H": { "type": "item", "code": "game:arrowhead-copper" },
+			"S": { "type": "item", "code": "game:stick" }
+		},
+		"width": 2,
+		"height": 1,
+		"output": { "type": "item", "code": "combatoverhaul:bolt-copper", "quantity": 1  }
+	}
+]

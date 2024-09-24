@@ -1,0 +1,89 @@
+﻿[
+  {
+    "ingredientPattern": "ANF,LBS,WWK",
+    "ingredients": {
+      "B": {"type": "item", "code": "combatoverhaul:prod-steel-heavy", "quantity": 1},
+      "S": {"type": "item", "code": "combatoverhaul:parts-stirrup-steel", "quantity": 1},
+      "N": {"type": "item", "code": "game:metalnailsandstrips-steel", "quantity": 1},
+      "L": {"type": "item", "code": "combatoverhaul:parts-lock-steel", "quantity": 1},
+      "A": {"type": "item", "code": "game:metalplate-iron", "quantity": 1},
+      "F": {"type": "item", "code": "game:flaxtwine", "quantity": 16},
+      "W": {"type": "item", "code": "game:plank-*", "quantity": 1},
+      "K": { "type": "item", "code": "game:saw-*", "isTool": true  }
+    },
+    "width": 3,
+    "height": 3,
+    "output": {"type": "item", "code": "combatoverhaul:crossbow-windlass-regular"}
+  },
+  {
+    "ingredientPattern": "ANF,LB_,WWK",
+    "ingredients": {
+      "B": {"type": "item", "code": "combatoverhaul:prod-steel-light", "quantity": 1},
+      "L": {"type": "item", "code": "combatoverhaul:parts-lock-steel", "quantity": 1},
+      "N": {"type": "item", "code": "game:metalnailsandstrips-steel", "quantity": 1},
+      "A": {"type": "item", "code": "game:metalplate-iron", "quantity": 1},
+      "F": {"type": "item", "code": "game:flaxtwine", "quantity": 8},
+      "W": {"type": "item", "code": "game:plank-*", "quantity": 1},
+      "K": { "type": "item", "code": "game:saw-*", "isTool": true  }
+    },
+    "width": 3,
+    "height": 3,
+    "output": {"type": "item", "code": "combatoverhaul:crossbow-goatsfoot-regular"}
+  },
+  {
+    "ingredientPattern": "_NF,LB_,WWK",
+    "ingredients": {
+      "B": {"type": "item", "code": "combatoverhaul:prod-composite-heavy", "quantity": 1},
+      "L": {"type": "item", "code": "combatoverhaul:parts-latch-iron", "quantity": 1},
+      "N": {"type": "item", "code": "game:metalnailsandstrips-iron", "quantity": 1},
+      "F": {"type": "item", "code": "game:flaxtwine", "quantity": 4},
+      "W": {"type": "item", "code": "game:plank-*", "quantity": 1},
+      "K": { "type": "item", "code": "game:saw-*", "isTool": true  }
+    },
+    "width": 3,
+    "height": 3,
+    "output": {"type": "item", "code": "combatoverhaul:crossbow-latch-regular"}
+  },
+  {
+    "ingredientPattern": "ANF,LBS,WWK",
+    "ingredients": {
+      "B": {"type": "item", "code": "combatoverhaul:prod-composite-heavy", "quantity": 1},
+      "S": {"type": "item", "code": "combatoverhaul:parts-stirrup-tinbronze", "quantity": 1},
+      "N": {"type": "item", "code": "game:metalnailsandstrips-tinbronze", "quantity": 1},
+      "A": {"type": "item", "code": "game:metalplate-brass", "quantity": 1},
+      "L": {"type": "item", "code": "combatoverhaul:parts-lock-tinbronze", "quantity": 1},
+      "F": {"type": "item", "code": "game:flaxtwine", "quantity": 4},
+      "W": {"type": "item", "code": "game:plank-*", "quantity": 1},
+      "K": { "type": "item", "code": "game:saw-*", "isTool": true  }
+    },
+    "width": 3,
+    "height": 3,
+    "output": {"type": "item", "code": "combatoverhaul:crossbow-stirrup-regular"}
+  },
+  {
+    "ingredientPattern": "SMP,PFB",
+    "ingredients": {
+      "B": {"type": "item", "code": "game:bow-simple", "quantity": 1},
+      "M": {"type": "item", "code": "game:metalnailsandstrips-copper", "quantity": 1},
+      "P": {"type": "item", "code": "game:plank-*", "quantity": 2},
+      "F": {"type": "item", "code": "game:rope", "quantity": 1},
+      "S": { "type": "item", "code": "game:saw-*", "isTool": true }
+    },
+    "width": 3,
+    "height": 2,
+    "output": {"type": "item", "code": "combatoverhaul:crossbow-repeating-regular"}
+  },
+  {
+    "ingredientPattern": "KNF,WWS",
+    "ingredients": {
+      "S": {"type": "item", "code": "game:bow-simple", "quantity": 1},
+      "N": {"type": "item", "code": "game:bone", "quantity": 1},
+      "W": {"type": "item", "code": "game:firewood", "quantity": 1},
+      "F": {"type": "item", "code": "game:rope", "quantity": 1},
+      "K": { "type": "item", "code": "game:knife-*", "isTool": true  }
+    },
+    "width": 3,
+    "height": 2,
+    "output": {"type": "item", "code": "combatoverhaul:crossbow-simple-regular"}
+  }
+]

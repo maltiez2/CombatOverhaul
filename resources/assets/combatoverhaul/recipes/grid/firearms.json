@@ -1,0 +1,78 @@
+[
+  {
+    "ingredientPattern": "WLB,MWR",
+    "ingredients": {
+      "B": {"type": "item", "code": "combatoverhaul:barrel-pistol-tinbronze", "quantity": 1},
+      "M": {"type": "item", "code": "game:metalplate-brass", "quantity": 1},
+      "L": {"type": "item", "code": "combatoverhaul:lock-wheellock", "quantity": 1},
+      "W": {"type": "item", "code": "game:plank-*", "quantity": 1},
+      "R": {"type": "item", "code": "combatoverhaul:ramrod-pistol", "quantity": 1}
+    },
+    "width": 3,
+    "height": 2,
+    "output": {"type": "item", "code": "combatoverhaul:firearm-pistol-regular"}
+  },
+  {
+    "ingredientPattern": "WLB,MWR",
+    "ingredients": {
+      "B": {"type": "item", "code": "combatoverhaul:barrel-arquebus-iron", "quantity": 1},
+      "M": {"type": "item", "code": "game:metalplate-iron", "quantity": 1},
+      "L": {"type": "item", "code": "combatoverhaul:lock-matchlock", "quantity": 1},
+      "W": {"type": "item", "code": "game:plank-*", "quantity": 1},
+      "R": {"type": "item", "code": "combatoverhaul:ramrod-arquebus", "quantity": 1}
+    },
+    "width": 3,
+    "height": 2,
+    "output": {"type": "item", "code": "combatoverhaul:firearm-arquebus-regular"}
+  },
+  {
+    "ingredientPattern": "WLB,MWP,__R",
+    "ingredients": {
+      "B": {"type": "item", "code": "combatoverhaul:barrel-carbine-steel", "quantity": 1},
+      "P": {"type": "item", "code": "game:metalplate-brass", "quantity": 1},
+      "M": {"type": "item", "code": "game:metalplate-steel", "quantity": 1},
+      "L": {"type": "item", "code": "combatoverhaul:lock-flintlock", "quantity": 1},
+      "W": {"type": "item", "code": "game:plank-*", "quantity": 1},
+      "R": {"type": "item", "code": "combatoverhaul:ramrod-carbine", "quantity": 1}
+    },
+    "width": 3,
+    "height": 3,
+    "output": {"type": "item", "code": "combatoverhaul:firearm-carbine-regular"}
+  },
+  {
+    "ingredientPattern": "_PP,NFF,_PP",
+    "ingredients": {
+      "P": {"type": "item", "code": "game:metalplate-steel", "quantity": 1},
+      "N": {"type": "item", "code": "game:metalnailsandstrips-steel", "quantity": 1},
+      "F": {"type": "item", "code": "game:powderedborax", "quantity": 2}
+    },
+    "width": 3,
+    "height": 3,
+    "output": {"type": "item", "code": "combatoverhaul:barrel-carbine-steel"}
+  },
+  {
+    "ingredientPattern": "WLB,MWP,__R",
+    "ingredients": {
+      "B": {"type": "item", "code": "combatoverhaul:barrel-musket-steel", "quantity": 1},
+      "P": {"type": "item", "code": "game:metalplate-brass", "quantity": 2},
+      "M": {"type": "item", "code": "game:metalplate-steel", "quantity": 2},
+      "L": {"type": "item", "code": "combatoverhaul:lock-flintlock", "quantity": 1},
+      "W": {"type": "item", "code": "game:plank-*", "quantity": 2},
+      "R": {"type": "item", "code": "combatoverhaul:ramrod-musket", "quantity": 1}
+    },
+    "width": 3,
+    "height": 3,
+    "output": {"type": "item", "code": "combatoverhaul:firearm-musket-regular"}
+  },
+  {
+    "ingredientPattern": "PPP,NFF,PPP",
+    "ingredients": {
+      "P": {"type": "item", "code": "game:metalplate-steel", "quantity": 1},
+      "N": {"type": "item", "code": "game:metalnailsandstrips-steel", "quantity": 1},
+      "F": {"type": "item", "code": "game:powderedborax", "quantity": 3}
+    },
+    "width": 3,
+    "height": 3,
+    "output": {"type": "item", "code": "combatoverhaul:barrel-musket-steel"}
+  }
+]

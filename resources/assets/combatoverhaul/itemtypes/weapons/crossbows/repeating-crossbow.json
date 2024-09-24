@@ -1,7 +1,7 @@
 ﻿{
   "code": "crossbow",
   "class": "CombatOverhaul:MagazineCrossbow",
-  "variantgroups": [{"code": "type", "states": ["repeating"]}],
+  "variantgroups": [{"code": "type", "states": ["repeating"]}, {"code": "subtype", "states": ["regular"]}],
   "creativeinventory": {"combatoverhaul": ["*"]},
   "maxstacksize": 1,
   "durabilityByType": {"*-repeating": 600},
