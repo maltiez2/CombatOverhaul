@@ -69,6 +69,7 @@
     <AssetsToFormat Include="$(AssetsDir)\$(ModId)\patches" />
     <AssetsToFormat Include="$(AssetsDir)\$(ModId)\entities" />
     <AssetsToFormat Include="$(AssetsDir)\$(ModId)\config\animations" />
+    <AssetsToFormat Include="$(AssetsDir)\game\itemtypes" />
   </ItemGroup>
 
   <!-- References to libraries that are being used in project -->
@@ -78,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Releases\" />
+    <Folder Include="resources\assets\combatoverhaul\itemtypes\" />
   </ItemGroup>
 
   <!-- Forces rebuild -->

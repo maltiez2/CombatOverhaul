@@ -1,0 +1,8 @@
+﻿[
+  {
+    "file": "game:itemtypes/tool/spear",
+    "op": "add",
+    "path": "/skipVariants/-",
+    "value": "@spear-generic-(chert|granite|andesite|basalt|obsidian|peridotite|flint|copper|tinbronze|bismuthbronze|blackbronze|ornategold|ornatesilver)"
+  }
+]

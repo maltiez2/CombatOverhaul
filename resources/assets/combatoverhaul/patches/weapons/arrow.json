@@ -1,0 +1,4 @@
+﻿[
+  {"file": "game:itemtypes/tool/arrow", "op": "add", "path": "/skipVariants", "value": ["*"]},
+  {"file": "game:itemtypes/tool/arrow", "op": "replace", "path": "/creativeinventory", "value": {}}
+]

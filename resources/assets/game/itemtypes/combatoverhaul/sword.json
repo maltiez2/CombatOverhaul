@@ -1,0 +1,74 @@
+﻿{
+  "code": "blade",
+  "class": "CombatOverhaul:MeleeWeapon",
+  "tool": "sword",
+  "attributes": {
+    "ProficiencyStat": "spearsProficiency",
+    "OneHandedStance": {
+      "CanAttack": true,
+      "CanParry": false,
+      "CanBlock": false,
+      "CanSprint": true,
+      "SpeedPenalty": 0,
+      "AttackCooldownMs": 650,
+      "Attack": {
+        "StopOnTerrainHit": false,
+        "StopOnEntityHit": false,
+        "CollideWithTerrain": true,
+        "MaxReach": 9,
+        "DamageTypesByType": {
+          "*-tinbronze": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.8, 0, 0.5]}],
+          "*-bismuthbronze": [
+            {"Damage": {"DamageType": "PiercingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.8, 0, 0.5]}
+          ],
+          "*-blackbronze": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.8, 0, 0.5]}],
+          "*-iron": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 3, 0, 0.5]}],
+          "*-steel": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 3.2, 0, 0.5]}]
+        }
+      },
+      "AttackAnimation": "combatoverhaul:spear-thrust-1h",
+      "ReadyAnimation": "combatoverhaul:spear-ready-1h",
+      "IdleAnimation": "combatoverhaul:spear-idle-1h"
+    }
+  },
+  "behaviors": [],
+  "variantgroups": [
+    {"code": "type", "states": ["falx", "blackguard", "forlorn"]},
+    {"code": "metal", "states": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "gold", "silver", "iron", "meteoriciron", "steel"]}
+  ],
+  "allowedVariants": ["blade-falx-*", "blade-blackguard-iron", "blade-forlorn-iron"],
+  "shapeByType": {
+    "blade-falx-*": {"base": "item/tool/blade/falx/{metal}"},
+    "blade-blackguard-*": {"base": "combatoverhaul:weapons/swords/sword-blackguard"},
+    "blade-forlorn-*": {"base": "combatoverhaul:weapons/swords/sword-forlorn"}
+  },
+  "durabilitybytype": {
+    "blade-falx-copper": 250,
+    "blade-falx-tinbronze": 450,
+    "blade-falx-bismuthbronze": 530,
+    "blade-falx-blackbronze": 600,
+    "blade-falx-iron": 850,
+    "blade-falx-meteoriciron": 1100,
+    "blade-falx-steel": 2125,
+    "blade-falx-gold": 2125,
+    "blade-falx-silver": 2125,
+    "blade-blackguard-iron": 1100,
+    "blade-forlorn-iron": 650
+  },
+  "creativeinventory": {"general": ["*"], "items": ["*"], "tools": ["*"], "combatoverhaul": ["*"]},
+  "guiTransformByType": {
+    "blade-blackguard-iron": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -89, "y": 47, "z": -13}, "origin": {"x": 0.6, "y": -0.1, "z": 0.44}, "scale": 1.65},
+    "blade-forlorn-iron": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -89, "y": 47, "z": 44}, "origin": {"x": 0.6, "y": -0.2, "z": 0.44}, "scale": 1.42},
+    "*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -53, "y": 118, "z": -5}, "origin": {"x": 0.65, "y": 0.1, "z": 0.37}, "scale": 1.65}
+  },
+  "groundTransformByType": {
+    "blade-blackguard-iron": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 3.4},
+    "blade-forlorn-iron": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 3.4},
+    "*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 3.4}
+  },
+  "tpHandTransformByType": {
+    "blade-blackguard-iron": {"translation": {"x": -1.03, "y": -0.01, "z": -0.56}, "rotation": {"x": -90, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 0.8},
+    "blade-forlorn-iron": {"translation": {"x": -1.07, "y": 0.03, "z": -0.59}, "rotation": {"x": -90, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 0.8},
+    "*": {"translation": {"x": -1.03, "y": -0.005, "z": -0.66}, "rotation": {"x": 85, "y": 0, "z": 2}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 0.8}
+  }
+}
