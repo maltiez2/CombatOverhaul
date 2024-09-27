@@ -4,31 +4,77 @@
   "tool": "sword",
   "attributes": {
     "ProficiencyStat": "spearsProficiency",
-    "OneHandedStance": {
-      "CanAttack": true,
-      "CanParry": false,
-      "CanBlock": false,
-      "CanSprint": true,
-      "SpeedPenalty": 0,
-      "AttackCooldownMs": 650,
-      "Attack": {
-        "StopOnTerrainHit": false,
-        "StopOnEntityHit": false,
-        "CollideWithTerrain": true,
-        "MaxReach": 9,
-        "DamageTypesByType": {
-          "*-tinbronze": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.8, 0, 0.5]}],
-          "*-bismuthbronze": [
-            {"Damage": {"DamageType": "PiercingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.8, 0, 0.5]}
-          ],
-          "*-blackbronze": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.8, 0, 0.5]}],
-          "*-iron": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 3, 0, 0.5]}],
-          "*-steel": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 3.2, 0, 0.5]}]
-        }
+    "OneHandedStanceByType": {
+      "*-forlorn-*": {
+        "CanAttack": true,
+        "CanParry": false,
+        "CanBlock": false,
+        "CanSprint": true,
+        "SpeedPenalty": 0,
+        "AttackCooldownMs": 550,
+        "Attack": {
+          "StopOnTerrainHit": false,
+          "StopOnEntityHit": false,
+          "CollideWithTerrain": true,
+          "MaxReach": 9,
+          "DamageTypes": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.3, 0, 0.5]}]
+        },
+        "AttackAnimation": "combatoverhaul:sword-forlorn-thrust",
+        "ReadyAnimation": "combatoverhaul:sword-falx-ready",
+        "IdleAnimation": "combatoverhaul:sword-falx-idle"
       },
-      "AttackAnimation": "combatoverhaul:spear-thrust-1h",
-      "ReadyAnimation": "combatoverhaul:spear-ready-1h",
-      "IdleAnimation": "combatoverhaul:spear-idle-1h"
+      "*-blackguard-*": {
+        "CanAttack": true,
+        "CanParry": false,
+        "CanBlock": false,
+        "CanSprint": true,
+        "SpeedPenalty": 0,
+        "AttackCooldownMs": 550,
+        "Attack": {
+          "StopOnTerrainHit": false,
+          "StopOnEntityHit": false,
+          "CollideWithTerrain": true,
+          "MaxReach": 9,
+          "DamageTypes": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.8, 0, 0.5]}]
+        },
+        "AttackAnimation": "combatoverhaul:sword-forlorn-thrust",
+        "ReadyAnimation": "combatoverhaul:sword-falx-ready",
+        "IdleAnimation": "combatoverhaul:sword-falx-idle"
+      },
+      "*-falx-*": {
+        "CanAttack": true,
+        "CanParry": false,
+        "CanBlock": false,
+        "CanSprint": true,
+        "SpeedPenalty": 0,
+        "AttackCooldownMs": 650,
+        "Attack": {
+          "StopOnTerrainHit": false,
+          "StopOnEntityHit": false,
+          "CollideWithTerrain": true,
+          "MaxReach": 9,
+          "DamageTypesByType": {
+            "*-copper": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.05]}],
+            "*-tinbronze": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.05]}],
+            "*-bismuthbronze": [
+              {"Damage": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.05]}
+            ],
+            "*-blackbronze": [
+              {"Damage": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.05]}
+            ],
+            "*-iron": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.05]}],
+            "*-gold": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.05]}],
+            "*-silver": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.05]}],
+            "*-meteoriciron": [
+              {"Damage": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.05]}
+            ],
+            "*-steel": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.05]}]
+          }
+        },
+        "AttackAnimation": "combatoverhaul:sword-falx-slash",
+        "ReadyAnimation": "combatoverhaul:sword-falx-ready",
+        "IdleAnimation": "combatoverhaul:sword-falx-idle"
+      }
     }
   },
   "behaviors": [],
@@ -67,8 +113,8 @@
     "*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 3.4}
   },
   "tpHandTransformByType": {
-    "blade-blackguard-iron": {"translation": {"x": -1.03, "y": -0.01, "z": -0.56}, "rotation": {"x": -90, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 0.8},
-    "blade-forlorn-iron": {"translation": {"x": -1.07, "y": 0.03, "z": -0.59}, "rotation": {"x": -90, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 0.8},
+    "blade-blackguard-iron": {"translation": {"x": -1.25, "y": 0.05, "z": -0.76}, "rotation": {"x": -90, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 0.6},
+    "blade-forlorn-iron": {"translation": {"x": -1.25, "y": 0.03, "z": -0.83}, "rotation": {"x": -90, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 0.6},
     "*": {"translation": {"x": -1.03, "y": -0.005, "z": -0.66}, "rotation": {"x": 85, "y": 0, "z": 2}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 0.8}
   }
 }

@@ -216,6 +216,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
     protected readonly MeleeWeaponStats Stats;
     protected const string PlayerStatsMainHandCategory = "CombatOverhaul:held-item-mainhand";
     protected const string PlayerStatsOffHandCategory = "CombatOverhaul:held-item-offhand";
+    protected bool ParryButtonReleased = true;
 
     protected long MainHandAttackCooldownTimer = -1;
     protected long OffHandAttackCooldownTimer = -1;
@@ -381,6 +382,8 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
 
         if (CanParry(mainHand) && parryStats != null && stats != null)
         {
+            if (!ParryButtonReleased) return true;
+            
             SetState(MeleeWeaponState.Parrying, mainHand);
             AnimationBehavior?.Play(
                 mainHand,
@@ -389,6 +392,8 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
                 category: AnimationCategory(mainHand),
                 callback: () => BlockAnimationCallback(mainHand, player),
                 callbackHandler: code => BlockAnimationCallbackHandler(code, mainHand));
+
+            ParryButtonReleased = false;
         }
         else if (CanBlock(mainHand) && blockStats != null && stats != null)
         {
@@ -461,6 +466,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Released)]
     protected virtual bool StopBlock(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
+        ParryButtonReleased = true;
         if (!CheckState(mainHand, MeleeWeaponState.Blocking, MeleeWeaponState.Parrying)) return false;
 
         MeleeBlockSystem.StopBlock(mainHand);
@@ -745,6 +751,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
 
     private void DebugEditColliders(MeleeAttack attack, int attackIndex)
     {
+#if DEBUG
         int typeIndex = 0;
         foreach (MeleeDamageType damageType in attack.DamageTypes)
         {
@@ -771,6 +778,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
                 });
         }
     }
+#endif
 }
 
 public class MeleeWeapon : Item, IHasWeaponLogic, IHasDynamicIdleAnimations, IHasMeleeWeaponActions, IHasServerBlockCallback, ISetsRenderingOffset, IMouseWheelInput
@@ -846,7 +854,7 @@ public sealed class GripController
     {
         _grip = 0;
 
-        PlayAnimation(mainHand);
+        _animationBehavior?.Stop("grip");
     }
 
     private float _grip = 0;
