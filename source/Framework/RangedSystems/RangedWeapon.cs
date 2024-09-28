@@ -70,7 +70,6 @@ public class RangeWeaponClient : IClientWeaponLogic
     {
         float manipulationSpeed = PlayerBehavior?.ManipulationSpeed ?? 1;
         float proficiencyBonus = proficiencyStat == "" ? 0 : player.Stats.GetBlended(proficiencyStat) - 1;
-        Console.WriteLine($"Stat '{proficiencyStat}': {player.Stats.GetBlended(proficiencyStat)}");
         return Math.Clamp(manipulationSpeed + proficiencyBonus, min, max);
     }
     protected bool CheckForOtherHandEmpty(bool mainHand, EntityPlayer player)
