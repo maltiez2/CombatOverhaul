@@ -22,7 +22,7 @@
         "AttackAnimation": "combatoverhaul:sword-forlorn-thrust",
         "ReadyAnimation": "combatoverhaul:sword-falx-ready",
         "IdleAnimation": "combatoverhaul:sword-falx-idle",
-        "AttackTpAnimation": ""
+        "AttackTpAnimation": "spearhit"
       },
       "*-blackguard-*": {
         "CanAttack": true,
@@ -40,7 +40,8 @@
         },
         "AttackAnimation": "combatoverhaul:sword-forlorn-thrust",
         "ReadyAnimation": "combatoverhaul:sword-falx-ready",
-        "IdleAnimation": "combatoverhaul:sword-falx-idle"
+        "IdleAnimation": "combatoverhaul:sword-falx-idle",
+        "AttackTpAnimation": "spearhit"
       },
       "*-falx-*": {
         "CanAttack": true,
@@ -74,7 +75,8 @@
         },
         "AttackAnimation": "combatoverhaul:sword-falx-slash",
         "ReadyAnimation": "combatoverhaul:sword-falx-ready",
-        "IdleAnimation": "combatoverhaul:sword-falx-idle"
+        "IdleAnimation": "combatoverhaul:sword-falx-idle",
+        "AttackTpAnimation": "falx"
       }
     }
   },
@@ -104,8 +106,8 @@
   },
   "creativeinventory": {"general": ["*"], "items": ["*"], "tools": ["*"], "combatoverhaul": ["*"]},
   "guiTransformByType": {
-    "blade-blackguard-iron": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -89, "y": 47, "z": -13}, "origin": {"x": 0.6, "y": -0.1, "z": 0.44}, "scale": 1.65},
-    "blade-forlorn-iron": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -89, "y": 47, "z": 44}, "origin": {"x": 0.6, "y": -0.2, "z": 0.44}, "scale": 1.42},
+    "blade-blackguard-iron": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -89, "y": 47, "z": 23}, "origin": {"x": 0.65, "y": 1.1, "z": 0.46}, "scale": 2.45},
+    "blade-forlorn-iron": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -89, "y": 47, "z": 44}, "origin": {"x": 0.6, "y": 0.4, "z": 0.47}, "scale": 2.7},
     "*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -53, "y": 118, "z": -5}, "origin": {"x": 0.65, "y": 0.1, "z": 0.37}, "scale": 1.65}
   },
   "groundTransformByType": {

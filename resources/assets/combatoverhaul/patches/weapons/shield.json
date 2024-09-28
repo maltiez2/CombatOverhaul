@@ -21,7 +21,8 @@
         "BlockCooldownMs": 300,
         "BlockAnimation": "combatoverhaul:shield-light-parry",
         "ReadyAnimation": "combatoverhaul:shield-light-ready",
-        "IdleAnimation": "combatoverhaul:shield-light-ready"
+        "IdleAnimation": "combatoverhaul:shield-light-ready",
+        "BlockTpAnimation": "block"
       },
       "*-woodmetal": {
         "CanAttack": false,
@@ -39,7 +40,8 @@
         "BlockCooldownMs": 300,
         "BlockAnimation": "combatoverhaul:shield-light-parry",
         "ReadyAnimation": "combatoverhaul:shield-light-ready",
-        "IdleAnimation": "combatoverhaul:shield-light-ready"
+        "IdleAnimation": "combatoverhaul:shield-light-ready",
+        "BlockTpAnimation": "block"
       },
       "*-woodmetalleather": {
         "CanAttack": false,
@@ -57,7 +59,8 @@
         "BlockCooldownMs": 300,
         "BlockAnimation": "combatoverhaul:shield-light-parry",
         "ReadyAnimation": "combatoverhaul:shield-light-ready",
-        "IdleAnimation": "combatoverhaul:shield-light-ready"
+        "IdleAnimation": "combatoverhaul:shield-light-ready",
+        "BlockTpAnimation": "block"
       },
       "*-metal": {
         "CanAttack": false,
@@ -75,7 +78,8 @@
         "BlockCooldownMs": 300,
         "BlockAnimation": "combatoverhaul:shield-light-parry",
         "ReadyAnimation": "combatoverhaul:shield-light-ready",
-        "IdleAnimation": "combatoverhaul:shield-light-ready"
+        "IdleAnimation": "combatoverhaul:shield-light-ready",
+        "BlockTpAnimation": "block"
       },
       "*-blackguard": {
         "CanAttack": false,
@@ -93,7 +97,8 @@
         "BlockCooldownMs": 300,
         "BlockAnimation": "combatoverhaul:shield-light-parry",
         "ReadyAnimation": "combatoverhaul:shield-light-ready",
-        "IdleAnimation": "combatoverhaul:shield-light-ready"
+        "IdleAnimation": "combatoverhaul:shield-light-ready",
+        "BlockTpAnimation": "block"
       }
     }
   }

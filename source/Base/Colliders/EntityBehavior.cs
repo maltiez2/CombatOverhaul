@@ -104,6 +104,11 @@ public sealed class CollidersEntityBehavior : EntityBehavior
                 CollidersTypes.Add(collider, ColliderTypes.Critical);
                 ShapeElementsToProcess.Add(collider);
             }
+            foreach (string collider in types.Resistant)
+            {
+                CollidersTypes.Add(collider, ColliderTypes.Resistant);
+                ShapeElementsToProcess.Add(collider);
+            }
 
             UnprocessedElementsLeft = true;
             HasOBBCollider = true;

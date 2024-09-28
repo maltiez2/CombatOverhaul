@@ -1,0 +1,118 @@
+﻿[
+  {
+    "side": "Server",
+    "file": "game:entities/land/locust",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*-corrupt-sawblade": {
+          "Torso": [],
+          "Head": ["body"],
+          "Arm": ["segment 1", "segment 2", "segment 3", "segment 5", "segment 6", "sawblade base"],
+          "Leg": ["leg extention 21", "leg extention 18", "leg extention 15", "leg extention 5", "leg extention 3", "leg extention 1"],
+          "Critical": [],
+          "Resistant": []
+        },
+        "*": {
+          "Torso": ["abdomen"],
+          "Head": ["body"],
+          "Arm": [],
+          "Leg": ["leg extention 21", "leg extention 18", "leg extention 15", "leg extention 5", "leg extention 3", "leg extention 1"],
+          "Critical": [],
+          "Resistant": []
+        }
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/locust",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*-corrupt-sawblade": {
+          "Torso": [],
+          "Head": ["body"],
+          "Arm": ["segment 1", "segment 2", "segment 3", "segment 5", "segment 6", "sawblade base"],
+          "Leg": ["leg extention 21", "leg extention 18", "leg extention 15", "leg extention 5", "leg extention 3", "leg extention 1"],
+          "Critical": [],
+          "Resistant": []
+        },
+        "*": {
+          "Torso": ["abdomen"],
+          "Head": ["body"],
+          "Arm": [],
+          "Leg": ["leg extention 21", "leg extention 18", "leg extention 15", "leg extention 5", "leg extention 3", "leg extention 1"],
+          "Critical": [],
+          "Resistant": []
+        }
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/locust",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 0.8,
+        "LimbsDamageMultiplier": 0.5,
+        "HeadDamageMultiplier": 1,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResistsByType": {
+          "*-bronze": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0},
+          "*-corrupt": {"BluntAttack": 0, "SlashingAttack": 1, "PiercingAttack": 1},
+          "*-corrupt-sawblade": {"BluntAttack": 1, "SlashingAttack": 3, "PiercingAttack": 5}
+        }
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/locust",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 0.8,
+        "LimbsDamageMultiplier": 0.5,
+        "HeadDamageMultiplier": 1,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResistsByType": {
+          "*-bronze": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0},
+          "*-corrupt": {"BluntAttack": 0, "SlashingAttack": 1, "PiercingAttack": 1},
+          "*-corrupt-sawblade": {"BluntAttack": 1, "SlashingAttack": 3, "PiercingAttack": 5}
+        }
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/locust",
+    "op": "replace",
+    "path": "/server/behaviors/7/aitasks/0",
+    "value": {
+      "code": "meleeattack",
+      "entityCodes": ["player"],
+      "priority": 3,
+      "damageByType": {"*-bronze": 2, "*-corrupt": 4, "*-corrupt-sawblade": 16},
+      "damageTierByType": {"*-bronze": 2, "*-corrupt": 4, "*-corrupt-sawblade": 6},
+      "mincooldown": 1500,
+      "maxcooldown": 1500,
+      "damageTypeByType": {"*-bronze": "PiercingAttack", "*-corrupt": "PiercingAttack", "*-corrupt-sawblade": "SlashingAttack"},
+      "damagePlayerAtMs": 500,
+      "attackDurationMs": 800,
+      "animation": "attack",
+      "animationSpeed": 1.8,
+      "soundByType": {"*-corrupt-sawblade": "creature/locust/saw"},
+      "soundStartMs": 1000
+    }
+  }
+]

@@ -478,7 +478,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
 
         MeleeBlockSystem.StopBlock(mainHand);
         AnimationBehavior?.PlayReadyAnimation(mainHand);
-        AnimationBehavior?.StopVanillaAnimation(GetStanceStats(mainHand)?.AttackTpAnimation ?? "");
+        AnimationBehavior?.StopVanillaAnimation(GetStanceStats(mainHand)?.BlockTpAnimation ?? "");
         SetState(MeleeWeaponState.Idle, mainHand);
 
         float cooldown = GetStanceStats(mainHand)?.BlockCooldownMs ?? 0;
@@ -827,7 +827,7 @@ public class MeleeWeapon : Item, IHasWeaponLogic, IHasDynamicIdleAnimations, IHa
 
     public override void OnHeldAttackStart(ItemSlot slot, EntityAgent byEntity, BlockSelection blockSel, EntitySelection entitySel, ref EnumHandHandling handling)
     {
-        handling = EnumHandHandling.PreventDefault;
+        handling = EnumHandHandling.PreventDefaultAction;
     }
 
     public void BlockCallback(IServerPlayer player, ItemSlot slot, bool mainHand)

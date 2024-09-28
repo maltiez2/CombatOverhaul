@@ -16,6 +16,7 @@ public sealed class EntityDamageModelJson
     public float LimbsDamageMultiplier { get; set; } = 0.5f;
     public float HeadDamageMultiplier { get; set; } = 1.25f;
     public float CriticalDamageMultiplier { get; set; } = 2.0f;
+    public float ResistantDamageMultiplier { get; set; } = 0.0f;
     public Dictionary<string, float> DefaultResists { get; set; } = new();
     public Dictionary<string, Dictionary<string, float>> ResistsForColliders { get; set; } = new();
 }
@@ -37,7 +38,8 @@ public sealed class EntityDamageModelBehavior : EntityBehavior
         { ColliderTypes.Arm, 1.0f },
         { ColliderTypes.Leg, 1.0f },
         { ColliderTypes.Head, 1.0f },
-        { ColliderTypes.Critical, 1.0f }
+        { ColliderTypes.Critical, 1.0f },
+        { ColliderTypes.Resistant, 0.0f }
     }.ToImmutableDictionary();
     public DamageResistData Resists { get; set; } = new();
     public ImmutableDictionary<string, DamageResistData> ResistsForColliders { get; private set; } = new Dictionary<string, DamageResistData>().ToImmutableDictionary();
@@ -61,7 +63,8 @@ public sealed class EntityDamageModelBehavior : EntityBehavior
                 { ColliderTypes.Arm, stats.LimbsDamageMultiplier },
                 { ColliderTypes.Leg, stats.LimbsDamageMultiplier },
                 { ColliderTypes.Head, stats.HeadDamageMultiplier },
-                { ColliderTypes.Critical, stats.CriticalDamageMultiplier }
+                { ColliderTypes.Critical, stats.CriticalDamageMultiplier },
+                { ColliderTypes.Resistant, stats.ResistantDamageMultiplier }
             }.ToImmutableDictionary();
         }
     }

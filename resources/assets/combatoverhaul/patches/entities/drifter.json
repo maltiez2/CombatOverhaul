@@ -3,7 +3,7 @@
     "side": "Server",
     "file": "game:entities/land/drifter",
     "op": "add",
-    "path": "/client/behaviors/0",
+    "path": "/client/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
       "elementsByType": {
@@ -30,7 +30,7 @@
     "side": "Server",
     "file": "game:entities/land/drifter",
     "op": "add",
-    "path": "/server/behaviors/0",
+    "path": "/server/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
       "elementsByType": {
@@ -103,7 +103,7 @@
     "side": "Server",
     "file": "game:entities/land/drifter",
     "op": "replace",
-    "path": "/server/behaviors/9/aitasks/2",
+    "path": "/server/behaviors/8/aitasks/2",
     "value": {
       "code": "meleeattack",
       "entityCodes": ["player"],
@@ -132,7 +132,7 @@
     "side": "Server",
     "file": "game:entities/land/drifter",
     "op": "add",
-    "path": "/server/behaviors/9/aitasks/-",
+    "path": "/server/behaviors/8/aitasks/-",
     "value": {
       "code": "meleeattack",
       "entityCodes": ["player"],
