@@ -785,8 +785,8 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
                     damageType.RelativeCollider = new(damageType.RelativeCollider.Position, new Vector3(newHead.X, newHead.Y, newHead.Z) - damageType.RelativeCollider.Position);
                 });
         }
-    }
 #endif
+    }
 }
 
 public class MeleeWeapon : Item, IHasWeaponLogic, IHasDynamicIdleAnimations, IHasMeleeWeaponActions, IHasServerBlockCallback, ISetsRenderingOffset, IMouseWheelInput
