@@ -23,7 +23,7 @@
             "*-steel": {"DamageType": "SlashingAttack", "Damage": 6}
           },
           "SpeedThreshold": 0.3,
-          "Knockback": 0.1,
+          "Knockback": 0.5,
           "EntityCode": "combatoverhaul:arrow-{material}",
           "DurabilityDamage": 0,
           "DropChanceByType": {

@@ -77,8 +77,12 @@
     <Reference Include="$(GameDirectory)/**/*.dll" Private="false" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="resources\assets\combatoverhaul\itemtypes\**" />
+    <EmbeddedResource Remove="resources\assets\combatoverhaul\itemtypes\**" />
+    <None Remove="resources\assets\combatoverhaul\itemtypes\**" />
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Releases\" />
-    <Folder Include="resources\assets\combatoverhaul\itemtypes\" />
   </ItemGroup>
 
   <!-- Forces rebuild -->

@@ -21,7 +21,8 @@
         },
         "AttackAnimation": "combatoverhaul:sword-forlorn-thrust",
         "ReadyAnimation": "combatoverhaul:sword-falx-ready",
-        "IdleAnimation": "combatoverhaul:sword-falx-idle"
+        "IdleAnimation": "combatoverhaul:sword-falx-idle",
+        "AttackTpAnimation": ""
       },
       "*-blackguard-*": {
         "CanAttack": true,
