@@ -17,7 +17,7 @@
           "StopOnEntityHit": false,
           "CollideWithTerrain": true,
           "MaxReach": 9,
-          "DamageTypes": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.3, 0, 0.5]}]
+          "DamageTypes": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 3, "Damage": 6}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.3, 0, 0.5]}]
         },
         "AttackAnimation": "combatoverhaul:sword-forlorn-thrust",
         "ReadyAnimation": "combatoverhaul:sword-falx-ready",
@@ -36,7 +36,7 @@
           "StopOnEntityHit": false,
           "CollideWithTerrain": true,
           "MaxReach": 9,
-          "DamageTypes": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.8, 0, 0.5]}]
+          "DamageTypes": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 2, "Damage": 6}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.8, 0, 0.5]}]
         },
         "AttackAnimation": "combatoverhaul:sword-forlorn-thrust",
         "ReadyAnimation": "combatoverhaul:sword-falx-ready",
@@ -56,21 +56,15 @@
           "CollideWithTerrain": true,
           "MaxReach": 9,
           "DamageTypesByType": {
-            "*-copper": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.05]}],
-            "*-tinbronze": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.05]}],
-            "*-bismuthbronze": [
-              {"Damage": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.05]}
-            ],
-            "*-blackbronze": [
-              {"Damage": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.05]}
-            ],
+            "*-copper": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 4, "Damage": 4}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.05]}],
+            "*-*bronze": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 4.5, "Damage": 4.5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.05]}],
             "*-iron": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.05]}],
             "*-gold": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.05]}],
             "*-silver": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.05]}],
             "*-meteoriciron": [
-              {"Damage": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.05]}
+              {"Damage": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5.5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.05]}
             ],
-            "*-steel": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.05]}]
+            "*-steel": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 6, "Damage": 5.5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.05]}]
           }
         },
         "AttackAnimation": "combatoverhaul:sword-falx-slash",

@@ -19,7 +19,7 @@
             "*-iron": {"DamageType": "SlashingAttack", "Damage": 5.6},
             "*-gold": {"DamageType": "SlashingAttack", "Damage": 5.6},
             "*-silver": {"DamageType": "SlashingAttack", "Damage": 5.6},
-            "*-meteoriciron": {"DamageType": "SlashingAttack", "Damage": 5.6},
+            "*-meteoriciron": {"DamageType": "SlashingAttack", "Damage": 5.8},
             "*-steel": {"DamageType": "SlashingAttack", "Damage": 6}
           },
           "SpeedThreshold": 0.3,
