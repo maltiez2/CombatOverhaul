@@ -89,22 +89,16 @@
   "item-bow-simple-regular": "Simple bow",
   "item-bow-long-regular": "Long bow",
   "item-bow-recurve-regular": "Recurve bow",
-  "item-sword-long-regular-*bronze": "Long sword (Bronze)",
-  "item-sword-long-regular-iron": "Long sword (Iron)",
-  "item-sword-long-regular-steel": "Long sword (Steel)",
-  "item-shield-light-*-crude": "Light shield (Hide)",
-  "item-shield-light-*-copper": "Light shield (Copper)",
-  "item-shield-light-*-*bronze": "Light shield (Bronze)",
-  "item-shield-light-*-iron": "Light shield (Iron)",
-  "item-shield-light-*-steel": "Light shield (Steel)",
-  "item-shield-heavy-*-crude": "Heavy shield (Wicker)",
-  "item-shield-heavy-*-copper": "Heavy shield (Copper)",
-  "item-shield-heavy-*-*bronze": "Heavy shield (Bronze)",
-  "item-shield-heavy-*-iron": "Heavy shield (Iron)",
   "item-arrow-crude": "Arrow (Crude)",
   "item-arrow-flint": "Arrow (Flint)",
   "item-arrow-copper": "Arrow (Copper)",
   "item-arrow-*bronze": "Arrow (Bronze)",
   "item-arrow-*iron": "Arrow (Iron)",
-  "item-arrow-steel": "Arrow (Steel)"
+  "item-arrow-steel": "Arrow (Steel)",
+  
+  "game:item-spear-generic-iron": "Iron spear",
+  "game:item-spear-generic-meteoriciron": "Meteoric iron spear",
+  "game:item-spear-generic-steel": "Steel spear",
+
+  "prefixandcreature-arrow-*": "Arrow"
 }

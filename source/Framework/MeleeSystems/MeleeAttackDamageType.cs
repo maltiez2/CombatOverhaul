@@ -2,14 +2,11 @@
 using CombatOverhaul.DamageSystems;
 using ProtoBuf;
 using System.Numerics;
-using System.Reflection;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
-using Vintagestory.Client.NoObf;
-using static Microsoft.WindowsAPICodePack.Shell.PropertySystem.SystemProperties.System;
 
 namespace CombatOverhaul.MeleeSystems;
 

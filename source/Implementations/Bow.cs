@@ -136,6 +136,7 @@ public sealed class BowClient : RangeWeaponClient
 
         AnimationBehavior?.Play(mainHand, _stats.LoadAnimation, animationSpeed: GetAnimationSpeed(player, _stats.ProficiencyStat), callback: LoadAnimationCallback);
 
+        _aimingSystem.ResetAim();
         _aimingSystem.StartAiming(_aimingStats);
         _aimingSystem.AimingState = WeaponAimingState.Blocked;
 

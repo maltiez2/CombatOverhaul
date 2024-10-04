@@ -193,6 +193,12 @@ public sealed class ClientAimingSystem : IDisposable
 
         return _currentAim;
     }
+    public void ResetAim()
+    {
+        Aim = new(0, 0);
+
+        ResetAimOffset();
+    }
 
     // TODO: For a rewrite, consider switching aimX and aimY from pixels to % of screen width/height. That way it's consistent on all resolutions
     // (still will have to account for FoV though).
@@ -270,12 +276,6 @@ public sealed class ClientAimingSystem : IDisposable
         AimOffset = new(0, 0);
         _twitch = new(0, 0);
         ShowVanillaReticle = true;
-    }
-    private void ResetAim()
-    {
-        Aim = new(0, 0);
-
-        ResetAimOffset();
     }
     private void UpdateAimOffsetSimple(ClientMain __instance, float dt)
     {

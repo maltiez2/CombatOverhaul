@@ -369,6 +369,8 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
 
     private void StartIdleTimer(AnimationRequestByCode request, bool mainHand)
     {
+        if (_api?.IsGamePaused == true) return;
+        
         long timer = _api?.World.RegisterCallback(_ => PlayIdleAnimation(request, mainHand), (int)_readyTimeout.TotalMilliseconds) ?? -1;
         if (mainHand)
         {
