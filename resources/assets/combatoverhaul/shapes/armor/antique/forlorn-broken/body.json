@@ -1,0 +1,173 @@
+{
+	"editor": {
+		"backDropShape": "entity/humanoid/seraph",
+		"allAngles": false,
+		"entityTextureMode": true
+	},
+	"textureWidth": 64,
+	"textureHeight": 64,
+	"textureSizes": {
+	},
+	"textures": {
+		"forlornhope-destroyed": "entity/humanoid/serapharmor/forlorn/forlorn-broken"
+	},
+	"elements": [
+		{
+			"name": "ArmorUpperArmR",
+			"stepParentName": "UpperArmR",
+			"from": [ -0.2, -0.2, -0.3 ], 
+			"to": [ 3.1, 7.2, 2.1 ], 
+			"autoUnwrap": false,
+			"uv": [ 47.0, 34.5 ],
+			"rotationOrigin": [ -0.2, -0.2, -0.3 ],
+			"faces": {
+				"north": { "texture": "#forlornhope-destroyed", "uv": [ 45.0, 44.0, 48.0, 51.0 ] },
+				"east": { "texture": "#forlornhope-destroyed", "uv": [ 43.0, 44.0, 45.0, 51.0 ] },
+				"south": { "texture": "#forlornhope-destroyed", "uv": [ 50.0, 44.0, 53.0, 51.0 ] },
+				"west": { "texture": "#forlornhope-destroyed", "uv": [ 48.0, 44.0, 50.0, 51.0 ] },
+				"up": { "texture": "#forlornhope-destroyed", "uv": [ 45.0, 42.0, 48.0, 44.0 ] },
+				"down": { "texture": "#forlornhope-destroyed", "uv": [ 48.0, 51.0, 51.0, 53.0 ] }
+			}
+		},
+		{
+			"name": "ArmorUpperArmL",
+			"stepParentName": "UpperArmL",
+			"from": [ -0.2, 1.8, -0.1 ], 
+			"to": [ 3.1, 7.2, 2.3 ], 
+			"autoUnwrap": false,
+			"uv": [ 33.0, 37.5 ],
+			"rotationOrigin": [ -0.2, 1.8, -0.1 ],
+			"faces": {
+				"north": { "texture": "#forlornhope-destroyed", "uv": [ 39.0, 44.0, 42.0, 49.0 ] },
+				"east": { "texture": "#forlornhope-destroyed", "uv": [ 37.0, 44.0, 39.0, 49.0 ] },
+				"south": { "texture": "#forlornhope-destroyed", "uv": [ 34.0, 44.0, 37.0, 49.0 ] },
+				"west": { "texture": "#forlornhope-destroyed", "uv": [ 32.0, 44.0, 34.0, 49.0 ] },
+				"up": { "texture": "#forlornhope-destroyed", "uv": [ 34.0, 42.0, 37.0, 44.0 ] },
+				"down": { "texture": "#forlornhope-destroyed", "uv": [ 37.0, 51.0, 40.0, 53.0 ] }
+			}
+		},
+		{
+			"name": "ArmorLowerArmL",
+			"stepParentName": "LowerArmL",
+			"from": [ -0.2, -0.2, -0.25 ], 
+			"to": [ 2.7, 7.2, 2.25 ], 
+			"autoUnwrap": false,
+			"uv": [ 32.5, 44.5 ],
+			"rotationOrigin": [ -0.2, -0.2, -0.3 ],
+			"faces": {
+				"north": { "texture": "#forlornhope-destroyed", "uv": [ 39.5, 54.5, 42.0, 61.5 ] },
+				"east": { "texture": "#forlornhope-destroyed", "uv": [ 37.0, 54.5, 39.5, 61.5 ] },
+				"south": { "texture": "#forlornhope-destroyed", "uv": [ 34.5, 54.5, 37.0, 61.5 ] },
+				"west": { "texture": "#forlornhope-destroyed", "uv": [ 32.0, 54.5, 34.5, 61.5 ] },
+				"up": { "texture": "#forlornhope-destroyed", "uv": [ 34.5, 51.0, 37.0, 53.5 ] },
+				"down": { "texture": "#forlornhope-destroyed", "uv": [ 34.5, 61.5, 37.0, 64.0 ] }
+			}
+		},
+		{
+			"name": "ArmorUpperTorso",
+			"stepParentName": "UpperTorso",
+			"from": [ -0.8, -0.4, -0.5 ], 
+			"to": [ 5.2, 5.4, 6.5 ], 
+			"autoUnwrap": false,
+			"uv": [ 35.0, 0.0 ],
+			"rotationOrigin": [ 2.5, 3.6, 3.0 ],
+			"rotationX": -3.0,
+			"rotationZ": 5.0,
+			"faces": {
+				"north": { "texture": "#forlornhope-destroyed", "uv": [ 38.0, 6.0, 44.0, 11.5 ] },
+				"east": { "texture": "#forlornhope-destroyed", "uv": [ 57.0, 6.0, 64.0, 11.5 ] },
+				"south": { "texture": "#forlornhope-destroyed", "uv": [ 51.0, 6.0, 57.0, 11.5 ] },
+				"west": { "texture": "#forlornhope-destroyed", "uv": [ 44.0, 6.0, 51.0, 11.5 ] },
+				"up": { "texture": "#forlornhope-destroyed", "uv": [ 44.0, 0.0, 51.0, 6.0 ], "rotation": 90 },
+				"down": { "texture": "#forlornhope-destroyed", "uv": [ 51.0, 0.0, 58.0, 6.0 ], "rotation": 270 }
+			}
+		},
+		{
+			"name": "ArmorLowerTorso",
+			"stepParentName": "LowerTorso",
+			"from": [ -0.3, -0.5, -0.3 ], 
+			"to": [ 5.3, 5.1, 6.3 ], 
+			"autoUnwrap": false,
+			"uv": [ 39.5, 8.0 ],
+			"rotationOrigin": [ -0.3, -0.5, -0.3 ],
+			"faces": {
+				"north": { "texture": "#forlornhope-destroyed", "uv": [ 38.5, 12.0, 44.0, 17.5 ] },
+				"east": { "texture": "#forlornhope-destroyed", "uv": [ 56.0, 12.0, 62.5, 17.5 ] },
+				"south": { "texture": "#forlornhope-destroyed", "uv": [ 50.5, 12.0, 56.0, 17.5 ] },
+				"west": { "texture": "#forlornhope-destroyed", "uv": [ 44.0, 12.0, 50.5, 17.5 ] },
+				"up": { "texture": "#forlornhope-destroyed", "uv": [ 44.0, 17.5, 50.5, 23.0 ], "rotation": 90 },
+				"down": { "texture": "#forlornhope-destroyed", "uv": [ 56.0, 17.5, 62.5, 23.0 ], "rotation": 90 }
+			}
+		},
+		{
+			"name": "ArmorLowerArmR",
+			"stepParentName": "LowerArmR",
+			"from": [ -0.2, -0.3, -0.25 ], 
+			"to": [ 2.7, 7.1, 2.25 ], 
+			"autoUnwrap": false,
+			"uv": [ 50.5, 40.0 ],
+			"rotationOrigin": [ -0.2, -0.3, -0.4 ],
+			"faces": {
+				"north": { "texture": "#forlornhope-destroyed", "uv": [ 45.5, 54.5, 48.0, 61.5 ] },
+				"east": { "texture": "#forlornhope-destroyed", "uv": [ 43.0, 54.5, 45.5, 61.5 ] },
+				"south": { "texture": "#forlornhope-destroyed", "uv": [ 50.5, 54.5, 53.0, 61.5 ] },
+				"west": { "texture": "#forlornhope-destroyed", "uv": [ 48.0, 54.5, 50.5, 61.5 ] },
+				"up": { "texture": "#forlornhope-destroyed", "uv": [ 45.5, 51.0, 48.0, 53.5 ] },
+				"down": { "texture": "#forlornhope-destroyed", "uv": [ 45.5, 61.5, 48.0, 64.0 ] }
+			},
+			"children": [
+				{
+					"name": "ArmorBracerR",
+					"from": [ -0.2, 2.9, -0.4 ], 
+					"to": [ 3.1, 6.9, 0.9 ], 
+					"autoUnwrap": false,
+					"uv": [ 48.5, 34.5 ],
+					"rotationOrigin": [ 1.5, 2.9, -0.4 ],
+					"rotationX": -3.0,
+					"rotationY": -6.0,
+					"faces": {
+						"north": { "texture": "#forlornhope-destroyed", "uv": [ 42.0, 31.0, 45.0, 35.0 ] },
+						"east": { "texture": "#forlornhope-destroyed", "uv": [ 41.0, 31.0, 42.0, 35.0 ] },
+						"south": { "texture": "#forlornhope-destroyed", "uv": [ 46.0, 31.0, 49.0, 35.0 ] },
+						"west": { "texture": "#forlornhope-destroyed", "uv": [ 45.0, 31.0, 46.0, 35.0 ] },
+						"up": { "texture": "#forlornhope-destroyed", "uv": [ 42.0, 30.0, 45.0, 31.0 ], "rotation": 180 },
+						"down": { "texture": "#forlornhope-destroyed", "uv": [ 42.0, 35.0, 45.0, 36.0 ] }
+					}
+				}
+			]
+		},
+		{
+			"name": "ArmorCoatR",
+			"stepParentName": "UpperFootR",
+			"from": [ -0.7, 2.2, -0.35 ], 
+			"to": [ 4.9, 7.2, 3.15 ], 
+			"autoUnwrap": false,
+			"uv": [ 26.0, 21.5 ],
+			"rotationOrigin": [ -0.7, 2.2, -0.5 ],
+			"faces": {
+				"north": { "texture": "#forlornhope-destroyed", "uv": [ 18.5, 23.0, 24.0, 28.0 ] },
+				"east": { "texture": "#forlornhope-destroyed", "uv": [ 33.0, 23.0, 36.5, 28.0 ] },
+				"south": { "texture": "#forlornhope-destroyed", "uv": [ 27.5, 23.0, 33.0, 28.0 ] },
+				"west": { "texture": "#forlornhope-destroyed", "uv": [ 24.0, 23.0, 27.5, 28.0 ] },
+				"up": { "texture": "#forlornhope-destroyed", "uv": [ 24.0, 17.5, 27.5, 23.0 ], "rotation": 90 },
+				"down": { "texture": "#forlornhope-destroyed", "uv": [ 27.5, 19.5, 33.0, 23.0 ], "enabled": false }
+			}
+		},
+		{
+			"name": "ArmorCoatL",
+			"stepParentName": "UpperFootL",
+			"from": [ -0.7, 0.3, 0.05 ], 
+			"to": [ 4.9, 6.3, 3.55 ], 
+			"autoUnwrap": false,
+			"uv": [ 0.0, 23.0 ],
+			"rotationOrigin": [ -0.7, 0.3, -0.1 ],
+			"faces": {
+				"north": { "texture": "#forlornhope-destroyed", "uv": [ 0.0, 23.0, 5.5, 29.0 ] },
+				"east": { "texture": "#forlornhope-destroyed", "uv": [ 14.5, 23.0, 18.0, 29.0 ] },
+				"south": { "texture": "#forlornhope-destroyed", "uv": [ 9.0, 23.0, 14.5, 29.0 ] },
+				"west": { "texture": "#forlornhope-destroyed", "uv": [ 5.5, 23.0, 9.0, 29.0 ] },
+				"up": { "texture": "#forlornhope-destroyed", "uv": [ 5.5, 17.5, 9.0, 23.0 ], "rotation": 90 },
+				"down": { "texture": "#forlornhope-destroyed", "uv": [ 9.0, 19.5, 14.5, 23.0 ], "enabled": false }
+			}
+		}
+	]}

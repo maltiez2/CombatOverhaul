@@ -7,6 +7,7 @@ using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
+using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
 using VSImGui.Debug;
@@ -60,7 +61,8 @@ public class StanceStats
     public float AttackCooldownMs { get; set; } = 0;
     public float BlockCooldownMs { get; set; } = 0;
 
-    public string AttackAnimation { get; set; } = "";
+    public string AttackDirectionsType { get; set; } = "None";
+    public Dictionary<string, string[]> AttackAnimation { get; set; } = new();
     public string BlockAnimation { get; set; } = "";
     public string ReadyAnimation { get; set; } = "";
     public string IdleAnimation { get; set; } = "";
@@ -78,7 +80,7 @@ public class MeleeWeaponStats : WeaponStats
     public float AnimationStaggerOnHitDurationMs { get; set; } = 100;
 }
 
-public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
+public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, IOnGameTick
 {
     public MeleeWeaponClient(ICoreClientAPI api, Item item)
     {
@@ -126,7 +128,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
 
     public int ItemId => Item.Id;
 
-    public virtual DirectionsConfiguration DirectionsType => DirectionsConfiguration.Eight;
+    public virtual DirectionsConfiguration DirectionsType { get; protected set; }
 
     public AnimationRequestByCode? GetIdleAnimation(bool mainHand)
     {
@@ -208,6 +210,38 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
     public bool CanBlock(bool mainHand = true) => GetStanceStats(mainHand)?.CanBlock ?? false;
     public bool CanParry(bool mainHand = true) => GetStanceStats(mainHand)?.CanParry ?? false;
 
+    public void OnGameTick(ItemSlot slot, EntityPlayer player, ref int state, bool mainHand)
+    {
+        if (!mainHand && CanAttackWithOtherHand(player, mainHand)) return;
+        EnsureStance(player, mainHand);
+        if (!CanAttack(mainHand)) return;
+        if (IsAttackOnCooldown(mainHand)) return;
+        if (GetState<MeleeWeaponState>(!mainHand) == MeleeWeaponState.Blocking) return;
+
+        MeleeAttack? attack = GetStanceAttack(mainHand);
+        StanceStats? stats = GetStanceStats(mainHand);
+        MeleeAttack? handle = GetStanceHandleAttack(mainHand);
+
+        if (attack == null || stats == null) return;
+
+        switch (GetState<MeleeWeaponState>(mainHand))
+        {
+            case MeleeWeaponState.Idle:
+                break;
+            case MeleeWeaponState.WindingUp:
+                break;
+            case MeleeWeaponState.Cooldown:
+                break;
+            case MeleeWeaponState.Attacking:
+                {
+                    TryAttack(attack, handle, stats, slot, player, mainHand);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
     protected readonly Item Item;
     protected readonly ICoreClientAPI Api;
     protected readonly MeleeBlockSystemClient MeleeBlockSystem;
@@ -225,6 +259,8 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
     protected long OffHandAttackCooldownTimer = -1;
     protected long MainHandBlockCooldownTimer = -1;
     protected long OffHandBlockCooldownTimer = -1;
+    protected int MainHandAttackCounter = 0;
+    protected int OffHandAttackCounter = 0;
 
     protected MeleeAttack? OneHandedAttack;
     protected MeleeAttack? TwoHandedAttack;
@@ -255,18 +291,32 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
         {
             case MeleeWeaponState.Idle:
                 {
+                    string attackAnimation = 
+                        DirectionsType == DirectionsConfiguration.None ? 
+                        stats.AttackAnimation["Main"][(mainHand ? MainHandAttackCounter : OffHandAttackCounter) % stats.AttackAnimation["Main"].Length] : 
+                        stats.AttackAnimation[direction.ToString()][(mainHand ? MainHandAttackCounter : OffHandAttackCounter) % stats.AttackAnimation[direction.ToString()].Length];
+
                     MeleeBlockSystem.StopBlock(mainHand);
                     SetState(MeleeWeaponState.WindingUp, mainHand);
                     attack.Start(player.Player);
                     handle?.Start(player.Player);
                     AnimationBehavior?.Play(
                         mainHand,
-                        stats.AttackAnimation,
+                        attackAnimation,
                         animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat),
                         category: AnimationCategory(mainHand),
                         callback: () => AttackAnimationCallback(mainHand),
                         callbackHandler: code => AttackAnimationCallbackHandler(code, mainHand));
                     AnimationBehavior?.PlayVanillaAnimation(stats.AttackTpAnimation);
+
+                    if (mainHand)
+                    {
+                        MainHandAttackCounter++;
+                    }
+                    else
+                    {
+                        OffHandAttackCounter++;
+                    }
                 }
                 break;
             case MeleeWeaponState.WindingUp:
@@ -274,9 +324,6 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
             case MeleeWeaponState.Cooldown:
                 break;
             case MeleeWeaponState.Attacking:
-                {
-                    TryAttack(attack, handle, stats, slot, player, mainHand);
-                }
                 break;
             default:
                 return false;
@@ -336,6 +383,15 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
         AnimationBehavior?.PlayReadyAnimation(mainHand);
         SetState(MeleeWeaponState.Idle, mainHand);
 
+        if (mainHand)
+        {
+            MainHandAttackCounter = 0;
+        }
+        else
+        {
+            OffHandAttackCounter = 0;
+        }
+
         return true;
     }
     protected virtual void AttackAnimationCallbackHandler(string callbackCode, bool mainHand)
@@ -346,7 +402,10 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
                 SetState(MeleeWeaponState.Attacking, mainHand);
                 break;
             case "stop":
-                //SetState(MeleeWeaponState.Cooldown, mainHand);
+                SetState(MeleeWeaponState.Cooldown, mainHand);
+                break;
+            case "ready":
+                SetState(MeleeWeaponState.Idle, mainHand);
                 break;
         }
     }
@@ -354,6 +413,8 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
     [ActionEventHandler(EnumEntityAction.LeftMouseDown, ActionState.Released)]
     protected virtual bool StopAttack(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
+        return false;
+        
         if (!CheckState(mainHand, MeleeWeaponState.Attacking, MeleeWeaponState.WindingUp)) return false;
 
         AnimationBehavior?.PlayReadyAnimation(mainHand);
@@ -514,6 +575,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
             {
                 AnimationBehavior?.PlayReadyAnimation(mainHand);
             }
+            DirectionsType = Enum.Parse<DirectionsConfiguration>(Stats.TwoHandedStance.AttackDirectionsType);
         }
         else
         {
@@ -522,6 +584,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
             {
                 AnimationBehavior?.PlayReadyAnimation(mainHand);
             }
+            if (Stats.OneHandedStance != null) DirectionsType = Enum.Parse<DirectionsConfiguration>(Stats.OneHandedStance.AttackDirectionsType);
         }
     }
 
@@ -789,7 +852,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations
     }
 }
 
-public class MeleeWeapon : Item, IHasWeaponLogic, IHasDynamicIdleAnimations, IHasMeleeWeaponActions, IHasServerBlockCallback, ISetsRenderingOffset, IMouseWheelInput
+public class MeleeWeapon : Item, IHasWeaponLogic, IHasDynamicIdleAnimations, IHasMeleeWeaponActions, IHasServerBlockCallback, ISetsRenderingOffset, IMouseWheelInput, IOnGameTick
 {
     public MeleeWeaponClient? ClientLogic { get; private set; }
 
@@ -824,6 +887,10 @@ public class MeleeWeapon : Item, IHasWeaponLogic, IHasDynamicIdleAnimations, IHa
 
     public bool CanAttack(bool mainHand) => ClientLogic?.CanAttack(mainHand) ?? false;
     public bool CanBlock(bool mainHand) => (ClientLogic?.CanBlock(mainHand) ?? false) || (ClientLogic?.CanParry(mainHand) ?? false);
+    public void OnGameTick(ItemSlot slot, EntityPlayer player, ref int state, bool mainHand)
+    {
+        ClientLogic?.OnGameTick(slot, player, ref state, mainHand);
+    }
 
     public override void OnHeldAttackStart(ItemSlot slot, EntityAgent byEntity, BlockSelection blockSel, EntitySelection entitySel, ref EnumHandHandling handling)
     {

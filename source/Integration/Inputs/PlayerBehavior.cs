@@ -35,6 +35,11 @@ public interface IClientWeaponLogic
     void OnRegistered(ActionsManagerPlayerBehavior behavior, ICoreClientAPI api);
 }
 
+public interface IOnGameTick
+{
+    void OnGameTick(ItemSlot slot, EntityPlayer player, ref int state, bool mainHand);
+}
+
 public sealed class ActionsManagerPlayerBehavior : EntityBehavior
 {
     public bool SuppressLMB { get; set; } = false;
@@ -63,6 +68,7 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
 
         _actionListener = system.ActionListener ?? throw new Exception();
         _directionController = system.DirectionController ?? throw new Exception();
+        _directionRenderer = system.DirectionCursorRenderer ?? throw new Exception();
         _statsSystem = system.ClientStatsSystem ?? throw new Exception();
 
         if (_mainPlayer)
@@ -78,6 +84,17 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
         SetRenderDirectionCursorForMainHand();
         _directionController.OnGameTick();
         _ = CheckIfItemsInHandsChanged();
+
+        if (_player.RightHandItemSlot.Itemstack?.Item is IOnGameTick mainhandTickListener)
+        {
+            mainhandTickListener.OnGameTick(_player.RightHandItemSlot, _player, ref _mainHandState, true);
+        }
+
+        if (_player.LeftHandItemSlot.Itemstack?.Item is IOnGameTick offhandTickListener)
+        {
+            offhandTickListener.OnGameTick(_player.LeftHandItemSlot, _player, ref _mainHandState, false);
+        }
+
         _actionListener.SuppressLMB = SuppressLMB;
         _actionListener.SuppressRMB = SuppressRMB;
     }
@@ -106,6 +123,7 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
     private const string _statCategory = "CombatOverhaul:melee-weapon-player-behavior";
     internal readonly ActionListener _actionListener;
     private readonly DirectionController _directionController;
+    private readonly DirectionCursorRenderer _directionRenderer;
     private readonly StatsSystemClient _statsSystem;
 
     private IClientWeaponLogic? _currentMainHandWeapon;
@@ -304,12 +322,17 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
     {
         ItemStack? stack = _player.ActiveHandItemSlot.Itemstack;
 
-        if (stack == null || stack.Item is not IClientWeaponLogic weapon)
+        if (stack == null || stack.Item is not IHasWeaponLogic weapon)
         {
             _directionController.DirectionsConfiguration = DirectionsConfiguration.None;
+            _directionRenderer.Show = false;
             return;
         }
 
-        _directionController.DirectionsConfiguration = weapon.DirectionsType;
+        if (weapon.ClientLogic != null)
+        {
+            _directionController.DirectionsConfiguration = weapon.ClientLogic.DirectionsType;
+            _directionRenderer.Show = weapon.ClientLogic.DirectionsType != DirectionsConfiguration.None;
+        }
     }
 }

@@ -18,6 +18,13 @@
   "armor-inventory-dialog-legs": "Legs:",
   "armor-inventory-dialog-feet": "Feet:",
 
+  "entity-damage-zone-Head": "Head",
+  "entity-damage-zone-Resistant": "Resistant",
+  "entity-damage-zone-Critical": "Critical",
+  "entity-damage-zone-Torso": "Torso",
+  "entity-damage-zone-Arm": "Arm",
+  "entity-damage-zone-Leg": "Leg",
+
   "damage-zone-None": "None",
   "damage-zone-Head": "Head",
   "damage-zone-Face": "Face",
@@ -73,6 +80,7 @@
   "damagelog-success-block": "Player successfully blocked damage to {0}",
   "damagelog-armor-damage-negation": "Armor negated {0} amount of damage to {1} and lost {2} durability",
   "damagelog-received-damage": "Player receives {0} damage to {1}",
+  "damagelog-dealt-damage": "Player hit {0} of {1} dealing {2} damage",
 
   "iteminfo-range-weapon-damage": "Damage multiplier: {0}\nDamage tier: {1}",
   "iteminfo-projectile": "Damage: {0}\nDamage type: {1}\nBreak chance: {2}%",

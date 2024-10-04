@@ -3,8 +3,10 @@ using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
+using Vintagestory.API.Config;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
+using Vintagestory.API.Server;
 using Vintagestory.GameContent;
 
 namespace CombatOverhaul.Colliders;
@@ -218,6 +220,12 @@ public sealed class CollidersEntityBehavior : EntityBehavior
         }
 
         return foundIntersection;
+    }
+
+    public ColliderTypes ColliderFromIndex(int index)
+    {
+        if (index < 0 || CollidersIds.Count <= index) return ColliderTypes.Torso;
+        return CollidersTypes[CollidersIds[index]];
     }
 
     public ColliderTypes GetColliderType(int colliderId) => CollidersTypes[CollidersIds[colliderId]];

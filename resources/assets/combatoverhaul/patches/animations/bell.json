@@ -1,0 +1,194 @@
+﻿[
+  {
+    "file": "game:shapes/entity/land/bell",
+    "op": "replace",
+    "path": "/animations/3",
+    "value": {
+      "name": "Alarm",
+      "code": "alarm",
+      "quantityframes": 33,
+      "onActivityStopped": "EaseOut",
+      "onAnimationEnd": "Repeat",
+      "keyframes": [
+        {
+          "frame": 0,
+          "elements": {
+            "origin": {"offsetX": 0.5, "offsetY": 1.6, "offsetZ": 0, "rotationX": 0, "rotationY": 0, "rotationZ": -94},
+            "ORIGIN SPINE": {"rotationX": 0, "rotationY": 0, "rotationZ": 126.8},
+            "origin vertebrae 2": {"rotationX": 0, "rotationY": 0, "rotationZ": -15},
+            "origin vertebrae 3": {"rotationX": 0, "rotationY": 0, "rotationZ": -15},
+            "origin vertebrae 4": {"rotationX": 0, "rotationY": 0, "rotationZ": -15},
+            "funnel origin": {"rotationX": 0, "rotationY": 0, "rotationZ": -50},
+            "funnel 1": {"rotationX": 0, "rotationY": 0, "rotationZ": 17},
+            "funnel 2": {"rotationX": 0, "rotationY": 0, "rotationZ": 49},
+            "funnel 3": {"offsetX": 0, "offsetY": -0.2, "offsetZ": 0, "rotationX": 0, "rotationY": 0, "rotationZ": 66},
+            "funnel 4": {"rotationX": 0, "rotationY": 0, "rotationZ": -39},
+            "string": {"rotationX": 0, "rotationY": 0, "rotationZ": -15}
+          }
+        },
+        {"frame": 1, "elements": {"sensory 3": {"rotationX": -11, "rotationY": 0, "rotationZ": 0}, "sensory 6": {"rotationX": 19, "rotationY": 0, "rotationZ": 0}}},
+        {
+          "frame": 3,
+          "elements": {
+            "origin": {"offsetX": -2.5, "offsetY": 2.5, "offsetZ": 0, "rotationX": 0, "rotationY": 0, "rotationZ": -77},
+            "ORIGIN SPINE": {"rotationX": 0, "rotationY": 0, "rotationZ": 70},
+            "funnel origin": {"rotationX": 0, "rotationY": 0, "rotationZ": -25},
+            "funnel 1": {"rotationX": 0, "rotationY": 0, "rotationZ": 33},
+            "funnel 2": {"rotationX": 0, "rotationY": 0, "rotationZ": 22},
+            "funnel 3": {"rotationX": 0, "rotationY": 0, "rotationZ": 53},
+            "funnel 4": {"rotationX": 0, "rotationY": 0, "rotationZ": -17}
+          }
+        },
+        {
+          "frame": 4,
+          "elements": {
+            "origin": {"offsetX": -3.5, "offsetY": 2.5, "offsetZ": 0},
+            "sensory 3": {"rotationX": 36, "rotationY": 0, "rotationZ": 0},
+            "sensory 6": {"rotationX": -19, "rotationY": 0, "rotationZ": 0}
+          }
+        },
+        {"frame": 5, "elements": {"funnel 3": {"rotationX": 0, "rotationY": 0, "rotationZ": 72}}},
+        {
+          "frame": 6,
+          "elements": {
+            "origin": {"rotationX": 0, "rotationY": 0, "rotationZ": -68.75},
+            "string": {"rotationX": 0, "rotationY": 0, "rotationZ": 19},
+            "ORIGIN SPINE": {"rotationX": 0, "rotationY": 0, "rotationZ": 25},
+            "sensory 1": {"rotationX": 39, "rotationY": 0, "rotationZ": 0},
+            "funnel 1": {"rotationX": 0, "rotationY": 0, "rotationZ": 58.25},
+            "funnel 2": {"rotationX": 0, "rotationY": 0, "rotationZ": 24.75},
+            "funnel 3": {"rotationX": 0, "rotationY": 0, "rotationZ": 80},
+            "funnel 4": {"rotationX": 0, "rotationY": 0, "rotationZ": -55}
+          }
+        },
+        {
+          "frame": 9,
+          "elements": {
+            "origin": {"offsetX": -8.3, "offsetY": -1.5, "offsetZ": 0},
+            "sensory 1": {"rotationX": -44, "rotationY": 0, "rotationZ": 0},
+            "funnel 2": {"rotationX": 0, "rotationY": 0, "rotationZ": 35.5},
+            "funnel 3": {"rotationX": 0, "rotationY": 0, "rotationZ": 72},
+            "funnel 4": {"rotationX": 0, "rotationY": 0, "rotationZ": -34}
+          }
+        },
+        {"frame": 12, "elements": {"sensory 9": {"rotationX": 30, "rotationY": 0, "rotationZ": 0}}},
+        {"frame": 13, "elements": {"origin": {"offsetX": -7.8, "offsetY": -8.8, "offsetZ": 0}, "sensory 2": {"rotationX": -19, "rotationY": 0, "rotationZ": 0}}},
+        {
+          "frame": 15,
+          "elements": {
+            "origin": {"offsetX": -5, "offsetY": -12.2, "offsetZ": 0, "rotationX": 0, "rotationY": 0, "rotationZ": -220},
+            "ORIGIN SPINE": {"rotationX": 0, "rotationY": 0, "rotationZ": 102},
+            "origin vertebrae 2": {"rotationX": 0, "rotationY": 0, "rotationZ": 5},
+            "origin vertebrae 3": {"rotationX": 0, "rotationY": 0, "rotationZ": 5},
+            "origin vertebrae 4": {"rotationX": 0, "rotationY": 0, "rotationZ": 5},
+            "funnel origin": {"rotationX": 0, "rotationY": 0, "rotationZ": 14},
+            "funnel 1": {"rotationX": 0, "rotationY": 0, "rotationZ": 22},
+            "funnel 2": {"rotationX": 0, "rotationY": 0, "rotationZ": 47},
+            "funnel 3": {"offsetX": 0, "offsetY": -0.2, "offsetZ": 0, "rotationX": 0, "rotationY": 0, "rotationZ": 100},
+            "funnel 4": {"rotationX": 0, "rotationY": 0, "rotationZ": -43},
+            "sensory 9": {"rotationX": 44, "rotationY": 0, "rotationZ": 0},
+            "sensory 5": {"rotationX": -19, "rotationY": 0, "rotationZ": 0},
+            "sensory 4": {"rotationX": 0, "rotationY": 0, "rotationZ": 0},
+            "string": {"rotationX": 0, "rotationY": 0, "rotationZ": 19}
+          }
+        },
+        {"frame": 16, "elements": {"origin": {"offsetX": -4, "offsetY": -11, "offsetZ": 0}, "sensory 2": {"rotationX": -39, "rotationY": 0, "rotationZ": 0}}},
+        {
+          "frame": 17,
+          "elements": {
+            "sensory 10": {"rotationX": -17, "rotationY": 0, "rotationZ": 0},
+            "funnel 3": {"rotationX": 0, "rotationY": 0, "rotationZ": 110},
+            "funnel 4": {"rotationX": 0, "rotationY": 0, "rotationZ": -50}
+          }
+        },
+        {
+          "frame": 18,
+          "elements": {
+            "origin": {"offsetX": -5.5, "offsetY": -7.5, "offsetZ": 0, "rotationX": 0, "rotationY": 0, "rotationZ": -220},
+            "ORIGIN SPINE": {"rotationX": 0, "rotationY": 0, "rotationZ": 163},
+            "funnel origin": {"rotationX": 0, "rotationY": 0, "rotationZ": -89},
+            "funnel 1": {"rotationX": 0, "rotationY": 0, "rotationZ": 47},
+            "funnel 2": {"rotationX": 0, "rotationY": 0, "rotationZ": 64},
+            "funnel 3": {"offsetX": 0, "offsetY": -0.2, "offsetZ": 0, "rotationX": 0, "rotationY": 0, "rotationZ": 114},
+            "funnel 4": {"rotationX": 0, "rotationY": 0, "rotationZ": -50},
+            "sensory 5": {"rotationX": -39, "rotationY": 0, "rotationZ": 0},
+            "sensory 4": {"rotationX": 28, "rotationY": 0, "rotationZ": 0}
+          }
+        },
+        {"frame": 19, "elements": {"sensory 7": {"rotationX": -17, "rotationY": 0, "rotationZ": 0}}},
+        {
+          "frame": 20,
+          "elements": {
+            "origin": {"offsetX": -6.5, "offsetY": -4, "offsetZ": 0},
+            "string": {"rotationX": 0, "rotationY": 0, "rotationZ": -20},
+            "sensory 10": {"rotationX": 22, "rotationY": 0, "rotationZ": 0},
+            "funnel 3": {"rotationX": 0, "rotationY": 0, "rotationZ": 110},
+            "funnel 4": {"rotationX": 0, "rotationY": 0, "rotationZ": -50}
+          }
+        },
+        {"frame": 22, "elements": {"origin": {"offsetX": -6.2, "offsetY": -1, "offsetZ": 0}, "sensory 7": {"rotationX": 25, "rotationY": 0, "rotationZ": 0}}},
+        {"frame": 24, "elements": {"origin": {"offsetX": -4.7, "offsetY": 1, "offsetZ": 0}, "sensory 47": {"rotationX": -28, "rotationY": 0, "rotationZ": 0}}},
+        {
+          "frame": 27,
+          "elements": {
+            "origin": {"offsetX": -2, "offsetY": 2, "offsetZ": 0, "rotationX": 0, "rotationY": 0, "rotationZ": -102.5},
+            "ORIGIN SPINE": {"rotationX": 0, "rotationY": 0, "rotationZ": 105.85},
+            "sensory 47": {"rotationX": 25, "rotationY": 0, "rotationZ": 0}
+          }
+        },
+        {
+          "frame": 30,
+          "elements": {
+            "origin": {"offsetX": -2.5, "offsetY": 2.5, "offsetZ": 0, "rotationX": 0, "rotationY": 0, "rotationZ": -77},
+            "ORIGIN SPINE": {"rotationX": 0, "rotationY": 0, "rotationZ": 70},
+            "sensory 1": {"rotationX": 33.2317, "rotationY": 0, "rotationZ": 0},
+            "sensory 2": {"rotationX": -24.0193, "rotationY": 0, "rotationZ": 0},
+            "sensory 3": {"rotationX": 20.3333, "rotationY": 0, "rotationZ": 0},
+            "sensory 4": {"rotationX": 8.5135, "rotationY": 0, "rotationZ": 0},
+            "origin vertebrae 2": {"rotationX": 0, "rotationY": 0, "rotationZ": -11},
+            "sensory 5": {"rotationX": -25.0811, "rotationY": 0, "rotationZ": 0},
+            "sensory 6": {"rotationX": -6.3333, "rotationY": 0, "rotationZ": 0},
+            "sensory 7": {"rotationX": 0.2541, "rotationY": 0, "rotationZ": 0},
+            "sensory 47": {"rotationX": 0.8778, "rotationY": 0, "rotationZ": 0},
+            "origin vertebrae 3": {"rotationX": 0, "rotationY": 0, "rotationZ": -11},
+            "sensory 9": {"rotationX": 33.1435, "rotationY": 0, "rotationZ": 0},
+            "sensory 10": {"rotationX": -3.0631, "rotationY": 0, "rotationZ": 0},
+            "origin vertebrae 4": {"rotationX": 0, "rotationY": 0, "rotationZ": -11},
+            "funnel origin": {"rotationX": 0, "rotationY": 0, "rotationZ": -25},
+            "funnel 1": {"rotationX": 0, "rotationY": 0, "rotationZ": 33},
+            "funnel 2": {"rotationX": 0, "rotationY": 0, "rotationZ": 22},
+            "funnel 3": {"offsetX": 0, "offsetY": -0.2, "offsetZ": 0, "rotationX": 0, "rotationY": 0, "rotationZ": 53},
+            "funnel 4": {"rotationX": 0, "rotationY": 0, "rotationZ": -17},
+            "string": {"rotationX": 0, "rotationY": 0, "rotationZ": -7}
+          }
+        },
+        {
+          "frame": 32,
+          "elements": {
+            "origin": {"offsetX": -1, "offsetY": 1.6, "offsetZ": 0, "rotationX": 0, "rotationY": 0, "rotationZ": -95},
+            "sensory 1": {"rotationX": 25.5405, "rotationY": 0, "rotationZ": 0},
+            "sensory 2": {"rotationX": -26.027, "rotationY": 0, "rotationZ": 0},
+            "sensory 3": {"rotationX": -9.7297, "rotationY": 0, "rotationZ": 0},
+            "sensory 4": {"rotationX": 11.3514, "rotationY": 0, "rotationZ": 0},
+            "origin vertebrae 2": {"rotationX": 0, "rotationY": 0, "rotationZ": -15},
+            "sensory 5": {"rotationX": -27.1081, "rotationY": 0, "rotationZ": 0},
+            "sensory 6": {"rotationX": 17.973, "rotationY": 0, "rotationZ": 0},
+            "sensory 7": {"rotationX": 4.5676, "rotationY": 0, "rotationZ": 0},
+            "sensory 47": {"rotationX": 6.3784, "rotationY": 0, "rotationZ": 0},
+            "origin vertebrae 3": {"rotationX": 0, "rotationY": 0, "rotationZ": -15},
+            "sensory 9": {"rotationX": 34.5405, "rotationY": 0, "rotationZ": 0},
+            "sensory 10": {"rotationX": 0.9189, "rotationY": 0, "rotationZ": 0},
+            "origin vertebrae 4": {"rotationX": 0, "rotationY": 0, "rotationZ": -15},
+            "funnel origin": {"rotationX": 0, "rotationY": 0, "rotationZ": -50},
+            "funnel 1": {"rotationX": 0, "rotationY": 0, "rotationZ": 17},
+            "funnel 2": {"rotationX": 0, "rotationY": 0, "rotationZ": 49},
+            "funnel 3": {"offsetX": 0, "offsetY": -0.2, "offsetZ": 0, "rotationX": 0, "rotationY": 0, "rotationZ": 66},
+            "funnel 4": {"rotationX": 0, "rotationY": 0, "rotationZ": -39},
+            "string": {"rotationX": 0, "rotationY": 0, "rotationZ": -15},
+            "ORIGIN SPINE": {"rotationX": 0, "rotationY": 0, "rotationZ": 112.8}
+          }
+        }
+      ]
+    }
+  }
+]

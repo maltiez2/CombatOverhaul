@@ -1,0 +1,9 @@
+﻿[
+  {
+    "side": "Server",
+    "file": "game:itemtypes/wearable/armor",
+    "op": "replace",
+    "path": "/shapeByType/armor-*-sewn-linen",
+    "value": {"base": "combatoverhaul:armor/gambeson/{bodypart}"}
+  }
+]

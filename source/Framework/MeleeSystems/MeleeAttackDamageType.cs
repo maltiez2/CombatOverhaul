@@ -1,13 +1,15 @@
 ﻿using CombatOverhaul.Colliders;
 using CombatOverhaul.DamageSystems;
-using CompactExifLib;
 using ProtoBuf;
 using System.Numerics;
+using System.Reflection;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
+using Vintagestory.API.Config;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
-using Vintagestory.GameContent;
+using Vintagestory.Client.NoObf;
+using static Microsoft.WindowsAPICodePack.Shell.PropertySystem.SystemProperties.System;
 
 namespace CombatOverhaul.MeleeSystems;
 
@@ -20,6 +22,7 @@ public struct MeleeDamagePacket
     public float[] Knockback { get; set; }
     public float[] Position { get; set; }
     public int Collider { get; set; }
+    public int ColliderType { get; set; }
     public long AttackerEntityId { get; set; }
     public long TargetEntityId { get; set; }
     public int DurabilityDamage { get; set; }
@@ -56,6 +59,10 @@ public struct MeleeDamagePacket
             slot?.Itemstack.Collectible.DamageItem(target.Api.World, attacker, slot, DurabilityDamage);
             slot?.MarkDirty();
         }
+
+        string damageLogMessage = Lang.Get("combatoverhaul:damagelog-dealt-damage", Lang.Get($"combatoverhaul:entity-damage-zone-{(ColliderTypes)ColliderType}"), target.GetName(), $"{target.WatchedAttributes.GetFloat("onHurt"):F2}");
+
+        ((attacker as EntityPlayer)?.Player as IServerPlayer)?.SendMessage(GlobalConstants.DamageLogChatGroup, damageLogMessage, EnumChatType.Notification);
     }
 }
 
@@ -91,18 +98,18 @@ public class MeleeDamageType : IHasLineCollider
 
     public bool TryAttack(IPlayer attacker, Entity target, out int collider, out Vector3 collisionPoint, out MeleeDamagePacket packet, bool mainHand, float maximumParameter)
     {
-        bool collided = Collide(target, out collider, out collisionPoint, out float parameter);
+        bool collided = Collide(target, out collider, out collisionPoint, out float parameter, out ColliderTypes colliderType);
 
         packet = new();
 
         if (maximumParameter < parameter) return false;
         if (!collided) return false;
 
-        bool received = Attack(attacker.Entity, target, collisionPoint, collider, out packet, mainHand);
+        bool received = Attack(attacker.Entity, target, collisionPoint, collider, out packet, mainHand, colliderType);
 
         return received;
     }
-    public bool Attack(Entity attacker, Entity target, Vector3 position, int collider, out MeleeDamagePacket packet, bool mainHand)
+    public bool Attack(Entity attacker, Entity target, Vector3 position, int collider, out MeleeDamagePacket packet, bool mainHand, ColliderTypes colliderType)
     {
         packet = new();
 
@@ -141,6 +148,7 @@ public class MeleeDamageType : IHasLineCollider
             Knockback = received ? new float[3] { knockback.X, knockback.Y, knockback.Z } : new float[3] { 0, 0, 0 },
             Position = new float[3] { position.X, position.Y, position.Z },
             Collider = collider,
+            ColliderType = (int)colliderType,
             AttackerEntityId = attacker.EntityId,
             TargetEntityId = target.EntityId,
             DurabilityDamage = DurabilityDamage,
@@ -151,15 +159,17 @@ public class MeleeDamageType : IHasLineCollider
     }
 
     private const float _knockbackFactor = 0.1f;
-    private bool Collide(Entity target, out int collider, out Vector3 collisionPoint, out float parameter)
+    private bool Collide(Entity target, out int collider, out Vector3 collisionPoint, out float parameter, out ColliderTypes colliderType)
     {
         parameter = 1f;
 
+        colliderType = ColliderTypes.Torso;
         collisionPoint = Vector3.Zero;
         CollidersEntityBehavior? colliders = target.GetBehavior<CollidersEntityBehavior>();
         if (colliders != null)
         {
             bool intersects = colliders.Collide(InWorldCollider.Position, InWorldCollider.Direction, out collider, out parameter, out collisionPoint);
+            colliderType = colliders.ColliderFromIndex(collider);
             return intersects;
         }
 

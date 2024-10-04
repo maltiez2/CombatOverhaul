@@ -1,0 +1,81 @@
+{
+	"editor": {
+		"backDropShape": "entity/humanoid/seraph",
+		"allAngles": true,
+		"singleTexture": true
+	},
+	"textureWidth": 64,
+	"textureHeight": 64,
+	"textures": {
+		"material": "entity/humanoid/serapharmor/plate/steel"
+	},
+	"elements": [
+		{
+			"name": "ArmorHelmet",
+			"stepParentName": "Head",
+			"from": [ -0.2, -0.5, -0.6 ], 
+			"to": [ 6.4, 5.5, 5.7 ], 
+			"unwrapMode": 4,
+			"uv": [ 26.5, 14.0 ],
+			"rotationOrigin": [ -0.2, -0.5, -0.6 ],
+			"faces": {
+				"north": { "texture": "#material", "uv": [ 26.5, 20.5, 33.0, 26.5 ] },
+				"east": { "texture": "#material", "uv": [ 45.5, 20.5, 51.5, 26.5 ] },
+				"south": { "texture": "#material", "uv": [ 39.0, 20.5, 45.5, 26.5 ] },
+				"west": { "texture": "#material", "uv": [ 33.0, 20.5, 39.0, 26.5 ] },
+				"up": { "texture": "#material", "uv": [ 33.0, 14.0, 39.0, 20.5 ], "rotation": 90 },
+				"down": { "texture": "#material", "uv": [ 33.0, 26.5, 39.0, 33.0 ], "rotation": 90 }
+			},
+			"children": [
+				{
+					"name": "ArmorHelmetTop",
+					"from": [ 0.5, 6.0, 0.5 ], 
+					"to": [ 6.1, 6.5, 5.8 ], 
+					"autoUnwrap": false,
+					"uv": [ 41.0, 28.5 ],
+					"rotationOrigin": [ 0.5, 6.0, 0.5 ],
+					"faces": {
+						"north": { "texture": "#material", "uv": [ 45.0, 21.0, 50.5, 21.5 ] },
+						"east": { "texture": "#material", "uv": [ 46.0, 20.5, 51.0, 21.0 ] },
+						"south": { "texture": "#material", "uv": [ 45.5, 25.5, 51.0, 26.0 ] },
+						"west": { "texture": "#material", "uv": [ 33.5, 15.0, 38.5, 15.5 ] },
+						"up": { "texture": "#material", "uv": [ 45.5, 21.0, 51.0, 26.0 ] },
+						"down": { "texture": "#material", "uv": [ 45.5, 28.5, 51.0, 33.5 ], "enabled": false }
+					}
+				},
+				{
+					"name": "ArmorHelmetFront",
+					"from": [ -0.5, 0.0, 1.0 ], 
+					"to": [ 0.0, 6.0, 5.3 ], 
+					"autoUnwrap": false,
+					"uv": [ 48.5, 26.0 ],
+					"rotationOrigin": [ -0.5, 0.0, 1.0 ],
+					"faces": {
+						"north": { "texture": "#material", "uv": [ 33.5, 20.5, 34.0, 26.5 ] },
+						"east": { "texture": "#material", "uv": [ 49.5, 30.0, 53.5, 36.0 ], "enabled": false },
+						"south": { "texture": "#material", "uv": [ 38.0, 20.5, 38.5, 26.5 ] },
+						"west": { "texture": "#material", "uv": [ 34.0, 20.5, 38.0, 26.5 ] },
+						"up": { "texture": "#material", "uv": [ 38.5, 28.0, 39.0, 32.0 ] },
+						"down": { "texture": "#material", "uv": [ 33.0, 28.0, 33.5, 32.0 ] }
+					}
+				}
+			]
+		},
+		{
+			"name": "ArmorNeck",
+			"stepParentName": "Neck",
+			"from": [ -0.3, 0.6, -0.3 ], 
+			"to": [ 3.3, 2.4, 3.3 ], 
+			"unwrapMode": 4,
+			"uv": [ 12.0, 5.5 ],
+			"rotationOrigin": [ -0.3, 2.6, -0.3 ],
+			"faces": {
+				"north": { "texture": "#material", "uv": [ 12.0, 5.5, 15.5, 7.0 ] },
+				"east": { "texture": "#material", "uv": [ 22.5, 5.5, 26.0, 7.0 ] },
+				"south": { "texture": "#material", "uv": [ 19.0, 5.5, 22.5, 7.0 ] },
+				"west": { "texture": "#material", "uv": [ 15.5, 5.5, 19.0, 7.0 ] },
+				"up": { "texture": "#material", "uv": [ 15.5, 5.5, 19.0, 9.0 ], "rotation": 90, "enabled": false },
+				"down": { "texture": "#material", "uv": [ 15.5, 7.0, 19.0, 10.5 ], "rotation": 90, "enabled": false }
+			}
+		}
+	]}

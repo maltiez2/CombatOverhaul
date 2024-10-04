@@ -11,7 +11,7 @@
         "CanBlock": false,
         "CanSprint": true,
         "SpeedPenalty": 0,
-        "AttackCooldownMs": 550,
+        "AttackCooldownMs": 0,
         "Attack": {
           "StopOnTerrainHit": false,
           "StopOnEntityHit": false,
@@ -19,7 +19,7 @@
           "MaxReach": 9,
           "DamageTypes": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 3, "Damage": 6}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.3, 0, 0.5]}]
         },
-        "AttackAnimation": "combatoverhaul:sword-forlorn-thrust",
+        "AttackAnimation": {"Main": ["combatoverhaul:sword-forlorn-thrust"]},
         "ReadyAnimation": "combatoverhaul:sword-falx-ready",
         "IdleAnimation": "combatoverhaul:sword-falx-idle",
         "AttackTpAnimation": "spearhit"
@@ -30,7 +30,7 @@
         "CanBlock": false,
         "CanSprint": true,
         "SpeedPenalty": 0,
-        "AttackCooldownMs": 550,
+        "AttackCooldownMs": 0,
         "Attack": {
           "StopOnTerrainHit": false,
           "StopOnEntityHit": false,
@@ -38,7 +38,7 @@
           "MaxReach": 9,
           "DamageTypes": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 2, "Damage": 6}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.8, 0, 0.5]}]
         },
-        "AttackAnimation": "combatoverhaul:sword-forlorn-thrust",
+        "AttackAnimation": {"Main": ["combatoverhaul:sword-forlorn-thrust"]},
         "ReadyAnimation": "combatoverhaul:sword-falx-ready",
         "IdleAnimation": "combatoverhaul:sword-falx-idle",
         "AttackTpAnimation": "spearhit"
@@ -49,7 +49,7 @@
         "CanBlock": false,
         "CanSprint": true,
         "SpeedPenalty": 0,
-        "AttackCooldownMs": 650,
+        "AttackCooldownMs": 0,
         "Attack": {
           "StopOnTerrainHit": false,
           "StopOnEntityHit": false,
@@ -69,7 +69,7 @@
             "*-steel": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 6, "Damage": 5.5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.05]}]
           }
         },
-        "AttackAnimation": "combatoverhaul:sword-falx-slash",
+        "AttackAnimation": {"Main": ["combatoverhaul:sword-falx-slash-1", "combatoverhaul:sword-falx-slash-2"]},
         "ReadyAnimation": "combatoverhaul:sword-falx-ready",
         "IdleAnimation": "combatoverhaul:sword-falx-idle",
         "AttackTpAnimation": "falx"

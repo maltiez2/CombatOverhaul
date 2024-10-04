@@ -33,7 +33,7 @@ public sealed class DirectionCursorRenderer : IRenderer
         {
             LoadedTexture cursorTexture = new(api);
 
-            api.Render.GetOrLoadTexture(new AssetLocation("meleeweaponsframework", $"gui/direction-cursor-{index}.png"), ref cursorTexture);
+            api.Render.GetOrLoadTexture(new AssetLocation("combatoverhaul", $"gui/direction-cursor-{index}.png"), ref cursorTexture);
 
             _directionCursorTextures.Add(cursorTexture);
         }

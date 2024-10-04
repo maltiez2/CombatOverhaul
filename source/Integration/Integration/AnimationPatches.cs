@@ -71,13 +71,13 @@ internal static class AnimationPatch
 
     private static void DoRender3DOpaque(EntityShapeRenderer __instance, float dt, bool isShadowPass)
     {
-        var behavior = __instance.entity.GetBehavior<CollidersEntityBehavior>();
+        CollidersEntityBehavior behavior = __instance.entity.GetBehavior<CollidersEntityBehavior>();
         behavior?.Render(__instance.entity.Api as ICoreClientAPI, __instance.entity as EntityAgent, __instance);
     }
 
     private static void DoRender3DOpaquePlayer(EntityPlayerShapeRenderer __instance, float dt, bool isShadowPass)
     {
-        var behavior = __instance.entity.GetBehavior<CollidersEntityBehavior>();
+        CollidersEntityBehavior behavior = __instance.entity.GetBehavior<CollidersEntityBehavior>();
         behavior?.Render(__instance.entity.Api as ICoreClientAPI, __instance.entity as EntityAgent, __instance);
     }
 
@@ -88,12 +88,36 @@ internal static class AnimationPatch
         if (entity?.Api?.Side != EnumAppSide.Client) return;
 
         ClientAnimator? animator = __instance.Animator as ClientAnimator;
-        if (__instance.Animator is not ProceduralClientAnimator && animator != null)
+
+        if (__instance.Animator is not ProceduralClientAnimator && animator != null && entity != null)
         {
-            if (entity != null)
+            __instance.Animator = ProceduralClientAnimator.Create(__instance, animator, entity);
+
+            if (__instance.Animator is ProceduralClientAnimator clientAnimator)
             {
-                __instance.Animator = ProceduralClientAnimator.Create(__instance, animator, entity);
+                CollidersEntityBehavior? colliders = entity?.GetBehavior<CollidersEntityBehavior>();
+                List<ElementPose> poses = clientAnimator.RootPoses;
+
+                if (colliders != null)
+                {
+                    colliders.Animator = clientAnimator;
+
+                    foreach (ElementPose pose in poses)
+                    {
+                        AddPoseShapeElements(pose, colliders);
+                    }
+                }
             }
+        }
+    }
+
+    private static void AddPoseShapeElements(ElementPose pose, CollidersEntityBehavior colliders)
+    {
+        colliders.SetColliderElement(pose.ForElement);
+
+        foreach (ElementPose childPose in pose.ChildElementPoses)
+        {
+            AddPoseShapeElements(childPose, colliders);
         }
     }
 
@@ -143,7 +167,7 @@ internal class ProceduralClientAnimator : ClientAnimator
 {
     static public event AnimatorEventDelegate? WeightCalculation;
     static public event AnimatorEventDelegate? AnimationApplication;
-    static public event Action<ShapeElement, Entity, Shape> ShapeElementAnimated;
+    static public event Action<ShapeElement, Entity, Shape>? ShapeElementAnimated;
 
     public ProceduralClientAnimator(ClientAnimator previous, EntityAgent entity, Vintagestory.API.Common.Animation[] animations, Action<string> onAnimationStoppedListener) : base(
         () => entity.Controls.MovespeedMultiplier * entity.GetWalkSpeedMultiplier(),
@@ -256,7 +280,7 @@ internal class ProceduralClientAnimator : ClientAnimator
             float[] tmp = new float[16];
             Mat4f.Identity(tmp);
 
-            if (_colliders != null) _colliders.Animator = this;
+            //if (_colliders != null) _colliders.Animator = this;
 
             CalculateMatrices(num, dt, RootPoses, weightsByAnimationAndElement[0], Mat4f.Create(), frameByDepthByAnimation[0], nextFrameTransformsByAnimation[0], 0);
 
@@ -342,7 +366,7 @@ internal class ProceduralClientAnimator : ClientAnimator
             float weightSum = SumWeights(childPoseIndex, weightsByAnimationAndElement);
             float weightSumCopy = weightSum;
 
-            if (_shape != null) WeightCalculation?.Invoke(outFramePose, ref weightSum, _shape);
+            //if (_shape != null) WeightCalculation?.Invoke(outFramePose, ref weightSum, _shape);
 
             CalculateAnimationForElements(
                     nowChildKeyFrameByAnimation,
@@ -356,7 +380,7 @@ internal class ProceduralClientAnimator : ClientAnimator
                     childPoseIndex
                     );
 
-            if (_shape != null) AnimationApplication?.Invoke(outFramePose, ref weightSumCopy, _shape);
+            //if (_shape != null) AnimationApplication?.Invoke(outFramePose, ref weightSumCopy, _shape);
 
             if (_entity != null) AnimationPatch.OnFrameInvoke(_entity, outFramePose);
 
@@ -364,7 +388,7 @@ internal class ProceduralClientAnimator : ClientAnimator
             Mat4f.Mul(outFramePose.AnimModelMatrix, outFramePose.AnimModelMatrix, localTransformMatrix);
             CalculateElementTransformMatrices(elem, outFramePose);
 
-            _colliders?.SetColliderElement(elem);
+            //_colliders?.SetColliderElement(elem);
 
             if (outFramePose.ChildElementPoses != null)
             {
