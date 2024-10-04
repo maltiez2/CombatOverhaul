@@ -76,13 +76,13 @@ public class RangeWeaponClient : IClientWeaponLogic
     {
         if (mainHand && !player.LeftHandItemSlot.Empty)
         {
-            (player.World.Api as ICoreClientAPI)?.TriggerIngameError(this, "offhandShouldBeEmpty", Lang.Get("combatoverhaul:message-mainhand-empty"));
+            (player.World.Api as ICoreClientAPI)?.TriggerIngameError(this, "offhandShouldBeEmpty", Lang.Get("combatoverhaul:message-offhand-empty"));
             return false;
         }
 
         if (!mainHand && !player.RightHandItemSlot.Empty)
         {
-            (player.World.Api as ICoreClientAPI)?.TriggerIngameError(this, "mainHandShouldBeEmpty", Lang.Get("combatoverhaul:message-offhand-empty"));
+            (player.World.Api as ICoreClientAPI)?.TriggerIngameError(this, "mainHandShouldBeEmpty", Lang.Get("combatoverhaul:message-mainhand-empty"));
             return false;
         }
 
