@@ -64,6 +64,11 @@ public sealed class DirectionController
 
     public void OnGameTick()
     {
+        if (DirectionsConfiguration == 0)
+        {
+            DirectionsConfiguration = DirectionsConfiguration.None;
+        }
+        
         if (DirectionsConfiguration == DirectionsConfiguration.None)
         {
             _directionCursorRenderer.Show = false;

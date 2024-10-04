@@ -1,5 +1,7 @@
 ﻿[
   {"file": "game:itemtypes/tool/shield", "op": "replace", "path": "/class", "value": "CombatOverhaul:VanillaShield"},
+  {"file": "game:itemtypes/tool/shield", "op": "remove", "path": "/attributes/shield"},
+  {"file": "game:itemtypes/tool/shield", "op": "add", "path": "/creativeinventory/combatoverhaul", "value": ["shield-crude", "shield-blackguard"]},
   {
     "file": "game:itemtypes/tool/shield",
     "op": "add",

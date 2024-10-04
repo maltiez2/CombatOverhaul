@@ -128,7 +128,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
 
     public int ItemId => Item.Id;
 
-    public virtual DirectionsConfiguration DirectionsType { get; protected set; }
+    public virtual DirectionsConfiguration DirectionsType { get; protected set; } = DirectionsConfiguration.None;
 
     public AnimationRequestByCode? GetIdleAnimation(bool mainHand)
     {
