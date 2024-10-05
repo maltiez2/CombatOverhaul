@@ -116,8 +116,9 @@ public class Animatable : CollectibleBehavior
             target == EnumItemRenderTarget.HandFp
         )
         {
-            if (animator is ProceduralClientAnimator procedural)
-                procedural._entity = entity;
+            if (animator is ClientAnimator clientAnimator && entity is EntityAgent agent)
+                AnimationPatch._animators[clientAnimator] = agent;
+
             animator.OnFrame(ActiveAnimationsByCode, dt);
         }
     }

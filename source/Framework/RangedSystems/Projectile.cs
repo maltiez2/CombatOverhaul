@@ -130,7 +130,7 @@ public class ProjectileEntity : Entity
         CollisionTestBox = SelectionBox.Clone().OmniGrowBy(0.05f);
 
         GetBehavior<EntityBehaviorPassivePhysics>().OnPhysicsTickCallback = OnPhysicsTickCallback;
-        GetBehavior<EntityBehaviorPassivePhysics>().collisionYExtra = 0f; // Slightly cheap hax so that stones/arrows don't collid with fences
+        //GetBehavior<EntityBehaviorPassivePhysics>().collisionYExtra = 0f; // Slightly cheap hax so that stones/arrows don't collid with fences
 
         PreviousPosition = Pos.XYZ.Clone();
         PreviousVelocity = Pos.Motion.Clone();

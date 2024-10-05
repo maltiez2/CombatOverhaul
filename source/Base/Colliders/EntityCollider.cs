@@ -245,11 +245,11 @@ public sealed class ShapeElementCollider
         SetElementVertices(element);
     }
 
-    public void Transform(float[] transformMatrix4x3, ICoreClientAPI api)
+    public void Transform(float[] transformMatrix, ICoreClientAPI api)
     {
         if (Renderer == null) return;
 
-        float[] transformMatrix = GetTransformMatrix(JointId, transformMatrix4x3);
+        //float[] transformMatrix = GetTransformMatrix(JointId, transformMatrix4x3);
 
         EntityPos playerPos = api.World.Player.Entity.Pos;
 

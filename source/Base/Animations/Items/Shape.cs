@@ -149,7 +149,7 @@ public sealed class AnimatableShape : ITexPositionSource, IDisposable
         if (animationCache.TryGetValue(cacheDictKey, out AnimCacheEntry? cacheObj))
         {
             animator = clientApi.Side == EnumAppSide.Client ?
-                new ProceduralClientAnimator(shape, () => 1, cacheObj.RootPoses, cacheObj.Animations, cacheObj.RootElems, shape.JointsById) :
+                new ClientAnimator(() => 1, cacheObj.RootPoses, cacheObj.Animations, cacheObj.RootElems, shape.JointsById) :
                 new ServerAnimator(() => 1, cacheObj.RootPoses, cacheObj.Animations, cacheObj.RootElems, shape.JointsById)
             ;
         }
@@ -161,14 +161,14 @@ public sealed class AnimatableShape : ITexPositionSource, IDisposable
             }
 
             animator = clientApi.Side == EnumAppSide.Client ?
-                new ProceduralClientAnimator(shape, () => 1, shape.Animations, shape.Elements, shape.JointsById) :
+                new ClientAnimator(() => 1, shape.Animations, shape.Elements, shape.JointsById) :
                 new ServerAnimator(() => 1, shape.Animations, shape.Elements, shape.JointsById)
             ;
 
             animationCache[cacheDictKey] = new AnimCacheEntry()
             {
                 Animations = shape.Animations,
-                RootElems = (animator as ClientAnimator)?.rootElements,
+                RootElems = (animator as ClientAnimator)?.RootElements,
                 RootPoses = (animator as ClientAnimator)?.RootPoses
             };
         }
@@ -297,12 +297,12 @@ internal class AnimatableShapeRenderer
             }
         }
     }
-    private static void ZeroTransformCorrection(float[] elementTransforms)
+    private static void ZeroTransformCorrection(List<float> elementTransforms)
     {
-        bool zeroTransform = elementTransforms.Count(value => value == 0) == elementTransforms.Length;
+        bool zeroTransform = elementTransforms.Count(value => value == 0) == elementTransforms.Count;
         if (zeroTransform)
         {
-            for (int i = 0; i < elementTransforms.Length; i += 4)
+            for (int i = 0; i < elementTransforms.Count; i += 4)
             {
                 if (elementTransforms[i] == 0)
                 {
@@ -316,16 +316,23 @@ internal class AnimatableShapeRenderer
     {
         FillShaderValues(shaderProgram, itemStackRenderInfo, render, itemStack, lightrgbs, itemModelMatrix, world);
 
-        float[] elementTransforms = animator.TransformationMatrices4x3;
+        List<float> elementTransforms = new();
 
+        for (int index = 0; index < animator.TransformationMatrices.Length; index++)
+        {
+            if (index % 4 == 3) continue;
+            elementTransforms.Add(animator.TransformationMatrices[index]);
+        }
+        
         ZeroTransformCorrection(elementTransforms);
 
         shaderProgram.UniformMatrices4x3(
             "elementTransforms",
             GlobalConstants.MaxAnimatedElements,
-            elementTransforms
+            elementTransforms.ToArray()
         );
     }
+
     private static void FillShaderValues(IShaderProgram shaderProgram, ItemRenderInfo itemStackRenderInfo, IRenderAPI render, ItemStack itemStack, Vec4f lightrgbs, Matrixf itemModelMatrix, IWorldAccessor world)
     {
         shaderProgram.Uniform("dontWarpVertices", 0);

@@ -1,0 +1,61 @@
+﻿{
+  "code": "club",
+  "class": "CombatOverhaul:MeleeWeapon",
+  "variantgroups": [{"code": "type", "states": ["generic"]}, {"code": "material", "states": ["wood"]}],
+  "shape": {"base": "combatoverhaul:weapons/club"},
+  "attributes": {
+    "groundStorageTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
+    "toolrackTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
+    "ProficiencyStat": "clubsProficiency",
+    "OneHandedStance": {
+      "CanAttack": true,
+      "CanParry": false,
+      "CanBlock": false,
+      "CanSprint": true,
+      "Attack": {
+        "StopOnTerrainHit": false,
+        "StopOnEntityHit": false,
+        "CollideWithTerrain": true,
+        "MaxReach": 9,
+        "DamageTypes": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 1, "Damage": 4}, "Knockback": 2, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.6, 0, 0.5]}]
+      },
+      "AttackAnimation": {"Main": ["combatoverhaul:club-strike-1h"]},
+      "ReadyAnimation": "combatoverhaul:club-idle-1h",
+      "IdleAnimation": "combatoverhaul:club-ready-1h"
+    },
+    "TwoHandedStance": {
+      "CanAttack": true,
+      "CanParry": false,
+      "CanBlock": false,
+      "CanSprint": true,
+      "Attack": {
+        "StopOnTerrainHit": false,
+        "StopOnEntityHit": false,
+        "CollideWithTerrain": true,
+        "MaxReach": 9,
+        "DamageTypes": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 1, "Damage": 4}, "Knockback": 2, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.6, 0, 0.5]}]
+      },
+      "AttackAnimation": {"Main": ["combatoverhaul:club-strike-2h"]},
+      "ReadyAnimation": "combatoverhaul:club-ready-2h",
+      "IdleAnimation": "combatoverhaul:club-idle-2h"
+    }
+  },
+  "behaviors": [
+    {
+      "name": "GroundStorable",
+      "properties": {
+        "layout": "WallHalves",
+        "wallOffY": 2,
+        "sprintKey": true,
+        "selectionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.1, "z2": 1},
+        "collisionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 0, "y2": 0, "z2": 0}
+      }
+    }
+  ],
+  "durability": 150,
+  "creativeinventory": {"general": ["*"], "items": ["*"], "tools": ["*"], "combatoverhaul": ["*"]},
+  "combustibleProps": {"burnTemperature": 600, "burnDuration": 10},
+  "guiTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 40, "y": 0, "z": -52}, "origin": {"x": 2.4, "y": -0.3, "z": 0}, "scale": 1.6},
+  "groundTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 4},
+  "tpHandTransform": {"translation": {"x": 0.63, "y": 0.05, "z": 0.5}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.6}
+}

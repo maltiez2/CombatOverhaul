@@ -73,7 +73,7 @@ public sealed class CollidersEntityBehavior : EntityBehavior
     public List<string> CollidersIds { get; private set; } = new();
     public Dictionary<int, ShapeElementCollider> Colliders { get; private set; } = new();
     public override string PropertyName() => "animationmanagerlib:colliders";
-    internal ProceduralClientAnimator? Animator { get; set; }
+    internal ClientAnimator? Animator { get; set; }
     static public bool RenderColliders { get; set; } = false;
 
     public override void Initialize(EntityProperties properties, JsonObject attributes)
@@ -240,11 +240,11 @@ public sealed class CollidersEntityBehavior : EntityBehavior
         { ColliderTypes.Resistant, ColorUtil.ColorFromRgba(255, 0, 255, 255 ) } // Magenta
     };
 
-    private void RecalculateColliders(ProceduralClientAnimator animator, ICoreClientAPI clientApi)
+    private void RecalculateColliders(ClientAnimator animator, ICoreClientAPI clientApi)
     {
         foreach ((_, ShapeElementCollider collider) in Colliders)
         {
-            collider.Transform(animator.TransformationMatrices4x3, clientApi);
+            collider.Transform(animator.TransformationMatrices, clientApi);
         }
         CalculateBoundingBox();
     }

@@ -1,5 +1,6 @@
 ﻿using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
+using Vintagestory.GameContent;
 
 namespace CombatOverhaul.Armor;
 
@@ -15,9 +16,11 @@ public sealed class ArmorStatsBehavior : EntityBehavior
 
     public override void OnGameTick(float deltaTime)
     {
-        if (_initialized || _player.GearInventory == null) return;
+        InventoryBase? inventory = GetGearInventory(_player);
 
-        _player.GearInventory.SlotModified += _ => UpdateStatsValues();
+        if (_initialized || inventory == null) return;
+
+        inventory.SlotModified += _ => UpdateStatsValues();
         UpdateStatsValues();
 
         _initialized = true;
@@ -27,8 +30,17 @@ public sealed class ArmorStatsBehavior : EntityBehavior
     private const string _statsCategory = "CombatOverhaul:Armor";
     private bool _initialized = false;
 
+    private static InventoryBase? GetGearInventory(Entity entity)
+    {
+        return entity.GetBehavior<EntityBehaviorPlayerInventory>().Inventory;
+    }
+
     private void UpdateStatsValues()
     {
+        InventoryBase? inventory = GetGearInventory(_player);
+
+        if (inventory == null) return;
+
         foreach ((string stat, _) in Stats)
         {
             _player.Stats.Remove(stat, _statsCategory);
@@ -36,7 +48,7 @@ public sealed class ArmorStatsBehavior : EntityBehavior
 
         Stats.Clear();
 
-        foreach (IAffectsPlayerStats armor in _player.GearInventory.Select(slot => slot.Itemstack?.Item).OfType<IAffectsPlayerStats>())
+        foreach (IAffectsPlayerStats armor in inventory.Select(slot => slot.Itemstack?.Item).OfType<IAffectsPlayerStats>())
         {
             foreach ((string stat, float value) in armor.PlayerStats)
             {
@@ -44,7 +56,7 @@ public sealed class ArmorStatsBehavior : EntityBehavior
             }
         }
 
-        foreach (IAffectsPlayerStats armor in _player.GearInventory
+        foreach (IAffectsPlayerStats armor in inventory
             .Select(slot => slot.Itemstack?.Item)
             .OfType<Item>()
             .Select(item => item.CollectibleBehaviors.Where(behavior => behavior is IAffectsPlayerStats).FirstOrDefault(defaultValue: null))

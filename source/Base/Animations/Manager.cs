@@ -118,40 +118,6 @@ public sealed class AnimationsManager
                 TransformEditorTab();
                 ImGui.EndTabItem();
             }
-            if (ImGui.BeginTabItem($"Camera movement effects"))
-            {
-                /*float Amplitude = EyeHightController.Amplitude;
-                ImGui.SliderFloat("Amplitude##effects", ref Amplitude, 0, 2);
-                EyeHightController.Amplitude = Amplitude;*/
-
-                float Frequency = EyeHightController.Frequency;
-                ImGui.SliderFloat("Frequency##effects", ref Frequency, 0, 2);
-                EyeHightController.Frequency = Frequency;
-
-                float SprintFrequencyEffect = EyeHightController.SprintFrequencyEffect;
-                ImGui.SliderFloat("SprintFrequencyEffect##effects", ref SprintFrequencyEffect, 0, 2);
-                EyeHightController.SprintFrequencyEffect = SprintFrequencyEffect;
-
-                float SprintAmplitudeEffect = EyeHightController.SprintAmplitudeEffect;
-                ImGui.SliderFloat("SprintAmplitudeEffect##effects", ref SprintAmplitudeEffect, 0, 2);
-                EyeHightController.SprintAmplitudeEffect = SprintAmplitudeEffect;
-
-                float SneakEffect = EyeHightController.SneakEffect;
-                ImGui.SliderFloat("SneakEffect##effects", ref SneakEffect, 0.5f, 2);
-                EyeHightController.SneakEffect = SneakEffect;
-
-                float Offset = EyeHightController.OffsetMultiplier;
-                ImGui.SliderFloat("Offset##effects", ref Offset, 0, 2);
-                EyeHightController.OffsetMultiplier = Offset;
-
-                float LiquidEffect = EyeHightController.LiquidEffect;
-                ImGui.SliderFloat("LiquidEffect##effects", ref LiquidEffect, 0, 2);
-                EyeHightController.LiquidEffect = LiquidEffect;
-
-                //EditFov();
-
-                ImGui.EndTabItem();
-            }
             if (ImGui.BeginTabItem("Particle effects##tab"))
             {
                 _particleEffectsManager.Draw("particle-effects");

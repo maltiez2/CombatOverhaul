@@ -281,7 +281,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
             if (_resetFov)
             {
                 SetFov(1);
-                EyeHightController.Amplitude = 1.0f;
+                //EyeHightController.Amplitude = 1.0f; @TODO use new entity property
                 _resetFov = false;
             }
             return;
@@ -331,7 +331,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
         }
 
         SetFov(frame.Player.FovMultiplier);
-        EyeHightController.Amplitude = frame.Player.BobbingAmplitude;
+        //EyeHightController.Amplitude = frame.Player.BobbingAmplitude; @TODO use new entity property
         _resetFov = true;
     }
     private static bool IsOwner(Entity entity) => (entity.Api as ICoreClientAPI)?.World.Player.Entity.EntityId == entity.EntityId;
