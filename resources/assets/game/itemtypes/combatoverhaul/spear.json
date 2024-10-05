@@ -62,15 +62,15 @@
         "CollideWithTerrain": true,
         "MaxReach": 9,
         "DamageTypesByType": {
-          "*-flint": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 2, "Damage": 3}, "Knockback": 3, "DurabilityDamage": 1, "Collider": [0.6, 0, 0.5, 1.2, 0, 0.5]}],
-          "*-copper": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 3, "Damage": 3.5}, "Knockback": 3, "DurabilityDamage": 1, "Collider": [0.6, 0, 0.5, 1.2, 0, 0.5]}],
-          "*-*bronze": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 3, "Damage": 3.5}, "Knockback": 3, "DurabilityDamage": 1, "Collider": [0.6, 0, 0.5, 1.2, 0, 0.5]}],
-          "*-iron": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 4, "Damage": 4}, "Knockback": 3, "DurabilityDamage": 1, "Collider": [0.6, 0, 0.5, 1.2, 0, 0.5]}],
+          "*-flint": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 2, "Damage": 3}, "Knockback": 1, "DurabilityDamage": 1, "Collider": [0.6, 0, 0.5, 1.2, 0, 0.5]}],
+          "*-copper": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 3, "Damage": 3.5}, "Knockback": 1, "DurabilityDamage": 1, "Collider": [0.6, 0, 0.5, 1.2, 0, 0.5]}],
+          "*-*bronze": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 3, "Damage": 3.5}, "Knockback": 1, "DurabilityDamage": 1, "Collider": [0.6, 0, 0.5, 1.2, 0, 0.5]}],
+          "*-iron": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 4, "Damage": 4}, "Knockback": 1, "DurabilityDamage": 1, "Collider": [0.6, 0, 0.5, 1.2, 0, 0.5]}],
           "*-meteoriciron": [
-            {"Damage": {"DamageType": "PiercingAttack", "Strength": 4.5, "Damage": 4.2}, "Knockback": 3, "DurabilityDamage": 1, "Collider": [0.6, 0, 0.5, 1.2, 0, 0.5]}
+            {"Damage": {"DamageType": "PiercingAttack", "Strength": 4.5, "Damage": 4.2}, "Knockback": 1, "DurabilityDamage": 1, "Collider": [0.6, 0, 0.5, 1.2, 0, 0.5]}
           ],
-          "*-steel": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 5, "Damage": 4.5}, "Knockback": 3, "DurabilityDamage": 1, "Collider": [0.6, 0, 0.5, 1.2, 0, 0.5]}],
-          "*": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 1, "Damage": 2.5}, "Knockback": 3, "DurabilityDamage": 1, "Collider": [0.6, 0, 0.5, 1.2, 0, 0.5]}]
+          "*-steel": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 5, "Damage": 4.5}, "Knockback": 1, "DurabilityDamage": 1, "Collider": [0.6, 0, 0.5, 1.2, 0, 0.5]}],
+          "*": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 1, "Damage": 2.5}, "Knockback": 1, "DurabilityDamage": 1, "Collider": [0.6, 0, 0.5, 1.2, 0, 0.5]}]
         }
       },
       "HandleAttack": {
@@ -78,14 +78,7 @@
         "StopOnEntityHit": false,
         "CollideWithTerrain": true,
         "MaxReach": 9,
-        "DamageTypesByType": {
-          "*-flint": [{"Damage": {"DamageType": "BluntAttack", "Strength": 0, "Damage": 1}, "Knockback": 2, "DurabilityDamage": 1, "Collider": [0.5, 0, 0.5, -2.5, 0, 0.5]}],
-          "*-copper": [{"Damage": {"DamageType": "BluntAttack", "Strength": 0, "Damage": 1}, "Knockback": 2, "DurabilityDamage": 1, "Collider": [0.5, 0, 0.5, -2.5, 0, 0.5]}],
-          "*-*bronze": [{"Damage": {"DamageType": "BluntAttack", "Strength": 0, "Damage": 1}, "Knockback": 2, "DurabilityDamage": 1, "Collider": [0.5, 0, 0.5, -2.5, 0, 0.5]}],
-          "*-iron": [{"Damage": {"DamageType": "BluntAttack", "Strength": 0, "Damage": 1}, "Knockback": 2, "DurabilityDamage": 1, "Collider": [0.5, 0, 0.5, -2.5, 0, 0.5]}],
-          "*-steel": [{"Damage": {"DamageType": "BluntAttack", "Strength": 0, "Damage": 1}, "Knockback": 2, "DurabilityDamage": 1, "Collider": [0.5, 0, 0.5, -2.5, 0, 0.5]}],
-          "*": [{"Damage": {"DamageType": "BluntAttack", "Strength": 0, "Damage": 1}, "Knockback": 2, "DurabilityDamage": 1, "Collider": [0.5, 0, 0.5, -2.5, 0, 0.5]}]
-        }
+        "DamageTypes": [{"Damage": {"DamageType": "BluntAttack", "Strength": 0, "Damage": 1}, "Knockback": 1, "DurabilityDamage": 1, "Collider": [0.5, 0, 0.5, -2.5, 0, 0.5]}]
       },
       "AttackAnimation": {"Main": ["combatoverhaul:spear-thrust-1h"]},
       "ReadyAnimation": "combatoverhaul:spear-ready-1h",
@@ -109,15 +102,15 @@
         "CollideWithTerrain": true,
         "MaxReach": 15,
         "DamageTypesByType": {
-          "*-flint": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 2, "Damage": 3}, "Knockback": 3, "DurabilityDamage": 1, "Collider": [0.6, 0, 0.5, 1.2, 0, 0.5]}],
-          "*-copper": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 3, "Damage": 3.5}, "Knockback": 3, "DurabilityDamage": 1, "Collider": [0.6, 0, 0.5, 1.2, 0, 0.5]}],
-          "*-*bronze": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 3, "Damage": 3.5}, "Knockback": 3, "DurabilityDamage": 1, "Collider": [0.6, 0, 0.5, 1.2, 0, 0.5]}],
-          "*-iron": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 4, "Damage": 4}, "Knockback": 3, "DurabilityDamage": 1, "Collider": [0.6, 0, 0.5, 1.2, 0, 0.5]}],
+          "*-flint": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 2, "Damage": 3}, "Knockback": 2, "DurabilityDamage": 1, "Collider": [0.6, 0, 0.5, 1.2, 0, 0.5]}],
+          "*-copper": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 3, "Damage": 3.5}, "Knockback": 2, "DurabilityDamage": 1, "Collider": [0.6, 0, 0.5, 1.2, 0, 0.5]}],
+          "*-*bronze": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 3, "Damage": 3.5}, "Knockback": 2, "DurabilityDamage": 1, "Collider": [0.6, 0, 0.5, 1.2, 0, 0.5]}],
+          "*-iron": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 4, "Damage": 4}, "Knockback": 2, "DurabilityDamage": 1, "Collider": [0.6, 0, 0.5, 1.2, 0, 0.5]}],
           "*-meteoriciron": [
-            {"Damage": {"DamageType": "PiercingAttack", "Strength": 4.5, "Damage": 4.2}, "Knockback": 3, "DurabilityDamage": 1, "Collider": [0.6, 0, 0.5, 1.2, 0, 0.5]}
+            {"Damage": {"DamageType": "PiercingAttack", "Strength": 4.5, "Damage": 4.2}, "Knockback": 2, "DurabilityDamage": 1, "Collider": [0.6, 0, 0.5, 1.2, 0, 0.5]}
           ],
-          "*-steel": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 5, "Damage": 4.5}, "Knockback": 3, "DurabilityDamage": 1, "Collider": [0.6, 0, 0.5, 1.2, 0, 0.5]}],
-          "*": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 1, "Damage": 2.5}, "Knockback": 3, "DurabilityDamage": 1, "Collider": [0.6, 0, 0.5, 1.2, 0, 0.5]}]
+          "*-steel": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 5, "Damage": 4.5}, "Knockback": 2, "DurabilityDamage": 1, "Collider": [0.6, 0, 0.5, 1.2, 0, 0.5]}],
+          "*": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 1, "Damage": 2.5}, "Knockback": 2, "DurabilityDamage": 1, "Collider": [0.6, 0, 0.5, 1.2, 0, 0.5]}]
         }
       },
       "HandleAttack": {
@@ -125,7 +118,7 @@
         "StopOnEntityHit": false,
         "CollideWithTerrain": true,
         "MaxReach": 9,
-        "DamageTypes": [{"Damage": {"DamageType": "BluntAttack", "Strength": 0, "Damage": 1}, "Knockback": 2, "DurabilityDamage": 1, "Collider": [0.5, 0, 0.5, -2.5, 0, 0.5]}]
+        "DamageTypes": [{"Damage": {"DamageType": "BluntAttack", "Strength": 0, "Damage": 1}, "Knockback": 1, "DurabilityDamage": 1, "Collider": [0.5, 0, 0.5, -2.5, 0, 0.5]}]
       },
       "Parry": {"Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand"], "Directions": [90, 90, 90, 90]},
       "BlockAnimation": "combatoverhaul:spear-parry",

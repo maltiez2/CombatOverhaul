@@ -1,4 +1,5 @@
-﻿using CombatOverhaul.Colliders;
+﻿using Cairo.Freetype;
+using CombatOverhaul.Colliders;
 using CombatOverhaul.DamageSystems;
 using ProtoBuf;
 using System.Numerics;
@@ -16,7 +17,7 @@ public struct MeleeDamagePacket
     public string DamageType { get; set; }
     public float Strength { get; set; }
     public float Damage { get; set; }
-    public float[] Knockback { get; set; }
+    public float Knockback { get; set; }
     public float[] Position { get; set; }
     public int Collider { get; set; }
     public int ColliderType { get; set; }
@@ -33,22 +34,13 @@ public struct MeleeDamagePacket
         bool damageReceived = target.ReceiveDamage(new DirectionalTypedDamageSource()
         {
             Source = attacker is EntityPlayer ? EnumDamageSource.Player : EnumDamageSource.Entity,
-            SourceEntity = null,
+            SourceEntity = attacker,
             CauseEntity = attacker,
             DamageTypeData = new DamageData(Enum.Parse<EnumDamageType>(DamageType), Strength),
             Position = new Vector3(Position[0], Position[1], Position[2]),
-            Collider = Collider
+            Collider = Collider,
+            KnockbackStrength = Knockback
         }, Damage);
-
-        bool received = damageReceived || Damage <= 0;
-
-        if (received)
-        {
-            Vec3f knockback = new(Knockback[0], Knockback[1], Knockback[2]);
-
-            target.Pos.Motion.Add(knockback);
-            target.ServerPos.Motion.Add(knockback);
-        }
 
         if (DurabilityDamage > 0)
         {
@@ -57,7 +49,9 @@ public struct MeleeDamagePacket
             slot?.MarkDirty();
         }
 
-        string damageLogMessage = Lang.Get("combatoverhaul:damagelog-dealt-damage", Lang.Get($"combatoverhaul:entity-damage-zone-{(ColliderTypes)ColliderType}"), target.GetName(), $"{target.WatchedAttributes.GetFloat("onHurt"):F2}");
+        float damage = damageReceived ? target.WatchedAttributes.GetFloat("onHurt") : 0;
+
+        string damageLogMessage = Lang.Get("combatoverhaul:damagelog-dealt-damage", Lang.Get($"combatoverhaul:entity-damage-zone-{(ColliderTypes)ColliderType}"), target.GetName(), $"{damage:F2}");
 
         ((attacker as EntityPlayer)?.Player as IServerPlayer)?.SendMessage(GlobalConstants.DamageLogChatGroup, damageLogMessage, EnumChatType.Notification);
     }
@@ -119,30 +113,22 @@ public class MeleeDamageType : IHasLineCollider
         bool damageReceived = target.ReceiveDamage(new DirectionalTypedDamageSource()
         {
             Source = attacker is EntityPlayer ? EnumDamageSource.Player : EnumDamageSource.Entity,
-            SourceEntity = null,
+            SourceEntity = attacker,
             CauseEntity = attacker,
             DamageTypeData = DamageTypeData,
             Position = position,
-            Collider = collider
+            Collider = collider,
+            KnockbackStrength = Knockback
         }, Damage);
 
         bool received = damageReceived || Damage <= 0;
-
-        Vec3f knockback = new();
-        if (received)
-        {
-            knockback = (target.Pos.XYZFloat - attacker.Pos.XYZFloat).Normalize() * Knockback * _knockbackFactor * (1.0f - target.Properties.KnockbackResistance);
-
-            target.Pos.Motion.Add(knockback);
-            target.ServerPos.Motion.Add(knockback);
-        }
 
         packet = new()
         {
             DamageType = DamageTypeData.DamageType.ToString(),
             Strength = DamageTypeData.Strength,
             Damage = Damage,
-            Knockback = received ? new float[3] { knockback.X, knockback.Y, knockback.Z } : new float[3] { 0, 0, 0 },
+            Knockback = Knockback,
             Position = new float[3] { position.X, position.Y, position.Z },
             Collider = collider,
             ColliderType = (int)colliderType,
