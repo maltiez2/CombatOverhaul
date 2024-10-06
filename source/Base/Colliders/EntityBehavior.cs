@@ -138,8 +138,8 @@ public sealed class CollidersEntityBehavior : EntityBehavior
     public void Render(ICoreClientAPI api, EntityAgent entityPlayer, EntityShapeRenderer renderer, int color = ColorUtil.WhiteArgb)
     {
         if (api.World.Player.Entity.EntityId == entityPlayer.EntityId) return;
-
         if (!HasOBBCollider) return;
+        if ((entity.Api as ICoreClientAPI)?.Render.WireframeDebugRender.Entity! != true) return;
 
         IShaderProgram? currentShader = api.Render.CurrentActiveShader;
         currentShader?.Stop();
@@ -152,7 +152,7 @@ public sealed class CollidersEntityBehavior : EntityBehavior
                 collider.HasRenderer = true;
             }
 
-            if (RenderColliders) collider.Render(api, entityPlayer, _colliderColors[CollidersTypes[CollidersIds[id]]]);
+            collider.Render(api, entityPlayer, _colliderColors[CollidersTypes[CollidersIds[id]]]);
         }
 
         currentShader?.Use();
