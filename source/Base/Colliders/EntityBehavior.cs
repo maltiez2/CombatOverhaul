@@ -139,7 +139,7 @@ public sealed class CollidersEntityBehavior : EntityBehavior
     {
         if (api.World.Player.Entity.EntityId == entityPlayer.EntityId) return;
         if (!HasOBBCollider) return;
-        if ((entity.Api as ICoreClientAPI)?.Render.WireframeDebugRender.Entity! != true) return;
+        if ((entity.Api as ICoreClientAPI)?.Render.WireframeDebugRender.Entity != true) return;
 
         IShaderProgram? currentShader = api.Render.CurrentActiveShader;
         currentShader?.Stop();
