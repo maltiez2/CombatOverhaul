@@ -348,6 +348,11 @@ public sealed class ShapeElementCollider
             GetElementTransformMatrix(matrix, element.ParentElement);
         }
 
+        if (element.RotationOrigin == null)
+        {
+            element.RotationOrigin = new double[3] { 0, 0, 0 };
+        }
+
         matrix
             .Translate(element.RotationOrigin[0], element.RotationOrigin[1], element.RotationOrigin[2])
             .RotateX((float)element.RotationX * GameMath.DEG2RAD)
