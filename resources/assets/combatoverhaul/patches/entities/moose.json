@@ -62,8 +62,8 @@
       "code": "CombatOverhaul:EntityDamageModel",
       "damageModel": {
         "TorsoDamageMultiplier": 1,
-        "LimbsDamageMultiplier": 0.5,
-        "HeadDamageMultiplier": 1.25,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.5,
         "CriticalDamageMultiplier": 2,
         "DefaultResistsByType": {"*-baby": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}, "*": {"BluntAttack": 4, "SlashingAttack": 3, "PiercingAttack": 1}}
       }
@@ -78,8 +78,8 @@
       "code": "CombatOverhaul:EntityDamageModel",
       "damageModel": {
         "TorsoDamageMultiplier": 1,
-        "LimbsDamageMultiplier": 0.5,
-        "HeadDamageMultiplier": 1.25,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.5,
         "CriticalDamageMultiplier": 2,
         "DefaultResistsByType": {"*-baby": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}, "*": {"BluntAttack": 4, "SlashingAttack": 3, "PiercingAttack": 1}}
       }

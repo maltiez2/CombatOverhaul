@@ -1,0 +1,104 @@
+﻿[
+  {
+    "side": "Server",
+    "file": "game:entities/land/fox",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*-male-*": {
+          "Torso": ["neck", "body", "abdomen", "tail", "L back leg", "R back leg"],
+          "Head": ["head", "mouth"],
+          "Arm": ["L front leg", "left front feet", "R front leg", "right front feet"],
+          "Leg": ["L back feet", "R back feet"],
+          "Critical": [],
+          "Resistant": []
+        },
+        "*-female-*": {
+          "Torso": ["neck", "body", "abdomen", "tail", "L back leg", "R back leg"],
+          "Head": ["head", "mouth"],
+          "Arm": ["L front leg", "left front feet", "R front leg", "right front feet"],
+          "Leg": ["L back feet", "R back feet"],
+          "Critical": [],
+          "Resistant": []
+        },
+        "*-pup-*": {
+          "Torso": ["neck", "body", "abdomen", "L back leg", "R back leg"],
+          "Head": ["head", "mouth"],
+          "Arm": ["L front leg", "L front feet", "R front leg", "R front feet"],
+          "Leg": ["L back feet", "R back feet"],
+          "Critical": [],
+          "Resistant": []
+        }
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/fox",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*-male-*": {
+          "Torso": ["neck", "body", "abdomen", "tail", "L back leg", "R back leg"],
+          "Head": ["head", "mouth"],
+          "Arm": ["L front leg", "left front feet", "R front leg", "right front feet"],
+          "Leg": ["L back feet", "R back feet"],
+          "Critical": [],
+          "Resistant": []
+        },
+        "*-female-*": {
+          "Torso": ["neck", "body", "abdomen", "tail", "L back leg", "R back leg"],
+          "Head": ["head", "mouth"],
+          "Arm": ["L front leg", "left front feet", "R front leg", "right front feet"],
+          "Leg": ["L back feet", "R back feet"],
+          "Critical": [],
+          "Resistant": []
+        },
+        "*-pup-*": {
+          "Torso": ["neck", "body", "abdomen", "L back leg", "R back leg"],
+          "Head": ["head", "mouth"],
+          "Arm": ["L front leg", "L front feet", "R front leg", "R front feet"],
+          "Leg": ["L back feet", "R back feet"],
+          "Critical": [],
+          "Resistant": []
+        }
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/fox",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 4,
+        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/fox",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 4,
+        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}
+      }
+    }
+  }
+]

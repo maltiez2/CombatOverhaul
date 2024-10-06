@@ -1,15 +1,15 @@
 ﻿[
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-male",
+    "file": "game:entities/land/pig-wild-male",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
       "elements": {
-        "Torso": ["R back leg", "L back leg", "R front leg", "L front leg", "neck", "Body", "abdomen"],
-        "Head": ["head", "mouth"],
-        "Arm": ["L front feet", "R front feet"],
+        "Torso": ["body", "L back leg", "R back leg"],
+        "Head": ["neck", "head", "cheeks"],
+        "Arm": ["R front feet", "L front feet"],
         "Leg": ["L back feet", "R back feet"],
         "Critical": [],
         "Resistant": []
@@ -18,15 +18,15 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-male",
+    "file": "game:entities/land/pig-wild-male",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
       "elements": {
-        "Torso": ["R back leg", "L back leg", "R front leg", "L front leg", "neck", "Body", "abdomen"],
-        "Head": ["head", "mouth"],
-        "Arm": ["L front feet", "R front feet"],
+        "Torso": ["body", "L back leg", "R back leg"],
+        "Head": ["neck", "head", "cheeks"],
+        "Arm": ["R front feet", "L front feet"],
         "Leg": ["L back feet", "R back feet"],
         "Critical": [],
         "Resistant": []
@@ -35,15 +35,15 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-female",
+    "file": "game:entities/land/pig-wild-female",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
       "elements": {
-        "Torso": ["R back leg", "L back leg", "R front leg", "L front leg", "neck", "Body", "abdomen"],
-        "Head": ["head", "mouth"],
-        "Arm": ["L front feet", "R front feet"],
+        "Torso": ["body", "L back leg", "R back leg"],
+        "Head": ["neck", "head", "cheeks"],
+        "Arm": ["R front feet", "L front feet"],
         "Leg": ["L back feet", "R back feet"],
         "Critical": [],
         "Resistant": []
@@ -52,15 +52,15 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-female",
+    "file": "game:entities/land/pig-wild-female",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
       "elements": {
-        "Torso": ["R back leg", "L back leg", "R front leg", "L front leg", "neck", "Body", "abdomen"],
-        "Head": ["head", "mouth"],
-        "Arm": ["L front feet", "R front feet"],
+        "Torso": ["body", "L back leg", "R back leg"],
+        "Head": ["neck", "head", "cheeks"],
+        "Arm": ["R front feet", "L front feet"],
         "Leg": ["L back feet", "R back feet"],
         "Critical": [],
         "Resistant": []
@@ -69,41 +69,27 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-pup",
+    "file": "game:entities/land/pig-wild-piglet",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
-      "elements": {
-        "Torso": ["neck", "body"],
-        "Head": ["head", "mouth up"],
-        "Arm": ["L front leg", "L front feet", "R front leg", "R front feet"],
-        "Leg": ["L back leg", "L back feet", "R back leg", "R back feet"],
-        "Critical": [],
-        "Resistant": []
-      }
+      "elements": {"Torso": ["body"], "Head": ["head", "nose"], "Arm": ["R front feet", "L front feet"], "Leg": ["L back feet", "R back feet"], "Critical": [], "Resistant": []}
     }
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-pup",
+    "file": "game:entities/land/pig-wild-piglet",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
-      "elements": {
-        "Torso": ["neck", "body"],
-        "Head": ["head", "mouth up"],
-        "Arm": ["L front leg", "L front feet", "R front leg", "R front feet"],
-        "Leg": ["L back leg", "L back feet", "R back leg", "R back feet"],
-        "Critical": [],
-        "Resistant": []
-      }
+      "elements": {"Torso": ["body"], "Head": ["head", "nose"], "Arm": ["R front feet", "L front feet"], "Leg": ["L back feet", "R back feet"], "Critical": [], "Resistant": []}
     }
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-male",
+    "file": "game:entities/land/pig-wild-male",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
@@ -119,7 +105,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-male",
+    "file": "game:entities/land/pig-wild-male",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
@@ -135,7 +121,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-female",
+    "file": "game:entities/land/pig-wild-female",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
@@ -151,7 +137,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-female",
+    "file": "game:entities/land/pig-wild-female",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
@@ -167,33 +153,33 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-pup",
+    "file": "game:entities/land/pig-wild-piglet",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityDamageModel",
       "damageModel": {
         "TorsoDamageMultiplier": 1,
-        "LimbsDamageMultiplier": 0.75,
+        "LimbsDamageMultiplier": 1,
         "HeadDamageMultiplier": 1.5,
         "CriticalDamageMultiplier": 4,
-        "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 1, "PiercingAttack": 0}
+        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}
       }
     }
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-pup",
+    "file": "game:entities/land/pig-wild-piglet",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityDamageModel",
       "damageModel": {
         "TorsoDamageMultiplier": 1,
-        "LimbsDamageMultiplier": 0.75,
+        "LimbsDamageMultiplier": 1,
         "HeadDamageMultiplier": 1.5,
         "CriticalDamageMultiplier": 4,
-        "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 1, "PiercingAttack": 0}
+        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}
       }
     }
   }

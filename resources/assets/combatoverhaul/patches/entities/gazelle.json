@@ -1,0 +1,104 @@
+﻿[
+  {
+    "side": "Server",
+    "file": "game:entities/land/gazelle",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*-male": {
+          "Torso": ["Body", "abdomen", "L front Thigh", "R front Thigh", "L back Thigh", "R back Thigh", "neck", "neck2"],
+          "Head": ["head", "mouth up"],
+          "Arm": ["L front Upper Arm", "L front lower arm", "R front Upper Arm", "R front lower arm"],
+          "Leg": ["L back Upper Arm", "L back lower arm", "R back Upper Arm", "R back lower arm"],
+          "Critical": [],
+          "Resistant": ["L horn base", "L horn mid", "R horn base", "R horn mid"]
+        },
+        "*-female": {
+          "Torso": ["Body", "abdomen", "L front Thigh", "R front Thigh", "L back Thigh", "R back Thigh", "neck", "neck2"],
+          "Head": ["head", "mouth up"],
+          "Arm": ["L front Upper Arm", "L front lower arm", "R front Upper Arm", "R front lower arm"],
+          "Leg": ["L back Upper Arm", "L back lower arm", "R back Upper Arm", "R back lower arm"],
+          "Critical": [],
+          "Resistant": []
+        },
+        "*-calf": {
+          "Torso": ["Body", "abdomen", "L front Thigh", "R front Thigh", "L back Thigh", "R back Thigh", "neck"],
+          "Head": ["head", "mouth-up"],
+          "Arm": ["L front Upper Arm", "L front lower arm", "R front Upper Arm", "R front lower arm"],
+          "Leg": ["L back Upper Arm", "L back lower arm", "R back Upper Arm", "R back lower arm"],
+          "Critical": [],
+          "Resistant": []
+        }
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/gazelle",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*-male": {
+          "Torso": ["Body", "abdomen", "L front Thigh", "R front Thigh", "L back Thigh", "R back Thigh", "neck", "neck2"],
+          "Head": ["head", "mouth up"],
+          "Arm": ["L front Upper Arm", "L front lower arm", "R front Upper Arm", "R front lower arm"],
+          "Leg": ["L back Upper Arm", "L back lower arm", "R back Upper Arm", "R back lower arm"],
+          "Critical": [],
+          "Resistant": ["L horn base", "L horn mid", "R horn base", "R horn mid"]
+        },
+        "*-female": {
+          "Torso": ["Body", "abdomen", "L front Thigh", "R front Thigh", "L back Thigh", "R back Thigh", "neck", "neck2"],
+          "Head": ["head", "mouth up"],
+          "Arm": ["L front Upper Arm", "L front lower arm", "R front Upper Arm", "R front lower arm"],
+          "Leg": ["L back Upper Arm", "L back lower arm", "R back Upper Arm", "R back lower arm"],
+          "Critical": [],
+          "Resistant": []
+        },
+        "*-calf": {
+          "Torso": ["Body", "abdomen", "L front Thigh", "R front Thigh", "L back Thigh", "R back Thigh", "neck"],
+          "Head": ["head", "mouth-up"],
+          "Arm": ["L front Upper Arm", "L front lower arm", "R front Upper Arm", "R front lower arm"],
+          "Leg": ["L back Upper Arm", "L back lower arm", "R back Upper Arm", "R back lower arm"],
+          "Critical": [],
+          "Resistant": []
+        }
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/gazelle",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 4,
+        "DefaultResists": {"BluntAttack": 3, "SlashingAttack": 2, "PiercingAttack": 0}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/gazelle",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 4,
+        "DefaultResists": {"BluntAttack": 3, "SlashingAttack": 2, "PiercingAttack": 0}
+      }
+    }
+  }
+]

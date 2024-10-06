@@ -1,109 +1,109 @@
 ﻿[
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-male",
+    "file": "game:entities/land/raccoon-male",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
       "elements": {
-        "Torso": ["R back leg", "L back leg", "R front leg", "L front leg", "neck", "Body", "abdomen"],
+        "Torso": ["body", "abdomen", "tail", "L back leg", "R back leg"],
         "Head": ["head", "mouth"],
-        "Arm": ["L front feet", "R front feet"],
+        "Arm": ["R front feet", "L front feet"],
         "Leg": ["L back feet", "R back feet"],
-        "Critical": [],
+        "Critical": ["neck"],
         "Resistant": []
       }
     }
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-male",
+    "file": "game:entities/land/raccoon-male",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
       "elements": {
-        "Torso": ["R back leg", "L back leg", "R front leg", "L front leg", "neck", "Body", "abdomen"],
+        "Torso": ["body", "abdomen", "tail", "L back leg", "R back leg"],
         "Head": ["head", "mouth"],
-        "Arm": ["L front feet", "R front feet"],
+        "Arm": ["R front feet", "L front feet"],
         "Leg": ["L back feet", "R back feet"],
-        "Critical": [],
+        "Critical": ["neck"],
         "Resistant": []
       }
     }
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-female",
+    "file": "game:entities/land/raccoon-female",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
       "elements": {
-        "Torso": ["R back leg", "L back leg", "R front leg", "L front leg", "neck", "Body", "abdomen"],
+        "Torso": ["body", "abdomen", "tail", "L back leg", "R back leg"],
         "Head": ["head", "mouth"],
-        "Arm": ["L front feet", "R front feet"],
+        "Arm": ["R front feet", "L front feet"],
         "Leg": ["L back feet", "R back feet"],
-        "Critical": [],
+        "Critical": ["neck"],
         "Resistant": []
       }
     }
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-female",
+    "file": "game:entities/land/raccoon-female",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
       "elements": {
-        "Torso": ["R back leg", "L back leg", "R front leg", "L front leg", "neck", "Body", "abdomen"],
+        "Torso": ["body", "abdomen", "tail", "L back leg", "R back leg"],
         "Head": ["head", "mouth"],
-        "Arm": ["L front feet", "R front feet"],
+        "Arm": ["R front feet", "L front feet"],
         "Leg": ["L back feet", "R back feet"],
-        "Critical": [],
+        "Critical": ["neck"],
         "Resistant": []
       }
     }
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-pup",
+    "file": "game:entities/land/raccoon-pup",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
       "elements": {
-        "Torso": ["neck", "body"],
-        "Head": ["head", "mouth up"],
-        "Arm": ["L front leg", "L front feet", "R front leg", "R front feet"],
-        "Leg": ["L back leg", "L back feet", "R back leg", "R back feet"],
-        "Critical": [],
+        "Torso": ["body", "abdomen", "tail", "L back leg", "R back leg"],
+        "Head": ["head", "mouth"],
+        "Arm": ["R front feet", "L front feet"],
+        "Leg": ["L back feet", "R back feet"],
+        "Critical": ["neck"],
         "Resistant": []
       }
     }
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-pup",
+    "file": "game:entities/land/raccoon-pup",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
       "elements": {
-        "Torso": ["neck", "body"],
-        "Head": ["head", "mouth up"],
-        "Arm": ["L front leg", "L front feet", "R front leg", "R front feet"],
-        "Leg": ["L back leg", "L back feet", "R back leg", "R back feet"],
-        "Critical": [],
+        "Torso": ["body", "abdomen", "tail", "L back leg", "R back leg"],
+        "Head": ["head", "mouth"],
+        "Arm": ["R front feet", "L front feet"],
+        "Leg": ["L back feet", "R back feet"],
+        "Critical": ["neck"],
         "Resistant": []
       }
     }
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-male",
+    "file": "game:entities/land/raccoon-male",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
@@ -113,13 +113,13 @@
         "LimbsDamageMultiplier": 0.75,
         "HeadDamageMultiplier": 1.5,
         "CriticalDamageMultiplier": 4,
-        "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 1, "PiercingAttack": 0}
+        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}
       }
     }
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-male",
+    "file": "game:entities/land/raccoon-male",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
@@ -129,13 +129,13 @@
         "LimbsDamageMultiplier": 0.75,
         "HeadDamageMultiplier": 1.5,
         "CriticalDamageMultiplier": 4,
-        "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 1, "PiercingAttack": 0}
+        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}
       }
     }
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-female",
+    "file": "game:entities/land/raccoon-female",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
@@ -145,13 +145,13 @@
         "LimbsDamageMultiplier": 0.75,
         "HeadDamageMultiplier": 1.5,
         "CriticalDamageMultiplier": 4,
-        "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 1, "PiercingAttack": 0}
+        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}
       }
     }
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-female",
+    "file": "game:entities/land/raccoon-female",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
@@ -161,13 +161,13 @@
         "LimbsDamageMultiplier": 0.75,
         "HeadDamageMultiplier": 1.5,
         "CriticalDamageMultiplier": 4,
-        "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 1, "PiercingAttack": 0}
+        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}
       }
     }
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-pup",
+    "file": "game:entities/land/raccoon-pup",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
@@ -177,13 +177,13 @@
         "LimbsDamageMultiplier": 0.75,
         "HeadDamageMultiplier": 1.5,
         "CriticalDamageMultiplier": 4,
-        "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 1, "PiercingAttack": 0}
+        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}
       }
     }
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-pup",
+    "file": "game:entities/land/raccoon-pup",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
@@ -193,7 +193,7 @@
         "LimbsDamageMultiplier": 0.75,
         "HeadDamageMultiplier": 1.5,
         "CriticalDamageMultiplier": 4,
-        "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 1, "PiercingAttack": 0}
+        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}
       }
     }
   }
