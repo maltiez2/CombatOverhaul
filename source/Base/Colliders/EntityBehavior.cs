@@ -1,12 +1,9 @@
-﻿using CombatOverhaul.Integration;
-using System.Numerics;
+﻿using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
-using Vintagestory.API.Config;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
-using Vintagestory.API.Server;
 using Vintagestory.GameContent;
 
 namespace CombatOverhaul.Colliders;
@@ -138,8 +135,8 @@ public sealed class CollidersEntityBehavior : EntityBehavior
     public void Render(ICoreClientAPI api, EntityAgent entityPlayer, EntityShapeRenderer renderer, int color = ColorUtil.WhiteArgb)
     {
         if (api.World.Player.Entity.EntityId == entityPlayer.EntityId) return;
-
         if (!HasOBBCollider) return;
+        if (!api.Render.WireframeDebugRender.Entity) return;
 
         IShaderProgram? currentShader = api.Render.CurrentActiveShader;
         currentShader?.Stop();
@@ -152,7 +149,7 @@ public sealed class CollidersEntityBehavior : EntityBehavior
                 collider.HasRenderer = true;
             }
 
-            if (RenderColliders) collider.Render(api, entityPlayer, _colliderColors[CollidersTypes[CollidersIds[id]]]);
+            collider.Render(api, entityPlayer, _colliderColors[CollidersTypes[CollidersIds[id]]]);
         }
 
         currentShader?.Use();
