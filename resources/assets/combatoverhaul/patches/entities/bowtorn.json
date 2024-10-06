@@ -1,0 +1,164 @@
+﻿[
+  {
+    "side": "Server",
+    "file": "game:entities/land/bowtorn",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*-gearfoot": {
+          "Torso": ["Pelvis", "Midsection", "Chest", "Neck1"],
+          "Head": ["Face", "Mouth", "Head2", "Head"],
+          "Arm": [],
+          "Leg": ["L Calf", "L Thigh", "R Calf", "R Thigh"],
+          "Critical": ["Neck2", "Neck3"],
+          "Resistant": ["PlateRB2", "PlateRA1", "Plate1", "PlateLA1", "PlateLA2", "PlateRA2", "Plate2", "Plate3", "PlateLA3", "PlateRA3", "Plate4", "Plate6", "Plate5"]
+        },
+        "*-nightmare": {
+          "Torso": ["Pelvis", "Midsection", "Chest", "Neck1"],
+          "Head": ["Head", "Mouth", "Face"],
+          "Arm": [],
+          "Leg": ["L Calf", "L Thigh", "R Calf", "R Thigh", "ToeR2", "ToeR3", "ToeR1", "ToeR4"],
+          "Critical": ["Neck2", "Neck3"],
+          "Resistant": [
+            "Visor",
+            "Helmet1",
+            "Helmet2",
+            "HelmetL",
+            "HelmetR",
+            "L Pauldron",
+            "LameL1",
+            "LameL2",
+            "R Pauldron",
+            "LameR1",
+            "Plate1",
+            "Plate2",
+            "ArmorLegL1",
+            "ArmorLegL2",
+            "ArmorL1"
+          ]
+        },
+        "*-surface": {
+          "Torso": ["Pelvis", "Midsection", "Chest", "Neck1"],
+          "Head": ["Head", "Mouth", "Head2", "Head3"],
+          "Arm": [],
+          "Leg": ["L Calf", "L Thigh", "R Calf", "R Thigh"],
+          "Critical": ["Neck2", "Neck3"],
+          "Resistant": []
+        },
+        "*": {
+          "Torso": ["Pelvis", "Midsection", "Chest", "Neck1"],
+          "Head": ["Face", "Mouth", "Head2", "Head"],
+          "Arm": [],
+          "Leg": ["L Calf", "L Thigh", "R Calf", "R Thigh"],
+          "Critical": ["Neck2", "Neck3"],
+          "Resistant": []
+        }
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/bowtorn",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "*-gearfoot": {
+        "Torso": ["Pelvis", "Midsection", "Chest", "Neck1"],
+        "Head": ["Face", "Mouth", "Head2", "Head"],
+        "Arm": [],
+        "Leg": ["L Calf", "L Thigh", "R Calf", "R Thigh"],
+        "Critical": ["Neck2", "Neck3"],
+        "Resistant": ["PlateRB2", "PlateRA1", "Plate1", "PlateLA1", "PlateLA2", "PlateRA2", "Plate2", "Plate3", "PlateLA3", "PlateRA3", "Plate4", "Plate6", "Plate5"]
+      },
+      "*-nightmare": {
+        "Torso": ["Pelvis", "Midsection", "Chest", "Neck1"],
+        "Head": ["Head", "Mouth", "Face"],
+        "Arm": [],
+        "Leg": ["L Calf", "L Thigh", "R Calf", "R Thigh", "ToeR2", "ToeR3", "ToeR1", "ToeR4"],
+        "Critical": ["Neck2", "Neck3"],
+        "Resistant": [
+          "Visor",
+          "Helmet1",
+          "Helmet2",
+          "HelmetL",
+          "HelmetR",
+          "L Pauldron",
+          "LameL1",
+          "LameL2",
+          "HelmetR",
+          "R Pauldron",
+          "LameR1",
+          "Plate1",
+          "Plate2",
+          "ArmorLegL1",
+          "ArmorLegL2",
+          "ArmorL1"
+        ]
+      },
+      "*-surface": {
+        "Torso": ["Pelvis", "Midsection", "Chest", "Neck1"],
+        "Head": ["Head", "Mouth", "Head2", "Head3"],
+        "Arm": [],
+        "Leg": ["L Calf", "L Thigh", "R Calf", "R Thigh"],
+        "Critical": ["Neck2", "Neck3"],
+        "Resistant": []
+      },
+      "*": {
+        "Torso": ["Pelvis", "Midsection", "Chest", "Neck1"],
+        "Head": ["Face", "Mouth", "Head2", "Head"],
+        "Arm": [],
+        "Leg": ["L Calf", "L Thigh", "R Calf", "R Thigh"],
+        "Critical": ["Neck2", "Neck3"],
+        "Resistant": []
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/bowtorn",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.5,
+        "HeadDamageMultiplier": 1.25,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResistsByType": {
+          "*-surface": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0},
+          "*-deep": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 1},
+          "*-tainted": {"BluntAttack": 0, "SlashingAttack": 1, "PiercingAttack": 2},
+          "*-corrupt": {"BluntAttack": 1, "SlashingAttack": 2, "PiercingAttack": 3},
+          "*-nightmare": {"BluntAttack": 1, "SlashingAttack": 3, "PiercingAttack": 4},
+          "*-gearfoot": {"BluntAttack": 2, "SlashingAttack": 5, "PiercingAttack": 5}
+        }
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/bowtorn",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.5,
+        "HeadDamageMultiplier": 1.25,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResistsByType": {
+          "*-surface": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0},
+          "*-deep": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 1},
+          "*-tainted": {"BluntAttack": 0, "SlashingAttack": 1, "PiercingAttack": 2},
+          "*-corrupt": {"BluntAttack": 1, "SlashingAttack": 2, "PiercingAttack": 3},
+          "*-nightmare": {"BluntAttack": 1, "SlashingAttack": 3, "PiercingAttack": 4},
+          "*-gearfoot": {"BluntAttack": 2, "SlashingAttack": 5, "PiercingAttack": 5}
+        }
+      }
+    }
+  }
+]
