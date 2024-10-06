@@ -1,0 +1,88 @@
+﻿[
+  {
+    "side": "Server",
+    "file": "game:entities/land/hooved/moose",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*-baby": {
+          "Torso": ["neck2", "neck", "Body", "Midsection", "abdomen", "L back Thigh", "L front Thigh", "R back Thigh", "R front Thigh"],
+          "Head": ["head", "mouth up", "nose", "jaw2"],
+          "Arm": ["L front Upper Arm", "L front lower arm", "R front Upper Arm", "R front lower arm"],
+          "Leg": ["L back Upper Arm", "L back lower arm", "R back Upper Arm", "R back lower arm"],
+          "Critical": [],
+          "Resistant": []
+        },
+        "*": {
+          "Torso": ["neck2", "neck", "Body", "Midsection", "abdomen", "L back Thigh", "L front Thigh", "R back Thigh", "R front Thigh"],
+          "Head": ["head", "mouth up", "nose", "jaw2"],
+          "Arm": ["L front Upper Arm", "L front lower arm", "R front Upper Arm", "R front lower arm"],
+          "Leg": ["L back Upper Arm", "L back lower arm", "R back Upper Arm", "R back lower arm"],
+          "Critical": [],
+          "Resistant": []
+        }
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/hooved/moose",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*-baby": {
+          "Torso": ["neck2", "neck", "Body", "Midsection", "abdomen", "L back Thigh", "L front Thigh", "R back Thigh", "R front Thigh"],
+          "Head": ["head", "mouth up", "nose", "jaw2"],
+          "Arm": ["L front Upper Arm", "L front lower arm", "R front Upper Arm", "R front lower arm"],
+          "Leg": ["L back Upper Arm", "L back lower arm", "R back Upper Arm", "R back lower arm"],
+          "Critical": [],
+          "Resistant": []
+        },
+        "*": {
+          "Torso": ["neck2", "neck", "Body", "Midsection", "abdomen", "L back Thigh", "L front Thigh", "R back Thigh", "R front Thigh"],
+          "Head": ["head", "mouth up", "nose", "jaw2"],
+          "Arm": ["L front Upper Arm", "L front lower arm", "R front Upper Arm", "R front lower arm"],
+          "Leg": ["L back Upper Arm", "L back lower arm", "R back Upper Arm", "R back lower arm"],
+          "Critical": [],
+          "Resistant": []
+        }
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/hooved/moose",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.5,
+        "HeadDamageMultiplier": 1.25,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResistsByType": {"*-baby": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}, "*": {"BluntAttack": 4, "SlashingAttack": 3, "PiercingAttack": 1}}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/hooved/moose",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.5,
+        "HeadDamageMultiplier": 1.25,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResistsByType": {"*-baby": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}, "*": {"BluntAttack": 4, "SlashingAttack": 3, "PiercingAttack": 1}}
+      }
+    }
+  }
+]

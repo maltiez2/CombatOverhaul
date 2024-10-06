@@ -1,0 +1,200 @@
+﻿[
+  {
+    "side": "Server",
+    "file": "game:entities/land/sheep-bighorn-male",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {
+        "Torso": ["neck", "Body", "R back leg", "L back leg"],
+        "Head": ["head", "mouth up"],
+        "Arm": ["R back foot", "L back foot"],
+        "Leg": ["R front leg", "R front foot", "L front leg", "L front foot"],
+        "Critical": [],
+        "Resistant": ["R horn base", "R horn 2", "R horn 3", "R horn 4", "L horn base20", "L horn 21", "L horn 22", "L horn 23"]
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/sheep-bighorn-male",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {
+        "Torso": ["neck", "Body", "R back leg", "L back leg"],
+        "Head": ["head", "mouth up"],
+        "Arm": ["R back foot", "L back foot"],
+        "Leg": ["R front leg", "R front foot", "L front leg", "L front foot"],
+        "Critical": [],
+        "Resistant": ["R horn base", "R horn 2", "R horn 3", "R horn 4", "L horn base20", "L horn 21", "L horn 22", "L horn 23"]
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/sheep-bighorn-female",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {
+        "Torso": ["neck", "Body", "R back leg", "L back leg"],
+        "Head": ["head", "mouth up"],
+        "Arm": ["R back foot", "L back foot"],
+        "Leg": ["R front leg", "R front foot", "L front leg", "L front foot"],
+        "Critical": [],
+        "Resistant": []
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/sheep-bighorn-female",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {
+        "Torso": ["neck", "Body", "R back leg", "L back leg"],
+        "Head": ["head", "mouth up"],
+        "Arm": ["R back foot", "L back foot"],
+        "Leg": ["R front leg", "R front foot", "L front leg", "L front foot"],
+        "Critical": [],
+        "Resistant": []
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/sheep-bighorn-lamb",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {
+        "Torso": ["neck", "Body", "R back leg", "L back leg"],
+        "Head": ["head", "mouth"],
+        "Arm": ["R back foot", "L back foot"],
+        "Leg": ["R front leg", "R front foot", "L front leg", "L front foot"],
+        "Critical": [],
+        "Resistant": []
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/sheep-bighorn-lamb",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {
+        "Torso": ["neck", "Body", "R back leg", "L back leg"],
+        "Head": ["head", "mouth"],
+        "Arm": ["R back foot", "L back foot"],
+        "Leg": ["R front leg", "R front foot", "L front leg", "L front foot"],
+        "Critical": [],
+        "Resistant": []
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/sheep-bighorn-male",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 0.8,
+        "LimbsDamageMultiplier": 0.6,
+        "HeadDamageMultiplier": 1,
+        "CriticalDamageMultiplier": 4,
+        "DefaultResists": {"BluntAttack": 3, "SlashingAttack": 2, "PiercingAttack": 0}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/sheep-bighorn-male",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 0.8,
+        "LimbsDamageMultiplier": 0.6,
+        "HeadDamageMultiplier": 1,
+        "CriticalDamageMultiplier": 4,
+        "DefaultResists": {"BluntAttack": 3, "SlashingAttack": 2, "PiercingAttack": 0}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/sheep-bighorn-female",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 0.8,
+        "LimbsDamageMultiplier": 0.6,
+        "HeadDamageMultiplier": 1,
+        "CriticalDamageMultiplier": 4,
+        "DefaultResists": {"BluntAttack": 3, "SlashingAttack": 2, "PiercingAttack": 0}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/sheep-bighorn-female",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 0.8,
+        "LimbsDamageMultiplier": 0.6,
+        "HeadDamageMultiplier": 1,
+        "CriticalDamageMultiplier": 4,
+        "DefaultResists": {"BluntAttack": 3, "SlashingAttack": 2, "PiercingAttack": 0}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/sheep-bighorn-lamb",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 0.8,
+        "LimbsDamageMultiplier": 0.6,
+        "HeadDamageMultiplier": 1,
+        "CriticalDamageMultiplier": 4,
+        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/sheep-bighorn-lamb",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 1,
+        "HeadDamageMultiplier": 1,
+        "CriticalDamageMultiplier": 4,
+        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}
+      }
+    }
+  }
+]

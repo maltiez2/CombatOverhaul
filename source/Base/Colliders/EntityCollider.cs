@@ -483,9 +483,9 @@ public sealed class ShapeElementCollider
         BlockPos playerPos = player.Pos.AsBlockPos;
         Vec3f deltaPos = 0 - new Vec3f(playerPos.X, playerPos.Y, playerPos.Z);
 
-        RenderLine(api, InworldVertices[0], InworldVertices[1], playerPos, deltaPos, ColorUtil.ToRgba(255, 0, 0, 255));
-        RenderLine(api, InworldVertices[0], InworldVertices[3], playerPos, deltaPos, ColorUtil.ToRgba(255, 0, 255, 0));
-        RenderLine(api, InworldVertices[0], InworldVertices[4], playerPos, deltaPos, ColorUtil.ToRgba(255, 255, 0, 0));
+        RenderLine(api, InworldVertices[0], InworldVertices[1], playerPos, deltaPos, color); //ColorUtil.ToRgba(255, 0, 0, 255));
+        RenderLine(api, InworldVertices[0], InworldVertices[3], playerPos, deltaPos, color); //ColorUtil.ToRgba(255, 0, 255, 0));
+        RenderLine(api, InworldVertices[0], InworldVertices[4], playerPos, deltaPos, color); // ColorUtil.ToRgba(255, 255, 0, 0));
 
         RenderLine(api, InworldVertices[1], InworldVertices[1], playerPos, deltaPos, color);
         RenderLine(api, InworldVertices[1], InworldVertices[5], playerPos, deltaPos, color);
