@@ -1,6 +1,7 @@
 ﻿using CombatOverhaul.Animations;
 using CombatOverhaul.Colliders;
 using HarmonyLib;
+using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Reflection.Emit;
 using Vintagestory.API.Client;
@@ -18,6 +19,7 @@ internal static class AnimationPatch
 
     public static void Patch(string harmonyId)
     {
+        _animators.Clear();
         new Harmony(harmonyId).Patch(
                 typeof(EntityShapeRenderer).GetMethod("RenderHeldItem", AccessTools.all),
                 prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimationPatch), nameof(RenderHeldItem)))
@@ -51,6 +53,7 @@ internal static class AnimationPatch
         new Harmony(harmonyId).Unpatch(typeof(Vintagestory.API.Common.AnimationManager).GetMethod("OnClientFrame", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         new Harmony(harmonyId).Unpatch(typeof(EntityPlayer).GetMethod("OnSelfBeforeRender", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         new Harmony(harmonyId).Unpatch(typeof(EntityPlayer).GetMethod("updateEyeHeight", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
+        _animators.Clear();
     }
 
     public static void OnFrameInvoke(ClientAnimator animator, ElementPose pose)
@@ -105,7 +108,7 @@ internal static class AnimationPatch
         }
     }
 
-    internal static Dictionary<ClientAnimator, EntityAgent> _animators = new();
+    internal static readonly Dictionary<ClientAnimator, EntityAgent> _animators = new();
 
     private static void AddPoseShapeElements(ElementPose pose, CollidersEntityBehavior colliders)
     {
