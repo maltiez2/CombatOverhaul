@@ -100,6 +100,7 @@ public class CrossbowClient : RangeWeaponClient
     protected virtual bool Draw(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
         if (state != (int)CrossbowState.Unloaded || eventData.AltPressed) return false;
+        if (!CheckDrawRequirement(player)) return false;
 
         AnimationBehavior?.Play(mainHand, Stats.DrawAnimation, callback: () => DrawAnimationCallback(slot, mainHand), animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat));
 
@@ -114,7 +115,6 @@ public class CrossbowClient : RangeWeaponClient
     protected virtual bool Load(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
         if (state != (int)CrossbowState.Drawn || eventData.AltPressed) return false;
-        if (!CheckDrawRequirement(player)) return false;
 
         player.WalkInventory(slot =>
         {
@@ -297,7 +297,7 @@ public class CrossbowClient : RangeWeaponClient
         {
             if (slot?.Itemstack?.Item == null) return true;
 
-            if (slot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(Stats.DrawRequirement, slot.Itemstack.Item.Code.Path))
+            if (WildcardUtil.Match(Stats.DrawRequirement, slot.Itemstack.Item.Code.ToString()))
             {
                 requirement = slot;
                 return false;
@@ -321,7 +321,7 @@ public class CrossbowServer : RangeWeaponServer
 
     public override bool Reload(IServerPlayer player, ItemSlot slot, ItemSlot? ammoSlot, ReloadPacket packet)
     {
-        if (ammoSlot?.Itemstack?.Item != null && ammoSlot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(_stats.BoltWildcard, ammoSlot.Itemstack.Item.Code.Path))
+        if (ammoSlot?.Itemstack?.Item != null && ammoSlot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(_stats.BoltWildcard, ammoSlot.Itemstack.Item.Code.ToString()))
         {
             _boltSlots[player.Entity.EntityId] = ammoSlot;
             return true;

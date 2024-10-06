@@ -1,0 +1,56 @@
+﻿[
+  {
+    "side": "Server",
+    "file": "game:entities/land/shiver",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*-bellhead": {
+          "Torso": ["TorsoUp", "TorsoLow"],
+          "Head": ["Head"],
+          "Arm": ["R Hand", "L Hand", "R ArmLow", "L ArmLow", "R ArmUp", "L ArmUp"],
+          "Leg": ["R Toes", "R LegLow", "R LegUp", "R Thigh", "L Toes", "L LegLow", "L LegUp", "L Thigh"],
+          "Critical": ["Neck"],
+          "Resistant": ["E1", "S1", "W1", "N1", "W2", "N2", "E2", "S2", "N3", "E3", "S3", "W3"]
+        },
+        "*": {
+          "Torso": ["TorsoUp", "TorsoLow"],
+          "Head": ["L Head2", "L Head1", "R Head2", "R Head1"],
+          "Arm": ["R Hand", "L Hand", "R ArmLow", "L ArmLow", "R ArmUp", "L ArmUp"],
+          "Leg": ["R Toes", "R LegLow", "R LegUp", "R Thigh", "L Toes", "L LegLow", "L LegUp", "L Thigh"],
+          "Critical": ["R Neck1", "R Neck2", "L Neck2", "L Neck1"],
+          "Resistant": []
+        }
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/shiver",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*-bellhead": {
+          "Torso": ["TorsoUp", "TorsoLow"],
+          "Head": ["L Head2", "L Head1", "R Head2", "R Head1"],
+          "Arm": ["R Hand", "L Hand", "R ArmLow", "L ArmLow", "R ArmUp", "L ArmUp"],
+          "Leg": ["R Toes", "R LegLow", "R LegUp", "R Thigh", "L Toes", "L LegLow", "L LegUp", "L Thigh"],
+          "Critical": ["R Neck1", "R Neck2", "L Neck2", "L Neck1"],
+          "Resistant": ["E1", "S1", "W1", "N1", "W2", "N2", "E2", "S2", "N3", "E3", "S3", "W3"]
+        },
+        "*": {
+          "Torso": ["TorsoUp", "TorsoLow"],
+          "Head": ["L Head2", "L Head1", "R Head2", "R Head1"],
+          "Arm": ["R Hand", "L Hand", "R ArmLow", "L ArmLow", "R ArmUp", "L ArmUp"],
+          "Leg": ["R Toes", "R LegLow", "R LegUp", "R Thigh", "L Toes", "L LegLow", "L LegUp", "L Thigh"],
+          "Critical": ["R Neck1", "R Neck2", "L Neck2", "L Neck1"],
+          "Resistant": []
+        }
+      }
+    }
+  }
+]

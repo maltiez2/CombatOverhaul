@@ -333,7 +333,7 @@ public sealed class BowServer : RangeWeaponServer
 
     public override bool Reload(IServerPlayer player, ItemSlot slot, ItemSlot? ammoSlot, ReloadPacket packet)
     {
-        if (ammoSlot?.Itemstack?.Item != null && ammoSlot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(_stats.ArrowWildcard, ammoSlot.Itemstack.Item.Code.Path))
+        if (ammoSlot?.Itemstack?.Item != null && ammoSlot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(_stats.ArrowWildcard, ammoSlot.Itemstack.Item.Code.ToString()))
         {
             _arrowSlots[player.Entity.EntityId] = ammoSlot;
             return true;

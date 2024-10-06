@@ -700,7 +700,7 @@ public class MuzzleloaderServer : RangeWeaponServer
             if (
                 ammoSlot.Itemstack?.Item != null &&
                 ammoSlot.Itemstack.Item.HasBehavior<ProjectileBehavior>() &&
-                WildcardUtil.Match(Stats.BulletWildcard, ammoSlot.Itemstack.Item.Code.Path) &&
+                WildcardUtil.Match(Stats.BulletWildcard, ammoSlot.Itemstack.Item.Code.ToString()) &&
                 ammoSlot.Itemstack.StackSize >= Stats.BulletLoadedPerReload)
             {
                 for (int count = 0; count < Stats.BulletLoadedPerReload; count++)

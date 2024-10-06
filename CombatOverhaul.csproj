@@ -4,7 +4,7 @@
     <ModName>Combat Overhaul</ModName>
     <ModType>code</ModType>
     <GameVersion>1.20.0-pre.5</GameVersion>
-    <ModVersion>0.0.11</ModVersion>
+    <ModVersion>0.0.12</ModVersion>
     <ModId>combatoverhaul</ModId>
     <Description></Description>
     <Side>Universal</Side>
@@ -136,13 +136,13 @@
   </Target>
 
   <!-- Archives output directory into zip and puts it into Releases folder -->
-  <Target Name="ZipFiles" AfterTargets="BeforeBuild" Condition=" '$(Configuration)' == 'Release' ">
+  <Target Name="ZipFiles" AfterTargets="Build" Condition=" '$(Configuration)' == 'Release' ">
     <Message Text="Pachaging into '$(ReleaseFile)'" Importance="high" />
     <MakeDir Directories="$(ReleasesDir)" />
     <Delete Files="$(ReleasePath)" />
     <ZipDirectory SourceDirectory="$(OutputPath)" DestinationFile="$(ReleasePath)" />
   </Target>
-  <Target Name="ZipFilesDev" AfterTargets="BeforeBuild" Condition=" '$(Configuration)' == 'Debug' ">
+  <Target Name="ZipFilesDev" AfterTargets="Build" Condition=" '$(Configuration)' == 'Debug' ">
     <Message Text="Pachaging into '$(ReleaseFile)'" Importance="high" />
     <MakeDir Directories="$(ReleasesDir)" />
     <Delete Files="$(ReleasePathDev)" />

@@ -65,6 +65,9 @@ public sealed class CombatOverhaulSystem : ModSystem
         api.RegisterEntity("CombatOverhaul:ProjectileOreBomb", typeof(ProjectileOreBomb));
         api.RegisterEntity("CombatOverhaul:ProjectileFirework", typeof(ProjectileFirework));
 
+        api.RegisterBlockEntityClass("CombatOverhaul:GenericDisplayBlockEntity", typeof(GenericDisplayBlockEntity));
+        api.RegisterBlockClass("CombatOverhaul:GenericDisplayBlock", typeof(GenericDisplayBlock));
+
         new Harmony("CombatOverhaulAuto").PatchAll();
     }
     public override void StartServerSide(ICoreServerAPI api)

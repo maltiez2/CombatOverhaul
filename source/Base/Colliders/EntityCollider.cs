@@ -245,11 +245,11 @@ public sealed class ShapeElementCollider
         SetElementVertices(element);
     }
 
-    public void Transform(float[] transformMatrix, ICoreClientAPI api)
+    public void Transform(float[] transformMatrixAll, ICoreClientAPI api)
     {
         if (Renderer == null) return;
 
-        //float[] transformMatrix = GetTransformMatrix(JointId, transformMatrix4x3);
+        float[] transformMatrix = GetTransformMatrix(JointId, transformMatrixAll);
 
         EntityPos playerPos = api.World.Player.Entity.Pos;
 
@@ -358,8 +358,8 @@ public sealed class ShapeElementCollider
     }
     private static int? GetIndex(int jointId, int matrixElementIndex)
     {
-        int index = 12 * jointId;
-        int offset = matrixElementIndex switch
+        int index = 16 * jointId;
+        int offset = matrixElementIndex; /*matrixElementIndex switch
         {
             0 => 0,
             1 => 1,
@@ -374,7 +374,7 @@ public sealed class ShapeElementCollider
             13 => 10,
             14 => 11,
             _ => -1
-        };
+        };*/
 
         if (offset < 0) return null;
 

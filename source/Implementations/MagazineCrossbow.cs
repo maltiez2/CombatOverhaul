@@ -38,7 +38,7 @@ public class MagazineCrossbowStats : WeaponStats
     public float BoltDamageMultiplier { get; set; } = 1;
     public float BoltDamageStrength { get; set; } = 1;
     public float BoltVelocity { get; set; } = 1;
-    public string BoltWildcard { get; set; } = "@.*(bolt-copper|bolt-flint)";
+    public string BoltWildcard { get; set; } = "@.*(bolt-copper|bolt-crude)";
     public float Zeroing { get; set; } = 1.5f;
     public float[] DispersionMOA { get; set; } = new float[] { 0, 0 };
 
@@ -292,7 +292,7 @@ public class MagazineCrossbowServer : RangeWeaponServer
         _inventory.Read(slot, _inventoryId);
         if (_inventory.Items.Count >= _stats.MagazineSize) return false;
 
-        if (ammoSlot?.Itemstack?.Item != null && ammoSlot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(_stats.BoltWildcard, ammoSlot.Itemstack.Item.Code.Path))
+        if (ammoSlot?.Itemstack?.Item != null && ammoSlot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(_stats.BoltWildcard, ammoSlot.Itemstack.Item.Code.ToString()))
         {
             ItemStack ammo = ammoSlot.TakeOut(1);
             ammoSlot.MarkDirty();
