@@ -75,7 +75,7 @@
               "*-steel": {"DamageType": "PiercingAttack", "Strength": 5, "Damage": 4.5},
               "*": {"DamageType": "PiercingAttack", "Strength": 1, "Damage": 2.5}
             },
-            "Knockback": 1,
+            "Knockback": 0.5,
             "DurabilityDamage": 1,
             "Collider": [0, 0, 0.5, 1.2, 0, 0.5]
           }
@@ -125,7 +125,7 @@
               "*-steel": {"DamageType": "PiercingAttack", "Strength": 5, "Damage": 4.5},
               "*": {"DamageType": "PiercingAttack", "Strength": 1, "Damage": 2.5}
             },
-            "Knockback": 0.75,
+            "Knockback": 1,
             "DurabilityDamage": 1,
             "Collider": [0, 0, 0.5, 1.2, 0, 0.5]
           }

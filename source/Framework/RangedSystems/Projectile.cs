@@ -1,4 +1,5 @@
-﻿using CombatOverhaul.DamageSystems;
+﻿using CombatOverhaul.Colliders;
+using CombatOverhaul.DamageSystems;
 using System.Numerics;
 using System.Text;
 using Vintagestory.API.Common;
@@ -40,7 +41,7 @@ public sealed class ProjectileServer
         _entity.ServerPos.Motion.Y = receiver.ServerPos.Motion.Y;
         _entity.ServerPos.Motion.Z = receiver.ServerPos.Motion.Z;
 
-        _entity.OnCollisionWithEntity();
+        _entity.OnCollisionWithEntity(receiver, packet.Collider);
     }
 
     public void TryCollide()
@@ -219,7 +220,7 @@ public class ProjectileEntity : Entity
         }
     }
 
-    public void OnCollisionWithEntity()
+    public void OnCollisionWithEntity(Entity target, string collider)
     {
         WatchedAttributes.MarkAllDirty();
         TryDestroyOnCollision();

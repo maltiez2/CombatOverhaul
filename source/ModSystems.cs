@@ -78,11 +78,13 @@ public sealed class CombatOverhaulSystem : ModSystem
         ServerMeleeSystem = new(api);
         ServerBlockSystem = new(api);
         ServerStatsSystem = new(api);
+        ServerProjectileStuckSystem = new(api);
     }
     public override void StartClientSide(ICoreClientAPI api)
     {
         _clientApi = api;
 
+        ClientProjectileStuckSystem = new(api);
         ClientProjectileSystem = new(api, api.ModLoader.GetModSystem<EntityPartitioning>());
         ActionListener = new(api);
         DirectionCursorRenderer = new(api);
@@ -149,6 +151,8 @@ public sealed class CombatOverhaulSystem : ModSystem
         _clientApi?.Event.UnregisterRenderer(ReticleRenderer, EnumRenderStage.Ortho);
         _clientApi?.Event.UnregisterRenderer(DirectionCursorRenderer, EnumRenderStage.Ortho);
 
+        ClientProjectileStuckSystem?.UnregisterTickListener();
+
         AimingPatches.Unpatch("CombatOverhaulAiming");
         MouseWheelPatch.Unpatch("CombatOverhaul");
     }
@@ -170,6 +174,8 @@ public sealed class CombatOverhaulSystem : ModSystem
     public MeleeBlockSystemServer? ServerBlockSystem { get; private set; }
     public StatsSystemClient? ClientStatsSystem { get; private set; }
     public StatsSystemServer? ServerStatsSystem { get; private set; }
+    public ProjectileStuckSystemServer? ServerProjectileStuckSystem { get; private set; }
+    public ProjectileStuckSystemClient? ClientProjectileStuckSystem { get; private set; }
 
 
     private ICoreClientAPI? _clientApi;

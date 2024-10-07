@@ -30,6 +30,7 @@ public struct MeleeDamagePacket
     {
         Entity target = api.World.GetEntityById(TargetEntityId);
         Entity attacker = api.World.GetEntityById(AttackerEntityId);
+        string targetName = target.GetName();
 
         bool damageReceived = target.ReceiveDamage(new DirectionalTypedDamageSource()
         {
@@ -51,7 +52,7 @@ public struct MeleeDamagePacket
 
         float damage = damageReceived ? target.WatchedAttributes.GetFloat("onHurt") : 0;
 
-        string damageLogMessage = Lang.Get("combatoverhaul:damagelog-dealt-damage", Lang.Get($"combatoverhaul:entity-damage-zone-{(ColliderTypes)ColliderType}"), target.GetName(), $"{damage:F2}");
+        string damageLogMessage = Lang.Get("combatoverhaul:damagelog-dealt-damage", Lang.Get($"combatoverhaul:entity-damage-zone-{(ColliderTypes)ColliderType}"), targetName, $"{damage:F2}");
 
         ((attacker as EntityPlayer)?.Player as IServerPlayer)?.SendMessage(GlobalConstants.DamageLogChatGroup, damageLogMessage, EnumChatType.Notification);
     }

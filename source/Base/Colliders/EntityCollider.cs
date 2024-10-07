@@ -305,7 +305,7 @@ public sealed class ShapeElementCollider
 
         return distance <= radius;
     }
-    
+
     private void SetElementVertices(ShapeElement element)
     {
         Vector4 from = new((float)element.From[0], (float)element.From[1], (float)element.From[2], 1);

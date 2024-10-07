@@ -136,6 +136,8 @@ public sealed class ProjectileSystemClient : ProjectileSystemBase
             .RegisterMessageType<ProjectileCollisionCheckRequest>()
             .SetMessageHandler<ProjectileCollisionCheckRequest>(HandleRequest);
 
+        _stuckSystemClient = api.ModLoader.GetModSystem<CombatOverhaulSystem>().ClientProjectileStuckSystem ?? throw new Exception();
+
         _api = api;
         _entityPartitioning = entityPartitioning;
     }
@@ -159,6 +161,7 @@ public sealed class ProjectileSystemClient : ProjectileSystemBase
     private readonly ICoreClientAPI _api;
     private readonly IClientNetworkChannel _clientChannel;
     private readonly EntityPartitioning _entityPartitioning;
+    private readonly ProjectileStuckSystemClient _stuckSystemClient;
     private const float _entityCollisionRadius = 5;
 
     private void HandleRequest(ProjectileCollisionCheckRequest packet)
@@ -206,6 +209,11 @@ public sealed class ProjectileSystemClient : ProjectileSystemBase
         float relativeSpeed = (targetVelocity - velocity).Length();
 
         Collide(packet.ProjectileId, target, point, targetVelocity, relativeSpeed, collider, packet);
+
+        if (_api.World.GetEntityById(packet.ProjectileEntityId) is ProjectileEntity projectile)
+        {
+            _stuckSystemClient.Stuck(projectile, target, collider, currentPosition);
+        }
 
         return true;
     }
