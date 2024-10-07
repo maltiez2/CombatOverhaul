@@ -19,7 +19,11 @@
           "Directions": [45, 45, 45, 45],
           "Sound": "game:sounds/held/shieldblock"
         },
-        "Block": {"Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand"], "Directions": [60, 60, 60, 60], "Sound": "game:sounds/held/shieldblock"},
+        "Block": {
+          "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
+          "Directions": [60, 60, 60, 60],
+          "Sound": "game:sounds/held/shieldblock"
+        },
         "BlockCooldownMs": 300,
         "BlockAnimation": "combatoverhaul:shield-light-parry",
         "ReadyAnimation": "combatoverhaul:shield-light-ready",
@@ -95,7 +99,7 @@
           "Directions": [90, 90, 90, 90],
           "Sound": "game:sounds/held/shieldblock"
         },
-        "Block": {"Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand"], "Directions": [45, 45, 45, 45], "Sound": "game:sounds/held/shieldblock"},
+        "Block": {"Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand"], "Directions": [90, 90, 90, 90], "Sound": "game:sounds/held/shieldblock"},
         "BlockCooldownMs": 300,
         "BlockAnimation": "combatoverhaul:shield-light-parry",
         "ReadyAnimation": "combatoverhaul:shield-light-ready",

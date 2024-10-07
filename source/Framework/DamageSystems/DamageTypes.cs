@@ -51,13 +51,13 @@ public readonly struct DamageData
 public interface ILocationalDamage
 {
     public Vector3 Position { get; set; }
-    public int Collider { get; set; }
+    public string Collider { get; set; }
 }
 
 public class DirectionalTypedDamageSource : DamageSource, ILocationalDamage, ITypedDamage
 {
     public Vector3 Position { get; set; }
-    public int Collider { get; set; }
+    public string Collider { get; set; } = "";
     public DamageData DamageTypeData { get; set; }
 }
 

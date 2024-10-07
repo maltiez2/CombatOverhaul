@@ -5,13 +5,14 @@
       "game:itemtypes/combatoverhaul/bow.json": {
         "attributes/AimingByType/@@*/CursorType": "bows_aiming_cursor_type"
       }
+    },
+    "other": {
+      "combatoverhaul:pathces/weapons/shield.json": {
+        "3/value/@*/Block/Zones": "shields_protection_zones"
+      }
     }
   },
   "settings": [
-    {
-      "type": "separator",
-      "title": "Aiming"
-    },
     {
       "code": "bows_aiming_cursor_type",
       "type": "string",
@@ -23,6 +24,19 @@
         "Fixed",
         "Moving"
       ]
+    },
+    {
+      "code": "shields_protection_zones",
+      "type": "other",
+      "ingui": "Shields protection zones",
+      "default": "Full without feet and head",
+      "mapping": {
+        "Full": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
+        "Full without feet": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
+        "Full without head": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
+        "Full without feet and head": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
+        "Minimal": ["Face", "Neck", "Torso", "LeftArm", "LeftHand", "LeftLeg", "RightLeg"]
+      }
     }
   ]
 }

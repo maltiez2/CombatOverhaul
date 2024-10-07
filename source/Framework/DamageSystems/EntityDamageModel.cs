@@ -100,7 +100,7 @@ public sealed class EntityDamageModelBehavior : EntityBehavior
 
         if (_colliders != null && damageSource is ILocationalDamage locationalDamageSource)
         {
-            colliderType = _colliders.GetColliderType(locationalDamageSource.Collider);
+            if (_colliders.CollidersTypes.ContainsKey(locationalDamageSource.Collider)) colliderType = _colliders.CollidersTypes[locationalDamageSource.Collider];
             float multiplier = DamageMultipliers[colliderType];
             damage *= multiplier;
         }
@@ -109,11 +109,9 @@ public sealed class EntityDamageModelBehavior : EntityBehavior
         {
             if (damageSource is ILocationalDamage locationalDamage && _colliders != null)
             {
-                string collider = _colliders.CollidersIds[locationalDamage.Collider];
-
-                if (ResistsForColliders.ContainsKey(collider))
+                if (ResistsForColliders.ContainsKey(locationalDamage.Collider))
                 {
-                    typedDamage.DamageTypeData = ResistsForColliders[collider].ApplyResist(typedDamage.DamageTypeData, ref damage);
+                    typedDamage.DamageTypeData = ResistsForColliders[locationalDamage.Collider].ApplyResist(typedDamage.DamageTypeData, ref damage);
                 }
                 else
                 {

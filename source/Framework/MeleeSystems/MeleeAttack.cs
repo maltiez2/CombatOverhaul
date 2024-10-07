@@ -142,7 +142,7 @@ public sealed class MeleeAttack
                     .Where(entity => _attackedEntities.ContainsKey(entityId))
                     .Where(entity => !_attackedEntities[entityId].Contains(entity.EntityId)))
             {
-                attacked = damageType.TryAttack(player, entity, out int collider, out Vector3 point, out MeleeDamagePacket packet, mainHand, maximumParameter);
+                attacked = damageType.TryAttack(player, entity, out string collider, out Vector3 point, out MeleeDamagePacket packet, mainHand, maximumParameter);
 
                 if (!attacked) continue;
 

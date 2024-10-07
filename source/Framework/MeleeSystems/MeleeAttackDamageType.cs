@@ -19,7 +19,7 @@ public struct MeleeDamagePacket
     public float Damage { get; set; }
     public float Knockback { get; set; }
     public float[] Position { get; set; }
-    public int Collider { get; set; }
+    public string Collider { get; set; }
     public int ColliderType { get; set; }
     public long AttackerEntityId { get; set; }
     public long TargetEntityId { get; set; }
@@ -87,7 +87,7 @@ public class MeleeDamageType : IHasLineCollider
         DurabilityDamage = stats.DurabilityDamage;
     }
 
-    public bool TryAttack(IPlayer attacker, Entity target, out int collider, out Vector3 collisionPoint, out MeleeDamagePacket packet, bool mainHand, float maximumParameter)
+    public bool TryAttack(IPlayer attacker, Entity target, out string collider, out Vector3 collisionPoint, out MeleeDamagePacket packet, bool mainHand, float maximumParameter)
     {
         bool collided = Collide(target, out collider, out collisionPoint, out float parameter, out ColliderTypes colliderType);
 
@@ -100,7 +100,7 @@ public class MeleeDamageType : IHasLineCollider
 
         return received;
     }
-    public bool Attack(Entity attacker, Entity target, Vector3 position, int collider, out MeleeDamagePacket packet, bool mainHand, ColliderTypes colliderType)
+    public bool Attack(Entity attacker, Entity target, Vector3 position, string collider, out MeleeDamagePacket packet, bool mainHand, ColliderTypes colliderType)
     {
         packet = new();
 
@@ -141,8 +141,7 @@ public class MeleeDamageType : IHasLineCollider
         return received;
     }
 
-    private const float _knockbackFactor = 0.1f;
-    private bool Collide(Entity target, out int collider, out Vector3 collisionPoint, out float parameter, out ColliderTypes colliderType)
+    private bool Collide(Entity target, out string collider, out Vector3 collisionPoint, out float parameter, out ColliderTypes colliderType)
     {
         parameter = 1f;
 
@@ -152,11 +151,12 @@ public class MeleeDamageType : IHasLineCollider
         if (colliders != null)
         {
             bool intersects = colliders.Collide(InWorldCollider.Position, InWorldCollider.Direction, out collider, out parameter, out collisionPoint);
-            colliderType = colliders.ColliderFromIndex(collider);
+            if (intersects) colliderType = colliders.CollidersTypes[collider];
+
             return intersects;
         }
 
-        collider = -1;
+        collider = "";
 
         Cuboidf collisionBox = GetCollisionBox(target);
         if (!InWorldCollider.RoughIntersect(collisionBox)) return false;

@@ -64,54 +64,56 @@
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
-      "*-gearfoot": {
-        "Torso": ["Pelvis", "Midsection", "Chest", "Neck1"],
-        "Head": ["Face", "Mouth", "Head2", "Head"],
-        "Arm": [],
-        "Leg": ["L Calf", "L Thigh", "R Calf", "R Thigh"],
-        "Critical": ["Neck2", "Neck3"],
-        "Resistant": ["PlateRB2", "PlateRA1", "Plate1", "PlateLA1", "PlateLA2", "PlateRA2", "Plate2", "Plate3", "PlateLA3", "PlateRA3", "Plate4", "Plate6", "Plate5"]
-      },
-      "*-nightmare": {
-        "Torso": ["Pelvis", "Midsection", "Chest", "Neck1"],
-        "Head": ["Head", "Mouth", "Face"],
-        "Arm": [],
-        "Leg": ["L Calf", "L Thigh", "R Calf", "R Thigh", "ToeR2", "ToeR3", "ToeR1", "ToeR4"],
-        "Critical": ["Neck2", "Neck3"],
-        "Resistant": [
-          "Visor",
-          "Helmet1",
-          "Helmet2",
-          "HelmetL",
-          "HelmetR",
-          "L Pauldron",
-          "LameL1",
-          "LameL2",
-          "HelmetR",
-          "R Pauldron",
-          "LameR1",
-          "Plate1",
-          "Plate2",
-          "ArmorLegL1",
-          "ArmorLegL2",
-          "ArmorL1"
-        ]
-      },
-      "*-surface": {
-        "Torso": ["Pelvis", "Midsection", "Chest", "Neck1"],
-        "Head": ["Head", "Mouth", "Head2", "Head3"],
-        "Arm": [],
-        "Leg": ["L Calf", "L Thigh", "R Calf", "R Thigh"],
-        "Critical": ["Neck2", "Neck3"],
-        "Resistant": []
-      },
-      "*": {
-        "Torso": ["Pelvis", "Midsection", "Chest", "Neck1"],
-        "Head": ["Face", "Mouth", "Head2", "Head"],
-        "Arm": [],
-        "Leg": ["L Calf", "L Thigh", "R Calf", "R Thigh"],
-        "Critical": ["Neck2", "Neck3"],
-        "Resistant": []
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*-gearfoot": {
+          "Torso": ["Pelvis", "Midsection", "Chest", "Neck1"],
+          "Head": ["Face", "Mouth", "Head2", "Head"],
+          "Arm": [],
+          "Leg": ["L Calf", "L Thigh", "R Calf", "R Thigh"],
+          "Critical": ["Neck2", "Neck3"],
+          "Resistant": ["PlateRB2", "PlateRA1", "Plate1", "PlateLA1", "PlateLA2", "PlateRA2", "Plate2", "Plate3", "PlateLA3", "PlateRA3", "Plate4", "Plate6", "Plate5"]
+        },
+        "*-nightmare": {
+          "Torso": ["Pelvis", "Midsection", "Chest", "Neck1"],
+          "Head": ["Head", "Mouth", "Face"],
+          "Arm": [],
+          "Leg": ["L Calf", "L Thigh", "R Calf", "R Thigh", "ToeR2", "ToeR3", "ToeR1", "ToeR4"],
+          "Critical": ["Neck2", "Neck3"],
+          "Resistant": [
+            "Visor",
+            "Helmet1",
+            "Helmet2",
+            "HelmetL",
+            "HelmetR",
+            "L Pauldron",
+            "LameL1",
+            "LameL2",
+            "R Pauldron",
+            "LameR1",
+            "Plate1",
+            "Plate2",
+            "ArmorLegL1",
+            "ArmorLegL2",
+            "ArmorL1"
+          ]
+        },
+        "*-surface": {
+          "Torso": ["Pelvis", "Midsection", "Chest", "Neck1"],
+          "Head": ["Head", "Mouth", "Head2", "Head3"],
+          "Arm": [],
+          "Leg": ["L Calf", "L Thigh", "R Calf", "R Thigh"],
+          "Critical": ["Neck2", "Neck3"],
+          "Resistant": []
+        },
+        "*": {
+          "Torso": ["Pelvis", "Midsection", "Chest", "Neck1"],
+          "Head": ["Face", "Mouth", "Head2", "Head"],
+          "Arm": [],
+          "Leg": ["L Calf", "L Thigh", "R Calf", "R Thigh"],
+          "Critical": ["Neck2", "Neck3"],
+          "Resistant": []
+        }
       }
     }
   },

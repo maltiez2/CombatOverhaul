@@ -55,7 +55,7 @@ public sealed class ProjectileServer
     private readonly ICoreAPI _api;
     private readonly ProjectileSystemServer _system;
 
-    private bool Attack(Entity attacker, Entity target, Vector3 position, int collider, float relativeSpeed)
+    private bool Attack(Entity attacker, Entity target, Vector3 position, string collider, float relativeSpeed)
     {
         if (!CheckPermissions(attacker, target)) return false;
         if (relativeSpeed < _stats.SpeedThreshold) return false;

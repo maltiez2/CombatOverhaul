@@ -92,7 +92,14 @@
     ],
     "ItemKeyFrames": [],
     "SoundFrames": [
-      {"Code": ["game:sounds/player/strike1", "game:sounds/player/strike2"], "DurationFraction": 0.083333336, "RandomizePitch": true, "Range": 16, "Volume": 0.5, "Synchronize": true}
+      {
+        "Code": ["game:sounds/player/strike1", "game:sounds/player/strike2"],
+        "DurationFraction": 0.083333336,
+        "RandomizePitch": true,
+        "Range": 16,
+        "Volume": 0.5,
+        "Synchronize": true
+      }
     ],
     "ParticlesFrames": [],
     "CallbackFrames": [{"Code": "start", "DurationFraction": 0.083333336}, {"Code": "stop", "DurationFraction": 0.41666666}, {"Code": "ready", "DurationFraction": 0.75}],

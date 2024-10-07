@@ -71,8 +71,7 @@ public sealed class CollidersEntityBehavior : EntityBehavior
     public bool UnprocessedElementsLeft { get; set; } = false;
     public HashSet<string> ShapeElementsToProcess { get; private set; } = new();
     public Dictionary<string, ColliderTypes> CollidersTypes { get; private set; } = new();
-    public List<string> CollidersIds { get; private set; } = new();
-    public Dictionary<int, ShapeElementCollider> Colliders { get; private set; } = new();
+    public Dictionary<string, ShapeElementCollider> Colliders { get; private set; } = new();
     public override string PropertyName() => "animationmanagerlib:colliders";
     internal ClientAnimator? Animator { get; set; }
     static public bool RenderColliders { get; set; } = false;
@@ -116,11 +115,6 @@ public sealed class CollidersEntityBehavior : EntityBehavior
             UnprocessedElementsLeft = true;
             HasOBBCollider = true;
         }
-        
-        foreach (string element in ShapeElementsToProcess)
-        {
-            CollidersIds.Add(element);
-        }
     }
     public override void OnGameTick(float deltaTime)
     {
@@ -131,7 +125,7 @@ public sealed class CollidersEntityBehavior : EntityBehavior
     {
         if (UnprocessedElementsLeft && ShapeElementsToProcess.Contains(element.Name))
         {
-            Colliders.Add(CollidersIds.IndexOf(element.Name), new ShapeElementCollider(element));
+            Colliders.Add(element.Name, new ShapeElementCollider(element));
             ShapeElementsToProcess.Remove(element.Name);
             UnprocessedElementsLeft = ShapeElementsToProcess.Count > 0;
         }
@@ -144,7 +138,7 @@ public sealed class CollidersEntityBehavior : EntityBehavior
         IShaderProgram? currentShader = api.Render.CurrentActiveShader;
         currentShader?.Stop();
 
-        foreach ((int id, ShapeElementCollider collider) in Colliders)
+        foreach ((string id, ShapeElementCollider collider) in Colliders)
         {
             if (!collider.HasRenderer)
             {
@@ -152,17 +146,17 @@ public sealed class CollidersEntityBehavior : EntityBehavior
                 collider.HasRenderer = true;
             }
 
-            if (RenderColliders) collider.Render(api, entityPlayer, _colliderColors[CollidersTypes[CollidersIds[id]]]);
+            if (RenderColliders) collider.Render(api, entityPlayer, _colliderColors[CollidersTypes[id]]);
         }
 
         currentShader?.Use();
     }
-    public bool Collide(Vector3 segmentStart, Vector3 segmentDirection, out int collider, out float parameter, out Vector3 intersection)
+    public bool Collide(Vector3 segmentStart, Vector3 segmentDirection, out string collider, out float parameter, out Vector3 intersection)
     {
 
         parameter = float.MaxValue;
         bool foundIntersection = false;
-        collider = -1;
+        collider = "";
         intersection = Vector3.Zero;
 
         if (!HasOBBCollider)
@@ -178,7 +172,7 @@ public sealed class CollidersEntityBehavior : EntityBehavior
             return false;
         }
 
-        foreach ((int key, ShapeElementCollider shapeElementCollider) in Colliders)
+        foreach ((string key, ShapeElementCollider shapeElementCollider) in Colliders)
         {
             if (shapeElementCollider.Collide(segmentStart, segmentDirection, out float currentParameter, out Vector3 currentIntersection) && currentParameter < parameter)
             {
@@ -191,11 +185,11 @@ public sealed class CollidersEntityBehavior : EntityBehavior
 
         return foundIntersection;
     }
-    public bool Collide(Vector3 thisTickOrigin, Vector3 previousTickOrigin, float radius, out int collider, out float distance, out Vector3 intersection)
+    public bool Collide(Vector3 thisTickOrigin, Vector3 previousTickOrigin, float radius, out string collider, out float distance, out Vector3 intersection)
     {
         distance = float.MaxValue;
         bool foundIntersection = false;
-        collider = -1;
+        collider = "";
 
         if (!HasOBBCollider)
         {
@@ -208,7 +202,7 @@ public sealed class CollidersEntityBehavior : EntityBehavior
             return false;
         }
 
-        foreach ((int key, ShapeElementCollider shapeElementCollider) in Colliders)
+        foreach ((string key, ShapeElementCollider shapeElementCollider) in Colliders)
         {
             if (shapeElementCollider.Collide(thisTickOrigin, previousTickOrigin, radius, out float currentDistance, out Vector3 currentIntersection) && currentDistance < distance)
             {
@@ -221,14 +215,6 @@ public sealed class CollidersEntityBehavior : EntityBehavior
 
         return foundIntersection;
     }
-
-    public ColliderTypes ColliderFromIndex(int index)
-    {
-        if (index < 0 || CollidersIds.Count <= index) return ColliderTypes.Torso;
-        return CollidersTypes[CollidersIds[index]];
-    }
-
-    public ColliderTypes GetColliderType(int colliderId) => CollidersTypes[CollidersIds[colliderId]];
 
     private readonly Dictionary<ColliderTypes, int> _colliderColors = new()
     {
