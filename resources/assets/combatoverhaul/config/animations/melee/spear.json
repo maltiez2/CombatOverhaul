@@ -161,7 +161,9 @@
       }
     ],
     "ItemKeyFrames": [],
-    "SoundFrames": [],
+    "SoundFrames": [
+      {"Code": ["game:sounds/player/strike1", "game:sounds/player/strike2"], "DurationFraction": 0, "RandomizePitch": true, "Range": 16, "Volume": 0.5, "Synchronize": true}
+    ],
     "ParticlesFrames": [],
     "CallbackFrames": [{"Code": "start", "DurationFraction": 0.083333336}, {"Code": "stop", "DurationFraction": 0.5555556}, {"Code": "ready", "DurationFraction": 0.8333333}],
     "ItemAnimationStart": 0,
@@ -226,7 +228,9 @@
       }
     ],
     "ItemKeyFrames": [],
-    "SoundFrames": [],
+    "SoundFrames": [
+      {"Code": ["game:sounds/player/strike1", "game:sounds/player/strike2"], "DurationFraction": 0, "RandomizePitch": true, "Range": 16, "Volume": 0.5, "Synchronize": true}
+    ],
     "ParticlesFrames": [],
     "CallbackFrames": [{"Code": "start", "DurationFraction": 0.083333336}, {"Code": "stop", "DurationFraction": 0.5555556}, {"Code": "ready", "DurationFraction": 0.8333333}],
     "ItemAnimationStart": 0,
@@ -270,7 +274,9 @@
       }
     ],
     "ItemKeyFrames": [],
-    "SoundFrames": [],
+    "SoundFrames": [
+      {"Code": ["game:sounds/player/strike1", "game:sounds/player/strike2"], "DurationFraction": 0, "RandomizePitch": true, "Range": 16, "Volume": 0.5, "Synchronize": true}
+    ],
     "ParticlesFrames": [],
     "CallbackFrames": [{"Code": "start", "DurationFraction": 0.083333336}, {"Code": "stop", "DurationFraction": 0.5}],
     "ItemAnimationStart": 0,
