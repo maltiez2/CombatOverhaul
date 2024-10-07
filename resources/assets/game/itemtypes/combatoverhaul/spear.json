@@ -65,16 +65,19 @@
           {
             "DamageByType": {
               "*-flint": {"DamageType": "PiercingAttack", "Strength": 2, "Damage": 3},
+              "*-obsidian": {"DamageType": "PiercingAttack", "Strength": 3, "Damage": 3.5},
               "*-copper": {"DamageType": "PiercingAttack", "Strength": 3, "Damage": 3.5},
-              "*-*bronze": {"DamageType": "PiercingAttack", "Strength": 3, "Damage": 3.5},
+              "*-*bronze": {"DamageType": "PiercingAttack", "Strength": 3, "Damage": 4},
               "*-iron": {"DamageType": "PiercingAttack", "Strength": 4, "Damage": 4},
+              "*-ornategold": {"DamageType": "PiercingAttack", "Strength": 4, "Damage": 4},
+              "*-ornatesilver": {"DamageType": "PiercingAttack", "Strength": 4, "Damage": 4},
               "*-meteoriciron": {"DamageType": "PiercingAttack", "Strength": 4.5, "Damage": 4.2},
               "*-steel": {"DamageType": "PiercingAttack", "Strength": 5, "Damage": 4.5},
               "*": {"DamageType": "PiercingAttack", "Strength": 1, "Damage": 2.5}
             },
             "Knockback": 1,
             "DurabilityDamage": 1,
-            "Collider": [0.6, 0, 0.5, 1.2, 0, 0.5]
+            "Collider": [0, 0, 0.5, 1.2, 0, 0.5]
           }
         ]
       },
@@ -83,8 +86,10 @@
         "StopOnEntityHit": false,
         "CollideWithTerrain": true,
         "MaxReach": 9,
-        "DamageTypes": [{"Damage": {"DamageType": "BluntAttack", "Strength": 0, "Damage": 1}, "Knockback": 1, "DurabilityDamage": 1, "Collider": [0.5, 0, 0.5, -2.5, 0, 0.5]}]
+        "DamageTypes": [{"Damage": {"DamageType": "BluntAttack", "Strength": 0, "Damage": 1}, "Knockback": 1, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, -2.5, 0, 0.5]}]
       },
+      "AttackHitSound": "game:sounds/arrow-impact",
+      "HandleHitSound": "game:sounds/thud",
       "AttackAnimation": {"Main": ["combatoverhaul:spear-thrust-1h"]},
       "ReadyAnimation": "combatoverhaul:spear-ready-1h",
       "IdleAnimation": "combatoverhaul:spear-idle-1h",
@@ -110,16 +115,19 @@
           {
             "DamageByType": {
               "*-flint": {"DamageType": "PiercingAttack", "Strength": 2, "Damage": 3},
+              "*-obsidian": {"DamageType": "PiercingAttack", "Strength": 3, "Damage": 3.5},
               "*-copper": {"DamageType": "PiercingAttack", "Strength": 3, "Damage": 3.5},
-              "*-*bronze": {"DamageType": "PiercingAttack", "Strength": 3, "Damage": 3.5},
+              "*-*bronze": {"DamageType": "PiercingAttack", "Strength": 3, "Damage": 4},
               "*-iron": {"DamageType": "PiercingAttack", "Strength": 4, "Damage": 4},
+              "*-ornategold": {"DamageType": "PiercingAttack", "Strength": 4, "Damage": 4},
+              "*-ornatesilver": {"DamageType": "PiercingAttack", "Strength": 4, "Damage": 4},
               "*-meteoriciron": {"DamageType": "PiercingAttack", "Strength": 4.5, "Damage": 4.2},
               "*-steel": {"DamageType": "PiercingAttack", "Strength": 5, "Damage": 4.5},
               "*": {"DamageType": "PiercingAttack", "Strength": 1, "Damage": 2.5}
             },
             "Knockback": 0.75,
             "DurabilityDamage": 1,
-            "Collider": [0.6, 0, 0.5, 1.2, 0, 0.5]
+            "Collider": [0, 0, 0.5, 1.2, 0, 0.5]
           }
         ]
       },
@@ -128,8 +136,10 @@
         "StopOnEntityHit": false,
         "CollideWithTerrain": true,
         "MaxReach": 9,
-        "DamageTypes": [{"Damage": {"DamageType": "BluntAttack", "Strength": 0, "Damage": 0}, "Knockback": 0, "DurabilityDamage": 0, "Collider": [0.5, 0, 0.5, -2.5, 0, 0.5]}]
+        "DamageTypes": [{"Damage": {"DamageType": "BluntAttack", "Strength": 0, "Damage": 0}, "Knockback": 0, "DurabilityDamage": 0, "Collider": [0, 0, 0.5, -2.5, 0, 0.5]}]
       },
+      "AttackHitSound": "game:sounds/arrow-impact",
+      "HandleHitSound": "game:sounds/thud",
       "Parry": {"Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand"], "Directions": [90, 90, 90, 90]},
       "BlockAnimation": "combatoverhaul:spear-parry",
       "AttackDirectionsType": "TopBottom",
@@ -141,15 +151,16 @@
   },
   "durabilitybytype": {
     "*-copper": 300,
-    "*-tinbronze": 600,
+    "*-tinbronze": 500,
     "*-bismuthbronze": 400,
-    "*-blackbronze": 500,
+    "*-blackbronze": 600,
     "*-iron": 400,
     "*-meteoriciron": 600,
     "*-ornategold": 600,
     "*-ornatesilver": 500,
     "*-steel": 1250,
     "*-flint": 150,
+    "*-obsidian": 100,
     "*": 100
   },
   "creativeinventory": {"general": ["*"], "items": ["*"], "tools": ["*"], "combatoverhaul": ["*"]},

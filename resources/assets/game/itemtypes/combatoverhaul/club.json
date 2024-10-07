@@ -14,14 +14,15 @@
       "CanSprint": true,
       "Attack": {
         "StopOnTerrainHit": false,
-        "StopOnEntityHit": false,
+        "StopOnEntityHit": true,
         "CollideWithTerrain": true,
         "MaxReach": 9,
-        "DamageTypes": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 1, "Damage": 4}, "Knockback": 2, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.6, 0, 0.5]}]
+        "DamageTypes": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 1, "Damage": 3}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.6, 0, 0.5]}]
       },
+      "AttackHitSound": "game:sounds/thud",
       "AttackAnimation": {"Main": ["combatoverhaul:club-strike-1h"]},
-      "ReadyAnimation": "combatoverhaul:club-idle-1h",
-      "IdleAnimation": "combatoverhaul:club-ready-1h"
+      "ReadyAnimation": "combatoverhaul:club-ready-1h",
+      "IdleAnimation": "combatoverhaul:club-idle-1h"
     },
     "TwoHandedStance": {
       "CanAttack": true,
@@ -30,12 +31,13 @@
       "CanSprint": true,
       "Attack": {
         "StopOnTerrainHit": false,
-        "StopOnEntityHit": false,
+        "StopOnEntityHit": true,
         "CollideWithTerrain": true,
         "MaxReach": 9,
-        "DamageTypes": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 1, "Damage": 4}, "Knockback": 2, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.6, 0, 0.5]}]
+        "DamageTypes": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 1, "Damage": 3}, "Knockback": 1, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.6, 0, 0.5]}]
       },
-      "AttackAnimation": {"Main": ["combatoverhaul:club-strike-2h"]},
+      "AttackHitSound": "game:sounds/thud",
+      "AttackAnimation": {"Main": ["combatoverhaul:club-strike-2h-1", "combatoverhaul:club-strike-2h-2"]},
       "ReadyAnimation": "combatoverhaul:club-ready-2h",
       "IdleAnimation": "combatoverhaul:club-idle-2h"
     }

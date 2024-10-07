@@ -3,11 +3,11 @@ using CombatOverhaul.DamageSystems;
 using CombatOverhaul.Inputs;
 using CombatOverhaul.MeleeSystems;
 using System.Numerics;
+using System.Text;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
-using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
 using VSImGui.Debug;
@@ -242,6 +242,53 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
         }
     }
 
+    public void GetHeldItemInfo(ItemSlot inSlot, StringBuilder dsc, IWorldAccessor world, bool withDebugInfo)
+    {
+        if (Stats.OneHandedStance?.Attack != null)
+        {
+            float damage = 0;
+            float tier = 0;
+            float knockback = 0;
+            int count = 0;
+
+            foreach (MeleeDamageTypeJson attack in Stats.OneHandedStance.Attack.DamageTypes)
+            {
+                count++;
+                damage += attack.Damage.Damage;
+                tier += attack.Damage.Strength;
+                knockback += attack.Knockback;
+            }
+
+            damage /= count;
+            tier /= count;
+            knockback /= count;
+
+            dsc.AppendLine(Lang.Get("combatoverhaul:iteminfo-melee-weapon-onehanded", damage, tier, knockback));
+        }
+
+        if (Stats.TwoHandedStance?.Attack != null)
+        {
+            float damage = 0;
+            float tier = 0;
+            float knockback = 0;
+            int count = 0;
+
+            foreach (MeleeDamageTypeJson attack in Stats.TwoHandedStance.Attack.DamageTypes)
+            {
+                count++;
+                damage += attack.Damage.Damage;
+                tier += attack.Damage.Strength;
+                knockback += attack.Knockback;
+            }
+
+            damage /= count;
+            tier /= count;
+            knockback /= count;
+
+            dsc.AppendLine(Lang.Get("combatoverhaul:iteminfo-melee-weapon-twohanded", damage, tier, knockback));
+        }
+    }
+
     protected readonly Item Item;
     protected readonly ICoreClientAPI Api;
     protected readonly MeleeBlockSystemClient MeleeBlockSystem;
@@ -250,6 +297,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
     protected SoundsSynchronizerClient SoundsSystem;
     protected GripController? GripController;
     internal const int _maxStates = 100;
+    protected const int MaxState = _maxStates;
     protected readonly MeleeWeaponStats Stats;
     protected const string PlayerStatsMainHandCategory = "CombatOverhaul:held-item-mainhand";
     protected const string PlayerStatsOffHandCategory = "CombatOverhaul:held-item-offhand";
@@ -261,6 +309,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
     protected long OffHandBlockCooldownTimer = -1;
     protected int MainHandAttackCounter = 0;
     protected int OffHandAttackCounter = 0;
+    protected bool HandleHitTerrain = false;
 
     protected MeleeAttack? OneHandedAttack;
     protected MeleeAttack? TwoHandedAttack;
@@ -291,9 +340,9 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
         {
             case MeleeWeaponState.Idle:
                 {
-                    string attackAnimation = 
-                        DirectionsType == DirectionsConfiguration.None ? 
-                        stats.AttackAnimation["Main"][(mainHand ? MainHandAttackCounter : OffHandAttackCounter) % stats.AttackAnimation["Main"].Length] : 
+                    string attackAnimation =
+                        DirectionsType == DirectionsConfiguration.None ?
+                        stats.AttackAnimation["Main"][(mainHand ? MainHandAttackCounter : OffHandAttackCounter) % stats.AttackAnimation["Main"].Length] :
                         stats.AttackAnimation[direction.ToString()][(mainHand ? MainHandAttackCounter : OffHandAttackCounter) % stats.AttackAnimation[direction.ToString()].Length];
 
                     MeleeBlockSystem.StopBlock(mainHand);
@@ -317,6 +366,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
                     {
                         OffHandAttackCounter++;
                     }
+                    HandleHitTerrain = false;
                 }
                 break;
             case MeleeWeaponState.WindingUp:
@@ -342,9 +392,10 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
                         out IEnumerable<(Block block, System.Numerics.Vector3 point)> handleTerrainCollision,
                         out IEnumerable<(Vintagestory.API.Common.Entities.Entity entity, System.Numerics.Vector3 point)> handleEntitiesCollision);
 
-            if (handleTerrainCollision.Any())
+            if (!HandleHitTerrain && handleTerrainCollision.Any())
             {
                 if (stats.HandleHitSound != null) SoundsSystem.Play(stats.HandleHitSound);
+                HandleHitTerrain = true;
                 return;
             }
         }
@@ -414,7 +465,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
     protected virtual bool StopAttack(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
         return false;
-        
+
         if (!CheckState(mainHand, MeleeWeaponState.Attacking, MeleeWeaponState.WindingUp)) return false;
 
         AnimationBehavior?.PlayReadyAnimation(mainHand);
@@ -449,7 +500,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
         if (CanParry(mainHand) && parryStats != null && stats != null)
         {
             if (!ParryButtonReleased) return true;
-            
+
             SetState(MeleeWeaponState.Parrying, mainHand);
             AnimationBehavior?.Play(
                 mainHand,
@@ -473,7 +524,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
                 category: AnimationCategory(mainHand),
                 callback: () => BlockAnimationCallback(mainHand, player),
                 callbackHandler: code => BlockAnimationCallbackHandler(code, mainHand));
-            AnimationBehavior?.PlayVanillaAnimation(stats.BlockTpAnimation); 
+            AnimationBehavior?.PlayVanillaAnimation(stats.BlockTpAnimation);
         }
 
         SetSpeedPenalty(mainHand, player);
@@ -895,6 +946,14 @@ public class MeleeWeapon : Item, IHasWeaponLogic, IHasDynamicIdleAnimations, IHa
     public override void OnHeldAttackStart(ItemSlot slot, EntityAgent byEntity, BlockSelection blockSel, EntitySelection entitySel, ref EnumHandHandling handling)
     {
         handling = EnumHandHandling.PreventDefaultAction;
+    }
+
+    public override void GetHeldItemInfo(ItemSlot inSlot, StringBuilder dsc, IWorldAccessor world, bool withDebugInfo)
+    {
+        ClientLogic?.GetHeldItemInfo(inSlot, dsc, world, withDebugInfo);
+        dsc.AppendLine("");
+
+        base.GetHeldItemInfo(inSlot, dsc, world, withDebugInfo);
     }
 
     public void BlockCallback(IServerPlayer player, ItemSlot slot, bool mainHand)

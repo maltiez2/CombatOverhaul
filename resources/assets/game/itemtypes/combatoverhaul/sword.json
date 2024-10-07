@@ -3,7 +3,7 @@
   "class": "CombatOverhaul:MeleeWeapon",
   "tool": "sword",
   "attributes": {
-    "ProficiencyStat": "spearsProficiency",
+    "ProficiencyStat": "oneHandedSwordsProficiency",
     "OneHandedStanceByType": {
       "*-forlorn-*": {
         "CanAttack": true,
@@ -14,7 +14,7 @@
         "AttackCooldownMs": 0,
         "Attack": {
           "StopOnTerrainHit": false,
-          "StopOnEntityHit": false,
+          "StopOnEntityHit": true,
           "CollideWithTerrain": true,
           "MaxReach": 9,
           "DamageTypes": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 3, "Damage": 6}, "Knockback": 0.5, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.3, 0, 0.5]}]
@@ -33,7 +33,7 @@
         "AttackCooldownMs": 0,
         "Attack": {
           "StopOnTerrainHit": false,
-          "StopOnEntityHit": false,
+          "StopOnEntityHit": true,
           "CollideWithTerrain": true,
           "MaxReach": 9,
           "DamageTypes": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 2, "Damage": 6}, "Knockback": 0.5, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.8, 0, 0.5]}]
@@ -52,22 +52,25 @@
         "AttackCooldownMs": 0,
         "Attack": {
           "StopOnTerrainHit": false,
-          "StopOnEntityHit": false,
+          "StopOnEntityHit": true,
           "CollideWithTerrain": true,
           "MaxReach": 9,
-          "DamageTypesByType": {
-            "*-copper": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 4, "Damage": 4}, "Knockback": -0.2, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.05]}],
-            "*-*bronze": [
-              {"Damage": {"DamageType": "SlashingAttack", "Strength": 4.5, "Damage": 4.5}, "Knockback": -0.2, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.05]}
-            ],
-            "*-iron": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5}, "Knockback": -0.2, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.05]}],
-            "*-gold": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5}, "Knockback": -0.2, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.05]}],
-            "*-silver": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5}, "Knockback": -0.2, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.05]}],
-            "*-meteoriciron": [
-              {"Damage": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5.5}, "Knockback": -0.2, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.05]}
-            ],
-            "*-steel": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 6, "Damage": 5.5}, "Knockback": -0.2, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.05]}]
-          }
+          "DamageTypes": [
+            {
+              "DamageByType": {
+                "*-copper": {"DamageType": "SlashingAttack", "Strength": 3, "Damage": 4},
+                "*-*bronze": {"DamageType": "SlashingAttack", "Strength": 4, "Damage": 4.5},
+                "*-iron": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5},
+                "*-gold": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5},
+                "*-silver": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5},
+                "*-meteoriciron": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5.5},
+                "*-steel": {"DamageType": "SlashingAttack", "Strength": 6, "Damage": 5.5}
+              },
+              "Knockback": -0.2,
+              "DurabilityDamage": 1,
+              "Collider": [0, 0, 0.5, 1.2, 0, 0.05]
+            }
+          ]
         },
         "AttackAnimation": {"Main": ["combatoverhaul:sword-falx-slash-1", "combatoverhaul:sword-falx-slash-2"]},
         "ReadyAnimation": "combatoverhaul:sword-falx-ready",

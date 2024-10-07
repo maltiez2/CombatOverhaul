@@ -135,12 +135,14 @@ public sealed class MeleeAttack
 
         foreach (MeleeDamageType damageType in DamageTypes)
         {
+            bool attacked = false;
+
             foreach (Entity entity in entities
                     .Where(entity => entity != player.Entity)
                     .Where(entity => _attackedEntities.ContainsKey(entityId))
                     .Where(entity => !_attackedEntities[entityId].Contains(entity.EntityId)))
             {
-                bool attacked = damageType.TryAttack(player, entity, out int collider, out Vector3 point, out MeleeDamagePacket packet, mainHand, maximumParameter);
+                attacked = damageType.TryAttack(player, entity, out int collider, out Vector3 point, out MeleeDamagePacket packet, mainHand, maximumParameter);
 
                 if (!attacked) continue;
 
@@ -151,6 +153,8 @@ public sealed class MeleeAttack
 
                 if (StopOnEntityHit) break;
             }
+
+            if (attacked && StopOnEntityHit) break;
         }
 
         packets = damagePackets.ToImmutableArray();

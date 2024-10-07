@@ -7,6 +7,7 @@ using Vintagestory.API.Config;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
+using Vintagestory.Client.NoObf;
 using Vintagestory.GameContent;
 
 namespace CombatOverhaul.Colliders;
@@ -139,7 +140,6 @@ public sealed class CollidersEntityBehavior : EntityBehavior
     {
         if (api.World.Player.Entity.EntityId == entityPlayer.EntityId) return;
         if (!HasOBBCollider) return;
-        if (api.Render.WireframeDebugRender.Entity) return;
 
         IShaderProgram? currentShader = api.Render.CurrentActiveShader;
         currentShader?.Stop();
@@ -152,7 +152,7 @@ public sealed class CollidersEntityBehavior : EntityBehavior
                 collider.HasRenderer = true;
             }
 
-            collider.Render(api, entityPlayer, _colliderColors[CollidersTypes[CollidersIds[id]]]);
+            if (RenderColliders) collider.Render(api, entityPlayer, _colliderColors[CollidersTypes[CollidersIds[id]]]);
         }
 
         currentShader?.Use();

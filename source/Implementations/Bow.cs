@@ -11,8 +11,6 @@ using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
 using Vintagestory.API.Server;
 using Vintagestory.API.Util;
-using Vintagestory.GameContent;
-using VSImGui.Debug;
 
 namespace CombatOverhaul.Implementations;
 
@@ -259,7 +257,7 @@ public sealed class BowClient : RangeWeaponClient
 
         return true;
     }
-    
+
     private bool FullLoadCallback()
     {
         PlayerBehavior?.SetState((int)BowState.Drawn);

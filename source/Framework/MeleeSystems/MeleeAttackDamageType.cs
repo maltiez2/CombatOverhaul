@@ -121,7 +121,7 @@ public class MeleeDamageType : IHasLineCollider
             KnockbackStrength = Knockback
         }, Damage);
 
-        bool received = damageReceived || Damage <= 0;
+        bool received = damageReceived || Damage > 0;
 
         packet = new()
         {

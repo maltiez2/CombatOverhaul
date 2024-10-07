@@ -1,7 +1,6 @@
 ﻿using CombatOverhaul.Animations;
 using CombatOverhaul.Colliders;
 using HarmonyLib;
-using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Reflection.Emit;
 using Vintagestory.API.Client;

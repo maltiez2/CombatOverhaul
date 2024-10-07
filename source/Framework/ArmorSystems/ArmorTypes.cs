@@ -130,12 +130,26 @@ public class ArmorBehavior : CollectibleBehavior, IArmor, IAffectsPlayerStats
             string damageType = Lang.Get($"combatoverhaul:damage-type-{type}");
             dsc.AppendLine($"  {damageType}: {level}");
         }
-        dsc.AppendLine(Lang.Get("combatoverhaul:armor-flat-protection"));
-        foreach ((EnumDamageType type, float level) in Resists.FlatDamageReduction)
+
+        if (Resists.FlatDamageReduction.Values.Any(value => value != 0))
         {
-            string damageType = Lang.Get($"combatoverhaul:damage-type-{type}");
-            dsc.AppendLine($"  {damageType}: {level}");
+            dsc.AppendLine(Lang.Get("combatoverhaul:armor-flat-protection"));
+            foreach ((EnumDamageType type, float level) in Resists.FlatDamageReduction)
+            {
+                string damageType = Lang.Get($"combatoverhaul:damage-type-{type}");
+                dsc.AppendLine($"  {damageType}: {level}");
+            }
         }
+
+        if (PlayerStats.Values.Any(value => value != 0))
+        {
+            dsc.AppendLine("Stats:"); // @TODO add translations
+            foreach ((string stat, float value) in PlayerStats)
+            {
+                if (value != 0f) dsc.AppendLine($"  {stat}: {value * 100:F1}%");
+            }
+        }
+        
         dsc.AppendLine();
     }
 }

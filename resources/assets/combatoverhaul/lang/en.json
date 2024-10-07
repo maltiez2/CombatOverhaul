@@ -1,6 +1,5 @@
 {
   "game:tabname-combatoverhaul": "Combat Overhaul",
-  "game:tabname-combatoverhaul-test": "CO - Test",
 
   "message-mainhand-empty": "Main hand should be empty",
   "message-offhand-empty":  "Offhand should be empty",
@@ -75,6 +74,30 @@
   "armor-fraction-protection": "Protection levels:",
   "armor-flat-protection": "Flat damage reduction:",
 
+  "game:trait-bowsProficiency": "<font color=\"#84ff84\">• Bows proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
+  "game:trait-crossbowsProficiency": "<font color=\"#84ff84\">• Crossbows proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
+  "game:trait-firearmsProficiency": "<font color=\"#84ff84\">• Firearms proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
+  "game:trait-oneHandedSwordsProficiency": "<font color=\"#84ff84\">• Onehanded swords proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
+  "game:trait-twoHandedSwordsProficiency": "<font color=\"#84ff84\">• Twohanded swords proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
+  "game:trait-spearsProficiency": "<font color=\"#84ff84\">• Spears proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
+  "game:trait-javelinsProficiency": "<font color=\"#84ff84\">• Javelins proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
+  "game:trait-macesProficiency": "<font color=\"#84ff84\">• Maces proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
+  "game:trait-clubsProficiency": "<font color=\"#84ff84\">• Clubs proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
+  "game:trait-steadyAim": "<font color=\"#84ff84\">• Steady aim</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
+  "game:trait-tremblingAim": "<font color=\"#ff8484\">• Trembling aim</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
+
+  "game:charattribute-bowsProficiency-0.3": "+30% draw speed",
+  "game:charattribute-crossbowsProficiency-0.3": "+30% reload speed",
+  "game:charattribute-firearmsProficiency-0.3": "+30% reload speed",
+  "game:charattribute-oneHandedSwordsProficiency-0.3": "+30% attack speed",
+  "game:charattribute-twoHandedSwordsProficiency-0.3": "+30% attack speed",
+  "game:charattribute-spearsProficiency-0.3": "+30% attack speed",
+  "game:charattribute-javelinsProficiency-0.3": "+30% attack speed",
+  "game:charattribute-macesProficiency-0.3": "+30% attackspeed",
+  "game:charattribute-clubsProficiency-0.3": "+30% attack speed",
+  "game:charattribute-steadyAim-0.5": "50% less aim drift",
+  "game:charattribute-steadyAim--0.5": "50% more aim drift",
+
   "damagelog-missed-block-zone": "Player tried blocking, but {0} was not protected by block",
   "damagelog-missed-block-direction": "Player tried blocking, but directon ({0}) of incomming attack was not covered by block",
   "damagelog-success-block": "Player successfully blocked damage to {0}",
@@ -84,17 +107,8 @@
 
   "iteminfo-range-weapon-damage": "Damage multiplier: {0}\nDamage tier: {1}",
   "iteminfo-projectile": "Damage: {0}\nDamage type: {1}\nBreak chance: {2}%",
-
-  "item-bow-crude-regular": "Crude bow",
-  "item-bow-simple-regular": "Simple bow",
-  "item-bow-long-regular": "Long bow",
-  "item-bow-recurve-regular": "Recurve bow",
-  "item-arrow-crude": "Arrow (Crude)",
-  "item-arrow-flint": "Arrow (Flint)",
-  "item-arrow-copper": "Arrow (Copper)",
-  "item-arrow-*bronze": "Arrow (Bronze)",
-  "item-arrow-*iron": "Arrow (Iron)",
-  "item-arrow-steel": "Arrow (Steel)",
+  "iteminfo-melee-weapon-onehanded": "Onehanded attack\n  damage: {0}\n  tier: {1}\n  knockback: {2}",
+  "iteminfo-melee-weapon-twohanded": "Twohanded attack\n  damage: {0}\n  tier: {1}\n  knockback: {2}",
   
   "game:item-spear-generic-iron": "Iron spear",
   "game:item-spear-generic-meteoriciron": "Meteoric iron spear",

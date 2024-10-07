@@ -8,11 +8,9 @@ using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
-using Vintagestory.API.Config;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
 using Vintagestory.API.Util;
-using Vintagestory.GameContent;
 using VSImGui.Debug;
 
 namespace CombatOverhaul.Implementations;
@@ -203,7 +201,7 @@ public class JavelinClient : IClientWeaponLogic
     {
         SetState(JavelinState.Aiming, mainHand);
         AimingSystem.AimingState = WeaponAimingState.FullCharge;
-        
+
         return true;
     }
 
@@ -221,7 +219,7 @@ public class JavelinClient : IClientWeaponLogic
     {
         SetState(JavelinState.Idle, mainHand);
         AimingSystem.AimingState = WeaponAimingState.FullCharge;
-        
+
         Vintagestory.API.MathTools.Vec3d position = player.LocalEyePos + player.Pos.XYZ;
         Vector3 targetDirection = AimingSystem.TargetVec;
 
