@@ -2,6 +2,7 @@
 using ImGuiNET;
 using System.Numerics;
 using Vintagestory.API.Common;
+using Vintagestory.Common;
 
 namespace CombatOverhaul.Animations;
 
@@ -200,6 +201,8 @@ public sealed class Animation
     {
         return Interpolate(PlayerItemFrame.Zero, progress * TotalDuration);
     }
+
+    public Animation Clone() => new Animation(PlayerKeyFrames, ItemKeyFrames, SoundFrames, ParticlesFrames, CallbackFrames);
 
     internal int _playerFrameIndex = 0;
     internal int _itemFrameIndex = 0;

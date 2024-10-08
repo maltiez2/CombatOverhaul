@@ -1,0 +1,41 @@
+﻿{
+  "code": "spear",
+  "class": "CombatOverhaul:Projectile",
+  "variantgroups": [
+    {"code": "type", "states": ["generic"]},
+    {
+      "code": "material",
+      "states": [
+        "chert",
+        "granite",
+        "andesite",
+        "basalt",
+        "obsidian",
+        "peridotite",
+        "flint",
+        "copper",
+        "tinbronze",
+        "bismuthbronze",
+        "blackbronze",
+        "iron",
+        "meteoriciron",
+        "steel",
+        "ornategold",
+        "ornatesilver"
+      ]
+    }
+  ],
+  "hitboxSize": {"x": 0.125, "y": 0.125},
+  "client": {
+    "size": 0.8,
+    "renderer": "Shape",
+    "shapeByType": {
+      "@spear-generic-(chert|granite|andesite|basalt|obsidian|peridotite|flint)": {"base": "combatoverhaul:weapons/spears/spear-flint"},
+      "*": {"base": "combatoverhaul:weapons/spears/spear-{material}"}
+    },
+    "texturesByType": {"@spear-generic-(chert|granite|andesite|basalt|obsidian|peridotite)": {"head": {"base": "block/stone/rock/{material}1"}}},
+    "behaviors": [{"code": "passivephysics", "groundDragFactor": 1, "airDragFactor": 1, "gravityFactor": 1}, {"code": "interpolateposition"}]
+  },
+  "server": {"behaviors": [{"code": "passivephysics", "groundDragFactor": 1, "airDragFactor": 1, "gravityFactor": 1}, {"code": "despawn", "minSeconds": 600}]},
+  "sounds": {}
+}

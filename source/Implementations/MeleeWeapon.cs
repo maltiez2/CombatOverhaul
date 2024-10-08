@@ -2,6 +2,8 @@
 using CombatOverhaul.DamageSystems;
 using CombatOverhaul.Inputs;
 using CombatOverhaul.MeleeSystems;
+using CombatOverhaul.RangedSystems;
+using CombatOverhaul.RangedSystems.Aiming;
 using System.Numerics;
 using System.Text;
 using Vintagestory.API.Client;
@@ -21,7 +23,10 @@ public enum MeleeWeaponState
     Attacking,
     Parrying,
     Blocking,
-    Cooldown
+    Cooldown,
+    StartingAim,
+    Aiming,
+    Throwing
 }
 
 public enum MeleeWeaponStance
@@ -39,10 +44,11 @@ public interface IHasMeleeWeaponActions
 
 public class StanceStats
 {
-    public bool CanAttack { get; set; } = true;
-    public bool CanParry { get; set; } = true;
-    public bool CanBlock { get; set; } = true;
+    public bool CanAttack { get; set; } = false;
+    public bool CanParry { get; set; } = false;
+    public bool CanBlock { get; set; } = false;
     public bool CanSprint { get; set; } = true;
+    public bool CanThrow { get; set; } = false;
     public float SpeedPenalty { get; set; } = 0;
     public float BlockSpeedPenalty { get; set; } = 0;
 
@@ -71,11 +77,24 @@ public class StanceStats
     public string BlockTpAnimation { get; set; } = "";
 }
 
+public class ThrowWeaponStats
+{
+    public string AimAnimation { get; set; } = "";
+    public string ThrowAnimation { get; set; } = "";
+    public AimingStatsJson Aiming { get; set; } = new();
+    public float DamageStrength { get; set; }
+    public float Knockback { get; set; } = 0;
+    public int DurabilityDamage { get; set; } = 1;
+    public float Velocity { get; set; } = 1;
+    public float Zeroing { get; set; } = 1.5f;
+}
+
 public class MeleeWeaponStats : WeaponStats
 {
     public StanceStats? OneHandedStance { get; set; } = null;
     public StanceStats? TwoHandedStance { get; set; } = null;
     public StanceStats? OffHandStance { get; set; } = null;
+    public ThrowWeaponStats? ThrowAttack { get; set; } = null;
     public bool RenderingOffset { get; set; } = false;
     public float AnimationStaggerOnHitDurationMs { get; set; } = 100;
 }
@@ -90,39 +109,42 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
         CombatOverhaulSystem system = api.ModLoader.GetModSystem<CombatOverhaulSystem>();
         MeleeBlockSystem = system.ClientBlockSystem ?? throw new Exception();
         SoundsSystem = system.ClientSoundsSynchronizer ?? throw new Exception();
+        RangedWeaponSystem = system.ClientRangedWeaponSystem ?? throw new Exception();
+        AimingSystem = system.AimingSystem ?? throw new Exception();
 
         Stats = item.Attributes.AsObject<MeleeWeaponStats>();
+        AimingStats = Stats.ThrowAttack?.Aiming.ToStats();
 
         if (Stats.OneHandedStance?.Attack != null)
         {
             OneHandedAttack = new(api, Stats.OneHandedStance.Attack);
-            //DebugEditColliders(OneHandedAttack, item.Id * 100 + 0);
+            if (EditColliders) DebugEditColliders(OneHandedAttack, item.Id * 100 + 0);
         }
         if (Stats.TwoHandedStance?.Attack != null)
         {
             TwoHandedAttack = new(api, Stats.TwoHandedStance.Attack);
-            //DebugEditColliders(TwoHandedAttack, item.Id * 100 + 1);
+            if (EditColliders) DebugEditColliders(TwoHandedAttack, item.Id * 100 + 1);
         }
         if (Stats.OffHandStance?.Attack != null)
         {
             OffHandAttack = new(api, Stats.OffHandStance.Attack);
-            //DebugEditColliders(OffHandAttack, item.Id * 100 + 2);
+            if (EditColliders) DebugEditColliders(OffHandAttack, item.Id * 100 + 2);
         }
 
         if (Stats.OneHandedStance?.HandleAttack != null)
         {
             OneHandedHandleAttack = new(api, Stats.OneHandedStance.HandleAttack);
-            //DebugEditColliders(OneHandedHandleAttack, item.Id * 100 + 3);
+            if (EditColliders) DebugEditColliders(OneHandedHandleAttack, item.Id * 100 + 3);
         }
         if (Stats.TwoHandedStance?.HandleAttack != null)
         {
             TwoHandedHandleAttack = new(api, Stats.TwoHandedStance.HandleAttack);
-            //DebugEditColliders(TwoHandedHandleAttack, item.Id * 100 + 4);
+            if (EditColliders) DebugEditColliders(TwoHandedHandleAttack, item.Id * 100 + 4);
         }
         if (Stats.OffHandStance?.HandleAttack != null)
         {
             OffHandHandleAttack = new(api, Stats.OffHandStance.HandleAttack);
-            //DebugEditColliders(OffHandHandleAttack, item.Id * 100 + 5);
+            if (EditColliders) DebugEditColliders(OffHandHandleAttack, item.Id * 100 + 5);
         }
     }
 
@@ -167,12 +189,16 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
         GripController?.ResetGrip(mainHand);
         AnimationBehavior?.StopSpeedModifier();
         PlayerBehavior?.SetStat("walkspeed", mainHand ? PlayerStatsMainHandCategory : PlayerStatsOffHandCategory);
+        AimingAnimationController?.Stop(mainHand);
+        AimingSystem.StopAiming();
     }
     public virtual void OnRegistered(ActionsManagerPlayerBehavior behavior, ICoreClientAPI api)
     {
         PlayerBehavior = behavior;
         AnimationBehavior = behavior.entity.GetBehavior<FirstPersonAnimationsBehavior>();
         GripController = new(AnimationBehavior);
+        
+        if (AimingStats != null) AimingAnimationController = new(AimingSystem, AnimationBehavior, AimingStats);
     }
 
     public virtual void RenderDebugCollider(ItemSlot inSlot, IClientPlayer byPlayer)
@@ -188,7 +214,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
 
     public virtual bool OnMouseWheel(ItemSlot slot, IClientPlayer byPlayer, float delta)
     {
-        if (PlayerBehavior?._actionListener.IsActive(EnumEntityAction.RightMouseDown) == false) return false;
+        //if (PlayerBehavior?._actionListener.IsActive(EnumEntityAction.RightMouseDown) == false) return false;
 
         bool mainHand = byPlayer.Entity.RightHandItemSlot == slot;
         StanceStats? stance = GetStanceStats(mainHand);
@@ -209,6 +235,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
     public bool CanAttack(bool mainHand = true) => GetStanceStats(mainHand)?.CanAttack ?? false;
     public bool CanBlock(bool mainHand = true) => GetStanceStats(mainHand)?.CanBlock ?? false;
     public bool CanParry(bool mainHand = true) => GetStanceStats(mainHand)?.CanParry ?? false;
+    public bool CanThrow(bool mainHand = true) => GetStanceStats(mainHand)?.CanThrow ?? false;
 
     public void OnGameTick(ItemSlot slot, EntityPlayer player, ref int state, bool mainHand)
     {
@@ -292,9 +319,12 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
     protected readonly Item Item;
     protected readonly ICoreClientAPI Api;
     protected readonly MeleeBlockSystemClient MeleeBlockSystem;
+    protected readonly RangedWeaponSystemClient RangedWeaponSystem;
+    protected readonly ClientAimingSystem AimingSystem;
     protected FirstPersonAnimationsBehavior? AnimationBehavior;
     protected ActionsManagerPlayerBehavior? PlayerBehavior;
     protected SoundsSynchronizerClient SoundsSystem;
+    protected AimingAnimationController? AimingAnimationController;
     protected GripController? GripController;
     internal const int _maxStates = 100;
     protected const int MaxState = _maxStates;
@@ -310,6 +340,9 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
     protected int MainHandAttackCounter = 0;
     protected int OffHandAttackCounter = 0;
     protected bool HandleHitTerrain = false;
+    protected const bool EditColliders = false;
+
+    protected readonly AimingStats? AimingStats;
 
     protected MeleeAttack? OneHandedAttack;
     protected MeleeAttack? TwoHandedAttack;
@@ -639,6 +672,75 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
         }
     }
 
+
+    [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Active)]
+    protected virtual bool Aim(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
+    {
+        if (eventData.AltPressed || !CanThrow(mainHand) || Stats.ThrowAttack == null || AimingStats == null) return false;
+        if (!CheckState(mainHand, MeleeWeaponState.Idle)) return false;
+        //if (mainHand && CanBlockWithOtherHand(player, mainHand)) return false;
+
+        SetState(MeleeWeaponState.StartingAim, mainHand);
+        AimingSystem.AimingState = WeaponAimingState.Blocked;
+        AimingAnimationController?.Play(mainHand);
+        AimingSystem.StartAiming(AimingStats);
+
+        AnimationBehavior?.Play(mainHand, Stats.ThrowAttack.AimAnimation, animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat), callback: () => AimAnimationCallback(slot, mainHand));
+
+        return true;
+    }
+    protected virtual bool AimAnimationCallback(ItemSlot slot, bool mainHand)
+    {
+        SetState(MeleeWeaponState.Aiming, mainHand);
+        AimingSystem.AimingState = WeaponAimingState.FullCharge;
+
+        return true;
+    }
+
+    [ActionEventHandler(EnumEntityAction.LeftMouseDown, ActionState.Pressed)]
+    protected virtual bool Throw(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
+    {
+        if (Stats.ThrowAttack == null) return false;
+        if (!CheckState(mainHand, MeleeWeaponState.Aiming)) return false;
+
+        SetState(MeleeWeaponState.Throwing, mainHand);
+        AnimationBehavior?.Play(mainHand, Stats.ThrowAttack.ThrowAnimation, animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat), callback: () => ThrowAnimationCallback(slot, player, mainHand));
+
+        return true;
+    }
+    protected virtual bool ThrowAnimationCallback(ItemSlot slot, EntityPlayer player, bool mainHand)
+    {
+        if (Stats.ThrowAttack == null) return false;
+
+        SetState(MeleeWeaponState.Idle, mainHand);
+        AimingSystem.AimingState = WeaponAimingState.FullCharge;
+
+        Vintagestory.API.MathTools.Vec3d position = player.LocalEyePos + player.Pos.XYZ;
+        Vector3 targetDirection = AimingSystem.TargetVec;
+
+        targetDirection = ClientAimingSystem.Zeroing(targetDirection, Stats.ThrowAttack.Zeroing);
+
+        RangedWeaponSystem.Shoot(slot, 1, new Vector3((float)position.X, (float)position.Y, (float)position.Z), new Vector3(targetDirection.X, targetDirection.Y, targetDirection.Z), mainHand, _ => { });
+
+        slot.TakeOut(1);
+
+        return true;
+    }
+
+    [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Released)]
+    protected virtual bool Ease(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
+    {
+        if (!CheckState(mainHand, MeleeWeaponState.StartingAim, MeleeWeaponState.Aiming)) return false;
+
+        AnimationBehavior?.PlayReadyAnimation(mainHand);
+        SetState(MeleeWeaponState.Idle, mainHand);
+        AimingAnimationController?.Stop(mainHand);
+        AimingSystem.StopAiming();
+
+        return true;
+    }
+
+
     protected virtual void StartAttackCooldown(bool mainHand, TimeSpan time)
     {
         StopAttackCooldown(mainHand);
@@ -903,11 +1005,52 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
     }
 }
 
-public class MeleeWeapon : Item, IHasWeaponLogic, IHasDynamicIdleAnimations, IHasMeleeWeaponActions, IHasServerBlockCallback, ISetsRenderingOffset, IMouseWheelInput, IOnGameTick
+public class MeleeWeaponServer : RangeWeaponServer
+{
+    public MeleeWeaponServer(ICoreServerAPI api, Item item) : base(api, item)
+    {
+        _projectileSystem = api.ModLoader.GetModSystem<CombatOverhaulSystem>().ServerProjectileSystem ?? throw new Exception();
+        _stats = item.Attributes.AsObject<MeleeWeaponStats>();
+    }
+
+    public override bool Shoot(IServerPlayer player, ItemSlot slot, ShotPacket packet, Entity shooter)
+    {
+        if (slot?.Itemstack == null || slot.Itemstack.StackSize < 1) return false;
+
+        ProjectileStats? stats = slot.Itemstack.Item.GetCollectibleBehavior<ProjectileBehavior>(true)?.Stats;
+
+        if (stats == null)
+        {
+            return false;
+        }
+
+        ProjectileSpawnStats spawnStats = new()
+        {
+            ProducerEntityId = player.Entity.EntityId,
+            DamageMultiplier = 1,
+            DamageStrength = _stats.ThrowAttack?.DamageStrength ?? 0,
+            Position = new Vector3(packet.Position[0], packet.Position[1], packet.Position[2]),
+            Velocity = Vector3.Normalize(new Vector3(packet.Velocity[0], packet.Velocity[1], packet.Velocity[2])) * (_stats.ThrowAttack?.Velocity ?? 1)
+        };
+
+        _projectileSystem.Spawn(packet.ProjectileId, stats, spawnStats, slot.TakeOut(1), shooter);
+
+        slot.MarkDirty();
+
+        return true;
+    }
+
+    private readonly ProjectileSystemServer _projectileSystem;
+    private readonly MeleeWeaponStats _stats;
+}
+
+public class MeleeWeapon : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasDynamicIdleAnimations, IHasMeleeWeaponActions, IHasServerBlockCallback, ISetsRenderingOffset, IMouseWheelInput, IOnGameTick
 {
     public MeleeWeaponClient? ClientLogic { get; private set; }
+    public MeleeWeaponServer? ServerLogic { get; private set; }
 
     IClientWeaponLogic? IHasWeaponLogic.ClientLogic => ClientLogic;
+    IServerRangedWeaponLogic? IHasRangedWeaponLogic.ServerWeaponLogic => ServerLogic;
 
     public bool RenderingOffset { get; set; }
 
@@ -920,6 +1063,11 @@ public class MeleeWeapon : Item, IHasWeaponLogic, IHasDynamicIdleAnimations, IHa
             ClientLogic = new(clientAPI, this);
             MeleeWeaponStats Stats = Attributes.AsObject<MeleeWeaponStats>();
             RenderingOffset = Stats.RenderingOffset;
+        }
+
+        if (api is ICoreServerAPI serverAPI)
+        {
+            ServerLogic = new(serverAPI, this);
         }
     }
 
@@ -992,7 +1140,7 @@ public sealed class GripController
     }
 
     private float _grip = 0;
-    private readonly Animations.Animation _gripAnimation = Animations.Animation.Zero;
+    private readonly Animations.Animation _gripAnimation = Animations.Animation.Zero.Clone();
     private readonly FirstPersonAnimationsBehavior? _animationBehavior;
 
     private PLayerKeyFrame GetAimingFrame()

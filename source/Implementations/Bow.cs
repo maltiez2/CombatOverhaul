@@ -289,8 +289,8 @@ public sealed class AimingAnimationController
         _aimingSystem.OnAimPointChange -= UpdateCursorFollowAnimation;
     }
 
-    private readonly Animations.Animation _cursorFollowAnimation = Animations.Animation.Zero;
-    private readonly Animations.Animation _cursorStopFollowAnimation = Animations.Animation.Zero;
+    private readonly Animations.Animation _cursorFollowAnimation = Animations.Animation.Zero.Clone();
+    private readonly Animations.Animation _cursorStopFollowAnimation = Animations.Animation.Zero.Clone();
     private const float _animationFollowMultiplier = 0.01f;
     private readonly ClientAimingSystem _aimingSystem;
     private readonly AimingStats _aimingStats;

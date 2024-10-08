@@ -11,6 +11,31 @@
         "selectionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.1, "z2": 1},
         "collisionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 0, "y2": 0, "z2": 0}
       }
+    },
+    {
+      "name": "CombatOverhaul:Projectile",
+      "properties": {
+        "stats": {
+          "AdditionalDurabilityCost": 0,
+          "CollisionRadius": 0.05,
+          "DamageStatsByType": {
+            "*-crude": {"DamageType": "PiercingAttack", "Damage": 3.5},
+            "*-flint": {"DamageType": "PiercingAttack", "Damage": 4},
+            "*-copper": {"DamageType": "PiercingAttack", "Damage": 4.5},
+            "*-tinbronze": {"DamageType": "PiercingAttack", "Damage": 5},
+            "*-bismuthbronze": {"DamageType": "PiercingAttack", "Damage": 5},
+            "*-blackbronze": {"DamageType": "PiercingAttack", "Damage": 5},
+            "*-iron": {"DamageType": "PiercingAttack", "Damage": 5.6},
+            "*-meteoriciron": {"DamageType": "PiercingAttack", "Damage": 5.6},
+            "*-steel": {"DamageType": "PiercingAttack", "Damage": 6}
+          },
+          "SpeedThreshold": 0.3,
+          "Knockback": 0.1,
+          "EntityCode": "combatoverhaul:spear-generic-{material}",
+          "DurabilityDamage": 1,
+          "DropChance": 1
+        }
+      }
     }
   ],
   "variantgroups": [
@@ -51,6 +76,7 @@
       "CanParry": false,
       "CanBlock": false,
       "CanSprint": true,
+      "CanThrow": true,
       "SpeedPenalty": 0,
       "AttackCooldownMs": 550,
       "GripLengthFactor": 2,
@@ -97,9 +123,10 @@
     },
     "TwoHandedStance": {
       "CanAttack": true,
-      "CanParry": true,
+      "CanParry": false,
       "CanBlock": false,
       "CanSprint": true,
+      "CanThrow": true,
       "SpeedPenalty": 0,
       "AttackCooldownMs": 500,
       "BlockCooldownMs": 750,
@@ -140,13 +167,47 @@
       },
       "AttackHitSound": "game:sounds/arrow-impact",
       "HandleHitSound": "game:sounds/thud",
-      "Parry": {"Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand"], "Directions": [90, 90, 90, 90]},
-      "BlockAnimation": "combatoverhaul:spear-parry",
       "AttackDirectionsType": "TopBottom",
       "AttackAnimation": {"Top": ["combatoverhaul:spear-thrust-2h-top"], "Bottom": ["combatoverhaul:spear-thrust-2h-bottom"]},
       "ReadyAnimation": "combatoverhaul:spear-ready-2h",
       "IdleAnimation": "combatoverhaul:spear-idle-2h",
       "AttackTpAnimation": "spearhit"
+    },
+    "ThrowAttack": {
+      "AimAnimation": "combatoverhaul:javelin-aim",
+      "ThrowAnimation": "combatoverhaul:javelin-throw",
+      "Aiming": {
+        "AimDifficulty": 1,
+        "CursorType": "Fixed",
+        "AccuracyOvertimeSec": 0,
+        "ZeroingAngle": 1,
+        "CursorTextureReady": "combatoverhaul:gui/aiming/arrow-full.png",
+        "CursorTextureNotReady": "combatoverhaul:gui/aiming/arrow-part.png",
+        "AllowSprint": true,
+        "MoveSpeedPenalty": 0.1,
+        "AimDrift": 60,
+        "AimTwitch": 4,
+        "AnimationFollowX": 5.5,
+        "AnimationFollowY": 5.5,
+        "VerticalLimit": 0.25,
+        "VerticalOffset": -0.05
+      },
+      "DamageStrengthType": {
+        "*-flint": 2,
+        "*-obsidian": 3,
+        "*-copper": 3,
+        "*-*bronze": 3,
+        "*-iron": 4,
+        "*-ornategold": 4,
+        "*-ornatesilver": 4,
+        "*-meteoriciron": 4.5,
+        "*-steel": 5,
+        "*": 2
+      },
+      "Knockback": 1,
+      "DurabilityDamage": 1,
+      "Velocity": 0.7,
+      "Zeroing": 1.5
     }
   },
   "durabilitybytype": {
