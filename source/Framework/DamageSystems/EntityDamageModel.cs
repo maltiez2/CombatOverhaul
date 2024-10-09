@@ -5,7 +5,6 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
 using Vintagestory.API.Datastructures;
-using Vintagestory.API.Server;
 using Vintagestory.GameContent;
 
 namespace CombatOverhaul.DamageSystems;
@@ -19,6 +18,21 @@ public sealed class EntityDamageModelJson
     public float ResistantDamageMultiplier { get; set; } = 0.0f;
     public Dictionary<string, float> DefaultResists { get; set; } = new();
     public Dictionary<string, Dictionary<string, float>> ResistsForColliders { get; set; } = new();
+    public Dictionary<string, SoundEffectData> HitSounds { get; set; } = new()
+    {
+        {"Head", new() { Code = "game:sounds/arrow-impact"}  },
+        {"Critical", new() { Code = "game:sounds/arrow-impact"}  },
+        {"Resistant", new() { Code = "game:sounds/held/shieldblock"}  },
+    };
+    public Dictionary<string, string> ParticleEffects { get; set; } = new();
+}
+
+public sealed class SoundEffectData
+{
+    public string Code { get; set; } = "";
+    public bool RandomizePitch { get; set; } = false;
+    public float Range { get; set; } = 32;
+    public float Volume { get; set; } = 1;
 }
 
 public delegate void OnEntityReceiveDamageDelegate(ref float damage, DamageSource damageSource, ColliderTypes damageZone);
@@ -43,10 +57,10 @@ public sealed class EntityDamageModelBehavior : EntityBehavior
     }.ToImmutableDictionary();
     public DamageResistData Resists { get; set; } = new();
     public ImmutableDictionary<string, DamageResistData> ResistsForColliders { get; private set; } = new Dictionary<string, DamageResistData>().ToImmutableDictionary();
+    public ImmutableDictionary<ColliderTypes, SoundEffectData> HitSounds { get; private set; } = new Dictionary<ColliderTypes, SoundEffectData>().ToImmutableDictionary();
 
     public override void Initialize(EntityProperties properties, JsonObject attributes)
     {
-
         if (attributes.KeyExists("damageModel"))
         {
             EntityDamageModelJson stats = attributes["damageModel"].AsObject<EntityDamageModelJson>();
@@ -66,6 +80,8 @@ public sealed class EntityDamageModelBehavior : EntityBehavior
                 { ColliderTypes.Critical, stats.CriticalDamageMultiplier },
                 { ColliderTypes.Resistant, stats.ResistantDamageMultiplier }
             }.ToImmutableDictionary();
+
+            HitSounds = stats.HitSounds.ToDictionary(entry => Enum.Parse<ColliderTypes>(entry.Key), entry => entry.Value).ToImmutableDictionary();
         }
     }
     public override void GetInfoText(StringBuilder infotext)
@@ -90,10 +106,6 @@ public sealed class EntityDamageModelBehavior : EntityBehavior
 
     private CollidersEntityBehavior? _colliders;
 
-    private void PrintToDamageLog(string message, DamageSource damageSource)
-    {
-        if (message != "") ((damageSource.CauseEntity as EntityPlayer)?.Player as IServerPlayer)?.SendMessage(GlobalConstants.DamageLogChatGroup, message, EnumChatType.Notification);
-    }
     private float OnReceiveDamageHandler(float damage, DamageSource damageSource)
     {
         ColliderTypes colliderType = ColliderTypes.Torso;
@@ -127,6 +139,11 @@ public sealed class EntityDamageModelBehavior : EntityBehavior
         {
             DamageData damageData = new(damageSource.Type, damageSource.DamageTier);
             Resists.ApplyResist(damageData, ref damage);
+        }
+
+        if (HitSounds.TryGetValue(colliderType, out SoundEffectData? value))
+        {
+            entity.Api.World.PlaySoundAt(new AssetLocation(value.Code), entity, randomizePitch: value.RandomizePitch, range: value.Range, volume: value.Volume);
         }
 
         OnReceiveDamage?.Invoke(ref damage, damageSource, colliderType);

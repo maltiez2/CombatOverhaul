@@ -67,7 +67,7 @@
     "@spear-generic-(chert|granite|andesite|basalt|obsidian|peridotite|flint)": {"base": "combatoverhaul:weapons/spears/spear-flint"},
     "*": {"base": "combatoverhaul:weapons/spears/spear-{material}"}
   },
-  "texturesByType": {"@spear-generic-(chert|granite|andesite|basalt|obsidian|peridotite)": {"head": {"base": "block/stone/rock/{material}1"}}},
+  "texturesByType": {"@spear-generic-(chert|granite|andesite|basalt|obsidian|peridotite)": {"head": {"base": "game:block/stone/rock/{material}1"}}},
   "attributes": {
     "groundStorageTransform": {"translation": {"x": 0.5, "y": 2, "z": 0.41}, "rotation": {"x": 12, "y": 0, "z": 90}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
     "ProficiencyStat": "spearsProficiency",
@@ -114,7 +114,6 @@
         "MaxReach": 9,
         "DamageTypes": [{"Damage": {"DamageType": "BluntAttack", "Strength": 0, "Damage": 1}, "Knockback": 1, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, -2.5, 0, 0.5]}]
       },
-      "AttackHitSound": "game:sounds/arrow-impact",
       "HandleHitSound": "game:sounds/thud",
       "AttackAnimation": {"Main": ["combatoverhaul:spear-thrust-1h"]},
       "ReadyAnimation": "combatoverhaul:spear-ready-1h",
@@ -165,7 +164,6 @@
         "MaxReach": 9,
         "DamageTypes": [{"Damage": {"DamageType": "BluntAttack", "Strength": 0, "Damage": 0}, "Knockback": 0, "DurabilityDamage": 0, "Collider": [0, 0, 0.5, -2.5, 0, 0.5]}]
       },
-      "AttackHitSound": "game:sounds/arrow-impact",
       "HandleHitSound": "game:sounds/thud",
       "AttackDirectionsType": "TopBottom",
       "AttackAnimation": {"Top": ["combatoverhaul:spear-thrust-2h-top"], "Bottom": ["combatoverhaul:spear-thrust-2h-bottom"]},

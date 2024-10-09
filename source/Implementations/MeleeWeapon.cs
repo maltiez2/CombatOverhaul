@@ -429,8 +429,9 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
             {
                 if (stats.HandleHitSound != null) SoundsSystem.Play(stats.HandleHitSound);
                 HandleHitTerrain = true;
-                return;
             }
+
+            if (handleTerrainCollision.Any()) return;
         }
 
         attack.Attack(

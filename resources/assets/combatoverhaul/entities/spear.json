@@ -33,7 +33,7 @@
       "@spear-generic-(chert|granite|andesite|basalt|obsidian|peridotite|flint)": {"base": "combatoverhaul:weapons/spears/spear-flint"},
       "*": {"base": "combatoverhaul:weapons/spears/spear-{material}"}
     },
-    "texturesByType": {"@spear-generic-(chert|granite|andesite|basalt|obsidian|peridotite)": {"head": {"base": "block/stone/rock/{material}1"}}},
+    "texturesByType": {"@spear-generic-(chert|granite|andesite|basalt|obsidian|peridotite)": {"head": {"base": "game:block/stone/rock/{material}1"}}},
     "behaviors": [{"code": "passivephysics", "groundDragFactor": 1, "airDragFactor": 1, "gravityFactor": 1}, {"code": "interpolateposition"}]
   },
   "server": {"behaviors": [{"code": "passivephysics", "groundDragFactor": 1, "airDragFactor": 1, "gravityFactor": 1}, {"code": "despawn", "minSeconds": 600}]},

@@ -4,6 +4,16 @@
     "string": {
       "game:itemtypes/combatoverhaul/bow.json": {
         "attributes/AimingByType/@@*/CursorType": "bows_aiming_cursor_type"
+      },
+      "game:itemtypes/combatoverhaul/spear.json": {
+        "attributes/ThrowAttack/Aiming/CursorType": "spears_aiming_cursor_type"
+      },
+      "combatoverhaul:patches/traits-and-classes.json": {
+        "1/file": "(modify_vanilla_classes) ? value : empty_string",
+        "2/file": "(modify_vanilla_classes) ? value : empty_string",
+        "3/file": "(modify_vanilla_classes) ? value : empty_string",
+        "4/file": "(modify_vanilla_classes) ? value : empty_string",
+        "5/file": "(modify_vanilla_classes) ? value : empty_string"
       }
     },
     "other": {
@@ -12,12 +22,27 @@
       }
     }
   },
+  "constants": {
+    "empty_string": ""
+  },
   "settings": [
     {
       "code": "bows_aiming_cursor_type",
       "type": "string",
       "ingui": "Bows aiming cursor type",
       "default": "Moving",
+      "values": [
+        "None",
+        "Vanilla",
+        "Fixed",
+        "Moving"
+      ]
+    },
+    {
+      "code": "spears_aiming_cursor_type",
+      "type": "Fixed",
+      "ingui": "Spears aiming cursor type",
+      "default": "Fixed",
       "values": [
         "None",
         "Vanilla",
@@ -37,6 +62,12 @@
         "Full without feet and head": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
         "Minimal": ["Face", "Neck", "Torso", "LeftArm", "LeftHand", "LeftLeg", "RightLeg"]
       }
+    },
+    {
+      "code": "modify_vanilla_classes",
+      "type": "boolean",
+      "ingui": "Modify vanilla classes",
+      "default": true
     }
   ]
 }
