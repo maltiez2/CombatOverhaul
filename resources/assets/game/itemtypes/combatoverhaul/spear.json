@@ -190,7 +190,7 @@
         "VerticalLimit": 0.25,
         "VerticalOffset": -0.05
       },
-      "DamageStrengthType": {
+      "DamageStrengthByType": {
         "*-flint": 2,
         "*-obsidian": 3,
         "*-copper": 3,

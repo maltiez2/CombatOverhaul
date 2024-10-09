@@ -75,9 +75,11 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
         {
             RegisterWeapons();
         }
+
+        clientApi.Event.RegisterGameTickListener(OnGameFrame, 0);
     }
     public override string PropertyName() => _statCategory;
-    public override void OnGameTick(float deltaTime)
+    public void OnGameFrame(float deltaTime)
     {
         if (!_mainPlayer) return;
 
@@ -98,6 +100,7 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
         _actionListener.SuppressLMB = SuppressLMB;
         _actionListener.SuppressRMB = SuppressRMB;
     }
+    
     public int GetState(bool mainHand = true) => mainHand ? _mainHandState : _offHandState;
     public void SetState(int state, bool mainHand = true)
     {

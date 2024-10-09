@@ -24,7 +24,6 @@ public sealed class EntityDamageModelJson
         {"Critical", new() { Code = "game:sounds/arrow-impact"}  },
         {"Resistant", new() { Code = "game:sounds/held/shieldblock"}  },
     };
-    public Dictionary<string, string> ParticleEffects { get; set; } = new();
 }
 
 public sealed class SoundEffectData

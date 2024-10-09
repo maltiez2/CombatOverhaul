@@ -104,7 +104,7 @@ public abstract class ProjectileSystemBase
             throw new InvalidOperationException();
         }
 
-        if (stats.DurabilityDamage != 0) projectileStack.Item.DamageItem(api.World, projectile, new DummySlot(projectileStack), stats.DurabilityDamage);
+        if (stats.DurabilityDamage != 0) projectileStack.Item.DamageItem(api.World, shooter, new DummySlot(projectileStack), stats.DurabilityDamage);
 
         projectile.ProjectileId = id;
         projectile.ProjectileStack = projectileStack;

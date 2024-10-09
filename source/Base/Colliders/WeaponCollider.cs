@@ -81,6 +81,13 @@ public readonly struct LineSegmentCollider : IWeaponCollider
 
         return new LineSegmentCollider(tail, head - tail);
     }
+    public LineSegmentCollider? TransformLineSegment(EntityPos origin, EntityAgent entity, ItemSlot itemSlot, ICoreClientAPI api, bool right = true)
+    {
+        Matrixf? modelMatrix = ColliderTools.GetHeldItemModelMatrix(entity, itemSlot, api, right);
+        if (modelMatrix is null) return null;
+
+        return TransformSegment(this, modelMatrix, origin);
+    }
 
     public bool RoughIntersect(Cuboidf collisionBox)
     {
@@ -123,6 +130,12 @@ public readonly struct LineSegmentCollider : IWeaponCollider
         parameter = tMin;
 
         return Position + tMin * Direction;
+    }
+    public (Block block, Vector3 position, float parameter)? IntersectBlock(ICoreClientAPI api, BlockPos position)
+    {
+        (Block, Vector3, float parameter)? intersection = IntersectBlock(api.World.BlockAccessor, position.X, position.Y, position.Z);
+
+        return intersection;
     }
     public (Block block, Vector3 position, float parameter)? IntersectTerrain(ICoreClientAPI api)
     {

@@ -80,6 +80,7 @@
   "stat-steadyAim": "Steady aim",
   "stat-healingeffectivness": "Healing effectivness",
   "stat-hungerrate": "Hunger rate",
+  "stat-meleeWeaponsDamage": "Melee weapon damage",
 
   "game:trait-bowsProficiency": "<font color=\"#84ff84\">• Bows proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
   "game:trait-crossbowsProficiency": "<font color=\"#84ff84\">• Crossbows proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
@@ -111,11 +112,15 @@
   "damagelog-armor-damage-negation": "Armor negated {0} amount of damage to {1} and lost {2} durability",
   "damagelog-received-damage": "Player receives {0} damage to {1}",
   "damagelog-dealt-damage": "Player hit {0} of {1} dealing {2} damage",
+  "damagelog-dealt-damage-with-projectile": "Player's {3} hit {0} of {1} dealing {2} damage",
+
+  "item-creature-arrow-*": "arrow",
+  "item-creature-spear-*": "spear",
 
   "iteminfo-range-weapon-damage": "Damage multiplier: {0}\nDamage tier: {1}",
   "iteminfo-projectile": "Damage: {0}\nDamage type: {1}\nBreak chance: {2}%",
-  "iteminfo-melee-weapon-onehanded": "Onehanded attack\n  damage: {0}\n  tier: {1}\n  knockback: {2}",
-  "iteminfo-melee-weapon-twohanded": "Twohanded attack\n  damage: {0}\n  tier: {1}\n  knockback: {2}",
+  "iteminfo-melee-weapon-onehanded": "Onehanded attack\n  damage: {0}\n  tier: {1}\n  knockback: {2}\n  type: {3}",
+  "iteminfo-melee-weapon-twohanded": "Twohanded attack\n  damage: {0}\n  tier: {1}\n  knockback: {2}\n  type: {3}",
   
   "game:item-spear-generic-iron": "Iron spear",
   "game:item-spear-generic-meteoriciron": "Meteoric iron spear",

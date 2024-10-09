@@ -1,0 +1,84 @@
+﻿{
+  "code": "axe-test",
+  "class": "CombatOverhaul:Axe",
+  "attributes": {
+    "handbook": {"groupBy": ["axe-*"]},
+    "toolrackTransform": {"rotation": {"y": 1, "z": -1}, "translation": {"x": -0.3, "y": 0.6}, "scale": 1.25},
+    "groundStorageTransform": {"translation": {"x": 0, "y": 0.18, "z": -0.105}, "rotation": {"x": 26, "y": 88, "z": -87}, "scale": 0.88},
+    "ReadyAnimation": "combatoverhaul:axe-ready",
+    "IdleAnimation": "combatoverhaul:axe-idle",
+    "SwingForwardAnimation": "combatoverhaul:axe-swing-forward",
+    "SwingBackAnimation": "combatoverhaul:axe-swing-back",
+    "SwingTpAnimation": "axechop",
+    "RenderingOffset": false,
+    "Collider": [0.9, 0.05, 0.15, 1.1, 0.05, 0.15],
+    "HitParticleEffects": {}
+  },
+  "behaviors": [
+    {
+      "name": "GroundStorable",
+      "properties": {
+        "layout": "WallHalves",
+        "wallOffY": 1,
+        "ctrlKey": true,
+        "selectionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.1, "z2": 1},
+        "collisionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 0, "y2": 0, "z2": 0}
+      }
+    }
+  ],
+  "variantgroups": [
+    {
+      "code": "material",
+      "states": [
+        "chert",
+        "granite",
+        "andesite",
+        "basalt",
+        "obsidian",
+        "peridotite",
+        "flint",
+        "bone-chert",
+        "bone-granite",
+        "bone-andesite",
+        "bone-basalt",
+        "bone-obsidian",
+        "bone-peridotite",
+        "bone-flint"
+      ]
+    }
+  ],
+  "tool": "axe",
+  "damagedby": ["blockbreaking", "attacking"],
+  "shape": {"base": "item/tool/axe/stone"},
+  "heldRightReadyAnimation": "axeready",
+  "heldTpHitAnimation": "axechop",
+  "texturesByType": {
+    "axe-flint": {"material": {"base": "block/stone/{material}"}},
+    "*-bone-chert": {"material": {"base": "block/stone/rock/chert1"}, "handle": {"base": "block/creature/bone-yellow"}},
+    "*-bone-granite": {"material": {"base": "block/stone/rock/granite1"}, "handle": {"base": "block/creature/bone-yellow"}},
+    "*-bone-andesite": {"material": {"base": "block/stone/rock/andesite1"}, "handle": {"base": "block/creature/bone-yellow"}},
+    "*-bone-basalt": {"material": {"base": "block/stone/rock/basalt1"}, "handle": {"base": "block/creature/bone-yellow"}},
+    "*-bone-obsidian": {"material": {"base": "block/stone/rock/obsidian1"}, "handle": {"base": "block/creature/bone-yellow"}},
+    "*-bone-peridotite": {"material": {"base": "block/stone/rock/peridotite1"}, "handle": {"base": "block/creature/bone-yellow"}},
+    "*-bone-flint": {"material": {"base": "block/stone/flint"}, "handle": {"base": "block/creature/bone-yellow"}},
+    "*": {"material": {"base": "block/stone/rock/{material}1"}}
+  },
+  "durabilitybytype": {
+    "axe-flint": 60,
+    "axe-bone-flint": 70,
+    "axe-obsidian": 90,
+    "axe-bone-obsidian": 100,
+    "axe-bone-chert": 60,
+    "axe-bone-andesite": 60,
+    "axe-bone-granite": 60,
+    "axe-bone-basalt": 60,
+    "axe-bone-peridotite": 60,
+    "*": 50
+  },
+  "attackpowerbytype": {"axe-obsidian": 1.5, "axe-bone-obsidian": 1.5, "axe-flint": 1.25, "axe-bone-flint": 1.25, "*": 0.75},
+  "creativeinventory": {"general": ["*"], "items": ["*"], "tools": ["*"], "clutterByType": {"*-ruined": ["*"]}, "combatoverhaul": ["*"]},
+  "guiTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -89, "y": 41, "z": 33}, "origin": {"x": 0.48, "y": 0, "z": 0.38}, "scale": 1.78},
+  "fpHandTransform": {"translation": {"x": -0.3, "y": -0.5, "z": 0.3}, "rotation": {"x": -29, "y": 1, "z": 88}, "origin": {"x": 0.2, "y": 0.5, "z": 0.5}, "scale": 2.5},
+  "groundTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 3.4},
+  "tpHandTransform": {"translation": {"x": -0.45, "y": 0.03, "z": -0.66}, "rotation": {"x": 90, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 0.8}
+}

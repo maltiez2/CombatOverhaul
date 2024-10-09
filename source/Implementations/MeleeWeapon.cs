@@ -12,7 +12,6 @@ using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
-using VSImGui.Debug;
 
 namespace CombatOverhaul.Implementations;
 
@@ -118,33 +117,33 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
         if (Stats.OneHandedStance?.Attack != null)
         {
             OneHandedAttack = new(api, Stats.OneHandedStance.Attack);
-            if (EditColliders) DebugEditColliders(OneHandedAttack, item.Id * 100 + 0);
+            RegisterCollider(item.Code.ToString(), "onehanded-", OneHandedAttack);
         }
         if (Stats.TwoHandedStance?.Attack != null)
         {
             TwoHandedAttack = new(api, Stats.TwoHandedStance.Attack);
-            if (EditColliders) DebugEditColliders(TwoHandedAttack, item.Id * 100 + 1);
+            RegisterCollider(item.Code.ToString(), "twohanded-", TwoHandedAttack);
         }
         if (Stats.OffHandStance?.Attack != null)
         {
             OffHandAttack = new(api, Stats.OffHandStance.Attack);
-            if (EditColliders) DebugEditColliders(OffHandAttack, item.Id * 100 + 2);
+            RegisterCollider(item.Code.ToString(), "offhand-", OffHandAttack);
         }
 
         if (Stats.OneHandedStance?.HandleAttack != null)
         {
             OneHandedHandleAttack = new(api, Stats.OneHandedStance.HandleAttack);
-            if (EditColliders) DebugEditColliders(OneHandedHandleAttack, item.Id * 100 + 3);
+            RegisterCollider(item.Code.ToString(), "onehanded-handle-", OneHandedHandleAttack);
         }
         if (Stats.TwoHandedStance?.HandleAttack != null)
         {
             TwoHandedHandleAttack = new(api, Stats.TwoHandedStance.HandleAttack);
-            if (EditColliders) DebugEditColliders(TwoHandedHandleAttack, item.Id * 100 + 4);
+            RegisterCollider(item.Code.ToString(), "twohanded-handle-", TwoHandedHandleAttack);
         }
         if (Stats.OffHandStance?.HandleAttack != null)
         {
             OffHandHandleAttack = new(api, Stats.OffHandStance.HandleAttack);
-            if (EditColliders) DebugEditColliders(OffHandHandleAttack, item.Id * 100 + 5);
+            RegisterCollider(item.Code.ToString(), "offhand-handle-", OffHandHandleAttack);
         }
     }
 
@@ -197,18 +196,34 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
         PlayerBehavior = behavior;
         AnimationBehavior = behavior.entity.GetBehavior<FirstPersonAnimationsBehavior>();
         GripController = new(AnimationBehavior);
-        
+
         if (AimingStats != null) AimingAnimationController = new(AimingSystem, AnimationBehavior, AimingStats);
     }
 
     public virtual void RenderDebugCollider(ItemSlot inSlot, IClientPlayer byPlayer)
     {
-        MeleeAttack? attack = GetStanceAttack(mainHand: true);
-        if (attack == null) return;
-
-        foreach (MeleeDamageType damageType in attack.DamageTypes)
+        if (AnimationsManager._currentCollider != null)
         {
-            damageType.RelativeCollider.Transform(byPlayer.Entity.Pos, byPlayer.Entity, inSlot, Api, right: true)?.Render(Api, byPlayer.Entity);
+            AnimationsManager._currentCollider.Value.Transform(byPlayer.Entity.Pos, byPlayer.Entity, inSlot, Api, right: true)?.Render(Api, byPlayer.Entity, ColorUtil.ColorFromRgba(255, 125, 125, 255));
+            return;
+        }
+
+        MeleeAttack? attack = GetStanceAttack(mainHand: true);
+        if (attack != null)
+        {
+            foreach (MeleeDamageType damageType in attack.DamageTypes)
+            {
+                damageType.RelativeCollider.Transform(byPlayer.Entity.Pos, byPlayer.Entity, inSlot, Api, right: true)?.Render(Api, byPlayer.Entity);
+            }
+        }
+
+        MeleeAttack? handle = GetStanceHandleAttack(mainHand: true);
+        if (handle != null)
+        {
+            foreach (MeleeDamageType damageType in handle.DamageTypes)
+            {
+                damageType.RelativeCollider.Transform(byPlayer.Entity.Pos, byPlayer.Entity, inSlot, Api, right: true)?.Render(Api, byPlayer.Entity, ColorUtil.ColorFromRgba(150, 150, 150, 255));
+            }
         }
     }
 
@@ -277,6 +292,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
             float tier = 0;
             float knockback = 0;
             int count = 0;
+            string damageType = "None";
 
             foreach (MeleeDamageTypeJson attack in Stats.OneHandedStance.Attack.DamageTypes)
             {
@@ -284,13 +300,14 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
                 damage += attack.Damage.Damage;
                 tier += attack.Damage.Strength;
                 knockback += attack.Knockback;
+                damageType = attack.Damage.DamageType;
             }
 
             damage /= count;
             tier /= count;
             knockback /= count;
 
-            dsc.AppendLine(Lang.Get("combatoverhaul:iteminfo-melee-weapon-onehanded", damage, tier, knockback));
+            dsc.AppendLine(Lang.Get("combatoverhaul:iteminfo-melee-weapon-onehanded", damage, tier, knockback, Lang.Get($"damage-type-{damageType}")));
         }
 
         if (Stats.TwoHandedStance?.Attack != null)
@@ -299,6 +316,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
             float tier = 0;
             float knockback = 0;
             int count = 0;
+            string damageType = "None";
 
             foreach (MeleeDamageTypeJson attack in Stats.TwoHandedStance.Attack.DamageTypes)
             {
@@ -306,13 +324,14 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
                 damage += attack.Damage.Damage;
                 tier += attack.Damage.Strength;
                 knockback += attack.Knockback;
+                damageType = attack.Damage.DamageType;
             }
 
             damage /= count;
             tier /= count;
             knockback /= count;
 
-            dsc.AppendLine(Lang.Get("combatoverhaul:iteminfo-melee-weapon-twohanded", damage, tier, knockback));
+            dsc.AppendLine(Lang.Get("combatoverhaul:iteminfo-melee-weapon-twohanded", damage, tier, knockback, Lang.Get($"damage-type-{damageType}")));
         }
     }
 
@@ -974,33 +993,13 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
         return Math.Clamp(manipulationSpeed + proficiencyBonus, min, max);
     }
 
-    private void DebugEditColliders(MeleeAttack attack, int attackIndex)
+    protected static void RegisterCollider(string item, string type, MeleeAttack attack)
     {
 #if DEBUG
         int typeIndex = 0;
         foreach (MeleeDamageType damageType in attack.DamageTypes)
         {
-            int index = attackIndex * 100 + typeIndex++;
-
-            DebugWidgets.Float3Drag("test", "colliders", $"{Item.Code}: Collider {index} tail", () =>
-            {
-                return new Vec3f(damageType.RelativeCollider.Position.X, damageType.RelativeCollider.Position.Y, damageType.RelativeCollider.Position.Z);
-            },
-                newTail =>
-                {
-                    damageType.RelativeCollider = new(new Vector3(newTail.X, newTail.Y, newTail.Z), damageType.RelativeCollider.Direction);
-                });
-            DebugWidgets.Float3Drag("test", "colliders", $"{Item.Code}: Collider {index} head", () =>
-            {
-                return new Vec3f(
-                    damageType.RelativeCollider.Direction.X + damageType.RelativeCollider.Position.X,
-                    damageType.RelativeCollider.Direction.Y + damageType.RelativeCollider.Position.Y,
-                    damageType.RelativeCollider.Direction.Z + damageType.RelativeCollider.Position.Z);
-            },
-                newHead =>
-                {
-                    damageType.RelativeCollider = new(damageType.RelativeCollider.Position, new Vector3(newHead.X, newHead.Y, newHead.Z) - damageType.RelativeCollider.Position);
-                });
+            AnimationsManager.RegisterCollider(item, type + typeIndex++, damageType);
         }
 #endif
     }

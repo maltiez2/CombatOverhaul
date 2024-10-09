@@ -16,6 +16,12 @@ public sealed class Composer
 
     public PlayerItemFrame Compose(TimeSpan delta)
     {
+        while (_requestsQueue.Any())
+        {
+            AnimationRequest request = _requestsQueue.Dequeue();
+            ProcessRequest(request);
+        }
+
         if (_speedModifierDelegate != null)
         {
             _speedModifierDuration += delta;
@@ -102,27 +108,7 @@ public sealed class Composer
 
     public void Play(AnimationRequest request)
     {
-        if (_animators.ContainsKey(request.Category))
-        {
-            string category = request.Category;
-            _animators[category].Play(request.Animation, request.AnimationSpeed);
-            _requests[category] = request;
-            _previousWeight[category] = _currentWeight[category];
-            _weightState[category] = AnimatorWeightState.EaseIn;
-            _currentTimes[category] = TimeSpan.Zero;
-            _callbacksCalled[category] = false;
-        }
-        else
-        {
-            string category = request.Category;
-            _animators.Add(category, new Animator(request.Animation, _soundsManager, _particleEffectsManager, _player, request.AnimationSpeed));
-            _requests.Add(category, request);
-            _previousWeight[category] = 0;
-            _currentWeight[category] = 0;
-            _weightState[category] = AnimatorWeightState.EaseIn;
-            _currentTimes[category] = TimeSpan.Zero;
-            _callbacksCalled[category] = false;
-        }
+        _requestsQueue.Enqueue(request);
     }
 
     public void Stop(string category)
@@ -166,6 +152,7 @@ public sealed class Composer
     private readonly Dictionary<string, AnimatorWeightState> _weightState = new();
     private readonly Dictionary<string, TimeSpan> _currentTimes = new();
     private readonly Dictionary<string, bool> _callbacksCalled = new();
+    private readonly Queue<AnimationRequest> _requestsQueue = new();
     private readonly SoundsSynchronizerClient _soundsManager;
     private readonly ParticleEffectsManager _particleEffectsManager;
     private readonly EntityPlayer _player;
@@ -200,6 +187,30 @@ public sealed class Composer
                     _weightState[category] = AnimatorWeightState.Finished;
                 }
                 break;
+        }
+    }
+    private void ProcessRequest(AnimationRequest request)
+    {
+        if (_animators.ContainsKey(request.Category))
+        {
+            string category = request.Category;
+            _animators[category].Play(request.Animation, request.AnimationSpeed);
+            _requests[category] = request;
+            _previousWeight[category] = _currentWeight[category];
+            _weightState[category] = AnimatorWeightState.EaseIn;
+            _currentTimes[category] = TimeSpan.Zero;
+            _callbacksCalled[category] = false;
+        }
+        else
+        {
+            string category = request.Category;
+            _animators.Add(category, new Animator(request.Animation, _soundsManager, _particleEffectsManager, _player, request.AnimationSpeed));
+            _requests.Add(category, request);
+            _previousWeight[category] = 0;
+            _currentWeight[category] = 0;
+            _weightState[category] = AnimatorWeightState.EaseIn;
+            _currentTimes[category] = TimeSpan.Zero;
+            _callbacksCalled[category] = false;
         }
     }
 }

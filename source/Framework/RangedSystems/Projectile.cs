@@ -61,6 +61,9 @@ public sealed class ProjectileServer
         if (!CheckPermissions(attacker, target)) return false;
         if (relativeSpeed < _stats.SpeedThreshold) return false;
 
+        string targetName = target.GetName();
+        string projectileName = _entity.GetName();
+
         float damage = _stats.DamageStats.Damage * _spawnStats.DamageMultiplier;
         DamageData damageData = new(Enum.Parse<EnumDamageType>(_stats.DamageStats.DamageType), _spawnStats.DamageStrength);
 
@@ -82,6 +85,13 @@ public sealed class ProjectileServer
             Vec3f knockback = _entity.Pos.Motion.ToVec3f() * _stats.Knockback * (1.0f - target.Properties.KnockbackResistance);
             target.SidedPos.Motion.Add(knockback);
         }
+
+        CollidersEntityBehavior? colliders = target.GetBehavior<CollidersEntityBehavior>();
+        ColliderTypes ColliderType = colliders?.CollidersTypes[collider] ?? ColliderTypes.Torso;
+
+        float damageReceivedValue = damageReceived ? target.WatchedAttributes.GetFloat("onHurt") : 0;
+        string damageLogMessage = Lang.Get("combatoverhaul:damagelog-dealt-damage-with-projectile", Lang.Get($"combatoverhaul:entity-damage-zone-{ColliderType}"), targetName, $"{damageReceivedValue:F2}", projectileName);
+        ((attacker as EntityPlayer)?.Player as IServerPlayer)?.SendMessage(GlobalConstants.DamageLogChatGroup, damageLogMessage, EnumChatType.Notification);
 
         return received;
     }
