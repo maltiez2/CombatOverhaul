@@ -111,6 +111,8 @@ public class MeleeDamageType : IHasLineCollider
             if (target is not EntityPlayer && !playerAttacker.Player.HasPrivilege("attackcreatures")) return false;
         }
 
+        float damage = Damage * attacker.Stats.GetBlended("meleeWeaponsDamage");
+
         bool damageReceived = target.ReceiveDamage(new DirectionalTypedDamageSource()
         {
             Source = attacker is EntityPlayer ? EnumDamageSource.Player : EnumDamageSource.Entity,
@@ -120,7 +122,7 @@ public class MeleeDamageType : IHasLineCollider
             Position = position,
             Collider = collider,
             KnockbackStrength = Knockback
-        }, Damage);
+        }, damage);
 
         bool received = damageReceived || Damage > 0;
 
@@ -128,7 +130,7 @@ public class MeleeDamageType : IHasLineCollider
         {
             DamageType = DamageTypeData.DamageType.ToString(),
             Strength = DamageTypeData.Strength,
-            Damage = Damage,
+            Damage = damage,
             Knockback = Knockback,
             Position = new float[3] { position.X, position.Y, position.Z },
             Collider = collider,

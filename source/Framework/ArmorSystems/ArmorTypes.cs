@@ -143,10 +143,10 @@ public class ArmorBehavior : CollectibleBehavior, IArmor, IAffectsPlayerStats
 
         if (PlayerStats.Values.Any(value => value != 0))
         {
-            dsc.AppendLine("Stats:"); // @TODO add translations
+            dsc.AppendLine(Lang.Get("combatoverhaul:stat-stats"));
             foreach ((string stat, float value) in PlayerStats)
             {
-                if (value != 0f) dsc.AppendLine($"  {stat}: {value * 100:F1}%");
+                if (value != 0f) dsc.AppendLine($"  {Lang.Get($"combatoverhaul:stat-{stat}")}: {value * 100:F1}%");
             }
         }
         

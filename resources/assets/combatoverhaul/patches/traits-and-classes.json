@@ -17,8 +17,24 @@
       {"code": "tremblingAim", "type": "negative", "attributes": {"steadyAim": -0.5}}
     ]
   },
-  {"file": "game:config/characterclasses", "op": "addeach", "path": "/1/traits/-", "value": ["bowsProficiency", "crossbowsProficiency", "steadyAim", "spearsProficiency"]},
+  {
+    "file": "game:config/characterclasses",
+    "op": "replace",
+    "path": "/1/traits",
+    "value": ["resourceful", "fleetfooted", "bowyer", "claustrophobic", "farsighted", "bowsProficiency", "crossbowsProficiency", "steadyAim", "spearsProficiency"]
+  },
   {"file": "game:config/characterclasses", "op": "addeach", "path": "/2/traits/-", "value": ["javelinsProficiency", "macesProficiency", "clubsProficiency"]},
-  {"file": "game:config/characterclasses", "op": "addeach", "path": "/3/traits/-", "value": ["firearmsProficiency"]},
-  {"file": "game:config/characterclasses", "op": "addeach", "path": "/4/traits/-", "value": ["oneHandedSwordsProficiency", "twoHandedSwordsProficiency", "tremblingAim"]}
+  {
+    "file": "game:config/characterclasses",
+    "op": "replace",
+    "path": "/3/traits",
+    "value": ["technical", "fleetfooted", "frail", "nervous", "tinkerer", "crossbowsProficiency", "firearmsProficiency"]
+  },
+  {
+    "file": "game:config/characterclasses",
+    "op": "replace",
+    "path": "/4/traits",
+    "value": ["soldier", "hardy", "merciless", "ravenous", "heavyhanded", "oneHandedSwordsProficiency", "twoHandedSwordsProficiency", "tremblingAim"]
+  },
+  {"file": "game:config/characterclasses", "op": "addeach", "path": "/5/traits/-", "value": ["tremblingAim"]}
 ]

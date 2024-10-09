@@ -74,6 +74,13 @@
   "armor-fraction-protection": "Protection levels:",
   "armor-flat-protection": "Flat damage reduction:",
 
+  "stat-stats": "Stats:",
+  "stat-walkspeed": "Walk speed",
+  "stat-manipulationSpeed": "Manipulation speed",
+  "stat-steadyAim": "Steady aim",
+  "stat-healingeffectivness": "Healing effectivness",
+  "stat-hungerrate": "Hunger rate",
+
   "game:trait-bowsProficiency": "<font color=\"#84ff84\">• Bows proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
   "game:trait-crossbowsProficiency": "<font color=\"#84ff84\">• Crossbows proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
   "game:trait-firearmsProficiency": "<font color=\"#84ff84\">• Firearms proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
