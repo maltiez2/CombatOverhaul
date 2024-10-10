@@ -618,9 +618,15 @@ public readonly struct PlayerFrame
     public static PlayerFrame Compose(IEnumerable<(PlayerFrame element, float weight)> frames)
     {
 #pragma warning disable CS8629 // Nullable value type may be null.
+        RightHandFrame rightHand = RightHandFrame.Compose(frames.Where(entry => entry.element.RightHand != null).Select(entry => (entry.element.RightHand.Value, entry.weight)));
+        LeftHandFrame leftHand = LeftHandFrame.Compose(frames.Where(entry => entry.element.LeftHand != null).Select(entry => (entry.element.LeftHand.Value, entry.weight)));
+
+        bool haveRightHandFrame = frames.Any(entry => entry.element.RightHand != null);
+        bool haveLeftHandFrame = frames.Any(entry => entry.element.LeftHand != null);
+
         return new(
-            RightHandFrame.Compose(frames.Where(entry => entry.element.RightHand != null).Select(entry => (entry.element.RightHand.Value, entry.weight))),
-            LeftHandFrame.Compose(frames.Where(entry => entry.element.LeftHand != null).Select(entry => (entry.element.LeftHand.Value, entry.weight))),
+            haveRightHandFrame ? rightHand : null,
+            haveLeftHandFrame ? leftHand : null,
             AnimationElement.Compose(frames.Where(entry => entry.element.UpperTorso != null).Select(entry => (entry.element.UpperTorso.Value, entry.weight))),
             AnimationElement.Compose(frames.Where(entry => entry.element.DetachedAnchorFrame != null).Select(entry => (entry.element.DetachedAnchorFrame.Value, entry.weight))),
             frames.Select(entry => entry.element.DetachedAnchor).Aggregate((first, second) => first || second),

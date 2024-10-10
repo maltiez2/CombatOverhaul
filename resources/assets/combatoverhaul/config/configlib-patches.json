@@ -18,7 +18,7 @@
     },
     "other": {
       "combatoverhaul:pathces/weapons/shield.json": {
-        "3/value/@*/Block/Zones": "shields_protection_zones"
+        "3/value/@@*/Block/Zones": "shields_protection_zones"
       }
     }
   },

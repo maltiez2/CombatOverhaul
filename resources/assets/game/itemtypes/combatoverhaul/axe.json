@@ -63,6 +63,13 @@
     "*-bone-flint": {"material": {"base": "block/stone/flint"}, "handle": {"base": "block/creature/bone-yellow"}},
     "*": {"material": {"base": "block/stone/rock/{material}1"}}
   },
+  "miningspeedbytype": {
+    "*-flint": {"wood": 2.8, "plant": 2.2, "leaves": 1.6},
+    "*-bone-flint": {"wood": 2.8, "plant": 2.2, "leaves": 1.6},
+    "*-obsidian": {"wood": 3.5, "plant": 2.7, "leaves": 2.4},
+    "*-bone-obsidian": {"wood": 3.5, "plant": 2.7, "leaves": 2.4},
+    "*": {"wood": 2.6, "plant": 2.2, "leaves": 1.7}
+  },
   "durabilitybytype": {
     "axe-flint": 60,
     "axe-bone-flint": 70,

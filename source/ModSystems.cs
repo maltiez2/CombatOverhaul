@@ -79,6 +79,7 @@ public sealed class CombatOverhaulSystem : ModSystem
         ServerMeleeSystem = new(api);
         ServerBlockSystem = new(api);
         ServerStatsSystem = new(api);
+        ServerBlockBreakingSystem = new(api);
     }
     public override void StartClientSide(ICoreClientAPI api)
     {
@@ -95,6 +96,7 @@ public sealed class CombatOverhaulSystem : ModSystem
         ClientMeleeSystem = new(api);
         ClientBlockSystem = new(api);
         ClientStatsSystem = new(api);
+        ClientBlockBreakingSystem = new(api);
 
         api.Event.RegisterRenderer(ReticleRenderer, EnumRenderStage.Ortho);
         api.Event.RegisterRenderer(DirectionCursorRenderer, EnumRenderStage.Ortho);
@@ -171,6 +173,8 @@ public sealed class CombatOverhaulSystem : ModSystem
     public MeleeBlockSystemServer? ServerBlockSystem { get; private set; }
     public StatsSystemClient? ClientStatsSystem { get; private set; }
     public StatsSystemServer? ServerStatsSystem { get; private set; }
+    public BlockBreakingSystemClient? ClientBlockBreakingSystem { get; private set; }
+    public BlockBreakingSystemServer? ServerBlockBreakingSystem { get; private set; }
 
     private ICoreClientAPI? _clientApi;
 }

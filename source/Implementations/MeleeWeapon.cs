@@ -1095,6 +1095,10 @@ public class MeleeWeapon : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasDyn
     {
         handling = EnumHandHandling.PreventDefaultAction;
     }
+    public override float OnBlockBreaking(IPlayer player, BlockSelection blockSel, ItemSlot itemslot, float remainingResistance, float dt, int counter)
+    {
+        return remainingResistance;
+    }
 
     public override void GetHeldItemInfo(ItemSlot inSlot, StringBuilder dsc, IWorldAccessor world, bool withDebugInfo)
     {
