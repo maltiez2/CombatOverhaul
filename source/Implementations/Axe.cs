@@ -1,7 +1,6 @@
 ﻿using CombatOverhaul.Animations;
 using CombatOverhaul.Colliders;
 using CombatOverhaul.Inputs;
-using CombatOverhaul.Utils;
 using ProtoBuf;
 using System.Numerics;
 using System.Reflection;
@@ -166,15 +165,9 @@ public class AxeClient : IClientWeaponLogic
 
         float miningSpeed = GetMiningSpeed(slot.Itemstack, selection, selection.Block, player);
 
-        //BlockBreakingSystem.DamageBlock(selection.Position, selection.Face, miningSpeed * (float)delta.TotalSeconds);
-
-        //Api.Network.SendPacketClient(ClientPackets.BlockInteraction(selection, 0, 0));
-
         AnimationBehavior?.SetSpeedModifier(HitImpactFunction);
 
         BlockBreakingSystem?.DamageBlock(selection, selection.Block, miningSpeed * (float)delta.TotalSeconds, Item.Tool ?? 0, Item.ToolTier);
-
-        //Item.BlockBreakDamage += miningSpeed * (float)delta.TotalSeconds;
 
         SwingStart = currentTime;
 
@@ -269,7 +262,7 @@ public class AxeClient : IClientWeaponLogic
     }
     protected virtual bool SplitAnimationCallback(ItemSlot slot, EntityPlayer player, bool mainHand)
     {
-        AnimationBehavior?.StopVanillaAnimation(Stats.SplitTpAnimation);  
+        AnimationBehavior?.StopVanillaAnimation(Stats.SplitTpAnimation);
         AnimationBehavior?.SetSpeedModifier(HitImpactFunction);
         AnimationBehavior?.Play(
                         mainHand,
@@ -308,6 +301,8 @@ public class AxeClient : IClientWeaponLogic
     protected static string AnimationCategory(bool mainHand = true) => mainHand ? "main" : "mainOffhand";
     protected virtual float GetMiningSpeed(IItemStack itemStack, BlockSelection blockSel, Block block, EntityPlayer forPlayer)
     {
+        //float toolTierMultiplier = block.RequiredMiningTier <= Item.ToolTier ? 1 : 0;
+
         float traitRate = 1f;
 
         EnumBlockMaterial mat = block.GetBlockMaterial(Api.World.BlockAccessor, blockSel.Position);
@@ -317,7 +312,9 @@ public class AxeClient : IClientWeaponLogic
             traitRate = forPlayer.Stats.GetBlended("miningSpeedMul");
         }
 
-        if (Item.MiningSpeed == null || !Item.MiningSpeed.ContainsKey(mat)) return traitRate;
+        if (!Item.MiningSpeed.ContainsKey(mat)) return 0;
+
+        //if (Item.MiningSpeed == null || !Item.MiningSpeed.ContainsKey(mat)) return traitRate * toolTierMultiplier;
 
         return Item.MiningSpeed[mat] * GlobalConstants.ToolMiningSpeedModifier * traitRate;
     }

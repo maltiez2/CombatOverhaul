@@ -59,6 +59,7 @@ public sealed class CombatOverhaulSystem : ModSystem
         api.RegisterItemClass("CombatOverhaul:Javelin", typeof(JavelinItem));
         api.RegisterItemClass("CombatOverhaul:VanillaShield", typeof(VanillaShield));
         api.RegisterItemClass("CombatOverhaul:Axe", typeof(Axe));
+        api.RegisterItemClass("CombatOverhaul:Pickaxe", typeof(Pickaxe));
 
         api.RegisterEntity("CombatOverhaul:Projectile", typeof(ProjectileEntity));
         api.RegisterEntity("CombatOverhaul:ProjectileExplosive", typeof(ProjectileExplosive));
