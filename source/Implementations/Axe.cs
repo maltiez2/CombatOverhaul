@@ -1,16 +1,12 @@
 ﻿using CombatOverhaul.Animations;
 using CombatOverhaul.Colliders;
 using CombatOverhaul.Inputs;
-using Microsoft.VisualBasic;
-using ProperVersion;
+using CombatOverhaul.Utils;
 using ProtoBuf;
-using System.Diagnostics.Metrics;
 using System.Numerics;
 using System.Reflection;
-using System.Xml.Linq;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
-using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
@@ -20,8 +16,6 @@ using Vintagestory.Client;
 using Vintagestory.Client.NoObf;
 using Vintagestory.Common;
 using Vintagestory.GameContent;
-using Vintagestory.Server;
-using static Microsoft.WindowsAPICodePack.Shell.PropertySystem.SystemProperties.System;
 
 namespace CombatOverhaul.Implementations;
 
@@ -32,13 +26,13 @@ public class AxeStats
     public string SwingForwardAnimation { get; set; } = "";
     public string SwingBackAnimation { get; set; } = "";
     public string SplitAnimation { get; set; } = "";
+    public string SplitBackAnimation { get; set; } = "";
     public string SwingTpAnimation { get; set; } = "";
     public string SplitTpAnimation { get; set; } = "";
     public bool RenderingOffset { get; set; } = false;
     public float[] Collider { get; set; } = Array.Empty<float>();
     public Dictionary<string, string> HitParticleEffects { get; set; } = new();
     public float HitStaggerDurationMs { get; set; } = 100;
-    public int FirewoodPerSplit { get; set; } = 4;
 }
 
 public enum AxeState
@@ -46,7 +40,9 @@ public enum AxeState
     Idle,
     SwingForward,
     SwingBack,
-    Splitting
+    SplittingWindUp,
+    Splitting,
+    SplittingBack
 }
 
 public class AxeClient : IClientWeaponLogic
@@ -62,15 +58,13 @@ public class AxeClient : IClientWeaponLogic
 
         CombatOverhaulSystem system = api.ModLoader.GetModSystem<CombatOverhaulSystem>();
         SoundsSystem = system.ClientSoundsSynchronizer ?? throw new Exception();
-        //BlockBreakingSystem = system.ClientBlockBreakingSystem ?? throw new Exception();
+        BlockBreakingNetworking = system.ClientBlockBreakingSystem ?? throw new Exception();
         BlockBreakingSystem = new(api);
 
 #if DEBUG
         AnimationsManager.RegisterCollider(item.Code.ToString(), "tool head", value => Collider = value, () => Collider);
 #endif
     }
-
-
     public int ItemId { get; }
     public DirectionsConfiguration DirectionsType => DirectionsConfiguration.None;
 
@@ -104,7 +98,7 @@ public class AxeClient : IClientWeaponLogic
     protected FirstPersonAnimationsBehavior? AnimationBehavior;
     protected ActionsManagerPlayerBehavior? PlayerBehavior;
     protected SoundsSynchronizerClient SoundsSystem;
-    //protected BlockBreakingSystemClient BlockBreakingSystem;
+    protected BlockBreakingSystemClient BlockBreakingNetworking;
     protected BlockBreakingController BlockBreakingSystem;
     protected Axe Item;
     protected TimeSpan SwingStart;
@@ -116,6 +110,7 @@ public class AxeClient : IClientWeaponLogic
     protected virtual bool Swing(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
         if (eventData.AltPressed && !mainHand) return false;
+        if (player.BlockSelection?.Block == null) return false;
 
         switch ((AxeState)state)
         {
@@ -228,7 +223,7 @@ public class AxeClient : IClientWeaponLogic
         if (eventData.AltPressed && !mainHand) return false;
         if (player.BlockSelection?.Block == null) return false;
         if (!IsSplittable(player.BlockSelection.Block)) return false;
-        if (state != (int)AxeState.Idle || state == (int)AxeState.Splitting) return false;
+        if (state != (int)AxeState.Idle && state != (int)AxeState.Splitting && state != (int)AxeState.SplittingWindUp) return false;
 
         if (!Api.World.Claims.TryAccess(Api.World.Player, player.BlockSelection.Position, EnumBlockAccessFlags.BuildOrBreak)) return false; // @TODO add error message "TriggerIngameError"
         if (Api.ModLoader.GetModSystem<ModSystemBlockReinforcement>().IsReinforced(player.BlockSelection.Position)) return false;
@@ -242,17 +237,20 @@ public class AxeClient : IClientWeaponLogic
                         Stats.SplitAnimation,
                         animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1,
                         category: AnimationCategory(mainHand),
-                        callback: () => SplitAnimationCallback(slot, player, mainHand));
+                        callback: () => SplitAnimationCallback(slot, player, mainHand),
+                        callbackHandler: code => SplitAnimationCallbackHandler(code, mainHand));
                     AnimationBehavior?.PlayVanillaAnimation(Stats.SplitTpAnimation);
+
+                    state = (int)AxeState.SplittingWindUp;
 
                     break;
                 }
-            case AxeState.Splitting: 
+            case AxeState.Splitting:
                 {
                     LineSegmentCollider? collider = Collider.TransformLineSegment(player.Pos, player, slot, Api, mainHand);
-                    if (collider == null) return false;
+                    if (collider == null) return true;
                     BlockSelection selection = player.BlockSelection;
-                    if (selection?.Position == null) return false;
+                    if (selection?.Position == null) return true;
                     (Block block, Vector3 position, float parameter)? collision = collider.Value.IntersectBlock(Api, selection.Position);
                     if (collision == null) return true;
 
@@ -264,10 +262,46 @@ public class AxeClient : IClientWeaponLogic
         return true;
     }
 
+    protected virtual bool SplitAnimationCallbackHandler(string code, bool mainHand)
+    {
+        if (code == "start") PlayerBehavior?.SetState((int)AxeState.Splitting, mainHand);
+        return true;
+    }
     protected virtual bool SplitAnimationCallback(ItemSlot slot, EntityPlayer player, bool mainHand)
     {
+        AnimationBehavior?.StopVanillaAnimation(Stats.SplitTpAnimation);  
+        AnimationBehavior?.SetSpeedModifier(HitImpactFunction);
+        AnimationBehavior?.Play(
+                        mainHand,
+                        Stats.SplitBackAnimation,
+                        animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1,
+                        category: AnimationCategory(mainHand),
+                        callback: () => SplitBackAnimationCallback(mainHand));
+        PlayerBehavior?.SetState((int)AxeState.SplittingBack, mainHand);
 
+        BlockSelection selection = player.BlockSelection;
+        if (selection?.Position == null) return true;
 
+        Splittable? behavior = selection.Block.GetBehavior<Splittable>();
+        if (behavior == null) return true;
+
+        SoundsSystem.Play(selection.Block.Sounds.GetHitSound(Item.Tool ?? EnumTool.Pickaxe).ToString(), randomizedPitch: true);
+
+        Api.World.BlockAccessor.BreakBlock(selection.Position, Api.World.Player, 0f);
+        Api.World.BlockAccessor.MarkBlockDirty(selection.Position, Api.World.Player);
+
+        Api.World.SpawnItemEntity(behavior.GetDrop(Api), selection.Position.ToVec3d());
+
+        BlockBreakingNetworking.SplitBlock();
+
+        slot.Itemstack.Item.DamageItem(Api.World, player, slot, 1);
+
+        return true;
+    }
+    protected virtual bool SplitBackAnimationCallback(bool mainHand)
+    {
+        AnimationBehavior?.PlayReadyAnimation(mainHand);
+        PlayerBehavior?.SetState((int)AxeState.Idle, mainHand);
         return true;
     }
 
@@ -341,18 +375,11 @@ public class Axe : ItemAxe, IHasWeaponLogic, ISetsRenderingOffset, IHasIdleAnima
 
     public override void OnHeldAttackStart(ItemSlot slot, EntityAgent byEntity, BlockSelection blockSel, EntitySelection entitySel, ref EnumHandHandling handling)
     {
-        if (BlockBreakDamage > 0)
-        {
-            base.OnHeldAttackStart(slot, byEntity, blockSel, entitySel, ref handling);
-        }
-        else
-        {
-            handling = EnumHandHandling.PreventDefault;
-        }
+        handling = EnumHandHandling.PreventDefault;
     }
     public override bool OnHeldAttackStep(float secondsPassed, ItemSlot slot, EntityAgent byEntity, BlockSelection blockSelection, EntitySelection entitySel)
     {
-        return false;// BlockBreakDamage > 0;
+        return false;
     }
 
     public override float OnBlockBreaking(IPlayer player, BlockSelection blockSel, ItemSlot itemslot, float remainingResistance, float dt, int counter)
@@ -368,10 +395,23 @@ public class Axe : ItemAxe, IHasWeaponLogic, ISetsRenderingOffset, IHasIdleAnima
 
 public class Splittable : BlockBehavior
 {
-    
-    
+    public JsonItemStack DroppedItem { get; private set; } = new();
+
     public Splittable(Block block) : base(block)
     {
+    }
+
+    public override void Initialize(JsonObject properties)
+    {
+        base.Initialize(properties);
+
+        DroppedItem = properties["DroppedItem"].AsObject<JsonItemStack>();
+    }
+
+    public ItemStack GetDrop(ICoreAPI api)
+    {
+        DroppedItem.Resolve(api.World, "CombatOverhaul");
+        return DroppedItem.ResolvedItemstack;
     }
 }
 
@@ -449,10 +489,10 @@ public sealed class BlockBreakingController
                 }
             }
         }
-        
+
         _curBlockDmg.RemainingResistance -= blockDamage;
-        
-        
+
+
         _survivalBreakingCounter++;
         _curBlockDmg.Facing = blockSelection.Face;
         if (_curBlockDmg.Position != blockSelection.Position || _curBlockDmg.Block != block)
@@ -490,7 +530,7 @@ public sealed class BlockBreakingController
             _game.SendPacketClient(ClientPackets.BlockInteraction(blockSelection, 2, 0));
         }
         //_curBlockDmg.RemainingResistance = block.OnGettingBroken(_api.World.Player, blockSelection, _api.World.Player.Entity.ActiveHandItemSlot, _curBlockDmg.RemainingResistance, (float)diff / 1000f, _survivalBreakingCounter);
-        _curBlockDmg.RemainingResistance = _api.World.Player.Entity.ActiveHandItemSlot.Itemstack.Collectible.OnBlockBreaking(_api.World.Player, blockSelection, _api.World.Player.Entity.ActiveHandItemSlot, _curBlockDmg.RemainingResistance, (float)diff / 1000f, _survivalBreakingCounter);
+        _curBlockDmg.RemainingResistance = _api.World.Player.Entity.ActiveHandItemSlot.Itemstack.Collectible.OnBlockBreaking(_api.World.Player, blockSelection, _api.World.Player.Entity.ActiveHandItemSlot, _curBlockDmg.RemainingResistance, diff / 1000f, _survivalBreakingCounter);
         _survivalBreakingCounter++;
         _curBlockDmg.Facing = blockSelection.Face;
         if (_curBlockDmg.Position != blockSelection.Position || _curBlockDmg.Block != block)
@@ -526,10 +566,10 @@ public sealed class BlockBreakingController
 
     public static Stack<BlockPos> FindTree(IWorldAccessor world, BlockPos startPos, out int resistance, out int woodTier)
     {
-        Queue<Vec4i> queue = new Queue<Vec4i>();
-        Queue<Vec4i> queue2 = new Queue<Vec4i>();
-        HashSet<BlockPos> hashSet = new HashSet<BlockPos>();
-        Stack<BlockPos> stack = new Stack<BlockPos>();
+        Queue<Vec4i> queue = new();
+        Queue<Vec4i> queue2 = new();
+        HashSet<BlockPos> hashSet = new();
+        Stack<BlockPos> stack = new();
         resistance = 0;
         woodTier = 0;
         Block block = world.BlockAccessor.GetBlock(startPos);
@@ -634,7 +674,7 @@ public sealed class BlockBreakingController
         for (int i = 0; i < Vec3i.DirectAndIndirectNeighbours.Length; i++)
         {
             Vec3i vec3i = Vec3i.DirectAndIndirectNeighbours[i];
-            BlockPos blockPos = new BlockPos(pos.X + vec3i.X, pos.Y + vec3i.Y, pos.Z + vec3i.Z);
+            BlockPos blockPos = new(pos.X + vec3i.X, pos.Y + vec3i.Y, pos.Z + vec3i.Z);
             float num = GameMath.Sqrt(blockPos.HorDistanceSqTo(startPos.X, startPos.Z));
             float num2 = blockPos.Y - startPos.Y;
             float num3 = (chopSpreadVertical ? 0.5f : 2f);
@@ -681,27 +721,10 @@ public sealed class BlockBreakingController
 }
 
 [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
-public class BlockDamagePacket
+public class BlockSplitPacket
 {
-    public int[] BlockPos { get; set; } = Array.Empty<int>();
-    public string Face { get; set; } = "";
-    public float Damage { get; set; } = 0;
 
-    public BlockDamagePacket() { }
-    public BlockDamagePacket(BlockPos position, BlockFacing facing, float damage)
-    {
-        BlockPos = new int[4] { position.X, position.Y, position.Z, position.dimension };
-        Face = facing.ToString();
-        Damage = damage;
-    }
-    public (BlockPos position, BlockFacing facing, float damage) ToData()
-    {
-        return (
-            new BlockPos(BlockPos[0], BlockPos[1], BlockPos[2], BlockPos[3]),
-            BlockFacing.FromCode(Face),
-            Damage
-            );
-    }
+    public BlockSplitPacket() { }
 }
 
 public class BlockBreakingSystemClient
@@ -712,13 +735,12 @@ public class BlockBreakingSystemClient
     {
         _api = api;
         _channel = api.Network.RegisterChannel(NetworkChannelId)
-            .RegisterMessageType<BlockDamagePacket>();
+            .RegisterMessageType<BlockSplitPacket>();
     }
 
-    public void DamageBlock(BlockPos position, BlockFacing facing, float damage)
+    public void SplitBlock()
     {
-        _api.World.BlockAccessor.DamageBlock(position, facing, damage);
-        _channel.SendPacket(new BlockDamagePacket(position, facing, damage));
+        _channel.SendPacket(new BlockSplitPacket());
     }
 
     private readonly ICoreClientAPI _api;
@@ -733,15 +755,27 @@ public class BlockBreakingSystemServer
     {
         _api = api;
         api.Network.RegisterChannel(NetworkChannelId)
-            .RegisterMessageType<BlockDamagePacket>()
-            .SetMessageHandler<BlockDamagePacket>(PacketHandler);
+            .RegisterMessageType<BlockSplitPacket>()
+            .SetMessageHandler<BlockSplitPacket>(PacketHandler);
     }
 
     private readonly ICoreServerAPI _api;
 
-    private void PacketHandler(IServerPlayer player, BlockDamagePacket packet)
+    private void PacketHandler(IServerPlayer player, BlockSplitPacket packet)
     {
-        (BlockPos position, BlockFacing facing, float damage) = packet.ToData();
-        _api.World.BlockAccessor.DamageBlock(position, facing, damage);
+        BlockSelection selection = player.Entity.BlockSelection;
+
+        if (selection?.Position == null) return;
+
+        Splittable? behavior = selection.Block.GetBehavior<Splittable>();
+        if (behavior == null) return;
+
+        _api.World.BlockAccessor.BreakBlock(selection.Position, player, 0f);
+        _api.World.BlockAccessor.MarkBlockDirty(selection.Position, player);
+
+        _api.World.SpawnItemEntity(behavior.GetDrop(_api), selection.Position.ToVec3d());
+
+        player.Entity.ActiveHandItemSlot.Itemstack.Item.DamageItem(_api.World, player.Entity, player.Entity.ActiveHandItemSlot, 1);
+        player.Entity.ActiveHandItemSlot.MarkDirty();
     }
 }

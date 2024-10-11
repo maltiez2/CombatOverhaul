@@ -1,0 +1,38 @@
+﻿[
+  {
+    "file": "game:itemtypes/tool/axe-stone",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "ReadyAnimation": "combatoverhaul:axe-ready",
+      "IdleAnimation": "combatoverhaul:axe-idle",
+      "SwingForwardAnimation": "combatoverhaul:axe-swing-forward",
+      "SwingBackAnimation": "combatoverhaul:axe-swing-back",
+      "SplitAnimation": "combatoverhaul:axe-split",
+      "SplitBackAnimation": "combatoverhaul:axe-split-back",
+      "SwingTpAnimation": "axechop",
+      "SplitTpAnimation": "axechop",
+      "RenderingOffset": false,
+      "Collider": [0.9, 0.05, 0.15, 1.1, 0.05, 0.15]
+    }
+  },
+  {"file": "game:itemtypes/tool/axe-stone", "op": "replace", "path": "/class", "value": "CombatOverhaul:Axe"},
+  {
+    "file": "game:itemtypes/tool/axe-metal",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "ReadyAnimation": "combatoverhaul:axe-ready",
+      "IdleAnimation": "combatoverhaul:axe-idle",
+      "SwingForwardAnimation": "combatoverhaul:axe-swing-forward",
+      "SwingBackAnimation": "combatoverhaul:axe-swing-back",
+      "SplitAnimation": "combatoverhaul:axe-split",
+      "SplitBackAnimation": "combatoverhaul:axe-split-back",
+      "SwingTpAnimation": "axechop",
+      "SplitTpAnimation": "axechop",
+      "RenderingOffset": false,
+      "Collider": [0.9, 0.05, 0.15, 1.1, 0.05, 0.15]
+    }
+  },
+  {"file": "game:itemtypes/tool/axe-metal", "op": "replace", "path": "/class", "value": "CombatOverhaul:Axe"}
+]

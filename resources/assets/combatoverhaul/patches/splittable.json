@@ -1,0 +1,16 @@
+﻿[
+  {
+    "side": "Server",
+    "file": "game:blocktypes/wood/woodtyped/log",
+    "op": "add",
+    "path": "/behaviorsByType/*/-",
+    "value": {"name": "CombatOverhaul:Splittable", "properties": {"DroppedItem": {"Type": "Item", "Code": "firewood", "StackSize": 4}}}
+  },
+  {
+    "side": "Server",
+    "file": "game:blocktypes/wood/woodtyped/log-debarked",
+    "op": "add",
+    "path": "/behaviors/-",
+    "value": {"name": "CombatOverhaul:Splittable", "properties": {"DroppedItem": {"Type": "Item", "Code": "firewood", "StackSize": 4}}}
+  }
+]
