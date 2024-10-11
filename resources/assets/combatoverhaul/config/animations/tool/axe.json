@@ -61,7 +61,7 @@
     "Hold": false,
     "PlayerKeyFrames": [
       {
-        "EasingTime": 300,
+        "EasingTime": 200,
         "EasingFunction": "Quadratic",
         "DetachedAnchor": false,
         "SwitchArms": false,
@@ -84,7 +84,7 @@
       {"Code": ["game:sounds/player/strike1", "game:sounds/player/strike2"], "DurationFraction": 0, "RandomizePitch": true, "Range": 16, "Volume": 0.5, "Synchronize": true}
     ],
     "ParticlesFrames": [],
-    "CallbackFrames": [{"Code": "start", "DurationFraction": 0.16666667}, {"Code": "stop", "DurationFraction": 0.6666667}],
+    "CallbackFrames": [],
     "ItemAnimationStart": 0,
     "ItemAnimationEnd": 0
   },
@@ -101,19 +101,19 @@
         "FOVMultiplier": 1,
         "BobbingAmplitude": 0.8,
         "Elements": {
-          "ItemAnchor": [-7.5, 1.3, 0, 0, 0, 14],
-          "LowerArmR": [0, 0, 0, 0, -16, -51],
-          "UpperArmR": [1, 0, 0, -43, -25, -83.2],
+          "ItemAnchor": [-7.5, 1.3, 0, 0, 0, -12],
+          "LowerArmR": [0, 0, 0, 0, -16, -68],
+          "UpperArmR": [1, 0, 0, -43, -25, -94.2],
           "ItemAnchorL": [0, 0, 0, 0, 0, 0],
           "LowerArmL": [0, 0, 0, 0, 0, -11],
-          "UpperArmL": [1, 0, 0, -35, -41, -106]
+          "UpperArmL": [1, 0, 0, -35, -41, -129]
         }
       }
     ],
     "ItemKeyFrames": [],
     "SoundFrames": [],
     "ParticlesFrames": [],
-    "CallbackFrames": [{"Code": "start", "DurationFraction": 0.16666667}, {"Code": "stop", "DurationFraction": 0.6666667}],
+    "CallbackFrames": [],
     "ItemAnimationStart": 0,
     "ItemAnimationEnd": 0
   }

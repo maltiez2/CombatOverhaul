@@ -69,6 +69,8 @@ public sealed class CombatOverhaulSystem : ModSystem
         api.RegisterBlockEntityClass("CombatOverhaul:GenericDisplayBlockEntity", typeof(GenericDisplayBlockEntity));
         api.RegisterBlockClass("CombatOverhaul:GenericDisplayBlock", typeof(GenericDisplayBlock));
 
+        api.RegisterBlockBehaviorClass("CombatOverhaul:Splittable", typeof(Splittable));
+
         new Harmony("CombatOverhaulAuto").PatchAll();
     }
     public override void StartServerSide(ICoreServerAPI api)

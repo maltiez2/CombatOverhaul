@@ -1,5 +1,6 @@
 ﻿using CombatOverhaul.Animations;
 using CombatOverhaul.Colliders;
+using CombatOverhaul.Utils;
 using HarmonyLib;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -41,7 +42,7 @@ internal static class AnimationPatch
 
         new Harmony(harmonyId).Patch(
                 typeof(Vintagestory.API.Common.AnimationManager).GetMethod("OnClientFrame", AccessTools.all),
-                prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimationPatch), nameof(AnimationPatch.ReplaceAnimator)))
+                prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimationPatch), nameof(AnimationPatch.CreateColliders)))
             );
     }
 
@@ -81,7 +82,7 @@ internal static class AnimationPatch
         behavior?.Render(__instance.entity.Api as ICoreClientAPI, __instance.entity as EntityAgent, __instance);
     }
 
-    private static void ReplaceAnimator(Vintagestory.API.Common.AnimationManager __instance, float dt)
+    private static void CreateColliders(Vintagestory.API.Common.AnimationManager __instance, float dt)
     {
         EntityAgent? entity = (Entity?)_entity?.GetValue(__instance) as EntityAgent;
 
@@ -102,6 +103,12 @@ internal static class AnimationPatch
                 foreach (ElementPose pose in poses)
                 {
                     AddPoseShapeElements(pose, colliders);
+                }
+
+                if (colliders.ShapeElementsToProcess.Any() && entity.Api.Side == EnumAppSide.Client)
+                {
+                    string missingColliders = colliders.ShapeElementsToProcess.Aggregate((first, second) => $"{first}, {second}");
+                    LoggerUtil.Warn(entity.Api, typeof(AnimationPatch), $"({entity.GetName()}) Listed colliders that was not found in shape: {missingColliders}");
                 }
             }
         }
