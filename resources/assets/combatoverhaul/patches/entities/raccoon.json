@@ -196,5 +196,9 @@
         "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}
       }
     }
-  }
+  },
+  {"side": "Server", "file": "game:entities/land/raccoon-female", "op": "add", "path": "/server/behaviors/9/aitasks/0/damageType", "value": "SlashingAttack"},
+  {"side": "Server", "file": "game:entities/land/raccoon-female", "op": "add", "path": "/server/behaviors/9/aitasks/0/damageTier", "value": 1},
+  {"side": "Server", "file": "game:entities/land/raccoon-male", "op": "add", "path": "/server/behaviors/9/aitasks/0/damageType", "value": "SlashingAttack"},
+  {"side": "Server", "file": "game:entities/land/raccoon-male", "op": "add", "path": "/server/behaviors/9/aitasks/0/damageTier", "value": 1}
 ]

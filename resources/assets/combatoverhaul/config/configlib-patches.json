@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "patches": {
     "string": {
       "game:itemtypes/combatoverhaul/bow.json": {
@@ -26,8 +26,31 @@
         "1/value": "(shovel_animation) ? value : vanilla_item"
       }
     },
+    "boolean": {
+      "combatoverhaul:patches/tools/axe.json": {
+        "0/value/RenderingOffset": "not(tool_rendering_offset)",
+        "2/value/RenderingOffset": "not(tool_rendering_offset)",
+        "0/value/CanSplitLogs": "axe_can_split_logs",
+        "2/value/CanSplitLogs": "axe_can_split_logs"
+      },
+      "combatoverhaul:patches/tools/pickaxe.json": {
+        "0/value/RenderingOffset": "not(tool_rendering_offset)"
+      },
+      "combatoverhaul:patches/tools/shovel.json": {
+        "0/value/RenderingOffset": "not(tool_rendering_offset)"
+      },
+      "game:itemtypes/combatoverhaul/spear.json": {
+        "attributes/RenderingOffset": "not(weapon_rendering_offset)"
+      },
+      "game:itemtypes/combatoverhaul/club.json": {
+        "attributes/RenderingOffset": "not(weapon_rendering_offset)"
+      },
+      "game:itemtypes/combatoverhaul/sword.json": {
+        "attributes/RenderingOffset": "not(weapon_rendering_offset)"
+      }
+    },
     "other": {
-      "combatoverhaul:pathces/weapons/shield.json": {
+      "combatoverhaul:patches/weapons/shield.json": {
         "3/value/@@*/Block/Zones": "shields_protection_zones"
       }
     }
@@ -97,6 +120,24 @@
       "code": "shovel_animation",
       "type": "boolean",
       "ingui": "New shovel animations",
+      "default": false
+    },
+    {
+      "code": "tool_rendering_offset",
+      "type": "boolean",
+      "ingui": "Tools clipping through blocks",
+      "default": true
+    },
+    {
+      "code": "weapon_rendering_offset",
+      "type": "boolean",
+      "ingui": "Weapons clipping through blocks and entities",
+      "default": true
+    },
+    {
+      "code": "axe_can_split_logs",
+      "type": "boolean",
+      "ingui": "Axe can split logs (turn off for compatibility with other mods if necessary)",
       "default": true
     }
   ]

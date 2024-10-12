@@ -133,7 +133,7 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
 
         if (damage != 0)
         {
-            string damageLogMessage = Lang.Get("combatoverhaul:damagelog-received-damage", damage, Lang.Get($"combatoverhaul:detailed-damage-zone-{detailedDamageZone}"));
+            string damageLogMessage = Lang.Get("combatoverhaul:damagelog-received-damage", $"{damage:F1}", Lang.Get($"combatoverhaul:detailed-damage-zone-{detailedDamageZone}"));
             PrintToDamageLog(damageLogMessage);
         }
 
@@ -241,7 +241,7 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
 
         if (previousDamage - damage > 0)
         {
-            damageLogMessage = Lang.Get("combatoverhaul:damagelog-armor-damage-negation", previousDamage - damage, Lang.Get($"combatoverhaul:damage-zone-{zone}"), durabilityDamage);
+            damageLogMessage = Lang.Get("combatoverhaul:damagelog-armor-damage-negation", $"{previousDamage - damage:F1}", Lang.Get($"combatoverhaul:damage-zone-{zone}"), durabilityDamage);
         }
     }
 }

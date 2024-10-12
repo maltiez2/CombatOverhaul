@@ -102,5 +102,28 @@
         }
       }
     }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/shiver",
+    "op": "replace",
+    "path": "/server/behaviors/8/aitasks/2/damageTierByType",
+    "value": {"*-surface": 0, "*-deep": 1, "*-tainted": 2, "*-corrupt": 3, "*-nightmare": 4, "*-stilt": 5, "*-deepsplit": 6, "*-bellhead": 6}
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/shiver",
+    "op": "replace",
+    "path": "/server/behaviors/8/aitasks/2/damageTypeByType",
+    "value": {
+      "*-surface": "SlashingAttack",
+      "*-deep": "SlashingAttack",
+      "*-tainted": "SlashingAttack",
+      "*-corrupt": "SlashingAttack",
+      "*-nightmare": "SlashingAttack",
+      "*-stilt": "SlashingAttack",
+      "*-deepsplit": "SlashingAttack",
+      "*-bellhead": "SlashingAttack"
+    }
   }
 ]

@@ -10,7 +10,7 @@
       "SwingBackAnimation": "combatoverhaul:pickaxe-swing-back",
       "SwingTpAnimation": "pickaxe",
       "RenderingOffset": false,
-      "Collider": [1, 0.05, 0.58, 0.9, 0.05, 0.98]
+      "Collider": [1, 0.05, 0.58, 0.9, 0.05, 1.18]
     }
   },
   {"file": "game:itemtypes/tool/pickaxe", "op": "add", "path": "/class", "value": "CombatOverhaul:Pickaxe"}

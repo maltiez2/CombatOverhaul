@@ -1,0 +1,36 @@
+﻿[
+  {
+    "file": "game:itemtypes/wearable/seraph/armor",
+    "op": "replace",
+    "path": "/shapeByType",
+    "value": {
+      "armor-body-improvised-wood": {"base": "game:combatoverhaul/armor/improvised/body"},
+      "armor-*-jerkin-*": {"base": "game:combatoverhaul/armor/jerkin/{bodypart}"},
+      "armor-*-sewn-leather": {"base": "game:combatoverhaul/armor/leather/{bodypart}"},
+      "armor-*-sewn-linen": {"base": "game:combatoverhaul/armor/gambeson/{bodypart}"},
+      "armor-*-tailored-*-linen": {"base": "game:combatoverhaul/armor/gambeson/{bodypart}"},
+      "armor-head-brigandine-tinbronze": {"base": "game:combatoverhaul/armor/{construction}/{bodypart}-bronze"},
+      "armor-head-brigandine-blackbronze": {"base": "game:combatoverhaul/armor/{construction}/{bodypart}-bronze"},
+      "armor-head-brigandine-bismuthbronze": {"base": "game:combatoverhaul/armor/{construction}/{bodypart}-bronze"},
+      "armor-head-brigandine-meteoriciron": {"base": "game:combatoverhaul/armor/{construction}/{bodypart}-meteoriciron"},
+      "armor-head-brigandine-*": {"base": "game:combatoverhaul/armor/{construction}/{bodypart}-{material}"},
+      "armor-head-chain-tinbronze": {"base": "game:combatoverhaul/armor/{construction}/{bodypart}-bronze"},
+      "armor-head-chain-blackbronze": {"base": "game:combatoverhaul/armor/{construction}/{bodypart}-bronze"},
+      "armor-head-chain-bismuthbronze": {"base": "game:combatoverhaul/armor/{construction}/{bodypart}-bronze"},
+      "armor-head-chain-meteoriciron": {"base": "game:combatoverhaul/armor/{construction}/{bodypart}-meteoriciron"},
+      "armor-head-chain-*": {"base": "game:combatoverhaul/armor/{construction}/{bodypart}-{material}"},
+      "armor-head-scale-tinbronze": {"base": "game:combatoverhaul/armor/{construction}/{bodypart}-bronze"},
+      "armor-head-scale-blackbronze": {"base": "game:combatoverhaul/armor/{construction}/{bodypart}-bronze"},
+      "armor-head-scale-bismuthbronze": {"base": "game:combatoverhaul/armor/{construction}/{bodypart}-bronze"},
+      "armor-head-scale-meteoriciron": {"base": "game:combatoverhaul/armor/{construction}/{bodypart}-meteoriciron"},
+      "armor-head-scale-*": {"base": "game:combatoverhaul/armor/{construction}/{bodypart}-{material}"},
+      "armor-head-plate-tinbronze": {"base": "game:combatoverhaul/armor/{construction}/{bodypart}-bronze"},
+      "armor-head-plate-blackbronze": {"base": "game:combatoverhaul/armor/{construction}/{bodypart}-bronze"},
+      "armor-head-plate-bismuthbronze": {"base": "game:combatoverhaul/armor/{construction}/{bodypart}-bronze"},
+      "armor-head-plate-meteoriciron": {"base": "game:combatoverhaul/armor/{construction}/{bodypart}-meteoriciron"},
+      "armor-head-plate-*": {"base": "game:combatoverhaul/armor/{construction}/{bodypart}-{material}"},
+      "armor-*-antique-*": {"base": "game:combatoverhaul/armor/{construction}/{material}/{bodypart}"},
+      "armor-*": {"base": "game:combatoverhaul/armor/{construction}/{bodypart}"}
+    }
+  }
+]

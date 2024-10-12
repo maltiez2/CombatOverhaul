@@ -3,7 +3,18 @@
   "class": "CombatOverhaul:MeleeWeapon",
   "tool": "sword",
   "attributes": {
+    "groundStorageTransformByType": {
+      "*-blackguard-*": {"translation": {"x": 0.2, "y": 0.1, "z": 0.68}, "rotation": {"x": -14, "y": 90, "z": 120}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.6},
+      "*-forlorn-*": {"translation": {"x": 0.2, "y": 0.1, "z": 0.62}, "rotation": {"x": -14, "y": 90, "z": 120}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.6},
+      "*-falx-*": {"translation": {"x": 0.2, "y": 0.06, "z": 0.68}, "rotation": {"x": -15, "y": 90, "z": 126}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.6}
+    },
+    "toolrackTransformByType": {
+      "*-blackguard-*": {"translation": {"x": 0.95, "y": 0.5, "z": 0.9}, "rotation": {"x": 0, "y": 180, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}},
+      "*-forlorn-*": {"translation": {"x": 1.05, "y": 0.55, "z": 0.9}, "rotation": {"x": 0, "y": 180, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}},
+      "*-falx-*": {"translation": {"x": 0.95, "y": 0.5, "z": 0.9}, "rotation": {"x": 0, "y": 180, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}}
+    },
     "ProficiencyStat": "oneHandedSwordsProficiency",
+    "RenderingOffset": false,
     "OneHandedStanceByType": {
       "*-forlorn-*": {
         "CanAttack": true,
@@ -22,7 +33,7 @@
         "AttackAnimation": {"Main": ["combatoverhaul:sword-forlorn-thrust"]},
         "ReadyAnimation": "combatoverhaul:sword-falx-ready",
         "IdleAnimation": "combatoverhaul:sword-falx-idle",
-        "AttackTpAnimation": "spearhit"
+        "AttackTpAnimation": "falx"
       },
       "*-blackguard-*": {
         "CanAttack": true,
@@ -41,7 +52,7 @@
         "AttackAnimation": {"Main": ["combatoverhaul:sword-forlorn-thrust"]},
         "ReadyAnimation": "combatoverhaul:sword-falx-ready",
         "IdleAnimation": "combatoverhaul:sword-falx-idle",
-        "AttackTpAnimation": "spearhit"
+        "AttackTpAnimation": "falx"
       },
       "*-falx-*": {
         "CanAttack": true,
@@ -79,7 +90,18 @@
       }
     }
   },
-  "behaviors": [],
+  "behaviors": [
+    {
+      "name": "GroundStorable",
+      "properties": {
+        "layout": "WallHalves",
+        "wallOffY": 3,
+        "sprintKey": true,
+        "selectionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.1, "z2": 1},
+        "collisionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 0, "y2": 0, "z2": 0}
+      }
+    }
+  ],
   "variantgroups": [
     {"code": "type", "states": ["falx", "blackguard", "forlorn"]},
     {"code": "metal", "states": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "gold", "silver", "iron", "meteoriciron", "steel"]}

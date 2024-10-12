@@ -3,10 +3,12 @@
   "class": "CombatOverhaul:MeleeWeapon",
   "variantgroups": [{"code": "type", "states": ["generic"]}, {"code": "material", "states": ["wood"]}],
   "shape": {"base": "combatoverhaul:weapons/club"},
+  "tool": "spear",
   "attributes": {
-    "groundStorageTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
-    "toolrackTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
+    "groundStorageTransform": {"translation": {"x": 0.6, "y": 1.6, "z": 0.7}, "rotation": {"x": 16, "y": -9, "z": -90}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.6},
+    "toolrackTransform": {"translation": {"x": -0.9, "y": 0.6, "z": -0.1}, "rotation": {"x": 0, "y": 0, "z": -2}, "origin": {"x": 0, "y": 0, "z": 0}},
     "ProficiencyStat": "clubsProficiency",
+    "RenderingOffset": false,
     "OneHandedStance": {
       "CanAttack": true,
       "CanParry": false,

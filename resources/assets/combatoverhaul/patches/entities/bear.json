@@ -64,5 +64,14 @@
         "DefaultResists": {"BluntAttack": 5, "SlashingAttack": 4, "PiercingAttack": 2}
       }
     }
-  }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/bear",
+    "op": "add",
+    "path": "/server/behaviors/9/aitasks/0/damageTierByType",
+    "value": {"*-black": 5, "*-brown": 6, "*-sun": 5, "*-panda": 5, "*-polar": 6}
+  },
+  {"side": "Server", "file": "game:entities/land/bear", "op": "replace", "path": "/server/behaviors/9/aitasks/0/damageType", "value": "SlashingAttack"},
+  {"side": "Server", "file": "game:entities/land/bear", "op": "remove", "path": "/server/behaviors/9/aitasks/0/damageTier"}
 ]

@@ -1,6 +1,7 @@
 ﻿using CombatOverhaul.Animations;
 using CombatOverhaul.Colliders;
 using CombatOverhaul.Inputs;
+using CombatOverhaul.MeleeSystems;
 using ProtoBuf;
 using System.Numerics;
 using System.Reflection;
@@ -32,6 +33,7 @@ public class AxeStats
     public float[] Collider { get; set; } = Array.Empty<float>();
     public Dictionary<string, string> HitParticleEffects { get; set; } = new();
     public float HitStaggerDurationMs { get; set; } = 100;
+    public bool CanSplitLogs { get; set; } = true;
 }
 
 public enum AxeState
@@ -214,6 +216,7 @@ public class AxeClient : IClientWeaponLogic
     protected virtual bool Split(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
         if (eventData.AltPressed && !mainHand) return false;
+        if (!Stats.CanSplitLogs) return false;
         if (player.BlockSelection?.Block == null) return false;
         if (!IsSplittable(player.BlockSelection.Block)) return false;
         if (state != (int)AxeState.Idle && state != (int)AxeState.Splitting && state != (int)AxeState.SplittingWindUp) return false;
