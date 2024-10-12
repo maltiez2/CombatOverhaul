@@ -14,6 +14,16 @@
         "3/file": "(modify_vanilla_classes) ? value : empty_string",
         "4/file": "(modify_vanilla_classes) ? value : empty_string",
         "5/file": "(modify_vanilla_classes) ? value : empty_string"
+      },
+      "combatoverhaul:patches/tools/axe.json": {
+        "1/value": "(axe_animation) ? value : vanilla_axe",
+        "3/value": "(axe_animation) ? value : vanilla_axe"
+      },
+      "combatoverhaul:patches/tools/pickaxe.json": {
+        "1/value": "(pickaxe_animation) ? value : vanilla_item"
+      },
+      "combatoverhaul:patches/tools/shovel.json": {
+        "1/value": "(shovel_animation) ? value : vanilla_item"
       }
     },
     "other": {
@@ -23,7 +33,9 @@
     }
   },
   "constants": {
-    "empty_string": ""
+    "empty_string": "",
+    "vanilla_axe": "ItemAxe",
+    "vanilla_item": "Item"
   },
   "settings": [
     {
@@ -67,6 +79,24 @@
       "code": "modify_vanilla_classes",
       "type": "boolean",
       "ingui": "Modify vanilla classes",
+      "default": true
+    },
+    {
+      "code": "axe_animation",
+      "type": "boolean",
+      "ingui": "New axe animations",
+      "default": true
+    },
+    {
+      "code": "pickaxe_animation",
+      "type": "boolean",
+      "ingui": "New pickaxe animations",
+      "default": true
+    },
+    {
+      "code": "shovel_animation",
+      "type": "boolean",
+      "ingui": "New shovel animations",
       "default": true
     }
   ]
