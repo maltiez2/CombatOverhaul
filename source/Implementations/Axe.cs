@@ -5,6 +5,7 @@ using CombatOverhaul.MeleeSystems;
 using ProtoBuf;
 using System.Numerics;
 using System.Reflection;
+using System.Xml.Linq;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Config;
@@ -421,8 +422,6 @@ public sealed class BlockBreakingController
     {
         _api = api;
         _game = api.World as ClientMain ?? throw new Exception();
-        _worldMap = (ClientWorldMap?)_clientMain_WorldMap?.GetValue(_game) ?? throw new Exception();
-        _eventManager = (ClientEventManager?)_clientMain_EventManager?.GetValue(_game) ?? throw new Exception();
         _damagedBlocks = (Dictionary<BlockPos, BlockDamage>?)_clientMain_damagedBlocks?.GetValue(_game) ?? throw new Exception();
     }
 
@@ -435,16 +434,12 @@ public sealed class BlockBreakingController
     private readonly ClientMain _game;
     private int _survivalBreakingCounter;
 
-    private static readonly FieldInfo? _clientMain_WorldMap = typeof(ClientMain).GetField("WorldMap", BindingFlags.NonPublic | BindingFlags.Instance);
-    private static readonly FieldInfo? _clientMain_EventManager = typeof(ClientMain).GetField("eventManager", BindingFlags.NonPublic | BindingFlags.Instance);
     private static readonly FieldInfo? _clientMain_damagedBlocks = typeof(ClientMain).GetField("damagedBlocks", BindingFlags.NonPublic | BindingFlags.Instance);
 
     private static readonly MethodInfo? _clientMain_OnPlayerTryDestroyBlock = typeof(ClientMain).GetMethod("OnPlayerTryDestroyBlock", BindingFlags.NonPublic | BindingFlags.Instance);
     private static readonly MethodInfo? _clientMain_loadOrCreateBlockDamage = typeof(ClientMain).GetMethod("loadOrCreateBlockDamage", BindingFlags.NonPublic | BindingFlags.Instance);
     private static readonly MethodInfo? _clientMain_UpdateCurrentSelection = typeof(ClientMain).GetMethod("UpdateCurrentSelection", BindingFlags.NonPublic | BindingFlags.Instance);
 
-    private readonly ClientWorldMap _worldMap;
-    private readonly ClientEventManager _eventManager;
     private readonly Dictionary<BlockPos, BlockDamage> _damagedBlocks;
 
     private void OnPlayerTryDestroyBlock(BlockSelection blockSelection) => _clientMain_OnPlayerTryDestroyBlock?.Invoke(_game, new object[] { blockSelection });
@@ -471,7 +466,7 @@ public sealed class BlockBreakingController
             BlockPos pos = blockSelection.Position;
             int chunksize = 32;
             c.BreakDecor(_game, pos, blockSelection.Face);
-            _worldMap.MarkChunkDirty(pos.X / chunksize, pos.Y / chunksize, pos.Z / chunksize, priority: true);
+            _game.WorldMap.MarkChunkDirty(pos.X / chunksize, pos.Y / chunksize, pos.Z / chunksize, priority: true);
             _game.SendPacketClient(ClientPackets.BlockInteraction(blockSelection, 2, 0));
         }
         if (tool == EnumTool.Axe)
@@ -503,14 +498,14 @@ public sealed class BlockBreakingController
         }
         if (_curBlockDmg.RemainingResistance <= 0f)
         {
-            _eventManager.TriggerBlockBroken(_curBlockDmg);
+            _game.eventManager.TriggerBlockBroken(_curBlockDmg);
             OnPlayerTryDestroyBlock(blockSelection);
             _damagedBlocks.Remove(blockSelection.Position);
             UpdateCurrentSelection();
         }
         else
         {
-            _eventManager.TriggerBlockBreaking(_curBlockDmg);
+            _game.eventManager.TriggerBlockBreaking(_curBlockDmg);
         }
         _curBlockDmg.LastBreakEllapsedMs = elapsedMs;
     }
@@ -526,7 +521,7 @@ public sealed class BlockBreakingController
             BlockPos pos = blockSelection.Position;
             int chunksize = 32;
             c.BreakDecor(_game, pos, blockSelection.Face);
-            _worldMap.MarkChunkDirty(pos.X / chunksize, pos.Y / chunksize, pos.Z / chunksize, priority: true);
+            _game.WorldMap.MarkChunkDirty(pos.X / chunksize, pos.Y / chunksize, pos.Z / chunksize, priority: true);
             _game.SendPacketClient(ClientPackets.BlockInteraction(blockSelection, 2, 0));
         }
         //_curBlockDmg.RemainingResistance = block.OnGettingBroken(_api.World.Player, blockSelection, _api.World.Player.Entity.ActiveHandItemSlot, _curBlockDmg.RemainingResistance, (float)diff / 1000f, _survivalBreakingCounter);
@@ -541,14 +536,14 @@ public sealed class BlockBreakingController
         }
         if (_curBlockDmg.RemainingResistance <= 0f)
         {
-            _eventManager.TriggerBlockBroken(_curBlockDmg);
+            _game.eventManager.TriggerBlockBroken(_curBlockDmg);
             OnPlayerTryDestroyBlock(blockSelection);
             _damagedBlocks.Remove(blockSelection.Position);
             UpdateCurrentSelection();
         }
         else
         {
-            _eventManager.TriggerBlockBreaking(_curBlockDmg);
+            _game.eventManager.TriggerBlockBreaking(_curBlockDmg);
         }
         _curBlockDmg.LastBreakEllapsedMs = elapsedMs;
     }

@@ -32,5 +32,17 @@
       "armor-*-antique-*": {"base": "game:combatoverhaul/armor/{construction}/{material}/{bodypart}"},
       "armor-*": {"base": "game:combatoverhaul/armor/{construction}/{bodypart}"}
     }
+  },
+  {
+    "file": "game:itemtypes/wearable/seraph/armor",
+    "op": "replace",
+    "path": "/attributes/attachableToEntity/disableElementsByType/armor-head-sewn-*",
+    "value": ["hidehat", "Hood", "Hair tile upper part", "ponytailhigh", "ponytaillow", "hair-uncovered", "sidehigh", "sidelow", "bangs"]
+  },
+  {
+    "file": "game:itemtypes/wearable/seraph/armor",
+    "op": "replace",
+    "path": "/attributes/attachableToEntity/disableElementsByType/armor-head-tailored-*",
+    "value": ["hidehat", "Hood", "Hair tile upper part", "ponytailhigh", "ponytaillow", "hair-uncovered", "sidehigh", "sidelow", "bangs"]
   }
 ]

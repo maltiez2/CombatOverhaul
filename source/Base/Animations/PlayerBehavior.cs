@@ -262,7 +262,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
 
     private static readonly TimeSpan _readyTimeout = TimeSpan.FromSeconds(5);
 
-    private readonly FieldInfo _mainCameraInfo = typeof(ClientMain).GetField("MainCamera", BindingFlags.NonPublic | BindingFlags.Instance) ?? throw new Exception();
+    private readonly FieldInfo _mainCameraInfo = typeof(ClientMain).GetField("MainCamera", BindingFlags.Public | BindingFlags.Instance) ?? throw new Exception();
     private readonly FieldInfo _cameraFov = typeof(Camera).GetField("Fov", BindingFlags.NonPublic | BindingFlags.Instance) ?? throw new Exception();
 
     private void OnBeforeFrame(Entity entity, float dt)
@@ -281,7 +281,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
             if (_resetFov)
             {
                 SetFov(1);
-                //EyeHightController.Amplitude = 1.0f; @TODO use new entity property
+                _player.HeadBobbingAmplitude = 1;
                 _resetFov = false;
             }
             return;
@@ -331,7 +331,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
         }
 
         SetFov(frame.Player.FovMultiplier);
-        //EyeHightController.Amplitude = frame.Player.BobbingAmplitude; @TODO use new entity property
+        _player.HeadBobbingAmplitude = frame.Player.BobbingAmplitude;
         _resetFov = true;
     }
     private static bool IsOwner(Entity entity) => (entity.Api as ICoreClientAPI)?.World.Player.Entity.EntityId == entity.EntityId;
