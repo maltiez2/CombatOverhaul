@@ -590,6 +590,8 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
         {
             case "startParry":
                 {
+                    Console.WriteLine("Start parry");
+                    
                     StanceStats? stats = GetStanceStats(mainHand);
                     DamageBlockJson? parryStats = stats?.Parry;
 
@@ -602,6 +604,8 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
                 break;
             case "stopParry":
                 {
+                    Console.WriteLine("Stop parry");
+
                     StanceStats? stats = GetStanceStats(mainHand);
                     DamageBlockJson? blockStats = stats?.Block;
                     if (CanBlock(mainHand) && blockStats != null)
