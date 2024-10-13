@@ -1,6 +1,5 @@
 ﻿using CombatOverhaul.Integration;
 using CombatOverhaul.Utils;
-using OpenTK.Windowing.GraphicsLibraryFramework;
 using System.Reflection;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -48,7 +47,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     public override void OnGameTick(float deltaTime) // @TODO refactor this brunching hell
     {
         if (!_mainPlayer || _player.RightHandItemSlot == null || _player.LeftHandItemSlot == null) return;
-        
+
         int mainHandItemId = _player.RightHandItemSlot.Itemstack?.Item?.Id ?? 0;
         int offhandItemId = _player.LeftHandItemSlot.Itemstack?.Item?.Id ?? 0;
 
@@ -370,7 +369,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     private void StartIdleTimer(AnimationRequestByCode request, bool mainHand)
     {
         if (_api?.IsGamePaused == true) return;
-        
+
         long timer = _api?.World.RegisterCallback(_ => PlayIdleAnimation(request, mainHand), (int)_readyTimeout.TotalMilliseconds) ?? -1;
         if (mainHand)
         {

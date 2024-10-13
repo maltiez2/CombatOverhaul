@@ -436,8 +436,8 @@ public sealed class BlockBreakingController
 
     private static readonly FieldInfo? _clientMain_damagedBlocks = typeof(ClientMain).GetField("damagedBlocks", BindingFlags.NonPublic | BindingFlags.Instance);
 
-    private static readonly MethodInfo? _clientMain_OnPlayerTryDestroyBlock = typeof(ClientMain).GetMethod("OnPlayerTryDestroyBlock", BindingFlags.NonPublic | BindingFlags.Instance);
-    private static readonly MethodInfo? _clientMain_loadOrCreateBlockDamage = typeof(ClientMain).GetMethod("loadOrCreateBlockDamage", BindingFlags.NonPublic | BindingFlags.Instance);
+    private static readonly MethodInfo? _clientMain_OnPlayerTryDestroyBlock = typeof(ClientMain).GetMethod("OnPlayerTryDestroyBlock", BindingFlags.Public | BindingFlags.Instance);
+    private static readonly MethodInfo? _clientMain_loadOrCreateBlockDamage = typeof(ClientMain).GetMethod("loadOrCreateBlockDamage", BindingFlags.Public | BindingFlags.Instance);
     private static readonly MethodInfo? _clientMain_UpdateCurrentSelection = typeof(ClientMain).GetMethod("UpdateCurrentSelection", BindingFlags.NonPublic | BindingFlags.Instance);
 
     private readonly Dictionary<BlockPos, BlockDamage> _damagedBlocks;
@@ -501,7 +501,7 @@ public sealed class BlockBreakingController
             _game.eventManager.TriggerBlockBroken(_curBlockDmg);
             OnPlayerTryDestroyBlock(blockSelection);
             _damagedBlocks.Remove(blockSelection.Position);
-            UpdateCurrentSelection();
+            //UpdateCurrentSelection();
         }
         else
         {
@@ -539,7 +539,7 @@ public sealed class BlockBreakingController
             _game.eventManager.TriggerBlockBroken(_curBlockDmg);
             OnPlayerTryDestroyBlock(blockSelection);
             _damagedBlocks.Remove(blockSelection.Position);
-            UpdateCurrentSelection();
+            //UpdateCurrentSelection();
         }
         else
         {
