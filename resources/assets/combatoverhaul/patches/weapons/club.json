@@ -1,1 +1,5 @@
-﻿[{"file": "game:itemtypes/tool/club", "op": "remove", "path": "/allowedVariants/0"}]
+﻿[
+  {"file": "game:itemtypes/tool/club", "op": "remove", "path": "/allowedVariants/2"},
+  {"file": "game:itemtypes/tool/club", "op": "remove", "path": "/allowedVariants/1"},
+  {"file": "game:itemtypes/tool/club", "op": "remove", "path": "/allowedVariants/0"}
+]

@@ -1,8 +1,9 @@
 ﻿{
   "code": "club",
   "class": "CombatOverhaul:MeleeWeapon",
-  "variantgroups": [{"code": "type", "states": ["generic"]}, {"code": "material", "states": ["wood"]}],
-  "shape": {"base": "combatoverhaul:weapons/club"},
+  "variantgroups": [{"code": "type", "states": ["generic", "scrap", "scrapmace"]}, {"code": "material", "states": ["wood", "scrap"]}],
+  "allowedVariants": ["club-generic-wood", "club-scrap-scrap"],
+  "shapeByType": {"*-generic-*": {"base": "combatoverhaul:weapons/clubs/club"}, "*-scrap-*": {"base": "combatoverhaul:weapons/clubs/scrap"}},
   "tool": "spear",
   "attributes": {
     "groundStorageTransform": {"translation": {"x": 0.6, "y": 1.6, "z": 0.7}, "rotation": {"x": 16, "y": -9, "z": -90}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.6},
@@ -19,10 +20,13 @@
         "StopOnEntityHit": true,
         "CollideWithTerrain": true,
         "MaxReach": 9,
-        "DamageTypes": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 1, "Damage": 3}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.6, 0, 0.5]}]
+        "DamageTypesByType": {
+          "*-generic-*": [{"Damage": {"DamageType": "BluntAttack", "Strength": 1, "Damage": 2}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.6, 0, 0.5]}],
+          "*-scrap-*": [{"Damage": {"DamageType": "BluntAttack", "Strength": 2, "Damage": 3}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.6, 0, 0.5]}]
+        }
       },
       "AttackHitSound": "game:sounds/thud",
-      "AttackAnimation": {"Main": ["combatoverhaul:club-strike-1h"]},
+      "AttackAnimation": {"Main": ["combatoverhaul:club-strike-1h-1", "combatoverhaul:club-strike-1h-2"]},
       "ReadyAnimation": "combatoverhaul:club-ready-1h",
       "IdleAnimation": "combatoverhaul:club-idle-1h"
     },
@@ -36,7 +40,10 @@
         "StopOnEntityHit": true,
         "CollideWithTerrain": true,
         "MaxReach": 9,
-        "DamageTypes": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 1, "Damage": 3}, "Knockback": 1, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.6, 0, 0.5]}]
+        "DamageTypesByType": {
+          "*-generic-*": [{"Damage": {"DamageType": "BluntAttack", "Strength": 1, "Damage": 2.5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.6, 0, 0.5]}],
+          "*-scrap-*": [{"Damage": {"DamageType": "BluntAttack", "Strength": 2, "Damage": 3.5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.6, 0, 0.5]}]
+        }
       },
       "AttackHitSound": "game:sounds/thud",
       "AttackAnimation": {"Main": ["combatoverhaul:club-strike-2h-1", "combatoverhaul:club-strike-2h-2"]},

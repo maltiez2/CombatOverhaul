@@ -1,0 +1,38 @@
+[
+	{
+		"ingredientPattern": "TLT,T_T",
+		"recipeGroup": 1,
+		"ingredients": {
+			"L": { "type": "block", "code": "linen-*", "quantity": 1 },
+			"T": { "type": "item", "code": "flaxtwine", "quantity": 1 }
+		},
+		"width": 3,
+		"height": 2,
+		"name": "gambeson helmet",
+		"output": { "type": "item", "code": "armor-head-sewn-linen"  }
+	},
+	{
+		"ingredientPattern": "L_L,MMM,LLL",
+		"recipeGroup": 1,
+		"ingredients": {
+			"L": { "type": "block", "code": "linen-*", "quantity": 1 },
+			"M": { "type": "item", "code": "flaxtwine", "quantity": 1 }
+		},
+		"width": 3,
+		"height": 3,
+		"name": "gambeson body armor",
+		"output": { "type": "item", "code": "armor-body-sewn-linen"  }
+	},
+	{
+		"ingredientPattern": "LTL,L_L,T_T",
+		"recipeGroup": 1,
+		"ingredients": {
+			"L": { "type": "block", "code": "linen-*", "quantity": 1 },
+			"T": { "type": "item", "code": "flaxtwine", "quantity": 1 }
+		},
+		"width": 3,
+		"height": 3,
+		"name": "gambeson leg armor",
+		"output": { "type": "item", "code": "armor-legs-sewn-linen"  }
+	}
+]

@@ -5,6 +5,7 @@
     "path": "/skipVariants/-",
     "value": "@spear-generic-(chert|granite|andesite|basalt|obsidian|peridotite|flint|copper|tinbronze|bismuthbronze|blackbronze|ornategold|ornatesilver)"
   },
+  {"file": "game:itemtypes/tool/spear", "op": "add", "path": "/skipVariants/-", "value": "spear-scrap-scrap"},
   {"side": "Server", "file": "game:recipes/grid/tool/spear", "op": "add", "path": "/ingredients/T/allowedVariants/-", "value": "iron"},
   {"side": "Server", "file": "game:recipes/grid/tool/spear", "op": "add", "path": "/ingredients/T/allowedVariants/-", "value": "meteoriciron"},
   {"side": "Server", "file": "game:recipes/grid/tool/spear", "op": "add", "path": "/ingredients/T/allowedVariants/-", "value": "steel"},

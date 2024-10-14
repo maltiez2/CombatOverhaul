@@ -103,8 +103,8 @@
   "game:charattribute-javelinsProficiency-0.3": "+30% attack speed",
   "game:charattribute-macesProficiency-0.3": "+30% attackspeed",
   "game:charattribute-clubsProficiency-0.3": "+30% attack speed",
-  "game:charattribute-steadyAim-0.5": "50% less aim drift",
-  "game:charattribute-steadyAim--0.5": "50% more aim drift",
+  "game:charattribute-steadyAim-0.3": "30% less aim drift",
+  "game:charattribute-steadyAim--0.3": "30% more aim drift",
 
   "damagelog-missed-block-zone": "Player tried blocking, but {0} was not protected by block",
   "damagelog-missed-block-direction": "Player tried blocking, but directon ({0}) of incomming attack was not covered by block",

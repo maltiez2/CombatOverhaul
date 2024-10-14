@@ -307,7 +307,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
             tier /= count;
             knockback /= count;
 
-            dsc.AppendLine(Lang.Get("combatoverhaul:iteminfo-melee-weapon-onehanded", damage, tier, knockback, Lang.Get($"damage-type-{damageType}")));
+            dsc.AppendLine(Lang.Get("combatoverhaul:iteminfo-melee-weapon-onehanded", damage, tier, knockback, Lang.Get($"combatoverhaul:damage-type-{damageType}")));
         }
 
         if (Stats.TwoHandedStance?.Attack != null)
@@ -331,7 +331,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
             tier /= count;
             knockback /= count;
 
-            dsc.AppendLine(Lang.Get("combatoverhaul:iteminfo-melee-weapon-twohanded", damage, tier, knockback, Lang.Get($"damage-type-{damageType}")));
+            dsc.AppendLine(Lang.Get("combatoverhaul:iteminfo-melee-weapon-twohanded", damage, tier, knockback, Lang.Get($"combatoverhaul:damage-type-{damageType}")));
         }
     }
 

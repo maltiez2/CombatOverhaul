@@ -1,0 +1,39 @@
+[
+	{
+		"ingredientPattern": "LTL,P_P",
+		"recipeGroup": 1,
+		"ingredients": {
+			"P": { "type": "item", "code": "metalplate-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"] },
+			"T": { "type": "item", "code": "metalplate-*", "name": "metal", "quantity": 2, "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"] },
+			"L": { "type": "item", "code": "leather-normal-plain" }
+		},
+		"width": 3,
+		"height": 2,
+		"name": "plate helmet",
+		"output": { "type": "item", "code": "armor-head-plate-{metal}"  }
+	},
+	{
+		"ingredientPattern": "PLP,PPP,PPP",
+		"recipeGroup": 1,
+		"ingredients": {
+			"P": { "type": "item", "code": "metalplate-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"] },
+			"L": { "type": "item", "code": "leather-normal-plain", "quantity": 5 }
+		},
+		"width": 3,
+		"height": 3,
+		"name": "plate body armor",
+		"output": { "type": "item", "code": "armor-body-plate-{metal}"  }
+	},
+	{
+		"ingredientPattern": "PPP,PLP",
+		"recipeGroup": 1,
+		"ingredients": {
+			"P": { "type": "item", "code": "metalplate-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"] },
+			"L": { "type": "item", "code": "leather-normal-plain", "quantity": 3 }
+		},
+		"width": 3,
+		"height": 2,
+		"name": "plate leg armor",
+		"output": { "type": "item", "code": "armor-legs-plate-{metal}"  }
+	}
+]
