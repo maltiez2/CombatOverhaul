@@ -70,7 +70,7 @@ public sealed class ArmorStatsBehavior : EntityBehavior
 
         foreach ((string stat, float value) in Stats)
         {
-            _player.Stats.Set(stat, _statsCategory, value, true);
+            _player.Stats.Set(stat, _statsCategory, value, false);
         }
 
         _player.walkSpeed = _player.Stats.GetBlended("walkspeed");

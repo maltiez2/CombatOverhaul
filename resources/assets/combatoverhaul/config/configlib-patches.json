@@ -6,7 +6,8 @@
         "attributes/AimingByType/@@*/CursorType": "bows_aiming_cursor_type"
       },
       "game:itemtypes/combatoverhaul/spear.json": {
-        "attributes/ThrowAttack/Aiming/CursorType": "spears_aiming_cursor_type"
+        "attributes/ThrowAttack/Aiming/CursorType": "spears_aiming_cursor_type",
+        "behaviors/1/properties/stats/HitSound": "(arrow_ping_sound_on_hit) ? value : empty_string"
       },
       "combatoverhaul:patches/traits-and-classes.json": {
         "1/file": "(modify_vanilla_classes) ? value : empty_string",
@@ -24,6 +25,9 @@
       },
       "combatoverhaul:patches/tools/shovel.json": {
         "1/value": "(shovel_animation) ? value : vanilla_item"
+      },
+      "game:itemtypes/combatoverhaul/arrow.json": {
+        "behaviors/0/properties/stats/HitSound": "(arrow_ping_sound_on_hit) ? value : empty_string"
       }
     },
     "boolean": {
@@ -47,6 +51,14 @@
       },
       "game:itemtypes/combatoverhaul/sword.json": {
         "attributes/RenderingOffset": "not(weapon_rendering_offset)"
+      }
+    },
+    "number": {
+      "combatoverhaul:config/animations/tool/axe.json": {
+        "axe-swing-forward/SoundFrames/0/Volume": "tool_whoosh_sound"
+      },
+      "combatoverhaul:config/animations/tool/pickaxe.json": {
+        "pickaxe-swing-forward/SoundFrames/0/Volume": "tool_whoosh_sound"
       }
     },
     "other": {
@@ -139,6 +151,22 @@
       "type": "boolean",
       "ingui": "Axe can split logs (turn off for compatibility with other mods if necessary)",
       "default": true
+    },
+    {
+      "code": "arrow_ping_sound_on_hit",
+      "type": "boolean",
+      "ingui": "Ping sound on arrow or thrown spear hit",
+      "default": true
+    },
+    {
+      "code": "tool_whoosh_sound",
+      "type": "float",
+      "ingui": "Tools whoosh sound volume on swing",
+      "default": 0.5,
+      "range": {
+        "min": 0.0,
+        "max": 1.0
+      }
     }
   ]
 }

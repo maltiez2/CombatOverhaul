@@ -25,6 +25,7 @@
           "SpeedThreshold": 0.3,
           "Knockback": 0.5,
           "EntityCode": "combatoverhaul:arrow-{material}",
+          "HitSound": "game:sounds/player/projectilehit",
           "DurabilityDamage": 0,
           "DropChanceByType": {
             "*-crude": 0.5,

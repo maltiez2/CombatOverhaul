@@ -168,7 +168,7 @@
     "file": "game:entities/land/bowtorn",
     "op": "replace",
     "path": "/server/behaviors/8/aitasks/0/damageTierByType",
-    "value": {"*-surface": 0, "*-deep": 1, "*-tainted": 2, "*-corrupt": 3, "*-nightmare": 4, "*-gearfoot": 5}
+    "value": {"*-surface": 1, "*-deep": 1, "*-tainted": 2, "*-corrupt": 3, "*-nightmare": 4, "*-gearfoot": 5}
   },
   {
     "side": "Server",

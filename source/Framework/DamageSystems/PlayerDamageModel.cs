@@ -219,6 +219,8 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
 
         IEnumerable<ArmorSlot> slots = inventory.GetNotEmptyZoneSlots(zone);
 
+        if (!slots.Any()) return;
+
         DamageResistData resists = DamageResistData.Combine(slots.Select(slot => slot.Resists));
 
         float previousDamage = damage;
@@ -232,6 +234,8 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
         {
             _ = resists.ApplyResist(new(damageSource.Type, damageSource.DamageTier), ref damage, out durabilityDamage);
         }
+
+        durabilityDamage = GameMath.Clamp(durabilityDamage / slots.Count(), 0, durabilityDamage);
 
         foreach (ArmorSlot slot in slots)
         {

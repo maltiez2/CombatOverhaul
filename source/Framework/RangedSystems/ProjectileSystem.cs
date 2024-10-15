@@ -14,8 +14,8 @@ namespace CombatOverhaul.RangedSystems;
 public class ProjectileStats
 {
     public int AdditionalDurabilityCost { get; set; } = 0;
-    public AssetLocation ImpactSound { get; set; } = new("game:sounds/arrow-impact");
-    public AssetLocation HitSound { get; set; } = new("game:sounds/player/projectilehit");
+    public string ImpactSound { get; set; } = "game:sounds/arrow-impact";
+    public string HitSound { get; set; } = "";
     public float CollisionRadius { get; set; } = 0;
     public ProjectileDamageDataJson DamageStats { get; set; } = new();
     public float SpeedThreshold { get; set; } = 0;

@@ -32,6 +32,7 @@
             "*-steel": {"DamageType": "PiercingAttack", "Damage": 6},
             "*": {"DamageType": "PiercingAttack", "Damage": 3.5}
           },
+          "HitSound": "game:sounds/player/projectilehit",
           "SpeedThreshold": 0.3,
           "Knockback": 0.1,
           "EntityCode": "combatoverhaul:spear-generic-{material}",

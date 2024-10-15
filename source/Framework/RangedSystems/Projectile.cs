@@ -1,4 +1,5 @@
-﻿using CombatOverhaul.Colliders;
+﻿using CombatOverhaul.Armor;
+using CombatOverhaul.Colliders;
 using CombatOverhaul.DamageSystems;
 using System.Numerics;
 using System.Text;
@@ -34,7 +35,9 @@ public sealed class ProjectileServer
 
         Vector3 collisionPoint = new(packet.CollisionPoint[0], packet.CollisionPoint[1], packet.CollisionPoint[2]);
 
-        _ = Attack(_shooter, receiver, collisionPoint, packet.Collider, packet.RelativeSpeed);
+        bool hit = Attack(_shooter, receiver, collisionPoint, packet.Collider, packet.RelativeSpeed);
+
+        if (hit) PlaySound(_shooter);
 
         _entity.ServerPos.SetPos(new Vec3d(collisionPoint.X, collisionPoint.Y, collisionPoint.Z));
         _entity.ServerPos.Motion.X = receiver.ServerPos.Motion.X;
@@ -104,6 +107,13 @@ public sealed class ProjectileServer
         }
 
         return true;
+    }
+    private void PlaySound(Entity attacker)
+    {
+        ProjectileStats? stats = _entity.ProjectileStack?.Item?.GetCollectibleBehavior<ProjectileBehavior>(true)?.Stats;
+        if (stats == null || attacker is not EntityPlayer player || stats.HitSound == "") return;
+
+        _api.World.PlaySoundFor(new(stats.HitSound), player.Player, false);
     }
 }
 

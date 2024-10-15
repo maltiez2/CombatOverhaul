@@ -125,16 +125,19 @@ public class ArmorBehavior : CollectibleBehavior, IArmor, IAffectsPlayerStats
         dsc.AppendLine(Lang.Get("combatoverhaul:armor-layers-info", ArmorType.LayersToTranslatedString()));
         dsc.AppendLine(Lang.Get("combatoverhaul:armor-zones-info", ArmorType.ZonesToTranslatedString()));
         dsc.AppendLine(Lang.Get("combatoverhaul:armor-fraction-protection"));
-        foreach ((EnumDamageType type, float level) in Resists.Resists)
+        if (Resists.Resists.Values.Any(value => value != 0))
         {
-            string damageType = Lang.Get($"combatoverhaul:damage-type-{type}");
-            dsc.AppendLine($"  {damageType}: {level}");
+            foreach ((EnumDamageType type, float level) in Resists.Resists.Where(entry => entry.Value > 0))
+            {
+                string damageType = Lang.Get($"combatoverhaul:damage-type-{type}");
+                dsc.AppendLine($"  {damageType}: {level}");
+            }
         }
 
         if (Resists.FlatDamageReduction.Values.Any(value => value != 0))
         {
             dsc.AppendLine(Lang.Get("combatoverhaul:armor-flat-protection"));
-            foreach ((EnumDamageType type, float level) in Resists.FlatDamageReduction)
+            foreach ((EnumDamageType type, float level) in Resists.FlatDamageReduction.Where(entry => entry.Value > 0))
             {
                 string damageType = Lang.Get($"combatoverhaul:damage-type-{type}");
                 dsc.AppendLine($"  {damageType}: {level}");
