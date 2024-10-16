@@ -117,6 +117,8 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
     {
         if (damageSource.Type == EnumDamageType.Heal) return damage;
 
+        Console.WriteLine(damageSource.Type);
+
         (PlayerBodyPart detailedDamageZone, float multiplier) = DetermineHitZone(damageSource);
 
         DamageZone damageZone = BodyPartsToZones[detailedDamageZone];
@@ -124,7 +126,7 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
         ApplyBlock(damageSource, detailedDamageZone, ref damage, out string blockDamageLogMessage);
         PrintToDamageLog(blockDamageLogMessage);
 
-        ApplyArmorResists(damageSource, damageZone, ref damage, out string armorDamageLogMessage);
+        ApplyArmorResists(damageSource, damageZone, ref damage, out string armorDamageLogMessage, out EnumDamageType damageType);
         PrintToDamageLog(armorDamageLogMessage);
 
         damage *= multiplier;
@@ -133,7 +135,7 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
 
         if (damage != 0)
         {
-            string damageLogMessage = Lang.Get("combatoverhaul:damagelog-received-damage", $"{damage:F1}", Lang.Get($"combatoverhaul:detailed-damage-zone-{detailedDamageZone}"));
+            string damageLogMessage = Lang.Get("combatoverhaul:damagelog-received-damage", $"{damage:F1}", Lang.Get($"combatoverhaul:detailed-damage-zone-{detailedDamageZone}"), Lang.Get($"combatoverhaul:damage-type-{damageType}"));
             PrintToDamageLog(damageLogMessage);
         }
 
@@ -209,9 +211,10 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
 
         if (CurrentDamageBlock.Sound != null) entity.Api.World.PlaySoundAt(new(CurrentDamageBlock.Sound), entity);
     }
-    private void ApplyArmorResists(DamageSource damageSource, DamageZone zone, ref float damage, out string damageLogMessage)
+    private void ApplyArmorResists(DamageSource damageSource, DamageZone zone, ref float damage, out string damageLogMessage, out EnumDamageType damageType)
     {
         damageLogMessage = "";
+        damageType = damageSource.Type;
 
         if ((entity as EntityPlayer)?.Player.InventoryManager.GetOwnInventory(GlobalConstants.characterInvClassName) is not ArmorInventory inventory) return;
 
@@ -229,12 +232,14 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
         if (damageSource is ITypedDamage typedDamage)
         {
             typedDamage.DamageTypeData = resists.ApplyResist(typedDamage.DamageTypeData, ref damage, out durabilityDamage);
+            damageType = typedDamage.DamageTypeData.DamageType;
         }
         else
         {
             _ = resists.ApplyResist(new(damageSource.Type, damageSource.DamageTier), ref damage, out durabilityDamage);
         }
 
+        durabilityDamage = GameMath.Clamp(durabilityDamage, 1, durabilityDamage);
         int durabilityDamagePerItem = GameMath.Clamp(durabilityDamage / slots.Count(), 0, durabilityDamage);
 
         foreach (ArmorSlot slot in slots)
@@ -245,7 +250,7 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
 
         if (previousDamage - damage > 0)
         {
-            damageLogMessage = Lang.Get("combatoverhaul:damagelog-armor-damage-negation", $"{previousDamage - damage:F1}", Lang.Get($"combatoverhaul:damage-zone-{zone}"), durabilityDamage);
+            damageLogMessage = Lang.Get("combatoverhaul:damagelog-armor-damage-negation", $"{previousDamage - damage:F1}", Lang.Get($"combatoverhaul:damage-zone-{zone}"), durabilityDamage, Lang.Get($"combatoverhaul:damage-type-{damageType}"));
         }
     }
 }

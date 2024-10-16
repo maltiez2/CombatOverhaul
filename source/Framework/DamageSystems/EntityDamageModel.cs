@@ -55,7 +55,7 @@ public sealed class EntityDamageModelBehavior : EntityBehavior
         { ColliderTypes.Resistant, 0.0f }
     }.ToImmutableDictionary();
     public DamageResistData Resists { get; set; } = new();
-    public ImmutableDictionary<string, DamageResistData> ResistsForColliders { get; private set; } = new Dictionary<string, DamageResistData>().ToImmutableDictionary();
+    public ImmutableDictionary<ColliderTypes, DamageResistData> ResistsForColliders { get; private set; } = new Dictionary<ColliderTypes, DamageResistData>().ToImmutableDictionary();
     public ImmutableDictionary<ColliderTypes, SoundEffectData> HitSounds { get; private set; } = new Dictionary<ColliderTypes, SoundEffectData>().ToImmutableDictionary();
 
     public override void Initialize(EntityProperties properties, JsonObject attributes)
@@ -67,7 +67,7 @@ public sealed class EntityDamageModelBehavior : EntityBehavior
             Resists = new(stats.DefaultResists.ToDictionary(entry => Enum.Parse<EnumDamageType>(entry.Key), entry => entry.Value));
 
             ResistsForColliders = stats.ResistsForColliders
-                .ToDictionary(entry => entry.Key, entry => new DamageResistData(entry.Value.ToDictionary(entry => Enum.Parse<EnumDamageType>(entry.Key), entry => entry.Value)))
+                .ToDictionary(entry => Enum.Parse<ColliderTypes>(entry.Key), entry => new DamageResistData(entry.Value.ToDictionary(entry => Enum.Parse<EnumDamageType>(entry.Key), entry => entry.Value)))
                 .ToImmutableDictionary();
 
             DamageMultipliers = new Dictionary<ColliderTypes, float>()
@@ -118,16 +118,9 @@ public sealed class EntityDamageModelBehavior : EntityBehavior
 
         if (damageSource is ITypedDamage typedDamage)
         {
-            if (damageSource is ILocationalDamage locationalDamage && _colliders != null)
+            if (ResistsForColliders.ContainsKey(colliderType))
             {
-                if (ResistsForColliders.ContainsKey(locationalDamage.Collider))
-                {
-                    typedDamage.DamageTypeData = ResistsForColliders[locationalDamage.Collider].ApplyResist(typedDamage.DamageTypeData, ref damage);
-                }
-                else
-                {
-                    typedDamage.DamageTypeData = Resists.ApplyResist(typedDamage.DamageTypeData, ref damage);
-                }
+                typedDamage.DamageTypeData = ResistsForColliders[colliderType].ApplyResist(typedDamage.DamageTypeData, ref damage);
             }
             else
             {
