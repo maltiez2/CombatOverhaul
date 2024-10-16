@@ -235,11 +235,11 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
             _ = resists.ApplyResist(new(damageSource.Type, damageSource.DamageTier), ref damage, out durabilityDamage);
         }
 
-        durabilityDamage = GameMath.Clamp(durabilityDamage / slots.Count(), 0, durabilityDamage);
+        int durabilityDamagePerItem = GameMath.Clamp(durabilityDamage / slots.Count(), 0, durabilityDamage);
 
         foreach (ArmorSlot slot in slots)
         {
-            slot.Itemstack.Item.DamageItem(entity.Api.World, entity, slot, durabilityDamage);
+            slot.Itemstack.Item.DamageItem(entity.Api.World, entity, slot, durabilityDamagePerItem);
             slot.MarkDirty();
         }
 
