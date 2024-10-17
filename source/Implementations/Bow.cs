@@ -73,7 +73,7 @@ public sealed class BowClient : RangeWeaponClient
         PlayerBehavior?.SetState((int)BowState.Unloaded);
         _aimingSystem.StopAiming();
 
-        AnimationBehavior?.StopVanillaAnimation(_stats.TpAimAnimation);
+        AnimationBehavior?.StopVanillaAnimation(_stats.TpAimAnimation, mainHand);
     }
 
     public override void OnRegistered(ActionsManagerPlayerBehavior behavior, ICoreClientAPI api)
@@ -205,7 +205,7 @@ public sealed class BowClient : RangeWeaponClient
             _aimingAnimationController?.Play(mainHand);
         }
 
-        AnimationBehavior?.PlayVanillaAnimation(_stats.TpAimAnimation);
+        AnimationBehavior?.PlayVanillaAnimation(_stats.TpAimAnimation, mainHand);
 
         return true;
     }
@@ -215,7 +215,7 @@ public sealed class BowClient : RangeWeaponClient
     {
         _aimingSystem.StopAiming();
 
-        AnimationBehavior?.StopVanillaAnimation(_stats.TpAimAnimation);
+        AnimationBehavior?.StopVanillaAnimation(_stats.TpAimAnimation, mainHand);
 
         if (CheckState(state, BowState.Load, BowState.PreLoaded))
         {

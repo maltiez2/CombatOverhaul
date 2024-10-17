@@ -76,7 +76,7 @@ public class AxeClient : IClientWeaponLogic
     }
     public virtual void OnDeselected(EntityPlayer player, bool mainHand, ref int state)
     {
-        AnimationBehavior?.StopVanillaAnimation(Stats.SwingTpAnimation);
+        AnimationBehavior?.StopVanillaAnimation(Stats.SwingTpAnimation, mainHand);
     }
     public virtual void OnRegistered(ActionsManagerPlayerBehavior behavior, ICoreClientAPI api)
     {
@@ -124,7 +124,7 @@ public class AxeClient : IClientWeaponLogic
                         animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1,
                         category: AnimationCategory(mainHand),
                         callback: () => SwingForwardAnimationCallback(slot, player, mainHand));
-                    AnimationBehavior?.PlayVanillaAnimation(Stats.SwingTpAnimation);
+                    AnimationBehavior?.PlayVanillaAnimation(Stats.SwingTpAnimation, mainHand);
 
                     state = (int)AxeState.SwingForward;
 
@@ -156,7 +156,7 @@ public class AxeClient : IClientWeaponLogic
             category: AnimationCategory(mainHand),
             callback: () => SwingBackAnimationCallback(mainHand));
         PlayerBehavior?.SetState((int)AxeState.SwingBack, mainHand);
-        AnimationBehavior?.StopVanillaAnimation(Stats.SwingTpAnimation);
+        AnimationBehavior?.StopVanillaAnimation(Stats.SwingTpAnimation, mainHand);
 
         BlockSelection selection = player.BlockSelection;
 
@@ -180,7 +180,7 @@ public class AxeClient : IClientWeaponLogic
     {
         AnimationBehavior?.PlayReadyAnimation(mainHand);
         PlayerBehavior?.SetState((int)AxeState.Idle, mainHand);
-        AnimationBehavior?.StopVanillaAnimation(Stats.SwingTpAnimation);
+        AnimationBehavior?.StopVanillaAnimation(Stats.SwingTpAnimation, mainHand);
 
         SwingEnd = TimeSpan.FromMilliseconds(Api.ElapsedMilliseconds);
 
@@ -236,7 +236,7 @@ public class AxeClient : IClientWeaponLogic
                         category: AnimationCategory(mainHand),
                         callback: () => SplitAnimationCallback(slot, player, mainHand),
                         callbackHandler: code => SplitAnimationCallbackHandler(code, mainHand));
-                    AnimationBehavior?.PlayVanillaAnimation(Stats.SplitTpAnimation);
+                    AnimationBehavior?.PlayVanillaAnimation(Stats.SplitTpAnimation, mainHand);
 
                     state = (int)AxeState.SplittingWindUp;
 
@@ -266,7 +266,7 @@ public class AxeClient : IClientWeaponLogic
     }
     protected virtual bool SplitAnimationCallback(ItemSlot slot, EntityPlayer player, bool mainHand)
     {
-        AnimationBehavior?.StopVanillaAnimation(Stats.SplitTpAnimation);
+        AnimationBehavior?.StopVanillaAnimation(Stats.SplitTpAnimation, mainHand);
         AnimationBehavior?.SetSpeedModifier(HitImpactFunction);
         AnimationBehavior?.Play(
                         mainHand,

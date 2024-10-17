@@ -1,6 +1,11 @@
 ﻿[
   {"file": "game:itemtypes/tool/shield", "op": "replace", "path": "/class", "value": "CombatOverhaul:VanillaShield"},
   {"file": "game:itemtypes/tool/shield", "op": "remove", "path": "/attributes/shield"},
+  {"file": "game:itemtypes/tool/shield", "op": "replace", "path": "/durabilitybytype/shield-crude", "value": 160},
+  {"file": "game:itemtypes/tool/shield", "op": "replace", "path": "/durabilitybytype/shield-woodmetal", "value": 600},
+  {"file": "game:itemtypes/tool/shield", "op": "replace", "path": "/durabilitybytype/shield-woodmetalleather", "value": 900},
+  {"file": "game:itemtypes/tool/shield", "op": "replace", "path": "/durabilitybytype/shield-metal", "value": 1200},
+  {"file": "game:itemtypes/tool/shield", "op": "replace", "path": "/durabilitybytype/shield-blackguard", "value": 1000},
   {"file": "game:itemtypes/tool/shield", "op": "add", "path": "/creativeinventory/combatoverhaul", "value": ["shield-crude", "shield-blackguard"]},
   {
     "file": "game:itemtypes/tool/shield",
@@ -20,9 +25,10 @@
           "Sound": "game:sounds/held/shieldblock"
         },
         "Block": {
-          "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
-          "Directions": [60, 60, 60, 60],
-          "Sound": "game:sounds/held/shieldblock"
+          "Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
+          "Directions": [90, 90, 90, 90],
+          "Sound": "game:sounds/held/shieldblock",
+          "BlockTier": {"BluntAttack": 2, "SlashingAttack": 2, "PiercingAttack": 2}
         },
         "BlockCooldownMs": 300,
         "BlockAnimation": "combatoverhaul:shield-light-parry",
@@ -39,10 +45,15 @@
         "BlockSpeedPenalty": -0.05,
         "Parry": {
           "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
-          "Directions": [60, 60, 60, 60],
+          "Directions": [45, 45, 45, 45],
           "Sound": "game:sounds/held/shieldblock"
         },
-        "Block": {"Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand"], "Directions": [60, 60, 60, 60], "Sound": "game:sounds/held/shieldblock"},
+        "Block": {
+          "Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
+          "Directions": [90, 90, 90, 90],
+          "Sound": "game:sounds/held/shieldblock",
+          "BlockTier": {"BluntAttack": 4, "SlashingAttack": 4, "PiercingAttack": 4}
+        },
         "BlockCooldownMs": 300,
         "BlockAnimation": "combatoverhaul:shield-light-parry",
         "ReadyAnimation": "combatoverhaul:shield-light-ready",
@@ -58,10 +69,15 @@
         "BlockSpeedPenalty": -0.05,
         "Parry": {
           "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
-          "Directions": [60, 60, 60, 60],
+          "Directions": [45, 45, 45, 45],
           "Sound": "game:sounds/held/shieldblock"
         },
-        "Block": {"Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand"], "Directions": [75, 75, 75, 75], "Sound": "game:sounds/held/shieldblock"},
+        "Block": {
+          "Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
+          "Directions": [90, 90, 90, 90],
+          "Sound": "game:sounds/held/shieldblock",
+          "BlockTier": {"BluntAttack": 5, "SlashingAttack": 5, "PiercingAttack": 5}
+        },
         "BlockCooldownMs": 300,
         "BlockAnimation": "combatoverhaul:shield-light-parry",
         "ReadyAnimation": "combatoverhaul:shield-light-ready",
@@ -76,11 +92,16 @@
         "SpeedPenalty": 0,
         "BlockSpeedPenalty": -0.1,
         "Parry": {
-          "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
-          "Directions": [60, 60, 60, 60],
+          "Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
+          "Directions": [90, 90, 90, 90],
           "Sound": "game:sounds/held/shieldblock"
         },
-        "Block": {"Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand"], "Directions": [90, 90, 90, 90], "Sound": "game:sounds/held/shieldblock"},
+        "Block": {
+          "Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
+          "Directions": [90, 90, 90, 90],
+          "Sound": "game:sounds/held/shieldblock",
+          "BlockTier": {"BluntAttack": 6, "SlashingAttack": 6, "PiercingAttack": 6}
+        },
         "BlockCooldownMs": 300,
         "BlockAnimation": "combatoverhaul:shield-light-parry",
         "ReadyAnimation": "combatoverhaul:shield-light-ready",
@@ -99,7 +120,12 @@
           "Directions": [90, 90, 90, 90],
           "Sound": "game:sounds/held/shieldblock"
         },
-        "Block": {"Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand"], "Directions": [90, 90, 90, 90], "Sound": "game:sounds/held/shieldblock"},
+        "Block": {
+          "Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand"],
+          "Directions": [90, 90, 90, 90],
+          "Sound": "game:sounds/held/shieldblock",
+          "BlockTier": {"BluntAttack": 5, "SlashingAttack": 5, "PiercingAttack": 5}
+        },
         "BlockCooldownMs": 300,
         "BlockAnimation": "combatoverhaul:shield-light-parry",
         "ReadyAnimation": "combatoverhaul:shield-light-ready",

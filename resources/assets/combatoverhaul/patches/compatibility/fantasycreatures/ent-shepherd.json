@@ -1,0 +1,158 @@
+﻿[
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/ent-shepherd",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {
+        "Torso": [
+          "bottom_pelvis",
+          "waist",
+          "branch11",
+          "branch6",
+          "branch7",
+          "branch8",
+          "branch12",
+          "branch9",
+          "branch10",
+          "branch13",
+          "branch14",
+          "upper_spine",
+          "neck",
+          "branch19",
+          "branch20",
+          "branch21",
+          "branch22",
+          "branch23",
+          "L_rib_9",
+          "L_rib_10",
+          "L_rib_11",
+          "L_rib_14",
+          "L_rib_15",
+          "L_rib_16",
+          "L_rib_17",
+          "L_rib_18",
+          "R_rib_9",
+          "R_rib_10",
+          "R_rib_11",
+          "R_rib_15",
+          "R_rib_16",
+          "R_rib_18",
+          "R_rib_19",
+          "shoulders"
+        ],
+        "Head": ["head", "branch15", "branch18", "branch16", "branch31", "branch17", "branch28"],
+        "Arm": ["R_upperarm2", "R_lowerarm2", "R_lowerarm1", "R_hand", "R_fingers", "L_upperarm2", "L_lowerarm1", "L_lowerarm2", "L_hand1", "L_fingers"],
+        "Leg": ["R_upperleg_2", "L_upperleg_2", "R_lowerleg2", "R_lowerleg", "L_lowerleg1", "L_lowerleg2", "branch24"],
+        "Critical": [],
+        "Resistant": ["branch36", "branch35", "branch30", "branch32", "branch33", "branch34"]
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/ent-shepherd",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {
+        "Torso": [
+          "bottom_pelvis",
+          "waist",
+          "branch11",
+          "branch6",
+          "branch7",
+          "branch8",
+          "branch12",
+          "branch9",
+          "branch10",
+          "branch13",
+          "branch14",
+          "upper_spine",
+          "neck",
+          "branch19",
+          "branch20",
+          "branch21",
+          "branch22",
+          "branch23",
+          "L_rib_9",
+          "L_rib_10",
+          "L_rib_11",
+          "L_rib_14",
+          "L_rib_15",
+          "L_rib_16",
+          "L_rib_17",
+          "L_rib_18",
+          "R_rib_9",
+          "R_rib_10",
+          "R_rib_11",
+          "R_rib_15",
+          "R_rib_16",
+          "R_rib_18",
+          "R_rib_19",
+          "shoulders"
+        ],
+        "Head": ["head", "branch15", "branch18", "branch16", "branch31", "branch17", "branch28"],
+        "Arm": ["R_upperarm2", "R_lowerarm2", "R_lowerarm1", "R_hand", "R_fingers", "L_upperarm2", "L_lowerarm1", "L_lowerarm2", "L_hand1", "L_fingers"],
+        "Leg": ["R_upperleg_2", "L_upperleg_2", "R_lowerleg2", "R_lowerleg", "L_lowerleg1", "L_lowerleg2", "branch24"],
+        "Critical": [],
+        "Resistant": ["branch36", "branch35", "branch30", "branch32", "branch33", "branch34"]
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/ent-shepherd",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 0.75,
+        "LimbsDamageMultiplier": 0.5,
+        "HeadDamageMultiplier": 1.25,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResists": {"BluntAttack": 4, "SlashingAttack": 2, "PiercingAttack": 8}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/ent-shepherd",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 0.75,
+        "LimbsDamageMultiplier": 0.5,
+        "HeadDamageMultiplier": 1.25,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResists": {"BluntAttack": 4, "SlashingAttack": 2, "PiercingAttack": 8}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/ent-shepherd",
+    "op": "add",
+    "path": "/server/behaviors/6/aitasks/1/damageType",
+    "value": "BluntAttack"
+  },
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/ent-shepherd",
+    "op": "replace",
+    "path": "/server/behaviors/6/aitasks/1/damageTier",
+    "value": 4
+  }
+]

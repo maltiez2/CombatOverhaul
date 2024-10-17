@@ -1,0 +1,220 @@
+﻿[
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/treant",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*-pine": {
+          "Torso": ["log1", "log2", "log3", "log4", "log5", "log6"],
+          "Head": [],
+          "Arm": [],
+          "Leg": [
+            "L_feet11",
+            "L_feet4",
+            "L_feet5",
+            "L_thigh_back",
+            "L_thigh5",
+            "L_thigh6",
+            "R_feet6",
+            "R_feet5",
+            "Back_thigh2",
+            "R_feet8",
+            "R_feet2",
+            "R_thigh2",
+            "R_thigh",
+            "R_feet4",
+            "R_feet3",
+            "Front_thigh",
+            "L_feet10",
+            "L_feet",
+            "L_feet2",
+            "L_thigh",
+            "L_thigh2",
+            "L_thigh3"
+          ],
+          "Critical": [],
+          "Resistant": []
+        },
+        "*": {
+          "Torso": ["L_thigh", "L_thigh2", "L_thigh3", "log1", "log2", "log3", "log4", "log20", "log19", "log18", "log17"],
+          "Head": [],
+          "Arm": [
+            "Left_upper_arm8",
+            "Left_upper_arm9",
+            "Left_lower_arm8",
+            "Rear_upper_arm8",
+            "Rear_upper_arm9",
+            "Rear_lower_arm8",
+            "Rear_lower_arm6",
+            "R_feet11",
+            "Right_upper_arm4",
+            "Right_upper_arm5",
+            "Right_lower_arm5",
+            "Right_upper_arm7",
+            "Front_upper_arm",
+            "Front_upper_arm2",
+            "R_feet9"
+          ],
+          "Leg": [
+            "R_feet6",
+            "R_feet5",
+            "Back_thigh2",
+            "R_feet2",
+            "R_feet8",
+            "R_thigh2",
+            "R_thigh",
+            "R_feet4",
+            "R_feet3",
+            "Front_thigh",
+            "L_feet10",
+            "L_feet",
+            "L_feet2",
+            "L_feet11",
+            "L_feet4",
+            "L_feet5"
+          ],
+          "Critical": [],
+          "Resistant": []
+        }
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/treant",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*-pine": {
+          "Torso": ["log1", "log2", "log3", "log4", "log5", "log6"],
+          "Head": [],
+          "Arm": [],
+          "Leg": [
+            "L_feet11",
+            "L_feet4",
+            "L_feet5",
+            "L_thigh_back",
+            "L_thigh5",
+            "L_thigh6",
+            "R_feet6",
+            "R_feet5",
+            "Back_thigh2",
+            "R_feet8",
+            "R_feet2",
+            "R_thigh2",
+            "R_thigh",
+            "R_feet4",
+            "R_feet3",
+            "Front_thigh",
+            "L_feet10",
+            "L_feet",
+            "L_feet2",
+            "L_thigh",
+            "L_thigh2",
+            "L_thigh3"
+          ],
+          "Critical": [],
+          "Resistant": []
+        },
+        "*": {
+          "Torso": ["L_thigh", "L_thigh2", "L_thigh3", "log1", "log2", "log3", "log4", "log20", "log19", "log18", "log17"],
+          "Head": [],
+          "Arm": [
+            "Left_upper_arm8",
+            "Left_upper_arm9",
+            "Left_lower_arm8",
+            "Rear_upper_arm8",
+            "Rear_upper_arm9",
+            "Rear_lower_arm8",
+            "Rear_lower_arm6",
+            "R_feet11",
+            "Right_upper_arm4",
+            "Right_upper_arm5",
+            "Right_lower_arm5",
+            "Right_upper_arm7",
+            "Front_upper_arm",
+            "Front_upper_arm2",
+            "R_feet9"
+          ],
+          "Leg": [
+            "R_feet6",
+            "R_feet5",
+            "Back_thigh2",
+            "R_feet2",
+            "R_feet8",
+            "R_thigh2",
+            "R_thigh",
+            "R_feet4",
+            "R_feet3",
+            "Front_thigh",
+            "L_feet10",
+            "L_feet",
+            "L_feet2",
+            "L_feet11",
+            "L_feet4",
+            "L_feet5"
+          ],
+          "Critical": [],
+          "Resistant": []
+        }
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/treant",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.25,
+        "CriticalDamageMultiplier": 1.5,
+        "DefaultResists": {"BluntAttack": 4, "SlashingAttack": 2, "PiercingAttack": 8}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/treant",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.25,
+        "CriticalDamageMultiplier": 1.5,
+        "DefaultResists": {"BluntAttack": 4, "SlashingAttack": 2, "PiercingAttack": 8}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/treant",
+    "op": "add",
+    "path": "/server/behaviors/6/aitasks/0/damageType",
+    "value": "BluntAttack"
+  },
+  {
+    "side": "Server",
+    "dependsOn": [{"modid": "fantasycreatures"}],
+    "file": "fantasycreatures:entities/land/treant",
+    "op": "replace",
+    "path": "/server/behaviors/6/aitasks/0/damageTier",
+    "value": 3
+  }
+]

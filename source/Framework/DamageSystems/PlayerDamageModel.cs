@@ -117,8 +117,6 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
     {
         if (damageSource.Type == EnumDamageType.Heal) return damage;
 
-        Console.WriteLine(damageSource.Type);
-
         (PlayerBodyPart detailedDamageZone, float multiplier) = DetermineHitZone(damageSource);
 
         DamageZone damageZone = BodyPartsToZones[detailedDamageZone];
@@ -203,11 +201,36 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
             }
         }
 
-        damage = 0;
+        float damageTier = damageSource.DamageTier;
+        float initialDamage = damage;
+        EnumDamageType damageType = damageSource.Type;
 
-        damageLogMessage = Lang.Get("combatoverhaul:damagelog-success-block", Lang.Get($"combatoverhaul:detailed-damage-zone-{zone}"));
+        if (CurrentDamageBlock.BlockTier != null)
+        {
+            if (!CurrentDamageBlock.BlockTier.ContainsKey(damageType))
+            {
+                damageLogMessage = Lang.Get("combatoverhaul:damagelog-missed-block-damageType", Lang.Get($"damage-type-{damageType}"));
+                return;
+            }
 
-        CurrentDamageBlock.Callback.Invoke();
+            float blockTier = CurrentDamageBlock.BlockTier[damageType];
+            if (blockTier < damageTier)
+            {
+                ApplyBlockResists(blockTier, damageTier, ref damage);
+                damageLogMessage = Lang.Get("combatoverhaul:damagelog-partial-block", Lang.Get($"combatoverhaul:detailed-damage-zone-{zone}"), $"{initialDamage - damage:F1}");
+            }
+            else
+            {
+                damageLogMessage = Lang.Get("combatoverhaul:damagelog-success-block", Lang.Get($"combatoverhaul:detailed-damage-zone-{zone}"), $"{damage:F1}");
+                damage = 0;
+            }
+        }
+        else
+        {
+            damage = 0;
+        }
+
+        CurrentDamageBlock.Callback.Invoke(initialDamage - damage);
 
         if (CurrentDamageBlock.Sound != null) entity.Api.World.PlaySoundAt(new(CurrentDamageBlock.Sound), entity);
     }
@@ -252,6 +275,10 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
         {
             damageLogMessage = Lang.Get("combatoverhaul:damagelog-armor-damage-negation", $"{previousDamage - damage:F1}", Lang.Get($"combatoverhaul:damage-zone-{zone}"), durabilityDamage, Lang.Get($"combatoverhaul:damage-type-{damageType}"));
         }
+    }
+    private void ApplyBlockResists(float blockTier, float damageTier, ref float damage)
+    {
+        damage *= 1 - MathF.Exp((blockTier - damageTier) / 2f);
     }
 }
 public sealed class PlayerDamageModel
@@ -361,15 +388,17 @@ public sealed class DamageBlockStats
 {
     public readonly PlayerBodyPart ZoneType;
     public readonly DirectionConstrain Directions;
-    public readonly Action Callback;
+    public readonly Action<float> Callback;
     public readonly string? Sound;
+    public readonly ImmutableDictionary<EnumDamageType, float>? BlockTier;
 
-    public DamageBlockStats(PlayerBodyPart type, DirectionConstrain directions, Action callback, string? sound)
+    public DamageBlockStats(PlayerBodyPart type, DirectionConstrain directions, Action<float> callback, string? sound, Dictionary<EnumDamageType, float>? blockTier)
     {
         ZoneType = type;
         Directions = directions;
         Callback = callback;
         Sound = sound;
+        BlockTier = blockTier?.ToImmutableDictionary();
     }
 }
 
@@ -380,10 +409,11 @@ public sealed class DamageBlockPacket
     public float[] Directions { get; set; } = Array.Empty<float>();
     public bool MainHand { get; set; }
     public string? Sound { get; set; } = null;
+    public Dictionary<EnumDamageType, float>? BlockTier { get; set; }
 
-    public DamageBlockStats ToBlockStats(Action callback)
+    public DamageBlockStats ToBlockStats(Action<float> callback)
     {
-        return new((PlayerBodyPart)Zones, DirectionConstrain.FromArray(Directions), callback, Sound);
+        return new((PlayerBodyPart)Zones, DirectionConstrain.FromArray(Directions), callback, Sound, BlockTier);
     }
 }
 
@@ -398,6 +428,7 @@ public sealed class DamageBlockJson
     public string[] Zones { get; set; } = Array.Empty<string>();
     public float[] Directions { get; set; } = Array.Empty<float>();
     public string? Sound { get; set; } = null;
+    public Dictionary<string, float>? BlockTier { get; set; }
 
     public DamageBlockPacket ToPacket()
     {
@@ -405,7 +436,8 @@ public sealed class DamageBlockJson
         {
             Zones = (int)Zones.Select(Enum.Parse<PlayerBodyPart>).Aggregate((first, second) => first | second),
             Directions = Directions,
-            Sound = Sound
+            Sound = Sound,
+            BlockTier = BlockTier?.ToDictionary(entry => Enum.Parse<EnumDamageType>(entry.Key), entry => entry.Value)
         };
     }
 }
@@ -435,7 +467,7 @@ public sealed class MeleeBlockSystemClient : MeleeSystem
 
 public interface IHasServerBlockCallback
 {
-    public void BlockCallback(IServerPlayer player, ItemSlot slot, bool mainHand);
+    public void BlockCallback(IServerPlayer player, ItemSlot slot, bool mainHand, float damageBlocked);
 }
 
 public sealed class MeleeBlockSystemServer : MeleeSystem
@@ -454,7 +486,7 @@ public sealed class MeleeBlockSystemServer : MeleeSystem
 
     private void HandlePacket(IServerPlayer player, DamageBlockPacket packet)
     {
-        player.Entity.GetBehavior<PlayerDamageModelBehavior>().CurrentDamageBlock = packet.ToBlockStats(() => BlockCallback(player, packet.MainHand));
+        player.Entity.GetBehavior<PlayerDamageModelBehavior>().CurrentDamageBlock = packet.ToBlockStats(damageBlocked => BlockCallback(player, packet.MainHand, damageBlocked));
     }
 
     private void HandlePacket(IServerPlayer player, DamageStopBlockPacket packet)
@@ -462,12 +494,12 @@ public sealed class MeleeBlockSystemServer : MeleeSystem
         player.Entity.GetBehavior<PlayerDamageModelBehavior>().CurrentDamageBlock = null;
     }
 
-    private static void BlockCallback(IServerPlayer player, bool mainHand)
+    private static void BlockCallback(IServerPlayer player, bool mainHand, float damageBlocked)
     {
         ItemSlot slot = mainHand ? player.Entity.RightHandItemSlot : player.Entity.LeftHandItemSlot;
 
         if (slot?.Itemstack?.Item is not IHasServerBlockCallback item) return;
 
-        item.BlockCallback(player, slot, mainHand);
+        item.BlockCallback(player, slot, mainHand, damageBlocked);
     }
 }

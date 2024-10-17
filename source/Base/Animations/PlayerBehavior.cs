@@ -237,8 +237,38 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     {
         _composer.Stop(category);
     }
-    public void PlayVanillaAnimation(string code) => _vanillaAnimationsManager?.StartAnimation(code);
-    public void StopVanillaAnimation(string code) => _vanillaAnimationsManager?.StopAnimation(code);
+    public void PlayVanillaAnimation(string code, bool mainHand)
+    {
+        _vanillaAnimationsManager?.StartAnimation(code);
+        if (mainHand)
+        {
+            _mainHandVanillaAnimations.Add(code);
+        }
+        else
+        {
+            _offhandVanillaAnimations.Add(code);
+        }
+    }
+    public void StopVanillaAnimation(string code, bool mainHand)
+    {
+        _vanillaAnimationsManager?.StopAnimation(code);
+        if (mainHand)
+        {
+            _mainHandVanillaAnimations.Remove(code);
+        }
+        else
+        {
+            _offhandVanillaAnimations.Remove(code);
+        }
+    }
+    public void StopAllVanillaAnimations(bool mainHand)
+    {
+        HashSet<string> animations = mainHand ? _mainHandVanillaAnimations : _offhandVanillaAnimations;
+        foreach (string code in animations)
+        {
+            _vanillaAnimationsManager?.StopAnimation(code);
+        }
+    }
     public void SetSpeedModifier(AnimationSpeedModifierDelegate modifier) => _composer.SetSpeedModifier(modifier);
     public void StopSpeedModifier() => _composer.StopSpeedModifier();
     public bool IsSpeedModifierActive() => _composer.IsSpeedModifierActive();
@@ -251,6 +281,8 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     private PlayerItemFrame _lastFrame = PlayerItemFrame.Zero;
     private readonly List<string> _offhandCategories = new();
     private readonly List<string> _mainHandCategories = new();
+    private readonly HashSet<string> _offhandVanillaAnimations = new();
+    private readonly HashSet<string> _mainHandVanillaAnimations = new();
     private readonly bool _mainPlayer = false;
     private int _offHandItemId = 0;
     private int _mainHandItemId = 0;

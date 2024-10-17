@@ -426,8 +426,8 @@ public class JavelinItem : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasIdl
         handling = EnumHandHandling.PreventDefault;
     }
 
-    public void BlockCallback(IServerPlayer player, ItemSlot slot, bool mainHand)
+    public void BlockCallback(IServerPlayer player, ItemSlot slot, bool mainHand, float damageBlocked)
     {
-        DamageItem(player.Entity.World, player.Entity, slot);
+        DamageItem(player.Entity.World, player.Entity, slot, (int)MathF.Ceiling(damageBlocked));
     }
 }

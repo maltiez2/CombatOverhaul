@@ -108,7 +108,9 @@
 
   "damagelog-missed-block-zone": "Player tried blocking, but {0} was not protected by block",
   "damagelog-missed-block-direction": "Player tried blocking, but directon ({0}) of incomming attack was not covered by block",
-  "damagelog-success-block": "Player successfully blocked damage to {0}",
+  "damagelog-missed-block-damageType": "Player tried blocking, but was not be able to block {0} damage",
+  "damagelog-success-block": "Player successfully blocked {1} damage to {0}",
+  "damagelog-partial-block": "Player partialy blocked {1} damage to {0}",
   "damagelog-armor-damage-negation": "Armor negated {0} amount of {3} damage to {1} and lost {2} durability",
   "damagelog-received-damage": "Player receives {0} {2} damage to {1}",
   "damagelog-dealt-damage": "Player hit {0} of {1} dealing {2} damage",
@@ -121,6 +123,7 @@
   "iteminfo-projectile": "Damage: {0}\nDamage type: {1}\nBreak chance: {2}%",
   "iteminfo-melee-weapon-onehanded": "Onehanded attack\n  damage: {0}\n  tier: {1}\n  knockback: {2}\n  type: {3}",
   "iteminfo-melee-weapon-twohanded": "Twohanded attack\n  damage: {0}\n  tier: {1}\n  knockback: {2}\n  type: {3}",
+  "iteminfo-melee-weapon-blockStats": "Block tier:",
   
   "game:item-spear-generic-iron": "Iron spear",
   "game:item-spear-generic-meteoriciron": "Meteoric iron spear",

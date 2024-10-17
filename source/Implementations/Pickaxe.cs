@@ -67,7 +67,7 @@ public class PickaxeClient : IClientWeaponLogic
     }
     public virtual void OnDeselected(EntityPlayer player, bool mainHand, ref int state)
     {
-        AnimationBehavior?.StopVanillaAnimation(Stats.SwingTpAnimation);
+        AnimationBehavior?.StopVanillaAnimation(Stats.SwingTpAnimation, mainHand);
     }
     public virtual void OnRegistered(ActionsManagerPlayerBehavior behavior, ICoreClientAPI api)
     {
@@ -115,7 +115,7 @@ public class PickaxeClient : IClientWeaponLogic
                         animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1,
                         category: AnimationCategory(mainHand),
                         callback: () => SwingForwardAnimationCallback(slot, player, mainHand));
-                    AnimationBehavior?.PlayVanillaAnimation(Stats.SwingTpAnimation);
+                    AnimationBehavior?.PlayVanillaAnimation(Stats.SwingTpAnimation, mainHand);
 
                     state = (int)PickaxeState.SwingForward;
 
@@ -147,7 +147,7 @@ public class PickaxeClient : IClientWeaponLogic
             category: AnimationCategory(mainHand),
             callback: () => SwingBackAnimationCallback(mainHand));
         PlayerBehavior?.SetState((int)PickaxeState.SwingBack, mainHand);
-        AnimationBehavior?.StopVanillaAnimation(Stats.SwingTpAnimation);
+        AnimationBehavior?.StopVanillaAnimation(Stats.SwingTpAnimation, mainHand);
 
         BlockSelection selection = player.BlockSelection;
 
@@ -171,7 +171,7 @@ public class PickaxeClient : IClientWeaponLogic
     {
         AnimationBehavior?.PlayReadyAnimation(mainHand);
         PlayerBehavior?.SetState((int)PickaxeState.Idle, mainHand);
-        AnimationBehavior?.StopVanillaAnimation(Stats.SwingTpAnimation);
+        AnimationBehavior?.StopVanillaAnimation(Stats.SwingTpAnimation, mainHand);
 
         SwingEnd = TimeSpan.FromMilliseconds(Api.ElapsedMilliseconds);
 

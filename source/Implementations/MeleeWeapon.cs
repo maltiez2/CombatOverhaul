@@ -4,6 +4,7 @@ using CombatOverhaul.Inputs;
 using CombatOverhaul.MeleeSystems;
 using CombatOverhaul.RangedSystems;
 using CombatOverhaul.RangedSystems.Aiming;
+using CompactExifLib;
 using System.Numerics;
 using System.Text;
 using Vintagestory.API.Client;
@@ -190,6 +191,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
         PlayerBehavior?.SetStat("walkspeed", mainHand ? PlayerStatsMainHandCategory : PlayerStatsOffHandCategory);
         AimingAnimationController?.Stop(mainHand);
         AimingSystem.StopAiming();
+        AnimationBehavior?.StopAllVanillaAnimations(mainHand);
     }
     public virtual void OnRegistered(ActionsManagerPlayerBehavior behavior, ICoreClientAPI api)
     {
@@ -333,6 +335,15 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
 
             dsc.AppendLine(Lang.Get("combatoverhaul:iteminfo-melee-weapon-twohanded", damage, tier, knockback, Lang.Get($"combatoverhaul:damage-type-{damageType}")));
         }
+
+        if (Stats.OffHandStance?.Block?.BlockTier != null)
+        {
+            dsc.AppendLine(Lang.Get("combatoverhaul:iteminfo-melee-weapon-blockStats"));
+            foreach ((string damageType, float tier) in Stats.OffHandStance.Block.BlockTier)
+            {
+                dsc.AppendLine($"  {Lang.Get($"combatoverhaul:damage-type-{damageType}")}: {tier:F0}");
+            }
+        }
     }
 
     protected readonly Item Item;
@@ -408,7 +419,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
                         category: AnimationCategory(mainHand),
                         callback: () => AttackAnimationCallback(mainHand),
                         callbackHandler: code => AttackAnimationCallbackHandler(code, mainHand));
-                    AnimationBehavior?.PlayVanillaAnimation(stats.AttackTpAnimation);
+                    AnimationBehavior?.PlayVanillaAnimation(stats.AttackTpAnimation, mainHand);
 
                     if (mainHand)
                     {
@@ -522,7 +533,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
         if (!CheckState(mainHand, MeleeWeaponState.Attacking, MeleeWeaponState.WindingUp)) return false;
 
         AnimationBehavior?.PlayReadyAnimation(mainHand);
-        AnimationBehavior?.StopVanillaAnimation(GetStanceStats(mainHand)?.AttackTpAnimation ?? "");
+        AnimationBehavior?.StopVanillaAnimation(GetStanceStats(mainHand)?.AttackTpAnimation ?? "", mainHand);
         SetState(MeleeWeaponState.Idle, mainHand);
 
         float cooldown = GetStanceStats(mainHand)?.AttackCooldownMs ?? 0;
@@ -562,7 +573,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
                 category: AnimationCategory(mainHand),
                 callback: () => BlockAnimationCallback(mainHand, player),
                 callbackHandler: code => BlockAnimationCallbackHandler(code, mainHand));
-            AnimationBehavior?.PlayVanillaAnimation(stats.BlockTpAnimation);
+            AnimationBehavior?.PlayVanillaAnimation(stats.BlockTpAnimation, mainHand);
 
             ParryButtonReleased = false;
         }
@@ -577,7 +588,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
                 category: AnimationCategory(mainHand),
                 callback: () => BlockAnimationCallback(mainHand, player),
                 callbackHandler: code => BlockAnimationCallbackHandler(code, mainHand));
-            AnimationBehavior?.PlayVanillaAnimation(stats.BlockTpAnimation);
+            AnimationBehavior?.PlayVanillaAnimation(stats.BlockTpAnimation, mainHand);
         }
 
         SetSpeedPenalty(mainHand, player);
@@ -590,8 +601,6 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
         {
             case "startParry":
                 {
-                    Console.WriteLine("Start parry");
-                    
                     StanceStats? stats = GetStanceStats(mainHand);
                     DamageBlockJson? parryStats = stats?.Parry;
 
@@ -604,8 +613,6 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
                 break;
             case "stopParry":
                 {
-                    Console.WriteLine("Stop parry");
-
                     StanceStats? stats = GetStanceStats(mainHand);
                     DamageBlockJson? blockStats = stats?.Block;
                     if (CanBlock(mainHand) && blockStats != null)
@@ -647,7 +654,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
 
         MeleeBlockSystem.StopBlock(mainHand);
         AnimationBehavior?.PlayReadyAnimation(mainHand);
-        AnimationBehavior?.StopVanillaAnimation(GetStanceStats(mainHand)?.BlockTpAnimation ?? "");
+        AnimationBehavior?.StopVanillaAnimation(GetStanceStats(mainHand)?.BlockTpAnimation ?? "", mainHand);
         SetState(MeleeWeaponState.Idle, mainHand);
 
         float cooldown = GetStanceStats(mainHand)?.BlockCooldownMs ?? 0;
@@ -1112,9 +1119,9 @@ public class MeleeWeapon : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasDyn
         base.GetHeldItemInfo(inSlot, dsc, world, withDebugInfo);
     }
 
-    public void BlockCallback(IServerPlayer player, ItemSlot slot, bool mainHand)
+    public void BlockCallback(IServerPlayer player, ItemSlot slot, bool mainHand, float damageBlocked)
     {
-        DamageItem(player.Entity.World, player.Entity, slot);
+        DamageItem(player.Entity.World, player.Entity, slot, (int)MathF.Ceiling(damageBlocked));
     }
 
     public bool OnMouseWheel(ItemSlot slot, IClientPlayer byPlayer, float delta) => ClientLogic?.OnMouseWheel(slot, byPlayer, delta) ?? false;
