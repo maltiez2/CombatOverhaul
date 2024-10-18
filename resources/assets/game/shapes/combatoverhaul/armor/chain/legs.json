@@ -9,10 +9,17 @@
 	"textureHeight": 64,
 	"textureSizes": {
 		"pants": [32,36],
-		"steel": [64,64]
+		"steel": [64,64],
+		"silver": [64,64],
+		"tinbronze": [64,64],
+		"meteoriciron": [64,64],
+		"gold": [64,64],
+		"copper": [64,64],
+		"blackbronze": [64,64],
+		"bismuthbronze": [64,64]
 	},
 	"textures": {
-		"material": "entity/humanoid/serapharmor/chain/blackbronze"
+		"material": "C:/Users/Corat/AppData/Roaming/VintagestoryData/Mods/combatoverhaul_0.0.31/assets/game/textures/entity/humanoid/serapharmor/chain/blackbronze"
 	},
 	"elements": [
 		{
@@ -50,10 +57,10 @@
 		{
 			"name": "ArmorLowerLegR",
 			"stepParentName": "LowerFootR",
-			"from": [ -0.25, 1.8, -0.24 ],
-			"to": [ 4.19, 10.3, 3.14 ],
+			"from": [ -0.25, 2.8, -0.24 ],
+			"to": [ 4.19, 9.3, 3.14 ],
 			"uv": [ 17.0, 49.0 ],
-			"rotationOrigin": [ -0.3, 1.8, -0.4 ],
+			"rotationOrigin": [ -0.3, 2.8, -0.4 ],
 			"faces": {
 				"north": { "texture": "#material", "uv": [ 16.0, 52.0, 20.5, 60.5 ], "autoUv": false },
 				"east": { "texture": "#material", "uv": [ 20.5, 52.0, 24.0, 60.5 ], "autoUv": false },
@@ -66,15 +73,15 @@
 		{
 			"name": "ArmorLowerLegL",
 			"stepParentName": "LowerFootL",
-			"from": [ -0.25, 1.8, -0.14 ],
-			"to": [ 4.19, 10.3, 3.24 ],
+			"from": [ -0.25, 2.8, -0.14 ],
+			"to": [ 4.19, 9.3, 3.24 ],
 			"uv": [ 2.5, 50.0 ],
 			"rotationOrigin": [ -0.3, 1.8, -0.4 ],
 			"faces": {
-				"north": { "texture": "#material", "uv": [ 0.0, 52.0, 4.5, 60.0 ], "autoUv": false },
-				"east": { "texture": "#material", "uv": [ 4.5, 52.0, 8.0, 60.0 ], "autoUv": false },
-				"south": { "texture": "#material", "uv": [ 8.0, 52.0, 12.5, 60.0 ], "autoUv": false },
-				"west": { "texture": "#material", "uv": [ 12.5, 52.0, 16.0, 60.0 ], "autoUv": false },
+				"north": { "texture": "#material", "uv": [ 0.0, 52.0, 4.5, 60.5 ], "autoUv": false },
+				"east": { "texture": "#material", "uv": [ 4.5, 52.0, 8.0, 60.5 ], "autoUv": false },
+				"south": { "texture": "#material", "uv": [ 8.0, 52.0, 12.5, 60.5 ], "autoUv": false },
+				"west": { "texture": "#material", "uv": [ 12.5, 52.0, 16.0, 60.5 ], "autoUv": false },
 				"up": { "texture": "#material", "uv": [ 0.0, 48.5, 4.5, 52.0 ], "autoUv": false },
 				"down": { "texture": "#material", "uv": [ 4.5, 48.5, 9.0, 52.0 ], "autoUv": false }
 			}
