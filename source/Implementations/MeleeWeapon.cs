@@ -254,7 +254,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
     public bool CanParry(bool mainHand = true) => GetStanceStats(mainHand)?.CanParry ?? false;
     public bool CanThrow(bool mainHand = true) => GetStanceStats(mainHand)?.CanThrow ?? false;
 
-    public void OnGameTick(ItemSlot slot, EntityPlayer player, ref int state, bool mainHand)
+    public virtual void OnGameTick(ItemSlot slot, EntityPlayer player, ref int state, bool mainHand)
     {
         if (!mainHand && CanAttackWithOtherHand(player, mainHand)) return;
         EnsureStance(player, mainHand);

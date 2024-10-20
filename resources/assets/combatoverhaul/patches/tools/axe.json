@@ -14,7 +14,27 @@
       "SplitTpAnimation": "axechop",
       "RenderingOffset": false,
       "CanSplitLogs": true,
-      "Collider": [0.9, 0.05, 0.15, 1.1, 0.05, 0.15]
+      "Collider": [0.9, 0.05, 0.15, 1.1, 0.05, 0.15],
+      "Attack": {
+        "StopOnTerrainHit": false,
+        "StopOnEntityHit": true,
+        "CollideWithTerrain": true,
+        "MaxReach": 9,
+        "DamageTypes": [
+          {
+            "DamageByType": {
+              "*-flint": {"DamageType": "SlashingAttack", "Strength": 2, "Damage": 2},
+              "*-obsidian": {"DamageType": "SlashingAttack", "Strength": 3, "Damage": 2},
+              "*": {"DamageType": "BluntAttack", "Strength": 1, "Damage": 2}
+            },
+            "Knockback": 0.5,
+            "DurabilityDamage": 1,
+            "Collider": [0.9, 0.05, 0.15, 1.1, 0.05, 0.15]
+          }
+        ]
+      },
+      "AttackAnimation": "combatoverhaul:axe-attack",
+      "AttackTpAnimation": "falx"
     }
   },
   {"file": "game:itemtypes/tool/axe-stone", "op": "replace", "path": "/class", "value": "CombatOverhaul:Axe"},
@@ -33,7 +53,29 @@
       "SplitTpAnimation": "axechop",
       "RenderingOffset": false,
       "CanSplitLogs": true,
-      "Collider": [0.9, 0.05, 0.15, 1.1, 0.05, 0.15]
+      "Collider": [0.9, 0.05, 0.15, 1.1, 0.05, 0.15],
+      "Attack": {
+        "StopOnTerrainHit": false,
+        "StopOnEntityHit": true,
+        "CollideWithTerrain": true,
+        "MaxReach": 9,
+        "DamageTypes": [
+          {
+            "DamageByType": {
+              "*-copper": {"DamageType": "SlashingAttack", "Strength": 2, "Damage": 3},
+              "*-*bronze": {"DamageType": "SlashingAttack", "Strength": 3, "Damage": 3},
+              "*-*iron": {"DamageType": "SlashingAttack", "Strength": 3, "Damage": 3},
+              "*-steel": {"DamageType": "SlashingAttack", "Strength": 3, "Damage": 3},
+              "*": {"DamageType": "BluntAttack", "Strength": 1, "Damage": 2}
+            },
+            "Knockback": 0.5,
+            "DurabilityDamage": 1,
+            "Collider": [0.9, 0.05, 0.15, 1.1, 0.05, 0.15]
+          }
+        ]
+      },
+      "AttackAnimation": "combatoverhaul:axe-attack",
+      "AttackTpAnimation": "falx"
     }
   },
   {"file": "game:itemtypes/tool/axe-metal", "op": "remove", "path": "/class"},

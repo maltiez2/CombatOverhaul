@@ -5,7 +5,6 @@ using CombatOverhaul.MeleeSystems;
 using ProtoBuf;
 using System.Numerics;
 using System.Reflection;
-using System.Xml.Linq;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Config;
@@ -35,6 +34,11 @@ public class AxeStats
     public Dictionary<string, string> HitParticleEffects { get; set; } = new();
     public float HitStaggerDurationMs { get; set; } = 100;
     public bool CanSplitLogs { get; set; } = true;
+
+    public MeleeAttackStats Attack { get; set; } = new();
+    public string AttackAnimation { get; set; } = "";
+    public string AttackTpAnimation { get; set; } = "";
+    public float AnimationStaggerOnHitDurationMs { get; set; } = 100;
 }
 
 public enum AxeState
@@ -44,10 +48,13 @@ public enum AxeState
     SwingBack,
     SplittingWindUp,
     Splitting,
-    SplittingBack
+    SplittingBack,
+    AttackWindup,
+    Attacking,
+    AttackCooldown
 }
 
-public class AxeClient : IClientWeaponLogic
+public class AxeClient : IClientWeaponLogic, IOnGameTick
 {
     public AxeClient(ICoreClientAPI api, Axe item)
     {
@@ -62,6 +69,8 @@ public class AxeClient : IClientWeaponLogic
         SoundsSystem = system.ClientSoundsSynchronizer ?? throw new Exception();
         BlockBreakingNetworking = system.ClientBlockBreakingSystem ?? throw new Exception();
         BlockBreakingSystem = new(api);
+
+        MeleeAttack = new(api, Stats.Attack);
 
 #if DEBUG
         AnimationsManager.RegisterCollider(item.Code.ToString(), "tool head", value => Collider = value, () => Collider);
@@ -94,6 +103,14 @@ public class AxeClient : IClientWeaponLogic
         Collider.Transform(byPlayer.Entity.Pos, byPlayer.Entity, inSlot, Api, right: true)?.Render(Api, byPlayer.Entity);
     }
 
+    public virtual void OnGameTick(ItemSlot slot, EntityPlayer player, ref int state, bool mainHand)
+    {
+        if (state == (int)AxeState.Attacking)
+        {
+            TryAttack(slot, player, mainHand);
+        }
+    }
+
     protected AxeStats Stats;
     protected LineSegmentCollider Collider;
     protected ICoreClientAPI Api;
@@ -107,6 +124,7 @@ public class AxeClient : IClientWeaponLogic
     protected TimeSpan SwingEnd;
     protected TimeSpan ExtraSwingTime;
     protected readonly TimeSpan MaxDelta = TimeSpan.FromSeconds(0.1);
+    protected readonly MeleeAttack MeleeAttack;
 
     [ActionEventHandler(EnumEntityAction.LeftMouseDown, ActionState.Active)]
     protected virtual bool Swing(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
@@ -258,7 +276,6 @@ public class AxeClient : IClientWeaponLogic
         }
         return true;
     }
-
     protected virtual bool SplitAnimationCallbackHandler(string code, bool mainHand)
     {
         if (code == "start") PlayerBehavior?.SetState((int)AxeState.Splitting, mainHand);
@@ -302,6 +319,76 @@ public class AxeClient : IClientWeaponLogic
         return true;
     }
 
+    [ActionEventHandler(EnumEntityAction.LeftMouseDown, ActionState.Active)]
+    protected virtual bool Attack(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
+    {
+        if (eventData.AltPressed && !mainHand) return false;
+        if (player.BlockSelection?.Block != null) return false;
+
+        switch ((AxeState)state)
+        {
+            case AxeState.Idle:
+                state = (int)AxeState.AttackWindup;
+                MeleeAttack.Start(player.Player);
+                AnimationBehavior?.Play(
+                    mainHand,
+                    Stats.AttackAnimation,
+                    animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1,
+                    category: AnimationCategory(mainHand),
+                    callback: () => AttackAnimationCallback(mainHand),
+                    callbackHandler: code => AttackAnimationCallbackHandler(code, mainHand));
+                AnimationBehavior?.PlayVanillaAnimation(Stats.AttackTpAnimation, mainHand);
+
+                return true;
+            default:
+                return false;
+        }
+    }
+    protected virtual void TryAttack(ItemSlot slot, EntityPlayer player, bool mainHand)
+    {
+        MeleeAttack.Attack(
+            player.Player,
+            slot,
+            mainHand,
+            out IEnumerable<(Block block, System.Numerics.Vector3 point)> terrainCollision,
+            out IEnumerable<(Vintagestory.API.Common.Entities.Entity entity, System.Numerics.Vector3 point)> entitiesCollision);
+
+        if (entitiesCollision.Any() && Stats.AnimationStaggerOnHitDurationMs > 0)
+        {
+            AnimationBehavior?.SetSpeedModifier(AttackImpactFunction);
+        }
+    }
+    protected virtual bool AttackImpactFunction(TimeSpan duration, ref TimeSpan delta)
+    {
+        TimeSpan totalDuration = TimeSpan.FromMilliseconds(Stats.AnimationStaggerOnHitDurationMs);
+
+        delta = TimeSpan.Zero;
+
+        return duration < totalDuration;
+    }
+    protected virtual bool AttackAnimationCallback(bool mainHand)
+    {
+        AnimationBehavior?.PlayReadyAnimation(mainHand);
+        PlayerBehavior?.SetState((int)AxeState.Idle, mainHand);
+
+        return true;
+    }
+    protected virtual void AttackAnimationCallbackHandler(string callbackCode, bool mainHand)
+    {
+        switch (callbackCode)
+        {
+            case "start":
+                PlayerBehavior?.SetState((int)AxeState.Attacking, mainHand);
+                break;
+            case "stop":
+                PlayerBehavior?.SetState((int)AxeState.AttackCooldown, mainHand);
+                break;
+            case "ready":
+                PlayerBehavior?.SetState((int)AxeState.Idle, mainHand);
+                break;
+        }
+    }
+
     protected static string AnimationCategory(bool mainHand = true) => mainHand ? "main" : "mainOffhand";
     protected virtual float GetMiningSpeed(IItemStack itemStack, BlockSelection blockSel, Block block, EntityPlayer forPlayer)
     {
@@ -333,7 +420,7 @@ public class AxeServer
     }
 }
 
-public class Axe : ItemAxe, IHasWeaponLogic, ISetsRenderingOffset, IHasIdleAnimations
+public class Axe : ItemAxe, IHasWeaponLogic, ISetsRenderingOffset, IHasIdleAnimations, IOnGameTick
 {
     public AxeClient? Client { get; private set; }
     public AxeServer? Server { get; private set; }
@@ -392,6 +479,8 @@ public class Axe : ItemAxe, IHasWeaponLogic, ISetsRenderingOffset, IHasIdleAnima
 
         return result;
     }
+
+    public void OnGameTick(ItemSlot slot, EntityPlayer player, ref int state, bool mainHand) => Client?.OnGameTick(slot, player, ref state, mainHand);
 }
 
 public class Splittable : BlockBehavior
@@ -718,7 +807,6 @@ public sealed class BlockBreakingController
 [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
 public class BlockSplitPacket
 {
-
     public BlockSplitPacket() { }
 }
 
