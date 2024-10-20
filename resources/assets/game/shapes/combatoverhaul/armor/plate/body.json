@@ -32,7 +32,7 @@
 		"silver": [64,64]
 	},
 	"textures": {
-		"tinbronze": "C:/Users/Corat/AppData/Roaming/VintagestoryData/Mods/combatoverhaul_0.0.31/assets/game/textures/entity/humanoid/serapharmor/plate/tinbronze"
+		"tinbronze": "entity/humanoid/serapharmor/plate/tinbronze"
 	},
 	"elements": [
 		{

@@ -25,7 +25,7 @@
 		"tailored-red": [64,64]
 	},
 	"textures": {
-		"bismuthbronze": "C:/Users/Corat/AppData/Roaming/VintagestoryData/Mods/combatoverhaul_0.0.31/assets/game/textures/entity/humanoid/serapharmor/scale/bismuthbronze"
+		"bismuthbronze": "entity/humanoid/serapharmor/scale/bismuthbronze"
 	},
 	"elements": [
 		{

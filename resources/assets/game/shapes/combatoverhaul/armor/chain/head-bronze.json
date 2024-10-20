@@ -12,7 +12,7 @@
 		"linen": [64,64]
 	},
 	"textures": {
-		"material": "/Vintage Story/Vintagestory/assets/survival/textures/entity/humanoid/serapharmor/chain/bismuthbronze"
+		"material": "entity/humanoid/serapharmor/chain/bismuthbronze"
 	},
 	"elements": [
 		{

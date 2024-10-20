@@ -11,7 +11,7 @@
 		"blackbronze": [64,64]
 	},
 	"textures": {
-		"blackbronze": "C:/Users/Corat/AppData/Roaming/VintagestoryData/Mods/combatoverhaul_0.0.31/assets/game/textures/entity/humanoid/serapharmor/brigandine/blackbronze"
+		"blackbronze": "entity/humanoid/serapharmor/brigandine/blackbronze"
 	},
 	"elements": [
 		{

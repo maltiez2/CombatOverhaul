@@ -26,7 +26,7 @@
 		"meteoriciron": [64,64]
 	},
 	"textures": {
-		"material": "C:/Users/Corat/AppData/Roaming/VintagestoryData/Mods/combatoverhaul_0.0.31/assets/game/textures/entity/humanoid/serapharmor/chain"
+		"material": "entity/humanoid/serapharmor/chain/blackbronze"
 	},
 	"elements": [
 		{

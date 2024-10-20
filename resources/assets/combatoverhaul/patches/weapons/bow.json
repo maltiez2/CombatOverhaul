@@ -1,4 +1,5 @@
 ﻿[
   {"file": "game:itemtypes/tool/bow", "op": "add", "path": "/skipVariants", "value": ["*"]},
+  {"file": "game:itemtypes/tool/bow", "op": "add", "path": "/shape", "value": {"base": "item/tool/bow/simple"}},
   {"file": "game:itemtypes/tool/bow", "op": "replace", "path": "/creativeinventory", "value": {}}
 ]

@@ -1,6 +1,6 @@
 {
 	"editor": {
-		"backDropShape": "D:/Vintage Story/Vintagestory/assets/game/shapes/entity/humanoid/seraph-hairless",
+		"backDropShape": "shapes/entity/humanoid/seraph-hairless",
 		"collapsedPaths": "Root/ArmorUpperTorso",
 		"allAngles": true,
 		"entityTextureMode": true
@@ -27,7 +27,7 @@
 		"meteoriciron": [64,64]
 	},
 	"textures": {
-		"blackbronze": "C:/Users/Corat/AppData/Roaming/VintagestoryData/Mods/combatoverhaul_0.0.31/assets/game/textures/entity/humanoid/serapharmor/brigandine/blackbronze"
+		"blackbronze": "entity/humanoid/serapharmor/brigandine/blackbronze"
 	},
 	"elements": [
 		{

@@ -4,6 +4,7 @@ using ImGuiNET;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ProtoBuf;
+using System.Globalization;
 using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -25,20 +26,30 @@ public struct ParticleEffectsPacket
 
 public class ParticleEffectsManager
 {
+    public const string ParticleEffectsFileName = "particle-effects.json";
+
     public ParticleEffectsManager(ICoreAPI api)
     {
-        List<IAsset> assets = api.Assets.GetManyInCategory("config", "particle-effects.json");
+        List<IAsset> assets = api.Assets.GetManyInCategory("config", ParticleEffectsFileName);
 
         foreach (IAsset asset in assets)
         {
-            string domain = asset.Location.Domain;
-            byte[] data = asset.Data;
-            string json = System.Text.Encoding.UTF8.GetString(data);
-            JObject token = JObject.Parse(json);
-            foreach ((string code, JToken? effect) in token)
+            try
             {
-                JsonObject effectJson = new(effect);
-                _particleProperties.Add($"{domain}:{code}", effectJson.AsObject<AdvancedParticleProperties>());
+                string domain = asset.Location.Domain;
+                byte[] data = asset.Data;
+                data = System.Text.Encoding.Convert(System.Text.Encoding.UTF8, System.Text.Encoding.Unicode, data);
+                string json = System.Text.Encoding.Unicode.GetString(data);
+                JObject token = JObject.Parse(json);
+                foreach ((string code, JToken? effect) in token)
+                {
+                    JsonObject effectJson = new(effect);
+                    _particleProperties.Add($"{domain}:{code}", effectJson.AsObject<AdvancedParticleProperties>());
+                }
+            }
+            catch (Exception exception)
+            {
+                LoggerUtil.Error(api, this, $"Error on parsing particle effects for '{asset.Location.Domain}':\n{exception}");
             }
         }
 

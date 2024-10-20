@@ -36,6 +36,6 @@
     "texturesByType": {"@spear-generic-(chert|granite|andesite|basalt|obsidian|peridotite)": {"head": {"base": "game:block/stone/rock/{material}1"}}},
     "behaviors": [{"code": "passivephysics", "groundDragFactor": 1, "airDragFactor": 1, "gravityFactor": 1}, {"code": "interpolateposition"}]
   },
-  "server": {"behaviors": [{"code": "passivephysics", "groundDragFactor": 1, "airDragFactor": 1, "gravityFactor": 1}, {"code": "despawn", "minSeconds": 600}]},
+  "server": {"behaviors": [{"code": "passivephysics", "groundDragFactor": 1, "airDragFactor": 1, "gravityFactor": 2}, {"code": "despawn", "minSeconds": 600}]},
   "sounds": {}
 }

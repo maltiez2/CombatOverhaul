@@ -349,16 +349,17 @@ public readonly struct ItemFrame
     {
         if (!from.Elements.Any()) return to;
 
-        if (from.ElementsHash != to.ElementsHash)
-        {
-            throw new InvalidOperationException("Trying to interpolate item frames with different sets of elements");
-        }
-
         Dictionary<string, AnimationElement> elements = new();
-        foreach ((string key, AnimationElement fromElement) in from.Elements)
+        foreach ((string key, AnimationElement toElement) in to.Elements)
         {
-            AnimationElement toElement = to.Elements[key];
-            elements.Add(key, AnimationElement.Interpolate(fromElement, toElement, progress));
+            if (from.Elements.TryGetValue(key, out AnimationElement fromElement))
+            {
+                elements.Add(key, AnimationElement.Interpolate(fromElement, toElement, progress));
+            }
+            else
+            {
+                elements.Add(key, toElement);
+            }
         }
 
         return new(elements);
