@@ -1,13 +1,11 @@
-﻿using CombatOverhaul.Integration;
+﻿using CombatOverhaul.Utils;
+using System;
 using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
-using Vintagestory.API.Config;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
-using Vintagestory.API.Server;
-using Vintagestory.Client.NoObf;
 using Vintagestory.GameContent;
 
 namespace CombatOverhaul.Colliders;
@@ -61,9 +59,6 @@ public sealed class CollidersEntityBehavior : EntityBehavior
 {
     public CollidersEntityBehavior(Entity entity) : base(entity)
     {
-#if DEBUG
-        //DebugWidgets.CheckBox("AMlib", "rendering", "Render debug colliders", () => RenderColliders, (value) => RenderColliders = value);
-#endif
     }
 
     public CuboidAABBCollider BoundingBox { get; private set; }
@@ -78,8 +73,14 @@ public sealed class CollidersEntityBehavior : EntityBehavior
 
     public override void Initialize(EntityProperties properties, JsonObject attributes)
     {
-        if (attributes.KeyExists("elements"))
+        try
         {
+            if (!attributes.KeyExists("elements"))
+            {
+                LoggerUtil.Error(entity.Api, this, $"Error on parsing behavior properties for entity: {entity.Code}. 'elements' attribute was not found.");
+                return;
+            }
+            
             ColliderTypesJson types = attributes["elements"].AsObject<ColliderTypesJson>();
             foreach (string collider in types.Torso)
             {
@@ -114,6 +115,13 @@ public sealed class CollidersEntityBehavior : EntityBehavior
 
             UnprocessedElementsLeft = true;
             HasOBBCollider = true;
+            
+        }
+        catch (Exception exception)
+        {
+            LoggerUtil.Error(entity.Api, this, $"Error on parsing behavior properties for entity: {entity.Code}. Exception:\n{exception}");
+            UnprocessedElementsLeft = false;
+            HasOBBCollider = false;
         }
     }
     public override void OnGameTick(float deltaTime)
@@ -123,7 +131,9 @@ public sealed class CollidersEntityBehavior : EntityBehavior
 
     public void SetColliderElement(ShapeElement element)
     {
-        if (UnprocessedElementsLeft && ShapeElementsToProcess.Contains(element.Name))
+        if (element?.Name == null) return;
+        
+        if (UnprocessedElementsLeft && ShapeElementsToProcess.Contains(element.Name) && !Colliders.ContainsKey(element.Name))
         {
             Colliders.Add(element.Name, new ShapeElementCollider(element));
             ShapeElementsToProcess.Remove(element.Name);
@@ -254,12 +264,5 @@ public sealed class CollidersEntityBehavior : EntityBehavior
         }
 
         BoundingBox = new CuboidAABBCollider(min, max);
-
-        /*entity.SelectionBox.X1 = min.X - (float)entity.Pos.X;
-        entity.SelectionBox.Y1 = min.Y - (float)entity.Pos.Y;
-        entity.SelectionBox.Z1 = min.Z - (float)entity.Pos.Z;
-        entity.SelectionBox.X2 = max.X - (float)entity.Pos.X;
-        entity.SelectionBox.Y2 = max.Y - (float)entity.Pos.Y;
-        entity.SelectionBox.Z2 = max.Z - (float)entity.Pos.Z;*/
     }
 }

@@ -63,11 +63,3 @@ internal static class ColliderTools
     private static readonly Vec4f _outputBuffer = new(0, 0, 0, 1);
     private static readonly Matrixf _matrixBuffer = new();
 }
-
-public sealed class LineSegmentColliderJson
-{
-    public float[] Tail { get; set; } = Array.Empty<float>();
-    public float[] Head { get; set; } = Array.Empty<float>();
-
-    public LineSegmentCollider Get() => new(new Vector3(Tail[0], Tail[1], Tail[2]), new Vector3(Head[0] - Tail[0], Head[1] - Tail[1], Head[2] - Tail[2]));
-}

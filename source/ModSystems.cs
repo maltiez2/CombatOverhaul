@@ -26,6 +26,8 @@ namespace CombatOverhaul;
 
 public sealed class CombatOverhaulSystem : ModSystem
 {
+    public event Action? OnDispose;
+    
     public override void StartPre(ICoreAPI api)
     {
         (api as ServerCoreAPI)?.ClassRegistryNative.RegisterInventoryClass(GlobalConstants.characterInvClassName, typeof(ArmorInventory));
@@ -41,6 +43,7 @@ public sealed class CombatOverhaulSystem : ModSystem
         api.RegisterEntityBehaviorClass("CombatOverhaul:ActionsManager", typeof(ActionsManagerPlayerBehavior));
         api.RegisterEntityBehaviorClass("CombatOverhaul:AimingAccuracy", typeof(AimingAccuracyBehavior));
         api.RegisterEntityBehaviorClass("CombatOverhaul:ArmorStats", typeof(ArmorStatsBehavior));
+        api.RegisterEntityBehaviorClass("CombatOverhaul:InInventory", typeof(InInventoryPlayerBehavior));
 
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:Animatable", typeof(Animatable));
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:AnimatableAttachable", typeof(AnimatableAttachable));
@@ -157,6 +160,8 @@ public sealed class CombatOverhaulSystem : ModSystem
 
         AimingPatches.Unpatch("CombatOverhaulAiming");
         MouseWheelPatch.Unpatch("CombatOverhaul");
+
+        OnDispose?.Invoke();
     }
 
     public ProjectileSystemClient? ClientProjectileSystem { get; private set; }

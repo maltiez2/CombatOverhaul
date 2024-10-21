@@ -38,6 +38,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
 
         AnimationPatch.OnBeforeFrame += OnBeforeFrame;
         AnimationPatch.OnFrame += OnFrame;
+        player.Api.ModLoader.GetModSystem<CombatOverhaulSystem>().OnDispose += Dispose;
 
         _mainPlayer = (entity as EntityPlayer)?.PlayerUID == _api?.Settings.String["playeruid"];
     }
@@ -443,5 +444,10 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
         }
 
         Play(request, mainHand);
+    }
+    private void Dispose()
+    {
+        AnimationPatch.OnBeforeFrame -= OnBeforeFrame;
+        AnimationPatch.OnFrame -= OnFrame;
     }
 }

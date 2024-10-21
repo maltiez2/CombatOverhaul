@@ -3,7 +3,7 @@
     "side": "Server",
     "file": "game:entities/humanoid/player",
     "op": "add",
-    "path": "/client/behaviors/0",
+    "path": "/client/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
       "elements": {
@@ -19,7 +19,7 @@
     "side": "Server",
     "file": "game:entities/humanoid/player",
     "op": "add",
-    "path": "/server/behaviors/0",
+    "path": "/server/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
       "elements": {
@@ -35,7 +35,7 @@
     "side": "Server",
     "file": "game:entities/humanoid/player",
     "op": "add",
-    "path": "/server/behaviors/0",
+    "path": "/server/behaviors/-",
     "value": {
       "code": "CombatOverhaul:PlayerDamageModel",
       "damageModel": {
