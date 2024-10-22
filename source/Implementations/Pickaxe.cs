@@ -219,6 +219,7 @@ public class PickaxeClient : IClientWeaponLogic, IOnGameTick
     protected virtual bool Attack(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
         if (eventData.AltPressed && !mainHand) return false;
+        if (Stats.AttackAnimation == "") return false;
         if (player.BlockSelection?.Block != null) return false;
 
         switch ((PickaxeState)state)

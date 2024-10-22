@@ -161,6 +161,12 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
                 _offhandCategories.Clear();
             }
         }
+
+        while (_playRequests.Any())
+        {
+            (AnimationRequest request, bool mainHand) = _playRequests.Dequeue();
+            PlayRequest(request, mainHand);
+        }
     }
 
     public PlayerItemFrame? FrameOverride { get; set; } = null;
@@ -168,16 +174,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
 
     public void Play(AnimationRequest request, bool mainHand = true)
     {
-        _composer.Play(request);
-        StopIdleTimer(mainHand);
-        if (mainHand)
-        {
-            _mainHandCategories.Add(request.Category);
-        }
-        else
-        {
-            _offhandCategories.Add(request.Category);
-        }
+        _playRequests.Enqueue((request, mainHand));
     }
     public void Play(AnimationRequestByCode requestByCode, bool mainHand = true)
     {
@@ -291,6 +288,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     private long _offHandIdleTimer = -1;
     private bool _resetFov = false;
     private readonly ICoreClientAPI? _api;
+    private readonly Queue<(AnimationRequest request, bool mainHand)> _playRequests = new();
 
     private static readonly TimeSpan _readyTimeout = TimeSpan.FromSeconds(5);
 
@@ -397,6 +395,19 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
         _cameraFov.SetValue(camera, ClientSettings.FieldOfView * GameMath.DEG2RAD * multiplier);
 
         CurrentFov = ClientSettings.FieldOfView * multiplier;
+    }
+    private void PlayRequest(AnimationRequest request, bool mainHand = true)
+    {
+        _composer.Play(request);
+        StopIdleTimer(mainHand);
+        if (mainHand)
+        {
+            _mainHandCategories.Add(request.Category);
+        }
+        else
+        {
+            _offhandCategories.Add(request.Category);
+        }
     }
 
     private void StartIdleTimer(AnimationRequestByCode request, bool mainHand)
