@@ -15,7 +15,7 @@ public class ProjectileStats
 {
     public int AdditionalDurabilityCost { get; set; } = 0;
     public string ImpactSound { get; set; } = "game:sounds/arrow-impact";
-    public string HitSound { get; set; } = "";
+    public string HitSound { get; set; } = "game:sounds/player/projectilehit";
     public float CollisionRadius { get; set; } = 0;
     public ProjectileDamageDataJson DamageStats { get; set; } = new();
     public float SpeedThreshold { get; set; } = 0;
