@@ -9,14 +9,14 @@ public interface IAffectsPlayerStats
     public Dictionary<string, float> PlayerStats { get; }
 }
 
-public sealed class ArmorStatsBehavior : EntityBehavior
+public sealed class WearableStatsBehavior : EntityBehavior
 {
-    public ArmorStatsBehavior(Entity entity) : base(entity)
+    public WearableStatsBehavior(Entity entity) : base(entity)
     {
         _player = entity as EntityPlayer ?? throw new InvalidDataException("This is player behavior");
     }
 
-    public override string PropertyName() => "CO:ArmorStatsBehavior";
+    public override string PropertyName() => "CombatOverhaul:WearableStats";
     public Dictionary<string, float> Stats { get; } = new();
 
     public override void OnGameTick(float deltaTime)

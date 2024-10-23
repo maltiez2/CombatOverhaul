@@ -42,29 +42,22 @@ public sealed class CombatOverhaulSystem : ModSystem
         api.RegisterEntityBehaviorClass("CombatOverhaul:PlayerDamageModel", typeof(PlayerDamageModelBehavior));
         api.RegisterEntityBehaviorClass("CombatOverhaul:ActionsManager", typeof(ActionsManagerPlayerBehavior));
         api.RegisterEntityBehaviorClass("CombatOverhaul:AimingAccuracy", typeof(AimingAccuracyBehavior));
-        api.RegisterEntityBehaviorClass("CombatOverhaul:ArmorStats", typeof(ArmorStatsBehavior));
+        api.RegisterEntityBehaviorClass("CombatOverhaul:WearableStats", typeof(WearableStatsBehavior));
         api.RegisterEntityBehaviorClass("CombatOverhaul:InInventory", typeof(InInventoryPlayerBehavior));
 
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:Animatable", typeof(Animatable));
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:AnimatableAttachable", typeof(AnimatableAttachable));
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:Projectile", typeof(ProjectileBehavior));
-        api.RegisterCollectibleBehaviorClass("CombatOverhaul:ExplosiveProjectile", typeof(ProjectileExplosiveBehavior));
-        api.RegisterCollectibleBehaviorClass("CombatOverhaul:FragmentationProjectile", typeof(ProjectileFragmentationBehavior));
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:Armor", typeof(ArmorBehavior));
 
         api.RegisterItemClass("CombatOverhaul:Bow", typeof(BowItem));
         api.RegisterItemClass("CombatOverhaul:MeleeWeapon", typeof(MeleeWeapon));
-        api.RegisterItemClass("CombatOverhaul:Armor", typeof(ArmorItem));
         api.RegisterItemClass("CombatOverhaul:VanillaShield", typeof(VanillaShield));
         api.RegisterItemClass("CombatOverhaul:Axe", typeof(Axe));
         api.RegisterItemClass("CombatOverhaul:Pickaxe", typeof(Pickaxe));
         api.RegisterItemClass("CombatOverhaul:WearableArmor", typeof(ItemWearableArmor));
 
         api.RegisterEntity("CombatOverhaul:Projectile", typeof(ProjectileEntity));
-        api.RegisterEntity("CombatOverhaul:ProjectileExplosive", typeof(ProjectileExplosive));
-        api.RegisterEntity("CombatOverhaul:ProjectileFragmentation", typeof(ProjectileFragmentation));
-        api.RegisterEntity("CombatOverhaul:ProjectileOreBomb", typeof(ProjectileOreBomb));
-        api.RegisterEntity("CombatOverhaul:ProjectileFirework", typeof(ProjectileFirework));
 
         api.RegisterBlockEntityClass("CombatOverhaul:GenericDisplayBlockEntity", typeof(GenericDisplayBlockEntity));
         api.RegisterBlockClass("CombatOverhaul:GenericDisplayBlock", typeof(GenericDisplayBlock));

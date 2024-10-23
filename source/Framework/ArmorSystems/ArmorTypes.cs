@@ -151,27 +151,3 @@ public class ArmorBehavior : CollectibleBehavior, IArmor, IAffectsPlayerStats
         dsc.AppendLine();
     }
 }
-
-public class ArmorItem : Item, IArmor
-{
-    public ArmorType ArmorType { get; protected set; } = new(ArmorLayers.None, DamageZone.None);
-    public DamageResistData Resists { get; protected set; } = new();
-
-    public override void OnLoaded(ICoreAPI api)
-    {
-        base.OnLoaded(api);
-
-        if (!Attributes.KeyExists("stats"))
-        {
-            LoggerUtil.Error(api, this, $"Armor item '{Code}' does not have stats attribute");
-            return;
-        }
-
-        ArmorStatsJson stats = Attributes["stats"].AsObject<ArmorStatsJson>();
-
-        ArmorType = new(stats.Layers.Select(Enum.Parse<ArmorLayers>).Aggregate((first, second) => first | second), stats.Layers.Select(Enum.Parse<DamageZone>).Aggregate((first, second) => first | second));
-        Resists = new(
-            stats.Resists.ToDictionary(entry => Enum.Parse<EnumDamageType>(entry.Key), entry => entry.Value),
-            stats.FlatReduction.ToDictionary(entry => Enum.Parse<EnumDamageType>(entry.Key), entry => entry.Value));
-    }
-}
