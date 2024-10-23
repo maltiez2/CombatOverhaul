@@ -77,11 +77,6 @@ public interface IArmor
     public DamageResistData Resists { get; }
 }
 
-public interface IAffectsPlayerStats
-{
-    public Dictionary<string, float> PlayerStats { get; }
-}
-
 public sealed class ArmorStatsJson
 {
     public string[] Layers { get; set; } = Array.Empty<string>();

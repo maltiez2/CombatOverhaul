@@ -4,6 +4,11 @@ using Vintagestory.GameContent;
 
 namespace CombatOverhaul.Armor;
 
+public interface IAffectsPlayerStats
+{
+    public Dictionary<string, float> PlayerStats { get; }
+}
+
 public sealed class ArmorStatsBehavior : EntityBehavior
 {
     public ArmorStatsBehavior(Entity entity) : base(entity)
@@ -58,7 +63,7 @@ public sealed class ArmorStatsBehavior : EntityBehavior
 
         foreach (IAffectsPlayerStats armor in inventory
             .Select(slot => slot.Itemstack?.Item)
-            .OfType<Item>()
+            .OfType<CollectibleObject>()
             .Select(item => item.CollectibleBehaviors.Where(behavior => behavior is IAffectsPlayerStats).FirstOrDefault(defaultValue: null))
             .OfType<IAffectsPlayerStats>())
         {

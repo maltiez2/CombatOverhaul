@@ -53,16 +53,12 @@ public sealed class CombatOverhaulSystem : ModSystem
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:Armor", typeof(ArmorBehavior));
 
         api.RegisterItemClass("CombatOverhaul:Bow", typeof(BowItem));
-        api.RegisterItemClass("CombatOverhaul:Crossbow", typeof(CrossbowItem));
-        api.RegisterItemClass("CombatOverhaul:MagazineCrossbow", typeof(MagazineCrossbowItem));
-        api.RegisterItemClass("CombatOverhaul:Muzzleloader", typeof(MuzzleloaderItem));
-        api.RegisterItemClass("CombatOverhaul:Matchlock", typeof(MatchlockItem));
         api.RegisterItemClass("CombatOverhaul:MeleeWeapon", typeof(MeleeWeapon));
         api.RegisterItemClass("CombatOverhaul:Armor", typeof(ArmorItem));
-        api.RegisterItemClass("CombatOverhaul:Javelin", typeof(JavelinItem));
         api.RegisterItemClass("CombatOverhaul:VanillaShield", typeof(VanillaShield));
         api.RegisterItemClass("CombatOverhaul:Axe", typeof(Axe));
         api.RegisterItemClass("CombatOverhaul:Pickaxe", typeof(Pickaxe));
+        api.RegisterItemClass("CombatOverhaul:WearableArmor", typeof(ItemWearableArmor));
 
         api.RegisterEntity("CombatOverhaul:Projectile", typeof(ProjectileEntity));
         api.RegisterEntity("CombatOverhaul:ProjectileExplosive", typeof(ProjectileExplosive));

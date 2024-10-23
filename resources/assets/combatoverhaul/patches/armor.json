@@ -857,16 +857,7 @@
       "armor-legs-antique-forlorn-broken": 2000
     }
   },
-  {
-    "file": "game:itemtypes/wearable/seraph/armor",
-    "op": "replace",
-    "path": "/attributes/protectionModifiersByType",
-    "value": {"*": {"relativeProtection": 0, "flatDamageReduction": 0, "protectionTier": 0}}
-  },
-  {
-    "file": "game:itemtypes/wearable/seraph/armor",
-    "op": "replace",
-    "path": "/attributes/statModifiersByType",
-    "value": {"*": {"rangedWeaponsAcc": 0, "rangedWeaponsSpeed": 0, "walkSpeed": 0, "healingeffectivness": 0, "hungerrate": 0}}
-  }
+  {"file": "game:itemtypes/wearable/seraph/armor", "op": "replace", "path": "/attributes/protectionModifiersByType", "value": {"*": null}},
+  {"file": "game:itemtypes/wearable/seraph/armor", "op": "replace", "path": "/attributes/statModifiersByType", "value": {"*": null}},
+  {"file": "game:itemtypes/wearable/seraph/armor", "op": "replace", "path": "/class", "value": "CombatOverhaul:WearableArmor"}
 ]

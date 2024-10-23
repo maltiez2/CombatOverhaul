@@ -1,7 +1,5 @@
-﻿using Cairo;
-using CombatOverhaul.DamageSystems;
+﻿using CombatOverhaul.DamageSystems;
 using CombatOverhaul.Utils;
-using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
 using Vintagestory.Common;
@@ -128,7 +126,7 @@ public sealed class ArmorInventory : InventoryCharacter
             if (itemStack != null)
             {
                 if (Api?.World != null) itemStack.ResolveBlockOrItem(Api.World);
-                
+
                 if (IsVanillaArmorSlot(index))
                 {
                     //Player.Entity.TryGiveItemStack(itemStack);
@@ -178,14 +176,18 @@ public sealed class ArmorInventory : InventoryCharacter
     }
     public static int IndexFromArmorType(ArmorType type) => IndexFromArmorType(type.Layers, type.Slots);
 
-    public ArmorType GetSlotBlockingSlot(ArmorType armorType) => _slotsByType
+    public IEnumerable<ArmorType> GetSlotBlockingSlots(ArmorType armorType) => _slotsByType
         .Where(entry => !entry.Value.Empty)
         .Where(entry => entry.Value.StoredArmoredType.Intersect(armorType))
-        .Select(entry => entry.Key)
-        .FirstOrDefault(defaultValue: ArmorType.Empty);
+        .Select(entry => entry.Key);
+    public ArmorType GetSlotBlockingSlot(ArmorType armorType) => GetSlotBlockingSlots(armorType).FirstOrDefault(defaultValue: ArmorType.Empty);
     public ArmorType GetSlotBlockingSlot(ArmorLayers layer, DamageZone zone) => GetSlotBlockingSlot(new ArmorType(layer, zone));
+    public IEnumerable<int> GetSlotBlockingSlotsIndices(ArmorType armorType) => GetSlotBlockingSlots(armorType).Select(IndexFromArmorType);
     public int GetSlotBlockingSlotIndex(ArmorType armorType) => IndexFromArmorType(GetSlotBlockingSlot(armorType));
     public int GetSlotBlockingSlotIndex(ArmorLayers layer, DamageZone zone) => IndexFromArmorType(GetSlotBlockingSlot(new ArmorType(layer, zone)));
+
+    public ArmorType GetFittingSlot(ArmorType armorType) => _slotsByType.Keys.Where(slot => slot.Intersect(armorType)).FirstOrDefault(ArmorType.Empty);
+    public int GetFittingSlotIndex(ArmorType armorType) => IndexFromArmorType(GetFittingSlot(armorType));
 
     public bool IsSlotAvailable(ArmorType armorType) => !_slotsByType.Where(entry => !entry.Value.Empty).Any(entry => entry.Value.StoredArmoredType.Intersect(armorType));
     public bool IsSlotAvailable(ArmorLayers layer, DamageZone zone) => IsSlotAvailable(new ArmorType(layer, zone));

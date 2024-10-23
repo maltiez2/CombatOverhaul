@@ -57,6 +57,7 @@ public class StanceStats
     public float GripMaxLength { get; set; } = 0;
 
     public MeleeAttackStats? Attack { get; set; }
+    public Dictionary<string, MeleeAttackStats>? DirectionalAttacks { get; set; }
     public DamageBlockJson? Block { get; set; }
     public DamageBlockJson? Parry { get; set; }
     public MeleeAttackStats? HandleAttack { get; set; }
@@ -120,15 +121,41 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
             OneHandedAttack = new(api, Stats.OneHandedStance.Attack);
             RegisterCollider(item.Code.ToString(), "onehanded-", OneHandedAttack);
         }
+        else if (Stats.OneHandedStance?.DirectionalAttacks != null)
+        {
+            DirectionalOneHandedAttacks = new();
+            foreach ((string direction, MeleeAttackStats attack) in Stats.OneHandedStance.DirectionalAttacks)
+            {
+                DirectionalOneHandedAttacks.Add(Enum.Parse<AttackDirection>(direction), new(api, attack));
+            }
+        }
+        
         if (Stats.TwoHandedStance?.Attack != null)
         {
             TwoHandedAttack = new(api, Stats.TwoHandedStance.Attack);
             RegisterCollider(item.Code.ToString(), "twohanded-", TwoHandedAttack);
         }
+        else if (Stats.TwoHandedStance?.DirectionalAttacks != null)
+        {
+            DirectionalTwoHandedAttacks = new();
+            foreach ((string direction, MeleeAttackStats attack) in Stats.TwoHandedStance.DirectionalAttacks)
+            {
+                DirectionalTwoHandedAttacks.Add(Enum.Parse<AttackDirection>(direction), new(api, attack));
+            }
+        }
+
         if (Stats.OffHandStance?.Attack != null)
         {
             OffHandAttack = new(api, Stats.OffHandStance.Attack);
             RegisterCollider(item.Code.ToString(), "offhand-", OffHandAttack);
+        }
+        else if (Stats.OffHandStance?.DirectionalAttacks != null)
+        {
+            DirectionalOffHandAttacks = new();
+            foreach ((string direction, MeleeAttackStats attack) in Stats.OffHandStance.DirectionalAttacks)
+            {
+                DirectionalOffHandAttacks.Add(Enum.Parse<AttackDirection>(direction), new(api, attack));
+            }
         }
 
         if (Stats.OneHandedStance?.HandleAttack != null)
@@ -377,6 +404,9 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
     protected MeleeAttack? OneHandedAttack;
     protected MeleeAttack? TwoHandedAttack;
     protected MeleeAttack? OffHandAttack;
+    protected Dictionary<AttackDirection, MeleeAttack>? DirectionalOneHandedAttacks;
+    protected Dictionary<AttackDirection, MeleeAttack>? DirectionalTwoHandedAttacks;
+    protected Dictionary<AttackDirection, MeleeAttack>? DirectionalOffHandAttacks;
 
     protected MeleeAttack? OneHandedHandleAttack;
     protected MeleeAttack? TwoHandedHandleAttack;
@@ -842,14 +872,14 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
 
     protected static string AnimationCategory(bool mainHand = true) => mainHand ? "main" : "mainOffhand";
 
-    protected MeleeAttack? GetStanceAttack(bool mainHand = true)
+    protected MeleeAttack? GetStanceAttack(bool mainHand = true, AttackDirection direction = AttackDirection.Top)
     {
         MeleeWeaponStance stance = GetStance<MeleeWeaponStance>(mainHand);
         return stance switch
         {
-            MeleeWeaponStance.MainHand => OneHandedAttack,
-            MeleeWeaponStance.OffHand => OffHandAttack,
-            MeleeWeaponStance.TwoHanded => TwoHandedAttack,
+            MeleeWeaponStance.MainHand => OneHandedAttack ?? DirectionalOneHandedAttacks?.GetValueOrDefault(direction),
+            MeleeWeaponStance.OffHand => OffHandAttack ?? DirectionalOffHandAttacks?.GetValueOrDefault(direction),
+            MeleeWeaponStance.TwoHanded => TwoHandedAttack ?? DirectionalTwoHandedAttacks?.GetValueOrDefault(direction),
             _ => OneHandedAttack,
         };
     }
