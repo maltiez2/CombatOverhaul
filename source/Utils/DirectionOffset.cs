@@ -58,8 +58,9 @@ public readonly struct DirectionOffset
 
         float yawSin = (from[2] * to[0] - from[0] * to[2]) / MathF.Sqrt((from[0] * from[0] + from[2] * from[2]) * (to[0] * to[0] + to[2] * to[2]));
         float pitchSin = (from[2] * to[1] - from[1] * to[2]) / MathF.Sqrt((from[1] * from[1] + from[2] * from[2]) * (to[1] * to[1] + to[2] * to[2]));
-        Yaw = Angle.FromRadians(MathF.Asin(yawSin));
-        Pitch = Angle.FromRadians(MathF.Asin(pitchSin));
+        
+        Yaw = Angle.FromRadians(GameMath.Clamp(MathF.Asin(yawSin), -2f * MathF.PI, 2f * MathF.PI));
+        Pitch = Angle.FromRadians(GameMath.Clamp(MathF.Asin(pitchSin), -2f * MathF.PI, 2f * MathF.PI));
     }
     public DirectionOffset(Vec3f direction, Vec3f reference)
     {
@@ -68,11 +69,11 @@ public readonly struct DirectionOffset
         float yawSin = (reference.Z * direction.X - reference.X * direction.Z) / MathF.Sqrt((reference.X * reference.X + reference.Z * reference.Z) * (direction.X * direction.X + direction.Z * direction.Z));
         float pitchSin = (reference.Z * direction.Y - reference.Y * direction.Z) / MathF.Sqrt((reference.Y * reference.Y + reference.Z * reference.Z) * (direction.Y * direction.Y + direction.Z * direction.Z));
 
-        float yawCos = (reference.Z * direction.X - reference.X * direction.Z) / MathF.Sqrt((reference.X * reference.X + reference.Z * reference.Z) * (direction.X * direction.X + direction.Z * direction.Z));
-        float pitchCos = (reference.Z * direction.Y - reference.Y * direction.Z) / MathF.Sqrt((reference.Y * reference.Y + reference.Z * reference.Z) * (direction.Y * direction.Y + direction.Z * direction.Z));
+        //float yawCos = (reference.Z * direction.X - reference.X * direction.Z) / MathF.Sqrt((reference.X * reference.X + reference.Z * reference.Z) * (direction.X * direction.X + direction.Z * direction.Z));
+        //float pitchCos = (reference.Z * direction.Y - reference.Y * direction.Z) / MathF.Sqrt((reference.Y * reference.Y + reference.Z * reference.Z) * (direction.Y * direction.Y + direction.Z * direction.Z));
 
-        Yaw = Angle.FromRadians(MathF.Asin(yawSin));
-        Pitch = Angle.FromRadians(MathF.Asin(pitchSin));
+        Yaw = Angle.FromRadians(GameMath.Clamp(MathF.Asin(yawSin), -2f * MathF.PI, 2f * MathF.PI));
+        Pitch = Angle.FromRadians(GameMath.Clamp(MathF.Asin(pitchSin), -2f * MathF.PI, 2f * MathF.PI));
     }
     public DirectionOffset(Vec3f direction)
     {
@@ -81,9 +82,9 @@ public readonly struct DirectionOffset
 
         float yawCos = direction.Z / MathF.Sqrt(direction.X * direction.X + direction.Z * direction.Z);
 
-        Angle yawSinAngle = Angle.FromRadians(MathF.Asin(yawSin));
-        Angle pitchSinAngle = Angle.FromRadians(MathF.Asin(pitchSin));
-        Angle yawCosAngle = Angle.FromRadians(MathF.Acos(yawCos));
+        Angle yawSinAngle = Angle.FromRadians(GameMath.Clamp(MathF.Asin(yawSin), -2f * MathF.PI, 2f * MathF.PI));
+        Angle pitchSinAngle = Angle.FromRadians(GameMath.Clamp(MathF.Asin(pitchSin), -2f * MathF.PI, 2f * MathF.PI));
+        Angle yawCosAngle = Angle.FromRadians(GameMath.Clamp(MathF.Acos(yawCos), -2f * MathF.PI, 2f * MathF.PI));
 
         Yaw = yawCosAngle * Math.Sign(yawSinAngle.Degrees);
         Pitch = pitchSinAngle;

@@ -53,7 +53,10 @@ public sealed class WearableStatsBehavior : EntityBehavior
 
         Stats.Clear();
 
-        foreach (IAffectsPlayerStats armor in inventory.Select(slot => slot.Itemstack?.Item).OfType<IAffectsPlayerStats>())
+        foreach (IAffectsPlayerStats armor in inventory
+            .Where(slot => slot?.Itemstack?.Item != null)
+            .Where(slot => slot.Itemstack.Item.GetRemainingDurability(slot.Itemstack) > 0)
+            .Select(slot => slot.Itemstack?.Item).OfType<IAffectsPlayerStats>())
         {
             foreach ((string stat, float value) in armor.PlayerStats)
             {
@@ -62,6 +65,8 @@ public sealed class WearableStatsBehavior : EntityBehavior
         }
 
         foreach (IAffectsPlayerStats armor in inventory
+            .Where(slot => slot?.Itemstack?.Item != null)
+            .Where(slot => slot.Itemstack.Item.GetRemainingDurability(slot.Itemstack) > 0)
             .Select(slot => slot.Itemstack?.Item)
             .OfType<CollectibleObject>()
             .Select(item => item.CollectibleBehaviors.Where(behavior => behavior is IAffectsPlayerStats).FirstOrDefault(defaultValue: null))

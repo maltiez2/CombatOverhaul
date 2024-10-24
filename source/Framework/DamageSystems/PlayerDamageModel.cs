@@ -247,7 +247,10 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
 
         if (!slots.Any()) return;
 
-        DamageResistData resists = DamageResistData.Combine(slots.Select(slot => slot.Resists));
+        DamageResistData resists = DamageResistData.Combine(slots
+            .Where(slot => slot?.Itemstack?.Item != null)
+            .Where(slot => slot?.Itemstack?.Item.GetRemainingDurability(slot.Itemstack) > 0)
+            .Select(slot => slot.Resists));
 
         float previousDamage = damage;
         int durabilityDamage = 0;

@@ -151,3 +151,34 @@ public class ArmorBehavior : CollectibleBehavior, IArmor, IAffectsPlayerStats
         dsc.AppendLine();
     }
 }
+
+public class WearableWithStatsBehavior : CollectibleBehavior, IAffectsPlayerStats
+{
+    public WearableWithStatsBehavior(CollectibleObject collObj) : base(collObj)
+    {
+    }
+
+    public Dictionary<string, float> PlayerStats { get; set; } = new();
+
+    public override void Initialize(JsonObject properties)
+    {
+        base.Initialize(properties);
+
+        ArmorStatsJson stats = properties.AsObject<ArmorStatsJson>();
+
+        PlayerStats = stats.PlayerStats;
+    }
+
+    public override void GetHeldItemInfo(ItemSlot inSlot, StringBuilder dsc, IWorldAccessor world, bool withDebugInfo)
+    {
+        if (PlayerStats.Values.Any(value => value != 0))
+        {
+            dsc.AppendLine(Lang.Get("combatoverhaul:stat-stats"));
+            foreach ((string stat, float value) in PlayerStats)
+            {
+                if (value != 0f) dsc.AppendLine($"  {Lang.Get($"combatoverhaul:stat-{stat}")}: {value * 100:F1}%");
+            }
+            dsc.AppendLine();
+        }
+    }
+}

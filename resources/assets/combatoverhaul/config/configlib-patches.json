@@ -59,6 +59,12 @@
       },
       "combatoverhaul:config/animations/tool/pickaxe.json": {
         "pickaxe-swing-forward/SoundFrames/0/Volume": "tool_whoosh_sound"
+      },
+      "game:itemtypes/combatoverhaul/bow.json": {
+        "attributes/AimingByType/@@*/AimDifficulty": "bow_aiming_difficulty"
+      },
+      "game:itemtypes/combatoverhaul/spear.json": {
+        "attributes/ThrowAttack/Aiming/AimDifficulty": "spears_aiming_difficulty"
       }
     },
     "other": {
@@ -86,6 +92,16 @@
       ]
     },
     {
+      "code": "bow_aiming_difficulty",
+      "type": "float",
+      "ingui": "Bows aiming difficulty",
+      "default": 1.0,
+      "range": {
+        "min": 0.0,
+        "max": 2.0
+      }
+    },
+    {
       "code": "spears_aiming_cursor_type",
       "type": "Fixed",
       "ingui": "Spears aiming cursor type",
@@ -96,6 +112,16 @@
         "Fixed",
         "Moving"
       ]
+    },
+    {
+      "code": "spears_aiming_difficulty",
+      "type": "float",
+      "ingui": "Spears aiming difficulty",
+      "default": 1.0,
+      "range": {
+        "min": 0.0,
+        "max": 2.0
+      }
     },
     {
       "code": "shields_protection_zones",
