@@ -82,7 +82,7 @@
     {
       "code": "bows_aiming_cursor_type",
       "type": "string",
-      "ingui": "Bows aiming cursor type",
+      "ingui": "combatoverhaul:setting-bows_aiming_cursor_type",
       "default": "Moving",
       "values": [
         "None",
@@ -94,7 +94,7 @@
     {
       "code": "bow_aiming_difficulty",
       "type": "float",
-      "ingui": "Bows aiming difficulty",
+      "ingui": "combatoverhaul:setting-bow_aiming_difficulty",
       "default": 1.0,
       "range": {
         "min": 0.0,
@@ -104,7 +104,7 @@
     {
       "code": "spears_aiming_cursor_type",
       "type": "Fixed",
-      "ingui": "Spears aiming cursor type",
+      "ingui": "combatoverhaul:setting-spears_aiming_cursor_type",
       "default": "Fixed",
       "values": [
         "None",
@@ -116,7 +116,7 @@
     {
       "code": "spears_aiming_difficulty",
       "type": "float",
-      "ingui": "Spears aiming difficulty",
+      "ingui": "combatoverhaul:setting-spears_aiming_difficulty",
       "default": 1.0,
       "range": {
         "min": 0.0,
@@ -126,7 +126,7 @@
     {
       "code": "shields_protection_zones",
       "type": "other",
-      "ingui": "Shields protection zones",
+      "ingui": "combatoverhaul:setting-shields_protection_zones",
       "default": "Full without feet and head",
       "mapping": {
         "Full": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
@@ -139,55 +139,55 @@
     {
       "code": "modify_vanilla_classes",
       "type": "boolean",
-      "ingui": "Modify vanilla classes",
+      "ingui": "combatoverhaul:setting-modify_vanilla_classes",
       "default": true
     },
     {
       "code": "axe_animation",
       "type": "boolean",
-      "ingui": "New axe animations",
+      "ingui": "combatoverhaul:setting-axe_animation",
       "default": true
     },
     {
       "code": "pickaxe_animation",
       "type": "boolean",
-      "ingui": "New pickaxe animations",
+      "ingui": "combatoverhaul:setting-pickaxe_animation",
       "default": true
     },
     {
       "code": "shovel_animation",
       "type": "boolean",
-      "ingui": "New shovel animations",
+      "ingui": "combatoverhaul:setting-shovel_animation",
       "default": false
     },
     {
       "code": "tool_rendering_offset",
       "type": "boolean",
-      "ingui": "Tools clipping through blocks",
+      "ingui": "combatoverhaul:setting-tool_rendering_offset",
       "default": true
     },
     {
       "code": "weapon_rendering_offset",
       "type": "boolean",
-      "ingui": "Weapons clipping through blocks and entities",
+      "ingui": "combatoverhaul:setting-weapon_rendering_offset",
       "default": true
     },
     {
       "code": "axe_can_split_logs",
       "type": "boolean",
-      "ingui": "Axe can split logs (turn off for compatibility with other mods if necessary)",
+      "ingui": "combatoverhaul:setting-axe_can_split_logs",
       "default": true
     },
     {
       "code": "arrow_ping_sound_on_hit",
       "type": "boolean",
-      "ingui": "Ping sound on arrow or thrown spear hit",
+      "ingui": "combatoverhaul:setting-arrow_ping_sound_on_hit",
       "default": true
     },
     {
       "code": "tool_whoosh_sound",
       "type": "float",
-      "ingui": "Tools whoosh sound volume on swing",
+      "ingui": "combatoverhaul:setting-tool_whoosh_sound",
       "default": 0.5,
       "range": {
         "min": 0.0,

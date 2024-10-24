@@ -157,7 +157,7 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
         {
             (damageZone, multiplier) = DamageModel.GetZone(directionalDamage.Direction, directionalDamage.Target, directionalDamage.WeightMultiplier);
         }
-        else if (damageSource.SourceEntity != null)
+        else if (damageSource.SourceEntity != null && damageSource.SourceEntity.EntityId != entity.EntityId)
         {
             DirectionOffset direction = DirectionOffset.GetDirection(entity, damageSource.SourceEntity);
 

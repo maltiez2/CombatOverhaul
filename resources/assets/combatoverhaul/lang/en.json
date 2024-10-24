@@ -129,5 +129,21 @@
   "game:item-spear-generic-meteoriciron": "Meteoric iron spear",
   "game:item-spear-generic-steel": "Steel spear",
 
-  "prefixandcreature-arrow-*": "Arrow"
+  "prefixandcreature-arrow-*": "Arrow",
+  "prefixandcreature-spear-*": "Spear",
+
+  "setting-bows_aiming_cursor_type": "Bows aiming cursor type",
+  "setting-bow_aiming_difficulty": "Bows aiming difficulty",
+  "setting-spears_aiming_cursor_type": "Spears aiming cursor type",
+  "setting-spears_aiming_difficulty": "Spears aiming difficulty",
+  "setting-shields_protection_zones": "Shields protection zones",
+  "setting-modify_vanilla_classes": "Modify vanilla classes",
+  "setting-axe_animation": "New axe animations",
+  "setting-pickaxe_animation": "New pickaxe animations",
+  "setting-shovel_animation": "New shovel animations",
+  "setting-tool_rendering_offset": "Tools clipping through blocks",
+  "setting-weapon_rendering_offset": "Weapons clipping through blocks and entities",
+  "setting-axe_can_split_logs": "Axe can split logs (turn off for compatibility with other mods if necessary)",
+  "setting-arrow_ping_sound_on_hit": "Ping sound on arrow or thrown spear hit",
+  "setting-tool_whoosh_sound": "Tools whoosh sound volume on swing"
 }
