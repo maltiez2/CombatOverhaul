@@ -24,6 +24,23 @@ public class Animatable : CollectibleBehavior
     {
         AnimatedShapePath = properties["animated-shape"].AsString(null);
         AnimatedShapeFirstPersonPath = properties["animated-shape-fp"].AsString(null);
+        JsonObject[]? ShapeAlternatesPathsUnsorted = properties["animated-shape-alternates"].AsArray();
+        JsonObject[]? ShapeAlternatesFirstPersonPathsUnsorted = properties["animated-shape-fp-alternates"].AsArray();
+
+        if (ShapeAlternatesPathsUnsorted != null)
+        {
+            foreach (JsonObject shapePath in ShapeAlternatesPathsUnsorted)
+            {
+                ShapeAlternatesPaths.Add(shapePath.AsString());
+            }
+        }
+        if (ShapeAlternatesFirstPersonPathsUnsorted != null)
+        {
+            foreach (JsonObject shapePath in ShapeAlternatesFirstPersonPathsUnsorted)
+            {
+                ShapeAlternatesFirstPersonPaths.Add(shapePath.AsString());
+            }
+        }
 
         base.Initialize(properties);
     }
@@ -48,7 +65,7 @@ public class Animatable : CollectibleBehavior
     {
         CurrentFirstPerson = IsFirstPerson(player);
 
-        if (CurrentAnimatableShape != null) CalculateAnimation(CurrentAnimatableShape.GetAnimator(player.EntityId), CurrentAnimatableShape.Shape, clientApi, player, target, dt);
+        if (CurrentAnimatableShape != null) CalculateAnimation(GetCurrentShape(itemStack)?.GetAnimator(player.EntityId), CurrentAnimatableShape.Shape, clientApi, player, target, dt);
     }
     public bool RenderHeldItem(float[] modelMat, ICoreClientAPI api, ItemSlot itemSlot, Entity entity, Vec4f lightrgbs, float dt, bool isShadowPass, bool right, ItemRenderInfo renderInfo)
     {
@@ -89,11 +106,16 @@ public class Animatable : CollectibleBehavior
     protected ICoreClientAPI? ClientApi;
     protected string? AnimatedShapePath;
     protected string? AnimatedShapeFirstPersonPath;
+    protected readonly List<string> ShapeAlternatesPaths = new();
+    protected readonly List<string> ShapeAlternatesFirstPersonPaths = new();
     protected AnimatableShape? Shape;
     protected AnimatableShape? ShapeFirstPerson;
+    protected readonly List<AnimatableShape?> ShapeAlternates = new();
+    protected readonly List<AnimatableShape?> ShapeAlternatesFirstPerson = new();
     protected Matrixf ItemModelMat = new();
     protected float TimeAccumulation = 0;
     protected bool CurrentFirstPerson = false;
+    protected const int RenderVariantOffset = 2;
 
     protected virtual void InitAnimatable()
     {
@@ -103,10 +125,53 @@ public class Animatable : CollectibleBehavior
 
         Shape = AnimatableShape.Create(ClientApi, AnimatedShapePath ?? AnimatedShapeFirstPersonPath ?? item.Shape?.Base.ToString() ?? "", item);
         ShapeFirstPerson = AnimatableShape.Create(ClientApi, AnimatedShapeFirstPersonPath ?? AnimatedShapePath ?? item.Shape?.Base.ToString() ?? "", item);
+
+        foreach (string shapePath in ShapeAlternatesPaths)
+        {
+            ShapeAlternates.Add(AnimatableShape.Create(ClientApi, shapePath, item));
+        }
+        foreach (string shapePath in ShapeAlternatesFirstPersonPaths)
+        {
+            ShapeAlternatesFirstPerson.Add(AnimatableShape.Create(ClientApi, shapePath, item));
+        }
+    }
+    protected virtual AnimatableShape? GetCurrentShape(ItemStack itemStack)
+    {
+        int renderVariant = itemStack.Attributes.GetAsInt("renderVariant", 0);
+        if (renderVariant == 0) return (CurrentFirstPerson ? ShapeFirstPerson : Shape) ?? Shape ?? ShapeFirstPerson;
+        renderVariant -= RenderVariantOffset;
+
+        if (CurrentFirstPerson && ShapeFirstPerson != null)
+        {
+            if (renderVariant < ShapeAlternatesFirstPerson.Count)
+            {
+                return ShapeAlternatesFirstPerson[renderVariant];
+            }
+            else if (renderVariant < ShapeAlternates.Count)
+            {
+                return ShapeAlternates[renderVariant];
+            }
+            else
+            {
+                return ShapeFirstPerson;
+            }
+        }
+        else
+        {
+            if (renderVariant >= ShapeAlternates.Count)
+            {
+                return Shape;
+            }
+            else
+            {
+                return ShapeAlternates[renderVariant];
+            }
+        }
+
     }
     protected virtual void RenderShape(IShaderProgram shaderProgram, IWorldAccessor world, AnimatableShape shape, ItemRenderInfo itemStackRenderInfo, IRenderAPI render, ItemStack itemStack, Vec4f lightrgbs, Matrixf itemModelMat, ItemSlot itemSlot, Entity entity, float dt)
     {
-        CurrentAnimatableShape?.Render(shaderProgram, itemStackRenderInfo, render, itemStack, lightrgbs, itemModelMat, entity, dt);
+        GetCurrentShape(itemStack)?.Render(shaderProgram, itemStackRenderInfo, render, itemStack, lightrgbs, itemModelMat, entity, dt);
     }
     protected virtual void CalculateAnimation(AnimatorBase? animator, Shape shape, ICoreClientAPI clientApi, Entity entity, EnumItemRenderTarget target, float dt)
     {

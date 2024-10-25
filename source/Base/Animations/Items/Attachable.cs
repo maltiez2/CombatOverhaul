@@ -81,11 +81,11 @@ public class AnimatableAttachable : Animatable
 
         if (Shape?.GetAnimator(entity.EntityId) == null) return;
         if (!ActiveAttachments.ContainsKey(entity.EntityId) || !Attachments.ContainsKey(entity.EntityId)) return;
-        if (CurrentAnimatableShape == null) return;
+        if (GetCurrentShape(itemStack) == null) return;
 
         foreach ((string code, bool active) in ActiveAttachments[entity.EntityId].Where(x => x.Value))
         {
-            Attachments[entity.EntityId][code].Render(CurrentAnimatableShape, shaderProgram, itemStackRenderInfo, render, lightrgbs, itemModelMat, entity, dt);
+            Attachments[entity.EntityId][code].Render(GetCurrentShape(itemStack), shaderProgram, itemStackRenderInfo, render, lightrgbs, itemModelMat, entity, dt);
         }
     }
 }

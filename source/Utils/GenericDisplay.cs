@@ -7,7 +7,7 @@ using Vintagestory.API.Datastructures;
 
 namespace CombatOverhaul;
 
-public class GenericDisplayBlockEntity : BlockEntityDisplay
+public class GenericDisplayBlockEntity : GenericDisplayProto
 {
     private readonly InventoryGeneric _inventory;
     private string _inventoryTranformName = "inGenericDisplayTransform";
@@ -83,7 +83,9 @@ public class GenericDisplayBlockEntity : BlockEntityDisplay
             return containedMeshSource.GetMeshCacheKey(stack);
         }
 
-        return $"{stack.Collectible.Code}.{_inventoryTranformName}";
+        int renderVariant = stack.Attributes?.GetInt("renderVariant", 0) ?? 0;
+
+        return $"{stack.Collectible.Code}.{renderVariant}.{_inventoryTranformName}";
     }
 
     protected static Vec3f GetCentre(Cuboidf box)

@@ -3,8 +3,7 @@
   <PropertyGroup>
     <ModName>Combat Overhaul</ModName>
     <ModType>code</ModType>
-    <GameVersion>1.20.0-pre.5</GameVersion>
-    <ModVersion>0.0.40</ModVersion>
+    <ModVersion>0.0.41</ModVersion>
     <ModId>combatoverhaul</ModId>
     <Description></Description>
     <Side>Universal</Side>
@@ -21,9 +20,6 @@
 
   <!-- Dependencies -->
   <ItemGroup>
-    <Dependencies Include="game">
-      <Version>$(GameVersion)</Version>
-    </Dependencies>
   </ItemGroup>
 
   <!-- Project settings -->
