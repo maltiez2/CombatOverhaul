@@ -27,35 +27,6 @@ public class ProjectileStats
     public ProjectileStats() { }
 }
 
-public class ExplosiveProjectileStats
-{
-    public AssetLocation ExplosionSound { get; set; } = new("game:sounds/effect/smallexplosion");
-    public float MaxRadius { get; set; } = 0;
-    public string DamageType { get; set; } = "BluntAttack";
-    public float DamageStrength { get; set; } = 0;
-    public float Damage { get; set; } = 0;
-    public string ParticlesEffect { get; set; } = "";
-    public float ParticlesIntensity { get; set; } = 1;
-    public float FuseTimeMs { get; set; } = 0;
-
-    public ExplosiveProjectileStats() { }
-}
-
-public class FragmentationProjectileStats
-{
-    public AssetLocation ExplosionSound { get; set; } = new("game:sounds/effect/smallexplosion");
-    public int FragmentsNumber { get; set; } = 1;
-    public ProjectileStats FragmentStats { get; set; } = new();
-    public float FragmentVelocity { get; set; } = 1;
-    public float FragmentDamageStrength { get; set; } = 1;
-    public JsonItemStack FragmentStack { get; set; } = new();
-    public string ParticlesEffect { get; set; } = "";
-    public float ParticlesIntensity { get; set; } = 1;
-    public float FuseTimeMs { get; set; } = 0;
-
-    public FragmentationProjectileStats() { }
-}
-
 public struct ProjectileSpawnStats
 {
     public long ProducerEntityId { get; set; }
@@ -104,12 +75,11 @@ public abstract class ProjectileSystemBase
             throw new InvalidOperationException();
         }
 
-        if (stats.DurabilityDamage != 0) projectileStack.Item.DamageItem(api.World, shooter, new DummySlot(projectileStack), stats.DurabilityDamage);
-
         projectile.ProjectileId = id;
         projectile.ProjectileStack = projectileStack;
         projectile.DropOnImpactChance = stats.DropChance;
         projectile.ColliderRadius = stats.CollisionRadius;
+        projectile.DurabilityDamageOnImpact = stats.DurabilityDamage;
 
         projectile.ServerPos.SetPos(new Vec3d(spawnStats.Position.X, spawnStats.Position.Y, spawnStats.Position.Z));
         projectile.ServerPos.Motion.Set(new Vec3d(spawnStats.Velocity.X, spawnStats.Velocity.Y, spawnStats.Velocity.Z));

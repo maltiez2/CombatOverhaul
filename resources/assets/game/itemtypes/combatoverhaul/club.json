@@ -8,7 +8,7 @@
   "attributes": {
     "groundStorageTransform": {"translation": {"x": 0.6, "y": 1.6, "z": 0.7}, "rotation": {"x": 16, "y": -9, "z": -90}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.6},
     "toolrackTransform": {"translation": {"x": -0.9, "y": 0.6, "z": -0.1}, "rotation": {"x": 0, "y": 0, "z": -2}, "origin": {"x": 0, "y": 0, "z": 0}},
-    "ProficiencyStat": "clubsProficiency",
+    "ProficiencyStatByType": {"*-scrapmace-*": "macesProficiency", "*": "clubsProficiency"},
     "RenderingOffset": false,
     "OneHandedStance": {
       "CanAttack": true,
@@ -20,10 +20,7 @@
         "StopOnEntityHit": true,
         "CollideWithTerrain": true,
         "MaxReach": 9,
-        "DamageTypes": [
-          {"Damage": {"DamageType": "BluntAttack", "Strength": 2, "Damage": 3}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.6, 0, 0.5]},
-          {"Damage": {"DamageType": "BluntAttack", "Strength": 2, "Damage": 3}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.6, 0, 0.5]}
-        ]
+        "DamageTypes": [{"Damage": {"DamageType": "BluntAttack", "Strength": 2, "Damage": 3}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.6, 0, 0.5]}]
       },
       "AttackHitSound": "game:sounds/thud",
       "AttackAnimation": {"Main": ["combatoverhaul:club-strike-1h-1", "combatoverhaul:club-strike-1h-2"]},

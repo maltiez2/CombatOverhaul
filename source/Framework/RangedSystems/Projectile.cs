@@ -122,6 +122,7 @@ public class ProjectileEntity : Entity
     public ProjectileServer? ServerProjectile { get; set; }
     public Guid ProjectileId { get; set; }
     public ItemStack? ProjectileStack { get; set; }
+    public int DurabilityDamageOnImpact { get; set; }
     public float DropOnImpactChance { get; set; }
     public Action<Guid>? ClearCallback { get; set; }
     public float ColliderRadius { get; set; }
@@ -243,6 +244,14 @@ public class ProjectileEntity : Entity
     public void OnCollisionWithEntity(Entity target, string collider)
     {
         WatchedAttributes.MarkAllDirty();
+        if (DurabilityDamageOnImpact != 0)
+        {
+            ProjectileStack?.Item?.DamageItem(Api.World, target, new DummySlot(ProjectileStack), DurabilityDamageOnImpact);
+            if (ProjectileStack?.Item?.GetRemainingDurability(ProjectileStack) <= 0)
+            {
+                Die();
+            }
+        }
         TryDestroyOnCollision();
     }
 

@@ -19,22 +19,22 @@
           "AdditionalDurabilityCost": 0,
           "CollisionRadius": 0.05,
           "DamageStatsByType": {
-            "*-flint": {"DamageType": "PiercingAttack", "Damage": 4},
-            "*-obsidian": {"DamageType": "PiercingAttack", "Damage": 4.5},
-            "*-copper": {"DamageType": "PiercingAttack", "Damage": 4.5},
-            "*-tinbronze": {"DamageType": "PiercingAttack", "Damage": 5},
-            "*-bismuthbronze": {"DamageType": "PiercingAttack", "Damage": 5},
-            "*-blackbronze": {"DamageType": "PiercingAttack", "Damage": 5},
-            "*-iron": {"DamageType": "PiercingAttack", "Damage": 5.6},
-            "*-meteoriciron": {"DamageType": "PiercingAttack", "Damage": 5.6},
-            "*-ornategold": {"DamageType": "PiercingAttack", "Damage": 5.6},
-            "*-ornatesilver": {"DamageType": "PiercingAttack", "Damage": 5.6},
-            "*-steel": {"DamageType": "PiercingAttack", "Damage": 6},
-            "*": {"DamageType": "PiercingAttack", "Damage": 3.5}
+            "*-flint": {"DamageType": "PiercingAttack", "Damage": 2},
+            "*-obsidian": {"DamageType": "PiercingAttack", "Damage": 2.5},
+            "*-copper": {"DamageType": "PiercingAttack", "Damage": 3},
+            "*-tinbronze": {"DamageType": "PiercingAttack", "Damage": 3.5},
+            "*-bismuthbronze": {"DamageType": "PiercingAttack", "Damage": 3.5},
+            "*-blackbronze": {"DamageType": "PiercingAttack", "Damage": 3.5},
+            "*-iron": {"DamageType": "PiercingAttack", "Damage": 4},
+            "*-meteoriciron": {"DamageType": "PiercingAttack", "Damage": 4},
+            "*-ornategold": {"DamageType": "PiercingAttack", "Damage": 4},
+            "*-ornatesilver": {"DamageType": "PiercingAttack", "Damage": 4},
+            "*-steel": {"DamageType": "PiercingAttack", "Damage": 4.5},
+            "*": {"DamageType": "PiercingAttack", "Damage": 2}
           },
           "HitSound": "game:sounds/player/projectilehit",
           "SpeedThreshold": 0.3,
-          "Knockback": 0.1,
+          "Knockback": 0.3,
           "EntityCode": "combatoverhaul:spear-generic-{material}",
           "DurabilityDamage": 1,
           "DropChance": 1
@@ -184,7 +184,7 @@
         "AimDifficulty": 1,
         "CursorType": "Fixed",
         "AccuracyOvertimeSec": 0,
-        "ZeroingAngle": 1,
+        "ZeroingAngle": 0,
         "CursorTextureReady": "combatoverhaul:gui/aiming/arrow-full.png",
         "CursorTextureNotReady": "combatoverhaul:gui/aiming/arrow-part.png",
         "AllowSprint": true,
@@ -211,7 +211,7 @@
       "Knockback": 1,
       "DurabilityDamage": 1,
       "Velocity": 0.7,
-      "Zeroing": 1.5
+      "Zeroing": 5
     }
   },
   "durabilitybytype": {
