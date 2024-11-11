@@ -15,7 +15,7 @@ public class PickaxeStats
 {
     public string ReadyAnimation { get; set; } = "";
     public string IdleAnimation { get; set; } = "";
-    public string SwingForwardAnimation { get; set; } = "";
+    public string[] SwingForwardAnimation { get; set; } = Array.Empty<string>();
     public string SwingBackAnimation { get; set; } = "";
     public string SwingTpAnimation { get; set; } = "";
     public bool RenderingOffset { get; set; } = false;
@@ -39,7 +39,7 @@ public enum PickaxeState
     AttackCooldown
 }
 
-public class PickaxeClient : IClientWeaponLogic, IOnGameTick
+public class PickaxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
 {
     public PickaxeClient(ICoreClientAPI api, Pickaxe item)
     {
@@ -63,6 +63,8 @@ public class PickaxeClient : IClientWeaponLogic, IOnGameTick
     }
     public int ItemId { get; }
     public DirectionsConfiguration DirectionsType => DirectionsConfiguration.None;
+    public bool RestrictRightHandAction() => PlayerBehavior?.GetState(mainHand: false) != (int)PickaxeState.Idle;
+    public bool RestrictLeftHandAction() => PlayerBehavior?.GetState(mainHand: true) != (int)PickaxeState.Idle;
 
     public virtual void OnSelected(ItemSlot slot, EntityPlayer player, bool mainHand, ref int state)
     {
@@ -109,20 +111,25 @@ public class PickaxeClient : IClientWeaponLogic, IOnGameTick
     protected TimeSpan ExtraSwingTime;
     protected readonly TimeSpan MaxDelta = TimeSpan.FromSeconds(0.1);
     protected readonly MeleeAttack MeleeAttack;
+    protected readonly Random Rand = new();
 
     [ActionEventHandler(EnumEntityAction.LeftMouseDown, ActionState.Active)]
     protected virtual bool Swing(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
         if (eventData.AltPressed && !mainHand) return false;
         if (player.BlockSelection?.Block == null || player.EntitySelection?.Entity != null) return false;
+        if (ActionRestricted(player, mainHand)) return false;
 
         switch ((PickaxeState)state)
         {
             case PickaxeState.Idle:
                 {
+                    int animationsNumber = Stats.SwingForwardAnimation.Length;
+                    int animationIndex = Rand.Next(0, animationsNumber);
+
                     AnimationBehavior?.Play(
                         mainHand,
-                        Stats.SwingForwardAnimation,
+                        Stats.SwingForwardAnimation[animationIndex],
                         animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1,
                         category: AnimationCategory(mainHand),
                         callback: () => SwingForwardAnimationCallback(slot, player, mainHand));
@@ -221,6 +228,7 @@ public class PickaxeClient : IClientWeaponLogic, IOnGameTick
         if (eventData.AltPressed && !mainHand) return false;
         if (Stats.AttackAnimation == "") return false;
         if (player.BlockSelection?.Block != null) return false;
+        if (ActionRestricted(player, mainHand)) return false;
 
         switch ((PickaxeState)state)
         {
@@ -303,9 +311,20 @@ public class PickaxeClient : IClientWeaponLogic, IOnGameTick
 
         return Item.MiningSpeed[mat] * GlobalConstants.ToolMiningSpeedModifier * traitRate;
     }
+    protected static bool ActionRestricted(EntityPlayer player, bool mainHand = true)
+    {
+        if (mainHand)
+        {
+            return (player.LeftHandItemSlot.Itemstack?.Item as IRestrictAction)?.RestrictRightHandAction() ?? false;
+        }
+        else
+        {
+            return (player.RightHandItemSlot.Itemstack?.Item as IRestrictAction)?.RestrictLeftHandAction() ?? false;
+        }
+    }
 }
 
-public class Pickaxe : Item, IHasWeaponLogic, ISetsRenderingOffset, IHasIdleAnimations, IOnGameTick
+public class Pickaxe : Item, IHasWeaponLogic, ISetsRenderingOffset, IHasIdleAnimations, IOnGameTick, IRestrictAction
 {
     public PickaxeClient? Client { get; private set; }
 
@@ -313,6 +332,8 @@ public class Pickaxe : Item, IHasWeaponLogic, ISetsRenderingOffset, IHasIdleAnim
     public bool RenderingOffset { get; private set; }
     public AnimationRequestByCode IdleAnimation { get; private set; }
     public AnimationRequestByCode ReadyAnimation { get; private set; }
+    public bool RestrictRightHandAction() => Client?.RestrictRightHandAction() ?? false;
+    public bool RestrictLeftHandAction() => Client?.RestrictLeftHandAction() ?? false;
 
     public float BlockBreakDamage { get; set; } = 0;
 

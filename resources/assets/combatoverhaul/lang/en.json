@@ -132,10 +132,13 @@
   "prefixandcreature-arrow-*": "Arrow",
   "prefixandcreature-spear-*": "Spear",
 
+  "setting-directions_cursor_transparency": "Directions selection cursor transparency",
+  "setting-directions_cursor_scale": "Directions selection cursor scale",
   "setting-bows_aiming_cursor_type": "Bows aiming cursor type",
   "setting-bow_aiming_difficulty": "Bows aiming difficulty",
   "setting-spears_aiming_cursor_type": "Spears aiming cursor type",
   "setting-spears_aiming_difficulty": "Spears aiming difficulty",
+  "setting-spears_thrown_distance": "Spears throwing distance",
   "setting-shields_protection_zones": "Shields protection zones",
   "setting-modify_vanilla_classes": "Modify vanilla classes",
   "setting-axe_animation": "New axe animations",

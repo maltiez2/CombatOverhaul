@@ -1,4 +1,5 @@
-﻿using Vintagestory.API.Common;
+﻿using CombatOverhaul.Utils;
+using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 
 namespace CombatOverhaul.Inputs;
@@ -19,14 +20,21 @@ public class InInventoryPlayerBehavior : EntityBehavior
 
     public override void OnGameTick(float deltaTime)
     {
-        _player.WalkInventory(ProcessSlot);
+        try
+        {
+            _player?.WalkInventory(ProcessSlot);
+        }
+        catch (Exception exception)
+        {
+            LoggerUtil.Verbose(_player.Api, this, $"[OnGameTick] Exception: {exception}");
+        }
     }
 
     private readonly EntityPlayer _player;
 
     private bool ProcessSlot(ItemSlot slot)
     {
-        if (slot?.Empty != true) return true;
+        if (slot?.Empty != false) return true;
 
         if (slot.Itemstack?.Item is IOnInInventory item)
         {

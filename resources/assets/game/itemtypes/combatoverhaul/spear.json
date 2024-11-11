@@ -184,7 +184,6 @@
         "AimDifficulty": 1,
         "CursorType": "Fixed",
         "AccuracyOvertimeSec": 0,
-        "ZeroingAngle": 0,
         "CursorTextureReady": "combatoverhaul:gui/aiming/arrow-full.png",
         "CursorTextureNotReady": "combatoverhaul:gui/aiming/arrow-part.png",
         "AllowSprint": true,
@@ -211,7 +210,7 @@
       "Knockback": 1,
       "DurabilityDamage": 1,
       "Velocity": 0.7,
-      "Zeroing": 5
+      "Zeroing": 7.5
     }
   },
   "durabilitybytype": {

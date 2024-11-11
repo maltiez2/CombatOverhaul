@@ -255,15 +255,7 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
         float previousDamage = damage;
         int durabilityDamage = 0;
 
-        if (damageSource is ITypedDamage typedDamage)
-        {
-            typedDamage.DamageTypeData = resists.ApplyResist(typedDamage.DamageTypeData, ref damage, out durabilityDamage);
-            damageType = typedDamage.DamageTypeData.DamageType;
-        }
-        else
-        {
-            _ = resists.ApplyResist(new(damageSource.Type, damageSource.DamageTier), ref damage, out durabilityDamage);
-        }
+        _ = resists.ApplyResist(new(damageSource.Type, damageSource.DamageTier), ref damage, out durabilityDamage);
 
         durabilityDamage = GameMath.Clamp(durabilityDamage, 1, durabilityDamage);
         int durabilityDamagePerItem = GameMath.Clamp(durabilityDamage / slots.Count(), 0, durabilityDamage);

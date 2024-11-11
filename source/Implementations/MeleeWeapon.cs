@@ -100,7 +100,7 @@ public class MeleeWeaponStats : WeaponStats
     public float AnimationStaggerOnHitDurationMs { get; set; } = 100;
 }
 
-public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, IOnGameTick
+public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, IOnGameTick, IRestrictAction
 {
     public MeleeWeaponClient(ICoreClientAPI api, Item item)
     {
@@ -372,6 +372,8 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
             }
         }
     }
+    public bool RestrictRightHandAction() => !CheckState(false, MeleeWeaponState.Idle, MeleeWeaponState.Aiming);
+    public bool RestrictLeftHandAction() => !CheckState(true, MeleeWeaponState.Idle, MeleeWeaponState.Aiming);
 
     protected readonly Item Item;
     protected readonly ICoreClientAPI Api;
@@ -420,8 +422,8 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
         EnsureStance(player, mainHand);
         if (!CanAttack(mainHand)) return false;
         if (IsAttackOnCooldown(mainHand)) return false;
-
-        if (GetState<MeleeWeaponState>(!mainHand) == MeleeWeaponState.Blocking) return false;
+        if (ActionRestricted(player, mainHand)) return false;
+        //if (GetState<MeleeWeaponState>(!mainHand) == MeleeWeaponState.Blocking) return false;
 
         MeleeAttack? attack = GetStanceAttack(mainHand);
         StanceStats? stats = GetStanceStats(mainHand);
@@ -584,8 +586,8 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
         EnsureStance(player, mainHand);
         if (!CanBlock(mainHand) && !CanParry(mainHand)) return false;
         if (mainHand && CanBlockWithOtherHand(player, mainHand)) return false;
-
-        if (GetState<MeleeWeaponState>(!mainHand) == MeleeWeaponState.Attacking) return false;
+        if (ActionRestricted(player, mainHand)) return false;
+        //if (GetState<MeleeWeaponState>(!mainHand) == MeleeWeaponState.Attacking) return false;
 
         StanceStats? stats = GetStanceStats(mainHand);
         DamageBlockJson? parryStats = stats?.Parry;
@@ -966,6 +968,18 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
         return (otherHandSlot.Itemstack?.Item as IHasMeleeWeaponActions)?.CanBlock(!mainHand) ?? false;
     }
 
+    protected static bool ActionRestricted(EntityPlayer player, bool mainHand = true)
+    {
+        if (mainHand)
+        {
+            return (player.LeftHandItemSlot.Itemstack?.Item as IRestrictAction)?.RestrictRightHandAction() ?? false;
+        }
+        else
+        {
+            return (player.RightHandItemSlot.Itemstack?.Item as IRestrictAction)?.RestrictLeftHandAction() ?? false;
+        }
+    }
+
     protected bool CheckForOtherHandEmpty(bool mainHand, EntityPlayer player)
     {
         if (mainHand && !player.LeftHandItemSlot.Empty)
@@ -1085,7 +1099,13 @@ public class MeleeWeaponServer : RangeWeaponServer
     private readonly MeleeWeaponStats _stats;
 }
 
-public class MeleeWeapon : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasDynamicIdleAnimations, IHasMeleeWeaponActions, IHasServerBlockCallback, ISetsRenderingOffset, IMouseWheelInput, IOnGameTick
+public interface IRestrictAction
+{
+    bool RestrictRightHandAction();
+    bool RestrictLeftHandAction();
+}
+
+public class MeleeWeapon : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasDynamicIdleAnimations, IHasMeleeWeaponActions, IHasServerBlockCallback, ISetsRenderingOffset, IMouseWheelInput, IOnGameTick, IRestrictAction
 {
     public MeleeWeaponClient? ClientLogic { get; private set; }
     public MeleeWeaponServer? ServerLogic { get; private set; }
@@ -1094,6 +1114,9 @@ public class MeleeWeapon : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasDyn
     IServerRangedWeaponLogic? IHasRangedWeaponLogic.ServerWeaponLogic => ServerLogic;
 
     public bool RenderingOffset { get; set; }
+
+    public bool RestrictRightHandAction() => ClientLogic?.RestrictRightHandAction() ?? false;
+    public bool RestrictLeftHandAction() => ClientLogic?.RestrictLeftHandAction() ?? false;
 
     public override void OnLoaded(ICoreAPI api)
     {

@@ -9,7 +9,7 @@ public interface ITypedDamage
     DamageData DamageTypeData { get; set; }
 }
 
-public struct DamageDataJson
+public class DamageDataJson
 {
     public string DamageType { get; set; } = "PiercingAttack";
     public float Strength { get; set; }
@@ -18,7 +18,7 @@ public struct DamageDataJson
     public DamageDataJson() { }
 }
 
-public struct ProjectileDamageDataJson
+public class ProjectileDamageDataJson
 {
     public string DamageType { get; set; } = "PiercingAttack";
     public float Damage { get; set; }
@@ -66,10 +66,10 @@ public class TypedDamageSource : DamageSource, ITypedDamage
     public DamageData DamageTypeData { get; set; }
 }
 
-public readonly struct DamageResistData
+public class DamageResistData
 {
-    public readonly ImmutableDictionary<EnumDamageType, float> Resists;
-    public readonly ImmutableDictionary<EnumDamageType, float> FlatDamageReduction;
+    public ImmutableDictionary<EnumDamageType, float> Resists { get; }
+    public ImmutableDictionary<EnumDamageType, float> FlatDamageReduction { get; }
 
     public DamageResistData(Dictionary<EnumDamageType, float> resists, Dictionary<EnumDamageType, float> flatDamageReduction)
     {
@@ -101,7 +101,7 @@ public readonly struct DamageResistData
         if (FlatDamageReduction.TryGetValue(damageData.DamageType, out float flatReduction))
         {
             damage = Math.Clamp(damage - flatReduction, 0, damage);
-        } 
+        }
 
         return new(
             damageType: damageData.DamageType,
@@ -112,7 +112,7 @@ public readonly struct DamageResistData
     {
         float protectionLevel = 0;
         float initialDamage = damage;
-        
+
         if (Resists.TryGetValue(damageData.DamageType, out float value))
         {
             protectionLevel = value;

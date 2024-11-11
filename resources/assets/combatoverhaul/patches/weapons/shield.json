@@ -4,7 +4,7 @@
   {"file": "game:itemtypes/tool/shield", "op": "replace", "path": "/durabilitybytype/shield-crude", "value": 160},
   {"file": "game:itemtypes/tool/shield", "op": "replace", "path": "/durabilitybytype/shield-woodmetal", "value": 600},
   {"file": "game:itemtypes/tool/shield", "op": "replace", "path": "/durabilitybytype/shield-woodmetalleather", "value": 900},
-  {"file": "game:itemtypes/tool/shield", "op": "replace", "path": "/durabilitybytype/shield-metal", "value": 1200},
+  {"file": "game:itemtypes/tool/shield", "op": "replace", "path": "/durabilitybytype/shield-metal", "value": 2000},
   {"file": "game:itemtypes/tool/shield", "op": "replace", "path": "/durabilitybytype/shield-blackguard", "value": 1000},
   {"file": "game:itemtypes/tool/shield", "op": "add", "path": "/creativeinventory/combatoverhaul", "value": ["shield-crude", "shield-blackguard"]},
   {
@@ -22,7 +22,8 @@
         "Parry": {
           "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
           "Directions": [45, 45, 45, 45],
-          "Sound": "game:sounds/held/shieldblock"
+          "Sound": "game:sounds/held/shieldblock",
+          "BlockTier": {"BluntAttack": 4, "SlashingAttack": 4, "PiercingAttack": 4}
         },
         "Block": {
           "Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
@@ -46,7 +47,8 @@
         "Parry": {
           "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
           "Directions": [45, 45, 45, 45],
-          "Sound": "game:sounds/held/shieldblock"
+          "Sound": "game:sounds/held/shieldblock",
+          "BlockTier": {"BluntAttack": 5, "SlashingAttack": 5, "PiercingAttack": 5}
         },
         "Block": {
           "Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
@@ -70,7 +72,8 @@
         "Parry": {
           "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
           "Directions": [45, 45, 45, 45],
-          "Sound": "game:sounds/held/shieldblock"
+          "Sound": "game:sounds/held/shieldblock",
+          "BlockTier": {"BluntAttack": 6, "SlashingAttack": 6, "PiercingAttack": 6}
         },
         "Block": {
           "Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
@@ -94,7 +97,8 @@
         "Parry": {
           "Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
           "Directions": [90, 90, 90, 90],
-          "Sound": "game:sounds/held/shieldblock"
+          "Sound": "game:sounds/held/shieldblock",
+          "BlockTier": {"BluntAttack": 7, "SlashingAttack": 7, "PiercingAttack": 7}
         },
         "Block": {
           "Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
@@ -118,10 +122,11 @@
         "Parry": {
           "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
           "Directions": [90, 90, 90, 90],
-          "Sound": "game:sounds/held/shieldblock"
+          "Sound": "game:sounds/held/shieldblock",
+          "BlockTier": {"BluntAttack": 7, "SlashingAttack": 7, "PiercingAttack": 7}
         },
         "Block": {
-          "Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand"],
+          "Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
           "Directions": [90, 90, 90, 90],
           "Sound": "game:sounds/held/shieldblock",
           "BlockTier": {"BluntAttack": 5, "SlashingAttack": 5, "PiercingAttack": 5}

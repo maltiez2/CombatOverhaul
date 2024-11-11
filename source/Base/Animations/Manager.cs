@@ -105,20 +105,40 @@ public sealed class AnimationsManager
     private int _colliderItemIndex = 0;
     private int _colliderIndex = 0;
     private readonly Dictionary<string, ModelTransform> _transforms = new();
-    private static Dictionary<string, Animation> FromAsset(IAsset asset)
+    private Dictionary<string, Animation> FromAsset(IAsset asset)
     {
         Dictionary<string, Animation> result = new();
 
         string domain = asset.Location.Domain;
-        JsonObject json = JsonObject.FromJson(asset.ToText());
+
+        JsonObject json;
+
+        try
+        {
+            json = JsonObject.FromJson(asset.ToText());
+        }
+        catch (Exception exception)
+        {
+            LoggerUtil.Error(_api, this, $"Error on parsing animations file '{asset.Location}'.\nException: {exception}");
+            return result;
+        }
+
         foreach (KeyValuePair<string, JToken?> entry in json.Token as JObject)
         {
             string code = entry.Key;
-            JsonObject animationJson = new(entry.Value);
 
-            Animation animation = animationJson.AsObject<AnimationJson>().ToAnimation();
+            try
+            {
+                JsonObject animationJson = new(entry.Value);
 
-            result.Add($"{domain}:{code}", animation);
+                Animation animation = animationJson.AsObject<AnimationJson>().ToAnimation();
+
+                result.Add($"{domain}:{code}", animation);
+            }
+            catch (Exception exception)
+            {
+                LoggerUtil.Error(_api, this, $"Error on parsing animation '{code}' from '{asset.Location}'.\nException: {exception}");
+            }
         }
 
         return result;

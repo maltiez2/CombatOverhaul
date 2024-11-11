@@ -1,5 +1,6 @@
 ﻿using Cairo;
 using CombatOverhaul.DamageSystems;
+using System.Diagnostics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -44,6 +45,14 @@ public sealed class GuiDialogArmorInventory : GuiDialog
         _composer?.Dispose();
     }
 
+    private void RecomposeDialog()
+    {
+        if (opened)
+        {
+            ComposeDialog();
+        }
+    }
+
     private void ComposeDialog()
     {
         if (_characterDialog == null)
@@ -69,7 +78,7 @@ public sealed class GuiDialogArmorInventory : GuiDialog
 
         if (!_inventoryLinked)
         {
-            inv._onSlotModified += ComposeDialog;
+            inv._onSlotModified += RecomposeDialog;
             _inventoryLinked = true;
         }
 
@@ -139,7 +148,7 @@ public sealed class GuiDialogArmorInventory : GuiDialog
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.ToString());
+            Trace.WriteLine(ex.ToString());
             return;
         }
 

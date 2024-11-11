@@ -40,7 +40,9 @@ public struct MeleeDamagePacket
             DamageTypeData = new DamageData(Enum.Parse<EnumDamageType>(DamageType), Strength),
             Position = new Vector3(Position[0], Position[1], Position[2]),
             Collider = Collider,
-            KnockbackStrength = Knockback
+            KnockbackStrength = Knockback,
+            DamageTier = (int)Strength,
+            Type = Enum.Parse<EnumDamageType>(DamageType)
         }, Damage);
 
         if (DurabilityDamage > 0)
@@ -60,7 +62,7 @@ public struct MeleeDamagePacket
 
 public class MeleeDamageTypeJson
 {
-    public DamageDataJson Damage { get; set; }
+    public DamageDataJson Damage { get; set; } = new();
     public float Knockback { get; set; } = 0;
     public int DurabilityDamage { get; set; } = 1;
     public float[] Collider { get; set; } = new float[6];

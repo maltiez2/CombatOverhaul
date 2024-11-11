@@ -15,9 +15,11 @@ using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Config;
+using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
 using Vintagestory.Client.NoObf;
+using Vintagestory.Common;
 using Vintagestory.GameContent;
 using Vintagestory.Server;
 
@@ -118,6 +120,18 @@ public sealed class CombatOverhaulSystem : ModSystem
 
                 RegisterCustomIcon(clientApi, iconCode, iconPath);
             }
+        }
+    }
+
+    public override void AssetsFinalize(ICoreAPI api)
+    {
+        IAsset settingsAsset = api.Assets.Get("combatoverhaul:config/settings.json");
+        JsonObject settings = JsonObject.FromJson(settingsAsset.ToText());
+
+        if (DirectionCursorRenderer != null)
+        {
+            DirectionCursorRenderer.Alpha = settings["directionsCursorAlpha"].AsFloat();
+            DirectionCursorRenderer.CursorScale = settings["directionsCursorScale"].AsFloat();
         }
     }
 

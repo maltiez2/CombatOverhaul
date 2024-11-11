@@ -198,8 +198,8 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
     }
     private bool HandleActionEvent(ActionEventData eventData, int itemId, ActionEventCallbackDelegate callback)
     {
-        int mainHandId = _player.ActiveHandItemSlot.Itemstack?.Id ?? -1;
-        int offHandId = _player.LeftHandItemSlot.Itemstack?.Id ?? -1;
+        int mainHandId = _player.ActiveHandItemSlot.Itemstack?.Item?.Id ?? -1;
+        int offHandId = _player.LeftHandItemSlot.Itemstack?.Item?.Id ?? -1;
 
         if (mainHandId == itemId)
         {
@@ -215,8 +215,8 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
     }
     private bool CheckIfItemsInHandsChanged()
     {
-        int mainHandId = _player.ActiveHandItemSlot.Itemstack?.Id ?? -1;
-        int offHandId = _player.LeftHandItemSlot.Itemstack?.Id ?? -1;
+        int mainHandId = _player.ActiveHandItemSlot.Itemstack?.Item?.Id ?? -1;
+        int offHandId = _player.LeftHandItemSlot.Itemstack?.Item?.Id ?? -1;
         bool anyChanged = mainHandId != _currentMainHandItemId || offHandId != _currentOffHandItemId;
 
         if (anyChanged)

@@ -57,7 +57,69 @@
     "ItemAnimationStart": 0,
     "ItemAnimationEnd": 0
   },
-  "pickaxe-swing-forward": {
+  "pickaxe-swing-forward-1": {
+    "Hold": false,
+    "PlayerKeyFrames": [
+      {
+        "EasingTime": 200,
+        "EasingFunction": "Cubic",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": true,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 0.8,
+        "Elements": {
+          "ItemAnchor": [-0.1, 0.2, 0, 15, -4, 52],
+          "LowerArmR": [0, 0, 0, 0, 0, -56],
+          "UpperArmR": [1, -1, 0, 0, 19, -23.2],
+          "ItemAnchorL": [0, 0, 0, 0, 0, 0],
+          "LowerArmL": [0, 0, 0, 0, 0, -16],
+          "UpperArmL": [1, 0, 0, 13, -38, -26]
+        }
+      }
+    ],
+    "ItemKeyFrames": [],
+    "SoundFrames": [
+      {"Code": ["game:sounds/player/strike1", "game:sounds/player/strike2"], "DurationFraction": 0, "RandomizePitch": true, "Range": 16, "Volume": 0.5, "Synchronize": true}
+    ],
+    "ParticlesFrames": [],
+    "CallbackFrames": [],
+    "ItemAnimationStart": 0,
+    "ItemAnimationEnd": 0
+  },
+  "pickaxe-swing-forward-2": {
+    "Hold": false,
+    "PlayerKeyFrames": [
+      {
+        "EasingTime": 200,
+        "EasingFunction": "Cubic",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": true,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 0.8,
+        "Elements": {
+          "ItemAnchor": [-0.1, 0.2, 0, 15, -4, 52],
+          "LowerArmR": [0, 0, 0, 0, 0, -56],
+          "UpperArmR": [1, -1, 0, 0, 19, -23.2],
+          "ItemAnchorL": [0, 0, 0, 0, 0, 0],
+          "LowerArmL": [0, 0, 0, 0, 0, -16],
+          "UpperArmL": [1, 0, 0, 13, -38, -26]
+        }
+      }
+    ],
+    "ItemKeyFrames": [],
+    "SoundFrames": [
+      {"Code": ["game:sounds/player/strike1", "game:sounds/player/strike2"], "DurationFraction": 0, "RandomizePitch": true, "Range": 16, "Volume": 0.5, "Synchronize": true}
+    ],
+    "ParticlesFrames": [],
+    "CallbackFrames": [],
+    "ItemAnimationStart": 0,
+    "ItemAnimationEnd": 0
+  },
+  "pickaxe-swing-forward-3": {
     "Hold": false,
     "PlayerKeyFrames": [
       {

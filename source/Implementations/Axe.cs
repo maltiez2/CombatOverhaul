@@ -54,7 +54,7 @@ public enum AxeState
     AttackCooldown
 }
 
-public class AxeClient : IClientWeaponLogic, IOnGameTick
+public class AxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
 {
     public AxeClient(ICoreClientAPI api, Axe item)
     {
@@ -78,6 +78,7 @@ public class AxeClient : IClientWeaponLogic, IOnGameTick
     }
     public int ItemId { get; }
     public DirectionsConfiguration DirectionsType => DirectionsConfiguration.None;
+
 
     public virtual void OnSelected(ItemSlot slot, EntityPlayer player, bool mainHand, ref int state)
     {
@@ -111,6 +112,9 @@ public class AxeClient : IClientWeaponLogic, IOnGameTick
         }
     }
 
+    public bool RestrictRightHandAction() => PlayerBehavior?.GetState(mainHand: false) != (int)AxeState.Idle;
+    public bool RestrictLeftHandAction() => PlayerBehavior?.GetState(mainHand: true) != (int)AxeState.Idle;
+
     protected AxeStats Stats;
     protected LineSegmentCollider Collider;
     protected ICoreClientAPI Api;
@@ -131,6 +135,7 @@ public class AxeClient : IClientWeaponLogic, IOnGameTick
     {
         if (eventData.AltPressed && !mainHand) return false;
         if (player.BlockSelection?.Block == null) return false;
+        if (ActionRestricted(player, mainHand)) return false;
 
         switch ((AxeState)state)
         {
@@ -324,6 +329,7 @@ public class AxeClient : IClientWeaponLogic, IOnGameTick
     {
         if (eventData.AltPressed && !mainHand) return false;
         if (player.BlockSelection?.Block != null) return false;
+        if (ActionRestricted(player, mainHand)) return false;
 
         switch ((AxeState)state)
         {
@@ -410,6 +416,18 @@ public class AxeClient : IClientWeaponLogic, IOnGameTick
         return Item.MiningSpeed[mat] * GlobalConstants.ToolMiningSpeedModifier * traitRate;
     }
     protected virtual bool IsSplittable(Block block) => block.HasBehavior<Splittable>();
+
+    protected static bool ActionRestricted(EntityPlayer player, bool mainHand = true)
+    {
+        if (mainHand)
+        {
+            return (player.LeftHandItemSlot.Itemstack?.Item as IRestrictAction)?.RestrictRightHandAction() ?? false;
+        }
+        else
+        {
+            return (player.RightHandItemSlot.Itemstack?.Item as IRestrictAction)?.RestrictLeftHandAction() ?? false;
+        }
+    }
 }
 
 public class AxeServer
@@ -420,7 +438,7 @@ public class AxeServer
     }
 }
 
-public class Axe : ItemAxe, IHasWeaponLogic, ISetsRenderingOffset, IHasIdleAnimations, IOnGameTick
+public class Axe : ItemAxe, IHasWeaponLogic, ISetsRenderingOffset, IHasIdleAnimations, IOnGameTick, IRestrictAction
 {
     public AxeClient? Client { get; private set; }
     public AxeServer? Server { get; private set; }
@@ -429,6 +447,8 @@ public class Axe : ItemAxe, IHasWeaponLogic, ISetsRenderingOffset, IHasIdleAnima
     public bool RenderingOffset { get; private set; }
     public AnimationRequestByCode IdleAnimation { get; private set; }
     public AnimationRequestByCode ReadyAnimation { get; private set; }
+    public bool RestrictRightHandAction() => Client?.RestrictRightHandAction() ?? false;
+    public bool RestrictLeftHandAction() => Client?.RestrictLeftHandAction() ?? false;
 
     public float BlockBreakDamage { get; set; } = 0;
 

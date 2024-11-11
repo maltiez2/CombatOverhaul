@@ -6,12 +6,14 @@
     "groundStorageTransformByType": {
       "*-blackguard-*": {"translation": {"x": 0.2, "y": 0.1, "z": 0.68}, "rotation": {"x": -14, "y": 90, "z": 120}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.6},
       "*-forlorn-*": {"translation": {"x": 0.2, "y": 0.1, "z": 0.62}, "rotation": {"x": -14, "y": 90, "z": 120}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.6},
-      "*-falx-*": {"translation": {"x": 0.2, "y": 0.06, "z": 0.68}, "rotation": {"x": -15, "y": 90, "z": 126}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.6}
+      "*-falx-*": {"translation": {"x": 0.2, "y": 0.06, "z": 0.68}, "rotation": {"x": -15, "y": 90, "z": 126}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.6},
+      "*-scrap-*": {"translation": {"x": 0.24, "y": 0.34, "z": 0}, "rotation": {"x": 24, "y": 61, "z": -87}, "scale": 0.88}
     },
     "toolrackTransformByType": {
       "*-blackguard-*": {"translation": {"x": 0.95, "y": 0.5, "z": 0.9}, "rotation": {"x": 0, "y": 180, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}},
       "*-forlorn-*": {"translation": {"x": 1.05, "y": 0.55, "z": 0.9}, "rotation": {"x": 0, "y": 180, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}},
-      "*-falx-*": {"translation": {"x": 0.95, "y": 0.5, "z": 0.9}, "rotation": {"x": 0, "y": 180, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}}
+      "*-falx-*": {"translation": {"x": 0.95, "y": 0.5, "z": 0.9}, "rotation": {"x": 0, "y": 180, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}},
+      "*-scrap-*": {"translation": {"x": 0.2, "y": 0.85}, "rotation": {"y": 180, "z": 1}, "scale": 1.66}
     },
     "ProficiencyStat": "oneHandedSwordsProficiency",
     "RenderingOffset": false,
@@ -87,6 +89,25 @@
         "ReadyAnimation": "combatoverhaul:sword-falx-ready",
         "IdleAnimation": "combatoverhaul:sword-falx-idle",
         "AttackTpAnimation": "falx"
+      },
+      "*-scrap-*": {
+        "CanAttack": true,
+        "CanParry": false,
+        "CanBlock": false,
+        "CanSprint": true,
+        "SpeedPenalty": 0,
+        "AttackCooldownMs": 0,
+        "Attack": {
+          "StopOnTerrainHit": false,
+          "StopOnEntityHit": true,
+          "CollideWithTerrain": true,
+          "MaxReach": 9,
+          "DamageTypes": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 3, "Damage": 4}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0.5, 0, 0.45, 1.4, 0, 0.45]}]
+        },
+        "AttackAnimation": {"Main": ["combatoverhaul:sword-falx-slash-1", "combatoverhaul:sword-falx-slash-2"]},
+        "ReadyAnimation": "combatoverhaul:sword-falx-ready",
+        "IdleAnimation": "combatoverhaul:sword-falx-idle",
+        "AttackTpAnimation": "falx"
       }
     }
   },
@@ -103,16 +124,19 @@
     }
   ],
   "variantgroups": [
-    {"code": "type", "states": ["falx", "blackguard", "forlorn"]},
-    {"code": "metal", "states": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "gold", "silver", "iron", "meteoriciron", "steel"]}
+    {"code": "type", "states": ["scrap", "falx", "blackguard", "forlorn"]},
+    {"code": "metal", "states": ["scrap", "copper", "tinbronze", "bismuthbronze", "blackbronze", "gold", "silver", "iron", "meteoriciron", "steel"]}
   ],
-  "allowedVariants": ["blade-falx-*", "blade-blackguard-iron", "blade-forlorn-iron"],
+  "skipVariants": ["blade-falx-scrap"],
+  "allowedVariants": ["blade-falx-*", "blade-blackguard-iron", "blade-forlorn-iron", "blade-scrap-scrap"],
   "shapeByType": {
     "blade-falx-*": {"base": "item/tool/blade/falx/{metal}"},
     "blade-blackguard-*": {"base": "combatoverhaul:weapons/swords/sword-blackguard"},
-    "blade-forlorn-*": {"base": "combatoverhaul:weapons/swords/sword-forlorn"}
+    "blade-forlorn-*": {"base": "combatoverhaul:weapons/swords/sword-forlorn"},
+    "blade-scrap-scrap": {"base": "item/tool/blade/{metal}"}
   },
   "durabilitybytype": {
+    "blade-scrap-scrap": 190,
     "blade-falx-copper": 250,
     "blade-falx-tinbronze": 450,
     "blade-falx-bismuthbronze": 530,
@@ -129,16 +153,19 @@
   "guiTransformByType": {
     "blade-blackguard-iron": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -89, "y": 47, "z": 23}, "origin": {"x": 0.65, "y": 1.1, "z": 0.46}, "scale": 2.45},
     "blade-forlorn-iron": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -89, "y": 47, "z": 44}, "origin": {"x": 0.6, "y": 0.4, "z": 0.47}, "scale": 2.7},
+    "*-scrap-*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -94, "y": 47, "z": 44}, "origin": {"x": 0.73, "y": 0, "z": 0.48}, "scale": 2.2},
     "*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -53, "y": 118, "z": -5}, "origin": {"x": 0.65, "y": 0.1, "z": 0.37}, "scale": 1.65}
   },
   "groundTransformByType": {
     "blade-blackguard-iron": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 3.4},
     "blade-forlorn-iron": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 3.4},
+    "*-scrap-*": {"translation": {"x": 0, "y": 0.05, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 3.67},
     "*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 3.4}
   },
   "tpHandTransformByType": {
     "blade-blackguard-iron": {"translation": {"x": -1.25, "y": 0.05, "z": -0.76}, "rotation": {"x": -90, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 0.6},
     "blade-forlorn-iron": {"translation": {"x": -1.25, "y": 0.03, "z": -0.83}, "rotation": {"x": -90, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 0.6},
+    "*-scrap-*": {"translation": {"x": -0.65, "y": -0.01, "z": -0.53}, "rotation": {"x": 90, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 0.91},
     "*": {"translation": {"x": -1.03, "y": -0.005, "z": -0.66}, "rotation": {"x": 85, "y": 0, "z": 2}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 0.8}
   }
 }

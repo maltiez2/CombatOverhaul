@@ -6,7 +6,7 @@
     "value": {
       "ReadyAnimation": "combatoverhaul:shovel-ready",
       "IdleAnimation": "combatoverhaul:shovel-idle",
-      "SwingForwardAnimation": "combatoverhaul:shovel-swing-forward",
+      "SwingForwardAnimation": ["combatoverhaul:shovel-swing-forward"],
       "SwingBackAnimation": "combatoverhaul:shovel-swing-back",
       "SwingTpAnimation": "shoveldig",
       "RenderingOffset": false,

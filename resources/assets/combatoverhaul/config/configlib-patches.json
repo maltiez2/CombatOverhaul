@@ -58,18 +58,25 @@
         "axe-swing-forward/SoundFrames/0/Volume": "tool_whoosh_sound"
       },
       "combatoverhaul:config/animations/tool/pickaxe.json": {
-        "pickaxe-swing-forward/SoundFrames/0/Volume": "tool_whoosh_sound"
+        "pickaxe-swing-forward-1/SoundFrames/0/Volume": "tool_whoosh_sound",
+        "pickaxe-swing-forward-2/SoundFrames/0/Volume": "tool_whoosh_sound",
+        "pickaxe-swing-forward-3/SoundFrames/0/Volume": "tool_whoosh_sound"
+      },
+      "combatoverhaul:entities/spear.json": {
+        "client/behaviors/0/airDragFactor": "value / spears_thrown_distance",
+        "client/behaviors/0/gravityFactor": "value / spears_thrown_distance",
+        "server/behaviors/0/airDragFactor": "value / spears_thrown_distance",
+        "server/behaviors/0/gravityFactor": "value / spears_thrown_distance"
       },
       "game:itemtypes/combatoverhaul/bow.json": {
         "attributes/AimingByType/@@*/AimDifficulty": "bow_aiming_difficulty"
       },
       "game:itemtypes/combatoverhaul/spear.json": {
         "attributes/ThrowAttack/Aiming/AimDifficulty": "spears_aiming_difficulty"
-      }
-    },
-    "other": {
-      "combatoverhaul:patches/weapons/shield.json": {
-        "3/value/@@*/Block/Zones": "shields_protection_zones"
+      },
+      "combatoverhaul:config/settings.json": {
+        "directionsCursorAlpha": "directions_cursor_transparency",
+        "directionsCursorScale": "directions_cursor_scale"
       }
     }
   },
@@ -79,6 +86,36 @@
     "vanilla_item": "Item"
   },
   "settings": [
+    {
+      "code": "directions_cursor_transparency",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-directions_cursor_transparency",
+      "default": 1.0,
+      "range": {
+        "min": 0.0,
+        "max": 1.0
+      }
+    },
+    {
+      "code": "directions_cursor_scale",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-directions_cursor_scale",
+      "default": 1.0,
+      "range": {
+        "min": 0.1,
+        "max": 3.0
+      }
+    },
+    {
+      "code": "bow_aiming_difficulty",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-bow_aiming_difficulty",
+      "default": 1.0,
+      "range": {
+        "min": 0.0,
+        "max": 2.0
+      }
+    },
     {
       "code": "bows_aiming_cursor_type",
       "type": "string",
@@ -90,16 +127,6 @@
         "Fixed",
         "Moving"
       ]
-    },
-    {
-      "code": "bow_aiming_difficulty",
-      "type": "float",
-      "ingui": "combatoverhaul:setting-bow_aiming_difficulty",
-      "default": 1.0,
-      "range": {
-        "min": 0.0,
-        "max": 2.0
-      }
     },
     {
       "code": "spears_aiming_cursor_type",
@@ -124,16 +151,13 @@
       }
     },
     {
-      "code": "shields_protection_zones",
-      "type": "other",
-      "ingui": "combatoverhaul:setting-shields_protection_zones",
-      "default": "Full without feet and head",
-      "mapping": {
-        "Full": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
-        "Full without feet": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
-        "Full without head": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
-        "Full without feet and head": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
-        "Minimal": ["Face", "Neck", "Torso", "LeftArm", "LeftHand", "LeftLeg", "RightLeg"]
+      "code": "spears_thrown_distance",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-spears_thrown_distance",
+      "default": 1.0,
+      "range": {
+        "min": 0.5,
+        "max": 5.0
       }
     },
     {

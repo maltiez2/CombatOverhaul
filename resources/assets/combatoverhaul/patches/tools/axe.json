@@ -79,5 +79,11 @@
     }
   },
   {"file": "game:itemtypes/tool/axe-metal", "op": "remove", "path": "/class"},
-  {"file": "game:itemtypes/tool/axe-metal", "op": "add", "path": "/classByType", "value": {"*-felling-*": "CombatOverhaul:Axe", "*": "ItemAxe"}}
+  {"file": "game:itemtypes/tool/axe-metal", "op": "add", "path": "/classByType", "value": {"*-felling-*": "CombatOverhaul:Axe", "*-scrap-*": "CombatOverhaul:Axe", "*": "ItemAxe"}},
+  {
+    "file": "game:itemtypes/tool/axe-metal",
+    "op": "replace",
+    "path": "/tpHandTransformByType/*-scrap",
+    "value": {"translation": {"x": -0.43, "y": -0.52, "z": -0.03}, "rotation": {"x": 90, "y": 0, "z": 0}, "scale": 0.95}
+  }
 ]

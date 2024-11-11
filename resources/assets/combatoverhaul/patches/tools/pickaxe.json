@@ -6,7 +6,7 @@
     "value": {
       "ReadyAnimation": "combatoverhaul:pickaxe-ready",
       "IdleAnimation": "combatoverhaul:pickaxe-idle",
-      "SwingForwardAnimation": "combatoverhaul:pickaxe-swing-forward",
+      "SwingForwardAnimation": ["combatoverhaul:pickaxe-swing-forward-1", "combatoverhaul:pickaxe-swing-forward-2", "combatoverhaul:pickaxe-swing-forward-3"],
       "SwingBackAnimation": "combatoverhaul:pickaxe-swing-back",
       "SwingTpAnimation": "pickaxe",
       "RenderingOffset": false,

@@ -74,42 +74,42 @@
             "Layers": ["Skin"],
             "Zones": ["Head", "Neck", "Face"],
             "Resists": {"PiercingAttack": 1, "SlashingAttack": 1, "BluntAttack": 4},
-            "FlatReduction": {"PiercingAttack": 0, "SlashingAttack": 0, "BluntAttack": 1},
+            "FlatReduction": {},
             "PlayerStats": {"walkspeed": 0, "manipulationSpeed": 0, "steadyAim": -0.02, "healingeffectivness": -0.05, "hungerrate": 0.05}
           },
           "armor-body-sewn-linen": {
             "Layers": ["Skin"],
             "Zones": ["Torso", "Arms", "Hands"],
             "Resists": {"PiercingAttack": 1, "SlashingAttack": 1, "BluntAttack": 4},
-            "FlatReduction": {"PiercingAttack": 0, "SlashingAttack": 0, "BluntAttack": 1},
+            "FlatReduction": {},
             "PlayerStats": {"walkspeed": -0.02, "manipulationSpeed": -0.02, "steadyAim": 0, "healingeffectivness": -0.1, "hungerrate": 0.05}
           },
           "armor-legs-sewn-linen": {
             "Layers": ["Skin"],
             "Zones": ["Legs", "Feet"],
             "Resists": {"PiercingAttack": 1, "SlashingAttack": 1, "BluntAttack": 4},
-            "FlatReduction": {"PiercingAttack": 0, "SlashingAttack": 0, "BluntAttack": 1},
+            "FlatReduction": {},
             "PlayerStats": {"walkspeed": -0.02, "manipulationSpeed": 0, "steadyAim": 0, "healingeffectivness": -0.05, "hungerrate": 0.05}
           },
           "armor-head-tailored-*-linen": {
             "Layers": ["Skin"],
             "Zones": ["Head", "Neck", "Face"],
             "Resists": {"PiercingAttack": 1, "SlashingAttack": 1, "BluntAttack": 8},
-            "FlatReduction": {"PiercingAttack": 0, "SlashingAttack": 0, "BluntAttack": 2},
+            "FlatReduction": {},
             "PlayerStats": {"walkspeed": 0, "manipulationSpeed": 0, "steadyAim": -0.02, "healingeffectivness": -0.05, "hungerrate": 0.05}
           },
           "armor-body-tailored-*-linen": {
             "Layers": ["Skin"],
             "Zones": ["Torso", "Arms", "Hands"],
             "Resists": {"PiercingAttack": 1, "SlashingAttack": 1, "BluntAttack": 8},
-            "FlatReduction": {"PiercingAttack": 0, "SlashingAttack": 0, "BluntAttack": 2},
+            "FlatReduction": {},
             "PlayerStats": {"walkspeed": -0.02, "manipulationSpeed": -0.02, "steadyAim": 0, "healingeffectivness": -0.1, "hungerrate": 0.05}
           },
           "armor-legs-tailored-*-linen": {
             "Layers": ["Skin"],
             "Zones": ["Legs", "Feet"],
             "Resists": {"PiercingAttack": 1, "SlashingAttack": 1, "BluntAttack": 8},
-            "FlatReduction": {"PiercingAttack": 0, "SlashingAttack": 0, "BluntAttack": 2},
+            "FlatReduction": {},
             "PlayerStats": {"walkspeed": -0.02, "manipulationSpeed": 0, "steadyAim": 0, "healingeffectivness": -0.05, "hungerrate": 0.05}
           },
           "armor-head-lamellar-copper": {

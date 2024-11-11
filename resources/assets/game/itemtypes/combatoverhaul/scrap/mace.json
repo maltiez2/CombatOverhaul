@@ -26,6 +26,7 @@
       },
       "AttackHitSound": "game:sounds/thud",
       "AttackAnimation": {"Main": ["combatoverhaul:club-strike-1h-1", "combatoverhaul:club-strike-1h-2"]},
+      "AttackTpAnimation": "falx",
       "ReadyAnimation": "combatoverhaul:sword-short-ready",
       "IdleAnimation": "combatoverhaul:sword-short-idle"
     }

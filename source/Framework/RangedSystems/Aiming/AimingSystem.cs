@@ -20,7 +20,6 @@ public class AimingStatsJson
     public float AimDifficulty { get; set; } = 1;
     public string CursorType { get; set; } = "Moving";
     public bool InvertMouseYAxis { get; set; } = false;
-    public float ZeroingAngle { get; set; } = 0;
 
     public float VerticalAccuracyMultiplier { get; set; } = 1f;
     public float HorizontalAccuracyMultiplier { get; set; } = 1f;
@@ -52,7 +51,6 @@ public class AimingStatsJson
             AimDifficulty = AimDifficulty,
             CursorType = Enum.Parse<AimingCursorType>(CursorType),
             InvertMouseYAxis = InvertMouseYAxis,
-            ZeroingAngle = ZeroingAngle,
             VerticalAccuracyMultiplier = VerticalAccuracyMultiplier,
             HorizontalAccuracyMultiplier = HorizontalAccuracyMultiplier,
             AimDriftFrequency = AimDriftFrequency,
@@ -81,7 +79,6 @@ public class AimingStats
     public float AimDifficulty { get; set; } = 1;
     public AimingCursorType CursorType { get; set; } = AimingCursorType.Moving;
     public bool InvertMouseYAxis { get; set; } = false;
-    public float ZeroingAngle { get; set; } = 0;
 
     public float VerticalAccuracyMultiplier { get; set; } = 1f;
     public float HorizontalAccuracyMultiplier { get; set; } = 1f;
