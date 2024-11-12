@@ -1,5 +1,4 @@
 ﻿using CombatOverhaul.Colliders;
-using System.Collections.Immutable;
 using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -33,7 +32,7 @@ public sealed class MeleeAttack
         StopOnEntityHit = stats.StopOnEntityHit;
         CollideWithTerrain = stats.CollideWithTerrain;
         MaxReach = stats.MaxReach;
-        DamageTypes = stats.DamageTypes.Select(stats => stats.ToDamageType()).ToImmutableArray();
+        DamageTypes = stats.DamageTypes.Select(stats => stats.ToDamageType());
 
         _meleeSystem = api.ModLoader.GetModSystem<CombatOverhaulSystem>().ClientMeleeSystem ?? throw new Exception();
     }
@@ -121,7 +120,7 @@ public sealed class MeleeAttack
             }
         }
 
-        return _terrainCollisionsBuffer.ToImmutableHashSet();
+        return _terrainCollisionsBuffer;
     }
     private IEnumerable<(Entity entity, Vector3 point)> CollideWithEntities(IPlayer player, out IEnumerable<MeleeDamagePacket> packets, bool mainHand, float maximumParameter)
     {
@@ -157,9 +156,9 @@ public sealed class MeleeAttack
             if (attacked && StopOnEntityHit) break;
         }
 
-        packets = damagePackets.ToImmutableArray();
+        packets = damagePackets;
 
-        IEnumerable<(Entity entity, Vector3 point)> result = _entitiesCollisionsBuffer.ToImmutableHashSet();
+        IEnumerable<(Entity entity, Vector3 point)> result = _entitiesCollisionsBuffer;
         _entitiesCollisionsBuffer.Clear();
         return result;
     }

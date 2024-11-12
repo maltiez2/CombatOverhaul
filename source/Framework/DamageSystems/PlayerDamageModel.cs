@@ -3,7 +3,6 @@ using CombatOverhaul.Colliders;
 using CombatOverhaul.MeleeSystems;
 using CombatOverhaul.Utils;
 using ProtoBuf;
-using System.Collections.Immutable;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -60,7 +59,7 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
     public override string PropertyName() => "PlayerDamageModel";
 
     public PlayerDamageModel DamageModel { get; private set; } = new(Array.Empty<DamageZoneStatsJson>());
-    public readonly ImmutableDictionary<string, PlayerBodyPart> CollidersToBodyParts = new Dictionary<string, PlayerBodyPart>()
+    public readonly Dictionary<string, PlayerBodyPart> CollidersToBodyParts = new Dictionary<string, PlayerBodyPart>()
     {
         { "LowerTorso", PlayerBodyPart.Torso },
         { "UpperTorso", PlayerBodyPart.Torso },
@@ -74,8 +73,8 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
         { "UpperFootR", PlayerBodyPart.RightLeg },
         { "LowerFootL", PlayerBodyPart.LeftFoot },
         { "LowerFootR", PlayerBodyPart.RightFoot }
-    }.ToImmutableDictionary();
-    public readonly ImmutableDictionary<PlayerBodyPart, DamageZone> BodyPartsToZones = new Dictionary<PlayerBodyPart, DamageZone>()
+    };
+    public readonly Dictionary<PlayerBodyPart, DamageZone> BodyPartsToZones = new Dictionary<PlayerBodyPart, DamageZone>()
     {
         { PlayerBodyPart.None, DamageZone.None },
         { PlayerBodyPart.Head, DamageZone.Head },
@@ -91,7 +90,7 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
         { PlayerBodyPart.LeftFoot, DamageZone.Feet },
         { PlayerBodyPart.RightFoot, DamageZone.Feet }
 
-    }.ToImmutableDictionary();
+    };
 
     public DamageBlockStats? CurrentDamageBlock { get; set; } = null;
 
@@ -278,11 +277,11 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
 }
 public sealed class PlayerDamageModel
 {
-    public readonly ImmutableArray<DamageZoneStats> DamageZones;
+    public readonly DamageZoneStats[] DamageZones;
 
     public PlayerDamageModel(DamageZoneStatsJson[] zones)
     {
-        DamageZones = zones.Select(zone => zone.ToStats()).Where(zone => zone.ZoneType != PlayerBodyPart.None).ToImmutableArray();
+        DamageZones = zones.Select(zone => zone.ToStats()).Where(zone => zone.ZoneType != PlayerBodyPart.None).ToArray();
         _random = new(0.5f, 0.5f, EnumDistribution.UNIFORM);
 
         _weights = new();
@@ -385,7 +384,7 @@ public sealed class DamageBlockStats
     public readonly DirectionConstrain Directions;
     public readonly Action<float> Callback;
     public readonly string? Sound;
-    public readonly ImmutableDictionary<EnumDamageType, float>? BlockTier;
+    public readonly Dictionary<EnumDamageType, float>? BlockTier;
 
     public DamageBlockStats(PlayerBodyPart type, DirectionConstrain directions, Action<float> callback, string? sound, Dictionary<EnumDamageType, float>? blockTier)
     {
@@ -393,7 +392,7 @@ public sealed class DamageBlockStats
         Directions = directions;
         Callback = callback;
         Sound = sound;
-        BlockTier = blockTier?.ToImmutableDictionary();
+        BlockTier = blockTier;
     }
 }
 

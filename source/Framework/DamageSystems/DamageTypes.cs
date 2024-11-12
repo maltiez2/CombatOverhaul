@@ -1,5 +1,4 @@
-﻿using System.Collections.Immutable;
-using System.Numerics;
+﻿using System.Numerics;
 using Vintagestory.API.Common;
 
 namespace CombatOverhaul.DamageSystems;
@@ -37,15 +36,14 @@ public readonly struct DamageData
         Strength = strength;
     }
 
-    public static readonly ImmutableDictionary<EnumDamageType, string> Units = new Dictionary<EnumDamageType, string>()
+    public static readonly Dictionary<EnumDamageType, string> Units = new Dictionary<EnumDamageType, string>()
     {
         { EnumDamageType.PiercingAttack, "tier" },
         { EnumDamageType.SlashingAttack, "tier" },
         { EnumDamageType.BluntAttack, "tier" },
         { EnumDamageType.Fire, "%" },
         { EnumDamageType.Heat, "%" }
-
-    }.ToImmutableDictionary();
+    };
 }
 
 public interface ILocationalDamage
@@ -68,23 +66,23 @@ public class TypedDamageSource : DamageSource, ITypedDamage
 
 public class DamageResistData
 {
-    public ImmutableDictionary<EnumDamageType, float> Resists { get; }
-    public ImmutableDictionary<EnumDamageType, float> FlatDamageReduction { get; }
+    public Dictionary<EnumDamageType, float> Resists { get; }
+    public Dictionary<EnumDamageType, float> FlatDamageReduction { get; }
 
     public DamageResistData(Dictionary<EnumDamageType, float> resists, Dictionary<EnumDamageType, float> flatDamageReduction)
     {
-        Resists = resists.ToImmutableDictionary();
-        FlatDamageReduction = flatDamageReduction.ToImmutableDictionary();
+        Resists = resists;
+        FlatDamageReduction = flatDamageReduction;
     }
     public DamageResistData(Dictionary<EnumDamageType, float> resists)
     {
-        Resists = resists.ToImmutableDictionary();
-        FlatDamageReduction = (new Dictionary<EnumDamageType, float>()).ToImmutableDictionary();
+        Resists = resists;
+        FlatDamageReduction = (new Dictionary<EnumDamageType, float>());
     }
     public DamageResistData()
     {
-        Resists = (new Dictionary<EnumDamageType, float>()).ToImmutableDictionary();
-        FlatDamageReduction = (new Dictionary<EnumDamageType, float>()).ToImmutableDictionary();
+        Resists = (new Dictionary<EnumDamageType, float>());
+        FlatDamageReduction = (new Dictionary<EnumDamageType, float>());
     }
 
     public static DamageResistData Empty => new();

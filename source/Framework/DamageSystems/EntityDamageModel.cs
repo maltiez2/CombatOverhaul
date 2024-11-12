@@ -1,5 +1,4 @@
 ﻿using CombatOverhaul.Colliders;
-using System.Collections.Immutable;
 using System.Text;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -45,7 +44,7 @@ public sealed class EntityDamageModelBehavior : EntityBehavior
     public event OnEntityReceiveDamageDelegate? OnReceiveDamage;
 
     public override string PropertyName() => "EntityDamageModel";
-    public ImmutableDictionary<ColliderTypes, float> DamageMultipliers { get; private set; } = new Dictionary<ColliderTypes, float>()
+    public Dictionary<ColliderTypes, float> DamageMultipliers { get; private set; } = new Dictionary<ColliderTypes, float>()
     {
         { ColliderTypes.Torso, 1.0f },
         { ColliderTypes.Arm, 1.0f },
@@ -53,10 +52,10 @@ public sealed class EntityDamageModelBehavior : EntityBehavior
         { ColliderTypes.Head, 1.0f },
         { ColliderTypes.Critical, 1.0f },
         { ColliderTypes.Resistant, 0.0f }
-    }.ToImmutableDictionary();
+    };
     public DamageResistData Resists { get; set; } = new();
-    public ImmutableDictionary<ColliderTypes, DamageResistData> ResistsForColliders { get; private set; } = new Dictionary<ColliderTypes, DamageResistData>().ToImmutableDictionary();
-    public ImmutableDictionary<ColliderTypes, SoundEffectData> HitSounds { get; private set; } = new Dictionary<ColliderTypes, SoundEffectData>().ToImmutableDictionary();
+    public Dictionary<ColliderTypes, DamageResistData> ResistsForColliders { get; private set; } = new Dictionary<ColliderTypes, DamageResistData>();
+    public Dictionary<ColliderTypes, SoundEffectData> HitSounds { get; private set; } = new Dictionary<ColliderTypes, SoundEffectData>();
 
     public override void Initialize(EntityProperties properties, JsonObject attributes)
     {
@@ -67,8 +66,7 @@ public sealed class EntityDamageModelBehavior : EntityBehavior
             Resists = new(stats.DefaultResists.ToDictionary(entry => Enum.Parse<EnumDamageType>(entry.Key), entry => entry.Value));
 
             ResistsForColliders = stats.ResistsForColliders
-                .ToDictionary(entry => Enum.Parse<ColliderTypes>(entry.Key), entry => new DamageResistData(entry.Value.ToDictionary(entry => Enum.Parse<EnumDamageType>(entry.Key), entry => entry.Value)))
-                .ToImmutableDictionary();
+                .ToDictionary(entry => Enum.Parse<ColliderTypes>(entry.Key), entry => new DamageResistData(entry.Value.ToDictionary(entry => Enum.Parse<EnumDamageType>(entry.Key), entry => entry.Value)));
 
             DamageMultipliers = new Dictionary<ColliderTypes, float>()
             {
@@ -78,9 +76,9 @@ public sealed class EntityDamageModelBehavior : EntityBehavior
                 { ColliderTypes.Head, stats.HeadDamageMultiplier },
                 { ColliderTypes.Critical, stats.CriticalDamageMultiplier },
                 { ColliderTypes.Resistant, stats.ResistantDamageMultiplier }
-            }.ToImmutableDictionary();
+            };
 
-            HitSounds = stats.HitSounds.ToDictionary(entry => Enum.Parse<ColliderTypes>(entry.Key), entry => entry.Value).ToImmutableDictionary();
+            HitSounds = stats.HitSounds.ToDictionary(entry => Enum.Parse<ColliderTypes>(entry.Key), entry => entry.Value);
         }
     }
     public override void GetInfoText(StringBuilder infotext)

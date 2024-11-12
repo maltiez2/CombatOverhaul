@@ -1,5 +1,4 @@
 ﻿using ImGuiNET;
-using System.Collections.Immutable;
 using System.Numerics;
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
@@ -51,7 +50,7 @@ public readonly struct PlayerItemFrame
 
 public readonly struct SoundFrame
 {
-    public readonly ImmutableArray<string> Code;
+    public readonly string[] Code;
     public readonly float DurationFraction;
     public readonly bool RandomizePitch;
     public readonly float Range;
@@ -60,7 +59,7 @@ public readonly struct SoundFrame
 
     public SoundFrame(string[] code, float durationFraction, bool randomizePitch = false, float range = 32, float volume = 1, bool synchronize = true)
     {
-        Code = code.ToImmutableArray();
+        Code = code;
         DurationFraction = durationFraction;
         RandomizePitch = randomizePitch;
         Range = range;
@@ -325,11 +324,11 @@ public readonly struct ItemKeyFrame
 public readonly struct ItemFrame
 {
     public readonly int ElementsHash = 0;
-    public readonly ImmutableDictionary<string, AnimationElement> Elements;
+    public readonly Dictionary<string, AnimationElement> Elements;
 
     public ItemFrame(Dictionary<string, AnimationElement> elements)
     {
-        Elements = elements.ToImmutableDictionary();
+        Elements = elements;
         if (elements.Any())
         {
             ElementsHash = Elements.Select(entry => entry.Key.GetHashCode()).Aggregate((first, second) => HashCode.Combine(first, second));
