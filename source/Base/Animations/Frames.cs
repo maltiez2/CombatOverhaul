@@ -324,11 +324,15 @@ public readonly struct ItemKeyFrame
 public readonly struct ItemFrame
 {
     public readonly int ElementsHash = 0;
-    public readonly Dictionary<string, AnimationElement> Elements;
+    public readonly Dictionary<string, AnimationElement> Elements = new();
 
     public ItemFrame(Dictionary<string, AnimationElement> elements)
     {
-        Elements = elements;
+        foreach ((string code, AnimationElement value) in elements)
+        {
+            Elements.Add(code, value);
+        }
+
         if (elements.Any())
         {
             ElementsHash = Elements.Select(entry => entry.Key.GetHashCode()).Aggregate((first, second) => HashCode.Combine(first, second));

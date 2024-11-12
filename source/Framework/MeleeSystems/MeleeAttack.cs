@@ -1,4 +1,5 @@
 ﻿using CombatOverhaul.Colliders;
+using System.Diagnostics;
 using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -18,7 +19,7 @@ public class MeleeAttackStats
 
 public sealed class MeleeAttack
 {
-    public IEnumerable<MeleeDamageType> DamageTypes { get; }
+    public MeleeDamageType[] DamageTypes { get; }
 
     public bool StopOnTerrainHit { get; set; }
     public bool StopOnEntityHit { get; set; }
@@ -32,7 +33,7 @@ public sealed class MeleeAttack
         StopOnEntityHit = stats.StopOnEntityHit;
         CollideWithTerrain = stats.CollideWithTerrain;
         MaxReach = stats.MaxReach;
-        DamageTypes = stats.DamageTypes.Select(stats => stats.ToDamageType());
+        DamageTypes = stats.DamageTypes.Select(stats => stats.ToDamageType()).ToArray();
 
         _meleeSystem = api.ModLoader.GetModSystem<CombatOverhaulSystem>().ClientMeleeSystem ?? throw new Exception();
     }
@@ -99,13 +100,11 @@ public sealed class MeleeAttack
 
     private readonly ICoreClientAPI _api;
     private readonly Dictionary<long, HashSet<long>> _attackedEntities = new();
-    private readonly HashSet<(Block block, Vector3 point)> _terrainCollisionsBuffer = new();
-    private readonly HashSet<(Entity entity, Vector3 point)> _entitiesCollisionsBuffer = new();
     private readonly MeleeSystemClient _meleeSystem;
 
     private IEnumerable<(Block block, Vector3 point)> CheckTerrainCollision(out float parameter)
     {
-        _terrainCollisionsBuffer.Clear();
+        List<(Block block, Vector3 point)> terrainCollisionsBuffer = new();
 
         parameter = 1f;
 
@@ -115,12 +114,12 @@ public sealed class MeleeAttack
 
             if (result != null)
             {
-                _terrainCollisionsBuffer.Add((result.Value.block, result.Value.position));
+                terrainCollisionsBuffer.Add((result.Value.block, result.Value.position));
                 if (result.Value.parameter < parameter) parameter = result.Value.parameter;
             }
         }
 
-        return _terrainCollisionsBuffer;
+        return terrainCollisionsBuffer;
     }
     private IEnumerable<(Entity entity, Vector3 point)> CollideWithEntities(IPlayer player, out IEnumerable<MeleeDamagePacket> packets, bool mainHand, float maximumParameter)
     {
@@ -128,7 +127,7 @@ public sealed class MeleeAttack
 
         Entity[] entities = _api.World.GetEntitiesAround(player.Entity.Pos.XYZ, MaxReach, MaxReach);
 
-        _entitiesCollisionsBuffer.Clear();
+        List<(Entity entity, Vector3 point)> entitiesCollisionsBuffer = new();
 
         List<MeleeDamagePacket> damagePackets = new();
 
@@ -145,7 +144,7 @@ public sealed class MeleeAttack
 
                 if (!attacked) continue;
 
-                _entitiesCollisionsBuffer.Add((entity, point));
+                entitiesCollisionsBuffer.Add((entity, point));
                 damagePackets.Add(packet);
 
                 _attackedEntities[entityId].Add(entity.EntityId);
@@ -158,8 +157,6 @@ public sealed class MeleeAttack
 
         packets = damagePackets;
 
-        IEnumerable<(Entity entity, Vector3 point)> result = _entitiesCollisionsBuffer;
-        _entitiesCollisionsBuffer.Clear();
-        return result;
+        return entitiesCollisionsBuffer;
     }
 }

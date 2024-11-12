@@ -2,6 +2,7 @@
 using CombatOverhaul.Colliders;
 using CombatOverhaul.DamageSystems;
 using ProtoBuf;
+using System.Diagnostics;
 using System.Numerics;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -156,6 +157,7 @@ public class MeleeDamageType : IHasLineCollider
         if (colliders != null)
         {
             bool intersects = colliders.Collide(InWorldCollider.Position, InWorldCollider.Direction, out collider, out parameter, out collisionPoint);
+
             if (intersects) colliderType = colliders.CollidersTypes[collider];
 
             return intersects;
