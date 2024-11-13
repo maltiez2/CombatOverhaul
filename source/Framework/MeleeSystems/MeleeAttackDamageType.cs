@@ -1,8 +1,6 @@
-﻿using Cairo.Freetype;
-using CombatOverhaul.Colliders;
+﻿using CombatOverhaul.Colliders;
 using CombatOverhaul.DamageSystems;
 using ProtoBuf;
-using System.Diagnostics;
 using System.Numerics;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;

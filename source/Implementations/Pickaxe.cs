@@ -2,6 +2,7 @@
 using CombatOverhaul.Colliders;
 using CombatOverhaul.Inputs;
 using CombatOverhaul.MeleeSystems;
+using System.Diagnostics;
 using System.Numerics;
 using System.Reflection.Metadata;
 using Vintagestory.API.Client;
@@ -27,6 +28,8 @@ public class PickaxeStats
     public string AttackAnimation { get; set; } = "";
     public string AttackTpAnimation { get; set; } = "";
     public float AnimationStaggerOnHitDurationMs { get; set; } = 100;
+
+    public float AnimationSpeedBonusFromMiningSpeed { get; set; } = 0.3f;
 }
 
 public enum PickaxeState
@@ -113,6 +116,10 @@ public class PickaxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
     protected readonly MeleeAttack MeleeAttack;
     protected readonly Random Rand = new();
 
+    protected const float DefaultMiningSpeed = 4;
+    protected const float SteelMiningSpeed = 9;
+    protected const float MaxAnimationSpeedBonus = 1.5f;
+
     [ActionEventHandler(EnumEntityAction.LeftMouseDown, ActionState.Active)]
     protected virtual bool Swing(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
@@ -124,13 +131,21 @@ public class PickaxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
         {
             case PickaxeState.Idle:
                 {
+                    float animationSpeedMultiplier = 1;
+                    BlockSelection? selection = player.BlockSelection;
+                    if (selection?.Position != null)
+                    {
+                        float miningSpeed = GetMiningSpeed(slot.Itemstack, selection, selection.Block, player);
+                        animationSpeedMultiplier = GetAnimationSpeedFromMiningSpeed(miningSpeed, Stats.AnimationSpeedBonusFromMiningSpeed);
+                    }
+
                     int animationsNumber = Stats.SwingForwardAnimation.Length;
                     int animationIndex = Rand.Next(0, animationsNumber);
 
                     AnimationBehavior?.Play(
                         mainHand,
                         Stats.SwingForwardAnimation[animationIndex],
-                        animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1,
+                        animationSpeed: PlayerBehavior?.ManipulationSpeed * animationSpeedMultiplier ?? animationSpeedMultiplier,
                         category: AnimationCategory(mainHand),
                         callback: () => SwingForwardAnimationCallback(slot, player, mainHand));
                     AnimationBehavior?.PlayVanillaAnimation(Stats.SwingTpAnimation, mainHand);
@@ -158,24 +173,39 @@ public class PickaxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
     }
     protected virtual bool SwingForwardAnimationCallback(ItemSlot slot, EntityPlayer player, bool mainHand)
     {
-        AnimationBehavior?.Play(
+        BlockSelection selection = player.BlockSelection;
+
+        if (selection?.Position == null)
+        {
+            AnimationBehavior?.Play(
             mainHand,
             Stats.SwingBackAnimation,
             animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1,
             category: AnimationCategory(mainHand),
             callback: () => SwingBackAnimationCallback(mainHand));
+            PlayerBehavior?.SetState((int)PickaxeState.SwingBack, mainHand);
+            AnimationBehavior?.StopVanillaAnimation(Stats.SwingTpAnimation, mainHand);
+            return true;
+        }
+
+        float miningSpeed = GetMiningSpeed(slot.Itemstack, selection, selection.Block, player);
+        float animationSpeedMultiplier = GetAnimationSpeedFromMiningSpeed(miningSpeed, Stats.AnimationSpeedBonusFromMiningSpeed);
+
+        AnimationBehavior?.Play(
+            mainHand,
+            Stats.SwingBackAnimation,
+            animationSpeed: PlayerBehavior?.ManipulationSpeed * animationSpeedMultiplier ?? animationSpeedMultiplier,
+            category: AnimationCategory(mainHand),
+            callback: () => SwingBackAnimationCallback(mainHand));
         PlayerBehavior?.SetState((int)PickaxeState.SwingBack, mainHand);
         AnimationBehavior?.StopVanillaAnimation(Stats.SwingTpAnimation, mainHand);
 
-        BlockSelection selection = player.BlockSelection;
-
-        if (selection?.Position == null) return true;
 
         SoundsSystem.Play(selection.Block.Sounds.GetHitSound(Item.Tool ?? EnumTool.Pickaxe).ToString(), randomizedPitch: true);
         TimeSpan currentTime = TimeSpan.FromMilliseconds(Api.ElapsedMilliseconds);
         TimeSpan delta = currentTime - SwingStart + ExtraSwingTime;
 
-        float miningSpeed = GetMiningSpeed(slot.Itemstack, selection, selection.Block, player);
+        Trace.WriteLine(animationSpeedMultiplier);
 
         AnimationBehavior?.SetSpeedModifier(HitImpactFunction);
 
@@ -321,6 +351,10 @@ public class PickaxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
         {
             return (player.RightHandItemSlot.Itemstack?.Item as IRestrictAction)?.RestrictLeftHandAction() ?? false;
         }
+    }
+    protected static float GetAnimationSpeedFromMiningSpeed(float miningSpeed, float bonusMultiplier)
+    {
+        return 1f + GameMath.Clamp(bonusMultiplier * (GameMath.Clamp(miningSpeed - DefaultMiningSpeed, 0, miningSpeed) / (SteelMiningSpeed - DefaultMiningSpeed)), 0, MaxAnimationSpeedBonus);
     }
 }
 

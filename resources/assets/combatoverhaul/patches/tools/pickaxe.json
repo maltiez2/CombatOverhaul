@@ -9,6 +9,7 @@
       "SwingForwardAnimation": ["combatoverhaul:pickaxe-swing-forward-1", "combatoverhaul:pickaxe-swing-forward-2", "combatoverhaul:pickaxe-swing-forward-3"],
       "SwingBackAnimation": "combatoverhaul:pickaxe-swing-back",
       "SwingTpAnimation": "pickaxe",
+      "AnimationSpeedBonusFromMiningSpeed": 0.3,
       "RenderingOffset": false,
       "Collider": [1, 0.05, 0.58, 0.9, 0.05, 1.18],
       "Attack": {

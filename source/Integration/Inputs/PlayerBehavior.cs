@@ -133,6 +133,7 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
     private IClientWeaponLogic? _currentOffHandWeapon;
     private int _currentMainHandItemId = -1;
     private int _currentOffHandItemId = -1;
+    private int _currentMainHandSlotId = -1;
     private int _mainHandState = 0;
     private int _offHandState = 0;
     private bool _mainHandRenderingOffset = true;
@@ -216,8 +217,9 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
     private bool CheckIfItemsInHandsChanged()
     {
         int mainHandId = _player.ActiveHandItemSlot.Itemstack?.Item?.Id ?? -1;
+        int mainHandSlotId = _player.ActiveHandItemSlot.Inventory.GetSlotId(_player.ActiveHandItemSlot);
         int offHandId = _player.LeftHandItemSlot.Itemstack?.Item?.Id ?? -1;
-        bool anyChanged = mainHandId != _currentMainHandItemId || offHandId != _currentOffHandItemId;
+        bool anyChanged = mainHandId != _currentMainHandItemId || offHandId != _currentOffHandItemId || mainHandSlotId != _currentMainHandSlotId;
 
         if (anyChanged)
         {
@@ -225,11 +227,12 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
             SuppressRMB = false;
         }
 
-        if (anyChanged && _currentMainHandItemId != mainHandId)
+        if (anyChanged && (_currentMainHandItemId != mainHandId || mainHandSlotId != _currentMainHandSlotId))
         {
             _mainHandState = 0;
             ProcessMainHandItemChanged();
             _currentMainHandItemId = mainHandId;
+            _currentMainHandSlotId = mainHandSlotId;
         }
 
         if (anyChanged && _currentOffHandItemId != offHandId)
