@@ -202,17 +202,20 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
         int mainHandId = _player.ActiveHandItemSlot.Itemstack?.Item?.Id ?? -1;
         int offHandId = _player.LeftHandItemSlot.Itemstack?.Item?.Id ?? -1;
 
+        bool mainHandHandled = false;
+        bool offHandHandled = false;
+
         if (mainHandId == itemId)
         {
-            return callback.Invoke(_player.ActiveHandItemSlot, _player, ref _mainHandState, eventData, true, _directionController.CurrentDirection);
+            mainHandHandled = callback.Invoke(_player.ActiveHandItemSlot, _player, ref _mainHandState, eventData, true, _directionController.CurrentDirection);
         }
 
         if (offHandId == itemId)
         {
-            return callback.Invoke(_player.LeftHandItemSlot, _player, ref _offHandState, eventData, false, _directionController.CurrentDirection);
+            offHandHandled = callback.Invoke(_player.LeftHandItemSlot, _player, ref _offHandState, eventData, false, _directionController.CurrentDirection);
         }
 
-        return false;
+        return mainHandHandled || offHandHandled;
     }
     private bool CheckIfItemsInHandsChanged()
     {
@@ -286,7 +289,7 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
     }
     private void ProcessOffHandItemChanged()
     {
-        _currentOffHandWeapon?.OnDeselected(_player, false, ref _mainHandState);
+        _currentOffHandWeapon?.OnDeselected(_player, false, ref _offHandState);
         _currentOffHandWeapon = null;
 
         foreach (string stat in _currentOffHandPlayerStats)
@@ -316,7 +319,7 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
 
         if (stack == null || stack.Item is not IHasWeaponLogic weapon) return;
 
-        weapon.ClientLogic?.OnSelected(_player.LeftHandItemSlot, _player, false, ref _mainHandState);
+        weapon.ClientLogic?.OnSelected(_player.LeftHandItemSlot, _player, false, ref _offHandState);
         _currentOffHandWeapon = weapon.ClientLogic;
 
         if (stack.Item.Attributes?["fpHandsOffset"].Exists == true)
