@@ -104,7 +104,7 @@ public sealed class MeleeAttack
 
     private IEnumerable<(Block block, Vector3 point)> CheckTerrainCollision(out float parameter)
     {
-        List<(Block block, Vector3 point)> terrainCollisionsBuffer = new();
+        List<(Block block, Vector3 point)> terrainCollisions = new();
 
         parameter = 1f;
 
@@ -114,20 +114,21 @@ public sealed class MeleeAttack
 
             if (result != null)
             {
-                terrainCollisionsBuffer.Add((result.Value.block, result.Value.position));
+                terrainCollisions.Add((result.Value.block, result.Value.position));
                 if (result.Value.parameter < parameter) parameter = result.Value.parameter;
             }
         }
 
-        return terrainCollisionsBuffer;
+        return terrainCollisions;
     }
     private IEnumerable<(Entity entity, Vector3 point)> CollideWithEntities(IPlayer player, out IEnumerable<MeleeDamagePacket> packets, bool mainHand, float maximumParameter)
     {
         long entityId = player.Entity.EntityId;
+        long mountedOn = player.Entity.MountedOn?.Entity?.EntityId ?? 0;
 
         Entity[] entities = _api.World.GetEntitiesAround(player.Entity.Pos.XYZ, MaxReach, MaxReach);
 
-        List<(Entity entity, Vector3 point)> entitiesCollisionsBuffer = new();
+        List<(Entity entity, Vector3 point)> entitiesCollisions = new();
 
         List<MeleeDamagePacket> damagePackets = new();
 
@@ -136,7 +137,7 @@ public sealed class MeleeAttack
             bool attacked = false;
 
             foreach (Entity entity in entities
-                    .Where(entity => entity != player.Entity)
+                    .Where(entity => entity.EntityId != entityId && entity.EntityId != mountedOn)
                     .Where(entity => _attackedEntities.ContainsKey(entityId))
                     .Where(entity => !_attackedEntities[entityId].Contains(entity.EntityId)))
             {
@@ -144,7 +145,7 @@ public sealed class MeleeAttack
 
                 if (!attacked) continue;
 
-                entitiesCollisionsBuffer.Add((entity, point));
+                entitiesCollisions.Add((entity, point));
                 damagePackets.Add(packet);
 
                 _attackedEntities[entityId].Add(entity.EntityId);
@@ -157,6 +158,6 @@ public sealed class MeleeAttack
 
         packets = damagePackets;
 
-        return entitiesCollisionsBuffer;
+        return entitiesCollisions;
     }
 }

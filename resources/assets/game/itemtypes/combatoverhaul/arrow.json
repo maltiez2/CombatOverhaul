@@ -4,6 +4,21 @@
   "variantgroups": [{"code": "material", "states": ["crude", "flint", "copper", "tinbronze", "bismuthbronze", "blackbronze", "gold", "silver", "iron", "meteoriciron", "steel"]}],
   "behaviors": [
     {
+      "name": "GroundStorable",
+      "properties": {
+        "layout": "Stacking",
+        "placeRemoveSound": "game:sounds/block/ceramicplace",
+        "stackingModelByType": {"*-crude": "combatoverhaul:ammo/pile-arrows-crude", "*": "combatoverhaul:ammo/pile-arrows-fletched"},
+        "modelItemsToStackSizeRatio": 4.2,
+        "stackingCapacity": 160,
+        "upSolid": true,
+        "transferQuantity": 5,
+        "bulkTransferQuantity": 25,
+        "collisionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.03125, "z2": 1},
+        "cbScaleYByLayer": 0.2
+      }
+    },
+    {
       "name": "CombatOverhaul:Projectile",
       "properties": {
         "stats": {

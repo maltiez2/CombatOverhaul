@@ -1,5 +1,6 @@
 ﻿using CombatOverhaul.Integration;
 using CombatOverhaul.Utils;
+using System.Numerics;
 using System.Reflection;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -233,10 +234,9 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     }
     private void ApplyFrame(PlayerItemFrame frame, Entity entity, ElementPose pose, Animatable? animatable)
     {
-        TorsoAnimationType torsoAnimation = (entity as EntityPlayer)?.Controls.Sneak ?? false ? TorsoAnimationType.Sneaking : TorsoAnimationType.Standing;
-        torsoAnimation = IsFirstPerson(entity) ? torsoAnimation : TorsoAnimationType.None;
+        Vector3 eyePosition = new((float)entity.LocalEyePos.X, (float)entity.LocalEyePos.Y, (float)entity.LocalEyePos.Z);
 
-        frame.Apply(pose, torsoAnimation);
+        frame.Apply(pose, eyePosition);
 
         if (animatable != null && frame.DetachedAnchor)
         {

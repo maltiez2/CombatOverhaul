@@ -5,13 +5,6 @@ using Vintagestory.API.MathTools;
 
 namespace CombatOverhaul.Animations;
 
-public enum TorsoAnimationType
-{
-    None,
-    Standing,
-    Sneaking
-}
-
 public readonly struct PlayerItemFrame
 {
     public readonly PlayerFrame Player;
@@ -30,9 +23,9 @@ public readonly struct PlayerItemFrame
     public static readonly PlayerItemFrame Zero = new(PlayerFrame.Zero, null);
     public static readonly PlayerItemFrame Empty = new(PlayerFrame.Empty, null);
 
-    public void Apply(ElementPose pose, TorsoAnimationType torsoAnimation)
+    public void Apply(ElementPose pose, Vector3 eyePosition)
     {
-        Player.Apply(pose, torsoAnimation);
+        Player.Apply(pose, eyePosition);
         Item?.Apply(pose);
     }
 
@@ -463,6 +456,8 @@ public readonly struct PlayerFrame
     public const float DefaultPitchFollow = 0.8f;
     public const float PerfectPitchFollow = 1.0f;
     public const float Epsilon = 1E-6f;
+    public const float DefaultEyesHeight = 1.7f;
+    public const float EyeHeightToAnimationDistanceMultiplier = 14.7f;
 
     public PlayerFrame(
         RightHandFrame? rightHand = null,
@@ -491,7 +486,7 @@ public readonly struct PlayerFrame
     public static readonly PlayerFrame Zero = new(RightHandFrame.Zero, LeftHandFrame.Zero);
     public static readonly PlayerFrame Empty = new();
 
-    public void Apply(ElementPose pose, TorsoAnimationType torsoAnimation)
+    public void Apply(ElementPose pose, Vector3 eyePosition)
     {
         switch (pose.ForElement.Name)
         {
@@ -502,15 +497,8 @@ public readonly struct PlayerFrame
                 UpperTorso?.Apply(pose);
                 break;
             case "LowerTorso":
-                switch (torsoAnimation)
-                {
-                    case TorsoAnimationType.Standing:
-                        StandingTorso.Apply(pose);
-                        break;
-                    case TorsoAnimationType.Sneaking:
-                        SneakingTorso.Apply(pose);
-                        break;
-                }
+                AnimationElement torso = new(0, (eyePosition.Y - DefaultEyesHeight) * EyeHeightToAnimationDistanceMultiplier, 0, 0, 0, 0);
+                torso.Apply(pose);
                 break;
             default:
                 RightHand?.Apply(pose, DetachedAnchor);
@@ -641,9 +629,6 @@ public readonly struct PlayerFrame
             );
 #pragma warning restore CS8629 // Nullable value type may be null.
     }
-
-    private readonly AnimationElement StandingTorso = AnimationElement.Zero;
-    private readonly AnimationElement SneakingTorso = new(0, -5, 0, 0, 0, 0);
 }
 
 public readonly struct RightHandFrame
@@ -943,7 +928,7 @@ public readonly struct AnimationElement
             float valueValue = value.Value * multiplier;
             ImGui.SetNextItemWidth(90);
             ImGui.DragFloat($"##{title}value", ref valueValue, speed); ImGui.SameLine();
-            
+
             ImGui.Checkbox($"##{title}checkbox", ref enabled);
             value = enabled ? valueValue / multiplier : null;
         }

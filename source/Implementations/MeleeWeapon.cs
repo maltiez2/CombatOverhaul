@@ -4,8 +4,6 @@ using CombatOverhaul.Inputs;
 using CombatOverhaul.MeleeSystems;
 using CombatOverhaul.RangedSystems;
 using CombatOverhaul.RangedSystems.Aiming;
-using CompactExifLib;
-using System.Diagnostics;
 using System.Numerics;
 using System.Text;
 using Vintagestory.API.Client;
@@ -130,7 +128,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
                 DirectionalOneHandedAttacks.Add(Enum.Parse<AttackDirection>(direction), new(api, attack));
             }
         }
-        
+
         if (Stats.TwoHandedStance?.Attack != null)
         {
             TwoHandedAttack = new(api, Stats.TwoHandedStance.Attack);
@@ -316,52 +314,40 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
 
     public void GetHeldItemInfo(ItemSlot inSlot, StringBuilder dsc, IWorldAccessor world, bool withDebugInfo)
     {
-        if (Stats.OneHandedStance?.Attack != null)
+        if (Stats.OneHandedStance?.Attack != null && Stats.OneHandedStance.Attack.DamageTypes.Length > 0)
         {
-            float damage = 0;
-            float tier = 0;
-            float knockback = 0;
-            int count = 0;
-            string damageType = "None";
-
-            foreach (MeleeDamageTypeJson attack in Stats.OneHandedStance.Attack.DamageTypes)
-            {
-                count++;
-                damage += attack.Damage.Damage;
-                tier += attack.Damage.Strength;
-                knockback += attack.Knockback;
-                damageType = attack.Damage.DamageType;
-            }
-
-            damage /= count;
-            tier /= count;
-            knockback /= count;
-
-            dsc.AppendLine(Lang.Get("combatoverhaul:iteminfo-melee-weapon-onehanded", damage, tier, knockback, Lang.Get($"combatoverhaul:damage-type-{damageType}")));
+            string description = GetAttackStatsDescription(Stats.OneHandedStance.Attack.DamageTypes.Select(element => element.Damage), "combatoverhaul:iteminfo-melee-weapon-onehanded");
+            dsc.AppendLine(description);
+        }
+        else if (Stats.OneHandedStance?.DirectionalAttacks != null && Stats.OneHandedStance.DirectionalAttacks.Count > 0)
+        {
+            IEnumerable<DamageDataJson> damageTypes = Stats.OneHandedStance.DirectionalAttacks.Values.SelectMany(element => element.DamageTypes).Select(element => element.Damage);
+            string description = GetAttackStatsDescription(damageTypes, "combatoverhaul:iteminfo-melee-weapon-onehanded");
+            dsc.AppendLine(description);
         }
 
-        if (Stats.TwoHandedStance?.Attack != null)
+        if (Stats.TwoHandedStance?.Attack != null && Stats.TwoHandedStance.Attack.DamageTypes.Length > 0)
         {
-            float damage = 0;
-            float tier = 0;
-            float knockback = 0;
-            int count = 0;
-            string damageType = "None";
+            string description = GetAttackStatsDescription(Stats.TwoHandedStance.Attack.DamageTypes.Select(element => element.Damage), "combatoverhaul:iteminfo-melee-weapon-twohanded");
+            dsc.AppendLine(description);
+        }
+        else if (Stats.TwoHandedStance?.DirectionalAttacks != null && Stats.TwoHandedStance.DirectionalAttacks.Count > 0)
+        {
+            IEnumerable<DamageDataJson> damageTypes = Stats.TwoHandedStance.DirectionalAttacks.Values.SelectMany(element => element.DamageTypes).Select(element => element.Damage);
+            string description = GetAttackStatsDescription(damageTypes, "combatoverhaul:iteminfo-melee-weapon-twohanded");
+            dsc.AppendLine(description);
+        }
 
-            foreach (MeleeDamageTypeJson attack in Stats.TwoHandedStance.Attack.DamageTypes)
-            {
-                count++;
-                damage += attack.Damage.Damage;
-                tier += attack.Damage.Strength;
-                knockback += attack.Knockback;
-                damageType = attack.Damage.DamageType;
-            }
-
-            damage /= count;
-            tier /= count;
-            knockback /= count;
-
-            dsc.AppendLine(Lang.Get("combatoverhaul:iteminfo-melee-weapon-twohanded", damage, tier, knockback, Lang.Get($"combatoverhaul:damage-type-{damageType}")));
+        if (Stats.OffHandStance?.Attack != null && Stats.OffHandStance.Attack.DamageTypes.Length > 0)
+        {
+            string description = GetAttackStatsDescription(Stats.OffHandStance.Attack.DamageTypes.Select(element => element.Damage), "combatoverhaul:iteminfo-melee-weapon-offhanded");
+            dsc.AppendLine(description);
+        }
+        else if (Stats.OffHandStance?.DirectionalAttacks != null && Stats.OffHandStance.DirectionalAttacks.Count > 0)
+        {
+            IEnumerable<DamageDataJson> damageTypes = Stats.OffHandStance.DirectionalAttacks.Values.SelectMany(element => element.DamageTypes).Select(element => element.Damage);
+            string description = GetAttackStatsDescription(damageTypes, "combatoverhaul:iteminfo-melee-weapon-offhanded");
+            dsc.AppendLine(description);
         }
 
         if (Stats.OffHandStance?.Block?.BlockTier != null)
@@ -1058,6 +1044,31 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
             AnimationsManager.RegisterCollider(item, type + typeIndex++, damageType);
         }
 #endif
+    }
+
+    protected static string GetAttackStatsDescription(IEnumerable<DamageDataJson> damageTypesData, string descriptionLangCode)
+    {
+        float damage = 0;
+        float tier = 0;
+        HashSet<string> damageTypes = new();
+
+        foreach (DamageDataJson attack in damageTypesData)
+        {
+            if (attack.Damage > damage)
+            {
+                damage = attack.Damage;
+            }
+            if (attack.Strength > tier)
+            {
+                tier = attack.Strength;
+            }
+
+            damageTypes.Add(attack.DamageType);
+        }
+
+        string damageType = damageTypes.Select(element => Lang.Get($"combatoverhaul:damage-type-{element}")).Aggregate((first, second) => $"first, second");
+
+        return Lang.Get(descriptionLangCode, damage, tier, damageType);
     }
 }
 

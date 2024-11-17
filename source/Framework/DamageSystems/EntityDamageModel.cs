@@ -19,9 +19,9 @@ public sealed class EntityDamageModelJson
     public Dictionary<string, Dictionary<string, float>> ResistsForColliders { get; set; } = new();
     public Dictionary<string, SoundEffectData> HitSounds { get; set; } = new()
     {
-        {"Head", new() { Code = "game:sounds/arrow-impact"}  },
-        {"Critical", new() { Code = "game:sounds/arrow-impact"}  },
-        {"Resistant", new() { Code = "game:sounds/held/shieldblock"}  },
+        //{"Head", new() { Code = "game:sounds/player/projectilehit"}  },
+        //{"Critical", new() { Code = "game:sounds/player/projectilehit"}  },
+        {"Resistant", new() { Code = "game:sounds/held/shieldblock-wood-light"}  }
     };
 }
 
@@ -104,7 +104,7 @@ public sealed class EntityDamageModelBehavior : EntityBehavior
     private CollidersEntityBehavior? _colliders;
 
     private float OnReceiveDamageHandler(float damage, DamageSource damageSource)
-    {
+    {   
         ColliderTypes colliderType = ColliderTypes.Torso;
 
         if (_colliders != null && damageSource is ILocationalDamage locationalDamageSource)

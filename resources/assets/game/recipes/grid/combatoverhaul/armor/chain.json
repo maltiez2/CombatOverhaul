@@ -15,7 +15,7 @@
 		"recipeGroup": 1,
 		"ingredients": {
 			"T": { "type": "item", "code": "metalchain-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"], "quantity": 1 },
-			"C": { "type": "item", "code": "metalchain-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"], "quantity": 2 }
+			"C": { "type": "item", "code": "metalchain-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"], "quantity": 1 }
 		},
 		"width": 3,
 		"height": 3,

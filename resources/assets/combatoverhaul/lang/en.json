@@ -121,8 +121,9 @@
 
   "iteminfo-range-weapon-damage": "Damage multiplier: {0}\nDamage tier: {1}",
   "iteminfo-projectile": "Damage: {0}\nDamage type: {1}\nBreak chance: {2}%",
-  "iteminfo-melee-weapon-onehanded": "Onehanded attack\n  damage: {0}\n  tier: {1}\n  knockback: {2}\n  type: {3}",
-  "iteminfo-melee-weapon-twohanded": "Twohanded attack\n  damage: {0}\n  tier: {1}\n  knockback: {2}\n  type: {3}",
+  "iteminfo-melee-weapon-onehanded": "One-handed: {0} ({1}t) {2}",
+  "iteminfo-melee-weapon-twohanded": "Two-handed: {0} ({1}t) {2}",
+  "iteminfo-melee-weapon-offhanded": "Off-handed: {0} ({1}t) {2}",
   "iteminfo-melee-weapon-blockStats": "Block tier:",
   
   "game:item-spear-generic-iron": "Iron spear",

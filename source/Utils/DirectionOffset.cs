@@ -40,9 +40,9 @@ public readonly struct Angle
     private readonly float _value;
 
     /// <summary>
-    /// For ~1% precision when dealing with seconds
+    /// For ~0.01% precision when dealing with seconds
     /// </summary>
-    private const float _epsilonFactor = 1e-8f;
+    private const float _epsilonFactor = 1e-10f;
     private static float Epsilon(float a, float b) => MathF.Max(Math.Abs(a), Math.Abs(b)) * _epsilonFactor;
 }
 

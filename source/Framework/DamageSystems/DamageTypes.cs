@@ -11,7 +11,7 @@ public interface ITypedDamage
 public class DamageDataJson
 {
     public string DamageType { get; set; } = "PiercingAttack";
-    public float Strength { get; set; }
+    public float Strength { get; set; } // Tier
     public float Damage { get; set; }
 
     public DamageDataJson() { }
@@ -28,22 +28,13 @@ public class ProjectileDamageDataJson
 public readonly struct DamageData
 {
     public readonly EnumDamageType DamageType;
-    public readonly float Strength;
+    public readonly float Tier;
 
-    public DamageData(EnumDamageType damageType, float strength)
+    public DamageData(EnumDamageType damageType, float tier)
     {
         DamageType = damageType;
-        Strength = strength;
+        Tier = tier;
     }
-
-    public static readonly Dictionary<EnumDamageType, string> Units = new Dictionary<EnumDamageType, string>()
-    {
-        { EnumDamageType.PiercingAttack, "tier" },
-        { EnumDamageType.SlashingAttack, "tier" },
-        { EnumDamageType.BluntAttack, "tier" },
-        { EnumDamageType.Fire, "%" },
-        { EnumDamageType.Heat, "%" }
-    };
 }
 
 public interface ILocationalDamage
@@ -103,7 +94,7 @@ public class DamageResistData
 
         return new(
             damageType: damageData.DamageType,
-            strength: damageData.Strength - protectionLevel
+            tier: damageData.Tier - protectionLevel
             );
     }
     public DamageData ApplyResist(DamageData damageData, ref float damage, out int durabilityDamage)
@@ -126,7 +117,7 @@ public class DamageResistData
 
         return new(
             damageType: damageData.DamageType,
-            strength: damageData.Strength - protectionLevel
+            tier: damageData.Tier - protectionLevel
             );
     }
 
@@ -168,19 +159,19 @@ public class DamageResistData
     {
         return damageData.DamageType switch
         {
-            EnumDamageType.Gravity => Percentage(protectionLevel, damageData.Strength),
-            EnumDamageType.Fire => Percentage(protectionLevel, damageData.Strength),
-            EnumDamageType.BluntAttack => PenetrationPercentage(protectionLevel, damageData.Strength, _damageReductionPower, _damageReductionThreshold),
-            EnumDamageType.SlashingAttack => PenetrationPercentage(protectionLevel, damageData.Strength, _damageReductionPower, _damageReductionThreshold),
-            EnumDamageType.PiercingAttack => PenetrationPercentage(protectionLevel, damageData.Strength, _damageReductionPower, _damageReductionThreshold),
-            EnumDamageType.Suffocation => Percentage(protectionLevel, damageData.Strength),
-            EnumDamageType.Heal => 1 + damageData.Strength + protectionLevel,
-            EnumDamageType.Poison => Percentage(protectionLevel, damageData.Strength),
-            EnumDamageType.Hunger => Percentage(protectionLevel, damageData.Strength),
-            EnumDamageType.Crushing => Percentage(protectionLevel, damageData.Strength),
-            EnumDamageType.Frost => Percentage(protectionLevel, damageData.Strength),
-            EnumDamageType.Electricity => Percentage(protectionLevel, damageData.Strength),
-            EnumDamageType.Heat => Percentage(protectionLevel, damageData.Strength),
+            EnumDamageType.Gravity => Percentage(protectionLevel, damageData.Tier),
+            EnumDamageType.Fire => Percentage(protectionLevel, damageData.Tier),
+            EnumDamageType.BluntAttack => PenetrationPercentage(protectionLevel, damageData.Tier, _damageReductionPower, _damageReductionThreshold),
+            EnumDamageType.SlashingAttack => PenetrationPercentage(protectionLevel, damageData.Tier, _damageReductionPower, _damageReductionThreshold),
+            EnumDamageType.PiercingAttack => PenetrationPercentage(protectionLevel, damageData.Tier, _damageReductionPower, _damageReductionThreshold),
+            EnumDamageType.Suffocation => Percentage(protectionLevel, damageData.Tier),
+            EnumDamageType.Heal => 1 + damageData.Tier + protectionLevel,
+            EnumDamageType.Poison => Percentage(protectionLevel, damageData.Tier),
+            EnumDamageType.Hunger => Percentage(protectionLevel, damageData.Tier),
+            EnumDamageType.Crushing => Percentage(protectionLevel, damageData.Tier),
+            EnumDamageType.Frost => Percentage(protectionLevel, damageData.Tier),
+            EnumDamageType.Electricity => Percentage(protectionLevel, damageData.Tier),
+            EnumDamageType.Heat => Percentage(protectionLevel, damageData.Tier),
             EnumDamageType.Injury => 1,
             _ => 1
         };

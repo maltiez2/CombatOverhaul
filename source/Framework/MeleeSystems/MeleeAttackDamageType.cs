@@ -11,7 +11,7 @@ using Vintagestory.API.Server;
 namespace CombatOverhaul.MeleeSystems;
 
 [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
-public struct MeleeDamagePacket
+public class MeleeDamagePacket
 {
     public string DamageType { get; set; }
     public float Strength { get; set; }
@@ -25,9 +25,12 @@ public struct MeleeDamagePacket
     public int DurabilityDamage { get; set; }
     public bool MainHand { get; set; }
 
-    public readonly void Attack(ICoreServerAPI api)
+    public void Attack(ICoreServerAPI api)
     {
         Entity target = api.World.GetEntityById(TargetEntityId);
+
+        if (!target.Alive) return;
+        
         Entity attacker = api.World.GetEntityById(AttackerEntityId);
         string targetName = target.GetName();
 
@@ -130,7 +133,7 @@ public class MeleeDamageType : IHasLineCollider
         packet = new()
         {
             DamageType = DamageTypeData.DamageType.ToString(),
-            Strength = DamageTypeData.Strength,
+            Strength = DamageTypeData.Tier,
             Damage = damage,
             Knockback = Knockback,
             Position = new float[3] { position.X, position.Y, position.Z },

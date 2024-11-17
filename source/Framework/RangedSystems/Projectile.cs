@@ -63,6 +63,7 @@ public sealed class ProjectileServer
     {
         if (!CheckPermissions(attacker, target)) return false;
         if (relativeSpeed < _stats.SpeedThreshold) return false;
+        if (!target.Alive) return false;
 
         string targetName = target.GetName();
         string projectileName = _entity.GetName();
