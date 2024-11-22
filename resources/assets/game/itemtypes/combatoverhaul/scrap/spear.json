@@ -37,7 +37,7 @@
         "StopOnEntityHit": false,
         "CollideWithTerrain": true,
         "MaxReach": 9,
-        "DamageTypes": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 1, "Damage": 3}, "Knockback": 0.5, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.5]}]
+        "DamageTypes": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 2, "Damage": 3}, "Knockback": 0.5, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.5]}]
       },
       "HandleAttack": {
         "StopOnTerrainHit": true,
