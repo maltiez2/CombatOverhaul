@@ -1,4 +1,5 @@
-﻿using Vintagestory.API.Common;
+﻿using System.Diagnostics;
+using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.MathTools;
 
@@ -77,9 +78,15 @@ public readonly struct DirectionOffset
     }
     public DirectionOffset(Vec3f direction)
     {
+        if (Math.Abs(direction.X * direction.X + direction.Z * direction.Z) < 1E-6f)
+        {
+            Yaw = Angle.FromDegrees(0);
+            Pitch = Angle.FromDegrees(90);
+            return;
+        }
+        
         float yawSin = direction.X / MathF.Sqrt(direction.X * direction.X + direction.Z * direction.Z);
         float pitchSin = direction.Y / MathF.Sqrt(direction.X * direction.X + direction.Y * direction.Y + direction.Z * direction.Z);
-
         float yawCos = direction.Z / MathF.Sqrt(direction.X * direction.X + direction.Z * direction.Z);
 
         Angle yawSinAngle = Angle.FromRadians(GameMath.Clamp(MathF.Asin(yawSin), -2f * MathF.PI, 2f * MathF.PI));

@@ -30,7 +30,7 @@ public class ReloadConfirmPacket
 [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
 public class ShotPacket
 {
-    public Guid ProjectileId { get; set; }
+    public Guid[] ProjectileId { get; set; } = Array.Empty<Guid>();
     public int ShotId { get; set; }
     public float[] Position { get; set; }
     public float[] Velocity { get; set; }
@@ -125,7 +125,11 @@ public class RangedWeaponSystemClient
     }
     public void Shoot(ItemSlot weapon, int amount, Vector3 position, Vector3 velocity, bool rightHand, Action<bool> shootCallback, byte[]? data = null)
     {
-        Guid projectileId = Guid.NewGuid();
+        List<Guid> projectilesIds = new();
+        for (int count = 0; count < amount; count++)
+        {
+            projectilesIds.Add(Guid.NewGuid());
+        }
 
         if (_nextId > int.MaxValue / 2) _nextId = 0;
         int id = _nextId++;
@@ -133,7 +137,7 @@ public class RangedWeaponSystemClient
 
         ShotPacket packet = new()
         {
-            ProjectileId = projectileId,
+            ProjectileId = projectilesIds.ToArray(),
             ShotId = id,
             Position = new float[3] { position.X, position.Y, position.Z },
             Velocity = new float[3] { velocity.X, velocity.Y, velocity.Z },

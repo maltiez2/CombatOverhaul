@@ -1,6 +1,6 @@
 {
 	"editor": {
-		"backDropShape": "D:/Vintage Story/Vintagestory/assets/game/shapes/entity/humanoid/seraph-hairless",
+		"backDropShape": "E:/Programs/VSModelCreator/seraph-faceless",
 		"allAngles": true,
 		"entityTextureMode": true
 	},
@@ -28,7 +28,7 @@
 			"faces": {
 				"north": { "texture": "#gold", "uv": [ 42.0, 23.5, 47.5, 28.5 ] },
 				"east": { "texture": "#gold", "uv": [ 36.0, 23.5, 42.0, 28.5 ] },
-				"south": { "texture": "#gold", "uv": [ 55.0, 23.5, 60.5, 28.5 ] },
+				"south": { "texture": "#gold", "uv": [ 55.5, 23.5, 61.0, 28.5 ] },
 				"west": { "texture": "#gold", "uv": [ 48.5, 23.5, 54.5, 28.5 ] },
 				"up": { "texture": "#gold", "uv": [ 42.0, 17.5, 47.5, 23.5 ], "rotation": 180 },
 				"down": { "texture": "#gold", "uv": [ 42.0, 29.0, 47.5, 35.0 ] }
@@ -68,7 +68,7 @@
 				{
 					"name": "ArmorHelmetTop",
 					"from": [ 0.5, 4.38, 0.5 ],
-					"to": [ 5.2, 5.18, 5.7 ],
+					"to": [ 5.2, 5.18, 5.6 ],
 					"unwrapMode": 1,
 					"autoUnwrap": false,
 					"uv": [ 31.0, 30.0 ],
@@ -76,11 +76,14 @@
 					"faces": {
 						"north": { "texture": "#gold", "uv": [ 36.0, 35.0, 40.5, 35.5 ] },
 						"east": { "texture": "#gold", "uv": [ 31.0, 35.0, 36.0, 35.5 ] },
-						"south": { "texture": "#gold", "uv": [ 47.0, 35.0, 51.5, 35.5 ] },
+						"south": { "texture": "#gold", "uv": [ 47.5, 35.0, 52.0, 35.5 ] },
 						"west": { "texture": "#gold", "uv": [ 41.5, 35.0, 46.5, 35.5 ] },
 						"up": { "texture": "#gold", "uv": [ 36.0, 30.0, 40.5, 35.0 ], "rotation": 180 }
 					}
 				}
 			]
 		}
-	]}
+	],
+	"animations": [
+	]
+}

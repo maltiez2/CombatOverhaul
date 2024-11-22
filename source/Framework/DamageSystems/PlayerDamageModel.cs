@@ -267,7 +267,7 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
 
         if (previousDamage - damage > 0)
         {
-            damageLogMessage = Lang.Get("combatoverhaul:damagelog-armor-damage-negation", $"{previousDamage - damage:F1}", Lang.Get($"combatoverhaul:damage-zone-{zone}"), durabilityDamage, Lang.Get($"combatoverhaul:damage-type-{damageType}"));
+            damageLogMessage = Lang.Get("combatoverhaul:damagelog-armor-damage-negation", $"{previousDamage - damage:F1}", Lang.Get($"combatoverhaul:damage-zone-{zone}"), durabilityDamage, Lang.Get($"combatoverhaul:damage-type-{damageType}"), damageSource.DamageTier);
         }
     }
     private void ApplyBlockResists(float blockTier, float damageTier, ref float damage)

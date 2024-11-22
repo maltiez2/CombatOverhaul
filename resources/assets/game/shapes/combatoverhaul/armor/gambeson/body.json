@@ -1,6 +1,6 @@
 {
 	"editor": {
-		"backDropShape": "D:/Vintage Story/Vintagestory/assets/game/shapes/entity/humanoid/seraph-hairless",
+		"backDropShape": "E:/Programs/VSModelCreator/seraph-faceless",
 		"collapsedPaths": "Root/ArmorUpperTorso,Root/GamCoatL,Root/ArmorCoatL,Root/GamCoatR,Root/ArmorCoatR",
 		"allAngles": true,
 		"entityTextureMode": true
@@ -94,8 +94,8 @@
 		{
 			"name": "GamLowerArmR",
 			"stepParentName": "LowerArmR",
-			"from": [ -0.18, 1.8, -0.23 ],
-			"to": [ 2.68, 8.17, 2.24 ],
+			"from": [ -0.18, 1.8, -0.24 ],
+			"to": [ 2.68, 8.17, 2.22 ],
 			"uv": [ 41.0, 11.5 ],
 			"rotationOrigin": [ -0.2, 1.8, -0.4 ],
 			"faces": {
@@ -110,7 +110,7 @@
 		{
 			"name": "GamLowerArmL",
 			"stepParentName": "LowerArmL",
-			"from": [ -0.18, 1.8, -0.24 ],
+			"from": [ -0.18, 1.8, -0.23 ],
 			"to": [ 2.68, 8.17, 2.23 ],
 			"uv": [ 31.0, 11.5 ],
 			"rotationOrigin": [ -0.2, 1.8, -0.3 ],
@@ -192,4 +192,7 @@
 				}
 			]
 		}
-	]}
+	],
+	"animations": [
+	]
+}

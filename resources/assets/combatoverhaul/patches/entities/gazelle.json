@@ -81,7 +81,7 @@
         "LimbsDamageMultiplier": 0.75,
         "HeadDamageMultiplier": 1.5,
         "CriticalDamageMultiplier": 4,
-        "DefaultResists": {"BluntAttack": 3, "SlashingAttack": 2, "PiercingAttack": 0}
+        "DefaultResists": {"BluntAttack": 5, "SlashingAttack": 3, "PiercingAttack": 2}
       }
     }
   },
@@ -97,7 +97,7 @@
         "LimbsDamageMultiplier": 0.75,
         "HeadDamageMultiplier": 1.5,
         "CriticalDamageMultiplier": 4,
-        "DefaultResists": {"BluntAttack": 3, "SlashingAttack": 2, "PiercingAttack": 0}
+        "DefaultResists": {"BluntAttack": 5, "SlashingAttack": 3, "PiercingAttack": 2}
       }
     }
   }

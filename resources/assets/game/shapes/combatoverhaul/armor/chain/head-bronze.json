@@ -1,6 +1,6 @@
 {
 	"editor": {
-		"backDropShape": "D:/Vintage Story/Vintagestory/assets/game/shapes/entity/humanoid/seraph-hairless",
+		"backDropShape": "E:/Programs/VSModelCreator/seraph-faceless",
 		"collapsedPaths": "Root/ArmorHelmet/ArmorHelmetFace",
 		"allAngles": true,
 		"entityTextureMode": true
@@ -27,7 +27,7 @@
 			"faces": {
 				"north": { "texture": "#material", "uv": [ 42.0, 23.5, 47.5, 28.5 ] },
 				"east": { "texture": "#material", "uv": [ 36.0, 23.5, 42.0, 28.5 ] },
-				"south": { "texture": "#material", "uv": [ 55.0, 23.5, 60.5, 28.5 ] },
+				"south": { "texture": "#material", "uv": [ 55.5, 23.5, 61.0, 28.5 ] },
 				"west": { "texture": "#material", "uv": [ 48.5, 23.5, 54.5, 28.5 ] },
 				"up": { "texture": "#material", "uv": [ 42.0, 17.5, 47.5, 23.5 ], "rotation": 180 },
 				"down": { "texture": "#material", "uv": [ 42.0, 29.0, 47.5, 35.0 ] }
@@ -54,14 +54,15 @@
 					"from": [ -0.32, 2.8, 0.0 ],
 					"to": [ 0.0, 5.12, 6.1 ],
 					"unwrapMode": 1,
-					"uv": [ 32.0, 35.5 ],
+					"autoUnwrap": false,
+					"uv": [ 32.0, 36.0 ],
 					"rotationOrigin": [ -0.5, 2.8, 0.0 ],
 					"faces": {
-						"north": { "texture": "#material", "uv": [ 32.0, 41.5, 32.5, 43.5 ] },
-						"south": { "texture": "#material", "uv": [ 38.5, 41.5, 39.0, 43.5 ] },
-						"west": { "texture": "#material", "uv": [ 32.5, 41.5, 38.5, 43.5 ] },
+						"north": { "texture": "#material", "uv": [ 32.0, 42.0, 32.5, 44.0 ] },
+						"south": { "texture": "#material", "uv": [ 38.5, 42.0, 39.0, 44.0 ] },
+						"west": { "texture": "#material", "uv": [ 32.5, 42.0, 38.5, 44.0 ] },
 						"up": { "texture": "#material", "uv": [ 32.0, 35.5, 32.5, 41.5 ], "rotation": 180 },
-						"down": { "texture": "#material", "uv": [ 32.0, 43.5, 32.5, 49.5 ] }
+						"down": { "texture": "#material", "uv": [ 32.0, 44.0, 32.5, 50.0 ] }
 					},
 					"children": [
 						{
@@ -82,4 +83,7 @@
 				}
 			]
 		}
-	]}
+	],
+	"animations": [
+	]
+}

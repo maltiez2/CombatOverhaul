@@ -371,7 +371,7 @@ public sealed class BowServer : RangeWeaponServer
             Velocity = GetDirectionWithDispersion(packet.Velocity, _stats.DispersionMOA) * _stats.ArrowVelocity
         };
 
-        _projectileSystem.Spawn(packet.ProjectileId, stats, spawnStats, arrowSlot.TakeOut(1), shooter);
+        _projectileSystem.Spawn(packet.ProjectileId[0], stats, spawnStats, arrowSlot.TakeOut(1), shooter);
 
         slot.Itemstack.Item.DamageItem(player.Entity.World, player.Entity, slot, 1 + stats.AdditionalDurabilityCost);
 

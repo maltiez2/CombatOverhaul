@@ -1100,7 +1100,7 @@ public class MeleeWeaponServer : RangeWeaponServer
             Velocity = Vector3.Normalize(new Vector3(packet.Velocity[0], packet.Velocity[1], packet.Velocity[2])) * (_stats.ThrowAttack?.Velocity ?? 1)
         };
 
-        _projectileSystem.Spawn(packet.ProjectileId, stats, spawnStats, slot.TakeOut(1), shooter);
+        _projectileSystem.Spawn(packet.ProjectileId[0], stats, spawnStats, slot.TakeOut(1), shooter);
 
         slot.MarkDirty();
 

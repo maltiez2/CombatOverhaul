@@ -111,7 +111,7 @@
   "damagelog-missed-block-damageType": "Player tried blocking, but was not be able to block {0} damage",
   "damagelog-success-block": "Player successfully blocked {1} damage to {0}",
   "damagelog-partial-block": "Player partialy blocked {1} damage to {0}",
-  "damagelog-armor-damage-negation": "Armor negated {0} amount of {3} damage to {1} and lost {2} durability",
+  "damagelog-armor-damage-negation": "Armor negated {0} amount of {3} ({4} tier) damage to {1} and lost {2} durability",
   "damagelog-received-damage": "Player receives {0} {2} damage to {1}",
   "damagelog-dealt-damage": "Player hit {0} of {1} dealing {2} damage",
   "damagelog-dealt-damage-with-projectile": "Player's {3} hit {0} of {1} dealing {2} damage",

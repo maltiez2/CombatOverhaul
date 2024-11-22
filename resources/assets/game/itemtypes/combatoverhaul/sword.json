@@ -30,7 +30,7 @@
           "StopOnEntityHit": true,
           "CollideWithTerrain": true,
           "MaxReach": 9,
-          "DamageTypes": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 3, "Damage": 6}, "Knockback": 0.5, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.3, 0, 0.5]}]
+          "DamageTypes": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 5, "Damage": 4}, "Knockback": 0.5, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.3, 0, 0.5]}]
         },
         "AttackHitSound": "game:sounds/thud",
         "AttackAnimation": {"Main": ["combatoverhaul:sword-forlorn-thrust"]},
@@ -50,7 +50,7 @@
           "StopOnEntityHit": true,
           "CollideWithTerrain": true,
           "MaxReach": 9,
-          "DamageTypes": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 2, "Damage": 6}, "Knockback": 0.5, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.8, 0, 0.5]}]
+          "DamageTypes": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 4, "Damage": 3.5}, "Knockback": 0.5, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.8, 0, 0.5]}]
         },
         "AttackHitSound": "game:sounds/thud",
         "AttackAnimation": {"Main": ["combatoverhaul:sword-forlorn-thrust"]},
@@ -73,13 +73,13 @@
           "DamageTypes": [
             {
               "DamageByType": {
-                "*-copper": {"DamageType": "SlashingAttack", "Strength": 3, "Damage": 4},
-                "*-*bronze": {"DamageType": "SlashingAttack", "Strength": 4, "Damage": 4.5},
-                "*-iron": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5},
-                "*-gold": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5},
-                "*-silver": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5},
-                "*-meteoriciron": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5.5},
-                "*-steel": {"DamageType": "SlashingAttack", "Strength": 6, "Damage": 5.5}
+                "*-copper": {"DamageType": "SlashingAttack", "Strength": 3, "Damage": 3},
+                "*-*bronze": {"DamageType": "SlashingAttack", "Strength": 4, "Damage": 3.5},
+                "*-iron": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 4},
+                "*-gold": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 4},
+                "*-silver": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 4},
+                "*-meteoriciron": {"DamageType": "SlashingAttack", "Strength": 6, "Damage": 4.5},
+                "*-steel": {"DamageType": "SlashingAttack", "Strength": 7, "Damage": 5}
               },
               "Knockback": -0.2,
               "DurabilityDamage": 1,
@@ -105,7 +105,9 @@
           "StopOnEntityHit": true,
           "CollideWithTerrain": true,
           "MaxReach": 9,
-          "DamageTypes": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 3, "Damage": 4}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0.5, 0, 0.45, 1.4, 0, 0.45]}]
+          "DamageTypes": [
+            {"Damage": {"DamageType": "SlashingAttack", "Strength": 2, "Damage": 2.5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0.5, 0, 0.45, 1.4, 0, 0.45]}
+          ]
         },
         "AttackHitSound": "game:sounds/thud",
         "AttackAnimation": {"Main": ["combatoverhaul:sword-falx-slash-1", "combatoverhaul:sword-falx-slash-2"]},

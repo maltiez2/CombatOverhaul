@@ -27,9 +27,9 @@ public class MeleeDamagePacket
 
     public void Attack(ICoreServerAPI api)
     {
-        Entity target = api.World.GetEntityById(TargetEntityId);
+        Entity? target = api.World.GetEntityById(TargetEntityId);
 
-        if (!target.Alive) return;
+        if (target == null || !target.Alive) return;
         
         Entity attacker = api.World.GetEntityById(AttackerEntityId);
         string targetName = target.GetName();

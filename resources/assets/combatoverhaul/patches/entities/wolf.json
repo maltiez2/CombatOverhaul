@@ -113,7 +113,7 @@
         "LimbsDamageMultiplier": 0.75,
         "HeadDamageMultiplier": 1.5,
         "CriticalDamageMultiplier": 4,
-        "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 1, "PiercingAttack": 0}
+        "DefaultResists": {"BluntAttack": 4, "SlashingAttack": 2, "PiercingAttack": 0}
       }
     }
   },
@@ -129,7 +129,7 @@
         "LimbsDamageMultiplier": 0.75,
         "HeadDamageMultiplier": 1.5,
         "CriticalDamageMultiplier": 4,
-        "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 1, "PiercingAttack": 0}
+        "DefaultResists": {"BluntAttack": 4, "SlashingAttack": 2, "PiercingAttack": 0}
       }
     }
   },
@@ -145,7 +145,7 @@
         "LimbsDamageMultiplier": 0.75,
         "HeadDamageMultiplier": 1.5,
         "CriticalDamageMultiplier": 4,
-        "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 1, "PiercingAttack": 0}
+        "DefaultResists": {"BluntAttack": 4, "SlashingAttack": 2, "PiercingAttack": 0}
       }
     }
   },
@@ -161,7 +161,7 @@
         "LimbsDamageMultiplier": 0.75,
         "HeadDamageMultiplier": 1.5,
         "CriticalDamageMultiplier": 4,
-        "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 1, "PiercingAttack": 0}
+        "DefaultResists": {"BluntAttack": 4, "SlashingAttack": 2, "PiercingAttack": 0}
       }
     }
   },

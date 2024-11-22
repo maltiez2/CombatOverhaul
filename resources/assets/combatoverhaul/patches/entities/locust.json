@@ -61,14 +61,14 @@
     "value": {
       "code": "CombatOverhaul:EntityDamageModel",
       "damageModel": {
-        "TorsoDamageMultiplier": 0.8,
-        "LimbsDamageMultiplier": 0.5,
-        "HeadDamageMultiplier": 1,
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 1,
+        "HeadDamageMultiplier": 1.5,
         "CriticalDamageMultiplier": 2,
         "DefaultResistsByType": {
-          "*-bronze": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0},
-          "*-corrupt": {"BluntAttack": 0, "SlashingAttack": 1, "PiercingAttack": 1},
-          "*-corrupt-sawblade": {"BluntAttack": 1, "SlashingAttack": 3, "PiercingAttack": 5}
+          "*-bronze": {"BluntAttack": 0, "SlashingAttack": 2, "PiercingAttack": 3},
+          "*-corrupt": {"BluntAttack": 3, "SlashingAttack": 4, "PiercingAttack": 6},
+          "*-corrupt-sawblade": {"BluntAttack": 6, "SlashingAttack": 8, "PiercingAttack": 10}
         }
       }
     }
@@ -81,14 +81,14 @@
     "value": {
       "code": "CombatOverhaul:EntityDamageModel",
       "damageModel": {
-        "TorsoDamageMultiplier": 0.8,
-        "LimbsDamageMultiplier": 0.5,
-        "HeadDamageMultiplier": 1,
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 1,
+        "HeadDamageMultiplier": 1.5,
         "CriticalDamageMultiplier": 2,
         "DefaultResistsByType": {
-          "*-bronze": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0},
-          "*-corrupt": {"BluntAttack": 0, "SlashingAttack": 1, "PiercingAttack": 1},
-          "*-corrupt-sawblade": {"BluntAttack": 1, "SlashingAttack": 3, "PiercingAttack": 5}
+          "*-bronze": {"BluntAttack": 0, "SlashingAttack": 2, "PiercingAttack": 3},
+          "*-corrupt": {"BluntAttack": 3, "SlashingAttack": 4, "PiercingAttack": 6},
+          "*-corrupt-sawblade": {"BluntAttack": 6, "SlashingAttack": 8, "PiercingAttack": 10}
         }
       }
     }

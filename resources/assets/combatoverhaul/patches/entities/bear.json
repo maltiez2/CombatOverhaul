@@ -45,7 +45,13 @@
         "LimbsDamageMultiplier": 0.75,
         "HeadDamageMultiplier": 1.5,
         "CriticalDamageMultiplier": 4,
-        "DefaultResists": {"BluntAttack": 5, "SlashingAttack": 4, "PiercingAttack": 2}
+        "DefaultResistsByType": {
+          "*-black": {"BluntAttack": 9, "SlashingAttack": 7, "PiercingAttack": 5},
+          "*-sun": {"BluntAttack": 9, "SlashingAttack": 7, "PiercingAttack": 5},
+          "*-panda": {"BluntAttack": 9, "SlashingAttack": 7, "PiercingAttack": 5},
+          "*-brown": {"BluntAttack": 10, "SlashingAttack": 8, "PiercingAttack": 6},
+          "*-polar": {"BluntAttack": 10, "SlashingAttack": 8, "PiercingAttack": 6}
+        }
       }
     }
   },
@@ -61,7 +67,13 @@
         "LimbsDamageMultiplier": 0.75,
         "HeadDamageMultiplier": 1.5,
         "CriticalDamageMultiplier": 4,
-        "DefaultResists": {"BluntAttack": 5, "SlashingAttack": 4, "PiercingAttack": 2}
+        "DefaultResistsByType": {
+          "*-black": {"BluntAttack": 9, "SlashingAttack": 7, "PiercingAttack": 5},
+          "*-sun": {"BluntAttack": 9, "SlashingAttack": 7, "PiercingAttack": 5},
+          "*-panda": {"BluntAttack": 9, "SlashingAttack": 7, "PiercingAttack": 5},
+          "*-brown": {"BluntAttack": 10, "SlashingAttack": 8, "PiercingAttack": 6},
+          "*-polar": {"BluntAttack": 10, "SlashingAttack": 8, "PiercingAttack": 6}
+        }
       }
     }
   },
@@ -70,7 +82,14 @@
     "file": "game:entities/land/bear",
     "op": "add",
     "path": "/server/behaviors/9/aitasks/0/damageTierByType",
-    "value": {"*-black": 5, "*-brown": 6, "*-sun": 5, "*-panda": 5, "*-polar": 6}
+    "value": {"*-black": 5, "*-brown": 6, "*-sun": 5, "*-panda": 5, "*-polar": 7}
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/bear",
+    "op": "add",
+    "path": "/server/behaviors/9/aitasks/1/damageTierByType",
+    "value": {"*-black": 5, "*-brown": 6, "*-sun": 5, "*-panda": 5, "*-polar": 7}
   },
   {"side": "Server", "file": "game:entities/land/bear", "op": "replace", "path": "/server/behaviors/9/aitasks/0/damageType", "value": "SlashingAttack"},
   {"side": "Server", "file": "game:entities/land/bear", "op": "remove", "path": "/server/behaviors/9/aitasks/0/damageTier"}

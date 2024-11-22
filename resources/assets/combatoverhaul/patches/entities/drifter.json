@@ -66,12 +66,12 @@
         "HeadDamageMultiplier": 1.25,
         "CriticalDamageMultiplier": 2,
         "DefaultResistsByType": {
-          "*-normal": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0},
-          "*-deep": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 1},
-          "*-tainted": {"BluntAttack": 0, "SlashingAttack": 1, "PiercingAttack": 2},
-          "*-corrupt": {"BluntAttack": 1, "SlashingAttack": 2, "PiercingAttack": 3},
-          "*-nightmare": {"BluntAttack": 1, "SlashingAttack": 3, "PiercingAttack": 4},
-          "*-double-headed": {"BluntAttack": 1, "SlashingAttack": 5, "PiercingAttack": 5}
+          "*-normal": {"BluntAttack": 0, "SlashingAttack": 2, "PiercingAttack": 4},
+          "*-deep": {"BluntAttack": 2, "SlashingAttack": 3, "PiercingAttack": 5},
+          "*-tainted": {"BluntAttack": 3, "SlashingAttack": 4, "PiercingAttack": 6},
+          "*-corrupt": {"BluntAttack": 4, "SlashingAttack": 5, "PiercingAttack": 7},
+          "*-nightmare": {"BluntAttack": 5, "SlashingAttack": 6, "PiercingAttack": 8},
+          "*-double-headed": {"BluntAttack": 6, "SlashingAttack": 7, "PiercingAttack": 10}
         }
       }
     }
@@ -89,12 +89,12 @@
         "HeadDamageMultiplier": 1.25,
         "CriticalDamageMultiplier": 2,
         "DefaultResistsByType": {
-          "*-normal": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0},
-          "*-deep": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 1},
-          "*-tainted": {"BluntAttack": 0, "SlashingAttack": 1, "PiercingAttack": 2},
-          "*-corrupt": {"BluntAttack": 1, "SlashingAttack": 2, "PiercingAttack": 3},
-          "*-nightmare": {"BluntAttack": 1, "SlashingAttack": 3, "PiercingAttack": 4},
-          "*-double-headed": {"BluntAttack": 1, "SlashingAttack": 5, "PiercingAttack": 5}
+          "*-normal": {"BluntAttack": 0, "SlashingAttack": 2, "PiercingAttack": 4},
+          "*-deep": {"BluntAttack": 2, "SlashingAttack": 3, "PiercingAttack": 5},
+          "*-tainted": {"BluntAttack": 3, "SlashingAttack": 4, "PiercingAttack": 6},
+          "*-corrupt": {"BluntAttack": 4, "SlashingAttack": 5, "PiercingAttack": 7},
+          "*-nightmare": {"BluntAttack": 5, "SlashingAttack": 6, "PiercingAttack": 8},
+          "*-double-headed": {"BluntAttack": 6, "SlashingAttack": 7, "PiercingAttack": 10}
         }
       }
     }

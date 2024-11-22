@@ -95,7 +95,7 @@
         "LimbsDamageMultiplier": 0.3,
         "HeadDamageMultiplier": 1,
         "CriticalDamageMultiplier": 3,
-        "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 4, "PiercingAttack": 6}
+        "DefaultResists": {"BluntAttack": 8, "SlashingAttack": 10, "PiercingAttack": 10}
       }
     }
   },
@@ -111,10 +111,10 @@
         "LimbsDamageMultiplier": 0.3,
         "HeadDamageMultiplier": 1,
         "CriticalDamageMultiplier": 3,
-        "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 4, "PiercingAttack": 6}
+        "DefaultResists": {"BluntAttack": 8, "SlashingAttack": 10, "PiercingAttack": 10}
       }
     }
   },
   {"side": "Server", "file": "game:entities/land/eidolon-immobilized", "op": "replace", "path": "/server/behaviors/5/aitasks/0/damageTier", "value": 7},
-  {"side": "Server", "file": "game:entities/land/eidolon-immobilized", "op": "replace", "path": "/server/behaviors/5/aitasks/1/damageTier", "value": 7}
+  {"side": "Server", "file": "game:entities/land/eidolon-immobilized", "op": "replace", "path": "/server/behaviors/5/aitasks/0/damage", "value": 25}
 ]
