@@ -62,7 +62,7 @@ public sealed class DirectionController
         }
     }
 
-    public void OnGameTick()
+    public void OnGameTick(bool forceNewDirection = false)
     {
         if (DirectionsConfiguration == 0)
         {
@@ -88,7 +88,7 @@ public sealed class DirectionController
 
         float delta = _directionQueue.Last().DeltaPitch * _directionQueue.Last().DeltaPitch + _directionQueue.Last().DeltaYaw * _directionQueue.Last().DeltaYaw;
 
-        if (delta > _sensitivityFactor / Sensitivity)
+        if (forceNewDirection || delta > _sensitivityFactor / Sensitivity)
         {
             CurrentDirectionNormalized = direction;
             CurrentDirection = (AttackDirection)_configurations[DirectionsConfiguration][CurrentDirectionNormalized];

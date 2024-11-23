@@ -81,7 +81,15 @@ public readonly struct DirectionOffset
         if (Math.Abs(direction.X * direction.X + direction.Z * direction.Z) < 1E-6f)
         {
             Yaw = Angle.FromDegrees(0);
-            Pitch = Angle.FromDegrees(90);
+            if (direction.Y > 0)
+            {
+                Pitch = Angle.FromDegrees(90);
+            }
+            else
+            {
+                Pitch = Angle.FromDegrees(-90);
+            }
+            
             return;
         }
         

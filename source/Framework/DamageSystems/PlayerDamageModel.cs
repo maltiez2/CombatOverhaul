@@ -3,6 +3,7 @@ using CombatOverhaul.Colliders;
 using CombatOverhaul.MeleeSystems;
 using CombatOverhaul.Utils;
 using ProtoBuf;
+using System.Linq;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -59,7 +60,7 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
     public override string PropertyName() => "PlayerDamageModel";
 
     public PlayerDamageModel DamageModel { get; private set; } = new(Array.Empty<DamageZoneStatsJson>());
-    public readonly Dictionary<string, PlayerBodyPart> CollidersToBodyParts = new Dictionary<string, PlayerBodyPart>()
+    public readonly Dictionary<string, PlayerBodyPart> CollidersToBodyParts = new()
     {
         { "LowerTorso", PlayerBodyPart.Torso },
         { "UpperTorso", PlayerBodyPart.Torso },
@@ -74,7 +75,7 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
         { "LowerFootL", PlayerBodyPart.LeftFoot },
         { "LowerFootR", PlayerBodyPart.RightFoot }
     };
-    public readonly Dictionary<PlayerBodyPart, DamageZone> BodyPartsToZones = new Dictionary<PlayerBodyPart, DamageZone>()
+    public readonly Dictionary<PlayerBodyPart, DamageZone> BodyPartsToZones = new()
     {
         { PlayerBodyPart.None, DamageZone.None },
         { PlayerBodyPart.Head, DamageZone.Head },
@@ -90,6 +91,12 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
         { PlayerBodyPart.LeftFoot, DamageZone.Feet },
         { PlayerBodyPart.RightFoot, DamageZone.Feet }
 
+    };
+    public readonly List<EnumDamageType> DamageTypesToProcess = new()
+    {
+        EnumDamageType.PiercingAttack,
+        EnumDamageType.SlashingAttack,
+        EnumDamageType.BluntAttack
     };
 
     public DamageBlockStats? CurrentDamageBlock { get; set; } = null;
@@ -114,7 +121,7 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
 
     private float OnReceiveDamageHandler(float damage, DamageSource damageSource)
     {
-        if (damageSource.Type == EnumDamageType.Heal) return damage;
+        if (!DamageTypesToProcess.Contains(damageSource.Type)) return damage;
 
         (PlayerBodyPart detailedDamageZone, float multiplier) = DetermineHitZone(damageSource);
 

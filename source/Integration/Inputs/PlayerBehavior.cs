@@ -83,8 +83,8 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
     {
         if (!_mainPlayer) return;
 
-        SetRenderDirectionCursorForMainHand();
-        _directionController.OnGameTick();
+        bool configurationChanged = SetRenderDirectionCursorForMainHand();
+        _directionController.OnGameTick(forceNewDirection: configurationChanged);
         _ = CheckIfItemsInHandsChanged();
 
         if (_player.RightHandItemSlot.Itemstack?.Item is IOnGameTick mainhandTickListener)
@@ -327,15 +327,17 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
             PlayerRenderingPatches.SetOffset(stack.Item.Attributes["fpHandsOffset"].AsFloat());
         }
     }
-    private void SetRenderDirectionCursorForMainHand()
+    private bool SetRenderDirectionCursorForMainHand()
     {
         ItemStack? stack = _player.ActiveHandItemSlot.Itemstack;
+
+        DirectionsConfiguration configuration = _directionController.DirectionsConfiguration;
 
         if (stack == null || stack.Item is not IHasWeaponLogic weapon)
         {
             _directionController.DirectionsConfiguration = DirectionsConfiguration.None;
             _directionRenderer.Show = false;
-            return;
+            return configuration != _directionController.DirectionsConfiguration;
         }
 
         if (weapon.ClientLogic != null)
@@ -343,5 +345,7 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
             _directionController.DirectionsConfiguration = weapon.ClientLogic.DirectionsType;
             _directionRenderer.Show = weapon.ClientLogic.DirectionsType != DirectionsConfiguration.None;
         }
+
+        return configuration != _directionController.DirectionsConfiguration;
     }
 }
