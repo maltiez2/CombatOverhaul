@@ -2,9 +2,6 @@
   "version": 2,
   "patches": {
     "string": {
-      "game:itemtypes/combatoverhaul/bow.json": {
-        "attributes/AimingByType/@@*/CursorType": "bows_aiming_cursor_type"
-      },
       "game:itemtypes/combatoverhaul/spear.json": {
         "attributes/ThrowAttack/Aiming/CursorType": "spears_aiming_cursor_type",
         "behaviors/1/properties/stats/HitSound": "(arrow_ping_sound_on_hit) ? value : empty_string"
@@ -28,6 +25,9 @@
       },
       "game:itemtypes/combatoverhaul/arrow.json": {
         "behaviors/0/properties/stats/HitSound": "(arrow_ping_sound_on_hit) ? value : empty_string"
+      },
+      "combatoverhaul:config/settings.json": {
+        "BowsAimingCursorType": "bows_aiming_cursor_type"
       }
     },
     "boolean": {
@@ -75,8 +75,10 @@
         "attributes/ThrowAttack/Aiming/AimDifficulty": "spears_aiming_difficulty"
       },
       "combatoverhaul:config/settings.json": {
-        "directionsCursorAlpha": "directions_cursor_transparency",
-        "directionsCursorScale": "directions_cursor_scale"
+        "DirectionsCursorAlpha": "directions_cursor_transparency",
+        "DirectionsCursorScale": "directions_cursor_scale",
+        "BowsAimingHorizontalLimit": "value * bow_aiming_horisontal_limit",
+        "BowsAimingVerticalLimit": "value * bow_aiming_vertical_limit"
       },
       "combatoverhaul:patches/tools/pickaxe.json": {
         "0/value/AnimationSpeedBonusFromMiningSpeed": "tool_animation_speed_bonus"
@@ -93,6 +95,7 @@
       "code": "directions_cursor_transparency",
       "type": "float",
       "ingui": "combatoverhaul:setting-directions_cursor_transparency",
+      "clientSide": true,
       "default": 1.0,
       "range": {
         "min": 0.0,
@@ -103,6 +106,7 @@
       "code": "directions_cursor_scale",
       "type": "float",
       "ingui": "combatoverhaul:setting-directions_cursor_scale",
+      "clientSide": true,
       "default": 1.0,
       "range": {
         "min": 0.1,
@@ -123,6 +127,7 @@
       "code": "bows_aiming_cursor_type",
       "type": "string",
       "ingui": "combatoverhaul:setting-bows_aiming_cursor_type",
+      "clientSide": true,
       "default": "Moving",
       "values": [
         "None",
@@ -130,6 +135,28 @@
         "Fixed",
         "Moving"
       ]
+    },
+    {
+      "code": "bow_aiming_vertical_limit",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-bow_aiming_vertical_limit",
+      "clientSide": true,
+      "default": 1.0,
+      "range": {
+        "min": 0.0,
+        "max": 2.0
+      }
+    },
+    {
+      "code": "bow_aiming_horisontal_limit",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-bow_aiming_horisontal_limit",
+      "clientSide": true,
+      "default": 1.0,
+      "range": {
+        "min": 0.0,
+        "max": 2.0
+      }
     },
     {
       "code": "spears_aiming_cursor_type",

@@ -19,17 +19,27 @@ using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
 using Vintagestory.Client.NoObf;
-using Vintagestory.Common;
 using Vintagestory.GameContent;
 using Vintagestory.Server;
 
 namespace CombatOverhaul;
 
+public sealed class Settings
+{
+    public float DirectionsCursorAlpha { get; set; } = 1.0f;
+    public float DirectionsCursorScale { get; set; } = 1.0f;
+
+    public string BowsAimingCursorType { get; set; } = "Moving";
+    public float BowsAimingHorizontalLimit { get; set; } = 0.125f;
+    public float BowsAimingVerticalLimit { get; set; } = 0.35f;
+}
 
 public sealed class CombatOverhaulSystem : ModSystem
 {
     public event Action? OnDispose;
-    
+    public event Action<Settings>? SettingsLoaded;
+    public Settings Settings { get; set; } = new();
+
     public override void StartPre(ICoreAPI api)
     {
         (api as ServerCoreAPI)?.ClassRegistryNative.RegisterInventoryClass(GlobalConstants.characterInvClassName, typeof(ArmorInventory));
@@ -127,12 +137,15 @@ public sealed class CombatOverhaulSystem : ModSystem
     {
         IAsset settingsAsset = api.Assets.Get("combatoverhaul:config/settings.json");
         JsonObject settings = JsonObject.FromJson(settingsAsset.ToText());
+        Settings = settings.AsObject<Settings>();
 
         if (DirectionCursorRenderer != null)
         {
-            DirectionCursorRenderer.Alpha = settings["directionsCursorAlpha"].AsFloat();
-            DirectionCursorRenderer.CursorScale = settings["directionsCursorScale"].AsFloat();
+            DirectionCursorRenderer.Alpha = Settings.DirectionsCursorAlpha;
+            DirectionCursorRenderer.CursorScale = Settings.DirectionsCursorScale;
         }
+
+        SettingsLoaded?.Invoke(Settings);
     }
 
     private readonly Vector4 _iconScale = new(-0.1f, -0.1f, 1.2f, 1.2f);

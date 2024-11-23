@@ -59,6 +59,13 @@ public sealed class BowClient : RangeWeaponClient
         _stats = item.Attributes.AsObject<BowStats>();
         _aimingStats = _stats.Aiming.ToStats();
         _ammoSelector = ammoSelector;
+
+        api.ModLoader.GetModSystem<CombatOverhaulSystem>().SettingsLoaded += settings =>
+        {
+            _aimingStats.CursorType = Enum.Parse<AimingCursorType>(settings.BowsAimingCursorType);
+            _aimingStats.VerticalLimit = settings.BowsAimingVerticalLimit;
+            _aimingStats.HorizontalLimit = settings.BowsAimingHorizontalLimit;
+        };
     }
 
     public override void OnSelected(ItemSlot slot, EntityPlayer player, bool mainHand, ref int state)

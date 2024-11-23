@@ -1,4 +1,7 @@
 {
-  "directionsCursorAlpha": 1.0,
-  "directionsCursorScale": 1.0
+  "DirectionsCursorAlpha": 1.0,
+  "DirectionsCursorScale": 1.0,
+  "BowsAimingCursorType": "Moving",
+  "BowsAimingHorizontalLimit": 0.125,
+  "BowsAimingVerticalLimit": 0.25
 }
