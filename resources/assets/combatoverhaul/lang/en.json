@@ -138,6 +138,8 @@
   "setting-bows_aiming_cursor_type": "Bows aiming cursor type",
   "setting-bow_aiming_difficulty": "Bows aiming difficulty",
   "setting-spears_aiming_cursor_type": "Spears aiming cursor type",
+  "setting-bow_aiming_vertical_limit": "Bows aiming cursor vertical limit",
+  "setting-bow_aiming_horisontal_limit": "Bows aiming cursor horizontal limit",
   "setting-spears_aiming_difficulty": "Spears aiming difficulty",
   "setting-spears_thrown_distance": "Spears throwing distance",
   "setting-shields_protection_zones": "Shields protection zones",

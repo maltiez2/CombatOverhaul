@@ -56,9 +56,132 @@ public class ItemWearableArmor : ItemWearable
             LoggerUtil.Error(api, this, $"Error on equipping '{code}' that occupies {armorType}:\n{exception}");
         }
     }
+    public override void OnCreatedByCrafting(ItemSlot[] inSlots, ItemSlot outputSlot, GridRecipe byRecipe)
+    {
+        EnsureConditionExists(outputSlot);
+        outputSlot.Itemstack.Attributes.SetFloat("condition", 1);
+
+        int newDurability = 0;
+        if (byRecipe.Name.Path.Contains("repair"))
+        {
+            CalculateRepairValueProperly(inSlots, outputSlot, out float repairValue, out int matCostPerMatType);
+
+            int curDur = outputSlot.Itemstack.Collectible.GetRemainingDurability(outputSlot.Itemstack);
+            int maxDur = GetMaxDurability(outputSlot.Itemstack);
+
+            newDurability = Math.Min(maxDur, (int)(curDur + maxDur * repairValue));
+        }
+
+        base.OnCreatedByCrafting(inSlots, outputSlot, byRecipe);
+
+        // Prevent derp in the handbook
+        if (outputSlot is DummySlot) return;
+
+        if (byRecipe.Name.Path.Contains("repair"))
+        {
+            outputSlot.Itemstack.Attributes.SetInt("durability", newDurability);
+        }
+    }
+    public override bool ConsumeCraftingIngredients(ItemSlot[] inSlots, ItemSlot outputSlot, GridRecipe recipe)
+    {
+        // Consume as much materials in the input grid as needed
+        if (recipe.Name.Path.Contains("repair"))
+        {
+            CalculateRepairValueProperly(inSlots, outputSlot, out float repairValue, out int matCostPerMatType);
+
+            foreach (ItemSlot islot in inSlots)
+            {
+                if (islot.Empty) continue;
+
+                if (islot.Itemstack.Collectible == this) { islot.Itemstack = null; continue; }
+
+                islot.TakeOut(matCostPerMatType);
+            }
+
+            return true;
+        }
+
+        return false;
+    }
 
     protected static InventoryBase? GetGearInventory(Entity entity)
     {
         return entity.GetBehavior<EntityBehaviorPlayerInventory>().Inventory;
+    }
+    protected virtual void EnsureConditionExists(ItemSlot slot)
+    {
+        // Prevent derp in the handbook
+        if (slot is DummySlot) return;
+
+        if (!slot.Itemstack.Attributes.HasAttribute("condition") && api.Side == EnumAppSide.Server)
+        {
+            if (slot.Itemstack.ItemAttributes?["warmth"].Exists == true && slot.Itemstack.ItemAttributes?["warmth"].AsFloat() != 0)
+            {
+                if (slot is ItemSlotTrade)
+                {
+                    slot.Itemstack.Attributes.SetFloat("condition", (float)api.World.Rand.NextDouble() * 0.25f + 0.75f);
+                }
+                else
+                {
+                    slot.Itemstack.Attributes.SetFloat("condition", (float)api.World.Rand.NextDouble() * 0.4f);
+                }
+
+                slot.MarkDirty();
+            }
+        }
+    }
+    protected virtual void CalculateRepairValueProperly(ItemSlot[] inSlots, ItemSlot outputSlot, out float repairValue, out int matCostPerMatType)
+    {
+        int origMatCount = GetOrigMatCount(inSlots, outputSlot);
+        if (origMatCount == 0)
+        {
+            origMatCount = Attributes["materialCount"].AsInt(1);
+        }
+        ItemSlot? armorSlot = inSlots.FirstOrDefault(slot => slot.Itemstack?.Collectible is ItemWearable);
+        int curDur = outputSlot.Itemstack.Collectible.GetRemainingDurability(armorSlot.Itemstack);
+        int maxDur = GetMaxDurability(outputSlot.Itemstack);
+
+        // How much 1x mat repairs in %
+        float repairValuePerItem = 2f / origMatCount;
+        // How much the mat repairs in durability
+        float repairDurabilityPerItem = repairValuePerItem * maxDur;
+        // Divide missing durability by repair per item = items needed for full repair 
+        int fullRepairMatCount = (int)Math.Max(1, Math.Round((maxDur - curDur) / repairDurabilityPerItem));
+        // Limit repair value to smallest stack size of all repair mats
+        int minMatStackSize = GetInputRepairCount(inSlots);
+        // Divide the cost amongst all mats
+        int matTypeCount = GetRepairMatTypeCount(inSlots);
+
+        int availableRepairMatCount = Math.Min(fullRepairMatCount, minMatStackSize * matTypeCount);
+        matCostPerMatType = Math.Min(fullRepairMatCount, minMatStackSize);
+
+        // Repairing costs half as many materials as newly creating it
+        repairValue = (float)availableRepairMatCount / origMatCount * 2;
+    }
+    protected virtual int GetRepairMatTypeCount(ItemSlot[] slots)
+    {
+        List<ItemStack> stackTypes = new();
+        foreach (ItemSlot slot in slots)
+        {
+            if (slot.Empty) continue;
+            bool found = false;
+            if (slot.Itemstack.Collectible is ItemWearable) continue;
+
+            foreach (ItemStack stack in stackTypes)
+            {
+                if (slot.Itemstack.Satisfies(stack))
+                {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+            {
+                stackTypes.Add(slot.Itemstack);
+            }
+        }
+
+        return stackTypes.Count;
     }
 }
