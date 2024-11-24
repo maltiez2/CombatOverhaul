@@ -180,7 +180,7 @@
             "Zones": ["Head", "Neck", "Face"],
             "Resists": {"PiercingAttack": 2, "SlashingAttack": 4, "BluntAttack": 0},
             "FlatReduction": {},
-            "PlayerStats": {"walkspeed": 0, "manipulationSpeed": 0, "steadyAim": -0.25, "healingeffectivness": -0.05, "hungerrate": 0.05}
+            "PlayerStats": {"walkspeed": 0, "manipulationSpeed": 0, "steadyAim": -0.15, "healingeffectivness": -0.05, "hungerrate": 0.05}
           },
           "armor-body-scale-copper": {
             "Layers": ["Outer", "Middle"],
@@ -285,7 +285,7 @@
             "Zones": ["Head", "Neck", "Face"],
             "Resists": {"PiercingAttack": 3, "SlashingAttack": 6, "BluntAttack": 0},
             "FlatReduction": {},
-            "PlayerStats": {"walkspeed": 0, "manipulationSpeed": 0, "steadyAim": -0.25, "healingeffectivness": -0.05, "hungerrate": 0.05}
+            "PlayerStats": {"walkspeed": 0, "manipulationSpeed": 0, "steadyAim": -0.15, "healingeffectivness": -0.05, "hungerrate": 0.05}
           },
           "armor-body-scale-*bronze": {
             "Layers": ["Outer", "Middle"],
@@ -369,7 +369,7 @@
             "Zones": ["Head", "Neck", "Face"],
             "Resists": {"PiercingAttack": 6, "SlashingAttack": 8, "BluntAttack": 0},
             "FlatReduction": {},
-            "PlayerStats": {"walkspeed": 0, "manipulationSpeed": 0, "steadyAim": -0.25, "healingeffectivness": -0.05, "hungerrate": 0.05}
+            "PlayerStats": {"walkspeed": 0, "manipulationSpeed": 0, "steadyAim": -0.15, "healingeffectivness": -0.05, "hungerrate": 0.05}
           },
           "armor-body-scale-*iron": {
             "Layers": ["Outer", "Middle"],
@@ -453,7 +453,7 @@
             "Zones": ["Head", "Neck", "Face"],
             "Resists": {"PiercingAttack": 7, "SlashingAttack": 9, "BluntAttack": 0},
             "FlatReduction": {"PiercingAttack": 0, "SlashingAttack": 1, "BluntAttack": 0},
-            "PlayerStats": {"walkspeed": 0, "manipulationSpeed": 0, "steadyAim": -0.25, "healingeffectivness": -0.05, "hungerrate": 0.05}
+            "PlayerStats": {"walkspeed": 0, "manipulationSpeed": 0, "steadyAim": -0.15, "healingeffectivness": -0.05, "hungerrate": 0.05}
           },
           "armor-body-scale-steel": {
             "Layers": ["Outer", "Middle"],

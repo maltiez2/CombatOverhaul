@@ -44,5 +44,11 @@
     "op": "replace",
     "path": "/attributes/attachableToEntity/disableElementsByType/armor-head-tailored-*",
     "value": ["hidehat", "Hood", "Hair tile upper part", "ponytailhigh", "ponytaillow", "Hair", "hair-uncovered", "sidehigh", "sidelow", "bangs"]
+  },
+  {
+    "file": "game:itemtypes/wearable/seraph/armor",
+    "op": "replace",
+    "path": "/attributes/attachableToEntity/disableElementsByType/armor-head-chain-*",
+    "value": ["hidehat", "Hood", "hoodupperover", "Hair tile upper part", "ponytailhigh", "ponytaillow", "Hair", "hair-uncovered", "sidehigh", "sidelow", "bangs"]
   }
 ]

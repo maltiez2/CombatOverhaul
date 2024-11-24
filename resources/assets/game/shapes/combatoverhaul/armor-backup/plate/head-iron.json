@@ -1,0 +1,52 @@
+{
+	"editor": {
+		"backDropShape": "D:/Vintage Story/Vintagestory/assets/game/shapes/entity/humanoid/seraph-hairless",
+		"collapsedPaths": "Root/ArmorHelmet",
+		"allAngles": true,
+		"entityTextureMode": true
+	},
+	"textureWidth": 64,
+	"textureHeight": 64,
+	"textureSizes": {
+		"copper": [64,64],
+		"linen": [64,64],
+		"bismuthbronze": [64,64]
+	},
+	"textures": {
+		"material": "entity/humanoid/serapharmor/plate/iron"
+	},
+	"elements": [
+		{
+			"name": "ArmorHelmet",
+			"stepParentName": "Head",
+			"from": [ -0.2, -0.9, -0.6 ],
+			"to": [ 5.9, 5.5, 5.7 ],
+			"unwrapMode": 4,
+			"autoUnwrap": false,
+			"uv": [ 27.0, 14.5 ],
+			"rotationOrigin": [ -0.2, -0.9, -0.6 ],
+			"faces": {
+				"north": { "texture": "#material", "uv": [ 27.0, 20.5, 33.0, 26.5 ] },
+				"east": { "texture": "#material", "uv": [ 45.5, 20.5, 51.5, 26.5 ] },
+				"south": { "texture": "#material", "uv": [ 39.0, 20.5, 45.0, 26.5 ] },
+				"west": { "texture": "#material", "uv": [ 33.0, 20.5, 39.0, 26.5 ] },
+				"up": { "texture": "#material", "uv": [ 33.0, 14.5, 39.0, 20.5 ], "rotation": 90 },
+				"down": { "texture": "#material", "uv": [ 33.0, 26.5, 39.0, 32.5 ], "rotation": 90 }
+			}
+		},
+		{
+			"name": "ArmorNeck",
+			"stepParentName": "Neck",
+			"from": [ -0.3, 0.6, -0.3 ],
+			"to": [ 3.3, 2.4, 3.3 ],
+			"unwrapMode": 4,
+			"uv": [ 12.0, 5.5 ],
+			"rotationOrigin": [ -0.3, 2.6, -0.3 ],
+			"faces": {
+				"north": { "texture": "#material", "uv": [ 12.0, 5.5, 15.5, 7.0 ] },
+				"east": { "texture": "#material", "uv": [ 22.5, 5.5, 26.0, 7.0 ] },
+				"south": { "texture": "#material", "uv": [ 19.0, 5.5, 22.5, 7.0 ] },
+				"west": { "texture": "#material", "uv": [ 15.5, 5.5, 19.0, 7.0 ] }
+			}
+		}
+	]}

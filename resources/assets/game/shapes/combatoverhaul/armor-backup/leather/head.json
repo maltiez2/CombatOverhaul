@@ -1,0 +1,65 @@
+{
+	"editor": {
+		"backDropShape": "entity/humanoid/seraph-hairless",
+		"collapsedPaths": "Root/bandN/toothR1,Root/bandN/toothL1",
+		"allAngles": true,
+		"entityTextureMode": true
+	},
+	"textureWidth": 64,
+	"textureHeight": 64,
+	"textureSizes": {
+	},
+	"textures": {
+		"material": "entity/humanoid/serapharmor/sewn/leather"
+	},
+	"elements": [
+		{
+			"name": "ArmorHelmet",
+			"stepParentName": "Head",
+			"from": [ 0.1, 1.8, -0.6 ],
+			"to": [ 6.2, 5.8, 5.7 ],
+			"unwrapMode": 5,
+			"autoUnwrap": false,
+			"uv": [ 34.5, 0.5 ],
+			"rotationOrigin": [ 0.1, 1.8, -0.6 ],
+			"faces": {
+				"north": { "texture": "#material", "uv": [ 38.5, 0.5, 44.5, 4.5 ], "rotation": 180 },
+				"east": { "texture": "#material", "uv": [ 44.5, 4.5, 48.5, 10.5 ], "rotation": 90 },
+				"south": { "texture": "#material", "uv": [ 38.5, 10.5, 44.5, 14.5 ] },
+				"west": { "texture": "#material", "uv": [ 34.0, 4.5, 38.0, 10.5 ], "rotation": 270 },
+				"up": { "texture": "#material", "uv": [ 38.5, 4.5, 44.5, 10.5 ] },
+				"down": { "texture": "#material", "uv": [ 48.5, 4.5, 54.5, 10.5 ] }
+			},
+			"children": [
+				{
+					"name": "ArmorHelmetstrap",
+					"from": [ 1.0, -2.0, 0.3 ],
+					"to": [ 2.0, 0.0, 6.0 ],
+					"uv": [ 46.5, 19.5 ],
+					"rotationOrigin": [ 1.0, -2.0, 0.3 ],
+					"faces": {
+						"north": { "texture": "#material", "uv": [ 46.5, 25.0, 48.5, 26.0 ], "rotation": 270 },
+						"east": { "texture": "#material", "uv": [ 48.5, 25.0, 54.0, 27.0 ] },
+						"south": { "texture": "#material", "uv": [ 54.0, 25.0, 55.0, 27.0 ] },
+						"west": { "texture": "#material", "uv": [ 55.0, 25.0, 60.5, 27.0 ] },
+						"down": { "texture": "#material", "uv": [ 46.5, 19.5, 47.5, 25.0 ] }
+					}
+				},
+				{
+					"name": "ArmorHelmetFront",
+					"from": [ -0.7, 1.0, 0.0 ],
+					"to": [ 0.0, 4.0, 6.3 ],
+					"unwrapMode": 4,
+					"uv": [ 45.5, 11.0 ],
+					"rotationOrigin": [ -0.5, 1.0, 0.0 ],
+					"faces": {
+						"north": { "texture": "#material", "uv": [ 45.5, 11.5, 46.0, 14.5 ] },
+						"south": { "texture": "#material", "uv": [ 52.0, 11.5, 52.5, 14.5 ] },
+						"west": { "texture": "#material", "uv": [ 46.0, 11.5, 52.0, 14.5 ] },
+						"up": { "texture": "#material", "uv": [ 46.0, 11.0, 52.0, 11.5 ], "rotation": 90 },
+						"down": { "texture": "#material", "uv": [ 46.0, 14.5, 52.0, 15.0 ], "rotation": 90 }
+					}
+				}
+			]
+		}
+	]}

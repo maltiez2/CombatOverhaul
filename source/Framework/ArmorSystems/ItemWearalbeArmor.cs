@@ -58,18 +58,22 @@ public class ItemWearableArmor : ItemWearable
     }
     public override void OnCreatedByCrafting(ItemSlot[] inSlots, ItemSlot outputSlot, GridRecipe byRecipe)
     {
-        EnsureConditionExists(outputSlot);
-        outputSlot.Itemstack.Attributes.SetFloat("condition", 1);
-
         int newDurability = 0;
-        if (byRecipe.Name.Path.Contains("repair"))
+
+        if (outputSlot is not DummySlot)
         {
-            CalculateRepairValueProperly(inSlots, outputSlot, out float repairValue, out int matCostPerMatType);
+            EnsureConditionExists(outputSlot);
+            outputSlot.Itemstack.Attributes.SetFloat("condition", 1);
 
-            int curDur = outputSlot.Itemstack.Collectible.GetRemainingDurability(outputSlot.Itemstack);
-            int maxDur = GetMaxDurability(outputSlot.Itemstack);
+            if (byRecipe.Name.Path.Contains("repair"))
+            {
+                CalculateRepairValueProperly(inSlots, outputSlot, out float repairValue, out int matCostPerMatType);
 
-            newDurability = Math.Min(maxDur, (int)(curDur + maxDur * repairValue));
+                int curDur = outputSlot.Itemstack.Collectible.GetRemainingDurability(outputSlot.Itemstack);
+                int maxDur = GetMaxDurability(outputSlot.Itemstack);
+
+                newDurability = Math.Min(maxDur, (int)(curDur + maxDur * repairValue));
+            }
         }
 
         base.OnCreatedByCrafting(inSlots, outputSlot, byRecipe);
