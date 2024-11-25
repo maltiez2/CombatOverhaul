@@ -1,7 +1,6 @@
 ﻿using CombatOverhaul.DamageSystems;
 using CombatOverhaul.Utils;
 using Vintagestory.API.Common;
-using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
@@ -12,7 +11,7 @@ namespace CombatOverhaul.Armor;
 public class ClothesSlot : ItemSlotCharacter
 {
     public IWorldAccessor? World { get; set; }
-    public string? OwnerUuid { get; set; }
+    public string? OwnerUUID { get; set; }
 
     public ClothesSlot(EnumCharacterDressType type, InventoryBase inventory) : base(type, inventory)
     {
@@ -57,12 +56,12 @@ public class ClothesSlot : ItemSlotCharacter
     {
         IHeldBag? bag = stack?.Item?.GetCollectibleInterface<IHeldBag>();
 
-        if (bag != null && World != null && World.PlayerByUid(OwnerUuid)?.Entity != null)
+        if (bag != null && World != null && World.PlayerByUid(OwnerUUID)?.Entity != null)
         {
             ItemStack[] bagContent = bag.GetContents(stack, World);
             foreach (ItemStack bagContentStack in bagContent)
             {
-                World.SpawnItemEntity(bagContentStack, World.PlayerByUid(OwnerUuid)?.Entity?.SidedPos.AsBlockPos);
+                World.SpawnItemEntity(bagContentStack, World.PlayerByUid(OwnerUUID)?.Entity?.SidedPos.AsBlockPos);
             }
 
             bag.Clear(stack);
@@ -79,6 +78,7 @@ public class ArmorSlot : ItemSlot
     public DamageResistData Resists => GetResists();
     public override int MaxSlotStackSize => 1;
     public bool Available => _inventory.IsSlotAvailable(ArmorType);
+    public List<int> SlotsWithSameItem { get; } = new();
 
     public ArmorSlot(InventoryBase inventory, ArmorType armorType) : base(inventory)
     {
@@ -235,6 +235,50 @@ public sealed class ArmorInventory : InventoryCharacter
     {
         base.OnItemSlotModified(slot);
 
+        if (slot is ArmorSlot armorSlot)
+        {
+            int thisSlotId = GetSlotId(slot);
+
+            if ((slot.Itemstack == null || slot.Itemstack.StackSize == 0) && armorSlot.SlotsWithSameItem.Count > 0)
+            {
+                foreach (int slotId in armorSlot.SlotsWithSameItem.Where(slotId => slotId != thisSlotId))
+                {
+                    if (_slots[slotId].Itemstack != null)
+                    {
+                        _slots[slotId].TakeOutWhole();
+                        _slots[slotId].MarkDirty();
+                    }
+                }
+                armorSlot.SlotsWithSameItem.Clear();
+            }
+            else if (slot.Itemstack != null && slot.Itemstack.StackSize > 0)
+            {
+                int[] blockingSlots = GetSlotsBlockedSlotIndices(armorSlot.StoredArmoredType).ToArray();
+                ArmorType[] test = GetSlotsBlockedSlot(armorSlot.StoredArmoredType).ToArray();
+                foreach (int slotId in blockingSlots
+                    .Where(slotId => slotId != thisSlotId)
+                    .Where(slotId => _slots[slotId].Itemstack == null || !_slots[slotId].Itemstack.Satisfies(slot.Itemstack)))
+                {
+                    if (_slots[slotId].Itemstack != null)
+                    {
+                        _slots[slotId].TakeOutWhole();
+                    }
+                    DummySlot dummySlot = new(slot.Itemstack.Clone());
+                    dummySlot.TryPutInto(Api.World, _slots[slotId]);
+                    _slots[slotId].MarkDirty();
+                }
+
+                foreach (int slotId in blockingSlots)
+                {
+                    (_slots[slotId] as ArmorSlot)?.SlotsWithSameItem.Clear();
+                    foreach (int slotIdToAdd in blockingSlots)
+                    {
+                        (_slots[slotId] as ArmorSlot)?.SlotsWithSameItem.Add(slotIdToAdd);
+                    }
+                }
+            }
+        }
+
         GetBackpackInventory()?.ReloadBagInventory();
 
         _onSlotModified?.Invoke();
@@ -247,14 +291,12 @@ public sealed class ArmorInventory : InventoryCharacter
 
         return result;
     }
-
     public override void DiscardAll()
     {
         base.DiscardAll();
 
         GetBackpackInventory()?.ReloadBagInventory();
     }
-
     public override void DropAll(Vec3d pos, int maxStackSize = 0)
     {
         base.DropAll(pos, maxStackSize);
@@ -269,6 +311,11 @@ public sealed class ArmorInventory : InventoryCharacter
         return _vanillaSlots + IndexFromArmorLayer(layer) * zonesCount + IndexFromDamageZone(zone);
     }
     public static int IndexFromArmorType(ArmorType type) => IndexFromArmorType(type.Layers, type.Slots);
+
+    public IEnumerable<ArmorType> GetSlotsBlockedSlot(ArmorType armorType) => _slotsByType
+        .Where(entry => entry.Value.ArmorType.Intersect(armorType))
+        .Select(entry => entry.Key);
+    public IEnumerable<int> GetSlotsBlockedSlotIndices(ArmorType armorType) => GetSlotsBlockedSlot(armorType).Select(IndexFromArmorType);
 
     public IEnumerable<ArmorType> GetSlotBlockingSlots(ArmorType armorType) => _slotsByType
         .Where(entry => !entry.Value.Empty)
@@ -415,7 +462,7 @@ public sealed class ArmorInventory : InventoryCharacter
         {
             if (slot is ClothesSlot clothesSlot)
             {
-                clothesSlot.OwnerUuid = playerUID;
+                clothesSlot.OwnerUUID = playerUID;
                 clothesSlot.World = Api.World;
             }
         }

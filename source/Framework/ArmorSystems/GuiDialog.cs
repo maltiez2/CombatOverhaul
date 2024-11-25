@@ -54,8 +54,8 @@ public sealed class GuiDialogArmorInventory : GuiDialog
     {
         if (!opened || _recomposeDialog) return;
 
-        _recomposeDialog = true;
-        _api.World.RegisterCallback(_ => RecomposeDialogCallback(), _recomposeDelay);
+        //_recomposeDialog = true;
+        //_api.World.RegisterCallback(_ => RecomposeDialogCallback(), _recomposeDelay);
     }
 
     private void RecomposeDialogCallback()
@@ -177,7 +177,7 @@ public sealed class GuiDialogArmorInventory : GuiDialog
     private void AddSlot(ArmorInventory inv, ArmorLayers layers, DamageZone zone, ref ElementBounds bounds, double gap)
     {
         int slotIndex = ArmorInventory.IndexFromArmorType(layers, zone);
-        bool available = inv.IsSlotAvailable(slotIndex) || !inv[slotIndex].Empty;
+        bool available = true;// inv.IsSlotAvailable(slotIndex) || !inv[slotIndex].Empty;
 
         if (available)
         {

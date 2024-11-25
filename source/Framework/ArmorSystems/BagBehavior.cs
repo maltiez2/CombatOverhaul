@@ -1,5 +1,4 @@
-﻿using Vintagestory.API.Client;
-using Vintagestory.API.Common;
+﻿using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
@@ -46,7 +45,7 @@ public class GearEquipableBag : CollectibleBehavior, IHeldBag, IAttachedInteract
     public string[] CanHoldWildcard { get; private set; } = new string[] { "*" };
     public string? SlotColor { get; private set; } = null;
     public int SlotsNumber { get; private set; } = 0;
-    
+
     public GearEquipableBag(CollectibleObject collObj) : base(collObj)
     {
     }
