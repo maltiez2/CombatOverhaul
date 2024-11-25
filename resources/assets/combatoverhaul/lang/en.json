@@ -4,6 +4,8 @@
   "message-mainhand-empty": "Main hand should be empty",
   "message-offhand-empty":  "Offhand should be empty",
 
+  "item-quiver-waist-*": "Quiver",
+
   "toolmode-noselection": "None",
   "interaction-ammoselection": "Select ammo type",
 

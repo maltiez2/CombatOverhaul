@@ -1,10 +1,74 @@
 ﻿using CombatOverhaul.DamageSystems;
 using CombatOverhaul.Utils;
 using Vintagestory.API.Common;
+using Vintagestory.API.Common.Entities;
+using Vintagestory.API.Config;
 using Vintagestory.API.Datastructures;
+using Vintagestory.API.MathTools;
 using Vintagestory.Common;
 
 namespace CombatOverhaul.Armor;
+
+public class ClothesSlot : ItemSlotCharacter
+{
+    public IWorldAccessor? World { get; set; }
+    public string? OwnerUuid { get; set; }
+
+    public ClothesSlot(EnumCharacterDressType type, InventoryBase inventory) : base(type, inventory)
+    {
+    }
+
+    public override void ActivateSlot(ItemSlot sourceSlot, ref ItemStackMoveOperation op)
+    {
+        if (Itemstack != null) EmptyBag(Itemstack);
+
+        base.ActivateSlot(sourceSlot, ref op);
+        OnItemSlotModified(null);
+    }
+
+    public override ItemStack? TakeOutWhole()
+    {
+        ItemStack itemStack = base.TakeOutWhole();
+
+        if (itemStack != null) EmptyBag(itemStack);
+
+        return itemStack;
+    }
+
+    public override ItemStack? TakeOut(int quantity)
+    {
+        ItemStack stack = base.TakeOut(quantity);
+
+        EmptyBag(stack);
+
+        return stack;
+    }
+
+    protected override void FlipWith(ItemSlot itemSlot)
+    {
+        base.FlipWith(itemSlot);
+
+        ItemStack stack = itemSlot.Itemstack;
+
+        if (stack != null) EmptyBag(stack);
+    }
+
+    protected void EmptyBag(ItemStack stack)
+    {
+        IHeldBag? bag = stack?.Item?.GetCollectibleInterface<IHeldBag>();
+
+        if (bag != null && World != null && World.PlayerByUid(OwnerUuid)?.Entity != null)
+        {
+            ItemStack[] bagContent = bag.GetContents(stack, World);
+            foreach (ItemStack bagContentStack in bagContent)
+            {
+                World.SpawnItemEntity(bagContentStack, World.PlayerByUid(OwnerUuid)?.Entity?.SidedPos.AsBlockPos);
+            }
+
+            bag.Clear(stack);
+        }
+    }
+}
 
 public class ArmorSlot : ItemSlot
 {
@@ -94,6 +158,8 @@ public sealed class ArmorInventory : InventoryCharacter
                 _slots[index].MaxSlotStackSize = 0;
             }
         }
+
+        FillSlotsOwnerAndWorld();
     }
     public ArmorInventory(string inventoryID, ICoreAPI api) : base(inventoryID, api)
     {
@@ -110,6 +176,8 @@ public sealed class ArmorInventory : InventoryCharacter
                 _slots[index].MaxSlotStackSize = 0;
             }
         }
+
+        FillSlotsOwnerAndWorld();
     }
 
     public override ItemSlot this[int slotId] { get => _slots[slotId]; set => LoggerUtil.Warn(Api, this, "Armor slots cannot be set"); }
@@ -144,6 +212,8 @@ public sealed class ArmorInventory : InventoryCharacter
                 _slots[index].MaxSlotStackSize = 0;
             }
         }
+
+        FillSlotsOwnerAndWorld();
     }
     public override void ToTreeAttributes(ITreeAttribute tree)
     {
@@ -165,7 +235,31 @@ public sealed class ArmorInventory : InventoryCharacter
     {
         base.OnItemSlotModified(slot);
 
+        GetBackpackInventory()?.ReloadBagInventory();
+
         _onSlotModified?.Invoke();
+    }
+    public override object ActivateSlot(int slotId, ItemSlot sourceSlot, ref ItemStackMoveOperation op)
+    {
+        object result = base.ActivateSlot(slotId, sourceSlot, ref op);
+
+        GetBackpackInventory()?.ReloadBagInventory();
+
+        return result;
+    }
+
+    public override void DiscardAll()
+    {
+        base.DiscardAll();
+
+        GetBackpackInventory()?.ReloadBagInventory();
+    }
+
+    public override void DropAll(Vec3d pos, int maxStackSize = 0)
+    {
+        base.DropAll(pos, maxStackSize);
+
+        GetBackpackInventory()?.ReloadBagInventory();
     }
 
     public static int IndexFromArmorType(ArmorLayers layer, DamageZone zone)
@@ -295,7 +389,7 @@ public sealed class ArmorInventory : InventoryCharacter
     {
         if (slotId < _clothesSlotsCount)
         {
-            ItemSlotCharacter slot = new((EnumCharacterDressType)slotId, this);
+            ClothesSlot slot = new((EnumCharacterDressType)slotId, this);
             _clothesSlotsIcons.TryGetValue((EnumCharacterDressType)slotId, out slot.BackgroundIcon);
             return slot;
         }
@@ -312,6 +406,18 @@ public sealed class ArmorInventory : InventoryCharacter
             _slotsByType[armorType] = slot;
             _armorSlotsIcons.TryGetValue(armorType, out slot.BackgroundIcon);
             return slot;
+        }
+    }
+
+    private void FillSlotsOwnerAndWorld()
+    {
+        foreach (ItemSlot slot in _slots)
+        {
+            if (slot is ClothesSlot clothesSlot)
+            {
+                clothesSlot.OwnerUuid = playerUID;
+                clothesSlot.World = Api.World;
+            }
         }
     }
 
@@ -408,5 +514,10 @@ public sealed class ArmorInventory : InventoryCharacter
         {
             return null;
         }
+    }
+
+    private InventoryPlayerBackPacksCombatOverhaul? GetBackpackInventory()
+    {
+        return Player?.InventoryManager.GetOwnInventory(GlobalConstants.backpackInvClassName) as InventoryPlayerBackPacksCombatOverhaul;
     }
 }

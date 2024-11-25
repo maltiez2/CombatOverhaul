@@ -340,13 +340,13 @@ public sealed class BowServer : RangeWeaponServer
     {
         if (ammoSlot?.Itemstack?.Item != null && ammoSlot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(_stats.ArrowWildcard, ammoSlot.Itemstack.Item.Code.ToString()))
         {
-            _arrowSlots[player.Entity.EntityId] = ammoSlot;
+            _arrowSlots[player.Entity.EntityId] = (ammoSlot.Inventory, ammoSlot.Inventory.GetSlotId(ammoSlot));
             return true;
         }
 
         if (ammoSlot == null)
         {
-            _arrowSlots[player.Entity.EntityId] = null;
+            _arrowSlots.Remove(player.Entity.EntityId);
             return true;
         }
 
@@ -357,7 +357,11 @@ public sealed class BowServer : RangeWeaponServer
     {
         if (!_arrowSlots.ContainsKey(player.Entity.EntityId)) return false;
 
-        ItemSlot? arrowSlot = _arrowSlots[player.Entity.EntityId];
+        (InventoryBase inventory, int slotId) = _arrowSlots[player.Entity.EntityId];
+
+        if (inventory.Count <= slotId) return false;
+
+        ItemSlot? arrowSlot = inventory[slotId];
 
         if (arrowSlot?.Itemstack == null || arrowSlot.Itemstack.StackSize < 1) return false;
 
@@ -365,7 +369,7 @@ public sealed class BowServer : RangeWeaponServer
 
         if (stats == null)
         {
-            _arrowSlots[player.Entity.EntityId] = null;
+            _arrowSlots.Remove(player.Entity.EntityId);
             return false;
         }
 
@@ -387,7 +391,8 @@ public sealed class BowServer : RangeWeaponServer
         return true;
     }
 
-    private readonly Dictionary<long, ItemSlot?> _arrowSlots = new();
+
+    private readonly Dictionary<long, (InventoryBase, int)> _arrowSlots = new();
     private readonly ProjectileSystemServer _projectileSystem;
     private readonly BowStats _stats;
 }

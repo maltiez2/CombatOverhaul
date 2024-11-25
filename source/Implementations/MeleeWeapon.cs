@@ -568,12 +568,12 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
     protected virtual bool Block(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
         if (eventData.AltPressed) return false;
-        if (!CheckState(mainHand, MeleeWeaponState.Idle, MeleeWeaponState.WindingUp, MeleeWeaponState.Attacking)) return false;
-        if (IsBlockOnCooldown(mainHand)) return false;
-        EnsureStance(player, mainHand);
         if (!CanBlock(mainHand) && !CanParry(mainHand)) return false;
-        if (mainHand && CanBlockWithOtherHand(player, mainHand)) return false;
-        if (ActionRestricted(player, mainHand)) return false;
+        if (!CheckState(mainHand, MeleeWeaponState.Idle, MeleeWeaponState.WindingUp, MeleeWeaponState.Attacking)) return true;
+        if (IsBlockOnCooldown(mainHand)) return true;
+        EnsureStance(player, mainHand);
+        if (mainHand && CanBlockWithOtherHand(player, mainHand)) return true;
+        if (ActionRestricted(player, mainHand)) return true;
         //if (GetState<MeleeWeaponState>(!mainHand) == MeleeWeaponState.Attacking) return false;
 
         StanceStats? stats = GetStanceStats(mainHand);

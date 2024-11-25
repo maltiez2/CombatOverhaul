@@ -44,6 +44,9 @@ public sealed class CombatOverhaulSystem : ModSystem
     {
         (api as ServerCoreAPI)?.ClassRegistryNative.RegisterInventoryClass(GlobalConstants.characterInvClassName, typeof(ArmorInventory));
         (api as ClientCoreAPI)?.ClassRegistryNative.RegisterInventoryClass(GlobalConstants.characterInvClassName, typeof(ArmorInventory));
+
+        (api as ServerCoreAPI)?.ClassRegistryNative.RegisterInventoryClass(GlobalConstants.backpackInvClassName, typeof(InventoryPlayerBackPacksCombatOverhaul));
+        (api as ClientCoreAPI)?.ClassRegistryNative.RegisterInventoryClass(GlobalConstants.backpackInvClassName, typeof(InventoryPlayerBackPacksCombatOverhaul));
     }
 
     public override void Start(ICoreAPI api)
@@ -62,6 +65,7 @@ public sealed class CombatOverhaulSystem : ModSystem
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:Projectile", typeof(ProjectileBehavior));
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:Armor", typeof(ArmorBehavior));
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:WearableWithStats", typeof(WearableWithStatsBehavior));
+        api.RegisterCollectibleBehaviorClass("CombatOverhaul:GearEquipableBag", typeof(GearEquipableBag));
 
         api.RegisterItemClass("CombatOverhaul:Bow", typeof(BowItem));
         api.RegisterItemClass("CombatOverhaul:MeleeWeapon", typeof(MeleeWeapon));
