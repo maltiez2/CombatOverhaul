@@ -12,12 +12,22 @@ namespace CombatOverhaul.Armor;
 
 public class ItemSlotBagContentWithWildcardMatch : ItemSlotBagContent
 {
-    public string CanHoldWildcard { get; private set; }
+    public string[] CanHoldWildcard { get; private set; }
 
-    public ItemSlotBagContentWithWildcardMatch(InventoryBase inventory, int BagIndex, int SlotIndex, EnumItemStorageFlags storageType, string? color, string canHoldWildcard) : base(inventory, BagIndex, SlotIndex, storageType)
+    public ItemSlotBagContentWithWildcardMatch(InventoryBase inventory, int BagIndex, int SlotIndex, EnumItemStorageFlags storageType, string? color, string[] canHoldWildcard) : base(inventory, BagIndex, SlotIndex, storageType)
     {
         CanHoldWildcard = canHoldWildcard;
         HexBackgroundColor = color;
+    }
+
+    public override bool CanTakeFrom(ItemSlot sourceSlot, EnumMergePriority priority = EnumMergePriority.AutoMerge)
+    {
+        if (!CanHold(sourceSlot))
+        {
+            return false;
+        }
+
+        return base.CanTakeFrom(sourceSlot, priority);
     }
 
     public override bool CanHold(ItemSlot sourceSlot)
@@ -33,7 +43,7 @@ public class ItemSlotBagContentWithWildcardMatch : ItemSlotBagContent
 
 public class GearEquipableBag : CollectibleBehavior, IHeldBag, IAttachedInteractions
 {
-    public string CanHoldWildcard { get; private set; } = "*";
+    public string[] CanHoldWildcard { get; private set; } = new string[] { "*" };
     public string? SlotColor { get; private set; } = null;
     public int SlotsNumber { get; private set; } = 0;
     
@@ -45,7 +55,7 @@ public class GearEquipableBag : CollectibleBehavior, IHeldBag, IAttachedInteract
     {
         base.Initialize(properties);
 
-        CanHoldWildcard = properties["canHoldWildcard"].AsString("*");
+        CanHoldWildcard = properties["canHoldWildcards"].AsArray().Select(element => element.AsString("*")).ToArray();
         SlotsNumber = properties["slotsNumber"].AsInt(0);
         SlotColor = properties["color"].AsString(null);
     }

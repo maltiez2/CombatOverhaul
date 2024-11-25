@@ -13,6 +13,8 @@ public sealed class GuiDialogArmorInventory : GuiDialog
 {
     public GuiDialogArmorInventory(ICoreClientAPI api) : base(api)
     {
+        _api = api;
+
         foreach (GuiDialogCharacter characterDialog in api.Gui.LoadedGuis.OfType<GuiDialogCharacter>())
         {
             characterDialog.OnOpened += OnOpenedEvent;
@@ -33,6 +35,9 @@ public sealed class GuiDialogArmorInventory : GuiDialog
     private bool _inventoryLinked = false;
     private GuiComposer? _composer;
     private readonly GuiDialogCharacter? _characterDialog;
+    private readonly ICoreClientAPI _api;
+    private bool _recomposeDialog = false;
+    private const int _recomposeDelay = 200;
 
     private void OnOpenedEvent()
     {
@@ -47,10 +52,16 @@ public sealed class GuiDialogArmorInventory : GuiDialog
 
     private void RecomposeDialog()
     {
-        if (opened)
-        {
-            ComposeDialog();
-        }
+        if (!opened || _recomposeDialog) return;
+
+        _recomposeDialog = true;
+        _api.World.RegisterCallback(_ => RecomposeDialogCallback(), _recomposeDelay);
+    }
+
+    private void RecomposeDialogCallback()
+    {
+        _recomposeDialog = false;
+        ComposeDialog();
     }
 
     private void ComposeDialog()
