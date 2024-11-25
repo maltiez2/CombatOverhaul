@@ -235,50 +235,6 @@ public sealed class ArmorInventory : InventoryCharacter
     {
         base.OnItemSlotModified(slot);
 
-        if (slot is ArmorSlot armorSlot)
-        {
-            int thisSlotId = GetSlotId(slot);
-
-            if ((slot.Itemstack == null || slot.Itemstack.StackSize == 0) && armorSlot.SlotsWithSameItem.Count > 0)
-            {
-                foreach (int slotId in armorSlot.SlotsWithSameItem.Where(slotId => slotId != thisSlotId))
-                {
-                    if (_slots[slotId].Itemstack != null)
-                    {
-                        _slots[slotId].TakeOutWhole();
-                        _slots[slotId].MarkDirty();
-                    }
-                }
-                armorSlot.SlotsWithSameItem.Clear();
-            }
-            else if (slot.Itemstack != null && slot.Itemstack.StackSize > 0)
-            {
-                int[] blockingSlots = GetSlotsBlockedSlotIndices(armorSlot.StoredArmoredType).ToArray();
-                ArmorType[] test = GetSlotsBlockedSlot(armorSlot.StoredArmoredType).ToArray();
-                foreach (int slotId in blockingSlots
-                    .Where(slotId => slotId != thisSlotId)
-                    .Where(slotId => _slots[slotId].Itemstack == null || !_slots[slotId].Itemstack.Satisfies(slot.Itemstack)))
-                {
-                    if (_slots[slotId].Itemstack != null)
-                    {
-                        _slots[slotId].TakeOutWhole();
-                    }
-                    DummySlot dummySlot = new(slot.Itemstack.Clone());
-                    dummySlot.TryPutInto(Api.World, _slots[slotId]);
-                    _slots[slotId].MarkDirty();
-                }
-
-                foreach (int slotId in blockingSlots)
-                {
-                    (_slots[slotId] as ArmorSlot)?.SlotsWithSameItem.Clear();
-                    foreach (int slotIdToAdd in blockingSlots)
-                    {
-                        (_slots[slotId] as ArmorSlot)?.SlotsWithSameItem.Add(slotIdToAdd);
-                    }
-                }
-            }
-        }
-
         GetBackpackInventory()?.ReloadBagInventory();
 
         _onSlotModified?.Invoke();
