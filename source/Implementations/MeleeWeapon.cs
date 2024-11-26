@@ -12,6 +12,8 @@ using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
+using Vintagestory.API.Util;
+using Vintagestory.GameContent;
 
 namespace CombatOverhaul.Implementations;
 
@@ -1076,8 +1078,8 @@ public class MeleeWeaponServer : RangeWeaponServer
 {
     public MeleeWeaponServer(ICoreServerAPI api, Item item) : base(api, item)
     {
-        _projectileSystem = api.ModLoader.GetModSystem<CombatOverhaulSystem>().ServerProjectileSystem ?? throw new Exception();
-        _stats = item.Attributes.AsObject<MeleeWeaponStats>();
+        ProjectileSystem = api.ModLoader.GetModSystem<CombatOverhaulSystem>().ServerProjectileSystem ?? throw new Exception();
+        Stats = item.Attributes.AsObject<MeleeWeaponStats>();
     }
 
     public override bool Shoot(IServerPlayer player, ItemSlot slot, ShotPacket packet, Entity shooter)
@@ -1095,20 +1097,76 @@ public class MeleeWeaponServer : RangeWeaponServer
         {
             ProducerEntityId = player.Entity.EntityId,
             DamageMultiplier = 1,
-            DamageStrength = _stats.ThrowAttack?.DamageStrength ?? 0,
+            DamageStrength = Stats.ThrowAttack?.DamageStrength ?? 0,
             Position = new Vector3(packet.Position[0], packet.Position[1], packet.Position[2]),
-            Velocity = Vector3.Normalize(new Vector3(packet.Velocity[0], packet.Velocity[1], packet.Velocity[2])) * (_stats.ThrowAttack?.Velocity ?? 1)
+            Velocity = Vector3.Normalize(new Vector3(packet.Velocity[0], packet.Velocity[1], packet.Velocity[2])) * (Stats.ThrowAttack?.Velocity ?? 1)
         };
 
-        _projectileSystem.Spawn(packet.ProjectileId[0], stats, spawnStats, slot.TakeOut(1), shooter);
+        AssetLocation projectileCode = slot.Itemstack.Item.Code.Clone();
+
+        ProjectileSystem.Spawn(packet.ProjectileId[0], stats, spawnStats, slot.TakeOut(1), shooter);
+
+        SwapToNewProjectile(player, slot, projectileCode);
 
         slot.MarkDirty();
 
         return true;
     }
 
-    private readonly ProjectileSystemServer _projectileSystem;
-    private readonly MeleeWeaponStats _stats;
+    protected readonly MeleeWeaponStats Stats;
+
+    protected static void SwapToNewProjectile(IServerPlayer player, ItemSlot slot, AssetLocation projectileCode)
+    {
+        if (slot.Itemstack == null || slot.Itemstack.StackSize == 0)
+        {
+            ItemSlot? replacementSlot = null;
+            player.Entity.WalkInventory(slot =>
+            {
+                if (slot?.Itemstack?.Item == null) return true;
+
+                if (slot.Itemstack.Item.Code.ToString() == projectileCode.ToString())
+                {
+                    replacementSlot = slot;
+                    return false;
+                }
+
+                return true;
+            });
+
+            if (replacementSlot == null)
+            {
+                string projectilePath = projectileCode.ToShortString();
+
+                while (projectilePath.Contains('-'))
+                {
+                    int delimiterIndex = projectilePath.LastIndexOf('-');
+                    projectilePath = projectilePath.Substring(0, delimiterIndex);
+                    string wildcard = $"{projectilePath}-*";
+
+                    player.Entity.WalkInventory(slot =>
+                    {
+                        if (slot?.Itemstack?.Item == null) return true;
+
+                        if (WildcardUtil.Match(wildcard, slot.Itemstack.Item.Code.ToShortString()))
+                        {
+                            replacementSlot = slot;
+                            return false;
+                        }
+
+                        return true;
+                    });
+
+                    if (replacementSlot != null) break;
+                }
+            }
+
+            if (replacementSlot != null)
+            {
+                slot.TryFlipWith(replacementSlot);
+                replacementSlot.MarkDirty();
+            }
+        }
+    }
 }
 
 public interface IRestrictAction

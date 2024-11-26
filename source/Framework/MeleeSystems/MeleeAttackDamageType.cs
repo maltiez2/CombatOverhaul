@@ -30,7 +30,10 @@ public class MeleeDamagePacket
         Entity? target = api.World.GetEntityById(TargetEntityId);
 
         if (target == null || !target.Alive) return;
-        
+
+        bool printIntoChat = api.ModLoader.GetModSystem<CombatOverhaulSystem>().Settings.PrintMeleeHits;
+
+
         Entity attacker = api.World.GetEntityById(AttackerEntityId);
         string targetName = target.GetName();
 
@@ -54,11 +57,14 @@ public class MeleeDamagePacket
             slot?.MarkDirty();
         }
 
-        float damage = damageReceived ? target.WatchedAttributes.GetFloat("onHurt") : 0;
+        if (printIntoChat)
+        {
+            float damage = damageReceived ? target.WatchedAttributes.GetFloat("onHurt") : 0;
 
-        string damageLogMessage = Lang.Get("combatoverhaul:damagelog-dealt-damage", Lang.Get($"combatoverhaul:entity-damage-zone-{(ColliderTypes)ColliderType}"), targetName, $"{damage:F2}");
+            string damageLogMessage = Lang.Get("combatoverhaul:damagelog-dealt-damage", Lang.Get($"combatoverhaul:entity-damage-zone-{(ColliderTypes)ColliderType}"), targetName, $"{damage:F2}");
 
-        ((attacker as EntityPlayer)?.Player as IServerPlayer)?.SendMessage(GlobalConstants.DamageLogChatGroup, damageLogMessage, EnumChatType.Notification);
+            ((attacker as EntityPlayer)?.Player as IServerPlayer)?.SendMessage(GlobalConstants.DamageLogChatGroup, damageLogMessage, EnumChatType.Notification);
+        }
     }
 }
 

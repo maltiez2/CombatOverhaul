@@ -22,6 +22,7 @@ public sealed class ProjectileServer
         _shooter = _api.World.GetEntityById(spawnStats.ProducerEntityId);
 
         _system = _api.ModLoader.GetModSystem<CombatOverhaulSystem>().ServerProjectileSystem ?? throw new Exception();
+        _printIntoChat = _api.ModLoader.GetModSystem<CombatOverhaulSystem>().Settings.PrintProjectilesHits;
 
         _entity = projectile;
         _entity.ClearCallback = clearCallback;
@@ -58,6 +59,7 @@ public sealed class ProjectileServer
     private readonly Entity _shooter;
     private readonly ICoreAPI _api;
     private readonly ProjectileSystemServer _system;
+    private readonly bool _printIntoChat = false;
 
     private bool Attack(Entity attacker, Entity target, Vector3 position, string collider, float relativeSpeed)
     {
@@ -80,6 +82,7 @@ public sealed class ProjectileServer
             Position = position,
             Collider = collider,
             DamageTypeData = damageData,
+            DamageTier = (int)damageData.Tier
         }, damage);
 
         bool received = damageReceived || damage <= 0;
@@ -90,12 +93,15 @@ public sealed class ProjectileServer
             target.SidedPos.Motion.Add(knockback);
         }
 
-        CollidersEntityBehavior? colliders = target.GetBehavior<CollidersEntityBehavior>();
-        ColliderTypes ColliderType = colliders?.CollidersTypes[collider] ?? ColliderTypes.Torso;
+        if (_printIntoChat)
+        {
+            CollidersEntityBehavior? colliders = target.GetBehavior<CollidersEntityBehavior>();
+            ColliderTypes ColliderType = colliders?.CollidersTypes[collider] ?? ColliderTypes.Torso;
 
-        float damageReceivedValue = damageReceived ? target.WatchedAttributes.GetFloat("onHurt") : 0;
-        string damageLogMessage = Lang.Get("combatoverhaul:damagelog-dealt-damage-with-projectile", Lang.Get($"combatoverhaul:entity-damage-zone-{ColliderType}"), targetName, $"{damageReceivedValue:F2}", projectileName);
-        ((attacker as EntityPlayer)?.Player as IServerPlayer)?.SendMessage(GlobalConstants.DamageLogChatGroup, damageLogMessage, EnumChatType.Notification);
+            float damageReceivedValue = damageReceived ? target.WatchedAttributes.GetFloat("onHurt") : 0;
+            string damageLogMessage = Lang.Get("combatoverhaul:damagelog-dealt-damage-with-projectile", Lang.Get($"combatoverhaul:entity-damage-zone-{ColliderType}"), targetName, $"{damageReceivedValue:F2}", projectileName);
+            ((attacker as EntityPlayer)?.Player as IServerPlayer)?.SendMessage(GlobalConstants.DamageLogChatGroup, damageLogMessage, EnumChatType.Notification);
+        }
 
         return received;
     }

@@ -3,5 +3,8 @@
   "DirectionsCursorScale": 1.0,
   "BowsAimingCursorType": "Moving",
   "BowsAimingHorizontalLimit": 0.125,
-  "BowsAimingVerticalLimit": 0.25
+  "BowsAimingVerticalLimit": 0.25,
+  "PrintProjectilesHits": false,
+  "PrintMeleeHits": false,
+  "PrintPlayerBeingHit": false
 }

@@ -12,6 +12,7 @@ using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Util;
 using Vintagestory.Client.NoObf;
+using Vintagestory.GameContent;
 using VSImGui;
 using VSImGui.API;
 
@@ -232,6 +233,11 @@ public sealed class AnimationsManager
 
                 ImGui.EndTabItem();
             }
+            if (ImGui.BeginTabItem("Generic Display##tab"))
+            {
+                GenericDisplayTab();
+                ImGui.EndTabItem();
+            }
             ImGui.EndTabBar();
 
             ImGui.End();
@@ -417,6 +423,88 @@ public sealed class AnimationsManager
         transform.Rotation.X = rotation.X;
         transform.Rotation.Y = rotation.Y;
         transform.Rotation.Z = rotation.Z;
+    }
+
+    private ModelTransform? _currentTransform;
+    private GenericDisplayProto? _currentBlock;
+    private bool _selected = false;
+    private bool _updateMesh = false;
+    private void GenericDisplayTab()
+    {
+        BlockSelection? selection = _api.World.Player.CurrentBlockSelection;
+        CollectibleObject? collectible = _api.World.Player.Entity.RightHandItemSlot.Itemstack?.Collectible;
+
+        if (ImGui.Button("Select##GenericDisplayTab") && !_selected && selection?.Block != null && collectible != null)
+        {
+            _currentBlock = selection.Block.GetBlockEntity<GenericDisplayProto>(selection);
+            if (_currentBlock != null)
+            {
+                _currentTransform = collectible.Attributes?[_currentBlock.AttributeTransformCode].AsObject<ModelTransform>();
+                if (_currentTransform != null)
+                {
+                    _selected = true;
+                    _currentBlock.EditedTransforms[collectible.Id] = _currentTransform;
+                }
+                else
+                {
+                    _selected = false;
+                }
+            }
+            else
+            {
+                _selected = false;
+            }
+        }
+        ImGui.SameLine();
+        if (ImGui.Button("Redraw##GenericDisplayTab"))
+        {
+            _currentBlock?.RegenerateMeshes();
+            //_currentBlock?.updateMeshes(forceUpdate: true);
+            //_currentBlock?.MarkDirty(true);
+        }
+
+        if (_currentTransform == null || !_selected) return;
+
+        ModelTransform transform = _currentTransform;
+
+        ImGui.SameLine();
+        if (ImGui.Button($"Export to clipboard##GenericDisplayTab"))
+        {
+            ImGui.SetClipboardText(JsonUtil.ToPrettyString(transform));
+        }
+
+        ImGui.SameLine();
+        ImGui.Checkbox("Update mesh", ref _updateMesh);
+
+        float speed = ImGui.GetIO().KeysDown[(int)ImGuiKey.LeftShift] ? 0.1f : 1;
+
+        float scale = transform.ScaleXYZ.X;
+        ImGui.DragFloat("Scale##GenericDisplayTab", ref scale, speed * 0.1f);
+        transform.Scale = scale;
+
+        Vector3 translation = new(transform.Translation.X, transform.Translation.Y, transform.Translation.Z);
+        Vector3 origin = new(transform.Origin.X, transform.Origin.Y, transform.Origin.Z);
+        Vector3 rotation = new(transform.Rotation.X, transform.Rotation.Y, transform.Rotation.Z);
+
+        ImGui.DragFloat3("Translation##GenericDisplayTab", ref translation, speed * 0.1f);
+        ImGui.DragFloat3("Origin##GenericDisplayTab", ref origin, speed * 0.1f);
+        ImGui.DragFloat3("Rotation##GenericDisplayTab", ref rotation, speed);
+
+        transform.Translation.X = translation.X;
+        transform.Translation.Y = translation.Y;
+        transform.Translation.Z = translation.Z;
+        transform.Origin.X = origin.X;
+        transform.Origin.Y = origin.Y;
+        transform.Origin.Z = origin.Z;
+        transform.Rotation.X = rotation.X;
+        transform.Rotation.Y = rotation.Y;
+        transform.Rotation.Z = rotation.Z;
+
+        if (_updateMesh)
+        {
+            _currentBlock?.RegenerateMeshes();
+        }
+        
     }
 
     private void CreateAnimationGui()

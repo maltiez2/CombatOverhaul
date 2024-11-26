@@ -53,6 +53,7 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
 {
     public PlayerDamageModelBehavior(Entity entity) : base(entity)
     {
+        _printIntoChat = entity.Api.ModLoader.GetModSystem<CombatOverhaulSystem>().Settings.PrintPlayerBeingHit;
     }
 
     public event OnPlayerReceiveDamageDelegate? OnReceiveDamage;
@@ -117,6 +118,7 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
         entity.GetBehavior<EntityBehaviorHealth>().onDamaged += OnReceiveDamageHandler;
     }
 
+    private readonly bool _printIntoChat = false;
     private CollidersEntityBehavior? _colliders;
 
     private float OnReceiveDamageHandler(float damage, DamageSource damageSource)
@@ -147,7 +149,7 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
     }
     private void PrintToDamageLog(string message)
     {
-        if (message != "") ((entity as EntityPlayer)?.Player as IServerPlayer)?.SendMessage(GlobalConstants.DamageLogChatGroup, message, EnumChatType.Notification);
+        if (_printIntoChat && message != "") ((entity as EntityPlayer)?.Player as IServerPlayer)?.SendMessage(GlobalConstants.DamageLogChatGroup, message, EnumChatType.Notification);
     }
 
     private (PlayerBodyPart zone, float multiplier) DetermineHitZone(DamageSource damageSource)

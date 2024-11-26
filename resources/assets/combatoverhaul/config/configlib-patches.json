@@ -51,6 +51,11 @@
       },
       "game:itemtypes/combatoverhaul/sword.json": {
         "attributes/RenderingOffset": "not(weapon_rendering_offset)"
+      },
+      "combatoverhaul:config/settings.json": {
+        "PrintProjectilesHits": "print_range_hits",
+        "PrintMeleeHits": "print_melee_hits",
+        "PrintPlayerBeingHit": "print_player_hits"
       }
     },
     "number": {
@@ -258,6 +263,27 @@
         "min": 0.0,
         "max": 1.5
       }
+    },
+    {
+      "code": "print_range_hits",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-print_range_hits",
+      "comment": "Can causes lags in some cases",
+      "default": false
+    },
+    {
+      "code": "print_melee_hits",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-print_melee_hits",
+      "comment": "Can causes lags in some cases",
+      "default": false
+    },
+    {
+      "code": "print_player_hits",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-print_player_hits",
+      "comment": "Can causes lags in some cases",
+      "default": false
     }
   ]
 }

@@ -3,8 +3,9 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Util;
+using Vintagestory.GameContent;
 
-namespace Vintagestory.GameContent;
+namespace CombatOverhaul.Utils;
 
 public abstract class GenericDisplayProto : BlockEntityContainer, ITexPositionSource
 {
@@ -12,6 +13,7 @@ public abstract class GenericDisplayProto : BlockEntityContainer, ITexPositionSo
     public virtual int DisplayedItems => Inventory.Count;
     public Size2i AtlasSize => ClientApi.BlockTextureAtlas.Size;
     public virtual string AttributeTransformCode => "onDisplayTransform";
+    public readonly Dictionary<int, ModelTransform> EditedTransforms = new();
 
     public virtual TextureAtlasPosition this[string textureCode]
     {
@@ -76,17 +78,30 @@ public abstract class GenericDisplayProto : BlockEntityContainer, ITexPositionSo
         return base.OnTesselation(mesher, tessThreadTesselator);
     }
 
-    public virtual void updateMeshes()
+    public virtual void updateMeshes(bool forceUpdate = false)
     {
         if (base.Api == null || base.Api.Side == EnumAppSide.Server) return;
         if (DisplayedItems == 0) return;
 
         for (int i = 0; i < DisplayedItems; i++)
         {
-            updateMesh(i);
+            updateMesh(i, forceUpdate);
         }
 
         TfMatrices = genTransformationMatrices();
+    }
+
+    public virtual void RegenerateMeshes()
+    {
+        for (int i = 0; i < DisplayedItems; i++)
+        {
+            if (Inventory[i].Empty) continue;
+            string key = getMeshCacheKey(Inventory[i].Itemstack);
+            MeshCache.Remove(key);
+        }
+
+        updateMeshes();
+        MarkDirty(true);
     }
 
     protected CollectibleObject? NowTessellatingObj;
@@ -95,7 +110,7 @@ public abstract class GenericDisplayProto : BlockEntityContainer, ITexPositionSo
     protected float[][]? TfMatrices;
 
 
-    protected virtual void updateMesh(int index)
+    protected virtual void updateMesh(int index, bool forceUpdate = false)
     {
         if (base.Api == null || base.Api.Side == EnumAppSide.Server) return;
         if (Inventory[index].Empty)
@@ -103,7 +118,7 @@ public abstract class GenericDisplayProto : BlockEntityContainer, ITexPositionSo
             return;
         }
 
-        getOrCreateMesh(Inventory[index].Itemstack, index);
+        getOrCreateMesh(Inventory[index].Itemstack, index, forceUpdate);
     }
     protected void OnEventBusEvent(string eventname, ref EnumHandling handling, IAttribute data)
     {
@@ -169,10 +184,10 @@ public abstract class GenericDisplayProto : BlockEntityContainer, ITexPositionSo
         return meshdata;
     }
 
-    protected virtual MeshData getOrCreateMesh(ItemStack stack, int index)
+    protected virtual MeshData getOrCreateMesh(ItemStack stack, int index, bool forceUpdate = false)
     {
         MeshData mesh = getMesh(stack);
-        if (mesh != null) return mesh;
+        if (mesh != null && !forceUpdate) return mesh;
 
         IContainedMeshSource? meshSource = stack.Collectible as IContainedMeshSource;
 
@@ -222,9 +237,18 @@ public abstract class GenericDisplayProto : BlockEntityContainer, ITexPositionSo
 
         if (stack.Collectible.Attributes?[AttributeTransformCode].Exists == true)
         {
-            ModelTransform transform = stack.Collectible.Attributes?[AttributeTransformCode].AsObject<ModelTransform>();
-            transform.EnsureDefaultValues();
-            mesh.ModelTransform(transform);
+            if (EditedTransforms.ContainsKey(stack.Collectible.Id))
+            {
+                ModelTransform transform = EditedTransforms[stack.Collectible.Id];
+                transform.EnsureDefaultValues();
+                mesh.ModelTransform(transform);
+            }
+            else
+            {
+                ModelTransform transform = stack.Collectible.Attributes?[AttributeTransformCode].AsObject<ModelTransform>();
+                transform.EnsureDefaultValues();
+                mesh.ModelTransform(transform);
+            }
         }
         else if (AttributeTransformCode == "onshelfTransform") // fallback to onDisplayTransform for onshelfTransform if it does not exist
         {

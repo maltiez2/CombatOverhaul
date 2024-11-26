@@ -32,6 +32,10 @@ public sealed class Settings
     public string BowsAimingCursorType { get; set; } = "Moving";
     public float BowsAimingHorizontalLimit { get; set; } = 0.125f;
     public float BowsAimingVerticalLimit { get; set; } = 0.35f;
+
+    public bool PrintProjectilesHits { get; set; } = false;
+    public bool PrintMeleeHits { get; set; } = false;
+    public bool PrintPlayerBeingHit { get; set; } = false;
 }
 
 public sealed class CombatOverhaulSystem : ModSystem

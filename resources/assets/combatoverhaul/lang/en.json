@@ -155,5 +155,8 @@
   "setting-arrow_ping_sound_on_hit": "Ping sound on arrow or thrown spear hit",
   "setting-tool_whoosh_sound": "Tools whoosh sound volume on swing",
   "setting-tool_animation_speed_bonus": "Animation speed bonus for pickaxes",
-  "setting-comment-tool_animation_speed_bonus": "Animation speed bonus from mining speed bonus of a pickaxe. Makes higher tier pickaxes swing faster. Value of 0.3 means +30% animation speed for steel piackaxe."
+  "setting-comment-tool_animation_speed_bonus": "Animation speed bonus from mining speed bonus of a pickaxe. Makes higher tier pickaxes swing faster. Value of 0.3 means +30% animation speed for steel piackaxe.",
+  "setting-print_range_hits": "Print range attacks results",
+  "setting-print_melee_hits": "Print melee attacks results",
+  "setting-print_player_hits": "Print damage received by player"
 }
