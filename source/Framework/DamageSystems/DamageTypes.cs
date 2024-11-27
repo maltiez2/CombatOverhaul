@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Numerics;
 using Vintagestory.API.Common;
+using Vintagestory.API.MathTools;
 
 namespace CombatOverhaul.DamageSystems;
 
@@ -162,9 +163,9 @@ public class DamageResistData
         {
             EnumDamageType.Gravity => Percentage(protectionLevel, damageData.Tier),
             EnumDamageType.Fire => Percentage(protectionLevel, damageData.Tier),
-            EnumDamageType.BluntAttack => PenetrationPercentage(protectionLevel, damageData.Tier, _damageReductionPower, _damageReductionThreshold),
-            EnumDamageType.SlashingAttack => PenetrationPercentage(protectionLevel, damageData.Tier, _damageReductionPower, _damageReductionThreshold),
-            EnumDamageType.PiercingAttack => PenetrationPercentage(protectionLevel, damageData.Tier, _damageReductionPower, _damageReductionThreshold),
+            EnumDamageType.BluntAttack => LookupTableMultiplier(protectionLevel, damageData.Tier),
+            EnumDamageType.SlashingAttack => LookupTableMultiplier(protectionLevel, damageData.Tier),
+            EnumDamageType.PiercingAttack => LookupTableMultiplier(protectionLevel, damageData.Tier),
             EnumDamageType.Suffocation => Percentage(protectionLevel, damageData.Tier),
             EnumDamageType.Heal => 1 + damageData.Tier + protectionLevel,
             EnumDamageType.Poison => Percentage(protectionLevel, damageData.Tier),
@@ -188,4 +189,44 @@ public class DamageResistData
 
         return multiplier <= threshold ? 0 : multiplier;
     }
+    private static float LookupTableMultiplier(float protection, float attackTier) => LookupTableMultiplier((int)protection, (int)attackTier);
+    private static float LookupTableMultiplier(int protection, int attackTier)
+    {
+        if (protection >= _maxArmorTier || attackTier >= _maxAttackTier)
+        {
+            return PenetrationPercentage(protection, attackTier, 2, 0.05f);
+        }
+
+        return _damageReduction[GameMath.Clamp(protection - 1, 0, _maxArmorTier - 1)][GameMath.Clamp(attackTier - 1, 0, _maxAttackTier - 1)];
+    }
+
+    private static int _maxAttackTier = 9;
+    private static int _maxArmorTier = 24;
+    private static readonly float[][] _damageReduction = new float[][]
+    {
+        new float[] { 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f  },
+        new float[] { 0.50f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f  },
+        new float[] { 0.25f, 0.75f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f  },
+        new float[] { 0.10f, 0.50f, 0.75f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f  },
+        new float[] { 0.05f, 0.25f, 0.50f, 0.75f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f  },
+        new float[] { 0.00f, 0.15f, 0.33f, 0.50f, 0.75f, 1.00f, 1.00f, 1.00f, 1.00f  },
+        new float[] { 0.00f, 0.10f, 0.25f, 0.40f, 0.50f, 0.75f, 1.00f, 1.00f, 1.00f  },
+        new float[] { 0.00f, 0.05f, 0.20f, 0.33f, 0.40f, 0.50f, 0.75f, 1.00f, 1.00f  },
+        new float[] { 0.00f, 0.00f, 0.15f, 0.25f, 0.35f, 0.45f, 0.50f, 0.75f, 1.00f  },
+        new float[] { 0.00f, 0.00f, 0.10f, 0.20f, 0.30f, 0.40f, 0.45f, 0.50f, 0.75f  },
+        new float[] { 0.00f, 0.00f, 0.05f, 0.15f, 0.25f, 0.35f, 0.40f, 0.45f, 0.50f  },
+        new float[] { 0.00f, 0.00f, 0.00f, 0.10f, 0.20f, 0.30f, 0.35f, 0.41f, 0.46f  },
+        new float[] { 0.00f, 0.00f, 0.00f, 0.07f, 0.15f, 0.25f, 0.30f, 0.37f, 0.42f  },
+        new float[] { 0.00f, 0.00f, 0.00f, 0.05f, 0.10f, 0.20f, 0.25f, 0.33f, 0.39f  },
+        new float[] { 0.00f, 0.00f, 0.00f, 0.00f, 0.07f, 0.15f, 0.20f, 0.29f, 0.36f  },
+        new float[] { 0.00f, 0.00f, 0.00f, 0.00f, 0.06f, 0.10f, 0.17f, 0.25f, 0.33f  },
+        new float[] { 0.00f, 0.00f, 0.00f, 0.00f, 0.05f, 0.08f, 0.15f, 0.21f, 0.30f  },
+        new float[] { 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.07f, 0.12f, 0.18f, 0.27f  },
+        new float[] { 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.06f, 0.10f, 0.15f, 0.24f  },
+        new float[] { 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.05f, 0.08f, 0.12f, 0.21f  },
+        new float[] { 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.07f, 0.10f, 0.18f  },
+        new float[] { 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.06f, 0.08f, 0.15f  },
+        new float[] { 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.05f, 0.07f, 0.12f  },
+        new float[] { 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.06f, 0.10f  }
+    };
 }

@@ -110,6 +110,6 @@ public class InventoryPlayerBackPacksCombatOverhaul : InventoryPlayerBackPacks
 
     private static InventoryBase? GetGearInventory(Entity entity)
     {
-        return entity.GetBehavior<EntityBehaviorPlayerInventory>()?.Inventory;
+        return entity?.GetBehavior<EntityBehaviorPlayerInventory>()?.Inventory;
     }
 }
