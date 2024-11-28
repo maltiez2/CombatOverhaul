@@ -36,6 +36,7 @@
   "damage-zone-Legs": "Legs",
   "damage-zone-Feet": "Feet",
 
+  "detailed-damage-zone-All": "All",
   "detailed-damage-zone-None": "None",
   "detailed-damage-zone-Head": "Head",
   "detailed-damage-zone-Face": "Face",
@@ -123,10 +124,14 @@
 
   "iteminfo-range-weapon-damage": "Damage multiplier: {0}\nDamage tier: {1}",
   "iteminfo-projectile": "Damage: {0}\nDamage type: {1}\nBreak chance: {2}%",
-  "iteminfo-melee-weapon-onehanded": "One-handed: {0} ({1}t) {2}",
-  "iteminfo-melee-weapon-twohanded": "Two-handed: {0} ({1}t) {2}",
-  "iteminfo-melee-weapon-offhanded": "Off-handed: {0} ({1}t) {2}",
-  "iteminfo-melee-weapon-blockStats": "Block tier:",
+  "iteminfo-melee-weapon-onehanded": "One-handed: {0} ({1} tier) {2}",
+  "iteminfo-melee-weapon-twohanded": "Two-handed: {0} ({1} tier) {2}",
+  "iteminfo-melee-weapon-offhanded": "Off-handed: {0} ({1} tier) {2}",
+  "iteminfo-melee-weapon-onehanded-block": "One-handed",
+  "iteminfo-melee-weapon-twohanded-block": "Two-handed",
+  "iteminfo-melee-weapon-offhanded-block": "Off-handed",
+  "iteminfo-melee-weapon-blockStats": "{2} block\n  Tier: {0}\n  Protected body parts: {1}",
+  "iteminfo-melee-weapon-parryStats": "{2} parry\n  Tier: {0}\n  Protected body parts: {1}",
   
   "game:item-spear-generic-iron": "Iron spear",
   "game:item-spear-generic-meteoriciron": "Meteoric iron spear",

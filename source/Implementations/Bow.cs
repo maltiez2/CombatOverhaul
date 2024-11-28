@@ -11,6 +11,7 @@ using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
 using Vintagestory.API.Server;
 using Vintagestory.API.Util;
+using Vintagestory.GameContent;
 
 namespace CombatOverhaul.Implementations;
 
@@ -75,7 +76,6 @@ public sealed class BowClient : RangeWeaponClient
 
     public override void OnDeselected(EntityPlayer player, bool mainHand, ref int state)
     {
-        _arrowSlot = null;
         _attachable.ClearAttachments(player.EntityId);
         PlayerBehavior?.SetState((int)BowState.Unloaded);
         _aimingSystem.StopAiming();
@@ -93,7 +93,6 @@ public sealed class BowClient : RangeWeaponClient
     private readonly AnimatableAttachable _attachable;
     private readonly ModelTransform _arrowTransform;
     private readonly ClientAimingSystem _aimingSystem;
-    private ItemSlot? _arrowSlot = null;
     private readonly BowStats _stats;
     private readonly AimingStats _aimingStats;
     private readonly AmmoSelector _ammoSelector;
@@ -105,39 +104,12 @@ public sealed class BowClient : RangeWeaponClient
     {
         if (state != (int)BowState.Unloaded || eventData.AltPressed || !CheckForOtherHandEmpty(mainHand, player)) return false;
 
-        player.WalkInventory(slot =>
-        {
-            if (slot?.Itemstack?.Item == null) return true;
+        ItemSlot? arrowSlot = GetArrowSlot(player);
 
-            if (slot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(_ammoSelector.SelectedAmmo, slot.Itemstack.Item.Code.ToString()))
-            {
-                _arrowSlot = slot;
-                return false;
-            }
+        if (arrowSlot == null) return false;
 
-            return true;
-        });
-
-        if (_arrowSlot == null)
-        {
-            player.WalkInventory(slot =>
-            {
-                if (slot?.Itemstack?.Item == null) return true;
-
-                if (slot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(_stats.ArrowWildcard, slot.Itemstack.Item.Code.ToString()))
-                {
-                    _arrowSlot = slot;
-                    return false;
-                }
-
-                return true;
-            });
-        }
-
-        if (_arrowSlot == null) return false;
-
-        _attachable.SetAttachment(player.EntityId, "Arrow", _arrowSlot.Itemstack, _arrowTransform);
-        RangedWeaponSystem.Reload(slot, _arrowSlot, 1, mainHand, ReloadCallback);
+        _attachable.SetAttachment(player.EntityId, "Arrow", arrowSlot.Itemstack, _arrowTransform);
+        RangedWeaponSystem.Reload(slot, arrowSlot, 1, mainHand, ReloadCallback);
 
         AnimationBehavior?.Play(mainHand, _stats.LoadAnimation, animationSpeed: GetAnimationSpeed(player, _stats.ProficiencyStat), callback: LoadAnimationCallback);
 
@@ -250,7 +222,6 @@ public sealed class BowClient : RangeWeaponClient
     private bool ShootCallback(ItemSlot slot, EntityPlayer player, bool mainHand)
     {
         PlayerBehavior?.SetState(0, mainHand);
-        _arrowSlot = null;
 
         Vintagestory.API.MathTools.Vec3d position = player.LocalEyePos + player.Pos.XYZ;
         Vector3 targetDirection = _aimingSystem.TargetVec;
@@ -270,6 +241,42 @@ public sealed class BowClient : RangeWeaponClient
         PlayerBehavior?.SetState((int)BowState.Drawn);
         _aimingSystem.AimingState = WeaponAimingState.FullCharge;
         return true;
+    }
+
+    private ItemSlot? GetArrowSlot(EntityPlayer player)
+    {
+        ItemSlot? arrowSlot = null;
+        
+        player.WalkInventory(slot =>
+        {
+            if (slot?.Itemstack?.Item == null) return true;
+
+            if (slot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(_ammoSelector.SelectedAmmo, slot.Itemstack.Item.Code.ToString()))
+            {
+                arrowSlot = slot;
+                return false;
+            }
+
+            return true;
+        });
+
+        if (arrowSlot == null)
+        {
+            player.WalkInventory(slot =>
+            {
+                if (slot?.Itemstack?.Item == null) return true;
+
+                if (slot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(_stats.ArrowWildcard, slot.Itemstack.Item.Code.ToString()))
+                {
+                    arrowSlot = slot;
+                    return false;
+                }
+
+                return true;
+            });
+        }
+
+        return arrowSlot;
     }
 }
 

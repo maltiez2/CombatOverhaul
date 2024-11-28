@@ -82,16 +82,11 @@ public sealed class ProjectileServer
             Position = position,
             Collider = collider,
             DamageTypeData = damageData,
-            DamageTier = (int)damageData.Tier
+            DamageTier = (int)damageData.Tier,
+            KnockbackStrength = _stats.Knockback
         }, damage);
 
         bool received = damageReceived || damage <= 0;
-
-        if (received)
-        {
-            Vec3f knockback = _entity.Pos.Motion.ToVec3f() * _stats.Knockback * (1.0f - target.Properties.KnockbackResistance);
-            target.SidedPos.Motion.Add(knockback);
-        }
 
         if (_printIntoChat)
         {

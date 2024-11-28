@@ -20,7 +20,7 @@
     "OneHandedStanceByType": {
       "*-forlorn-*": {
         "CanAttack": true,
-        "CanParry": false,
+        "CanParry": true,
         "CanBlock": false,
         "CanSprint": true,
         "SpeedPenalty": 0,
@@ -34,13 +34,21 @@
         },
         "AttackHitSound": "game:sounds/thud",
         "AttackAnimation": {"Main": ["combatoverhaul:sword-forlorn-thrust"]},
+        "Parry": {
+          "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
+          "Directions": [60, 60, 60, 60],
+          "Sound": "game:sounds/held/shieldblock-metal-heavy",
+          "BlockTier": {"BluntAttack": 9, "SlashingAttack": 9, "PiercingAttack": 9}
+        },
+        "BlockCooldownMs": 300,
+        "BlockAnimation": "combatoverhaul:sword-short-parry",
         "ReadyAnimation": "combatoverhaul:sword-falx-ready",
         "IdleAnimation": "combatoverhaul:sword-falx-idle",
         "AttackTpAnimation": "falx"
       },
       "*-blackguard-*": {
         "CanAttack": true,
-        "CanParry": false,
+        "CanParry": true,
         "CanBlock": false,
         "CanSprint": true,
         "SpeedPenalty": 0,
@@ -54,6 +62,14 @@
         },
         "AttackHitSound": "game:sounds/thud",
         "AttackAnimation": {"Main": ["combatoverhaul:sword-forlorn-thrust"]},
+        "Parry": {
+          "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
+          "Directions": [60, 60, 60, 60],
+          "Sound": "game:sounds/held/shieldblock-metal-heavy",
+          "BlockTier": {"BluntAttack": 9, "SlashingAttack": 9, "PiercingAttack": 9}
+        },
+        "BlockCooldownMs": 300,
+        "BlockAnimation": "combatoverhaul:sword-short-parry",
         "ReadyAnimation": "combatoverhaul:sword-falx-ready",
         "IdleAnimation": "combatoverhaul:sword-falx-idle",
         "AttackTpAnimation": "falx"

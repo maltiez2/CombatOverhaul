@@ -13,7 +13,6 @@ using Vintagestory.API.Config;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
 using Vintagestory.API.Util;
-using Vintagestory.GameContent;
 
 namespace CombatOverhaul.Implementations;
 
@@ -352,13 +351,100 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
             dsc.AppendLine(description);
         }
 
+        if (Stats.OneHandedStance?.Block?.BlockTier != null)
+        {
+            dsc.AppendLine();
+            float blockTier = 0;
+            foreach ((string damageType, float tier) in Stats.OneHandedStance.Block.BlockTier)
+            {
+                blockTier = Math.Max(blockTier, tier);
+            }
+
+            string bodyParts = Stats.OneHandedStance.Block.Zones.Length == 12 ? Lang.Get("combatoverhaul:detailed-damage-zone-All") : Stats.OneHandedStance.Block.Zones
+                .Select(zone => Lang.Get($"combatoverhaul:detailed-damage-zone-{zone}"))
+                .Aggregate((first, second) => $"{first}, {second}");
+
+            dsc.AppendLine(Lang.Get("combatoverhaul:iteminfo-melee-weapon-blockStats", $"{blockTier:F0}", bodyParts, Lang.Get("combatoverhaul:iteminfo-melee-weapon-onehanded-block")));
+        }
+
+        if (Stats.OneHandedStance?.Parry?.BlockTier != null)
+        {
+            dsc.AppendLine();
+            float blockTier = 0;
+            foreach ((string damageType, float tier) in Stats.OneHandedStance.Parry.BlockTier)
+            {
+                blockTier = Math.Max(blockTier, tier);
+            }
+
+            string bodyParts = Stats.OneHandedStance.Parry.Zones.Length == 12 ? Lang.Get("combatoverhaul:detailed-damage-zone-All") : Stats.OneHandedStance.Parry.Zones
+                .Select(zone => Lang.Get($"combatoverhaul:detailed-damage-zone-{zone}"))
+                .Aggregate((first, second) => $"{first}, {second}");
+
+            dsc.AppendLine(Lang.Get("combatoverhaul:iteminfo-melee-weapon-parryStats", $"{blockTier:F0}", bodyParts, Lang.Get("combatoverhaul:iteminfo-melee-weapon-onehanded-block")));
+        }
+
+        if (Stats.TwoHandedStance?.Block?.BlockTier != null)
+        {
+            dsc.AppendLine();
+            float blockTier = 0;
+            foreach ((string damageType, float tier) in Stats.TwoHandedStance.Block.BlockTier)
+            {
+                blockTier = Math.Max(blockTier, tier);
+            }
+
+            string bodyParts = Stats.TwoHandedStance.Block.Zones.Length == 12 ? Lang.Get("combatoverhaul:detailed-damage-zone-All") : Stats.TwoHandedStance.Block.Zones
+                .Select(zone => Lang.Get($"combatoverhaul:detailed-damage-zone-{zone}"))
+                .Aggregate((first, second) => $"{first}, {second}");
+
+            dsc.AppendLine(Lang.Get("combatoverhaul:iteminfo-melee-weapon-blockStats", $"{blockTier:F0}", bodyParts, Lang.Get("combatoverhaul:iteminfo-melee-weapon-twohanded-block")));
+        }
+
+        if (Stats.TwoHandedStance?.Parry?.BlockTier != null)
+        {
+            dsc.AppendLine();
+            float blockTier = 0;
+            foreach ((string damageType, float tier) in Stats.TwoHandedStance.Parry.BlockTier)
+            {
+                blockTier = Math.Max(blockTier, tier);
+            }
+
+            string bodyParts = Stats.TwoHandedStance.Parry.Zones.Length == 12 ? Lang.Get("combatoverhaul:detailed-damage-zone-All") : Stats.TwoHandedStance.Parry.Zones
+                .Select(zone => Lang.Get($"combatoverhaul:detailed-damage-zone-{zone}"))
+                .Aggregate((first, second) => $"{first}, {second}");
+
+            dsc.AppendLine(Lang.Get("combatoverhaul:iteminfo-melee-weapon-parryStats", $"{blockTier:F0}", bodyParts, Lang.Get("combatoverhaul:iteminfo-melee-weapon-twohanded-block")));
+        }
+
         if (Stats.OffHandStance?.Block?.BlockTier != null)
         {
-            dsc.AppendLine(Lang.Get("combatoverhaul:iteminfo-melee-weapon-blockStats"));
+            dsc.AppendLine();
+            float blockTier = 0;
             foreach ((string damageType, float tier) in Stats.OffHandStance.Block.BlockTier)
             {
-                dsc.AppendLine($"  {Lang.Get($"combatoverhaul:damage-type-{damageType}")}: {tier:F0}");
+                blockTier = Math.Max(blockTier, tier);
             }
+
+            string bodyParts = Stats.OffHandStance.Block.Zones.Length == 12 ? Lang.Get("combatoverhaul:detailed-damage-zone-All") : Stats.OffHandStance.Block.Zones
+                .Select(zone => Lang.Get($"combatoverhaul:detailed-damage-zone-{zone}"))
+                .Aggregate((first, second) => $"{first}, {second}");
+
+            dsc.AppendLine(Lang.Get("combatoverhaul:iteminfo-melee-weapon-blockStats", $"{blockTier:F0}", bodyParts, Lang.Get("combatoverhaul:iteminfo-melee-weapon-offhanded-block")));
+        }
+
+        if (Stats.OffHandStance?.Parry?.BlockTier != null)
+        {
+            dsc.AppendLine();
+            float blockTier = 0;
+            foreach ((string damageType, float tier) in Stats.OffHandStance.Parry.BlockTier)
+            {
+                blockTier = Math.Max(blockTier, tier);
+            }
+
+            string bodyParts = Stats.OffHandStance.Parry.Zones.Length == 12 ? Lang.Get("combatoverhaul:detailed-damage-zone-All") : Stats.OffHandStance.Parry.Zones
+                .Select(zone => Lang.Get($"combatoverhaul:detailed-damage-zone-{zone}"))
+                .Aggregate((first, second) => $"{first}, {second}");
+
+            dsc.AppendLine(Lang.Get("combatoverhaul:iteminfo-melee-weapon-parryStats", $"{blockTier:F0}", bodyParts, Lang.Get("combatoverhaul:iteminfo-melee-weapon-offhanded-block")));
         }
     }
     public bool RestrictRightHandAction() => !CheckState(false, MeleeWeaponState.Idle, MeleeWeaponState.Aiming, MeleeWeaponState.StartingAim);
@@ -1244,7 +1330,8 @@ public class MeleeWeapon : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasDyn
 
     public void BlockCallback(IServerPlayer player, ItemSlot slot, bool mainHand, float damageBlocked)
     {
-        DamageItem(player.Entity.World, player.Entity, slot, (int)MathF.Ceiling(damageBlocked));
+        DamageItem(player.Entity.World, player.Entity, slot, 1);
+        //DamageItem(player.Entity.World, player.Entity, slot, (int)MathF.Ceiling(damageBlocked)); // Damages swords too much
     }
 
     public bool OnMouseWheel(ItemSlot slot, IClientPlayer byPlayer, float delta) => ClientLogic?.OnMouseWheel(slot, byPlayer, delta) ?? false;
