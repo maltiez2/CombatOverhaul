@@ -141,6 +141,7 @@ public class ItemWearableArmor : ItemWearable
         {
             origMatCount = Attributes["materialCount"].AsInt(1);
         }
+        
         ItemSlot? armorSlot = inSlots.FirstOrDefault(slot => slot.Itemstack?.Collectible is ItemWearable);
         int curDur = outputSlot.Itemstack.Collectible.GetRemainingDurability(armorSlot.Itemstack);
         int maxDur = GetMaxDurability(outputSlot.Itemstack);

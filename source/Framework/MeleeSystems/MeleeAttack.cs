@@ -1,4 +1,5 @@
 ﻿using CombatOverhaul.Colliders;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Numerics;
 using Vintagestory.API.Client;
@@ -12,6 +13,7 @@ public class MeleeAttackStats
     public bool StopOnTerrainHit { get; set; } = false;
     public bool StopOnEntityHit { get; set; } = false;
     public bool CollideWithTerrain { get; set; } = true;
+    public bool HitOnlyOneEntity { get; set; } = false;
     public float MaxReach { get; set; } = 6;
 
     public MeleeDamageTypeJson[] DamageTypes { get; set; } = Array.Empty<MeleeDamageTypeJson>();
@@ -24,6 +26,7 @@ public sealed class MeleeAttack
     public bool StopOnTerrainHit { get; set; }
     public bool StopOnEntityHit { get; set; }
     public bool CollideWithTerrain { get; set; }
+    public bool HitOnlyOneEntity { get; set; } = false;
     public float MaxReach { get; set; }
 
     public MeleeAttack(ICoreClientAPI api, MeleeAttackStats stats)
@@ -32,6 +35,7 @@ public sealed class MeleeAttack
         StopOnTerrainHit = stats.StopOnTerrainHit;
         StopOnEntityHit = stats.StopOnEntityHit;
         CollideWithTerrain = stats.CollideWithTerrain;
+        HitOnlyOneEntity = stats.HitOnlyOneEntity;
         MaxReach = stats.MaxReach;
         DamageTypes = stats.DamageTypes.Select(stats => stats.ToDamageType()).ToArray();
 
@@ -97,6 +101,20 @@ public sealed class MeleeAttack
             collider.Render(_api, player.Entity);
         }
     }
+    public void MergeAttackedEntities(MeleeAttack attack)
+    {
+        foreach (long entityId in _attackedEntities.Keys)
+        {
+            foreach (long id in _attackedEntities[entityId])
+            {
+                attack._attackedEntities[entityId].Add(id);
+            }
+            foreach (long id in attack._attackedEntities[entityId])
+            {
+                _attackedEntities[entityId].Add(id);
+            }
+        }
+    }
 
     private readonly ICoreClientAPI _api;
     private readonly Dictionary<long, HashSet<long>> _attackedEntities = new();
@@ -125,6 +143,11 @@ public sealed class MeleeAttack
     {
         long entityId = player.Entity.EntityId;
         long mountedOn = player.Entity.MountedOn?.Entity?.EntityId ?? 0;
+        if (_attackedEntities[entityId].Count > 0 && HitOnlyOneEntity)
+        {
+            packets = Array.Empty<MeleeDamagePacket>();
+            return Array.Empty<(Entity entity, Vector3 point)>();
+        }
 
         Entity[] entities = _api.World.GetEntitiesAround(player.Entity.Pos.XYZ, MaxReach, MaxReach);
 
@@ -137,6 +160,7 @@ public sealed class MeleeAttack
             bool attacked = false;
 
             foreach (Entity entity in entities
+                    .Where(entity => entity.Alive)
                     .Where(entity => entity.EntityId != entityId && entity.EntityId != mountedOn)
                     .Where(entity => _attackedEntities.ContainsKey(entityId))
                     .Where(entity => !_attackedEntities[entityId].Contains(entity.EntityId)))

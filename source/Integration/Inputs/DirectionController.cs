@@ -1,7 +1,5 @@
 ﻿using Vintagestory.API.Client;
-using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
-using VSImGui.Debug;
 
 namespace CombatOverhaul.Inputs;
 
@@ -48,7 +46,9 @@ public sealed class DirectionController
     public DirectionsConfiguration DirectionsConfiguration { get; set; } = DirectionsConfiguration.Eight;
     public int Depth { get; set; } = 5;
     public float Sensitivity { get; set; } = 1.0f;
+    public bool Invert { get; set; } = false;
     public AttackDirection CurrentDirection { get; private set; }
+    public AttackDirection CurrentDirectionWithInversion => Invert ? _inversionMapping[CurrentDirection] : CurrentDirection;
     public int CurrentDirectionNormalized { get; private set; }
 
     public DirectionController(ICoreClientAPI api, DirectionCursorRenderer renderer)
@@ -60,6 +60,8 @@ public sealed class DirectionController
         {
             _directionQueue.Enqueue(new(0, 0, 0, 0));
         }
+
+        ConstructInvertedConfigurations();
     }
 
     public void OnGameTick(bool forceNewDirection = false)
@@ -68,7 +70,7 @@ public sealed class DirectionController
         {
             DirectionsConfiguration = DirectionsConfiguration.None;
         }
-        
+
         if (DirectionsConfiguration == DirectionsConfiguration.None)
         {
             _directionCursorRenderer.Show = false;
@@ -84,7 +86,7 @@ public sealed class DirectionController
 
         MouseMovementData previous = _directionQueue.Dequeue();
 
-        int direction = CalculateDirection(previous.Yaw - yaw, previous.Pitch - pitch, (int)DirectionsConfiguration);
+        int direction = CalculateDirectionWithInversion(previous.Yaw - yaw, previous.Pitch - pitch, (int)DirectionsConfiguration);
 
         float delta = _directionQueue.Last().DeltaPitch * _directionQueue.Last().DeltaPitch + _directionQueue.Last().DeltaYaw * _directionQueue.Last().DeltaYaw;
 
@@ -92,7 +94,7 @@ public sealed class DirectionController
         {
             CurrentDirectionNormalized = direction;
             CurrentDirection = (AttackDirection)_configurations[DirectionsConfiguration][CurrentDirectionNormalized];
-            _directionCursorRenderer.CurrentDirection = (int)CurrentDirection;
+            _directionCursorRenderer.CurrentDirection = (int)CurrentDirectionWithInversion;
         }
     }
 
@@ -107,7 +109,19 @@ public sealed class DirectionController
         { DirectionsConfiguration.Triangle, new() {0, 3, 5} },
         { DirectionsConfiguration.Square, new() {0, 2, 4, 6} },
         { DirectionsConfiguration.Star, new() {0, 1, 3, 5, 7} },
-        { DirectionsConfiguration.Eight, new() {0, 1, 2, 3, 4, 5, 6, 7, 8} }
+        { DirectionsConfiguration.Eight, new() {0, 1, 2, 3, 4, 5, 6, 7} }
+    };
+    private readonly Dictionary<DirectionsConfiguration, List<int>> _invertedConfigurations = new();
+    private readonly Dictionary<AttackDirection, AttackDirection> _inversionMapping = new()
+    {
+        { AttackDirection.Top, AttackDirection.Bottom },
+        { AttackDirection.TopRight, AttackDirection.BottomLeft },
+        { AttackDirection.Right, AttackDirection.Left },
+        { AttackDirection.BottomRight, AttackDirection.TopLeft },
+        { AttackDirection.Bottom, AttackDirection.Top },
+        { AttackDirection.BottomLeft, AttackDirection.TopRight },
+        { AttackDirection.Left, AttackDirection.Right },
+        { AttackDirection.TopLeft, AttackDirection.BottomRight }
     };
 
     private int CalculateDirection(float yaw, float pitch, int directionsCount)
@@ -117,5 +131,19 @@ public sealed class DirectionController
         float angle = MathF.Atan2(yaw, pitch) * GameMath.RAD2DEG;
         float angleOffset = angle + directionOffset + 360;
         return (int)(angleOffset / angleSegment) % directionsCount;
+    }
+
+    private int CalculateDirectionWithInversion(float yaw, float pitch, int directionsCount) => CalculateDirection(Invert ? -yaw : yaw, Invert ? -pitch : pitch, directionsCount);
+
+    private void ConstructInvertedConfigurations()
+    {
+        foreach ((DirectionsConfiguration configuration, List<int> directions) in _configurations)
+        {
+            _invertedConfigurations.Add(configuration, new());
+            foreach (int direction in directions)
+            {
+                _invertedConfigurations[configuration].Add((int)_inversionMapping[(AttackDirection)direction]);
+            }
+        }
     }
 }

@@ -578,6 +578,8 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
             out IEnumerable<(Block block, System.Numerics.Vector3 point)> terrainCollision,
             out IEnumerable<(Vintagestory.API.Common.Entities.Entity entity, System.Numerics.Vector3 point)> entitiesCollision);
 
+        if (handle != null) attack.MergeAttackedEntities(handle);
+
         if (entitiesCollision.Any() && stats.AttackHitSound != null)
         {
             SoundsSystem.Play(stats.AttackHitSound);

@@ -1,0 +1,38 @@
+[
+	{
+		"ingredientPattern": "LPL,L_L",
+		"recipeGroup": 1,
+		"ingredients": {
+			"L": { "type": "item", "code": "leather-normal-plain", "quantity": 2, "recipeAttributes": { "repairMat": { "type": "item", "code": "leather-normal-plain", "stacksize": 1 } } },
+			"P": { "type": "item", "code": "metalplate-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel"], "quantity": 2 }
+		},
+		"width": 3,
+		"height": 2,
+		"name": "brigandine helmet",
+		"output": { "type": "item", "code": "armor-head-brigandine-{metal}"  }
+	},
+	{
+      "ingredientPattern": "P_P,PJP",
+      "recipeGroup": 1,
+      "ingredients": {
+          "J": { "type": "item", "code": "armor-body-jerkin-leather", "quantity": 1, "recipeAttributes": { "repairMat": { "type": "item", "code": "leather-normal-plain", "stacksize": 9 } } },
+          "P": { "type": "item", "code": "metalplate-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel"], "quantity": 1 }
+      },
+      "width": 3,
+      "height": 2,
+      "name": "brigandine body armor",
+      "output": { "type": "item", "code": "armor-body-brigandine-{metal}"  }
+  },
+	{
+		"ingredientPattern": "PJP",
+		"recipeGroup": 1,
+		"ingredients": {
+			"J": { "type": "item", "code": "armor-legs-jerkin-leather", "recipeAttributes": { "repairMat": { "type": "item", "code": "leather-normal-plain", "stacksize": 6 } } },
+			"P": { "type": "item", "code": "metalplate-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel"], "quantity": 1 }
+		},
+		"width": 3,
+		"height": 1,
+		"name": "brigandine leg armor",
+		"output": { "type": "item", "code": "armor-legs-brigandine-{metal}"  }
+	}
+]

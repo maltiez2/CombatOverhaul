@@ -67,8 +67,8 @@
         "CriticalDamageMultiplier": 2,
         "DefaultResistsByType": {
           "*-bronze": {"BluntAttack": 0, "SlashingAttack": 2, "PiercingAttack": 3},
-          "*-corrupt": {"BluntAttack": 3, "SlashingAttack": 4, "PiercingAttack": 6},
-          "*-corrupt-sawblade": {"BluntAttack": 6, "SlashingAttack": 8, "PiercingAttack": 10}
+          "*-corrupt": {"BluntAttack": 0, "SlashingAttack": 4, "PiercingAttack": 5},
+          "*-corrupt-sawblade": {"BluntAttack": 0, "SlashingAttack": 6, "PiercingAttack": 7}
         }
       }
     }
@@ -87,8 +87,8 @@
         "CriticalDamageMultiplier": 2,
         "DefaultResistsByType": {
           "*-bronze": {"BluntAttack": 0, "SlashingAttack": 2, "PiercingAttack": 3},
-          "*-corrupt": {"BluntAttack": 3, "SlashingAttack": 4, "PiercingAttack": 6},
-          "*-corrupt-sawblade": {"BluntAttack": 6, "SlashingAttack": 8, "PiercingAttack": 10}
+          "*-corrupt": {"BluntAttack": 0, "SlashingAttack": 4, "PiercingAttack": 5},
+          "*-corrupt-sawblade": {"BluntAttack": 0, "SlashingAttack": 6, "PiercingAttack": 7}
         }
       }
     }

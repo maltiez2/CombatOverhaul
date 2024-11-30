@@ -6,5 +6,8 @@
   "BowsAimingVerticalLimit": 0.25,
   "PrintProjectilesHits": false,
   "PrintMeleeHits": false,
-  "PrintPlayerBeingHit": false
+  "PrintPlayerBeingHit": false,
+  "DirectionsControllerInertia": 5,
+  "DirectionsControllerSensitivity": 1.0,
+  "DirectionsControllerInvert": false
 }

@@ -89,7 +89,7 @@ public sealed class GuiDialogArmorInventory : GuiDialog
 
         if (!_inventoryLinked)
         {
-            inv._onSlotModified += RecomposeDialog;
+            inv.OnArmorSlotModified += RecomposeDialog;
             _inventoryLinked = true;
         }
 

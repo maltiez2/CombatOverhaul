@@ -12,6 +12,7 @@ public class ClothesSlot : ItemSlotCharacter
 {
     public IWorldAccessor? World { get; set; }
     public string? OwnerUUID { get; set; }
+    public bool PreviouslyHeldBag { get; set; } = false;
 
     public ClothesSlot(EnumCharacterDressType type, InventoryBase inventory) : base(type, inventory)
     {
@@ -235,15 +236,30 @@ public sealed class ArmorInventory : InventoryCharacter
     {
         base.OnItemSlotModified(slot);
 
-        GetBackpackInventory()?.ReloadBagInventory();
+        if (slot is ClothesSlot clothesSlot)
+        {
+            bool containsBag = clothesSlot.Itemstack?.Collectible?.GetCollectibleInterface<IHeldBag>() != null;
+            if (clothesSlot.PreviouslyHeldBag || containsBag)
+            {
+                GetBackpackInventory()?.ReloadBagInventory();
+            }
+            clothesSlot.PreviouslyHeldBag = containsBag;
+        }
 
-        _onSlotModified?.Invoke();
+        OnSlotModified?.Invoke();
+        if (slot is ArmorSlot)
+        {
+            OnArmorSlotModified?.Invoke();
+        }
     }
     public override object ActivateSlot(int slotId, ItemSlot sourceSlot, ref ItemStackMoveOperation op)
     {
         object result = base.ActivateSlot(slotId, sourceSlot, ref op);
 
-        GetBackpackInventory()?.ReloadBagInventory();
+        if (slotId < _clothesSlotsCount)
+        {
+            GetBackpackInventory()?.ReloadBagInventory();
+        }
 
         return result;
     }
@@ -386,7 +402,8 @@ public sealed class ArmorInventory : InventoryCharacter
     internal static readonly int _vanillaSlots = _clothesSlotsCount + _clothesArmorSlots;
     internal static readonly int _moddedArmorSlotsCount = (Enum.GetValues<ArmorLayers>().Length - 1) * (Enum.GetValues<DamageZone>().Length - 1);
     internal static readonly int _totalSlotsNumber = _clothesSlotsCount + _clothesArmorSlots + _moddedArmorSlotsCount;
-    internal event Action? _onSlotModified;
+    internal event Action? OnSlotModified;
+    internal event Action? OnArmorSlotModified;
 
     protected override ItemSlot NewSlot(int slotId)
     {

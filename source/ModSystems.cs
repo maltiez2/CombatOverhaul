@@ -36,6 +36,11 @@ public sealed class Settings
     public bool PrintProjectilesHits { get; set; } = false;
     public bool PrintMeleeHits { get; set; } = false;
     public bool PrintPlayerBeingHit { get; set; } = false;
+
+    public float DirectionsControllerInertia { get; set; } = 5;
+    public float DirectionsControllerSensitivity { get; set; } = 1f;
+    public bool DirectionsControllerInvert { get; set; } = false;
+
 }
 
 public sealed class CombatOverhaulSystem : ModSystem
@@ -151,6 +156,13 @@ public sealed class CombatOverhaulSystem : ModSystem
         {
             DirectionCursorRenderer.Alpha = Settings.DirectionsCursorAlpha;
             DirectionCursorRenderer.CursorScale = Settings.DirectionsCursorScale;
+        }
+
+        if (DirectionController != null)
+        {
+            DirectionController.Depth = (int)Settings.DirectionsControllerInertia;
+            DirectionController.Sensitivity = Settings.DirectionsControllerSensitivity;
+            DirectionController.Invert = Settings.DirectionsControllerInvert;
         }
 
         SettingsLoaded?.Invoke(Settings);

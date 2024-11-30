@@ -92,6 +92,7 @@
         "StopOnTerrainHit": false,
         "StopOnEntityHit": false,
         "CollideWithTerrain": true,
+        "HitOnlyOneEntity": true,
         "MaxReach": 9,
         "DamageTypes": [
           {
@@ -143,6 +144,7 @@
         "StopOnTerrainHit": false,
         "StopOnEntityHit": false,
         "CollideWithTerrain": true,
+        "HitOnlyOneEntity": true,
         "MaxReach": 15,
         "DamageTypes": [
           {

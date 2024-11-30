@@ -122,6 +122,25 @@ public class DamageResistData
             tier: damageData.Tier - protectionLevel
             );
     }
+    public DamageData ApplyNotPlayerResist(DamageData damageData, ref float damage)
+    {
+        float protectionLevel = 0;
+        if (Resists.TryGetValue(damageData.DamageType, out float value))
+        {
+            protectionLevel = value;
+            damage *= DamageMultiplierNotPlayer(protectionLevel, damageData);
+        }
+
+        if (FlatDamageReduction.TryGetValue(damageData.DamageType, out float flatReduction))
+        {
+            damage = Math.Clamp(damage - flatReduction, 0, damage);
+        }
+
+        return new(
+            damageType: damageData.DamageType,
+            tier: damageData.Tier - protectionLevel
+            );
+    }
 
     public static DamageResistData Combine(IEnumerable<DamageResistData> resists)
     {
@@ -156,6 +175,35 @@ public class DamageResistData
 
     private const float _damageReductionPower = 2;
     private const float _damageReductionThreshold = 0.05f;
+    private static int _maxAttackTier = 9;
+    private static int _maxArmorTier = 24;
+    private static readonly float[][] _damageReduction = new float[][]
+    {
+        new float[] { 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f  },
+        new float[] { 0.50f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f  },
+        new float[] { 0.25f, 0.75f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f  },
+        new float[] { 0.10f, 0.50f, 0.75f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f  },
+        new float[] { 0.05f, 0.25f, 0.50f, 0.75f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f  },
+        new float[] { 0.00f, 0.15f, 0.33f, 0.50f, 0.75f, 1.00f, 1.00f, 1.00f, 1.00f  },
+        new float[] { 0.00f, 0.10f, 0.25f, 0.40f, 0.50f, 0.75f, 1.00f, 1.00f, 1.00f  },
+        new float[] { 0.00f, 0.05f, 0.20f, 0.33f, 0.40f, 0.50f, 0.75f, 1.00f, 1.00f  },
+        new float[] { 0.00f, 0.00f, 0.15f, 0.25f, 0.35f, 0.45f, 0.50f, 0.75f, 1.00f  },
+        new float[] { 0.00f, 0.00f, 0.10f, 0.20f, 0.30f, 0.40f, 0.45f, 0.50f, 0.75f  },
+        new float[] { 0.00f, 0.00f, 0.05f, 0.15f, 0.25f, 0.35f, 0.40f, 0.45f, 0.50f  },
+        new float[] { 0.00f, 0.00f, 0.00f, 0.10f, 0.20f, 0.30f, 0.35f, 0.41f, 0.46f  },
+        new float[] { 0.00f, 0.00f, 0.00f, 0.07f, 0.15f, 0.25f, 0.30f, 0.37f, 0.42f  },
+        new float[] { 0.00f, 0.00f, 0.00f, 0.05f, 0.10f, 0.20f, 0.25f, 0.33f, 0.39f  },
+        new float[] { 0.00f, 0.00f, 0.00f, 0.00f, 0.07f, 0.15f, 0.20f, 0.29f, 0.36f  },
+        new float[] { 0.00f, 0.00f, 0.00f, 0.00f, 0.06f, 0.10f, 0.17f, 0.25f, 0.33f  },
+        new float[] { 0.00f, 0.00f, 0.00f, 0.00f, 0.05f, 0.08f, 0.15f, 0.21f, 0.30f  },
+        new float[] { 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.07f, 0.12f, 0.18f, 0.27f  },
+        new float[] { 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.06f, 0.10f, 0.15f, 0.24f  },
+        new float[] { 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.05f, 0.08f, 0.12f, 0.21f  },
+        new float[] { 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.07f, 0.10f, 0.18f  },
+        new float[] { 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.06f, 0.08f, 0.15f  },
+        new float[] { 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.05f, 0.07f, 0.12f  },
+        new float[] { 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.06f, 0.10f  }
+    };
 
     private static float DamageMultiplier(float protectionLevel, DamageData damageData)
     {
@@ -166,6 +214,27 @@ public class DamageResistData
             EnumDamageType.BluntAttack => LookupTableMultiplier(protectionLevel, damageData.Tier),
             EnumDamageType.SlashingAttack => LookupTableMultiplier(protectionLevel, damageData.Tier),
             EnumDamageType.PiercingAttack => LookupTableMultiplier(protectionLevel, damageData.Tier),
+            EnumDamageType.Suffocation => Percentage(protectionLevel, damageData.Tier),
+            EnumDamageType.Heal => 1 + damageData.Tier + protectionLevel,
+            EnumDamageType.Poison => Percentage(protectionLevel, damageData.Tier),
+            EnumDamageType.Hunger => Percentage(protectionLevel, damageData.Tier),
+            EnumDamageType.Crushing => Percentage(protectionLevel, damageData.Tier),
+            EnumDamageType.Frost => Percentage(protectionLevel, damageData.Tier),
+            EnumDamageType.Electricity => Percentage(protectionLevel, damageData.Tier),
+            EnumDamageType.Heat => Percentage(protectionLevel, damageData.Tier),
+            EnumDamageType.Injury => 1,
+            _ => 1
+        };
+    }
+    private static float DamageMultiplierNotPlayer(float protectionLevel, DamageData damageData)
+    {
+        return damageData.DamageType switch
+        {
+            EnumDamageType.Gravity => Percentage(protectionLevel, damageData.Tier),
+            EnumDamageType.Fire => Percentage(protectionLevel, damageData.Tier),
+            EnumDamageType.BluntAttack => FlatMultiplier(protectionLevel, damageData.Tier),
+            EnumDamageType.SlashingAttack => FlatMultiplier(protectionLevel, damageData.Tier),
+            EnumDamageType.PiercingAttack => FlatMultiplier(protectionLevel, damageData.Tier),
             EnumDamageType.Suffocation => Percentage(protectionLevel, damageData.Tier),
             EnumDamageType.Heal => 1 + damageData.Tier + protectionLevel,
             EnumDamageType.Poison => Percentage(protectionLevel, damageData.Tier),
@@ -199,34 +268,13 @@ public class DamageResistData
 
         return _damageReduction[GameMath.Clamp(protection - 1, 0, _maxArmorTier - 1)][GameMath.Clamp(attackTier - 1, 0, _maxAttackTier - 1)];
     }
-
-    private static int _maxAttackTier = 9;
-    private static int _maxArmorTier = 24;
-    private static readonly float[][] _damageReduction = new float[][]
+    private static float FlatMultiplier(float protection, float attackTier)
     {
-        new float[] { 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f  },
-        new float[] { 0.50f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f  },
-        new float[] { 0.25f, 0.75f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f  },
-        new float[] { 0.10f, 0.50f, 0.75f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f  },
-        new float[] { 0.05f, 0.25f, 0.50f, 0.75f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f  },
-        new float[] { 0.00f, 0.15f, 0.33f, 0.50f, 0.75f, 1.00f, 1.00f, 1.00f, 1.00f  },
-        new float[] { 0.00f, 0.10f, 0.25f, 0.40f, 0.50f, 0.75f, 1.00f, 1.00f, 1.00f  },
-        new float[] { 0.00f, 0.05f, 0.20f, 0.33f, 0.40f, 0.50f, 0.75f, 1.00f, 1.00f  },
-        new float[] { 0.00f, 0.00f, 0.15f, 0.25f, 0.35f, 0.45f, 0.50f, 0.75f, 1.00f  },
-        new float[] { 0.00f, 0.00f, 0.10f, 0.20f, 0.30f, 0.40f, 0.45f, 0.50f, 0.75f  },
-        new float[] { 0.00f, 0.00f, 0.05f, 0.15f, 0.25f, 0.35f, 0.40f, 0.45f, 0.50f  },
-        new float[] { 0.00f, 0.00f, 0.00f, 0.10f, 0.20f, 0.30f, 0.35f, 0.41f, 0.46f  },
-        new float[] { 0.00f, 0.00f, 0.00f, 0.07f, 0.15f, 0.25f, 0.30f, 0.37f, 0.42f  },
-        new float[] { 0.00f, 0.00f, 0.00f, 0.05f, 0.10f, 0.20f, 0.25f, 0.33f, 0.39f  },
-        new float[] { 0.00f, 0.00f, 0.00f, 0.00f, 0.07f, 0.15f, 0.20f, 0.29f, 0.36f  },
-        new float[] { 0.00f, 0.00f, 0.00f, 0.00f, 0.06f, 0.10f, 0.17f, 0.25f, 0.33f  },
-        new float[] { 0.00f, 0.00f, 0.00f, 0.00f, 0.05f, 0.08f, 0.15f, 0.21f, 0.30f  },
-        new float[] { 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.07f, 0.12f, 0.18f, 0.27f  },
-        new float[] { 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.06f, 0.10f, 0.15f, 0.24f  },
-        new float[] { 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.05f, 0.08f, 0.12f, 0.21f  },
-        new float[] { 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.07f, 0.10f, 0.18f  },
-        new float[] { 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.06f, 0.08f, 0.15f  },
-        new float[] { 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.05f, 0.07f, 0.12f  },
-        new float[] { 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.06f, 0.10f  }
-    };
+        if (attackTier >= protection)
+            return 1;
+        else if (attackTier < protection - 1)
+            return 0.5f;
+        else
+            return 0.75f;
+    }
 }
