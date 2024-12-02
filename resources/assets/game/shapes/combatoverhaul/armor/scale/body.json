@@ -1,31 +1,16 @@
 {
 	"editor": {
-		"backDropShape": "D:/Vintage Story/Vintagestory/assets/game/shapes/entity/humanoid/seraph-hairless",
-		"collapsedPaths": "Root/ArmorUpperTorso,Root/GamCoatL,Root/GamCoatR",
+		"backDropShape": "E:/Programs/VSModelCreator/seraph-hairless",
+		"collapsedPaths": "Root/GamCoatL,Root/GamCoatR",
 		"allAngles": true,
 		"entityTextureMode": true
 	},
 	"textureWidth": 64,
 	"textureHeight": 64,
 	"textureSizes": {
-		"bismuthbronze": [64,64],
-		"iron": [64,64],
-		"steel": [64,64],
-		"steel2": [64,64],
-		"steel3": [64,64],
-		"steel4": [64,64],
-		"steel5": [64,64],
-		"steel6": [64,64],
-		"steel7": [64,64],
-		"steel8": [64,64],
-		"steel9": [64,64],
-		"steel10": [64,64],
-		"steel11": [64,64],
-		"steel12": [64,64],
-		"tailored-red": [64,64]
 	},
 	"textures": {
-		"bismuthbronze": "entity/humanoid/serapharmor/scale/bismuthbronze"
+		"material": "entity/humanoid/serapharmor/scale/iron"
 	},
 	"elements": [
 		{
@@ -42,57 +27,7 @@
 				"west": { "texture": "#material", "uv": [ 17.5, 6.5, 24.0, 11.5 ], "autoUv": false },
 				"up": { "texture": "#material", "uv": [ 0.0, 0.0, 5.5, 6.5 ], "autoUv": false },
 				"down": { "texture": "#material", "uv": [ 5.5, 0.0, 11.0, 6.5 ], "autoUv": false }
-			},
-			"children": [
-				{
-					"name": "ArmorCollarR",
-					"from": [ 0.3, 5.4, 0.4 ],
-					"to": [ 5.3, 6.7, 1.2 ],
-					"unwrapMode": 5,
-					"uv": [ 49.0, 18.5 ],
-					"rotationOrigin": [ 0.3, 5.4, 1.2 ],
-					"rotationX": -25.0,
-					"faces": {
-						"north": { "texture": "#material", "uv": [ 50.0, 18.5, 55.0, 19.5 ], "rotation": 180 },
-						"east": { "texture": "#material", "uv": [ 55.0, 19.5, 56.0, 20.0 ], "rotation": 90 },
-						"south": { "texture": "#material", "uv": [ 50.0, 20.0, 55.0, 21.0 ] },
-						"west": { "texture": "#material", "uv": [ 49.0, 19.5, 50.0, 20.0 ], "rotation": 270 },
-						"up": { "texture": "#material", "uv": [ 50.0, 19.5, 55.0, 20.0 ] }
-					}
-				},
-				{
-					"name": "ArmorCollarL",
-					"from": [ 0.3, 5.4, 5.6 ],
-					"to": [ 5.3, 6.7, 6.4 ],
-					"unwrapMode": 5,
-					"uv": [ 49.0, 16.0 ],
-					"rotationOrigin": [ 0.3, 5.4, 5.6 ],
-					"rotationX": 25.0,
-					"faces": {
-						"north": { "texture": "#material", "uv": [ 50.0, 16.0, 55.0, 17.0 ], "rotation": 180 },
-						"east": { "texture": "#material", "uv": [ 55.0, 17.0, 56.0, 17.5 ], "rotation": 90 },
-						"south": { "texture": "#material", "uv": [ 50.0, 17.5, 55.0, 18.5 ] },
-						"west": { "texture": "#material", "uv": [ 49.0, 17.0, 50.0, 17.5 ], "rotation": 270 },
-						"up": { "texture": "#material", "uv": [ 50.0, 17.0, 55.0, 17.5 ] }
-					}
-				},
-				{
-					"name": "ArmorCollarRear",
-					"from": [ 4.7, 5.4, 0.4 ],
-					"to": [ 5.5, 6.7, 6.4 ],
-					"unwrapMode": 5,
-					"uv": [ 61.5, 20.0 ],
-					"rotationOrigin": [ 4.7, 5.4, 0.4 ],
-					"rotationZ": -25.0,
-					"faces": {
-						"north": { "texture": "#material", "uv": [ 62.5, 20.0, 63.0, 21.0 ], "rotation": 180 },
-						"east": { "texture": "#material", "uv": [ 63.0, 21.0, 64.0, 27.0 ], "rotation": 90 },
-						"south": { "texture": "#material", "uv": [ 62.5, 27.0, 63.0, 28.0 ] },
-						"west": { "texture": "#material", "uv": [ 61.5, 21.0, 62.5, 27.0 ], "rotation": 270 },
-						"up": { "texture": "#material", "uv": [ 62.5, 21.0, 63.0, 27.0 ] }
-					}
-				}
-			]
+			}
 		},
 		{
 			"name": "ArmorLowerTorso",
