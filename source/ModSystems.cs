@@ -40,7 +40,6 @@ public sealed class Settings
     public float DirectionsControllerInertia { get; set; } = 5;
     public float DirectionsControllerSensitivity { get; set; } = 1f;
     public bool DirectionsControllerInvert { get; set; } = false;
-
 }
 
 public sealed class CombatOverhaulSystem : ModSystem

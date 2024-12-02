@@ -45,6 +45,7 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
     public bool SuppressLMB { get; set; } = false;
     public bool SuppressRMB { get; set; } = false;
     public float ManipulationSpeed => Math.Clamp(entity.Stats.GetBlended("manipulationSpeed"), 0.5f, 2.0f);
+    public ActionListener ActionListener { get; }
 
     public delegate bool ActionEventCallbackDelegate(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction);
 
@@ -66,7 +67,7 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
 
         CombatOverhaulSystem system = _api.ModLoader.GetModSystem<CombatOverhaulSystem>();
 
-        _actionListener = system.ActionListener ?? throw new Exception();
+        ActionListener = system.ActionListener ?? throw new Exception();
         _directionController = system.DirectionController ?? throw new Exception();
         _directionRenderer = system.DirectionCursorRenderer ?? throw new Exception();
         _statsSystem = system.ClientStatsSystem ?? throw new Exception();
@@ -97,8 +98,8 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
             offhandTickListener.OnGameTick(_player.LeftHandItemSlot, _player, ref _mainHandState, false);
         }
 
-        _actionListener.SuppressLMB = SuppressLMB;
-        _actionListener.SuppressRMB = SuppressRMB;
+        ActionListener.SuppressLMB = SuppressLMB;
+        ActionListener.SuppressRMB = SuppressRMB;
     }
     
     public int GetState(bool mainHand = true) => mainHand ? _mainHandState : _offHandState;
@@ -124,7 +125,6 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
     private readonly HashSet<string> _currentMainHandPlayerStats = new();
     private readonly HashSet<string> _currentOffHandPlayerStats = new();
     private const string _statCategory = "CombatOverhaul:melee-weapon-player-behavior";
-    internal readonly ActionListener _actionListener;
     private readonly DirectionController _directionController;
     private readonly DirectionCursorRenderer _directionRenderer;
     private readonly StatsSystemClient _statsSystem;
@@ -158,7 +158,7 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
         {
             callbacks.ForEach(callback =>
             {
-                _actionListener.Subscribe(eventId, (eventData) => HandleActionEvent(eventData, itemId, callback));
+                ActionListener.Subscribe(eventId, (eventData) => HandleActionEvent(eventData, itemId, callback));
             });
         }
 

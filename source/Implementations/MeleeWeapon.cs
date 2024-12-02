@@ -258,7 +258,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
 
     public virtual bool OnMouseWheel(ItemSlot slot, IClientPlayer byPlayer, float delta)
     {
-        if (PlayerBehavior?._actionListener.IsActive(EnumEntityAction.RightMouseDown) == false) return false;
+        if (PlayerBehavior?.ActionListener.IsActive(EnumEntityAction.RightMouseDown) == false) return false;
 
         bool mainHand = byPlayer.Entity.RightHandItemSlot == slot;
         StanceStats? stance = GetStanceStats(mainHand);

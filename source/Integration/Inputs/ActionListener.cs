@@ -1,6 +1,5 @@
 ﻿using Vintagestory.API.Client;
 using Vintagestory.API.Common;
-using static OpenTK.Graphics.OpenGL.GL;
 
 namespace CombatOverhaul.Inputs;
 
@@ -151,7 +150,7 @@ public sealed class ActionListener : IDisposable
     public static bool AltPressed(ICoreClientAPI api) => (api?.Input.KeyboardKeyState[(int)GlKeys.AltLeft] ?? false) || (api?.Input.KeyboardKeyState[(int)GlKeys.AltRight] ?? false);
 
     private readonly Dictionary<ActionEventId, List<System.Func<ActionEventData, bool>>> _subscriptions = new();
-    private readonly HashSet<EnumEntityAction> _tyronDecidedToMakeThisActionsInconsistent_ThanksTyron = new()
+    private readonly HashSet<EnumEntityAction> _tyronDecidedToMakeTheseActionsInconsistent_ThanksTyron = new()
     {
         EnumEntityAction.InWorldLeftMouseDown,
         EnumEntityAction.InWorldRightMouseDown
@@ -253,7 +252,7 @@ public sealed class ActionListener : IDisposable
             return;
         }
 
-        if (_tyronDecidedToMakeThisActionsInconsistent_ThanksTyron.Contains(action))
+        if (_tyronDecidedToMakeTheseActionsInconsistent_ThanksTyron.Contains(action))
         {
             OnEntityActionInconsistent(action, ref handled);
 

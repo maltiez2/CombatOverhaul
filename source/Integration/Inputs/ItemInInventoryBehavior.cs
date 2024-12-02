@@ -26,7 +26,7 @@ public class InInventoryPlayerBehavior : EntityBehavior
         }
         catch (Exception exception)
         {
-            LoggerUtil.Verbose(_player.Api, this, $"[OnGameTick] Exception: {exception}");
+            LoggerUtil.Error(_player.Api, this, $"[OnGameTick] Exception: {exception}");
         }
     }
 
@@ -36,13 +36,9 @@ public class InInventoryPlayerBehavior : EntityBehavior
     {
         if (slot?.Empty != false) return true;
 
-        if (slot.Itemstack?.Item is IOnInInventory item)
+        if (slot.Itemstack?.Collectible?.GetCollectibleInterface<IOnInInventory>() is IOnInInventory collectible)
         {
-            item.OnInInventory(_player, slot);
-        }
-        else if (slot.Itemstack?.Block is IOnInInventory block)
-        {
-            block.OnInInventory(_player, slot);
+            collectible.OnInInventory(_player, slot);
         }
 
         return true;
