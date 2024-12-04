@@ -11,7 +11,6 @@ using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
 using Vintagestory.API.Server;
 using Vintagestory.API.Util;
-using Vintagestory.GameContent;
 
 namespace CombatOverhaul.Implementations;
 
@@ -48,59 +47,59 @@ public sealed class BowStats : WeaponStats
     public float[] DispersionMOA { get; set; } = new float[] { 0, 0 };
 }
 
-public sealed class BowClient : RangeWeaponClient
+public class BowClient : RangeWeaponClient
 {
     public BowClient(ICoreClientAPI api, Item item, AmmoSelector ammoSelector) : base(api, item)
     {
-        _api = api;
-        _attachable = item.GetCollectibleBehavior<AnimatableAttachable>(withInheritance: true) ?? throw new Exception("Bow should have AnimatableAttachable behavior.");
-        _arrowTransform = new(item.Attributes["ArrowTransform"].AsObject<ModelTransformNoDefaults>(), ModelTransform.BlockDefaultTp());
-        _aimingSystem = api.ModLoader.GetModSystem<CombatOverhaulSystem>().AimingSystem ?? throw new Exception();
+        Api = api;
+        Attachable = item.GetCollectibleBehavior<AnimatableAttachable>(withInheritance: true) ?? throw new Exception("Bow should have AnimatableAttachable behavior.");
+        ArrowTransform = new(item.Attributes["ArrowTransform"].AsObject<ModelTransformNoDefaults>(), ModelTransform.BlockDefaultTp());
+        AimingSystem = api.ModLoader.GetModSystem<CombatOverhaulSystem>().AimingSystem ?? throw new Exception();
 
-        _stats = item.Attributes.AsObject<BowStats>();
-        _aimingStats = _stats.Aiming.ToStats();
-        _ammoSelector = ammoSelector;
+        Stats = item.Attributes.AsObject<BowStats>();
+        AimingStats = Stats.Aiming.ToStats();
+        AmmoSelector = ammoSelector;
 
         api.ModLoader.GetModSystem<CombatOverhaulSystem>().SettingsLoaded += settings =>
         {
-            _aimingStats.CursorType = Enum.Parse<AimingCursorType>(settings.BowsAimingCursorType);
-            _aimingStats.VerticalLimit = settings.BowsAimingVerticalLimit;
-            _aimingStats.HorizontalLimit = settings.BowsAimingHorizontalLimit;
+            AimingStats.CursorType = Enum.Parse<AimingCursorType>(settings.BowsAimingCursorType);
+            AimingStats.VerticalLimit = settings.BowsAimingVerticalLimit;
+            AimingStats.HorizontalLimit = settings.BowsAimingHorizontalLimit;
         };
     }
 
     public override void OnSelected(ItemSlot slot, EntityPlayer player, bool mainHand, ref int state)
     {
-        _attachable.ClearAttachments(player.EntityId);
+        Attachable.ClearAttachments(player.EntityId);
     }
 
     public override void OnDeselected(EntityPlayer player, bool mainHand, ref int state)
     {
-        _attachable.ClearAttachments(player.EntityId);
+        Attachable.ClearAttachments(player.EntityId);
         PlayerBehavior?.SetState((int)BowState.Unloaded);
-        _aimingSystem.StopAiming();
+        AimingSystem.StopAiming();
 
-        AnimationBehavior?.StopVanillaAnimation(_stats.TpAimAnimation, mainHand);
+        AnimationBehavior?.StopVanillaAnimation(Stats.TpAimAnimation, mainHand);
     }
 
     public override void OnRegistered(ActionsManagerPlayerBehavior behavior, ICoreClientAPI api)
     {
         base.OnRegistered(behavior, api);
-        _aimingAnimationController = new(_aimingSystem, AnimationBehavior, _aimingStats);
+        AimingAnimationController = new(AimingSystem, AnimationBehavior, AimingStats);
     }
 
-    private readonly ICoreClientAPI _api;
-    private readonly AnimatableAttachable _attachable;
-    private readonly ModelTransform _arrowTransform;
-    private readonly ClientAimingSystem _aimingSystem;
-    private readonly BowStats _stats;
-    private readonly AimingStats _aimingStats;
-    private readonly AmmoSelector _ammoSelector;
-    private AimingAnimationController? _aimingAnimationController;
-    private bool _afterLoad = false;
+    protected readonly ICoreClientAPI Api;
+    protected readonly AnimatableAttachable Attachable;
+    protected readonly ModelTransform ArrowTransform;
+    protected readonly ClientAimingSystem AimingSystem;
+    protected readonly BowStats Stats;
+    protected readonly AimingStats AimingStats;
+    protected readonly AmmoSelector AmmoSelector;
+    protected AimingAnimationController? AimingAnimationController;
+    protected bool AfterLoad = false;
 
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Pressed)]
-    private bool Load(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
+    protected virtual bool Load(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
         if (state != (int)BowState.Unloaded || eventData.AltPressed || !CheckForOtherHandEmpty(mainHand, player)) return false;
 
@@ -108,24 +107,24 @@ public sealed class BowClient : RangeWeaponClient
 
         if (arrowSlot == null) return false;
 
-        _attachable.SetAttachment(player.EntityId, "Arrow", arrowSlot.Itemstack, _arrowTransform);
+        Attachable.SetAttachment(player.EntityId, "Arrow", arrowSlot.Itemstack, ArrowTransform);
         RangedWeaponSystem.Reload(slot, arrowSlot, 1, mainHand, ReloadCallback);
 
-        AnimationBehavior?.Play(mainHand, _stats.LoadAnimation, animationSpeed: GetAnimationSpeed(player, _stats.ProficiencyStat), callback: LoadAnimationCallback);
+        AnimationBehavior?.Play(mainHand, Stats.LoadAnimation, animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat), callback: LoadAnimationCallback);
 
-        _aimingSystem.ResetAim();
-        _aimingSystem.StartAiming(_aimingStats);
-        _aimingSystem.AimingState = WeaponAimingState.Blocked;
+        AimingSystem.ResetAim();
+        AimingSystem.StartAiming(AimingStats);
+        AimingSystem.AimingState = WeaponAimingState.Blocked;
 
-        _aimingAnimationController?.Play(mainHand);
+        AimingAnimationController?.Play(mainHand);
 
         state = (int)BowState.Load;
 
-        _afterLoad = true;
+        AfterLoad = true;
 
         return true;
     }
-    private void ReloadCallback(bool success)
+    protected virtual void ReloadCallback(bool success)
     {
         BowState state = GetState<BowState>(mainHand: true);
 
@@ -147,7 +146,7 @@ public sealed class BowClient : RangeWeaponClient
             SetState(BowState.Unloaded, mainHand: true);
         }
     }
-    private bool LoadAnimationCallback()
+    protected virtual bool LoadAnimationCallback()
     {
         BowState state = GetState<BowState>(mainHand: true);
 
@@ -165,41 +164,41 @@ public sealed class BowClient : RangeWeaponClient
     }
 
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Active)]
-    private bool Aim(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
+    protected virtual bool Aim(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
         if (state != (int)BowState.Loaded || eventData.AltPressed || !CheckForOtherHandEmpty(mainHand, player)) return false;
 
-        AnimationRequestByCode request = new(_afterLoad ? _stats.DrawAfterLoadAnimation : _stats.DrawAnimation, GetAnimationSpeed(player, _stats.ProficiencyStat), 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true, FullLoadCallback);
+        AnimationRequestByCode request = new(AfterLoad ? Stats.DrawAfterLoadAnimation : Stats.DrawAnimation, GetAnimationSpeed(player, Stats.ProficiencyStat), 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true, FullLoadCallback);
         AnimationBehavior?.Play(request, mainHand);
 
-        _afterLoad = false;
+        AfterLoad = false;
 
         state = (int)BowState.Draw;
 
-        if (!_aimingSystem.Aiming)
+        if (!AimingSystem.Aiming)
         {
-            _aimingSystem.StartAiming(_aimingStats);
-            _aimingSystem.AimingState = WeaponAimingState.Blocked;
+            AimingSystem.StartAiming(AimingStats);
+            AimingSystem.AimingState = WeaponAimingState.Blocked;
 
-            _aimingAnimationController?.Play(mainHand);
+            AimingAnimationController?.Play(mainHand);
         }
 
-        AnimationBehavior?.PlayVanillaAnimation(_stats.TpAimAnimation, mainHand);
+        AnimationBehavior?.PlayVanillaAnimation(Stats.TpAimAnimation, mainHand);
 
         return true;
     }
 
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Released)]
-    private bool Shoot(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
+    protected virtual bool Shoot(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
-        _aimingSystem.StopAiming();
+        AimingSystem.StopAiming();
 
-        AnimationBehavior?.StopVanillaAnimation(_stats.TpAimAnimation, mainHand);
+        AnimationBehavior?.StopVanillaAnimation(Stats.TpAimAnimation, mainHand);
 
         if (CheckState(state, BowState.Load, BowState.PreLoaded))
         {
             AnimationBehavior?.PlayReadyAnimation(mainHand);
-            _attachable.ClearAttachments(player.EntityId);
+            Attachable.ClearAttachments(player.EntityId);
             state = (int)BowState.Unloaded;
             return true;
         }
@@ -208,50 +207,50 @@ public sealed class BowClient : RangeWeaponClient
         {
             AnimationBehavior?.PlayReadyAnimation(mainHand);
             state = (int)BowState.Loaded;
-            _afterLoad = false;
+            AfterLoad = false;
             return true;
         }
 
         if (state != (int)BowState.Drawn) return false;
 
-        AnimationBehavior?.Play(mainHand, _stats.ReleaseAnimation, callback: () => ShootCallback(slot, player, mainHand));
+        AnimationBehavior?.Play(mainHand, Stats.ReleaseAnimation, callback: () => ShootCallback(slot, player, mainHand));
 
         return true;
     }
 
-    private bool ShootCallback(ItemSlot slot, EntityPlayer player, bool mainHand)
+    protected virtual bool ShootCallback(ItemSlot slot, EntityPlayer player, bool mainHand)
     {
         PlayerBehavior?.SetState(0, mainHand);
 
         Vintagestory.API.MathTools.Vec3d position = player.LocalEyePos + player.Pos.XYZ;
-        Vector3 targetDirection = _aimingSystem.TargetVec;
-        targetDirection = ClientAimingSystem.Zeroing(targetDirection, _stats.Zeroing);
+        Vector3 targetDirection = AimingSystem.TargetVec;
+        targetDirection = ClientAimingSystem.Zeroing(targetDirection, Stats.Zeroing);
 
         RangedWeaponSystem.Shoot(slot, 1, new((float)position.X, (float)position.Y, (float)position.Z), new(targetDirection.X, targetDirection.Y, targetDirection.Z), mainHand, _ => { });
-        _attachable.ClearAttachments(player.EntityId);
-        _aimingAnimationController?.Stop(mainHand);
+        Attachable.ClearAttachments(player.EntityId);
+        AimingAnimationController?.Stop(mainHand);
 
         AnimationBehavior?.PlayReadyAnimation(mainHand);
 
         return true;
     }
 
-    private bool FullLoadCallback()
+    protected virtual bool FullLoadCallback()
     {
         PlayerBehavior?.SetState((int)BowState.Drawn);
-        _aimingSystem.AimingState = WeaponAimingState.FullCharge;
+        AimingSystem.AimingState = WeaponAimingState.FullCharge;
         return true;
     }
 
-    private ItemSlot? GetArrowSlot(EntityPlayer player)
+    protected virtual ItemSlot? GetArrowSlot(EntityPlayer player)
     {
         ItemSlot? arrowSlot = null;
-        
+
         player.WalkInventory(slot =>
         {
             if (slot?.Itemstack?.Item == null) return true;
 
-            if (slot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(_ammoSelector.SelectedAmmo, slot.Itemstack.Item.Code.ToString()))
+            if (slot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(AmmoSelector.SelectedAmmo, slot.Itemstack.Item.Code.ToString()))
             {
                 arrowSlot = slot;
                 return false;
@@ -266,7 +265,7 @@ public sealed class BowClient : RangeWeaponClient
             {
                 if (slot?.Itemstack?.Item == null) return true;
 
-                if (slot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(_stats.ArrowWildcard, slot.Itemstack.Item.Code.ToString()))
+                if (slot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(Stats.ArrowWildcard, slot.Itemstack.Item.Code.ToString()))
                 {
                     arrowSlot = slot;
                     return false;
@@ -335,25 +334,25 @@ public sealed class AimingAnimationController
     }
 }
 
-public sealed class BowServer : RangeWeaponServer
+public class BowServer : RangeWeaponServer
 {
     public BowServer(ICoreServerAPI api, Item item) : base(api, item)
     {
-        _projectileSystem = api.ModLoader.GetModSystem<CombatOverhaulSystem>().ServerProjectileSystem ?? throw new Exception();
-        _stats = item.Attributes.AsObject<BowStats>();
+        ProjectileSystem = api.ModLoader.GetModSystem<CombatOverhaulSystem>().ServerProjectileSystem ?? throw new Exception();
+        Stats = item.Attributes.AsObject<BowStats>();
     }
 
     public override bool Reload(IServerPlayer player, ItemSlot slot, ItemSlot? ammoSlot, ReloadPacket packet)
     {
-        if (ammoSlot?.Itemstack?.Item != null && ammoSlot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(_stats.ArrowWildcard, ammoSlot.Itemstack.Item.Code.ToString()))
+        if (ammoSlot?.Itemstack?.Item != null && ammoSlot.Itemstack.Item.HasBehavior<ProjectileBehavior>() && WildcardUtil.Match(Stats.ArrowWildcard, ammoSlot.Itemstack.Item.Code.ToString()))
         {
-            _arrowSlots[player.Entity.EntityId] = (ammoSlot.Inventory, ammoSlot.Inventory.GetSlotId(ammoSlot));
+            ArrowSlots[player.Entity.EntityId] = (ammoSlot.Inventory, ammoSlot.Inventory.GetSlotId(ammoSlot));
             return true;
         }
 
         if (ammoSlot == null)
         {
-            _arrowSlots.Remove(player.Entity.EntityId);
+            ArrowSlots.Remove(player.Entity.EntityId);
             return true;
         }
 
@@ -362,9 +361,9 @@ public sealed class BowServer : RangeWeaponServer
 
     public override bool Shoot(IServerPlayer player, ItemSlot slot, ShotPacket packet, Entity shooter)
     {
-        if (!_arrowSlots.ContainsKey(player.Entity.EntityId)) return false;
+        if (!ArrowSlots.ContainsKey(player.Entity.EntityId)) return false;
 
-        (InventoryBase inventory, int slotId) = _arrowSlots[player.Entity.EntityId];
+        (InventoryBase inventory, int slotId) = ArrowSlots[player.Entity.EntityId];
 
         if (inventory.Count <= slotId) return false;
 
@@ -376,20 +375,20 @@ public sealed class BowServer : RangeWeaponServer
 
         if (stats == null)
         {
-            _arrowSlots.Remove(player.Entity.EntityId);
+            ArrowSlots.Remove(player.Entity.EntityId);
             return false;
         }
 
         ProjectileSpawnStats spawnStats = new()
         {
             ProducerEntityId = player.Entity.EntityId,
-            DamageMultiplier = _stats.ArrowDamageMultiplier,
-            DamageStrength = _stats.ArrowDamageStrength,
+            DamageMultiplier = Stats.ArrowDamageMultiplier,
+            DamageStrength = Stats.ArrowDamageStrength,
             Position = new Vector3(packet.Position[0], packet.Position[1], packet.Position[2]),
-            Velocity = GetDirectionWithDispersion(packet.Velocity, _stats.DispersionMOA) * _stats.ArrowVelocity
+            Velocity = GetDirectionWithDispersion(packet.Velocity, Stats.DispersionMOA) * Stats.ArrowVelocity
         };
 
-        _projectileSystem.Spawn(packet.ProjectileId[0], stats, spawnStats, arrowSlot.TakeOut(1), shooter);
+        ProjectileSystem.Spawn(packet.ProjectileId[0], stats, spawnStats, arrowSlot.TakeOut(1), shooter);
 
         slot.Itemstack.Item.DamageItem(player.Entity.World, player.Entity, slot, 1 + stats.AdditionalDurabilityCost);
 
@@ -399,12 +398,11 @@ public sealed class BowServer : RangeWeaponServer
     }
 
 
-    private readonly Dictionary<long, (InventoryBase, int)> _arrowSlots = new();
-    private readonly ProjectileSystemServer _projectileSystem;
-    private readonly BowStats _stats;
+    protected readonly Dictionary<long, (InventoryBase, int)> ArrowSlots = new();
+    protected readonly BowStats Stats;
 }
 
-public class AmmoSelector
+public sealed class AmmoSelector
 {
     public AmmoSelector(ICoreClientAPI api, string ammoWildcard)
     {

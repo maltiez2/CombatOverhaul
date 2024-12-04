@@ -94,6 +94,7 @@
   "game:trait-javelinsProficiency": "<font color=\"#84ff84\">• Javelins proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
   "game:trait-macesProficiency": "<font color=\"#84ff84\">• Maces proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
   "game:trait-clubsProficiency": "<font color=\"#84ff84\">• Clubs proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
+  "game:trait-halberdsProficiency": "<font color=\"#84ff84\">• Halberds proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
   "game:trait-steadyAim": "<font color=\"#84ff84\">• Steady aim</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
   "game:trait-tremblingAim": "<font color=\"#ff8484\">• Trembling aim</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
 
@@ -106,6 +107,7 @@
   "game:charattribute-javelinsProficiency-0.3": "+30% attack speed",
   "game:charattribute-macesProficiency-0.3": "+30% attackspeed",
   "game:charattribute-clubsProficiency-0.3": "+30% attack speed",
+  "game:charattribute-halberdsProficiency-0.3": "+30% attack speed",
   "game:charattribute-steadyAim-0.3": "30% less aim drift",
   "game:charattribute-steadyAim--0.3": "30% more aim drift",
 

@@ -13,6 +13,7 @@
       {"code": "javelinsProficiency", "type": "positive", "attributes": {"javelinsProficiency": 0.3}},
       {"code": "macesProficiency", "type": "positive", "attributes": {"macesProficiency": 0.3}},
       {"code": "clubsProficiency", "type": "positive", "attributes": {"clubsProficiency": 0.3}},
+      {"code": "halberdsProficiency", "type": "positive", "attributes": {"halberdsProficiency": 0.3}},
       {"code": "steadyAim", "type": "positive", "attributes": {"steadyAim": 0.3}},
       {"code": "tremblingAim", "type": "negative", "attributes": {"steadyAim": -0.3}}
     ]
@@ -21,7 +22,18 @@
     "file": "game:config/characterclasses",
     "op": "replace",
     "path": "/1/traits",
-    "value": ["resourceful", "fleetfooted", "bowyer", "claustrophobic", "farsighted", "bowsProficiency", "crossbowsProficiency", "steadyAim", "spearsProficiency"]
+    "value": [
+      "resourceful",
+      "fleetfooted",
+      "bowyer",
+      "claustrophobic",
+      "farsighted",
+      "bowsProficiency",
+      "crossbowsProficiency",
+      "steadyAim",
+      "spearsProficiency",
+      "halberdsProficiency"
+    ]
   },
   {"file": "game:config/characterclasses", "op": "addeach", "path": "/2/traits/-", "value": ["javelinsProficiency", "macesProficiency", "clubsProficiency"]},
   {

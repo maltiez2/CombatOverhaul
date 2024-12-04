@@ -97,6 +97,18 @@ public readonly struct CuboidFace
     }
 }
 
+public readonly struct  LineCollider
+{
+    public readonly Vector3 Tail;
+    public readonly Vector3 Head;
+
+    public LineCollider(Vector3 tail, Vector3 head)
+    {
+        Tail = tail;
+        Head = head;
+    }
+}
+
 public readonly struct CuboidAABBCollider
 {
     public readonly Vector3 VertexA;

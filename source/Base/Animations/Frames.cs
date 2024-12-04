@@ -501,7 +501,7 @@ public readonly struct PlayerFrame
                 torso.Apply(pose);
                 break;
             default:
-                RightHand?.Apply(pose, DetachedAnchor);
+                RightHand?.Apply(pose);
                 LeftHand?.Apply(pose);
                 break;
         }
@@ -644,7 +644,7 @@ public readonly struct RightHandFrame
         UpperArmR = upper;
     }
 
-    public void Apply(ElementPose pose, bool detachedAnchor)
+    public void Apply(ElementPose pose)
     {
         switch (pose.ForElement.Name)
         {

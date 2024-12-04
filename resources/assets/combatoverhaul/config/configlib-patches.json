@@ -147,7 +147,7 @@
     {
       "code": "directions_invert",
       "type": "boolean",
-      "ingui": "combatoverhaul:setting-directions_buffer_depth",
+      "ingui": "combatoverhaul:setting-directions_invert",
       "clientSide": true,
       "default": false
     },

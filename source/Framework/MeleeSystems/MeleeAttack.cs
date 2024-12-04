@@ -115,6 +115,16 @@ public sealed class MeleeAttack
             }
         }
     }
+    public void AddAttackedEntities(MeleeAttack attack)
+    {
+        foreach (long entityId in _attackedEntities.Keys)
+        {
+            foreach (long id in attack._attackedEntities[entityId])
+            {
+                _attackedEntities[entityId].Add(id);
+            }
+        }
+    }
 
     private readonly ICoreClientAPI _api;
     private readonly Dictionary<long, HashSet<long>> _attackedEntities = new();
@@ -143,6 +153,12 @@ public sealed class MeleeAttack
     {
         long entityId = player.Entity.EntityId;
         long mountedOn = player.Entity.MountedOn?.Entity?.EntityId ?? 0;
+
+        if (!_attackedEntities.ContainsKey(entityId))
+        {
+            _attackedEntities.Add(entityId, new());
+        }
+
         if (_attackedEntities[entityId].Count > 0 && HitOnlyOneEntity)
         {
             packets = Array.Empty<MeleeDamagePacket>();

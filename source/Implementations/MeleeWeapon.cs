@@ -4,6 +4,7 @@ using CombatOverhaul.Inputs;
 using CombatOverhaul.MeleeSystems;
 using CombatOverhaul.RangedSystems;
 using CombatOverhaul.RangedSystems.Aiming;
+using System.Diagnostics;
 using System.Numerics;
 using System.Text;
 using Vintagestory.API.Client;
@@ -127,6 +128,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
             foreach ((string direction, MeleeAttackStats attack) in Stats.OneHandedStance.DirectionalAttacks)
             {
                 DirectionalOneHandedAttacks.Add(Enum.Parse<AttackDirection>(direction), new(api, attack));
+                RegisterCollider(item.Code.ToString(), $"onehanded-{direction}-", DirectionalOneHandedAttacks[Enum.Parse<AttackDirection>(direction)]);
             }
         }
 
@@ -141,6 +143,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
             foreach ((string direction, MeleeAttackStats attack) in Stats.TwoHandedStance.DirectionalAttacks)
             {
                 DirectionalTwoHandedAttacks.Add(Enum.Parse<AttackDirection>(direction), new(api, attack));
+                RegisterCollider(item.Code.ToString(), $"twohanded-{direction}-", DirectionalTwoHandedAttacks[Enum.Parse<AttackDirection>(direction)]);
             }
         }
 
@@ -155,6 +158,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
             foreach ((string direction, MeleeAttackStats attack) in Stats.OffHandStance.DirectionalAttacks)
             {
                 DirectionalOffHandAttacks.Add(Enum.Parse<AttackDirection>(direction), new(api, attack));
+                RegisterCollider(item.Code.ToString(), $"offhand-{direction}-", DirectionalOffHandAttacks[Enum.Parse<AttackDirection>(direction)]);
             }
         }
 
@@ -237,7 +241,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
             return;
         }
 
-        MeleeAttack? attack = GetStanceAttack(mainHand: true);
+        MeleeAttack? attack = GetStanceAttack(true, CurrentMainHandDirection);
         if (attack != null)
         {
             foreach (MeleeDamageType damageType in attack.DamageTypes)
@@ -289,7 +293,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
         if (IsAttackOnCooldown(mainHand)) return;
         if (GetState<MeleeWeaponState>(!mainHand) == MeleeWeaponState.Blocking) return;
 
-        MeleeAttack? attack = GetStanceAttack(mainHand);
+        MeleeAttack? attack = GetStanceAttack(mainHand, mainHand ? CurrentMainHandDirection : CurrentOffHandDirection);
         StanceStats? stats = GetStanceStats(mainHand);
         MeleeAttack? handle = GetStanceHandleAttack(mainHand);
 
@@ -475,6 +479,8 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
     protected int OffHandAttackCounter = 0;
     protected bool HandleHitTerrain = false;
     protected const bool EditColliders = false;
+    protected AttackDirection CurrentMainHandDirection = AttackDirection.Top;
+    protected AttackDirection CurrentOffHandDirection = AttackDirection.Top;
 
     protected readonly AimingStats? AimingStats;
 
@@ -500,7 +506,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
         if (ActionRestricted(player, mainHand)) return false;
         //if (GetState<MeleeWeaponState>(!mainHand) == MeleeWeaponState.Blocking) return false;
 
-        MeleeAttack? attack = GetStanceAttack(mainHand);
+        MeleeAttack? attack = GetStanceAttack(mainHand, direction);
         StanceStats? stats = GetStanceStats(mainHand);
         MeleeAttack? handle = GetStanceHandleAttack(mainHand);
 
@@ -510,6 +516,15 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
         {
             case MeleeWeaponState.Idle:
                 {
+                    if (mainHand)
+                    {
+                        CurrentMainHandDirection = direction;
+                    }
+                    else
+                    {
+                        CurrentOffHandDirection = direction;
+                    }
+
                     string attackAnimation =
                         DirectionsType == DirectionsConfiguration.None ?
                         stats.AttackAnimation["Main"][(mainHand ? MainHandAttackCounter : OffHandAttackCounter) % stats.AttackAnimation["Main"].Length] :
@@ -578,7 +593,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
             out IEnumerable<(Block block, System.Numerics.Vector3 point)> terrainCollision,
             out IEnumerable<(Vintagestory.API.Common.Entities.Entity entity, System.Numerics.Vector3 point)> entitiesCollision);
 
-        if (handle != null) attack.MergeAttackedEntities(handle);
+        if (handle != null) handle.AddAttackedEntities(attack);
 
         if (entitiesCollision.Any() && stats.AttackHitSound != null)
         {
@@ -1156,7 +1171,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
             damageTypes.Add(attack.DamageType);
         }
 
-        string damageType = damageTypes.Select(element => Lang.Get($"combatoverhaul:damage-type-{element}")).Aggregate((first, second) => $"first, second");
+        string damageType = damageTypes.Select(element => Lang.Get($"combatoverhaul:damage-type-{element}")).Aggregate((first, second) => $"{first}, {second}");
 
         return Lang.Get(descriptionLangCode, damage, tier, damageType);
     }

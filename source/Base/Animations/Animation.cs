@@ -202,7 +202,16 @@ public sealed class Animation
         return Interpolate(PlayerItemFrame.Zero, progress * TotalDuration);
     }
 
-    public Animation Clone() => new Animation(PlayerKeyFrames, ItemKeyFrames, SoundFrames, ParticlesFrames, CallbackFrames);
+    public Animation Clone()
+    {
+        Animation result = new(PlayerKeyFrames, ItemKeyFrames, SoundFrames, ParticlesFrames, CallbackFrames)
+        {
+            ItemAnimationStart = ItemAnimationStart,
+            ItemAnimationEnd = ItemAnimationEnd,
+            Hold = Hold
+        };
+        return result;
+    }
 
     internal int _playerFrameIndex = 0;
     internal int _itemFrameIndex = 0;
