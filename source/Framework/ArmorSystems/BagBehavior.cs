@@ -238,7 +238,7 @@ public class GearEquipableBag : CollectibleBehavior, IHeldBag, IAttachedInteract
 
     public void OnEntityDespawn(ItemSlot itemslot, int slotIndex, Entity onEntity, EntityDespawnData despawn)
     {
-        getContainerWorkspace(slotIndex, onEntity)?.OnDespawn();
+        getContainerWorkspace(slotIndex, onEntity)?.OnDespawn(despawn);
     }
 
     public void OnEntityDeath(ItemSlot itemslot, int slotIndex, Entity onEntity, DamageSource damageSourceForDeath)

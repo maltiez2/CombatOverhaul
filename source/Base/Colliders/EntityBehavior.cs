@@ -225,6 +225,66 @@ public sealed class CollidersEntityBehavior : EntityBehavior
 
         return foundIntersection;
     }
+    public bool Collide(Vector3 thisTickOrigin, Vector3 previousTickOrigin, float radius, float penetrationDistance, out List<(string, float, Vector3)> intersections)
+    {
+        intersections = new();
+        bool foundIntersection = false;
+
+        
+
+        if (!HasOBBCollider)
+        {
+            CuboidAABBCollider AABBCollider = new(entity);
+            return AABBCollider.Collide(thisTickOrigin, previousTickOrigin, radius, out Vector3 intersection);
+        }
+
+        if (!BoundingBox.Collide(thisTickOrigin, previousTickOrigin, radius, out _))
+        {
+            return false;
+        }
+
+        Vector3 firstIntersection = previousTickOrigin;
+        float lowestParameter = 1;
+
+        foreach ((string key, ShapeElementCollider shapeElementCollider) in Colliders)
+        {
+            if (shapeElementCollider.Collide(thisTickOrigin, previousTickOrigin, radius, out _, out _, out Vector3 segmentClosestPoint))
+            {
+                Vector3 segmentPoint = segmentClosestPoint - previousTickOrigin;
+                float parameter = segmentPoint.Length() / (thisTickOrigin - previousTickOrigin).Length();
+
+                if (lowestParameter >= parameter)
+                {
+                    firstIntersection = segmentClosestPoint;
+                    lowestParameter = parameter;
+                }
+
+                foundIntersection = true;
+            }
+        }
+
+        Vector3 thisTickOriginAdjustedForPenetration = firstIntersection + Vector3.Normalize(thisTickOrigin - previousTickOrigin) * penetrationDistance;
+
+        if (foundIntersection)
+        {
+            foundIntersection = false;
+            foreach ((string key, ShapeElementCollider shapeElementCollider) in Colliders)
+            {
+                if (shapeElementCollider.Collide(thisTickOriginAdjustedForPenetration, previousTickOrigin, radius, out float currentDistance, out Vector3 currentIntersection, out Vector3 segmentClosestPoint))
+                {
+                    Vector3 segmentPoint = segmentClosestPoint - previousTickOrigin;
+                    float parameter = (segmentPoint.Length() + currentDistance) / (thisTickOrigin - previousTickOrigin).Length();
+
+                    intersections.Add((key, parameter, currentIntersection));
+                    foundIntersection = true;
+                }
+            }
+        }
+
+        intersections.Sort((first, second) => (int)(first.Item2 - second.Item2));
+
+        return foundIntersection;
+    }
 
     private readonly Dictionary<ColliderTypes, int> _colliderColors = new()
     {

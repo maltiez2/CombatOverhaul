@@ -7,6 +7,7 @@ using System.Reflection.Emit;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
+using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
 
@@ -16,6 +17,8 @@ internal static class AnimationPatch
 {
     public static event Action<Entity, float>? OnBeforeFrame;
     public static event Action<Entity, ElementPose>? OnFrame;
+
+    public static bool YawSmoothing { get; set; } = false;
 
     public static void Patch(string harmonyId)
     {
@@ -44,6 +47,11 @@ internal static class AnimationPatch
                 typeof(Vintagestory.API.Common.AnimationManager).GetMethod("OnClientFrame", AccessTools.all),
                 prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimationPatch), nameof(AnimationPatch.CreateColliders)))
             );
+
+        new Harmony(harmonyId).Patch(
+                typeof(EntityPlayerShapeRenderer).GetMethod("smoothCameraTurning", AccessTools.all),
+                prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimationPatch), nameof(AnimationPatch.SmoothCameraTurning)))
+            );
     }
 
     public static void Unpatch(string harmonyId)
@@ -53,6 +61,7 @@ internal static class AnimationPatch
         new Harmony(harmonyId).Unpatch(typeof(Vintagestory.API.Common.AnimationManager).GetMethod("OnClientFrame", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         new Harmony(harmonyId).Unpatch(typeof(EntityPlayer).GetMethod("OnSelfBeforeRender", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         new Harmony(harmonyId).Unpatch(typeof(EntityPlayer).GetMethod("updateEyeHeight", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
+        new Harmony(harmonyId).Unpatch(typeof(EntityPlayerShapeRenderer).GetMethod("smoothCameraTurning", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         _animators.Clear();
     }
 
@@ -162,6 +171,20 @@ internal static class AnimationPatch
                                           ?.GetValue(__instance);
 
         return !behavior.RenderHeldItem(__instance.ModelMat, __instance.capi, slot, __instance.entity, lightrgbs, dt, isShadowPass, right, renderInfo);
+    }
+
+    private static readonly FieldInfo? _smoothedBodyYaw = typeof(EntityPlayerShapeRenderer).GetField("smoothedBodyYaw", BindingFlags.NonPublic | BindingFlags.Instance);
+    private static bool SmoothCameraTurning(EntityPlayerShapeRenderer __instance, float bodyYaw, float mdt)
+    {
+        if (!YawSmoothing)
+        {
+            _smoothedBodyYaw?.SetValue(__instance, bodyYaw);
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 
     [HarmonyPatch(typeof(ClientAnimator), "calculateMatrices", typeof(int),

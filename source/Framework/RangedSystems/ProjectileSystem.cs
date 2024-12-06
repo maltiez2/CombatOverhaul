@@ -17,6 +17,7 @@ public class ProjectileStats
     public string ImpactSound { get; set; } = "game:sounds/arrow-impact";
     public string HitSound { get; set; } = "game:sounds/player/projectilehit";
     public float CollisionRadius { get; set; } = 0;
+    public float PenetrationDistance { get; set; } = 0;
     public ProjectileDamageDataJson DamageStats { get; set; } = new();
     public float SpeedThreshold { get; set; } = 0;
     public float Knockback { get; set; } = 0;
@@ -57,6 +58,7 @@ public class ProjectileCollisionCheckRequest
     public float[] PreviousPosition { get; set; } = Array.Empty<float>();
     public float[] Velocity { get; set; } = Array.Empty<float>();
     public float Radius { get; set; }
+    public float PenetrationDistance { get; set; }
     public bool CollideWithShooter { get; set; }
     public long[] IgnoreEntities { get; set; } = Array.Empty<long>();
     public int PacketVersion { get; set; }
@@ -79,6 +81,7 @@ public abstract class ProjectileSystemBase
         projectile.ProjectileStack = projectileStack;
         projectile.DropOnImpactChance = stats.DropChance;
         projectile.ColliderRadius = stats.CollisionRadius;
+        projectile.PenetrationDistance = stats.PenetrationDistance;
         projectile.DurabilityDamageOnImpact = stats.DurabilityDamage;
 
         projectile.ServerPos.SetPos(new Vec3d(spawnStats.Position.X, spawnStats.Position.Y, spawnStats.Position.Z));
@@ -169,7 +172,7 @@ public sealed class ProjectileSystemClient : ProjectileSystemBase
 
         if (packet.IgnoreEntities.Contains(target.EntityId)) return false;
 
-        if (!CheckCollision(target, out string collider, out Vector3 point, currentPosition, previousPosition, packet.Radius)) return false;
+        if (!CheckCollision(target, out string collider, out Vector3 point, currentPosition, previousPosition, packet.Radius, packet.PenetrationDistance)) return false;
 
         Vector3 targetVelocity = new((float)target.Pos.Motion.X, (float)target.Pos.Motion.Y, (float)target.Pos.Motion.Z);
 
@@ -192,6 +195,59 @@ public sealed class ProjectileSystemClient : ProjectileSystemBase
 
         CuboidAABBCollider collisionBox = GetCollisionBox(target);
         return collisionBox.Collide(currentPosition, previousPosition, radius, out point);
+    }
+    private bool CheckCollision(Entity target, out string collider, out Vector3 point, Vector3 currentPosition, Vector3 previousPosition, float radius, float penetrationDistance)
+    {
+        CollidersEntityBehavior? colliders = target.GetBehavior<CollidersEntityBehavior>();
+        EntityDamageModelBehavior? damageModel = target.GetBehavior<EntityDamageModelBehavior>();
+        collider = "";
+        point = new();
+
+        if (colliders != null)
+        {
+            bool result = colliders.Collide(currentPosition, previousPosition, radius, penetrationDistance, out List<(string key, float parameter, Vector3 point)> intersections);
+
+            if (!result) return false;
+
+            if (damageModel == null && intersections.Count > 0)
+            {
+                collider = intersections[0].key;
+                point = intersections[0].point;
+            }
+
+            if (damageModel != null && intersections.Count > 0)
+            {
+                float maxDamageMultiplier = 0;
+
+                foreach ((string key, float parameter, Vector3 intersectionPoint) in intersections)
+                {
+                    ColliderTypes colliderType = colliders.CollidersTypes[key];
+                    if (colliderType == ColliderTypes.Resistant)
+                    {
+                        if (collider == "")
+                        {
+                            collider = key;
+                            point = intersectionPoint;
+                        }
+
+                        break;
+                    }
+
+                    float damageMultiplier = damageModel.DamageMultipliers[colliderType];
+                    if (damageMultiplier >= maxDamageMultiplier)
+                    {
+                        maxDamageMultiplier = damageMultiplier;
+                        collider = key;
+                        point = intersectionPoint;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        CuboidAABBCollider collisionBox = GetCollisionBox(target);
+        return collisionBox.Collide(currentPosition, previousPosition, radius, out _);
     }
     private static CuboidAABBCollider GetCollisionBox(Entity entity)
     {
@@ -238,6 +294,7 @@ public sealed class ProjectileSystemServer : ProjectileSystemBase
             PreviousPosition = new float[3] { (float)projectile.PreviousPosition.X, (float)projectile.PreviousPosition.Y, (float)projectile.PreviousPosition.Z },
             Velocity = new float[3] { (float)projectile.PreviousVelocity.X, (float)projectile.PreviousVelocity.Y, (float)projectile.PreviousVelocity.Z },
             Radius = projectile.ColliderRadius,
+            PenetrationDistance = projectile.PenetrationDistance,
             CollideWithShooter = false,
             IgnoreEntities = projectile.CollidedWith.ToArray(),
             PacketVersion = projectile.ServerProjectile?.PacketVersion ?? 0

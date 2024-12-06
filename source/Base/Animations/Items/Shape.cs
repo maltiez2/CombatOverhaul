@@ -25,7 +25,11 @@ public sealed class AnimatableShape : ITexPositionSource, IDisposable
 
         if (currentShape == null) return null;
 
-        return new AnimatableShape(api, cacheKey, currentShape, item);
+        AnimatableShape shape = new(api, cacheKey, currentShape, item);
+
+        shape.Shape.ResolveReferences(api.Logger, "creating new animatable shape");
+
+        return shape;
     }
     public AnimatorBase? GetAnimator(long entityId)
     {

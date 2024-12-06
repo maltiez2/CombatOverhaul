@@ -141,6 +141,8 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     }
     public void PlayVanillaAnimation(string code, bool mainHand)
     {
+        if (code == "") return;
+        
         _vanillaAnimationsManager?.StartAnimation(code);
         if (mainHand)
         {

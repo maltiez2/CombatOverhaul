@@ -88,7 +88,7 @@ public sealed class ProjectileServer
 
         bool received = damageReceived || damage <= 0;
 
-        if (_printIntoChat)
+        if (_printIntoChat && collider != "")
         {
             CollidersEntityBehavior? colliders = target.GetBehavior<CollidersEntityBehavior>();
             ColliderTypes ColliderType = colliders?.CollidersTypes[collider] ?? ColliderTypes.Torso;
@@ -128,6 +128,7 @@ public class ProjectileEntity : Entity
     public float DropOnImpactChance { get; set; }
     public Action<Guid>? ClearCallback { get; set; }
     public float ColliderRadius { get; set; }
+    public float PenetrationDistance { get; set; }
     public long ShooterId { get; set; }
     public Vec3d PreviousPosition { get; private set; } = new(0, 0, 0);
     public Vec3d PreviousVelocity { get; private set; } = new(0, 0, 0);

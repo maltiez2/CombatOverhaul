@@ -317,6 +317,19 @@ public sealed class ShapeElementCollider
 
         return distance <= radius;
     }
+    public bool Collide(Vector3 thisTickOrigin, Vector3 previousTickOrigin, float radius, out float distance, out Vector3 intersection, out Vector3 segmentClosestPoint)
+    {
+        Vector3[] vertices = new Vector3[VertexCount];
+        for (int index = 0; index < VertexCount; index++)
+        {
+            vertices[index] = new(InworldVertices[index].X, InworldVertices[index].Y, InworldVertices[index].Z);
+        }
+
+        intersection = ClosestPoint(thisTickOrigin, previousTickOrigin, vertices, out segmentClosestPoint);
+        distance = Vector3.Distance(intersection, segmentClosestPoint);
+
+        return distance <= radius;
+    }
 
     private void SetElementVertices(ShapeElement element)
     {

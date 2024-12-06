@@ -28,6 +28,8 @@ public sealed class GuiDialogArmorInventory : GuiDialog
     public const string DialogName = "CombatOverhaul:armor-inventory-dialog";
     public readonly string DialogTitle = Lang.Get("combatoverhaul:armor-inventory-dialog-title");
 
+    public override bool PrefersUngrabbedMouse => false;
+
     public override string? ToggleKeyCombinationCode => null;
 
 

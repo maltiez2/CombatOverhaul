@@ -24,6 +24,7 @@
         "stats": {
           "AdditionalDurabilityCost": 0,
           "CollisionRadius": 0.05,
+          "PenetrationDistance": 0.1,
           "DamageStatsByType": {
             "*-crude": {"DamageType": "SlashingAttack", "Damage": 3.5},
             "*-flint": {"DamageType": "SlashingAttack", "Damage": 4},

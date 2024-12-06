@@ -1,0 +1,142 @@
+﻿[
+  {
+    "side": "Server",
+    "file": "game:entities/air/erel",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {
+        "Torso": ["Chest", "Midsection", "Rear", "Bum", "Chest-Misc"],
+        "Head": ["Head", "BeakTop1", "BeakTop2", "BeakTop3", "Jaw1Padding", "Jaw2"],
+        "Arm": [
+          "L ArmGear",
+          "L UpperArm",
+          "L ElbowGear",
+          "L LowerArm1",
+          "L HandGear",
+          "L WingTip1",
+          "L WingTip2",
+          "R ArmGear",
+          "R UpperArm",
+          "R ElbowGear",
+          "R LowerArm1",
+          "R HandGear",
+          "R WingTip1",
+          "R WingTip2"
+        ],
+        "Leg": [
+          "IliumR",
+          "R Thigh",
+          "R KneeGear",
+          "R Calf",
+          "R AnkleGear",
+          "R Tarsus",
+          "R Toe3",
+          "R Toe2",
+          "R Toe1",
+          "IliumL",
+          "L Thigh",
+          "L KneeGear",
+          "L Calf",
+          "L AnkleGear",
+          "L Tarsus",
+          "L Toe3",
+          "L Toe2",
+          "L Toe1"
+        ],
+        "Critical": ["NeckCover2", "NeckCover3"],
+        "Resistant": []
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/air/erel",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {
+        "Torso": ["Chest", "Midsection", "Rear", "Bum", "Chest-Misc"],
+        "Head": ["Head", "BeakTop1", "BeakTop2", "BeakTop3", "Jaw1Padding", "Jaw2"],
+        "Arm": [
+          "L ArmGear",
+          "L UpperArm",
+          "L ElbowGear",
+          "L LowerArm1",
+          "L HandGear",
+          "L WingTip1",
+          "L WingTip2",
+          "R ArmGear",
+          "R UpperArm",
+          "R ElbowGear",
+          "R LowerArm1",
+          "R HandGear",
+          "R WingTip1",
+          "R WingTip2"
+        ],
+        "Leg": [
+          "IliumR",
+          "R Thigh",
+          "R KneeGear",
+          "R Calf",
+          "R AnkleGear",
+          "R Tarsus",
+          "R Toe3",
+          "R Toe2",
+          "R Toe1",
+          "IliumL",
+          "L Thigh",
+          "L KneeGear",
+          "L Calf",
+          "L AnkleGear",
+          "L Tarsus",
+          "L Toe3",
+          "L Toe2",
+          "L Toe1"
+        ],
+        "Critical": ["NeckCover2", "NeckCover3"],
+        "Resistant": []
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/air/erel",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 1,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResists": {"BluntAttack": 3, "SlashingAttack": 5, "PiercingAttack": 6}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/air/erel",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 1,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResists": {"BluntAttack": 3, "SlashingAttack": 5, "PiercingAttack": 6}
+      }
+    }
+  },
+  {"side": "Server", "file": "game:entities/air/erel", "op": "add", "path": "/server/behaviors/8/aitasks/1/damageTier", "value": 7},
+  {"side": "Server", "file": "game:entities/air/erel", "op": "replace", "path": "/server/behaviors/8/aitasks/1/damageType", "value": "SlashingAttack"},
+  {"side": "Server", "file": "game:entities/air/erel", "op": "replace", "path": "/server/behaviors/8/aitasks/1/damage", "value": 25},
+  {"side": "Server", "file": "game:entities/air/erel", "op": "add", "path": "/server/behaviors/8/aitasks/2/damageTier", "value": 7},
+  {"side": "Server", "file": "game:entities/air/erel", "op": "replace", "path": "/server/behaviors/8/aitasks/2/damageType", "value": "SlashingAttack"},
+  {"side": "Server", "file": "game:entities/air/erel", "op": "replace", "path": "/server/behaviors/8/aitasks/2/damage", "value": 15}
+]
