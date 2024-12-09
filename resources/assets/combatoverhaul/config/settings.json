@@ -7,7 +7,6 @@
   "PrintProjectilesHits": false,
   "PrintMeleeHits": false,
   "PrintPlayerBeingHit": false,
-  "DirectionsControllerInertia": 5,
   "DirectionsControllerSensitivity": 1.0,
   "DirectionsControllerInvert": false
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Numerics;
+﻿using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -97,7 +96,7 @@ public readonly struct CuboidFace
     }
 }
 
-public readonly struct  LineCollider
+public readonly struct LineCollider
 {
     public readonly Vector3 Tail;
     public readonly Vector3 Head;
@@ -107,6 +106,86 @@ public readonly struct  LineCollider
         Tail = tail;
         Head = head;
     }
+}
+
+public readonly struct TriangleCollider
+{
+    public readonly Vector3 VertexA;
+    public readonly Vector3 VertexB;
+    public readonly Vector3 VertexC;
+
+    public TriangleCollider(Vector3 vertexA, Vector3 vertexB, Vector3 vertexC)
+    {
+        VertexA = vertexA;
+        VertexB = vertexB;
+        VertexC = vertexC;
+    }
+
+    public static bool IntersectTriangles(TriangleCollider first, TriangleCollider second)
+    {
+        if (!IntersectTrianglePlanes(first, second))
+            return false;
+
+        return GenerateSeparatingAxesAndCheckOverlap(first, second);
+    }
+
+    private static bool IntersectTrianglePlanes(TriangleCollider first, TriangleCollider second)
+    {
+        // Compute plane normals
+        Vector3 N1 = Vector3.Normalize(Vector3.Cross(first.VertexB - first.VertexA, first.VertexC - first.VertexA));
+        Vector3 N2 = Vector3.Normalize(Vector3.Cross(second.VertexB - second.VertexA, second.VertexC - second.VertexA));
+
+        // Planes dont intersect if these normalized vectors are parallel.
+        return Math.Abs(Vector3.Dot(N1, N2)) < 1.0f;
+    }
+
+    private static bool GenerateSeparatingAxesAndCheckOverlap(TriangleCollider first, TriangleCollider second)
+    {
+        Vector3 firstEdgeAB = first.VertexB - first.VertexA;
+        Vector3 firstEdgeBC = first.VertexC - first.VertexB;
+        Vector3 firstEdgeCA = first.VertexA - first.VertexC;
+        Vector3 secondEdgeAB = second.VertexB - second.VertexA;
+        Vector3 secondEdgeBC = second.VertexC - second.VertexB;
+        Vector3 secondEdgeCA = second.VertexA - second.VertexC;
+
+        Vector3 axisABAB = Vector3.Cross(firstEdgeAB, secondEdgeAB);
+        Vector3 axisABBC = Vector3.Cross(firstEdgeAB, secondEdgeBC);
+        Vector3 axisABCA = Vector3.Cross(firstEdgeAB, secondEdgeCA);
+        Vector3 axisBCAB = Vector3.Cross(firstEdgeBC, secondEdgeAB);
+        Vector3 axisBCBC = Vector3.Cross(firstEdgeBC, secondEdgeBC);
+        Vector3 axisBCCA = Vector3.Cross(firstEdgeBC, secondEdgeCA);
+        Vector3 axisCAAB = Vector3.Cross(firstEdgeCA, secondEdgeAB);
+        Vector3 axisCABC = Vector3.Cross(firstEdgeCA, secondEdgeBC);
+        Vector3 axisCACA = Vector3.Cross(firstEdgeCA, secondEdgeCA);
+
+        bool overlap =
+            OverlapOnAxis(first, second, axisABAB) ||
+            OverlapOnAxis(first, second, axisABBC) ||
+            OverlapOnAxis(first, second, axisABCA) ||
+            OverlapOnAxis(first, second, axisBCAB) ||
+            OverlapOnAxis(first, second, axisBCBC) ||
+            OverlapOnAxis(first, second, axisBCCA) ||
+            OverlapOnAxis(first, second, axisCAAB) ||
+            OverlapOnAxis(first, second, axisCABC) ||
+            OverlapOnAxis(first, second, axisCACA);
+
+        return overlap;
+    }
+
+    private static bool OverlapOnAxis(TriangleCollider first, TriangleCollider second, Vector3 axis)
+    {
+        Vector3 firstProjection = new(Vector3.Dot(first.VertexA, axis), Vector3.Dot(first.VertexB, axis), Vector3.Dot(first.VertexC, axis));
+        Vector3 secondProjection = new(Vector3.Dot(second.VertexA, axis), Vector3.Dot(second.VertexB, axis), Vector3.Dot(second.VertexC, axis));
+
+        float firstMin = MathF.Min(firstProjection.X, MathF.Min(firstProjection.Y, firstProjection.Z));
+        float firstMax = MathF.Max(firstProjection.X, MathF.Max(firstProjection.Y, firstProjection.Z));
+        float secondMin = MathF.Min(secondProjection.X, MathF.Min(secondProjection.Y, secondProjection.Z));
+        float secondMax = MathF.Max(secondProjection.X, MathF.Max(secondProjection.Y, secondProjection.Z));
+
+        // Check for overlap
+        return firstMin >= secondMin && secondMax >= firstMax;
+    }
+
 }
 
 public readonly struct CuboidAABBCollider

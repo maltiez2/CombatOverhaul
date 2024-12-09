@@ -37,7 +37,6 @@ public sealed class Settings
     public bool PrintMeleeHits { get; set; } = false;
     public bool PrintPlayerBeingHit { get; set; } = false;
 
-    public float DirectionsControllerInertia { get; set; } = 5;
     public float DirectionsControllerSensitivity { get; set; } = 1f;
     public bool DirectionsControllerInvert { get; set; } = false;
 
@@ -161,7 +160,6 @@ public sealed class CombatOverhaulSystem : ModSystem
 
         if (DirectionController != null)
         {
-            DirectionController.Depth = (int)Settings.DirectionsControllerInertia;
             DirectionController.Sensitivity = Settings.DirectionsControllerSensitivity;
             DirectionController.Invert = Settings.DirectionsControllerInvert;
         }
@@ -303,3 +301,78 @@ public sealed class CombatOverhaulAnimationsSystem : ModSystem
 }
 
 
+public sealed class NightVisionSystem : ModSystem, IRenderer
+{
+    public double RenderOrder => 0;
+    public int RenderRange => 1;
+
+    public override void StartClientSide(ICoreClientAPI api)
+    {
+        _clientApi = api;
+        api.Event.RegisterRenderer(this, EnumRenderStage.Before, "nightvisionCO");
+        api.Event.LevelFinalize += OnLevelFinalize;
+    }
+
+    public override void StartServerSide(ICoreServerAPI api)
+    {
+        base.StartServerSide(api);
+        _serverApi = api;
+        api.Event.RegisterGameTickListener(OnServerTick, 1000, 200);
+    }
+
+    public void OnRenderFrame(float deltaTime, EnumRenderStage stage)
+    {
+        if (_playerInventoryBehavior?.Inventory == null || _clientApi == null) return;
+
+        ItemSlot? slot = _playerInventoryBehavior.Inventory.FirstOrDefault(slot => slot.Itemstack?.Collectible is ItemNightvisiondevice);
+
+        double fuelLeft = (slot?.Itemstack?.Collectible as ItemNightvisiondevice)?.GetFuelHours(slot.Itemstack) ?? 0;
+
+        if (fuelLeft > 0)
+        {
+            _clientApi.Render.ShaderUniforms.NightVisionStrength = (float)GameMath.Clamp(fuelLeft * 20, 0, 0.8);
+        }
+        else
+        {
+            _clientApi.Render.ShaderUniforms.NightVisionStrength = 0;
+        }
+    }
+
+    private double _lastCheckTotalHours;
+    private ICoreClientAPI? _clientApi;
+    private ICoreServerAPI? _serverApi;
+    private EntityBehaviorPlayerInventory? _playerInventoryBehavior;
+
+    private void OnServerTick(float dt)
+    {
+        if (_serverApi == null) return;
+
+        double totalHours = _serverApi.World.Calendar.TotalHours;
+        double hoursPassed = totalHours - _lastCheckTotalHours;
+
+        if (hoursPassed > 0.05)
+        {
+            foreach (IPlayer? player in _serverApi.World.AllOnlinePlayers)
+            {
+                IInventory? inventory = player.InventoryManager.GetOwnInventory(GlobalConstants.characterInvClassName);
+                if (inventory == null) continue;
+
+                ItemSlot? slot = inventory.FirstOrDefault(slot => slot.Itemstack?.Collectible is ItemNightvisiondevice);
+
+                if (slot?.Itemstack?.Collectible is ItemNightvisiondevice device)
+                {
+                    device.AddFuelHours(slot.Itemstack, -hoursPassed);
+                    slot.MarkDirty();
+                }
+            }
+
+            _lastCheckTotalHours = totalHours;
+        }
+    }
+
+    private void OnLevelFinalize()
+    {
+        //gearInv = capi.World.Player.Entity.GearInventory;
+        _playerInventoryBehavior = _clientApi.World.Player.Entity.GetBehavior<EntityBehaviorPlayerInventory>();
+    }
+}

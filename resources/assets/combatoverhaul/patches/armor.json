@@ -860,5 +860,22 @@
   {"file": "game:itemtypes/wearable/seraph/armor", "op": "replace", "path": "/attributes/protectionModifiersByType", "value": {"*": null}},
   {"file": "game:itemtypes/wearable/seraph/armor", "op": "replace", "path": "/attributes/statModifiersByType", "value": {"*": null}},
   {"file": "game:itemtypes/wearable/seraph/armor", "op": "replace", "path": "/class", "value": "CombatOverhaul:WearableArmor"},
-  {"file": "game:itemtypes/wearable/seraph/armor", "op": "add", "path": "/attributes/materialCountByType", "value": {"*-head-*": 8, "*-body-*": 16, "*-lges-*": 8}}
+  {"file": "game:itemtypes/wearable/seraph/armor", "op": "add", "path": "/attributes/materialCountByType", "value": {"*-head-*": 8, "*-body-*": 16, "*-lges-*": 8}},
+  {
+    "file": "game:itemtypes/jonas/nightvisiondevice",
+    "op": "add",
+    "path": "/behaviors",
+    "value": [
+      {
+        "name": "CombatOverhaul:Armor",
+        "properties": {
+          "Layers": ["Outer"],
+          "Zones": ["Head", "Face", "Neck"],
+          "Resists": {"PiercingAttack": 2, "SlashingAttack": 4, "BluntAttack": 1},
+          "FlatReduction": {},
+          "PlayerStats": {"walkspeed": 0, "manipulationSpeed": 0, "steadyAim": -0.05, "healingeffectivness": -0.05, "hungerrate": 0.05}
+        }
+      }
+    ]
+  }
 ]

@@ -117,7 +117,7 @@ internal static class AnimationPatch
                 if (colliders.ShapeElementsToProcess.Any() && entity.Api.Side == EnumAppSide.Client)
                 {
                     string missingColliders = colliders.ShapeElementsToProcess.Aggregate((first, second) => $"{first}, {second}");
-                    LoggerUtil.Warn(entity.Api, typeof(AnimationPatch), $"({entity.GetName()}) Listed colliders that was not found in shape: {missingColliders}");
+                    LoggerUtil.Warn(entity.Api, typeof(AnimationPatch), $"({entity.Code}) Listed colliders that was not found in shape: {missingColliders}");
                 }
             }
         }

@@ -85,7 +85,6 @@
         "DirectionsCursorScale": "directions_cursor_scale",
         "BowsAimingHorizontalLimit": "value * bow_aiming_horisontal_limit",
         "BowsAimingVerticalLimit": "value * bow_aiming_vertical_limit",
-        "DirectionsControllerInertia": "directions_inertia",
         "DirectionsControllerSensitivity": "directions_sensitivity"
       },
       "combatoverhaul:patches/tools/pickaxe.json": {
@@ -122,17 +121,6 @@
       }
     },
     {
-      "code": "directions_inertia",
-      "type": "integer",
-      "ingui": "combatoverhaul:setting-directions_inertia",
-      "clientSide": true,
-      "default": 5,
-      "range": {
-        "min": 1,
-        "max": 60
-      }
-    },
-    {
       "code": "directions_sensitivity",
       "type": "float",
       "ingui": "combatoverhaul:setting-directions_sensitivity",
@@ -140,7 +128,7 @@
       "logarithmic": true,
       "default": 1.0,
       "range": {
-        "min": 0.1,
+        "min": 0.01,
         "max": 100.0
       }
     },
