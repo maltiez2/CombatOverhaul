@@ -6,6 +6,11 @@ using Vintagestory.Client.NoObf;
 
 namespace CombatOverhaul.Integration;
 
+public interface IMouseWheelInput
+{
+    bool OnMouseWheel(ItemSlot slot, IClientPlayer byPlayer, float delta);
+}
+
 internal static class MouseWheelPatch
 {
     public static void Patch(string harmonyId, ICoreClientAPI api)

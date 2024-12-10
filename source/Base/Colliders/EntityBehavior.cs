@@ -67,7 +67,7 @@ public sealed class CollidersEntityBehavior : EntityBehavior
     public HashSet<string> ShapeElementsToProcess { get; private set; } = new();
     public Dictionary<string, ColliderTypes> CollidersTypes { get; private set; } = new();
     public Dictionary<string, ShapeElementCollider> Colliders { get; private set; } = new();
-    public override string PropertyName() => "animationmanagerlib:colliders";
+    public override string PropertyName() => "combatoverhaul:colliders";
     internal ClientAnimator? Animator { get; set; }
     static public bool RenderColliders { get; set; } = false;
 

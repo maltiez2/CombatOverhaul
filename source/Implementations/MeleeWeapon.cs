@@ -1,6 +1,7 @@
 ﻿using CombatOverhaul.Animations;
 using CombatOverhaul.DamageSystems;
 using CombatOverhaul.Inputs;
+using CombatOverhaul.Integration;
 using CombatOverhaul.MeleeSystems;
 using CombatOverhaul.RangedSystems;
 using CombatOverhaul.RangedSystems.Aiming;
@@ -1352,11 +1353,6 @@ public class MeleeWeapon : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasDyn
     }
 
     public bool OnMouseWheel(ItemSlot slot, IClientPlayer byPlayer, float delta) => ClientLogic?.OnMouseWheel(slot, byPlayer, delta) ?? false;
-}
-
-public interface IMouseWheelInput
-{
-    bool OnMouseWheel(ItemSlot slot, IClientPlayer byPlayer, float delta);
 }
 
 public sealed class GripController

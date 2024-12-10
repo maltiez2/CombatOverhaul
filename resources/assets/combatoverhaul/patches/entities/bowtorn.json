@@ -135,7 +135,7 @@
           "*-tainted": {"BluntAttack": 0, "SlashingAttack": 3, "PiercingAttack": 5},
           "*-corrupt": {"BluntAttack": 0, "SlashingAttack": 4, "PiercingAttack": 6},
           "*-nightmare": {"BluntAttack": 0, "SlashingAttack": 5, "PiercingAttack": 7},
-          "*-gearfoot": {"BluntAttack": 0, "SlashingAttack": 86, "PiercingAttack": 7}
+          "*-gearfoot": {"BluntAttack": 0, "SlashingAttack": 6, "PiercingAttack": 7}
         }
       }
     }
@@ -158,7 +158,7 @@
           "*-tainted": {"BluntAttack": 0, "SlashingAttack": 3, "PiercingAttack": 5},
           "*-corrupt": {"BluntAttack": 0, "SlashingAttack": 4, "PiercingAttack": 6},
           "*-nightmare": {"BluntAttack": 0, "SlashingAttack": 5, "PiercingAttack": 7},
-          "*-gearfoot": {"BluntAttack": 0, "SlashingAttack": 86, "PiercingAttack": 7}
+          "*-gearfoot": {"BluntAttack": 0, "SlashingAttack": 6, "PiercingAttack": 7}
         }
       }
     }

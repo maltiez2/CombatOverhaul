@@ -15,13 +15,11 @@
       },
       "combatoverhaul:patches/tools/axe.json": {
         "1/value": "(axe_animation) ? value : vanilla_axe",
-        "3/value": "(axe_animation) ? value : vanilla_axe"
+        "4/value/*-felling-*": "(axe_animation) ? value : vanilla_axe",
+        "4/value/*-scrap-*": "(axe_animation) ? value : vanilla_axe"
       },
       "combatoverhaul:patches/tools/pickaxe.json": {
         "1/value": "(pickaxe_animation) ? value : vanilla_item"
-      },
-      "combatoverhaul:patches/tools/shovel.json": {
-        "1/value": "(shovel_animation) ? value : vanilla_item"
       },
       "game:itemtypes/combatoverhaul/arrow.json": {
         "behaviors/0/properties/stats/HitSound": "(arrow_ping_sound_on_hit) ? value : empty_string"
@@ -38,9 +36,6 @@
         "2/value/CanSplitLogs": "axe_can_split_logs"
       },
       "combatoverhaul:patches/tools/pickaxe.json": {
-        "0/value/RenderingOffset": "not(tool_rendering_offset)"
-      },
-      "combatoverhaul:patches/tools/shovel.json": {
         "0/value/RenderingOffset": "not(tool_rendering_offset)"
       },
       "game:itemtypes/combatoverhaul/spear.json": {
@@ -233,12 +228,6 @@
       "type": "boolean",
       "ingui": "combatoverhaul:setting-pickaxe_animation",
       "default": true
-    },
-    {
-      "code": "shovel_animation",
-      "type": "boolean",
-      "ingui": "combatoverhaul:setting-shovel_animation",
-      "default": false
     },
     {
       "code": "tool_rendering_offset",
