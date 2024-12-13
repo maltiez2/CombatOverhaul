@@ -45,8 +45,10 @@ internal static class AnimationPatch
     public static void Unpatch(string harmonyId)
     {
         new Harmony(harmonyId).Unpatch(typeof(EntityShapeRenderer).GetMethod("RenderHeldItem", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
+        new Harmony(harmonyId).Unpatch(typeof(EntityShapeRenderer).GetMethod("DoRender3DOpaque", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         new Harmony(harmonyId).Unpatch(typeof(Vintagestory.API.Common.AnimationManager).GetMethod("OnClientFrame", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         new Harmony(harmonyId).Unpatch(typeof(EntityPlayer).GetMethod("OnSelfBeforeRender", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
+        new Harmony(harmonyId).Unpatch(typeof(EntityPlayer).GetMethod("updateEyeHeight", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         new Harmony(harmonyId).Unpatch(typeof(EntityPlayerShapeRenderer).GetMethod("smoothCameraTurning", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         _animators.Clear();
     }
@@ -70,6 +72,14 @@ internal static class AnimationPatch
         EntityAgent? entity = (Entity?)_entity?.GetValue(__instance) as EntityAgent;
 
         if (entity?.Api?.Side != EnumAppSide.Client) return true;
+
+        ClientAnimator? animator = __instance.Animator as ClientAnimator;
+
+        if (animator != null && !_animators.ContainsKey(animator))
+        {
+            _animators.Add(animator, entity);
+        }
+
 
         // To catch not reproducable bug with nullref in calculateMatrices
         try
@@ -116,7 +126,6 @@ internal static class AnimationPatch
     }
 
     internal static readonly Dictionary<ClientAnimator, EntityAgent> _animators = new();
-
 
     private static bool RenderHeldItem(EntityShapeRenderer __instance, float dt, bool isShadowPass, bool right)
     {
@@ -178,7 +187,7 @@ internal static class AnimationPatch
         typeof(List<ElementPose>[]),
         typeof(List<ElementPose>[]),
         typeof(int))]
-    [HarmonyPatchCategory("bullseye-continued")]
+    [HarmonyPatchCategory("combatoverhaul")]
     public class ClientAnimatorCalculateMatricesPatch
     {
         [HarmonyTranspiler]
