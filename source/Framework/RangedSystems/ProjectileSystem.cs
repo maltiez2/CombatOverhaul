@@ -24,6 +24,14 @@ public class ProjectileStats
     public ProjectileStats() { }
 }
 
+public struct ProjectileDamageDataJson
+{
+    public string DamageType { get; set; } = "PiercingAttack";
+    public float Damage { get; set; }
+
+    public ProjectileDamageDataJson() { }
+}
+
 public struct ProjectileSpawnStats
 {
     public long ProducerEntityId { get; set; }
@@ -55,7 +63,7 @@ public sealed class ProjectileSystemServer
         projectile.DropOnImpactChance = projectileStats.DropChance;
 
         projectile.Damage = projectileStats.DamageStats.Damage * spawnStats.DamageMultiplier;
-        projectile.DamageType = projectileStats.DamageStats.DamageType;
+        projectile.DamageType = Enum.Parse<EnumDamageType>(projectileStats.DamageStats.DamageType);
         projectile.DamageTier = (int)spawnStats.DamageStrength;
         projectile.FiredBy = shooter;
         projectile.ProjectileStack = projectileStack;

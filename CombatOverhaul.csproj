@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <!-- Mod info -->
   <PropertyGroup>
-    <ModName>Combat Overhaul</ModName>
+    <ModName>Bullseye</ModName>
     <ModType>code</ModType>
-    <ModVersion>0.0.92</ModVersion>
-    <ModId>combatoverhaul</ModId>
-    <Description></Description>
+    <ModVersion>3.0.0</ModVersion>
+    <ModId>bullseye-continued</ModId>
+    <Description>A vanilla-friendly rebalance and overhaul of ranged weapons.</Description>
     <Side>Universal</Side>
     <RequiredOnClient>true</RequiredOnClient>
     <RequiredOnServer>true</RequiredOnServer>
@@ -13,9 +13,8 @@
 
   <!-- Authors -->
   <ItemGroup>
+    <ModInfoAuthors Include="TeacupAngel" />
     <ModInfoAuthors Include="Maltiez" />
-    <ModInfoAuthors Include="Craluminum2413" />
-    <ModInfoAuthors Include="Corat" />
   </ItemGroup>
 
   <!-- Dependencies -->

@@ -24,8 +24,6 @@ public class RangeWeaponClient : IClientWeaponLogic
 
     public int ItemId => Item.Id;
 
-    public virtual DirectionsConfiguration DirectionsType => DirectionsConfiguration.None;
-
     public virtual void OnDeselected(EntityPlayer player, bool mainHand, ref int state)
     {
 
