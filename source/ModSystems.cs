@@ -82,7 +82,7 @@ public sealed class BullseyeSystem : ModSystem
 
     public override void AssetsFinalize(ICoreAPI api)
     {
-        IAsset settingsAsset = api.Assets.Get("combatoverhaul:config/settings.json");
+        IAsset settingsAsset = api.Assets.Get("bullseye-continued:config/settings.json");
         JsonObject settings = JsonObject.FromJson(settingsAsset.ToText());
         Settings = settings.AsObject<Settings>();
 

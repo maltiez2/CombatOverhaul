@@ -1,0 +1,5 @@
+﻿[
+  {"side": "Server", "file": "game:entities/humanoid/player", "op": "add", "path": "/client/behaviors/-", "value": {"code": "Bullseye:FirstPersonAnimations"}},
+  {"side": "Server", "file": "game:entities/humanoid/player", "op": "add", "path": "/client/behaviors/-", "value": {"code": "Bullseye:ActionsManager"}},
+  {"side": "Server", "file": "game:entities/humanoid/player", "op": "add", "path": "/client/behaviors/-", "value": {"code": "Bullseye:AimingAccuracy"}}
+]

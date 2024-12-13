@@ -1,6 +1,4 @@
-﻿using Bullseye.Colliders;
-using Bullseye.Integration;
-using Bullseye.MeleeSystems;
+﻿using Bullseye.Integration;
 using Bullseye.Utils;
 using ImGuiNET;
 using Newtonsoft.Json.Linq;
@@ -12,7 +10,6 @@ using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Util;
 using Vintagestory.Client.NoObf;
-using Vintagestory.GameContent;
 using VSImGui;
 using VSImGui.API;
 
@@ -35,7 +32,6 @@ public sealed class AnimationsManager
 
         _api = api;
         _particleEffectsManager = particleEffectsManager;
-        _colliders.Clear();
     }
     public void Load()
     {
@@ -62,25 +58,6 @@ public sealed class AnimationsManager
     public void RegisterTransform(ModelTransform transform, string code)
     {
         _transforms[code] = transform;
-    }
-
-    public static void RegisterCollider(string item, string type, MeleeDamageType collider)
-    {
-        if (!_colliders.ContainsKey(item))
-        {
-            _colliders.Add(item, new());
-        }
-
-        _colliders[item].Add(type, (value => collider.RelativeCollider = value, () => collider.RelativeCollider));
-    }
-    public static void RegisterCollider(string item, string type, Action<LineSegmentCollider> setter, System.Func<LineSegmentCollider> getter)
-    {
-        if (!_colliders.ContainsKey(item))
-        {
-            _colliders.Add(item, new());
-        }
-
-        _colliders[item].Add(type, (setter, getter));
     }
 
     private bool _showAnimationEditor = false;
@@ -144,13 +121,10 @@ public sealed class AnimationsManager
 
         return result;
     }
-    private static Dictionary<string, Dictionary<string, (Action<LineSegmentCollider> setter, System.Func<LineSegmentCollider> getter)>> _colliders = new();
-    internal static LineSegmentCollider? _currentCollider = null;
 
 #if DEBUG
     private CallbackGUIStatus DrawEditor(float deltaSeconds)
     {
-        _currentCollider = null;
         if (!_showAnimationEditor) return CallbackGUIStatus.Closed;
 
         if (ImGui.Begin("Combat Overhaul - Animations editor and debug tools", ref _showAnimationEditor))
@@ -169,68 +143,6 @@ public sealed class AnimationsManager
             if (ImGui.BeginTabItem("Particle effects##tab"))
             {
                 _particleEffectsManager.Draw("particle-effects");
-                ImGui.EndTabItem();
-            }
-            if (ImGui.BeginTabItem("Colliders##tab"))
-            {
-                bool debugColliders = RenderDebugColliders;
-                ImGui.Checkbox("Render weapon colliders", ref debugColliders);
-                RenderDebugColliders = debugColliders;
-
-                ImGui.InputText("Items filter##colliders", ref _collidersItemsFilter, 200);
-                VSImGui.EditorsUtils.FilterElements(_collidersItemsFilter, _colliders.Keys, out IEnumerable<string> filteredItems, out _);
-                if (_colliderItemIndex > filteredItems.Count())
-                {
-                    _colliderItemIndex = 0;
-                }
-                if (filteredItems.Count() != 0)
-                {
-                    ImGui.ListBox("Items##colliders", ref _colliderItemIndex, filteredItems.ToArray(), filteredItems.Count());
-                    string selectedItem = filteredItems.ToArray()[_colliderItemIndex];
-
-                    Dictionary<string, (Action<LineSegmentCollider> setter, Func<LineSegmentCollider> getter)> selectedColliders = _colliders[selectedItem];
-
-                    string[] collidersTypes = selectedColliders.Select(entry => entry.Key).ToArray();
-
-                    ImGui.ListBox("Colliders##colliders", ref _colliderIndex, collidersTypes, collidersTypes.Length);
-
-                    if (collidersTypes.Length > 0)
-                    {
-                        (Action<LineSegmentCollider> setter, Func<LineSegmentCollider> getter) = selectedColliders[collidersTypes[_colliderIndex]];
-                        Vector3 position = getter().Position;
-                        Vector3 direction = getter().Direction;
-
-                        float sliderSpeed = ImGui.IsKeyPressed(ImGuiKey.LeftShift) ? 0.01f : 0.1f;
-
-                        ImGui.DragFloat3("Position##colliders", ref position, sliderSpeed);
-                        ImGui.DragFloat3("Direction##colliders", ref direction, sliderSpeed);
-
-                        _currentCollider = new(position, direction);
-
-                        setter(_currentCollider.Value);
-
-                        Vector3 head = position + direction;
-
-                        string json = $"[{position.X}, {position.Y}, {position.Z}, {head.X}, {head.Y}, {head.Z}]";
-                        if (ImGui.Button("To clipboard##colliders"))
-                        {
-                            ImGui.SetClipboardText(json);
-                        }
-                        ImGui.SameLine();
-                        ImGui.Text($"JSON: {json}");
-                    }
-                }
-
-                ImGui.EndTabItem();
-            }
-            if (ImGui.BeginTabItem("Debug##tab"))
-            {
-                bool collidersRender = CollidersEntityBehavior.RenderColliders;
-                ImGui.Checkbox("Render entities colliders", ref collidersRender);
-                CollidersEntityBehavior.RenderColliders = collidersRender;
-
-
-
                 ImGui.EndTabItem();
             }
             if (ImGui.BeginTabItem("Generic Display##tab"))

@@ -178,7 +178,7 @@ internal static class AnimationPatch
         typeof(List<ElementPose>[]),
         typeof(List<ElementPose>[]),
         typeof(int))]
-    [HarmonyPatchCategory("combatoverhaul")]
+    [HarmonyPatchCategory("bullseye-continued")]
     public class ClientAnimatorCalculateMatricesPatch
     {
         [HarmonyTranspiler]

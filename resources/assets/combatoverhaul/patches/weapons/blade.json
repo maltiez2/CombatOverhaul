@@ -1,6 +1,0 @@
-﻿[
-  {"file": "game:itemtypes/tool/blade", "op": "add", "path": "/skipVariants/-", "value": "blade-falx-*"},
-  {"file": "game:itemtypes/tool/blade", "op": "add", "path": "/skipVariants/-", "value": "blade-blackguard-*"},
-  {"file": "game:itemtypes/tool/blade", "op": "add", "path": "/skipVariants/-", "value": "blade-forlorn-*"},
-  {"file": "game:itemtypes/tool/blade", "op": "add", "path": "/skipVariants/-", "value": "blade-scrap-*"}
-]

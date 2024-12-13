@@ -36,10 +36,10 @@ public sealed class ReticleRenderer : IRenderer
 
         _aimTextureThrowCircle = new LoadedTexture(api);
 
-        api.Render.GetOrLoadTexture(new AssetLocation("combatoverhaul", "gui/aiming/default-blocked.png"), ref blockedReticle);
-        api.Render.GetOrLoadTexture(new AssetLocation("combatoverhaul", "gui/aiming/default-part.png"), ref partChargeReticle);
-        api.Render.GetOrLoadTexture(new AssetLocation("combatoverhaul", "gui/aiming/default-full.png"), ref fullChargeReticle);
-        api.Render.GetOrLoadTexture(new AssetLocation("combatoverhaul", "gui/aiming/throw-circle.png"), ref _aimTextureThrowCircle);
+        api.Render.GetOrLoadTexture(new AssetLocation("bullseye-continued", "gui/aiming/default-blocked.png"), ref blockedReticle);
+        api.Render.GetOrLoadTexture(new AssetLocation("bullseye-continued", "gui/aiming/default-part.png"), ref partChargeReticle);
+        api.Render.GetOrLoadTexture(new AssetLocation("bullseye-continued", "gui/aiming/default-full.png"), ref fullChargeReticle);
+        api.Render.GetOrLoadTexture(new AssetLocation("bullseye-continued", "gui/aiming/throw-circle.png"), ref _aimTextureThrowCircle);
 
         _defaultTextures[WeaponAimingState.Blocked] = blockedReticle;
         _defaultTextures[WeaponAimingState.PartCharge] = partChargeReticle;
