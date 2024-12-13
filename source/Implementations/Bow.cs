@@ -1,8 +1,8 @@
-﻿using CombatOverhaul.Animations;
-using CombatOverhaul.Inputs;
-using CombatOverhaul.RangedSystems;
-using CombatOverhaul.RangedSystems.Aiming;
-using CombatOverhaul.Utils;
+﻿using Bullseye.Animations;
+using Bullseye.Inputs;
+using Bullseye.RangedSystems;
+using Bullseye.RangedSystems.Aiming;
+using Bullseye.Utils;
 using System.Numerics;
 using System.Text;
 using Vintagestory.API.Client;
@@ -12,7 +12,7 @@ using Vintagestory.API.Config;
 using Vintagestory.API.Server;
 using Vintagestory.API.Util;
 
-namespace CombatOverhaul.Implementations;
+namespace Bullseye.Implementations;
 
 public enum BowState
 {
@@ -54,13 +54,13 @@ public class BowClient : RangeWeaponClient
         Api = api;
         Attachable = item.GetCollectibleBehavior<AnimatableAttachable>(withInheritance: true) ?? throw new Exception("Bow should have AnimatableAttachable behavior.");
         ArrowTransform = new(item.Attributes["ArrowTransform"].AsObject<ModelTransformNoDefaults>(), ModelTransform.BlockDefaultTp());
-        AimingSystem = api.ModLoader.GetModSystem<CombatOverhaulSystem>().AimingSystem ?? throw new Exception();
+        AimingSystem = api.ModLoader.GetModSystem<BullseyeSystem>().AimingSystem ?? throw new Exception();
 
         Stats = item.Attributes.AsObject<BowStats>();
         AimingStats = Stats.Aiming.ToStats();
         AmmoSelector = ammoSelector;
 
-        api.ModLoader.GetModSystem<CombatOverhaulSystem>().SettingsLoaded += settings =>
+        api.ModLoader.GetModSystem<BullseyeSystem>().SettingsLoaded += settings =>
         {
             AimingStats.CursorType = Enum.Parse<AimingCursorType>(settings.BowsAimingCursorType);
             AimingStats.VerticalLimit = settings.BowsAimingVerticalLimit;
@@ -338,7 +338,7 @@ public class BowServer : RangeWeaponServer
 {
     public BowServer(ICoreServerAPI api, Item item) : base(api, item)
     {
-        ProjectileSystem = api.ModLoader.GetModSystem<CombatOverhaulSystem>().ServerProjectileSystem ?? throw new Exception();
+        ProjectileSystem = api.ModLoader.GetModSystem<BullseyeSystem>().ServerProjectileSystem ?? throw new Exception();
         Stats = item.Attributes.AsObject<BowStats>();
     }
 

@@ -5,7 +5,7 @@ using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
 using Vintagestory.API.Datastructures;
 
-namespace CombatOverhaul.Utils;
+namespace Bullseye.Utils;
 
 public class GenericDisplayBlockEntity : GenericDisplayProto
 {

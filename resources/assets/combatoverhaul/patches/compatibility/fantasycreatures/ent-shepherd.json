@@ -6,7 +6,7 @@
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityColliders",
+      "code": "Bullseye:EntityColliders",
       "elements": {
         "Torso": [
           "bottom_pelvis",
@@ -59,7 +59,7 @@
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityColliders",
+      "code": "Bullseye:EntityColliders",
       "elements": {
         "Torso": [
           "bottom_pelvis",
@@ -112,7 +112,7 @@
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityDamageModel",
+      "code": "Bullseye:EntityDamageModel",
       "damageModel": {
         "TorsoDamageMultiplier": 0.75,
         "LimbsDamageMultiplier": 0.5,
@@ -129,7 +129,7 @@
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityDamageModel",
+      "code": "Bullseye:EntityDamageModel",
       "damageModel": {
         "TorsoDamageMultiplier": 0.75,
         "LimbsDamageMultiplier": 0.5,

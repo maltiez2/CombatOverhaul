@@ -2,7 +2,7 @@
 using Vintagestory.API.Client;
 using Vintagestory.API.Server;
 
-namespace CombatOverhaul.Animations;
+namespace Bullseye.Animations;
 
 [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
 public sealed class VanillaAnimationStartPacket
@@ -21,7 +21,7 @@ public sealed class VanillaAnimationsSystemClient
     public VanillaAnimationsSystemClient(ICoreClientAPI api)
     {
         _api = api;
-        _channel = api.Network.RegisterChannel("CombatOverhaul:vanilla-animations")
+        _channel = api.Network.RegisterChannel("Bullseye:vanilla-animations")
             .RegisterMessageType<VanillaAnimationStartPacket>()
             .RegisterMessageType<VanillaAnimationStopPacket>();
     }
@@ -46,7 +46,7 @@ public sealed class VanillaAnimationsSystemServer
 {
     public VanillaAnimationsSystemServer(ICoreServerAPI api)
     {
-        api.Network.RegisterChannel("CombatOverhaul:vanilla-animations")
+        api.Network.RegisterChannel("Bullseye:vanilla-animations")
             .RegisterMessageType<VanillaAnimationStartPacket>()
             .RegisterMessageType<VanillaAnimationStopPacket>()
             .SetMessageHandler<VanillaAnimationStartPacket>(StartAnimation)

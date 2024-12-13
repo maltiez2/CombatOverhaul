@@ -3,7 +3,7 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.MathTools;
 
-namespace CombatOverhaul.Utils;
+namespace Bullseye.Utils;
 
 public readonly struct Angle
 {

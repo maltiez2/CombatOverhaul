@@ -1,4 +1,4 @@
-﻿using CombatOverhaul.MeleeSystems;
+﻿using Bullseye.MeleeSystems;
 using HarmonyLib;
 using ImGuiNET;
 using Newtonsoft.Json;
@@ -13,7 +13,7 @@ using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
 
-namespace CombatOverhaul.Utils;
+namespace Bullseye.Utils;
 
 [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
 public struct ParticleEffectsPacket
@@ -113,7 +113,7 @@ public class ParticleEffectsManager
     private readonly ICoreAPI _api;
     private readonly Dictionary<string, AdvancedParticleProperties> _particleProperties = new();
     private readonly IClientNetworkChannel? _clientChannel;
-    private const string _networkChannelId = "CombatOverhaul:particle-effects";
+    private const string _networkChannelId = "Bullseye:particle-effects";
 
     private static ParticleEffectsPacket PreparePacket(string code, Entity player, Vector3 position, Vector3 velocity, float intensity)
     {

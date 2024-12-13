@@ -6,7 +6,7 @@
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityColliders",
+      "code": "Bullseye:EntityColliders",
       "elements": {
         "Torso": ["UpperTorso", "Abdomen"],
         "Head": ["Head"],
@@ -24,7 +24,7 @@
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityColliders",
+      "code": "Bullseye:EntityColliders",
       "elements": {
         "Torso": ["UpperTorso", "Abdomen"],
         "Head": ["Head"],
@@ -42,7 +42,7 @@
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityDamageModel",
+      "code": "Bullseye:EntityDamageModel",
       "damageModelByType": {
         "*-lessarmored": {
           "TorsoDamageMultiplier": 1,
@@ -69,7 +69,7 @@
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityDamageModel",
+      "code": "Bullseye:EntityDamageModel",
       "damageModelByType": {
         "*-lessarmored": {
           "TorsoDamageMultiplier": 1,
@@ -112,7 +112,7 @@
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityColliders",
+      "code": "Bullseye:EntityColliders",
       "elements": {
         "Torso": ["UpperTorso", "Abdomen"],
         "Head": ["Head"],
@@ -130,7 +130,7 @@
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityColliders",
+      "code": "Bullseye:EntityColliders",
       "elements": {
         "Torso": ["UpperTorso", "Abdomen"],
         "Head": ["Head"],
@@ -148,7 +148,7 @@
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityDamageModel",
+      "code": "Bullseye:EntityDamageModel",
       "damageModelByType": {
         "*-armored": {
           "TorsoDamageMultiplier": 1,
@@ -175,7 +175,7 @@
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityDamageModel",
+      "code": "Bullseye:EntityDamageModel",
       "damageModelByType": {
         "*-armored": {
           "TorsoDamageMultiplier": 1,

@@ -3,7 +3,7 @@ using Vintagestory.API.Client;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
 
-namespace CombatOverhaul.Animations;
+namespace Bullseye.Animations;
 
 [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
 public class SoundPacket
@@ -31,7 +31,7 @@ public class SoundsSynchronizerClient
     public SoundsSynchronizerClient(ICoreClientAPI api)
     {
         _api = api;
-        _channel = _api.Network.RegisterChannel("CombatOverhaul:sounds")
+        _channel = _api.Network.RegisterChannel("Bullseye:sounds")
             .RegisterMessageType<SoundPacket>();
     }
 
@@ -69,7 +69,7 @@ public class SoundsSynchronizerServer
     public SoundsSynchronizerServer(ICoreServerAPI api)
     {
         _api = api;
-        _api.Network.RegisterChannel("CombatOverhaul:sounds")
+        _api.Network.RegisterChannel("Bullseye:sounds")
             .RegisterMessageType<SoundPacket>()
             .SetMessageHandler<SoundPacket>(HandlePacket);
     }

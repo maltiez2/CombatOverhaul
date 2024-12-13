@@ -1,7 +1,7 @@
-﻿using CombatOverhaul.Utils;
+﻿using Bullseye.Utils;
 using Vintagestory.API.Common;
 
-namespace CombatOverhaul.Animations;
+namespace Bullseye.Animations;
 
 public delegate bool AnimationSpeedModifierDelegate(TimeSpan duration, ref TimeSpan delta);
 

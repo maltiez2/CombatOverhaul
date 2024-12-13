@@ -5,7 +5,7 @@
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityColliders",
+      "code": "Bullseye:EntityColliders",
       "elements": {"Torso": ["abdomen", "body", "L back leg", "R back leg"], "Head": ["head", "mouth"], "Arm": [], "Leg": [], "Critical": ["neck"], "Resistant": []}
     }
   },
@@ -15,7 +15,7 @@
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityColliders",
+      "code": "Bullseye:EntityColliders",
       "elements": {"Torso": ["abdomen", "body", "L back leg", "R back leg"], "Head": ["head", "mouth"], "Arm": [], "Leg": [], "Critical": ["neck"], "Resistant": []}
     }
   },
@@ -25,7 +25,7 @@
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityColliders",
+      "code": "Bullseye:EntityColliders",
       "elements": {"Torso": ["abdomen", "body", "L back leg", "R back leg"], "Head": ["head", "mouth"], "Arm": [], "Leg": [], "Critical": ["neck"], "Resistant": []}
     }
   },
@@ -35,7 +35,7 @@
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityColliders",
+      "code": "Bullseye:EntityColliders",
       "elements": {"Torso": ["abdomen", "body", "L back leg", "R back leg"], "Head": ["head", "mouth"], "Arm": [], "Leg": [], "Critical": ["neck"], "Resistant": []}
     }
   },
@@ -45,7 +45,7 @@
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityColliders",
+      "code": "Bullseye:EntityColliders",
       "elements": {"Torso": ["abdomen", "body", "L back leg", "R back leg"], "Head": ["head", "mouth"], "Arm": [], "Leg": [], "Critical": ["neck"], "Resistant": []}
     }
   },
@@ -55,7 +55,7 @@
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityColliders",
+      "code": "Bullseye:EntityColliders",
       "elements": {"Torso": ["abdomen", "body", "L back leg", "R back leg"], "Head": ["head", "mouth"], "Arm": [], "Leg": [], "Critical": ["neck"], "Resistant": []}
     }
   },
@@ -65,7 +65,7 @@
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityDamageModel",
+      "code": "Bullseye:EntityDamageModel",
       "damageModel": {
         "TorsoDamageMultiplier": 1,
         "LimbsDamageMultiplier": 0.75,
@@ -81,7 +81,7 @@
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityDamageModel",
+      "code": "Bullseye:EntityDamageModel",
       "damageModel": {
         "TorsoDamageMultiplier": 1,
         "LimbsDamageMultiplier": 0.75,
@@ -97,7 +97,7 @@
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityDamageModel",
+      "code": "Bullseye:EntityDamageModel",
       "damageModel": {
         "TorsoDamageMultiplier": 1,
         "LimbsDamageMultiplier": 0.75,
@@ -113,7 +113,7 @@
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityDamageModel",
+      "code": "Bullseye:EntityDamageModel",
       "damageModel": {
         "TorsoDamageMultiplier": 1,
         "LimbsDamageMultiplier": 0.75,
@@ -129,7 +129,7 @@
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityDamageModel",
+      "code": "Bullseye:EntityDamageModel",
       "damageModel": {
         "TorsoDamageMultiplier": 1,
         "LimbsDamageMultiplier": 1,
@@ -145,7 +145,7 @@
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityDamageModel",
+      "code": "Bullseye:EntityDamageModel",
       "damageModel": {
         "TorsoDamageMultiplier": 1,
         "LimbsDamageMultiplier": 1,

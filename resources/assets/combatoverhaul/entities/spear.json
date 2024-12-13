@@ -1,6 +1,6 @@
 ﻿{
   "code": "spear",
-  "class": "CombatOverhaul:Projectile",
+  "class": "EntityProjectile",
   "variantgroups": [
     {"code": "type", "states": ["generic"]},
     {

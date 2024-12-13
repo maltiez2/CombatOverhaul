@@ -1,6 +1,6 @@
 ﻿{
   "code": "blade",
-  "class": "CombatOverhaul:MeleeWeapon",
+  "class": "Bullseye:MeleeWeapon",
   "tool": "sword",
   "attributes": {
     "groundStorageTransformByType": {

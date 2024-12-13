@@ -1,11 +1,11 @@
-﻿using CombatOverhaul.Integration;
+﻿using Bullseye.Integration;
 using System.Reflection;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Util;
 
-namespace CombatOverhaul.Inputs;
+namespace Bullseye.Inputs;
 
 [AttributeUsage(AttributeTargets.Method)]
 public class ActionEventHandlerAttribute : Attribute
@@ -64,7 +64,7 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
         _player = player;
         _api = clientApi;
 
-        CombatOverhaulSystem system = _api.ModLoader.GetModSystem<CombatOverhaulSystem>();
+        BullseyeSystem system = _api.ModLoader.GetModSystem<BullseyeSystem>();
 
         ActionListener = system.ActionListener ?? throw new Exception();
         _statsSystem = system.ClientStatsSystem ?? throw new Exception();
@@ -119,7 +119,7 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
     private readonly EntityPlayer _player;
     private readonly HashSet<string> _currentMainHandPlayerStats = new();
     private readonly HashSet<string> _currentOffHandPlayerStats = new();
-    private const string _statCategory = "CombatOverhaul:melee-weapon-player-behavior";
+    private const string _statCategory = "Bullseye:melee-weapon-player-behavior";
     private readonly StatsSystemClient _statsSystem;
 
     private IClientWeaponLogic? _currentMainHandWeapon;

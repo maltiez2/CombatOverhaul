@@ -1,7 +1,7 @@
-﻿using CombatOverhaul.Colliders;
-using CombatOverhaul.Integration;
-using CombatOverhaul.MeleeSystems;
-using CombatOverhaul.Utils;
+﻿using Bullseye.Colliders;
+using Bullseye.Integration;
+using Bullseye.MeleeSystems;
+using Bullseye.Utils;
 using ImGuiNET;
 using Newtonsoft.Json.Linq;
 using System.Numerics;
@@ -16,7 +16,7 @@ using Vintagestory.GameContent;
 using VSImGui;
 using VSImGui.API;
 
-namespace CombatOverhaul.Animations;
+namespace Bullseye.Animations;
 
 public sealed class AnimationsManager
 {

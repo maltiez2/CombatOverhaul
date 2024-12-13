@@ -2,7 +2,7 @@
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 
-namespace CombatOverhaul.Utils;
+namespace Bullseye.Utils;
 
 public static class ToolModesUtils
 {

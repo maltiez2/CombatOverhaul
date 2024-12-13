@@ -1,11 +1,11 @@
-﻿using CombatOverhaul.Animations;
-using CombatOverhaul.Integration;
+﻿using Bullseye.Animations;
+using Bullseye.Integration;
 using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.MathTools;
 using Vintagestory.Client.NoObf;
 
-namespace CombatOverhaul.RangedSystems.Aiming;
+namespace Bullseye.RangedSystems.Aiming;
 
 public enum AimingCursorType
 {

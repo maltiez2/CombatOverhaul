@@ -1,9 +1,9 @@
 ﻿[
-  {"side": "Server", "file": "game:entities/humanoid/player", "op": "add", "path": "/client/behaviors/-", "value": {"code": "CombatOverhaul:FirstPersonAnimations"}},
-  {"side": "Server", "file": "game:entities/humanoid/player", "op": "add", "path": "/client/behaviors/-", "value": {"code": "CombatOverhaul:ActionsManager"}},
-  {"side": "Server", "file": "game:entities/humanoid/player", "op": "add", "path": "/client/behaviors/-", "value": {"code": "CombatOverhaul:AimingAccuracy"}},
-  {"side": "Server", "file": "game:entities/humanoid/player", "op": "add", "path": "/client/behaviors/-", "value": {"code": "CombatOverhaul:WearableStats"}},
-  {"side": "Server", "file": "game:entities/humanoid/player", "op": "add", "path": "/server/behaviors/-", "value": {"code": "CombatOverhaul:WearableStats"}},
-  {"side": "Server", "file": "game:entities/humanoid/player", "op": "add", "path": "/client/behaviors/-", "value": {"code": "CombatOverhaul:InInventory"}},
-  {"side": "Server", "file": "game:entities/humanoid/player", "op": "add", "path": "/server/behaviors/-", "value": {"code": "CombatOverhaul:InInventory"}}
+  {"side": "Server", "file": "game:entities/humanoid/player", "op": "add", "path": "/client/behaviors/-", "value": {"code": "Bullseye:FirstPersonAnimations"}},
+  {"side": "Server", "file": "game:entities/humanoid/player", "op": "add", "path": "/client/behaviors/-", "value": {"code": "Bullseye:ActionsManager"}},
+  {"side": "Server", "file": "game:entities/humanoid/player", "op": "add", "path": "/client/behaviors/-", "value": {"code": "Bullseye:AimingAccuracy"}},
+  {"side": "Server", "file": "game:entities/humanoid/player", "op": "add", "path": "/client/behaviors/-", "value": {"code": "Bullseye:WearableStats"}},
+  {"side": "Server", "file": "game:entities/humanoid/player", "op": "add", "path": "/server/behaviors/-", "value": {"code": "Bullseye:WearableStats"}},
+  {"side": "Server", "file": "game:entities/humanoid/player", "op": "add", "path": "/client/behaviors/-", "value": {"code": "Bullseye:InInventory"}},
+  {"side": "Server", "file": "game:entities/humanoid/player", "op": "add", "path": "/server/behaviors/-", "value": {"code": "Bullseye:InInventory"}}
 ]

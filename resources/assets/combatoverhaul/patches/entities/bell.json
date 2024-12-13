@@ -5,7 +5,7 @@
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityColliders",
+      "code": "Bullseye:EntityColliders",
       "elements": {
         "Torso": ["vertebrae 1", "vertebrae 2", "vertebrae 3", "vertebrae 4", "vertebrae 5", "vertebrae 6", "vertebrae 7", "vertebrae 8"],
         "Head": [],
@@ -22,7 +22,7 @@
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityColliders",
+      "code": "Bullseye:EntityColliders",
       "elements": {
         "Torso": ["vertebrae 1", "vertebrae 2", "vertebrae 3", "vertebrae 4", "vertebrae 5", "vertebrae 6", "vertebrae 7", "vertebrae 8"],
         "Head": [],
@@ -39,7 +39,7 @@
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityDamageModel",
+      "code": "Bullseye:EntityDamageModel",
       "damageModel": {
         "TorsoDamageMultiplier": 1,
         "LimbsDamageMultiplier": 0.8,
@@ -55,7 +55,7 @@
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityDamageModel",
+      "code": "Bullseye:EntityDamageModel",
       "damageModel": {
         "TorsoDamageMultiplier": 1,
         "LimbsDamageMultiplier": 0.8,

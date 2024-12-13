@@ -1,6 +1,6 @@
 ﻿{
   "code": "spear",
-  "class": "CombatOverhaul:MeleeWeapon",
+  "class": "Bullseye:MeleeWeapon",
   "behaviors": [
     {
       "name": "GroundStorable",
@@ -13,7 +13,7 @@
       }
     },
     {
-      "name": "CombatOverhaul:Projectile",
+      "name": "Bullseye:Projectile",
       "properties": {
         "stats": {
           "AdditionalDurabilityCost": 0,

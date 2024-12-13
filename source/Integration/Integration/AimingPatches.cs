@@ -3,7 +3,7 @@ using System.Numerics;
 using System.Reflection;
 using Vintagestory.Client.NoObf;
 
-namespace CombatOverhaul.Integration;
+namespace Bullseye.Integration;
 
 internal static class AimingPatches
 {

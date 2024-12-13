@@ -38,5 +38,5 @@
       "AttackTpAnimation": "falx"
     }
   },
-  {"file": "game:itemtypes/tool/pickaxe", "op": "add", "path": "/class", "value": "CombatOverhaul:Pickaxe"}
+  {"file": "game:itemtypes/tool/pickaxe", "op": "add", "path": "/class", "value": "Bullseye:Pickaxe"}
 ]

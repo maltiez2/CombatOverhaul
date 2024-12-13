@@ -5,7 +5,7 @@
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityColliders",
+      "code": "Bullseye:EntityColliders",
       "elements": {
         "Torso": ["LowerTorso", "UpperTorso"],
         "Head": ["Head"],
@@ -21,7 +21,7 @@
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityColliders",
+      "code": "Bullseye:EntityColliders",
       "elements": {
         "Torso": ["LowerTorso", "UpperTorso"],
         "Head": ["Head"],
@@ -37,7 +37,7 @@
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:PlayerDamageModel",
+      "code": "Bullseye:PlayerDamageModel",
       "damageModel": {
         "Zones": [
           {"Zone": "Torso", "Coverage": 70, "Top": 90, "Bottom": 90, "Left": 180, "Right": 180, "DamageMultiplier": 1},

@@ -3,7 +3,7 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.MathTools;
 
-namespace CombatOverhaul.RangedSystems.Aiming;
+namespace Bullseye.RangedSystems.Aiming;
 
 public sealed class AimingAccuracyBehavior : EntityBehavior
 {
@@ -16,7 +16,7 @@ public sealed class AimingAccuracyBehavior : EntityBehavior
 
         _player = player;
 
-        CombatOverhaulSystem system = entity.Api.ModLoader.GetModSystem<CombatOverhaulSystem>();
+        BullseyeSystem system = entity.Api.ModLoader.GetModSystem<BullseyeSystem>();
 
         if (entity.Api is not ICoreClientAPI clientApi) return;
 
@@ -68,7 +68,7 @@ public sealed class AimingAccuracyBehavior : EntityBehavior
             _modifiers[i].OnHurt(damage);
         }
     }
-    public override string PropertyName() => "CombatOverhaul:aimingAccuracy";
+    public override string PropertyName() => "Bullseye:aimingAccuracy";
 
     public void StartAim(AimingStats stats)
     {
@@ -77,7 +77,7 @@ public sealed class AimingAccuracyBehavior : EntityBehavior
 
         if (stats.MoveSpeedPenalty != 0)
         {
-            entity.Stats.Set("walkspeed", "CombatOverhaul:aiming", -(stats.MoveSpeedPenalty * entity.Stats.GetBlended("walkspeed")));
+            entity.Stats.Set("walkspeed", "Bullseye:aiming", -(stats.MoveSpeedPenalty * entity.Stats.GetBlended("walkspeed")));
         }
 
         for (int i = 0; i < _modifiers.Count; i++)
@@ -89,7 +89,7 @@ public sealed class AimingAccuracyBehavior : EntityBehavior
     {
         _isAiming = false;
 
-        entity.Stats.Set("walkspeed", "CombatOverhaul:aiming", 0);
+        entity.Stats.Set("walkspeed", "Bullseye:aiming", 0);
 
         for (int i = 0; i < _modifiers.Count; i++)
         {

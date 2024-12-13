@@ -1,12 +1,12 @@
 ﻿using Vintagestory.API.Common;
 
-namespace CombatOverhaul.RangedSystems;
+namespace Bullseye.RangedSystems;
 
 public class ItemInventoryBuffer
 {
     public string Id { get; private set; } = "";
     public List<ItemStack> Items { get; private set; } = new();
-    public string Attribute => $"CombatOverhaul:inventory.{Id}";
+    public string Attribute => $"Bullseye:inventory.{Id}";
 
     public ItemInventoryBuffer()
     {

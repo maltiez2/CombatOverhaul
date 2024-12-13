@@ -19,7 +19,7 @@
       }
     },
     {
-      "name": "CombatOverhaul:Projectile",
+      "name": "Bullseye:Projectile",
       "properties": {
         "stats": {
           "AdditionalDurabilityCost": 0,

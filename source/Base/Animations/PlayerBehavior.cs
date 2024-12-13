@@ -1,5 +1,5 @@
-﻿using CombatOverhaul.Integration;
-using CombatOverhaul.Utils;
+﻿using Bullseye.Integration;
+using Bullseye.Utils;
 using System.Numerics;
 using System.Reflection;
 using Vintagestory.API.Client;
@@ -9,7 +9,7 @@ using Vintagestory.API.MathTools;
 using Vintagestory.Client.NoObf;
 using Vintagestory.GameContent;
 
-namespace CombatOverhaul.Animations;
+namespace Bullseye.Animations;
 
 public interface IHasIdleAnimations
 {
@@ -30,16 +30,16 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
         if (entity is not EntityPlayer player) throw new ArgumentException("Only for players");
         _player = player;
         _api = player.Api as ICoreClientAPI;
-        _animationsManager = player.Api.ModLoader.GetModSystem<CombatOverhaulAnimationsSystem>().PlayerAnimationsManager;
-        _vanillaAnimationsManager = player.Api.ModLoader.GetModSystem<CombatOverhaulAnimationsSystem>().ClientVanillaAnimations;
+        _animationsManager = player.Api.ModLoader.GetModSystem<BullseyeAnimationsSystem>().PlayerAnimationsManager;
+        _vanillaAnimationsManager = player.Api.ModLoader.GetModSystem<BullseyeAnimationsSystem>().ClientVanillaAnimations;
 
-        SoundsSynchronizerClient soundsManager = player.Api.ModLoader.GetModSystem<CombatOverhaulSystem>().ClientSoundsSynchronizer ?? throw new Exception();
-        ParticleEffectsManager particleEffectsManager = player.Api.ModLoader.GetModSystem<CombatOverhaulAnimationsSystem>().ParticleEffectsManager ?? throw new Exception();
+        SoundsSynchronizerClient soundsManager = player.Api.ModLoader.GetModSystem<BullseyeSystem>().ClientSoundsSynchronizer ?? throw new Exception();
+        ParticleEffectsManager particleEffectsManager = player.Api.ModLoader.GetModSystem<BullseyeAnimationsSystem>().ParticleEffectsManager ?? throw new Exception();
         _composer = new(soundsManager, particleEffectsManager, player);
 
         AnimationPatch.OnBeforeFrame += OnBeforeFrame;
         AnimationPatch.OnFrame += OnFrame;
-        player.Api.ModLoader.GetModSystem<CombatOverhaulSystem>().OnDispose += Dispose;
+        player.Api.ModLoader.GetModSystem<BullseyeSystem>().OnDispose += Dispose;
 
         _mainPlayer = (entity as EntityPlayer)?.PlayerUID == _api?.Settings.String["playeruid"];
     }

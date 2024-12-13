@@ -5,7 +5,7 @@
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityColliders",
+      "code": "Bullseye:EntityColliders",
       "elementsByType": {
         "*-baby": {
           "Torso": ["neck2", "neck", "Body", "Midsection", "abdomen", "L back Thigh", "L front Thigh", "R back Thigh", "R front Thigh"],
@@ -32,7 +32,7 @@
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityColliders",
+      "code": "Bullseye:EntityColliders",
       "elementsByType": {
         "*-baby": {
           "Torso": ["neck2", "neck", "Body", "Midsection", "abdomen", "L back Thigh", "L front Thigh", "R back Thigh", "R front Thigh"],
@@ -59,7 +59,7 @@
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityDamageModel",
+      "code": "Bullseye:EntityDamageModel",
       "damageModel": {
         "TorsoDamageMultiplier": 1,
         "LimbsDamageMultiplier": 0.75,
@@ -75,7 +75,7 @@
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
-      "code": "CombatOverhaul:EntityDamageModel",
+      "code": "Bullseye:EntityDamageModel",
       "damageModel": {
         "TorsoDamageMultiplier": 1,
         "LimbsDamageMultiplier": 0.75,

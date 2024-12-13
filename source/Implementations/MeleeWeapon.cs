@@ -1,10 +1,10 @@
-﻿using CombatOverhaul.Animations;
-using CombatOverhaul.DamageSystems;
-using CombatOverhaul.Inputs;
-using CombatOverhaul.Integration;
-using CombatOverhaul.MeleeSystems;
-using CombatOverhaul.RangedSystems;
-using CombatOverhaul.RangedSystems.Aiming;
+﻿using Bullseye.Animations;
+using Bullseye.DamageSystems;
+using Bullseye.Inputs;
+using Bullseye.Integration;
+using Bullseye.MeleeSystems;
+using Bullseye.RangedSystems;
+using Bullseye.RangedSystems.Aiming;
 using System.Numerics;
 using System.Text;
 using Vintagestory.API.Client;
@@ -15,7 +15,7 @@ using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
 using Vintagestory.API.Util;
 
-namespace CombatOverhaul.Implementations;
+namespace Bullseye.Implementations;
 
 public enum MeleeWeaponState
 {
@@ -108,7 +108,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
         Item = item;
         Api = api;
 
-        CombatOverhaulSystem system = api.ModLoader.GetModSystem<CombatOverhaulSystem>();
+        BullseyeSystem system = api.ModLoader.GetModSystem<BullseyeSystem>();
         MeleeBlockSystem = system.ClientBlockSystem ?? throw new Exception();
         SoundsSystem = system.ClientSoundsSynchronizer ?? throw new Exception();
         RangedWeaponSystem = system.ClientRangedWeaponSystem ?? throw new Exception();
@@ -188,9 +188,9 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
         EnsureStance(Api.World.Player.Entity, mainHand);
         return GetStance<MeleeWeaponStance>(mainHand) switch
         {
-            MeleeWeaponStance.MainHand => Stats?.OneHandedStance?.IdleAnimation == null ? null : new(Stats.OneHandedStance.IdleAnimation, 1, 1, global::CombatOverhaul.Implementations.MeleeWeaponClient.AnimationCategory(mainHand), TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), false),
-            MeleeWeaponStance.OffHand => Stats?.OffHandStance?.IdleAnimation == null ? null : new(Stats.OffHandStance.IdleAnimation, 1, 1, global::CombatOverhaul.Implementations.MeleeWeaponClient.AnimationCategory(mainHand), TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), false),
-            MeleeWeaponStance.TwoHanded => Stats?.TwoHandedStance?.IdleAnimation == null ? null : new(Stats.TwoHandedStance.IdleAnimation, 1, 1, global::CombatOverhaul.Implementations.MeleeWeaponClient.AnimationCategory(mainHand), TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), false),
+            MeleeWeaponStance.MainHand => Stats?.OneHandedStance?.IdleAnimation == null ? null : new(Stats.OneHandedStance.IdleAnimation, 1, 1, global::Bullseye.Implementations.MeleeWeaponClient.AnimationCategory(mainHand), TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), false),
+            MeleeWeaponStance.OffHand => Stats?.OffHandStance?.IdleAnimation == null ? null : new(Stats.OffHandStance.IdleAnimation, 1, 1, global::Bullseye.Implementations.MeleeWeaponClient.AnimationCategory(mainHand), TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), false),
+            MeleeWeaponStance.TwoHanded => Stats?.TwoHandedStance?.IdleAnimation == null ? null : new(Stats.TwoHandedStance.IdleAnimation, 1, 1, global::Bullseye.Implementations.MeleeWeaponClient.AnimationCategory(mainHand), TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), false),
             _ => null
         };
     }
@@ -199,9 +199,9 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
         EnsureStance(Api.World.Player.Entity, mainHand);
         return GetStance<MeleeWeaponStance>(mainHand) switch
         {
-            MeleeWeaponStance.MainHand => Stats?.OneHandedStance?.ReadyAnimation == null ? null : new(Stats.OneHandedStance.ReadyAnimation, 1, 1, global::CombatOverhaul.Implementations.MeleeWeaponClient.AnimationCategory(mainHand), TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), false),
-            MeleeWeaponStance.OffHand => Stats?.OffHandStance?.ReadyAnimation == null ? null : new(Stats.OffHandStance.ReadyAnimation, 1, 1, global::CombatOverhaul.Implementations.MeleeWeaponClient.AnimationCategory(mainHand), TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), false),
-            MeleeWeaponStance.TwoHanded => Stats?.TwoHandedStance?.ReadyAnimation == null ? null : new(Stats.TwoHandedStance.ReadyAnimation, 1, 1, global::CombatOverhaul.Implementations.MeleeWeaponClient.AnimationCategory(mainHand), TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), false),
+            MeleeWeaponStance.MainHand => Stats?.OneHandedStance?.ReadyAnimation == null ? null : new(Stats.OneHandedStance.ReadyAnimation, 1, 1, global::Bullseye.Implementations.MeleeWeaponClient.AnimationCategory(mainHand), TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), false),
+            MeleeWeaponStance.OffHand => Stats?.OffHandStance?.ReadyAnimation == null ? null : new(Stats.OffHandStance.ReadyAnimation, 1, 1, global::Bullseye.Implementations.MeleeWeaponClient.AnimationCategory(mainHand), TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), false),
+            MeleeWeaponStance.TwoHanded => Stats?.TwoHandedStance?.ReadyAnimation == null ? null : new(Stats.TwoHandedStance.ReadyAnimation, 1, 1, global::Bullseye.Implementations.MeleeWeaponClient.AnimationCategory(mainHand), TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), false),
             _ => null,
         };
     }
@@ -467,8 +467,8 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
     internal const int _maxStates = 100;
     protected const int MaxState = _maxStates;
     protected readonly MeleeWeaponStats Stats;
-    protected const string PlayerStatsMainHandCategory = "CombatOverhaul:held-item-mainhand";
-    protected const string PlayerStatsOffHandCategory = "CombatOverhaul:held-item-offhand";
+    protected const string PlayerStatsMainHandCategory = "Bullseye:held-item-mainhand";
+    protected const string PlayerStatsOffHandCategory = "Bullseye:held-item-offhand";
     protected bool ParryButtonReleased = true;
 
     protected long MainHandAttackCooldownTimer = -1;
@@ -1181,7 +1181,7 @@ public class MeleeWeaponServer : RangeWeaponServer
 {
     public MeleeWeaponServer(ICoreServerAPI api, Item item) : base(api, item)
     {
-        ProjectileSystem = api.ModLoader.GetModSystem<CombatOverhaulSystem>().ServerProjectileSystem ?? throw new Exception();
+        ProjectileSystem = api.ModLoader.GetModSystem<BullseyeSystem>().ServerProjectileSystem ?? throw new Exception();
         Stats = item.Attributes.AsObject<MeleeWeaponStats>();
     }
 

@@ -6,7 +6,7 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Server;
 
-namespace CombatOverhaul.RangedSystems;
+namespace Bullseye.RangedSystems;
 
 [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
 public class ReloadPacket
@@ -49,7 +49,7 @@ public class ShotConfirmPacket
 
 public class RangedWeaponSystemClient
 {
-    public const string NetworkChannelId = "CombatOverhaul:rangeWeapon";
+    public const string NetworkChannelId = "Bullseye:rangeWeapon";
 
     public RangedWeaponSystemClient(ICoreClientAPI api)
     {
@@ -174,7 +174,7 @@ public class RangedWeaponSystemClient
 
 public class RangedWeaponSystemServer
 {
-    public const string NetworkChannelId = "CombatOverhaul:rangeWeapon";
+    public const string NetworkChannelId = "Bullseye:rangeWeapon";
 
     public RangedWeaponSystemServer(ICoreServerAPI api)
     {

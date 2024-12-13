@@ -1,24 +1,18 @@
-﻿using Cairo;
-using CombatOverhaul.Animations;
-using CombatOverhaul.Implementations;
-using CombatOverhaul.Inputs;
-using CombatOverhaul.Integration;
-using CombatOverhaul.RangedSystems;
-using CombatOverhaul.RangedSystems.Aiming;
-using CombatOverhaul.Utils;
+﻿using Bullseye.Animations;
+using Bullseye.Implementations;
+using Bullseye.Inputs;
+using Bullseye.Integration;
+using Bullseye.RangedSystems;
+using Bullseye.RangedSystems.Aiming;
+using Bullseye.Utils;
 using HarmonyLib;
-using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
-using Vintagestory.API.Config;
 using Vintagestory.API.Datastructures;
-using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
 using Vintagestory.Client.NoObf;
-using Vintagestory.GameContent;
-using Vintagestory.Server;
 
-namespace CombatOverhaul;
+namespace Bullseye;
 
 public sealed class Settings
 {
@@ -39,7 +33,7 @@ public sealed class Settings
     public bool HandsYawSmoothing { get; set; } = false;
 }
 
-public sealed class CombatOverhaulSystem : ModSystem
+public sealed class BullseyeSystem : ModSystem
 {
     public event Action? OnDispose;
     public event Action<Settings>? SettingsLoaded;
@@ -47,20 +41,21 @@ public sealed class CombatOverhaulSystem : ModSystem
 
     public override void Start(ICoreAPI api)
     {
-        api.RegisterEntityBehaviorClass("CombatOverhaul:FirstPersonAnimations", typeof(FirstPersonAnimationsBehavior));
-        api.RegisterEntityBehaviorClass("CombatOverhaul:ActionsManager", typeof(ActionsManagerPlayerBehavior));
-        api.RegisterEntityBehaviorClass("CombatOverhaul:AimingAccuracy", typeof(AimingAccuracyBehavior));
+        api.RegisterEntityBehaviorClass("Bullseye:FirstPersonAnimations", typeof(FirstPersonAnimationsBehavior));
+        api.RegisterEntityBehaviorClass("Bullseye:ActionsManager", typeof(ActionsManagerPlayerBehavior));
+        api.RegisterEntityBehaviorClass("Bullseye:AimingAccuracy", typeof(AimingAccuracyBehavior));
 
-        api.RegisterCollectibleBehaviorClass("CombatOverhaul:Animatable", typeof(Animatable));
-        api.RegisterCollectibleBehaviorClass("CombatOverhaul:AnimatableAttachable", typeof(AnimatableAttachable));
+        api.RegisterCollectibleBehaviorClass("Bullseye:Animatable", typeof(Animatable));
+        api.RegisterCollectibleBehaviorClass("Bullseye:AnimatableAttachable", typeof(AnimatableAttachable));
+        api.RegisterCollectibleBehaviorClass("Bullseye:Projectile", typeof(ProjectileBehavior));
 
-        api.RegisterItemClass("CombatOverhaul:Bow", typeof(BowItem));
-        api.RegisterItemClass("CombatOverhaul:MeleeWeapon", typeof(MeleeWeapon));
+        api.RegisterItemClass("Bullseye:Bow", typeof(BowItem));
+        api.RegisterItemClass("Bullseye:MeleeWeapon", typeof(MeleeWeapon));
 
-        api.RegisterBlockEntityClass("CombatOverhaul:GenericDisplayBlockEntity", typeof(GenericDisplayBlockEntity));
-        api.RegisterBlockClass("CombatOverhaul:GenericDisplayBlock", typeof(GenericDisplayBlock));
+        api.RegisterBlockEntityClass("Bullseye:GenericDisplayBlockEntity", typeof(GenericDisplayBlockEntity));
+        api.RegisterBlockClass("Bullseye:GenericDisplayBlock", typeof(GenericDisplayBlock));
 
-        new Harmony("CombatOverhaulAuto").PatchAll();
+        new Harmony("BullseyeAuto").PatchAll();
     }
     public override void StartServerSide(ICoreServerAPI api)
     {
@@ -82,7 +77,7 @@ public sealed class CombatOverhaulSystem : ModSystem
 
         api.Event.RegisterRenderer(ReticleRenderer, EnumRenderStage.Ortho);
 
-        AimingPatches.Patch("CombatOverhaulAiming");
+        AimingPatches.Patch("BullseyeAiming");
     }
 
     public override void AssetsFinalize(ICoreAPI api)
@@ -96,33 +91,13 @@ public sealed class CombatOverhaulSystem : ModSystem
         SettingsLoaded?.Invoke(Settings);
     }
 
-    private readonly Vector4 _iconScale = new(-0.1f, -0.1f, 1.2f, 1.2f);
-
-    private void RegisterCustomIcon(ICoreClientAPI api, string key, string path)
-    {
-        api.Gui.Icons.CustomIcons[key] = delegate (Context ctx, int x, int y, float w, float h, double[] rgba)
-        {
-            AssetLocation location = new(path);
-            IAsset svgAsset = api.Assets.TryGet(location);
-            int value = ColorUtil.ColorFromRgba(75, 75, 75, 125);
-            Surface target = ctx.GetTarget();
-
-            int xNew = x + (int)(w * _iconScale.X);
-            int yNew = y + (int)(h * _iconScale.Y);
-            int wNew = (int)(w * _iconScale.W);
-            int hNew = (int)(h * _iconScale.Z);
-
-            api.Gui.DrawSvg(svgAsset, (ImageSurface)(object)((target is ImageSurface) ? target : null), xNew, yNew, wNew, hNew, value);
-        };
-    }
-
     public override void Dispose()
     {
-        new Harmony("CombatOverhaulAuto").UnpatchAll();
+        new Harmony("BullseyeAuto").UnpatchAll();
 
         _clientApi?.Event.UnregisterRenderer(ReticleRenderer, EnumRenderStage.Ortho);
 
-        AimingPatches.Unpatch("CombatOverhaulAiming");
+        AimingPatches.Unpatch("BullseyeAiming");
 
         OnDispose?.Invoke();
     }
@@ -142,7 +117,7 @@ public sealed class CombatOverhaulSystem : ModSystem
 }
 
 
-public sealed class CombatOverhaulAnimationsSystem : ModSystem
+public sealed class BullseyeAnimationsSystem : ModSystem
 {
     public AnimationsManager? PlayerAnimationsManager { get; private set; }
     public ParticleEffectsManager? ParticleEffectsManager { get; private set; }
@@ -156,7 +131,7 @@ public sealed class CombatOverhaulAnimationsSystem : ModSystem
     {
         _api = api;
 
-        AnimationPatch.Patch("CombatOverhaul");
+        AnimationPatch.Patch("Bullseye");
 
     }
 
@@ -182,7 +157,7 @@ public sealed class CombatOverhaulAnimationsSystem : ModSystem
 
     public override void Dispose()
     {
-        AnimationPatch.Unpatch("CombatOverhaul");
+        AnimationPatch.Unpatch("Bullseye");
 
         if (_api is ICoreClientAPI clientApi)
         {

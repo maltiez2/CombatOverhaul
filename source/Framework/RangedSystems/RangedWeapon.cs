@@ -1,5 +1,5 @@
-﻿using CombatOverhaul.Animations;
-using CombatOverhaul.Inputs;
+﻿using Bullseye.Animations;
+using Bullseye.Inputs;
 using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -8,13 +8,13 @@ using Vintagestory.API.Config;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
 
-namespace CombatOverhaul.RangedSystems;
+namespace Bullseye.RangedSystems;
 
 public class RangeWeaponClient : IClientWeaponLogic
 {
     public RangeWeaponClient(ICoreClientAPI api, Item item)
     {
-        CombatOverhaulSystem system = api.ModLoader.GetModSystem<CombatOverhaulSystem>();
+        BullseyeSystem system = api.ModLoader.GetModSystem<BullseyeSystem>();
 
         RangedWeaponSystem = system.ClientRangedWeaponSystem ?? throw new Exception();
 
@@ -92,7 +92,7 @@ public class RangeWeaponServer : IServerRangedWeaponLogic
 {
     public RangeWeaponServer(ICoreServerAPI api, Item item)
     {
-        CombatOverhaulSystem system = api.ModLoader.GetModSystem<CombatOverhaulSystem>();
+        BullseyeSystem system = api.ModLoader.GetModSystem<BullseyeSystem>();
 
         ProjectileSystem = system.ServerProjectileSystem ?? throw new Exception();
         Item = item;

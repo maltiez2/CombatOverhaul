@@ -1,5 +1,5 @@
 ﻿[
-  {"file": "game:itemtypes/tool/shield", "op": "replace", "path": "/class", "value": "CombatOverhaul:VanillaShield"},
+  {"file": "game:itemtypes/tool/shield", "op": "replace", "path": "/class", "value": "Bullseye:VanillaShield"},
   {"file": "game:itemtypes/tool/shield", "op": "remove", "path": "/attributes/shield"},
   {"file": "game:itemtypes/tool/shield", "op": "replace", "path": "/durabilitybytype/shield-crude", "value": 160},
   {"file": "game:itemtypes/tool/shield", "op": "replace", "path": "/durabilitybytype/shield-woodmetal", "value": 600},

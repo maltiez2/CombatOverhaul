@@ -1,6 +1,6 @@
 ﻿{
   "code": "arrow",
-  "class": "CombatOverhaul:Projectile",
+  "class": "EntityProjectile",
   "variantgroups": [{"code": "material", "states": ["crude", "flint", "copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "gold", "silver", "steel", "meteoriciron"]}],
   "hitboxSize": {"x": 0.125, "y": 0.125},
   "client": {

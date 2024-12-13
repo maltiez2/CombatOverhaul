@@ -3,7 +3,7 @@ using ProtoBuf;
 using Vintagestory.API.Client;
 using Vintagestory.API.Server;
 
-namespace CombatOverhaul.Inputs;
+namespace Bullseye.Inputs;
 
 [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
 public sealed class StatsPacket
@@ -34,7 +34,7 @@ public class StatsSystemClient
         _api.World.Player.Entity.Stats.Set(stat, category, value);
     }
     
-    private const string _networkChannelId = "CombatOverhaul:stats";
+    private const string _networkChannelId = "Bullseye:stats";
     private readonly IClientNetworkChannel _clientChannel;
     private readonly ICoreClientAPI _api;
 }
@@ -48,7 +48,7 @@ public class StatsSystemServer
             .SetMessageHandler<StatsPacket>(HandlePacket);
     }
 
-    private const string _networkChannelId = "CombatOverhaul:stats";
+    private const string _networkChannelId = "Bullseye:stats";
 
     private void HandlePacket(IServerPlayer player, StatsPacket packet)
     {

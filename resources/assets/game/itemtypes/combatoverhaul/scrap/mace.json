@@ -1,6 +1,6 @@
 ﻿{
   "code": "club",
-  "class": "CombatOverhaul:MeleeWeapon",
+  "class": "Bullseye:MeleeWeapon",
   "variantgroups": [{"code": "type", "states": ["generic", "scrap", "scrapmace"]}, {"code": "material", "states": ["wood", "scrap"]}],
   "allowedVariants": ["club-scrapmace-scrap"],
   "shapeByType": {"*-scrapmace-*": {"base": "game:item/tool/club/{type}"}},

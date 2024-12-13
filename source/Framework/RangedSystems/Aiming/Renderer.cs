@@ -4,7 +4,7 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Config;
 using static OpenTK.Graphics.OpenGL.GL;
 
-namespace CombatOverhaul.RangedSystems.Aiming;
+namespace Bullseye.RangedSystems.Aiming;
 
 public enum WeaponAimingState
 {

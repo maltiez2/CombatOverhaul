@@ -1,5 +1,5 @@
-﻿using CombatOverhaul.Animations;
-using CombatOverhaul.Utils;
+﻿using Bullseye.Animations;
+using Bullseye.Utils;
 using HarmonyLib;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -9,7 +9,7 @@ using Vintagestory.API.Common.Entities;
 using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
 
-namespace CombatOverhaul.Integration;
+namespace Bullseye.Integration;
 
 internal static class AnimationPatch
 {

@@ -1,7 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using Vintagestory.API.Common;
 
-namespace CombatOverhaul.Utils;
+namespace Bullseye.Utils;
 
 internal static class LoggerUtil
 {

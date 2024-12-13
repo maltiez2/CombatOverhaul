@@ -5,7 +5,7 @@ using Vintagestory.API.MathTools;
 using Vintagestory.API.Util;
 using Vintagestory.GameContent;
 
-namespace CombatOverhaul.Utils;
+namespace Bullseye.Utils;
 
 public abstract class GenericDisplayProto : BlockEntityContainer, ITexPositionSource
 {

@@ -1,11 +1,11 @@
-﻿using CombatOverhaul.Integration;
+﻿using Bullseye.Integration;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 
-namespace CombatOverhaul.Animations;
+namespace Bullseye.Animations;
 
 public class Animatable : CollectibleBehavior
 {
@@ -46,7 +46,7 @@ public class Animatable : CollectibleBehavior
     }
     public override void OnLoaded(ICoreAPI api)
     {
-        ModSystem = api.ModLoader.GetModSystem<CombatOverhaulAnimationsSystem>();
+        ModSystem = api.ModLoader.GetModSystem<BullseyeAnimationsSystem>();
 
         if (api is ICoreClientAPI clientApi)
         {
@@ -101,7 +101,7 @@ public class Animatable : CollectibleBehavior
     }
 
 
-    protected CombatOverhaulAnimationsSystem? ModSystem;
+    protected BullseyeAnimationsSystem? ModSystem;
     protected Dictionary<string, AnimationMetaData> ActiveAnimationsByCode = new();
     protected ICoreClientAPI? ClientApi;
     protected string? AnimatedShapePath;

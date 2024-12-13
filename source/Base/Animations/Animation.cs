@@ -1,10 +1,10 @@
-﻿using CombatOverhaul.Utils;
+﻿using Bullseye.Utils;
 using ImGuiNET;
 using System.Numerics;
 using Vintagestory.API.Common;
 using Vintagestory.Common;
 
-namespace CombatOverhaul.Animations;
+namespace Bullseye.Animations;
 
 public sealed class Animation
 {
