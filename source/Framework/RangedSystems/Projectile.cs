@@ -1,7 +1,4 @@
-﻿using CombatOverhaul.Armor;
-using CombatOverhaul.Colliders;
-using CombatOverhaul.DamageSystems;
-using System.Numerics;
+﻿using System.Numerics;
 using System.Text;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;

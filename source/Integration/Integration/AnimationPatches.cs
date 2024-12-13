@@ -1,5 +1,4 @@
 ﻿using CombatOverhaul.Animations;
-using CombatOverhaul.Colliders;
 using CombatOverhaul.Utils;
 using HarmonyLib;
 using System.Reflection;
@@ -7,7 +6,6 @@ using System.Reflection.Emit;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
-using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
 
@@ -29,16 +27,6 @@ internal static class AnimationPatch
             );
 
         new Harmony(harmonyId).Patch(
-                typeof(EntityShapeRenderer).GetMethod("DoRender3DOpaque", AccessTools.all),
-                prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimationPatch), nameof(DoRender3DOpaque)))
-            );
-
-        new Harmony(harmonyId).Patch(
-                typeof(EntityPlayerShapeRenderer).GetMethod("DoRender3DOpaque", AccessTools.all),
-                prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimationPatch), nameof(DoRender3DOpaquePlayer)))
-            );
-
-        new Harmony(harmonyId).Patch(
                 typeof(EntityShapeRenderer).GetMethod("BeforeRender", AccessTools.all),
                 prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimationPatch), nameof(BeforeRender)))
             );
@@ -57,10 +45,8 @@ internal static class AnimationPatch
     public static void Unpatch(string harmonyId)
     {
         new Harmony(harmonyId).Unpatch(typeof(EntityShapeRenderer).GetMethod("RenderHeldItem", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
-        new Harmony(harmonyId).Unpatch(typeof(EntityShapeRenderer).GetMethod("DoRender3DOpaque", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         new Harmony(harmonyId).Unpatch(typeof(Vintagestory.API.Common.AnimationManager).GetMethod("OnClientFrame", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         new Harmony(harmonyId).Unpatch(typeof(EntityPlayer).GetMethod("OnSelfBeforeRender", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
-        new Harmony(harmonyId).Unpatch(typeof(EntityPlayer).GetMethod("updateEyeHeight", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         new Harmony(harmonyId).Unpatch(typeof(EntityPlayerShapeRenderer).GetMethod("smoothCameraTurning", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         _animators.Clear();
     }
@@ -79,49 +65,11 @@ internal static class AnimationPatch
         OnBeforeFrame?.Invoke(__instance.entity, dt);
     }
 
-    private static void DoRender3DOpaque(EntityShapeRenderer __instance, float dt, bool isShadowPass)
-    {
-        CollidersEntityBehavior behavior = __instance.entity.GetBehavior<CollidersEntityBehavior>();
-        behavior?.Render(__instance.entity.Api as ICoreClientAPI, __instance.entity as EntityAgent, __instance);
-    }
-
-    private static void DoRender3DOpaquePlayer(EntityPlayerShapeRenderer __instance, float dt, bool isShadowPass)
-    {
-        CollidersEntityBehavior behavior = __instance.entity.GetBehavior<CollidersEntityBehavior>();
-        behavior?.Render(__instance.entity.Api as ICoreClientAPI, __instance.entity as EntityAgent, __instance);
-    }
-
     private static bool CreateColliders(Vintagestory.API.Common.AnimationManager __instance, float dt)
     {
         EntityAgent? entity = (Entity?)_entity?.GetValue(__instance) as EntityAgent;
 
         if (entity?.Api?.Side != EnumAppSide.Client) return true;
-
-        ClientAnimator? animator = __instance.Animator as ClientAnimator;
-
-        if (animator != null && !_animators.ContainsKey(animator))
-        {
-            _animators.Add(animator, entity);
-            CollidersEntityBehavior? colliders = entity.GetBehavior<CollidersEntityBehavior>();
-            List<ElementPose> poses = animator.RootPoses;
-
-            if (colliders != null)
-            {
-                colliders.Animator = animator;
-
-                foreach (ElementPose pose in poses)
-                {
-                    AddPoseShapeElements(pose, colliders);
-                }
-
-                if (colliders.ShapeElementsToProcess.Any() && entity.Api.Side == EnumAppSide.Client)
-                {
-                    string missingColliders = colliders.ShapeElementsToProcess.Aggregate((first, second) => $"{first}, {second}");
-                    LoggerUtil.Warn(entity.Api, typeof(AnimationPatch), $"({entity.Code}) Listed colliders that was not found in shape: {missingColliders}");
-                }
-            }
-        }
-
 
         // To catch not reproducable bug with nullref in calculateMatrices
         try
@@ -169,15 +117,6 @@ internal static class AnimationPatch
 
     internal static readonly Dictionary<ClientAnimator, EntityAgent> _animators = new();
 
-    private static void AddPoseShapeElements(ElementPose pose, CollidersEntityBehavior colliders)
-    {
-        colliders.SetColliderElement(pose.ForElement);
-
-        foreach (ElementPose childPose in pose.ChildElementPoses)
-        {
-            AddPoseShapeElements(childPose, colliders);
-        }
-    }
 
     private static bool RenderHeldItem(EntityShapeRenderer __instance, float dt, bool isShadowPass, bool right)
     {

@@ -28,7 +28,6 @@ public interface ISetsRenderingOffset
 public interface IClientWeaponLogic
 {
     int ItemId { get; }
-    DirectionsConfiguration DirectionsType { get; }
 
     void OnSelected(ItemSlot slot, EntityPlayer player, bool mainHand, ref int state);
     void OnDeselected(EntityPlayer player, bool mainHand, ref int state);
@@ -47,7 +46,7 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
     public float ManipulationSpeed => Math.Clamp(entity.Stats.GetBlended("manipulationSpeed"), 0.5f, 2.0f);
     public ActionListener ActionListener { get; }
 
-    public delegate bool ActionEventCallbackDelegate(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction);
+    public delegate bool ActionEventCallbackDelegate(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand);
 
     public ActionsManagerPlayerBehavior(Entity entity) : base(entity)
     {
@@ -68,8 +67,6 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
         CombatOverhaulSystem system = _api.ModLoader.GetModSystem<CombatOverhaulSystem>();
 
         ActionListener = system.ActionListener ?? throw new Exception();
-        _directionController = system.DirectionController ?? throw new Exception();
-        _directionRenderer = system.DirectionCursorRenderer ?? throw new Exception();
         _statsSystem = system.ClientStatsSystem ?? throw new Exception();
 
         if (_mainPlayer)
@@ -84,8 +81,6 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
     {
         if (!_mainPlayer) return;
 
-        bool configurationChanged = SetRenderDirectionCursorForMainHand();
-        _directionController.OnGameTick(forceNewDirection: configurationChanged);
         _ = CheckIfItemsInHandsChanged();
 
         if (_player.RightHandItemSlot.Itemstack?.Item is IOnGameTick mainhandTickListener)
@@ -125,8 +120,6 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
     private readonly HashSet<string> _currentMainHandPlayerStats = new();
     private readonly HashSet<string> _currentOffHandPlayerStats = new();
     private const string _statCategory = "CombatOverhaul:melee-weapon-player-behavior";
-    private readonly DirectionController _directionController;
-    private readonly DirectionCursorRenderer _directionRenderer;
     private readonly StatsSystemClient _statsSystem;
 
     private IClientWeaponLogic? _currentMainHandWeapon;
@@ -136,8 +129,6 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
     private int _currentMainHandSlotId = -1;
     private int _mainHandState = 0;
     private int _offHandState = 0;
-    private bool _mainHandRenderingOffset = true;
-    private bool _offHandRenderingOffset = true;
 
     private void RegisterWeapons()
     {
@@ -207,12 +198,12 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
 
         if (mainHandId == itemId)
         {
-            mainHandHandled = callback.Invoke(_player.ActiveHandItemSlot, _player, ref _mainHandState, eventData, true, _directionController.CurrentDirection);
+            mainHandHandled = callback.Invoke(_player.ActiveHandItemSlot, _player, ref _mainHandState, eventData, true);
         }
 
         if (offHandId == itemId)
         {
-            offHandHandled = callback.Invoke(_player.LeftHandItemSlot, _player, ref _offHandState, eventData, false, _directionController.CurrentDirection);
+            offHandHandled = callback.Invoke(_player.LeftHandItemSlot, _player, ref _offHandState, eventData, false);
         }
 
         return mainHandHandled || offHandHandled;
@@ -259,33 +250,10 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
 
         ItemStack? stack = _player.ActiveHandItemSlot.Itemstack;
 
-        if (stack != null && stack.Item is ISetsRenderingOffset offset)
-        {
-            _mainHandRenderingOffset = offset.RenderingOffset;
-        }
-        else
-        {
-            _mainHandRenderingOffset = true;
-        }
-
-        if (_mainHandRenderingOffset && _offHandRenderingOffset)
-        {
-            PlayerRenderingPatches.ResetOffset();
-        }
-        else
-        {
-            PlayerRenderingPatches.SetOffset(0);
-        }
-
         if (stack == null || stack.Item is not IHasWeaponLogic weapon) return;
 
         weapon.ClientLogic?.OnSelected(_player.ActiveHandItemSlot, _player, true, ref _mainHandState);
         _currentMainHandWeapon = weapon.ClientLogic;
-
-        if (stack.Item.Attributes?["fpHandsOffset"].Exists == true)
-        {
-            PlayerRenderingPatches.SetOffset(stack.Item.Attributes["fpHandsOffset"].AsFloat());
-        }
     }
     private void ProcessOffHandItemChanged()
     {
@@ -299,53 +267,9 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
 
         ItemStack? stack = _player.LeftHandItemSlot.Itemstack;
 
-        if (stack != null && stack.Item is ISetsRenderingOffset offset)
-        {
-            _offHandRenderingOffset = offset.RenderingOffset;
-        }
-        else
-        {
-            _offHandRenderingOffset = true;
-        }
-
-        if (_mainHandRenderingOffset && _offHandRenderingOffset)
-        {
-            PlayerRenderingPatches.ResetOffset();
-        }
-        else
-        {
-            PlayerRenderingPatches.SetOffset(0);
-        }
-
         if (stack == null || stack.Item is not IHasWeaponLogic weapon) return;
 
         weapon.ClientLogic?.OnSelected(_player.LeftHandItemSlot, _player, false, ref _offHandState);
         _currentOffHandWeapon = weapon.ClientLogic;
-
-        if (stack.Item.Attributes?["fpHandsOffset"].Exists == true)
-        {
-            PlayerRenderingPatches.SetOffset(stack.Item.Attributes["fpHandsOffset"].AsFloat());
-        }
-    }
-    private bool SetRenderDirectionCursorForMainHand()
-    {
-        ItemStack? stack = _player.ActiveHandItemSlot.Itemstack;
-
-        DirectionsConfiguration configuration = _directionController.DirectionsConfiguration;
-
-        if (stack == null || stack.Item is not IHasWeaponLogic weapon)
-        {
-            _directionController.DirectionsConfiguration = DirectionsConfiguration.None;
-            _directionRenderer.Show = false;
-            return configuration != _directionController.DirectionsConfiguration;
-        }
-
-        if (weapon.ClientLogic != null)
-        {
-            _directionController.DirectionsConfiguration = weapon.ClientLogic.DirectionsType;
-            _directionRenderer.Show = weapon.ClientLogic.DirectionsType != DirectionsConfiguration.None;
-        }
-
-        return configuration != _directionController.DirectionsConfiguration;
     }
 }
