@@ -261,9 +261,17 @@ public class DamageResistData
     private static float LookupTableMultiplier(float protection, float attackTier) => LookupTableMultiplier((int)protection, (int)attackTier);
     private static float LookupTableMultiplier(int protection, int attackTier)
     {
-        if (protection >= _maxArmorTier || attackTier >= _maxAttackTier)
+        if (protection == 0)
         {
-            return PenetrationPercentage(protection, attackTier, 2, 0.05f);
+            return 1;
+        }
+        else if (attackTier == 0 && protection > 0)
+        {
+            return 0;
+        }
+        else if (protection >= _maxArmorTier || attackTier >= _maxAttackTier)
+        {
+            return PenetrationPercentage(protection, attackTier, 2, 0.01f);
         }
 
         return _damageReduction[GameMath.Clamp(protection - 1, 0, _maxArmorTier - 1)][GameMath.Clamp(attackTier - 1, 0, _maxAttackTier - 1)];

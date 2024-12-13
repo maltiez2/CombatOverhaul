@@ -91,11 +91,11 @@ internal static class AnimationPatch
         behavior?.Render(__instance.entity.Api as ICoreClientAPI, __instance.entity as EntityAgent, __instance);
     }
 
-    private static void CreateColliders(Vintagestory.API.Common.AnimationManager __instance, float dt)
+    private static bool CreateColliders(Vintagestory.API.Common.AnimationManager __instance, float dt)
     {
         EntityAgent? entity = (Entity?)_entity?.GetValue(__instance) as EntityAgent;
 
-        if (entity?.Api?.Side != EnumAppSide.Client) return;
+        if (entity?.Api?.Side != EnumAppSide.Client) return true;
 
         ClientAnimator? animator = __instance.Animator as ClientAnimator;
 
@@ -121,6 +121,50 @@ internal static class AnimationPatch
                 }
             }
         }
+
+
+        // To catch not reproducable bug with nullref in calculateMatrices
+        try
+        {
+            ICoreClientAPI clientApi = entity.Api as ICoreClientAPI;
+
+            if (!clientApi.IsGamePaused && __instance.Animator != null)
+            {
+                if (__instance.HeadController != null)
+                {
+                    __instance.HeadController.OnFrame(dt);
+                }
+
+                if (entity.IsRendered || entity.IsShadowRendered || !entity.Alive)
+                {
+                    __instance.Animator.OnFrame(__instance.ActiveAnimationsByAnimCode, dt);
+
+                    if (__instance.Triggers != null)
+                    {
+                        for (int i = 0; i < __instance.Triggers.Count; i++)
+                        {
+                            AnimFrameCallback animFrameCallback = __instance.Triggers[i];
+                            if (__instance.ActiveAnimationsByAnimCode.ContainsKey(animFrameCallback.Animation))
+                            {
+                                RunningAnimation animationState = __instance.Animator.GetAnimationState(animFrameCallback.Animation);
+                                if (animationState != null && animationState.CurrentFrame >= animFrameCallback.Frame)
+                                {
+                                    __instance.Triggers.RemoveAt(i);
+                                    animFrameCallback.Callback();
+                                    i--;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception exception)
+        {
+            LoggerUtil.Error(entity.Api, typeof(AnimationPatch), $"({entity.Code}) Error during client frame: \n{exception}");
+        }
+
+        return false;
     }
 
     internal static readonly Dictionary<ClientAnimator, EntityAgent> _animators = new();

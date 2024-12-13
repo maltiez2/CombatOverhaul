@@ -198,7 +198,7 @@
     }
   },
   {"side": "Server", "file": "game:entities/land/sheep-bighorn-male", "op": "add", "path": "/server/behaviors/9/aitasks/0/damageType", "value": "BluntAttack"},
-  {"side": "Server", "file": "game:entities/land/sheep-bighorn-male", "op": "replace", "path": "/server/behaviors/9/aitasks/0/damageTier", "value": 3},
+  {"side": "Server", "file": "game:entities/land/sheep-bighorn-male", "op": "replace", "path": "/server/behaviors/9/aitasks/0/damageTier", "value": 2},
   {"side": "Server", "file": "game:entities/land/sheep-bighorn-female", "op": "add", "path": "/server/behaviors/10/aitasks/0/damageType", "value": "BluntAttack"},
-  {"side": "Server", "file": "game:entities/land/sheep-bighorn-female", "op": "replace", "path": "/server/behaviors/10/aitasks/0/damageTier", "value": 2}
+  {"side": "Server", "file": "game:entities/land/sheep-bighorn-female", "op": "replace", "path": "/server/behaviors/10/aitasks/0/damageTier", "value": 1}
 ]

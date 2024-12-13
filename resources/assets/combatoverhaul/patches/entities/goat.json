@@ -70,5 +70,5 @@
     }
   },
   {"side": "Server", "file": "game:entities/land/hooved/goat", "op": "replace", "path": "/server/behaviors/12/aitasks/0/damageType", "value": "BluntAttack"},
-  {"side": "Server", "file": "game:entities/land/hooved/goat", "op": "replace", "path": "/server/behaviors/12/aitasks/0/damageTier", "value": 2}
+  {"side": "Server", "file": "game:entities/land/hooved/goat", "op": "replace", "path": "/server/behaviors/12/aitasks/0/damageTier", "value": 1}
 ]

@@ -30,7 +30,7 @@
           "StopOnEntityHit": true,
           "CollideWithTerrain": true,
           "MaxReach": 9,
-          "DamageTypes": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 5, "Damage": 4}, "Knockback": 0.5, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.3, 0, 0.5]}]
+          "DamageTypes": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 4.5}, "Knockback": 0.5, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.3, 0, 0.5]}]
         },
         "AttackHitSound": "game:sounds/thud",
         "AttackAnimation": {"Main": ["combatoverhaul:sword-forlorn-thrust"]},
@@ -58,7 +58,7 @@
           "StopOnEntityHit": true,
           "CollideWithTerrain": true,
           "MaxReach": 9,
-          "DamageTypes": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 4, "Damage": 3.5}, "Knockback": 0.5, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.8, 0, 0.5]}]
+          "DamageTypes": [{"Damage": {"DamageType": "SlashingAttack", "Strength": 4, "Damage": 4}, "Knockback": 0.5, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.8, 0, 0.5]}]
         },
         "AttackHitSound": "game:sounds/thud",
         "AttackAnimation": {"Main": ["combatoverhaul:sword-forlorn-thrust"]},

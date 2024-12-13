@@ -5,7 +5,6 @@ using CombatOverhaul.Integration;
 using CombatOverhaul.MeleeSystems;
 using CombatOverhaul.RangedSystems;
 using CombatOverhaul.RangedSystems.Aiming;
-using System.Diagnostics;
 using System.Numerics;
 using System.Text;
 using Vintagestory.API.Client;
