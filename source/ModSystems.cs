@@ -53,12 +53,9 @@ public sealed class CombatOverhaulSystem : ModSystem
 
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:Animatable", typeof(Animatable));
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:AnimatableAttachable", typeof(AnimatableAttachable));
-        api.RegisterCollectibleBehaviorClass("CombatOverhaul:Projectile", typeof(ProjectileBehavior));
 
         api.RegisterItemClass("CombatOverhaul:Bow", typeof(BowItem));
         api.RegisterItemClass("CombatOverhaul:MeleeWeapon", typeof(MeleeWeapon));
-
-        api.RegisterEntity("CombatOverhaul:Projectile", typeof(ProjectileEntity));
 
         api.RegisterBlockEntityClass("CombatOverhaul:GenericDisplayBlockEntity", typeof(GenericDisplayBlockEntity));
         api.RegisterBlockClass("CombatOverhaul:GenericDisplayBlock", typeof(GenericDisplayBlock));
@@ -76,7 +73,6 @@ public sealed class CombatOverhaulSystem : ModSystem
     {
         _clientApi = api;
 
-        ClientProjectileSystem = new(api, api.ModLoader.GetModSystem<EntityPartitioning>());
         ActionListener = new(api);
         ReticleRenderer = new(api);
         ClientRangedWeaponSystem = new(api);
@@ -131,7 +127,6 @@ public sealed class CombatOverhaulSystem : ModSystem
         OnDispose?.Invoke();
     }
 
-    public ProjectileSystemClient? ClientProjectileSystem { get; private set; }
     public ProjectileSystemServer? ServerProjectileSystem { get; private set; }
     public ActionListener? ActionListener { get; private set; }
     public ReticleRenderer? ReticleRenderer { get; private set; }

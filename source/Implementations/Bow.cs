@@ -99,7 +99,7 @@ public class BowClient : RangeWeaponClient
     protected bool AfterLoad = false;
 
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Pressed)]
-    protected virtual bool Load(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
+    protected virtual bool Load(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand)
     {
         if (state != (int)BowState.Unloaded || eventData.AltPressed || !CheckForOtherHandEmpty(mainHand, player)) return false;
 
@@ -164,7 +164,7 @@ public class BowClient : RangeWeaponClient
     }
 
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Active)]
-    protected virtual bool Aim(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
+    protected virtual bool Aim(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand)
     {
         if (state != (int)BowState.Loaded || eventData.AltPressed || !CheckForOtherHandEmpty(mainHand, player)) return false;
 
@@ -189,7 +189,7 @@ public class BowClient : RangeWeaponClient
     }
 
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Released)]
-    protected virtual bool Shoot(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
+    protected virtual bool Shoot(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand)
     {
         AimingSystem.StopAiming();
 
