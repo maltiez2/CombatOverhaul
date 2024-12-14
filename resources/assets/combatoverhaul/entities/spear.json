@@ -21,7 +21,8 @@
         "meteoriciron",
         "steel",
         "ornategold",
-        "ornatesilver"
+        "ornatesilver",
+        "scrap"
       ]
     }
   ],
@@ -31,6 +32,7 @@
     "renderer": "Shape",
     "shapeByType": {
       "@spear-generic-(chert|granite|andesite|basalt|obsidian|peridotite|flint)": {"base": "combatoverhaul:weapons/spears/spear-flint"},
+      "*-scrap": {"base": "combatoverhaul:weapons/spears/spear-{material}"},
       "*": {"base": "combatoverhaul:weapons/spears/spear-{material}"}
     },
     "texturesByType": {"@spear-generic-(chert|granite|andesite|basalt|obsidian|peridotite)": {"head": {"base": "game:block/stone/rock/{material}1"}}},

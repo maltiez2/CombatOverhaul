@@ -84,6 +84,6 @@
     "file": "game:itemtypes/tool/axe-metal",
     "op": "replace",
     "path": "/tpHandTransformByType/*-scrap",
-    "value": {"translation": {"x": -0.43, "y": -0.52, "z": -0.03}, "rotation": {"x": 90, "y": 0, "z": 0}, "scale": 0.95}
+    "value": {"translation": {"x": -0.23, "y": -0.52, "z": -0.03}, "rotation": {"x": 90, "y": 0, "z": 0}, "scale": 0.95}
   }
 ]

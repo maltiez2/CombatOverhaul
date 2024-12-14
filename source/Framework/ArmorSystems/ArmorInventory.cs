@@ -89,7 +89,7 @@ public class ArmorSlot : ItemSlot
 
     public override bool CanHold(ItemSlot sourceSlot)
     {
-        if (DrawUnavailable || !base.CanHold(sourceSlot) || !IsArmor(sourceSlot.Itemstack.Item, out IArmor? armor)) return false;
+        if (DrawUnavailable || !base.CanHold(sourceSlot) || !IsArmor(sourceSlot.Itemstack.Collectible, out IArmor? armor)) return false;
 
         if (armor == null || !_inventory.CanHoldArmorPiece(armor)) return false;
 
@@ -100,7 +100,7 @@ public class ArmorSlot : ItemSlot
 
     private ArmorType GetStoredArmorType()
     {
-        if (Itemstack?.Item != null && IsArmor(Itemstack.Item, out IArmor? armor) && armor != null)
+        if (Itemstack?.Item != null && IsArmor(Itemstack.Collectible, out IArmor? armor) && armor != null)
         {
             return armor.ArmorType;
         }
@@ -111,7 +111,7 @@ public class ArmorSlot : ItemSlot
     }
     private DamageResistData GetResists()
     {
-        if (Itemstack?.Item != null && IsArmor(Itemstack.Item, out IArmor? armor) && armor != null)
+        if (Itemstack?.Item != null && IsArmor(Itemstack.Collectible, out IArmor? armor) && armor != null)
         {
             return armor.Resists;
         }

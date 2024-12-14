@@ -14,6 +14,7 @@
       {"code": "macesProficiency", "type": "positive", "attributes": {"macesProficiency": 0.3}},
       {"code": "clubsProficiency", "type": "positive", "attributes": {"clubsProficiency": 0.3}},
       {"code": "halberdsProficiency", "type": "positive", "attributes": {"halberdsProficiency": 0.3}},
+      {"code": "axesProficiency", "type": "positive", "attributes": {"axesProficiency": 0.3}},
       {"code": "steadyAim", "type": "positive", "attributes": {"steadyAim": 0.3}},
       {"code": "tremblingAim", "type": "negative", "attributes": {"steadyAim": -0.3}}
     ]
@@ -32,7 +33,8 @@
       "crossbowsProficiency",
       "steadyAim",
       "spearsProficiency",
-      "halberdsProficiency"
+      "halberdsProficiency",
+      "axesProficiency"
     ]
   },
   {"file": "game:config/characterclasses", "op": "addeach", "path": "/2/traits/-", "value": ["javelinsProficiency", "macesProficiency", "clubsProficiency"]},

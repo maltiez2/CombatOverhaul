@@ -95,6 +95,7 @@
   "game:trait-macesProficiency": "<font color=\"#84ff84\">• Maces proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
   "game:trait-clubsProficiency": "<font color=\"#84ff84\">• Clubs proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
   "game:trait-halberdsProficiency": "<font color=\"#84ff84\">• Halberds proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
+  "game:trait-axesProficiency": "<font color=\"#84ff84\">• Battleaxes proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
   "game:trait-steadyAim": "<font color=\"#84ff84\">• Steady aim</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
   "game:trait-tremblingAim": "<font color=\"#ff8484\">• Trembling aim</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
 
@@ -108,6 +109,7 @@
   "game:charattribute-macesProficiency-0.3": "+30% attackspeed",
   "game:charattribute-clubsProficiency-0.3": "+30% attack speed",
   "game:charattribute-halberdsProficiency-0.3": "+30% attack speed",
+  "game:charattribute-axesProficiency-0.3": "+30% attack speed",
   "game:charattribute-steadyAim-0.3": "30% less aim drift",
   "game:charattribute-steadyAim--0.3": "30% more aim drift",
 
@@ -154,6 +156,9 @@
   "setting-bow_aiming_horisontal_limit": "Bows aiming cursor horizontal limit",
   "setting-spears_aiming_difficulty": "Spears aiming difficulty",
   "setting-spears_thrown_distance": "Spears throwing distance",
+  "setting-melee_weapons_damage_multiplier": "Melee weapons damage multiplier",
+  "setting-bows_damage_multiplier": "Bows damage multiplier",
+  "setting-spears_range_damage_multiplier": "Spears thrown damage multiplier",
   "setting-shields_protection_zones": "Shields protection zones",
   "setting-modify_vanilla_classes": "Modify vanilla classes",
   "setting-axe_animation": "New axe animations",
