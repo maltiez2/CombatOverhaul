@@ -94,7 +94,8 @@ public class ArmorBehavior : CollectibleBehavior, IArmor, IAffectsPlayerStats
 
     public ArmorType ArmorType { get; protected set; } = new(ArmorLayers.None, DamageZone.None);
     public DamageResistData Resists { get; protected set; } = new();
-    public Dictionary<string, float> PlayerStats { get; set; } = new();
+    public Dictionary<string, float> Stats { get; protected set; } = new();
+    public Dictionary<string, float> PlayerStats(ItemSlot slot, EntityPlayer player) => Stats;
 
     public override void Initialize(JsonObject properties)
     {
@@ -102,7 +103,7 @@ public class ArmorBehavior : CollectibleBehavior, IArmor, IAffectsPlayerStats
 
         ArmorStatsJson stats = properties.AsObject<ArmorStatsJson>();
 
-        PlayerStats = stats.PlayerStats;
+        Stats = stats.PlayerStats;
 
         if (!stats.Layers.Any() || !stats.Zones.Any())
         {
@@ -119,9 +120,9 @@ public class ArmorBehavior : CollectibleBehavior, IArmor, IAffectsPlayerStats
     {
         dsc.AppendLine(Lang.Get("combatoverhaul:armor-layers-info", ArmorType.LayersToTranslatedString()));
         dsc.AppendLine(Lang.Get("combatoverhaul:armor-zones-info", ArmorType.ZonesToTranslatedString()));
-        dsc.AppendLine(Lang.Get("combatoverhaul:armor-fraction-protection"));
         if (Resists.Resists.Values.Any(value => value != 0))
         {
+            dsc.AppendLine(Lang.Get("combatoverhaul:armor-fraction-protection"));
             foreach ((EnumDamageType type, float level) in Resists.Resists.Where(entry => entry.Value > 0))
             {
                 string damageType = Lang.Get($"combatoverhaul:damage-type-{type}");
@@ -139,10 +140,10 @@ public class ArmorBehavior : CollectibleBehavior, IArmor, IAffectsPlayerStats
             }
         }
 
-        if (PlayerStats.Values.Any(value => value != 0))
+        if (Stats.Values.Any(value => value != 0))
         {
             dsc.AppendLine(Lang.Get("combatoverhaul:stat-stats"));
-            foreach ((string stat, float value) in PlayerStats)
+            foreach ((string stat, float value) in Stats)
             {
                 if (value != 0f) dsc.AppendLine($"  {Lang.Get($"combatoverhaul:stat-{stat}")}: {value * 100:F1}%");
             }
@@ -157,8 +158,8 @@ public class WearableWithStatsBehavior : CollectibleBehavior, IAffectsPlayerStat
     public WearableWithStatsBehavior(CollectibleObject collObj) : base(collObj)
     {
     }
-
-    public Dictionary<string, float> PlayerStats { get; set; } = new();
+    public Dictionary<string, float> Stats { get; set; } = new();
+    public Dictionary<string, float> PlayerStats(ItemSlot slot, EntityPlayer player) => Stats;
 
     public override void Initialize(JsonObject properties)
     {
@@ -166,15 +167,15 @@ public class WearableWithStatsBehavior : CollectibleBehavior, IAffectsPlayerStat
 
         ArmorStatsJson stats = properties.AsObject<ArmorStatsJson>();
 
-        PlayerStats = stats.PlayerStats;
+        Stats = stats.PlayerStats;
     }
 
     public override void GetHeldItemInfo(ItemSlot inSlot, StringBuilder dsc, IWorldAccessor world, bool withDebugInfo)
     {
-        if (PlayerStats.Values.Any(value => value != 0))
+        if (Stats.Values.Any(value => value != 0))
         {
             dsc.AppendLine(Lang.Get("combatoverhaul:stat-stats"));
-            foreach ((string stat, float value) in PlayerStats)
+            foreach ((string stat, float value) in Stats)
             {
                 if (value != 0f) dsc.AppendLine($"  {Lang.Get($"combatoverhaul:stat-{stat}")}: {value * 100:F1}%");
             }

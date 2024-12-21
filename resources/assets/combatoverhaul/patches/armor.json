@@ -710,7 +710,7 @@
     "path": "/durabilityByType",
     "value": {
       "armor-*-improvised-wood": 150,
-      "armor-*-jerkin-leather": 500,
+      "armor-*-jerkin-leather": 1800,
       "armor-head-sewn-leather": 1400,
       "armor-head-sewn-linen": 1800,
       "armor-head-tailored-*-linen": 1800,

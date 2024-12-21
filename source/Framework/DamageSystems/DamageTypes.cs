@@ -13,7 +13,8 @@ public interface ITypedDamage
 public class DamageDataJson
 {
     public string DamageType { get; set; } = "PiercingAttack";
-    public float Strength { get; set; } // Tier
+    public float Strength { get; set; } // Tier, left for compatibility reasons
+    public int Tier { get; set; }
     public float Damage { get; set; }
 
     public DamageDataJson() { }

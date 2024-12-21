@@ -92,10 +92,10 @@
       "code": "CombatOverhaul:EntityDamageModel",
       "damageModel": {
         "TorsoDamageMultiplier": 1,
-        "LimbsDamageMultiplier": 0.3,
+        "LimbsDamageMultiplier": 0.5,
         "HeadDamageMultiplier": 1,
         "CriticalDamageMultiplier": 3,
-        "DefaultResists": {"BluntAttack": 3, "SlashingAttack": 5, "PiercingAttack": 7}
+        "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 3, "PiercingAttack": 4}
       }
     }
   },
@@ -108,13 +108,13 @@
       "code": "CombatOverhaul:EntityDamageModel",
       "damageModel": {
         "TorsoDamageMultiplier": 1,
-        "LimbsDamageMultiplier": 0.3,
+        "LimbsDamageMultiplier": 0.5,
         "HeadDamageMultiplier": 1,
         "CriticalDamageMultiplier": 3,
-        "DefaultResists": {"BluntAttack": 3, "SlashingAttack": 5, "PiercingAttack": 7}
+        "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 3, "PiercingAttack": 4}
       }
     }
   },
-  {"side": "Server", "file": "game:entities/land/eidolon-immobilized", "op": "replace", "path": "/server/behaviors/5/aitasks/0/damageTier", "value": 7},
-  {"side": "Server", "file": "game:entities/land/eidolon-immobilized", "op": "replace", "path": "/server/behaviors/5/aitasks/0/damage", "value": 25}
+  {"side": "Server", "file": "game:entities/land/eidolon-immobilized", "op": "replace", "path": "/server/behaviors/5/aitasks/0/damageTier", "value": 4},
+  {"side": "Server", "file": "game:entities/land/eidolon-immobilized", "op": "replace", "path": "/server/behaviors/5/aitasks/0/damage", "value": 16}
 ]

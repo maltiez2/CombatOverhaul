@@ -300,6 +300,12 @@ public sealed class CombatOverhaulAnimationsSystem : ModSystem
     }
 }
 
+public interface IFueledItem
+{
+    double GetFuelHours(ItemSlot slot);
+    void AddFuelHours(ItemSlot slot, double hours);
+}
+
 
 public sealed class NightVisionSystem : ModSystem, IRenderer
 {
@@ -366,13 +372,27 @@ public sealed class NightVisionSystem : ModSystem, IRenderer
                 }
             }
 
+            foreach (IPlayer? player in _serverApi.World.AllOnlinePlayers)
+            {
+                IInventory? inventory = player.InventoryManager.GetOwnInventory(GlobalConstants.characterInvClassName);
+                if (inventory == null) continue;
+
+                foreach (ItemSlot slot in inventory)
+                {
+                    IFueledItem? item = slot.Itemstack?.Collectible?.GetCollectibleInterface<IFueledItem>();
+                    if (item == null) continue;
+
+                    item.AddFuelHours(slot, -hoursPassed);
+                    slot.MarkDirty();
+                }
+            }
+
             _lastCheckTotalHours = totalHours;
         }
     }
 
     private void OnLevelFinalize()
     {
-        //gearInv = capi.World.Player.Entity.GearInventory;
-        _playerInventoryBehavior = _clientApi.World.Player.Entity.GetBehavior<EntityBehaviorPlayerInventory>();
+        _playerInventoryBehavior = _clientApi?.World?.Player?.Entity?.GetBehavior<EntityBehaviorPlayerInventory>();
     }
 }

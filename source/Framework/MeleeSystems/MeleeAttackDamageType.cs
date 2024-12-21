@@ -1,12 +1,14 @@
 ﻿using CombatOverhaul.Colliders;
 using CombatOverhaul.DamageSystems;
 using ProtoBuf;
+using System.Diagnostics;
 using System.Numerics;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
+using static Microsoft.WindowsAPICodePack.Shell.PropertySystem.SystemProperties.System;
 
 namespace CombatOverhaul.MeleeSystems;
 
@@ -32,7 +34,6 @@ public class MeleeDamagePacket
         if (target == null || !target.Alive) return;
 
         bool printIntoChat = api.ModLoader.GetModSystem<CombatOverhaulSystem>().Settings.PrintMeleeHits;
-
 
         Entity attacker = api.World.GetEntityById(AttackerEntityId);
         string targetName = target.GetName();
@@ -91,7 +92,7 @@ public class MeleeDamageType : IHasLineCollider
     public MeleeDamageType(MeleeDamageTypeJson stats)
     {
         Damage = stats.Damage.Damage;
-        DamageTypeData = new(Enum.Parse<EnumDamageType>(stats.Damage.DamageType), stats.Damage.Strength);
+        DamageTypeData = new(Enum.Parse<EnumDamageType>(stats.Damage.DamageType), Math.Max(stats.Damage.Strength, stats.Damage.Tier));
         Knockback = stats.Knockback;
         RelativeCollider = new LineSegmentCollider(stats.Collider);
         InWorldCollider = new LineSegmentCollider(stats.Collider);
@@ -122,6 +123,10 @@ public class MeleeDamageType : IHasLineCollider
         }
 
         float damage = Damage * attacker.Stats.GetBlended("meleeWeaponsDamage");
+        if (target.Properties.Attributes?["isMechanical"].AsBool() == true)
+        {
+            damage *= attacker.Stats.GetBlended("mechanicalsDamage");
+        }
 
         bool damageReceived = target.ReceiveDamage(new DirectionalTypedDamageSource()
         {

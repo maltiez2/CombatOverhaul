@@ -113,7 +113,7 @@
         "LimbsDamageMultiplier": 1,
         "HeadDamageMultiplier": 1.5,
         "CriticalDamageMultiplier": 2,
-        "DefaultResists": {"BluntAttack": 3, "SlashingAttack": 5, "PiercingAttack": 6}
+        "DefaultResists": {"BluntAttack": 3, "SlashingAttack": 4, "PiercingAttack": 5}
       }
     }
   },
@@ -129,14 +129,16 @@
         "LimbsDamageMultiplier": 1,
         "HeadDamageMultiplier": 1.5,
         "CriticalDamageMultiplier": 2,
-        "DefaultResists": {"BluntAttack": 3, "SlashingAttack": 5, "PiercingAttack": 6}
+        "DefaultResists": {"BluntAttack": 3, "SlashingAttack": 4, "PiercingAttack": 5}
       }
     }
   },
-  {"side": "Server", "file": "game:entities/air/erel", "op": "add", "path": "/server/behaviors/8/aitasks/1/damageTier", "value": 7},
+  {"side": "Server", "file": "game:entities/air/erel", "op": "add", "path": "/server/behaviors/8/aitasks/1/damageTier", "value": 5},
   {"side": "Server", "file": "game:entities/air/erel", "op": "replace", "path": "/server/behaviors/8/aitasks/1/damageType", "value": "SlashingAttack"},
-  {"side": "Server", "file": "game:entities/air/erel", "op": "replace", "path": "/server/behaviors/8/aitasks/1/damage", "value": 25},
-  {"side": "Server", "file": "game:entities/air/erel", "op": "add", "path": "/server/behaviors/8/aitasks/2/damageTier", "value": 7},
+  {"side": "Server", "file": "game:entities/air/erel", "op": "replace", "path": "/server/behaviors/8/aitasks/1/damage", "value": 20},
+  {"side": "Server", "file": "game:entities/air/erel", "op": "add", "path": "/server/behaviors/8/aitasks/2/damageTier", "value": 5},
   {"side": "Server", "file": "game:entities/air/erel", "op": "replace", "path": "/server/behaviors/8/aitasks/2/damageType", "value": "SlashingAttack"},
-  {"side": "Server", "file": "game:entities/air/erel", "op": "replace", "path": "/server/behaviors/8/aitasks/2/damage", "value": 15}
+  {"side": "Server", "file": "game:entities/air/erel", "op": "replace", "path": "/server/behaviors/8/aitasks/2/damage", "value": 15},
+  {"side": "Server", "file": "game:entities/air/erel", "op": "replace", "path": "/server/behaviors/2/health", "value": 500},
+  {"side": "Server", "file": "game:entities/air/erel", "op": "replace", "path": "/server/behaviors/2/maxhealth", "value": 500}
 ]

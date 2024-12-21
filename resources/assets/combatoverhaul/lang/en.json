@@ -84,6 +84,7 @@
   "stat-healingeffectivness": "Healing effectivness",
   "stat-hungerrate": "Hunger rate",
   "stat-meleeWeaponsDamage": "Melee weapon damage",
+  "stat-miningSpeedMul": "Mining speed",
 
   "game:trait-bowsProficiency": "<font color=\"#84ff84\">• Bows proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
   "game:trait-crossbowsProficiency": "<font color=\"#84ff84\">• Crossbows proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
@@ -106,12 +107,13 @@
   "game:charattribute-twoHandedSwordsProficiency-0.3": "+30% attack speed",
   "game:charattribute-spearsProficiency-0.3": "+30% attack speed",
   "game:charattribute-javelinsProficiency-0.3": "+30% attack speed",
-  "game:charattribute-macesProficiency-0.3": "+30% attackspeed",
+  "game:charattribute-macesProficiency-0.3": "+30% attack speed",
   "game:charattribute-clubsProficiency-0.3": "+30% attack speed",
   "game:charattribute-halberdsProficiency-0.3": "+30% attack speed",
   "game:charattribute-axesProficiency-0.3": "+30% attack speed",
   "game:charattribute-steadyAim-0.3": "30% less aim drift",
   "game:charattribute-steadyAim--0.3": "30% more aim drift",
+  "game:charattribute-armorWalkSpeedAffectedness--0.5": "walk speed penalty for wearing armor reduced by 50%",
 
   "damagelog-missed-block-zone": "Player tried blocking, but {0} was not protected by block",
   "damagelog-missed-block-direction": "Player tried blocking, but directon ({0}) of incomming attack was not covered by block",
@@ -173,5 +175,11 @@
   "setting-comment-tool_animation_speed_bonus": "Animation speed bonus from mining speed bonus of a pickaxe. Makes higher tier pickaxes swing faster. Value of 0.3 means +30% animation speed for steel piackaxe.",
   "setting-print_range_hits": "Print range attacks results",
   "setting-print_melee_hits": "Print melee attacks results",
-  "setting-print_player_hits": "Print damage received by player"
+  "setting-print_player_hits": "Print damage received by player",
+  "setting-player_model_torso_damage": "Player torso damage multiplier",
+  "setting-player_model_head_damage": "Player head damage multiplier",
+  "setting-player_model_neck_damage": "Player neck damage multiplier",
+  "setting-player_model_face_damage": "Player face damage multiplier",
+  "setting-player_model_arms_damage": "Player arms damage multiplier",
+  "setting-player_model_legs_damage": "Player legs damage multiplier"
 }

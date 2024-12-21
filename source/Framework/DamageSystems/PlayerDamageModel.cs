@@ -2,8 +2,8 @@
 using CombatOverhaul.Colliders;
 using CombatOverhaul.MeleeSystems;
 using CombatOverhaul.Utils;
+using Newtonsoft.Json.Linq;
 using ProtoBuf;
-using System.Linq;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -109,6 +109,19 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
             PlayerDamageModelJson stats = attributes["damageModel"].AsObject<PlayerDamageModelJson>();
 
             DamageModel = new(stats.Zones);
+        }
+
+        if (attributes.KeyExists("bodyParts"))
+        {
+            CollidersToBodyParts.Clear();
+            foreach (JToken token in attributes["bodyParts"].Token)
+            {
+                if (token is not JProperty property) continue;
+
+                JsonObject value = new(property.Value);
+
+                CollidersToBodyParts.Add(property.Name, Enum.Parse<PlayerBodyPart>(value.AsString("Torso")));
+            }
         }
     }
 

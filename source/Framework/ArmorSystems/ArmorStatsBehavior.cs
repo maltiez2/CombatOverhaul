@@ -1,12 +1,14 @@
 ﻿using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
+using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
+using static Microsoft.WindowsAPICodePack.Shell.PropertySystem.SystemProperties.System;
 
 namespace CombatOverhaul.Armor;
 
 public interface IAffectsPlayerStats
 {
-    public Dictionary<string, float> PlayerStats { get; }
+    public Dictionary<string, float> PlayerStats(ItemSlot slot, EntityPlayer player);
 }
 
 public sealed class WearableStatsBehavior : EntityBehavior
@@ -53,26 +55,27 @@ public sealed class WearableStatsBehavior : EntityBehavior
 
         Stats.Clear();
 
-        foreach (IAffectsPlayerStats armor in inventory
+        foreach (ItemSlot slot in inventory
             .Where(slot => slot?.Itemstack?.Item != null)
-            .Where(slot => slot.Itemstack.Item.GetRemainingDurability(slot.Itemstack) > 0)
-            .Select(slot => slot.Itemstack?.Item).OfType<IAffectsPlayerStats>())
+            .Where(slot => slot.Itemstack.Item.GetRemainingDurability(slot.Itemstack) > 0))
         {
-            foreach ((string stat, float value) in armor.PlayerStats)
+            if (slot?.Itemstack?.Item is not IAffectsPlayerStats item) continue;
+            
+            foreach ((string stat, float value) in item.PlayerStats(slot, _player))
             {
                 AddStatValue(stat, value);
             }
         }
 
-        foreach (IAffectsPlayerStats armor in inventory
+        foreach (ItemSlot slot in inventory
             .Where(slot => slot?.Itemstack?.Item != null)
-            .Where(slot => slot.Itemstack.Item.GetRemainingDurability(slot.Itemstack) > 0)
-            .Select(slot => slot.Itemstack?.Item)
-            .OfType<CollectibleObject>()
-            .Select(item => item.CollectibleBehaviors.Where(behavior => behavior is IAffectsPlayerStats).FirstOrDefault(defaultValue: null))
-            .OfType<IAffectsPlayerStats>())
+            .Where(slot => slot.Itemstack.Item.GetRemainingDurability(slot.Itemstack) > 0))
         {
-            foreach ((string stat, float value) in armor.PlayerStats)
+            IAffectsPlayerStats? behavior = slot.Itemstack.Item.CollectibleBehaviors.Where(behavior => behavior is IAffectsPlayerStats).FirstOrDefault(defaultValue: null) as IAffectsPlayerStats;
+
+            if (behavior == null) continue;
+
+            foreach ((string stat, float value) in behavior.PlayerStats(slot, _player))
             {
                 AddStatValue(stat, value);
             }
@@ -87,6 +90,11 @@ public sealed class WearableStatsBehavior : EntityBehavior
     }
     private void AddStatValue(string stat, float value)
     {
+        if (stat == "walkspeed" && value < 0)
+        {
+            value *= _player.Stats.GetBlended("armorWalkSpeedAffectedness");
+        }
+        
         if (!Stats.ContainsKey(stat))
         {
             Stats[stat] = value;

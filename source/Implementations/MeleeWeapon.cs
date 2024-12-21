@@ -1163,9 +1163,10 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
             {
                 damage = attack.Damage;
             }
-            if (attack.Strength > tier)
+            float currentTier = Math.Max(attack.Strength, attack.Tier);
+            if (currentTier > tier)
             {
-                tier = attack.Strength;
+                tier = currentTier;
             }
 
             damageTypes.Add(attack.DamageType);

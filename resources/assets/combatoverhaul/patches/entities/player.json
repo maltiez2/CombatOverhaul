@@ -38,6 +38,20 @@
     "path": "/server/behaviors/-",
     "value": {
       "code": "CombatOverhaul:PlayerDamageModel",
+      "bodyParts": {
+        "LowerTorso": "Torso",
+        "UpperTorso": "Torso",
+        "Head": "Head",
+        "Neck": "Neck",
+        "UpperArmR": "RightArm",
+        "UpperArmL": "LeftArm",
+        "LowerArmR": "RightHand",
+        "LowerArmL": "LeftHand",
+        "UpperFootL": "LeftLeg",
+        "UpperFootR": "RightLeg",
+        "LowerFootL": "LeftFoot",
+        "LowerFootR": "RightFoot"
+      },
       "damageModel": {
         "Zones": [
           {"Zone": "Torso", "Coverage": 70, "Top": 90, "Bottom": 90, "Left": 180, "Right": 180, "DamageMultiplier": 1},

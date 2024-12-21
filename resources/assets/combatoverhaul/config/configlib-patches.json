@@ -104,6 +104,21 @@
       },
       "combatoverhaul:patches/tools/pickaxe.json": {
         "0/value/AnimationSpeedBonusFromMiningSpeed": "tool_animation_speed_bonus"
+      },
+      "combatoverhaul:patches/entities/player.json": {
+        "2/value/damageModel/Zones/0/DamageMultiplier": "player_model_torso_damage",
+        "2/value/damageModel/Zones/1/DamageMultiplier": "player_model_head_damage",
+        "2/value/damageModel/Zones/2/DamageMultiplier": "player_model_neck_damage",
+        "2/value/damageModel/Zones/3/DamageMultiplier": "player_model_face_damage",
+        "2/value/damageModel/Zones/4/DamageMultiplier": "player_model_arms_damage",
+        "2/value/damageModel/Zones/5/DamageMultiplier": "player_model_arms_damage",
+        "2/value/damageModel/Zones/6/DamageMultiplier": "player_model_arms_damage",
+        "2/value/damageModel/Zones/7/DamageMultiplier": "player_model_arms_damage",
+        "2/value/damageModel/Zones/8/DamageMultiplier": "player_model_legs_damage",
+        "2/value/damageModel/Zones/9/DamageMultiplier": "player_model_legs_damage",
+        "2/value/damageModel/Zones/10/DamageMultiplier": "player_model_legs_damage",
+        "2/value/damageModel/Zones/11/DamageMultiplier": "player_model_legs_damage"
+
       }
     }
   },
@@ -347,6 +362,66 @@
       "ingui": "combatoverhaul:setting-print_player_hits",
       "comment": "Can causes lags in some cases",
       "default": false
+    },
+    {
+      "code": "player_model_torso_damage",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-player_model_torso_damage",
+      "default": 1.0,
+      "range": {
+        "min": 0.0,
+        "max": 5.0
+      }
+    },
+    {
+      "code": "player_model_head_damage",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-player_model_head_damage",
+      "default": 2.0,
+      "range": {
+        "min": 0.0,
+        "max": 5.0
+      }
+    },
+    {
+      "code": "player_model_neck_damage",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-player_model_neck_damage",
+      "default": 3.0,
+      "range": {
+        "min": 0.0,
+        "max": 5.0
+      }
+    },
+    {
+      "code": "player_model_face_damage",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-player_model_face_damage",
+      "default": 1.5,
+      "range": {
+        "min": 0.0,
+        "max": 5.0
+      }
+    },
+    {
+      "code": "player_model_arms_damage",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-player_model_arms_damage",
+      "default": 0.5,
+      "range": {
+        "min": 0.0,
+        "max": 5.0
+      }
+    },
+    {
+      "code": "player_model_legs_damage",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-player_model_legs_damage",
+      "default": 0.5,
+      "range": {
+        "min": 0.0,
+        "max": 5.0
+      }
     }
   ]
 }
