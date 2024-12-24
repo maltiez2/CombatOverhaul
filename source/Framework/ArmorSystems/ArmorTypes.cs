@@ -77,6 +77,12 @@ public interface IArmor
     public DamageResistData Resists { get; }
 }
 
+public interface IModularArmor
+{
+    public ArmorType ArmorType { get; }
+    public DamageResistData GetResists(ItemSlot slot, ArmorType type);
+}
+
 public sealed class ArmorStatsJson
 {
     public string[] Layers { get; set; } = Array.Empty<string>();

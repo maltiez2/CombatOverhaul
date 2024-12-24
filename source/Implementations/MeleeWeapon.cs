@@ -1307,6 +1307,13 @@ public class MeleeWeapon : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasDyn
         {
             ServerLogic = new(serverAPI, this);
         }
+
+        AltForInteractions = new()
+        {
+            MouseButton = EnumMouseButton.None,
+            HotKeyCode = "Alt",
+            ActionLangCode = "combatoverhaul:interaction-hold-alt"
+        };
     }
 
     public AnimationRequestByCode? GetIdleAnimation(bool mainHand) => ClientLogic?.GetIdleAnimation(mainHand);
@@ -1346,6 +1353,13 @@ public class MeleeWeapon : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasDyn
         base.GetHeldItemInfo(inSlot, dsc, world, withDebugInfo);
     }
 
+    public override WorldInteraction?[]? GetHeldInteractionHelp(ItemSlot inSlot)
+    {
+        WorldInteraction?[] interactionHelp = base.GetHeldInteractionHelp(inSlot);
+
+        return interactionHelp?.Append(AltForInteractions);
+    }
+
     public void BlockCallback(IServerPlayer player, ItemSlot slot, bool mainHand, float damageBlocked)
     {
         DamageItem(player.Entity.World, player.Entity, slot, 1);
@@ -1353,6 +1367,8 @@ public class MeleeWeapon : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasDyn
     }
 
     public bool OnMouseWheel(ItemSlot slot, IClientPlayer byPlayer, float delta) => ClientLogic?.OnMouseWheel(slot, byPlayer, delta) ?? false;
+
+    protected WorldInteraction? AltForInteractions;
 }
 
 public sealed class GripController

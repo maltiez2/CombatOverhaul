@@ -387,7 +387,7 @@
       "code": "player_model_neck_damage",
       "type": "float",
       "ingui": "combatoverhaul:setting-player_model_neck_damage",
-      "default": 3.0,
+      "default": 2.0,
       "range": {
         "min": 0.0,
         "max": 5.0

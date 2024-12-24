@@ -85,6 +85,8 @@
   "stat-hungerrate": "Hunger rate",
   "stat-meleeWeaponsDamage": "Melee weapon damage",
   "stat-miningSpeedMul": "Mining speed",
+  "stat-fallDamageThreshold": "Fall damage threshold",
+  "stat-jumpHeightMul": "Jump height",
 
   "game:trait-bowsProficiency": "<font color=\"#84ff84\">• Bows proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
   "game:trait-crossbowsProficiency": "<font color=\"#84ff84\">• Crossbows proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
@@ -100,9 +102,9 @@
   "game:trait-steadyAim": "<font color=\"#84ff84\">• Steady aim</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
   "game:trait-tremblingAim": "<font color=\"#ff8484\">• Trembling aim</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
 
-  "game:charattribute-bowsProficiency-0.3": "+30% draw speed",
-  "game:charattribute-crossbowsProficiency-0.3": "+30% reload speed",
-  "game:charattribute-firearmsProficiency-0.3": "+30% reload speed",
+  "game:charattribute-bowsProficiency-0.5": "+50% draw speed",
+  "game:charattribute-crossbowsProficiency-0.5": "+50% reload speed",
+  "game:charattribute-firearmsProficiency-0.5": "+50% reload speed",
   "game:charattribute-oneHandedSwordsProficiency-0.3": "+30% attack speed",
   "game:charattribute-twoHandedSwordsProficiency-0.3": "+30% attack speed",
   "game:charattribute-spearsProficiency-0.3": "+30% attack speed",
@@ -111,7 +113,7 @@
   "game:charattribute-clubsProficiency-0.3": "+30% attack speed",
   "game:charattribute-halberdsProficiency-0.3": "+30% attack speed",
   "game:charattribute-axesProficiency-0.3": "+30% attack speed",
-  "game:charattribute-steadyAim-0.3": "30% less aim drift",
+  "game:charattribute-steadyAim-0.5": "50% less aim drift",
   "game:charattribute-steadyAim--0.3": "30% more aim drift",
   "game:charattribute-armorWalkSpeedAffectedness--0.5": "walk speed penalty for wearing armor reduced by 50%",
 
@@ -145,6 +147,8 @@
 
   "prefixandcreature-arrow-*": "Arrow",
   "prefixandcreature-spear-*": "Spear",
+
+  "interaction-hold-alt": "Hold 'Alt' to interact with objects or place on tool-rack/ground",
 
   "setting-directions_cursor_transparency": "Directions selection cursor transparency",
   "setting-directions_cursor_scale": "Directions selection cursor scale",

@@ -75,7 +75,7 @@ public class GearEquipableBag : CollectibleBehavior, IHeldBag, IAttachedInteract
     public ItemStack[] GetContents(ItemStack bagstack, IWorldAccessor world)
     {
         ITreeAttribute backPackTree = bagstack.Attributes.GetTreeAttribute("backpack");
-        if (backPackTree == null) return null;
+        if (backPackTree == null) return Array.Empty<ItemStack>();
 
         List<ItemStack> contents = new();
         ITreeAttribute slotsTree = backPackTree.GetTreeAttribute("slots");

@@ -2,14 +2,16 @@
 using CombatOverhaul.Colliders;
 using CombatOverhaul.Utils;
 using HarmonyLib;
+using System.Diagnostics;
+using System.Numerics;
 using System.Reflection;
 using System.Reflection.Emit;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
-using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
+using static Microsoft.WindowsAPICodePack.Shell.PropertySystem.SystemProperties.System;
 
 namespace CombatOverhaul.Integration;
 
@@ -23,6 +25,7 @@ internal static class AnimationPatch
     public static void Patch(string harmonyId)
     {
         _animators.Clear();
+        _reportedEntities.Clear();
         new Harmony(harmonyId).Patch(
                 typeof(EntityShapeRenderer).GetMethod("RenderHeldItem", AccessTools.all),
                 prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimationPatch), nameof(RenderHeldItem)))
@@ -52,6 +55,11 @@ internal static class AnimationPatch
                 typeof(EntityPlayerShapeRenderer).GetMethod("smoothCameraTurning", AccessTools.all),
                 prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimationPatch), nameof(AnimationPatch.SmoothCameraTurning)))
             );
+
+        new Harmony(harmonyId).Patch(
+                typeof(EntityBehaviorHealth).GetMethod("OnFallToGround", AccessTools.all),
+                prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimationPatch), nameof(AnimationPatch.OnFallToGround)))
+            );
     }
 
     public static void Unpatch(string harmonyId)
@@ -62,7 +70,9 @@ internal static class AnimationPatch
         new Harmony(harmonyId).Unpatch(typeof(EntityPlayer).GetMethod("OnSelfBeforeRender", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         new Harmony(harmonyId).Unpatch(typeof(EntityPlayer).GetMethod("updateEyeHeight", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         new Harmony(harmonyId).Unpatch(typeof(EntityPlayerShapeRenderer).GetMethod("smoothCameraTurning", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
+        new Harmony(harmonyId).Unpatch(typeof(EntityBehaviorHealth).GetMethod("OnFallToGround", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         _animators.Clear();
+        _reportedEntities.Clear();
     }
 
     public static void OnFrameInvoke(ClientAnimator animator, ElementPose pose)
@@ -109,16 +119,24 @@ internal static class AnimationPatch
             {
                 colliders.Animator = animator;
 
-                foreach (ElementPose pose in poses)
+                try
                 {
-                    AddPoseShapeElements(pose, colliders);
-                }
+                    foreach (ElementPose pose in poses)
+                    {
+                        AddPoseShapeElements(pose, colliders);
+                    }
 
-                if (colliders.ShapeElementsToProcess.Any() && entity.Api.Side == EnumAppSide.Client)
-                {
-                    string missingColliders = colliders.ShapeElementsToProcess.Aggregate((first, second) => $"{first}, {second}");
-                    LoggerUtil.Warn(entity.Api, typeof(AnimationPatch), $"({entity.Code}) Listed colliders that was not found in shape: {missingColliders}");
+                    if (colliders.ShapeElementsToProcess.Any() && entity.Api.Side == EnumAppSide.Client)
+                    {
+                        string missingColliders = colliders.ShapeElementsToProcess.Aggregate((first, second) => $"{first}, {second}");
+                        LoggerUtil.Warn(entity.Api, typeof(AnimationPatch), $"({entity.Code}) Listed colliders that was not found in shape: {missingColliders}");
+                    }
                 }
+                catch (Exception exception)
+                {
+                    LoggerUtil.Error(entity.Api, typeof(AnimationPatch), $"({entity.Code}) Error during creating colliders: \n{exception}");
+                }
+                
             }
         }
 
@@ -161,13 +179,18 @@ internal static class AnimationPatch
         }
         catch (Exception exception)
         {
-            LoggerUtil.Error(entity.Api, typeof(AnimationPatch), $"({entity.Code}) Error during client frame: \n{exception}");
+            if (!_reportedEntities.Contains(entity.EntityId))
+            {
+                LoggerUtil.Error(entity.Api, typeof(AnimationPatch), $"({entity.Code}) Error during client frame (not directly related to CO): \n{exception}");
+                _reportedEntities.Add(entity.EntityId);
+            }
         }
 
         return false;
     }
 
     internal static readonly Dictionary<ClientAnimator, EntityAgent> _animators = new();
+    internal static readonly HashSet<long> _reportedEntities = new();
 
     private static void AddPoseShapeElements(ElementPose pose, CollidersEntityBehavior colliders)
     {
@@ -229,6 +252,62 @@ internal static class AnimationPatch
         {
             return true;
         }
+    }
+
+    private const string _fallDamageThresholdMultiplierStat = "fallDamageThreshold";
+    private const float _fallDamageMultiplier = 0.2f;
+    private const float _fallDamageSpeedThreshold = 0.1f;
+    private static bool OnFallToGround(EntityBehaviorHealth __instance, ref Vec3d positionBeforeFalling, ref double withYMotion)
+    {
+        if ((__instance.entity as EntityAgent)?.ServerControls.Gliding == true)
+        {
+            return true;
+        }
+        
+        if (__instance.entity is not EntityPlayer player)
+        {
+            return true;
+        }
+
+        double fallDistance = (positionBeforeFalling.Y - player.Pos.Y) / Math.Max(player.Stats.GetBlended(_fallDamageThresholdMultiplierStat), 0.001);
+
+        if (fallDistance < EntityBehaviorHealth.FallDamageFallenDistanceThreshold) return false;
+
+        if (Math.Abs(withYMotion) < _fallDamageSpeedThreshold) return false;
+
+        double fallDamage = Math.Max(0, fallDistance - EntityBehaviorHealth.FallDamageFallenDistanceThreshold) * player.Properties.FallDamageMultiplier * _fallDamageMultiplier;
+
+        player.ReceiveDamage(new DamageSource()
+        {
+            Source = EnumDamageSource.Fall,
+            Type = EnumDamageType.Gravity
+        }, (float)fallDamage);
+
+        return false;
+
+        /*if (!__instance.entity.Properties.FallDamage) return false;
+
+        double speedThreshold = Math.Abs(EntityBehaviorHealth.FallDamageYMotionThreshold);
+        double speed = Math.Abs(withYMotion);
+
+        Trace.WriteLine($"{speed}");
+
+        if (speed < speedThreshold) return false;
+
+        if (__instance.entity is EntityPlayer player)
+        {
+            speedThreshold *= Math.Sqrt(player.Stats.GetBlended(_fallDamageMultiplierStat));
+        }
+
+        double fallDamage = Math.Sqrt((speed - speedThreshold) / speedThreshold);
+
+        __instance.entity.ReceiveDamage(new DamageSource()
+        {
+            Source = EnumDamageSource.Fall,
+            Type = EnumDamageType.Gravity
+        }, (float)fallDamage);
+
+        return false;*/
     }
 
     [HarmonyPatch(typeof(ClientAnimator), "calculateMatrices", typeof(int),

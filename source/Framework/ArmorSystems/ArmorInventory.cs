@@ -60,9 +60,12 @@ public class ClothesSlot : ItemSlotCharacter
         if (bag != null && World != null && World.PlayerByUid(OwnerUUID)?.Entity != null)
         {
             ItemStack[] bagContent = bag.GetContents(stack, World);
-            foreach (ItemStack bagContentStack in bagContent)
+            if (bagContent != null)
             {
-                World.SpawnItemEntity(bagContentStack, World.PlayerByUid(OwnerUUID)?.Entity?.SidedPos.AsBlockPos);
+                foreach (ItemStack bagContentStack in bagContent)
+                {
+                    World.SpawnItemEntity(bagContentStack, World.PlayerByUid(OwnerUUID)?.Entity?.SidedPos.AsBlockPos);
+                }
             }
 
             bag.Clear(stack);
@@ -115,6 +118,10 @@ public class ArmorSlot : ItemSlot
         {
             return armor.Resists;
         }
+        else if (Itemstack?.Item != null && IsModularArmor(Itemstack.Collectible, out IModularArmor? modularArmor) && modularArmor != null)
+        {
+            return modularArmor.GetResists(this, ArmorType);
+        }
         else
         {
             return DamageResistData.Empty;
@@ -132,6 +139,25 @@ public class ArmorSlot : ItemSlot
         CollectibleBehavior? behavior = item.CollectibleBehaviors.FirstOrDefault(x => x is IArmor);
 
         if (behavior is not IArmor armorBehavior)
+        {
+            armor = null;
+            return false;
+        }
+
+        armor = armorBehavior;
+        return true;
+    }
+    private static bool IsModularArmor(CollectibleObject item, out IModularArmor? armor)
+    {
+        if (item is IModularArmor armorItem)
+        {
+            armor = armorItem;
+            return true;
+        }
+
+        CollectibleBehavior? behavior = item.CollectibleBehaviors.FirstOrDefault(x => x is IModularArmor);
+
+        if (behavior is not IModularArmor armorBehavior)
         {
             armor = null;
             return false;

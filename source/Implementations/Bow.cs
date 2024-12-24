@@ -541,6 +541,20 @@ public class BowItem : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasIdleAni
         {
             ServerLogic = new(serverAPI, this);
         }
+
+        _altForInteractions = new()
+        {
+            MouseButton = EnumMouseButton.None,
+            HotKeyCode = "Alt",
+            ActionLangCode = "combatoverhaul:interaction-hold-alt"
+        };
+
+        _ammoSelection = new()
+        {
+            ActionLangCode = Lang.Get("combatoverhaul:interaction-ammoselection"),
+            HotKeyCodes = new string[1] { "toolmodeselect" },
+            MouseButton = EnumMouseButton.None
+        };
     }
 
     public override void GetHeldItemInfo(ItemSlot inSlot, StringBuilder dsc, IWorldAccessor world, bool withDebugInfo)
@@ -556,14 +570,7 @@ public class BowItem : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasIdleAni
     {
         WorldInteraction[] interactions = base.GetHeldInteractionHelp(inSlot);
 
-        WorldInteraction ammoSelection = new()
-        {
-            ActionLangCode = Lang.Get("combatoverhaul:interaction-ammoselection"),
-            HotKeyCodes = new string[1] { "toolmodeselect" },
-            MouseButton = EnumMouseButton.None
-        };
-
-        return interactions.Append(ammoSelection).ToArray();
+        return interactions.Append(_ammoSelection).Append(_altForInteractions);
     }
 
     public override int GetToolMode(ItemSlot slot, IPlayer byPlayer, BlockSelection blockSelection)
@@ -595,4 +602,6 @@ public class BowItem : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasIdleAni
     private BowStats? _stats;
     private AmmoSelector? _ammoSelector;
     private ICoreClientAPI? _clientApi;
+    private WorldInteraction? _altForInteractions;
+    private WorldInteraction? _ammoSelection;
 }
