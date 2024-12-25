@@ -207,7 +207,9 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
 
         float factor = (entity.Api as ICoreClientAPI)?.IsSinglePlayer == true ? 0.5f : 1;
 
-        _lastFrame = _composer.Compose(TimeSpan.FromSeconds(dt * factor));
+        double dtAdjusted = GameMath.Clamp(dt * factor, -TimeSpan.MaxValue.TotalSeconds / 2, TimeSpan.MaxValue.TotalSeconds / 2);
+
+        _lastFrame = _composer.Compose(TimeSpan.FromSeconds(dtAdjusted));
     }
     private void OnFrame(Entity entity, ElementPose pose)
     {
