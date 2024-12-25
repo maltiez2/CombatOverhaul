@@ -15,7 +15,7 @@ using static Microsoft.WindowsAPICodePack.Shell.PropertySystem.SystemProperties.
 
 namespace CombatOverhaul.Integration;
 
-internal static class AnimationPatch
+internal static class HarmonyPatches
 {
     public static event Action<Entity, float>? OnBeforeFrame;
     public static event Action<Entity, ElementPose>? OnFrame;
@@ -28,37 +28,47 @@ internal static class AnimationPatch
         _reportedEntities.Clear();
         new Harmony(harmonyId).Patch(
                 typeof(EntityShapeRenderer).GetMethod("RenderHeldItem", AccessTools.all),
-                prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimationPatch), nameof(RenderHeldItem)))
+                prefix: new HarmonyMethod(AccessTools.Method(typeof(HarmonyPatches), nameof(RenderHeldItem)))
             );
 
         new Harmony(harmonyId).Patch(
                 typeof(EntityShapeRenderer).GetMethod("DoRender3DOpaque", AccessTools.all),
-                prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimationPatch), nameof(DoRender3DOpaque)))
+                prefix: new HarmonyMethod(AccessTools.Method(typeof(HarmonyPatches), nameof(DoRender3DOpaque)))
             );
 
         new Harmony(harmonyId).Patch(
                 typeof(EntityPlayerShapeRenderer).GetMethod("DoRender3DOpaque", AccessTools.all),
-                prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimationPatch), nameof(DoRender3DOpaquePlayer)))
+                prefix: new HarmonyMethod(AccessTools.Method(typeof(HarmonyPatches), nameof(DoRender3DOpaquePlayer)))
             );
 
         new Harmony(harmonyId).Patch(
                 typeof(EntityShapeRenderer).GetMethod("BeforeRender", AccessTools.all),
-                prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimationPatch), nameof(BeforeRender)))
+                prefix: new HarmonyMethod(AccessTools.Method(typeof(HarmonyPatches), nameof(BeforeRender)))
             );
 
         new Harmony(harmonyId).Patch(
                 typeof(Vintagestory.API.Common.AnimationManager).GetMethod("OnClientFrame", AccessTools.all),
-                prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimationPatch), nameof(AnimationPatch.CreateColliders)))
+                prefix: new HarmonyMethod(AccessTools.Method(typeof(HarmonyPatches), nameof(HarmonyPatches.CreateColliders)))
             );
 
         new Harmony(harmonyId).Patch(
                 typeof(EntityPlayerShapeRenderer).GetMethod("smoothCameraTurning", AccessTools.all),
-                prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimationPatch), nameof(AnimationPatch.SmoothCameraTurning)))
+                prefix: new HarmonyMethod(AccessTools.Method(typeof(HarmonyPatches), nameof(HarmonyPatches.SmoothCameraTurning)))
             );
 
         new Harmony(harmonyId).Patch(
                 typeof(EntityBehaviorHealth).GetMethod("OnFallToGround", AccessTools.all),
-                prefix: new HarmonyMethod(AccessTools.Method(typeof(AnimationPatch), nameof(AnimationPatch.OnFallToGround)))
+                prefix: new HarmonyMethod(AccessTools.Method(typeof(HarmonyPatches), nameof(HarmonyPatches.OnFallToGround)))
+            );
+
+        new Harmony(harmonyId).Patch(
+                typeof(BlockDamageOnTouch).GetMethod("OnEntityInside", AccessTools.all),
+                prefix: new HarmonyMethod(AccessTools.Method(typeof(HarmonyPatches), nameof(OnEntityInside)))
+            );
+
+        new Harmony(harmonyId).Patch(
+                typeof(BlockDamageOnTouch).GetMethod("OnEntityCollide", AccessTools.all),
+                prefix: new HarmonyMethod(AccessTools.Method(typeof(HarmonyPatches), nameof(OnEntityCollide)))
             );
     }
 
@@ -71,6 +81,8 @@ internal static class AnimationPatch
         new Harmony(harmonyId).Unpatch(typeof(EntityPlayer).GetMethod("updateEyeHeight", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         new Harmony(harmonyId).Unpatch(typeof(EntityPlayerShapeRenderer).GetMethod("smoothCameraTurning", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         new Harmony(harmonyId).Unpatch(typeof(EntityBehaviorHealth).GetMethod("OnFallToGround", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
+        new Harmony(harmonyId).Unpatch(typeof(BlockDamageOnTouch).GetMethod("OnEntityInside", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
+        new Harmony(harmonyId).Unpatch(typeof(BlockDamageOnTouch).GetMethod("OnEntityCollide", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         _animators.Clear();
         _reportedEntities.Clear();
     }
@@ -129,12 +141,12 @@ internal static class AnimationPatch
                     if (colliders.ShapeElementsToProcess.Any() && entity.Api.Side == EnumAppSide.Client)
                     {
                         string missingColliders = colliders.ShapeElementsToProcess.Aggregate((first, second) => $"{first}, {second}");
-                        LoggerUtil.Warn(entity.Api, typeof(AnimationPatch), $"({entity.Code}) Listed colliders that was not found in shape: {missingColliders}");
+                        LoggerUtil.Warn(entity.Api, typeof(HarmonyPatches), $"({entity.Code}) Listed colliders that was not found in shape: {missingColliders}");
                     }
                 }
                 catch (Exception exception)
                 {
-                    LoggerUtil.Error(entity.Api, typeof(AnimationPatch), $"({entity.Code}) Error during creating colliders: \n{exception}");
+                    LoggerUtil.Error(entity.Api, typeof(HarmonyPatches), $"({entity.Code}) Error during creating colliders: \n{exception}");
                 }
                 
             }
@@ -181,7 +193,7 @@ internal static class AnimationPatch
         {
             if (!_reportedEntities.Contains(entity.EntityId))
             {
-                LoggerUtil.Error(entity.Api, typeof(AnimationPatch), $"({entity.Code}) Error during client frame (not directly related to CO): \n{exception}");
+                LoggerUtil.Error(entity.Api, typeof(HarmonyPatches), $"({entity.Code}) Error during client frame (not directly related to CO): \n{exception}");
                 _reportedEntities.Add(entity.EntityId);
             }
         }
@@ -310,6 +322,41 @@ internal static class AnimationPatch
         return false;*/
     }
 
+    private static readonly FieldInfo? _immuneCreatures = typeof(BlockDamageOnTouch).GetField("immuneCreatures", BindingFlags.NonPublic | BindingFlags.Instance);
+    private static bool OnEntityInside(BlockDamageOnTouch __instance, IWorldAccessor world, Entity entity, BlockPos pos)
+    {
+        if (world.Side == EnumAppSide.Server && entity is EntityAgent && (entity as EntityAgent).ServerControls.Sprint && entity.ServerPos.Motion.LengthSq() > 0.001)
+        {
+            HashSet<AssetLocation>? immuneCreatures = (HashSet<AssetLocation>?)_immuneCreatures?.GetValue(__instance);
+
+            if (immuneCreatures?.Contains(entity.Code) == true) return false;
+
+            if (world.Rand.NextDouble() < 0.2)
+            {
+                entity.ReceiveDamage(new DamageSource() { Source = EnumDamageSource.Block, SourceBlock = __instance, Type = EnumDamageType.PiercingAttack, SourcePos = pos.ToVec3d() }, __instance.Attributes["sprintIntoDamage"].AsFloat(1));
+                entity.ServerPos.Motion.Set(0, 0, 0);
+            }
+        }
+
+        return false;
+    }
+    private static bool OnEntityCollide(BlockDamageOnTouch __instance, IWorldAccessor world, Entity entity, BlockPos pos, BlockFacing facing, Vec3d collideSpeed, bool isImpact)
+    {
+        if (world.Side == EnumAppSide.Server && isImpact && -collideSpeed.Y >= 0.3)
+        {
+            HashSet<AssetLocation>? immuneCreatures = (HashSet<AssetLocation>?)_immuneCreatures?.GetValue(__instance);
+
+            if (immuneCreatures?.Contains(entity.Code) == true) return false;
+
+            entity.ReceiveDamage(
+                new DamageSource() { Source = EnumDamageSource.Block, SourceBlock = __instance, Type = EnumDamageType.PiercingAttack, SourcePos = pos.ToVec3d() },
+                (float)Math.Abs(collideSpeed.Y * __instance.Attributes["fallIntoDamageMul"].AsFloat(30) / 2)
+            );
+        }
+
+        return false;
+    }
+
     [HarmonyPatch(typeof(ClientAnimator), "calculateMatrices", typeof(int),
         typeof(float),
         typeof(List<ElementPose>),
@@ -325,7 +372,7 @@ internal static class AnimationPatch
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             List<CodeInstruction> code = new(instructions);
-            MethodInfo onFrameInvokeMethod = AccessTools.Method(typeof(AnimationPatch), "OnFrameInvoke");
+            MethodInfo onFrameInvokeMethod = AccessTools.Method(typeof(HarmonyPatches), "OnFrameInvoke");
             MethodInfo getLocalTransformMatrixMethod = AccessTools.Method(typeof(ShapeElement), "GetLocalTransformMatrix");
 
             for (int i = 0; i < code.Count; i++)

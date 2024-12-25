@@ -164,7 +164,7 @@ public sealed class CombatOverhaulSystem : ModSystem
             DirectionController.Invert = Settings.DirectionsControllerInvert;
         }
 
-        AnimationPatch.YawSmoothing = Settings.HandsYawSmoothing;
+        HarmonyPatches.YawSmoothing = Settings.HandsYawSmoothing;
 
         SettingsLoaded?.Invoke(Settings);
     }
@@ -240,7 +240,7 @@ public sealed class CombatOverhaulAnimationsSystem : ModSystem
     {
         _api = api;
 
-        AnimationPatch.Patch("CombatOverhaul");
+        HarmonyPatches.Patch("CombatOverhaul");
 
     }
 
@@ -266,7 +266,7 @@ public sealed class CombatOverhaulAnimationsSystem : ModSystem
 
     public override void Dispose()
     {
-        AnimationPatch.Unpatch("CombatOverhaul");
+        HarmonyPatches.Unpatch("CombatOverhaul");
 
         if (_api is ICoreClientAPI clientApi)
         {

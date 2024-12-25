@@ -37,8 +37,8 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
         ParticleEffectsManager particleEffectsManager = player.Api.ModLoader.GetModSystem<CombatOverhaulAnimationsSystem>().ParticleEffectsManager ?? throw new Exception();
         _composer = new(soundsManager, particleEffectsManager, player);
 
-        AnimationPatch.OnBeforeFrame += OnBeforeFrame;
-        AnimationPatch.OnFrame += OnFrame;
+        HarmonyPatches.OnBeforeFrame += OnBeforeFrame;
+        HarmonyPatches.OnFrame += OnFrame;
         player.Api.ModLoader.GetModSystem<CombatOverhaulSystem>().OnDispose += Dispose;
 
         _mainPlayer = (entity as EntityPlayer)?.PlayerUID == _api?.Settings.String["playeruid"];
@@ -472,7 +472,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     }
     private void Dispose()
     {
-        AnimationPatch.OnBeforeFrame -= OnBeforeFrame;
-        AnimationPatch.OnFrame -= OnFrame;
+        HarmonyPatches.OnBeforeFrame -= OnBeforeFrame;
+        HarmonyPatches.OnFrame -= OnFrame;
     }
 }

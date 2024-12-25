@@ -182,7 +182,7 @@ public class Animatable : CollectibleBehavior
         )
         {
             if (animator is ClientAnimator clientAnimator && entity is EntityAgent agent)
-                AnimationPatch._animators[clientAnimator] = agent;
+                HarmonyPatches._animators[clientAnimator] = agent;
 
             animator.OnFrame(ActiveAnimationsByCode, dt);
         }
