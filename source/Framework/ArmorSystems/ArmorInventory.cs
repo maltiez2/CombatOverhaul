@@ -59,12 +59,12 @@ public class ClothesSlot : ItemSlotCharacter
 
         if (bag != null && World != null && World.PlayerByUid(OwnerUUID)?.Entity != null)
         {
-            ItemStack[] bagContent = bag.GetContents(stack, World);
+            ItemStack?[] bagContent = bag.GetContents(stack, World);
             if (bagContent != null)
             {
-                foreach (ItemStack bagContentStack in bagContent)
+                foreach (ItemStack? bagContentStack in bagContent)
                 {
-                    World.SpawnItemEntity(bagContentStack, World.PlayerByUid(OwnerUUID)?.Entity?.SidedPos.AsBlockPos);
+                    if (bagContentStack != null) World.SpawnItemEntity(bagContentStack, World.PlayerByUid(OwnerUUID)?.Entity?.SidedPos.AsBlockPos);
                 }
             }
 

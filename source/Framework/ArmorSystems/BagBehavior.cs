@@ -72,17 +72,17 @@ public class GearEquipableBag : CollectibleBehavior, IHeldBag, IAttachedInteract
         stackBackPackTree["slots"] = slots;
     }
 
-    public ItemStack[] GetContents(ItemStack bagstack, IWorldAccessor world)
+    public ItemStack?[] GetContents(ItemStack bagstack, IWorldAccessor world)
     {
         ITreeAttribute backPackTree = bagstack.Attributes.GetTreeAttribute("backpack");
         if (backPackTree == null) return Array.Empty<ItemStack>();
 
-        List<ItemStack> contents = new();
+        List<ItemStack?> contents = new();
         ITreeAttribute slotsTree = backPackTree.GetTreeAttribute("slots");
 
         foreach (KeyValuePair<string, IAttribute> val in slotsTree.SortedCopy())
         {
-            ItemStack cstack = (ItemStack)val.Value?.GetValue();
+            ItemStack? cstack = (ItemStack?)val.Value?.GetValue();
 
             if (cstack != null)
             {
@@ -131,9 +131,9 @@ public class GearEquipableBag : CollectibleBehavior, IHeldBag, IAttachedInteract
         return (EnumItemStorageFlags)defaultFlags;
     }
 
-    public List<ItemSlotBagContent> GetOrCreateSlots(ItemStack bagstack, InventoryBase parentinv, int bagIndex, IWorldAccessor world)
+    public List<ItemSlotBagContent?> GetOrCreateSlots(ItemStack bagstack, InventoryBase parentinv, int bagIndex, IWorldAccessor world)
     {
-        List<ItemSlotBagContent> bagContents = new();
+        List<ItemSlotBagContent?> bagContents = new();
 
         //string bgcolhex = GetSlotBgColor(bagstack);
         EnumItemStorageFlags flags = (EnumItemStorageFlags)defaultFlags;// GetStorageFlags(bagstack);

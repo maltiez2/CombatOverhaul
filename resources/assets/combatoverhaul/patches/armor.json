@@ -579,21 +579,21 @@
             "Zones": ["Head", "Neck", "Face"],
             "Resists": {"PiercingAttack": 10, "SlashingAttack": 10, "BluntAttack": 3},
             "FlatReduction": {"PiercingAttack": 1, "SlashingAttack": 0, "BluntAttack": 0},
-            "PlayerStats": {"walkspeed": 0, "manipulationSpeed": 0, "steadyAim": -0.2, "healingeffectivness": -0.05, "hungerrate": 0.05}
+            "PlayerStats": {"walkspeed": 0, "manipulationSpeed": 0, "steadyAim": -0.2, "healingeffectivness": -0.03, "hungerrate": 0.03}
           },
           "armor-body-antique-blackguard-pristine": {
             "Layers": ["Outer"],
             "Zones": ["Torso", "Arms", "Hands"],
             "Resists": {"PiercingAttack": 10, "SlashingAttack": 10, "BluntAttack": 3},
             "FlatReduction": {"PiercingAttack": 1, "SlashingAttack": 0, "BluntAttack": 0},
-            "PlayerStats": {"walkspeed": -0.05, "manipulationSpeed": -0.15, "steadyAim": -0.1, "healingeffectivness": -0.1, "hungerrate": 0.05}
+            "PlayerStats": {"walkspeed": -0.04, "manipulationSpeed": -0.12, "steadyAim": -0.1, "healingeffectivness": -0.06, "hungerrate": 0.03}
           },
           "armor-legs-antique-blackguard-pristine": {
             "Layers": ["Outer"],
             "Zones": ["Legs", "Feet"],
             "Resists": {"PiercingAttack": 10, "SlashingAttack": 10, "BluntAttack": 3},
             "FlatReduction": {"PiercingAttack": 1, "SlashingAttack": 0, "BluntAttack": 0},
-            "PlayerStats": {"walkspeed": -0.1, "manipulationSpeed": 0, "steadyAim": 0, "healingeffectivness": -0.05, "hungerrate": 0.05}
+            "PlayerStats": {"walkspeed": -0.08, "manipulationSpeed": 0, "steadyAim": 0, "healingeffectivness": -0.03, "hungerrate": 0.03}
           },
           "armor-head-antique-blackguard-damaged": {
             "Layers": ["Outer"],
@@ -642,21 +642,21 @@
             "Zones": ["Head", "Neck", "Face"],
             "Resists": {"PiercingAttack": 10, "SlashingAttack": 10, "BluntAttack": 3},
             "FlatReduction": {"PiercingAttack": 1, "SlashingAttack": 1, "BluntAttack": 0},
-            "PlayerStats": {"walkspeed": 0, "manipulationSpeed": 0, "steadyAim": -0.2, "healingeffectivness": -0.05, "hungerrate": 0.05}
+            "PlayerStats": {"walkspeed": 0, "manipulationSpeed": 0, "steadyAim": -0.1, "healingeffectivness": -0.02, "hungerrate": 0.02}
           },
           "armor-body-antique-forlorn-pristine": {
             "Layers": ["Outer"],
             "Zones": ["Torso", "Arms", "Hands"],
             "Resists": {"PiercingAttack": 10, "SlashingAttack": 10, "BluntAttack": 3},
             "FlatReduction": {"PiercingAttack": 1, "SlashingAttack": 0, "BluntAttack": 0},
-            "PlayerStats": {"walkspeed": -0.05, "manipulationSpeed": -0.15, "steadyAim": -0.1, "healingeffectivness": -0.1, "hungerrate": 0.05}
+            "PlayerStats": {"walkspeed": -0.02, "manipulationSpeed": -0.10, "steadyAim": -0.05, "healingeffectivness": -0.03, "hungerrate": 0.02}
           },
           "armor-legs-antique-forlorn-pristine": {
             "Layers": ["Outer"],
             "Zones": ["Legs", "Feet"],
             "Resists": {"PiercingAttack": 10, "SlashingAttack": 10, "BluntAttack": 3},
             "FlatReduction": {"PiercingAttack": 1, "SlashingAttack": 0, "BluntAttack": 0},
-            "PlayerStats": {"walkspeed": -0.1, "manipulationSpeed": 0, "steadyAim": 0, "healingeffectivness": -0.05, "hungerrate": 0.05}
+            "PlayerStats": {"walkspeed": -0.04, "manipulationSpeed": 0, "steadyAim": 0, "healingeffectivness": -0.02, "hungerrate": 0.02}
           },
           "armor-head-antique-forlorn-damaged": {
             "Layers": ["Outer"],
