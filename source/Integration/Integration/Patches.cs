@@ -141,7 +141,7 @@ internal static class HarmonyPatches
                     if (colliders.ShapeElementsToProcess.Any() && entity.Api.Side == EnumAppSide.Client)
                     {
                         string missingColliders = colliders.ShapeElementsToProcess.Aggregate((first, second) => $"{first}, {second}");
-                        LoggerUtil.Warn(entity.Api, typeof(HarmonyPatches), $"({entity.Code}) Listed colliders that was not found in shape: {missingColliders}");
+                        LoggerUtil.Warn(entity.Api, typeof(HarmonyPatches), $"({entity.Code}) Listed colliders that were not found in shape: {missingColliders}");
                     }
                 }
                 catch (Exception exception)

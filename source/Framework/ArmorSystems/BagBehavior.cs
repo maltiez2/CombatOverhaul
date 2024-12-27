@@ -75,21 +75,21 @@ public class GearEquipableBag : CollectibleBehavior, IHeldBag, IAttachedInteract
     public ItemStack?[] GetContents(ItemStack bagstack, IWorldAccessor world)
     {
         ITreeAttribute backPackTree = bagstack.Attributes.GetTreeAttribute("backpack");
-        if (backPackTree == null) return Array.Empty<ItemStack>();
+        if (backPackTree == null) return Array.Empty<ItemStack?>();
 
         List<ItemStack?> contents = new();
         ITreeAttribute slotsTree = backPackTree.GetTreeAttribute("slots");
 
-        foreach (KeyValuePair<string, IAttribute> val in slotsTree.SortedCopy())
+        foreach ((_, IAttribute attribute) in slotsTree.SortedCopy())
         {
-            ItemStack? cstack = (ItemStack?)val.Value?.GetValue();
+            ItemStack? contentStack = (ItemStack?)attribute?.GetValue();
 
-            if (cstack != null)
+            if (contentStack != null)
             {
-                cstack.ResolveBlockOrItem(world);
+                contentStack.ResolveBlockOrItem(world);
             }
 
-            contents.Add(cstack);
+            contents.Add(contentStack);
         }
 
         return contents.ToArray();
@@ -243,8 +243,8 @@ public class GearEquipableBag : CollectibleBehavior, IHeldBag, IAttachedInteract
 
     public void OnEntityDeath(ItemSlot itemslot, int slotIndex, Entity onEntity, DamageSource damageSourceForDeath)
     {
-        ItemStack[] contents = GetContents(itemslot.Itemstack, onEntity.World);
-        foreach (ItemStack stack in contents)
+        ItemStack?[] contents = GetContents(itemslot.Itemstack, onEntity.World);
+        foreach (ItemStack? stack in contents)
         {
             if (stack == null) continue;
             onEntity.World.SpawnItemEntity(stack, onEntity.Pos.XYZ);

@@ -57,18 +57,25 @@ public class ClothesSlot : ItemSlotCharacter
     {
         IHeldBag? bag = stack?.Item?.GetCollectibleInterface<IHeldBag>();
 
-        if (bag != null && World != null && World.PlayerByUid(OwnerUUID)?.Entity != null)
+        try
         {
-            ItemStack?[] bagContent = bag.GetContents(stack, World);
-            if (bagContent != null)
+            if (bag != null && World != null && World.PlayerByUid(OwnerUUID)?.Entity != null)
             {
-                foreach (ItemStack? bagContentStack in bagContent)
+                ItemStack?[] bagContent = bag.GetContents(stack, World);
+                if (bagContent != null)
                 {
-                    if (bagContentStack != null) World.SpawnItemEntity(bagContentStack, World.PlayerByUid(OwnerUUID)?.Entity?.SidedPos.AsBlockPos);
+                    foreach (ItemStack? bagContentStack in bagContent)
+                    {
+                        if (bagContentStack != null) World.SpawnItemEntity(bagContentStack, World.PlayerByUid(OwnerUUID)?.Entity?.SidedPos.AsBlockPos);
+                    }
                 }
-            }
 
-            bag.Clear(stack);
+                bag.Clear(stack);
+            }
+        }
+        catch (Exception exception)
+        {
+            LoggerUtil.Error(World?.Api, this, $"Error on emptying bag '{stack?.Collectible?.Code}': \n{exception}");
         }
     }
 }
@@ -222,14 +229,7 @@ public sealed class ArmorInventory : InventoryCharacter
             {
                 if (Api?.World != null) itemStack.ResolveBlockOrItem(Api.World);
 
-                if (IsVanillaArmorSlot(index))
-                {
-                    //Player.Entity.TryGiveItemStack(itemStack);
-                }
-                else
-                {
-                    _slots[index].Itemstack = itemStack;
-                }
+                _slots[index].Itemstack = itemStack;
             }
 
             if (IsVanillaArmorSlot(index))
