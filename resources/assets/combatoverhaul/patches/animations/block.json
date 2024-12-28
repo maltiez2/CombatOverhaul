@@ -1,1 +1,0 @@
-﻿[{"file": "game:entities/humanoid/player", "op": "add", "path": "/client/animations/-", "value": {"code": "block", "animation": "block", "animationSpeed": 1, "blendMode": "Add"}}]

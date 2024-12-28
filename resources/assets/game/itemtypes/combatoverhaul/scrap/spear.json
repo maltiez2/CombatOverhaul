@@ -64,6 +64,7 @@
       },
       "HandleHitSound": "game:sounds/thud",
       "AttackAnimation": {"Main": ["combatoverhaul:spear-thrust-1h"]},
+      "TpAttackAnimation": {"Main": "combatoverhaul-falx-slash"},
       "ReadyAnimation": "combatoverhaul:spear-ready-1h",
       "IdleAnimation": "combatoverhaul:spear-idle-1h",
       "AttackTpAnimation": "spearhit"
@@ -97,6 +98,7 @@
       "HandleHitSound": "game:sounds/thud",
       "AttackDirectionsType": "TopBottom",
       "AttackAnimation": {"Top": ["combatoverhaul:spear-thrust-2h-top"], "Bottom": ["combatoverhaul:spear-thrust-2h-bottom"]},
+      "TpAttackAnimation": {"Top": "combatoverhaul-spear-hit", "Bottom": "combatoverhaul-spear-hit"},
       "ReadyAnimation": "combatoverhaul:spear-ready-2h",
       "IdleAnimation": "combatoverhaul:spear-idle-2h",
       "AttackTpAnimation": "spearhit"

@@ -14,6 +14,7 @@ using HarmonyLib;
 using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
+using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
@@ -48,6 +49,7 @@ public sealed class CombatOverhaulSystem : ModSystem
     public event Action? OnDispose;
     public event Action<Settings>? SettingsLoaded;
     public Settings Settings { get; set; } = new();
+    public bool Disposed { get; private set; } = false;
 
     public override void StartPre(ICoreAPI api)
     {
@@ -57,7 +59,6 @@ public sealed class CombatOverhaulSystem : ModSystem
         (api as ServerCoreAPI)?.ClassRegistryNative.RegisterInventoryClass(GlobalConstants.backpackInvClassName, typeof(InventoryPlayerBackPacksCombatOverhaul));
         (api as ClientCoreAPI)?.ClassRegistryNative.RegisterInventoryClass(GlobalConstants.backpackInvClassName, typeof(InventoryPlayerBackPacksCombatOverhaul));
     }
-
     public override void Start(ICoreAPI api)
     {
         api.RegisterEntityBehaviorClass("CombatOverhaul:FirstPersonAnimations", typeof(FirstPersonAnimationsBehavior));
@@ -127,7 +128,6 @@ public sealed class CombatOverhaulSystem : ModSystem
         AimingPatches.Patch("CombatOverhaulAiming");
         MouseWheelPatch.Patch("CombatOverhaul", api);
     }
-
     public override void AssetsLoaded(ICoreAPI api)
     {
         if (api is not ICoreClientAPI clientApi) return;
@@ -145,7 +145,6 @@ public sealed class CombatOverhaulSystem : ModSystem
             }
         }
     }
-
     public override void AssetsFinalize(ICoreAPI api)
     {
         IAsset settingsAsset = api.Assets.Get("combatoverhaul:config/settings.json");
@@ -167,30 +166,21 @@ public sealed class CombatOverhaulSystem : ModSystem
         HarmonyPatches.YawSmoothing = Settings.HandsYawSmoothing;
 
         SettingsLoaded?.Invoke(Settings);
-    }
 
-    private readonly Vector4 _iconScale = new(-0.1f, -0.1f, 1.2f, 1.2f);
-
-    private void RegisterCustomIcon(ICoreClientAPI api, string key, string path)
-    {
-        api.Gui.Icons.CustomIcons[key] = delegate (Context ctx, int x, int y, float w, float h, double[] rgba)
+        if (api is ICoreServerAPI serverApi)
         {
-            AssetLocation location = new(path);
-            IAsset svgAsset = api.Assets.TryGet(location);
-            int value = ColorUtil.ColorFromRgba(75, 75, 75, 125);
-            Surface target = ctx.GetTarget();
+            CheckStatusServerSide(serverApi);
+        }
 
-            int xNew = x + (int)(w * _iconScale.X);
-            int yNew = y + (int)(h * _iconScale.Y);
-            int wNew = (int)(w * _iconScale.W);
-            int hNew = (int)(h * _iconScale.Z);
-
-            api.Gui.DrawSvg(svgAsset, (ImageSurface)(object)((target is ImageSurface) ? target : null), xNew, yNew, wNew, hNew, value);
-        };
+        if (api is ICoreClientAPI clientApi)
+        {
+            CheckStatusClientSide(clientApi);
+        }
     }
-
     public override void Dispose()
     {
+        if (Disposed) return;
+        
         new Harmony("CombatOverhaulAuto").UnpatchAll();
 
         _clientApi?.Event.UnregisterRenderer(ReticleRenderer, EnumRenderStage.Ortho);
@@ -200,6 +190,8 @@ public sealed class CombatOverhaulSystem : ModSystem
         MouseWheelPatch.Unpatch("CombatOverhaul");
 
         OnDispose?.Invoke();
+
+        Disposed = true;
     }
 
     public ProjectileSystemClient? ClientProjectileSystem { get; private set; }
@@ -223,6 +215,83 @@ public sealed class CombatOverhaulSystem : ModSystem
     public BlockBreakingSystemServer? ServerBlockBreakingSystem { get; private set; }
 
     private ICoreClientAPI? _clientApi;
+    private readonly Vector4 _iconScale = new(-0.1f, -0.1f, 1.2f, 1.2f);
+
+    private void RegisterCustomIcon(ICoreClientAPI api, string key, string path)
+    {
+        api.Gui.Icons.CustomIcons[key] = delegate (Context ctx, int x, int y, float w, float h, double[] rgba)
+        {
+            AssetLocation location = new(path);
+            IAsset svgAsset = api.Assets.TryGet(location);
+            int value = ColorUtil.ColorFromRgba(75, 75, 75, 125);
+            Surface target = ctx.GetTarget();
+
+            int xNew = x + (int)(w * _iconScale.X);
+            int yNew = y + (int)(h * _iconScale.Y);
+            int wNew = (int)(w * _iconScale.W);
+            int hNew = (int)(h * _iconScale.Z);
+
+            api.Gui.DrawSvg(svgAsset, (ImageSurface)(object)((target is ImageSurface) ? target : null), xNew, yNew, wNew, hNew, value);
+        };
+    }
+    private void CheckStatusServerSide(ICoreServerAPI api)
+    {
+
+    }
+    private void CheckStatusClientSide(ICoreClientAPI api)
+    {
+        IInventory? backpackInventory = GetBackpackInventory(api);
+        if (backpackInventory is not InventoryPlayerBackPacksCombatOverhaul)
+        {
+            string className = backpackInventory == null ? "null" : LoggerUtil.GetCallerTypeName(backpackInventory);
+            LoggerUtil.Error(api, this, $"Backpack inventory class was replaced by some other mod, so quivers cant work properly. New class: {className}");
+            PrintInChat(api, "(error message) Backpack inventory class was replaced by some other mod, so quivers cant work properly. Report this issue into Combat Overhaul thread with client-main logs attached.");
+        }
+
+        IInventory? gearInventory = GetGearInventory(api.World.Player.Entity);
+        if (gearInventory is not InventoryPlayerBackPacksCombatOverhaul)
+        {
+            string className = gearInventory == null ? "null" : LoggerUtil.GetCallerTypeName(gearInventory);
+            LoggerUtil.Error(api, this, $"Gear inventory inventory class was replaced by some other mod. New class: {className}");
+            ThrowException(api, "(Combat Overhaul) Gear inventory class was replaced by some other mod, shutting down the client. Report this issue into Combat Overhaul thread with client-main logs attached.");
+        }
+
+        bool immersiveFirstPersonMode = api.Settings.Bool["immersiveFpMode"];
+        if (immersiveFirstPersonMode)
+        {
+            LoggerUtil.Error(api, this, $"Immersive first person mode is enabled. It is not supported. Turn this setting off.");
+            PrintInChat(api, "(Combat Overhaul) Immersive first person mode is enabled. It is not supported. Turn this setting off and reload the world to prevent this message.");
+        }
+    }
+
+    private static IInventory? GetBackpackInventory(ICoreClientAPI api)
+    {
+        return api.World.Player.InventoryManager.GetOwnInventory(GlobalConstants.backpackInvClassName);
+    }
+    private static InventoryBase? GetGearInventory(Entity entity)
+    {
+        return entity.GetBehavior<EntityBehaviorPlayerInventory>().Inventory;
+    }
+    private static void ThrowException(ICoreAPI api, string message)
+    {
+        api.World.RegisterCallback(_ => throw new Exception(message), 1);
+    }
+    private void AnnoyPlayer(ICoreClientAPI api, string message)
+    {
+        api.World.RegisterCallback(_ =>
+        {
+            api.TriggerIngameError(this, "error", message);
+            if (!Disposed) AnnoyPlayer(api, message);
+        }, 5000);
+    }
+    private void PrintInChat(ICoreClientAPI api, string message)
+    {
+        api.World.RegisterCallback(_ =>
+        {
+            api.SendChatMessage(message);
+            if (!Disposed) PrintInChat(api, message);
+        }, 5000);
+    }
 }
 
 

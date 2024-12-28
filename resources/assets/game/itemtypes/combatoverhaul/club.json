@@ -27,6 +27,7 @@
       },
       "AttackHitSound": "game:sounds/thud",
       "AttackAnimation": {"Main": ["combatoverhaul:club-strike-1h-1", "combatoverhaul:club-strike-1h-2"]},
+      "TpAttackAnimation": {"Main": "combatoverhaul-falx-slash"},
       "AttackTpAnimation": "falx",
       "ReadyAnimation": "combatoverhaul:club-ready-1h",
       "IdleAnimation": "combatoverhaul:club-idle-1h"
@@ -48,6 +49,7 @@
       },
       "AttackHitSound": "game:sounds/thud",
       "AttackAnimation": {"Main": ["combatoverhaul:club-strike-2h-1", "combatoverhaul:club-strike-2h-2"]},
+      "TpAttackAnimation": {"Main": "combatoverhaul-falx-slash"},
       "ReadyAnimation": "combatoverhaul:club-ready-2h",
       "AttackTpAnimation": "falx",
       "IdleAnimation": "combatoverhaul:club-idle-2h"

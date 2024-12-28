@@ -98,7 +98,7 @@ public class BowClient : RangeWeaponClient
     protected AimingAnimationController? AimingAnimationController;
     protected bool AfterLoad = false;
 
-    [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Pressed)]
+    [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Active)]
     protected virtual bool Load(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
         if (state != (int)BowState.Unloaded || eventData.AltPressed || !CheckForOtherHandEmpty(mainHand, player)) return false;

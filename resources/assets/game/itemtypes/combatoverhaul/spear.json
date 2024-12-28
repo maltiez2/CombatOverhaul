@@ -124,9 +124,9 @@
       "AttackHitSound": "game:sounds/thud",
       "HandleHitSound": "game:sounds/thud",
       "AttackAnimation": {"Main": ["combatoverhaul:spear-thrust-1h"]},
+      "TpAttackAnimation": {"Main": "falx"},
       "ReadyAnimation": "combatoverhaul:spear-ready-1h",
-      "IdleAnimation": "combatoverhaul:spear-idle-1h",
-      "AttackTpAnimation": "spearhit"
+      "IdleAnimation": "combatoverhaul:spear-idle-1h"
     },
     "TwoHandedStance": {
       "CanAttack": true,
@@ -177,13 +177,15 @@
       "HandleHitSound": "game:sounds/thud",
       "AttackDirectionsType": "TopBottom",
       "AttackAnimation": {"Top": ["combatoverhaul:spear-thrust-2h-top"], "Bottom": ["combatoverhaul:spear-thrust-2h-bottom"]},
+      "TpAttackAnimation": {"Top": "combatoverhaul-spear-hit", "Bottom": "combatoverhaul-spear-hit"},
       "ReadyAnimation": "combatoverhaul:spear-ready-2h",
-      "IdleAnimation": "combatoverhaul:spear-idle-2h",
-      "AttackTpAnimation": "spearhit"
+      "IdleAnimation": "combatoverhaul:spear-idle-2h"
     },
     "ThrowAttack": {
       "AimAnimation": "combatoverhaul:javelin-aim",
       "ThrowAnimation": "combatoverhaul:javelin-throw",
+      "TpAimAnimation": "",
+      "TpThrowAnimation": "",
       "Aiming": {
         "AimDifficulty": 1,
         "CursorType": "Fixed",
@@ -234,5 +236,7 @@
   "creativeinventory": {"general": ["*"], "items": ["*"], "tools": ["*"], "combatoverhaul": ["*"]},
   "guiTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 39, "y": 0, "z": -130}, "origin": {"x": 1, "y": 0.1, "z": 0.3}, "scale": 2},
   "groundTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 4},
-  "tpHandTransform": {"translation": {"x": -2.5, "y": 0.05, "z": 0.5}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8}
+  "tpHandTransform": {"translation": {"x": -2.5, "y": 0.05, "z": 0.5}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
+  "heldTpIdleAnimation": "combatoverhaul-spear-idle",
+  "heldRightReadyAnimation": "combatoverhaul-spear-idle"
 }

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <ModName>Combat Overhaul</ModName>
     <ModType>code</ModType>
-    <ModVersion>0.0.104</ModVersion>
+    <ModVersion>0.0.105</ModVersion>
     <ModId>combatoverhaul</ModId>
     <Description></Description>
     <Side>Universal</Side>

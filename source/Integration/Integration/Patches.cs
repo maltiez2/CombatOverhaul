@@ -302,8 +302,6 @@ internal static class HarmonyPatches
         double speedThreshold = Math.Abs(EntityBehaviorHealth.FallDamageYMotionThreshold);
         double speed = Math.Abs(withYMotion);
 
-        Trace.WriteLine($"{speed}");
-
         if (speed < speedThreshold) return false;
 
         if (__instance.entity is EntityPlayer player)

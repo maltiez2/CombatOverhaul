@@ -205,8 +205,6 @@ public class PickaxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
         TimeSpan currentTime = TimeSpan.FromMilliseconds(Api.ElapsedMilliseconds);
         TimeSpan delta = currentTime - SwingStart + ExtraSwingTime;
 
-        Trace.WriteLine(animationSpeedMultiplier);
-
         AnimationBehavior?.SetSpeedModifier(HitImpactFunction);
 
         BlockBreakingSystem?.DamageBlock(selection, selection.Block, miningSpeed * (float)delta.TotalSeconds, Item.Tool ?? 0, Item.ToolTier);

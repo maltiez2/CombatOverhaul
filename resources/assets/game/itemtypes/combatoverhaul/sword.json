@@ -36,6 +36,7 @@
         },
         "AttackHitSound": "game:sounds/thud",
         "AttackAnimation": {"Main": ["combatoverhaul:sword-forlorn-thrust-1", "combatoverhaul:sword-forlorn-thrust-2", "combatoverhaul:sword-forlorn-thrust-3"]},
+        "TpAttackAnimation": {"Main": "combatoverhaul-falx-slash"},
         "Parry": {
           "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
           "Directions": [60, 60, 60, 60],
@@ -45,8 +46,7 @@
         "BlockCooldownMs": 300,
         "BlockAnimation": "combatoverhaul:sword-short-parry",
         "ReadyAnimation": "combatoverhaul:sword-falx-ready",
-        "IdleAnimation": "combatoverhaul:sword-falx-idle",
-        "AttackTpAnimation": "falx"
+        "IdleAnimation": "combatoverhaul:sword-falx-idle"
       },
       "*-blackguard-*": {
         "CanAttack": true,
@@ -66,6 +66,7 @@
         },
         "AttackHitSound": "game:sounds/thud",
         "AttackAnimation": {"Main": ["combatoverhaul:sword-blackguard-thrust-1", "combatoverhaul:sword-blackguard-thrust-2", "combatoverhaul:sword-blackguard-thrust-3"]},
+        "TpAttackAnimation": {"Main": "combatoverhaul-falx-slash"},
         "Parry": {
           "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
           "Directions": [60, 60, 60, 60],
@@ -75,8 +76,7 @@
         "BlockCooldownMs": 300,
         "BlockAnimation": "combatoverhaul:sword-short-parry",
         "ReadyAnimation": "combatoverhaul:sword-falx-ready",
-        "IdleAnimation": "combatoverhaul:sword-falx-idle",
-        "AttackTpAnimation": "falx"
+        "IdleAnimation": "combatoverhaul:sword-falx-idle"
       },
       "*-falx-*": {
         "CanAttack": true,
@@ -109,9 +109,9 @@
         },
         "AttackHitSound": "game:sounds/thud",
         "AttackAnimation": {"Main": ["combatoverhaul:sword-falx-slash-1", "combatoverhaul:sword-falx-slash-2"]},
+        "TpAttackAnimation": {"Main": "combatoverhaul-falx-slash"},
         "ReadyAnimation": "combatoverhaul:sword-falx-ready",
-        "IdleAnimation": "combatoverhaul:sword-falx-idle",
-        "AttackTpAnimation": "falx"
+        "IdleAnimation": "combatoverhaul:sword-falx-idle"
       },
       "*-scrap-*": {
         "CanAttack": true,
@@ -131,9 +131,9 @@
         },
         "AttackHitSound": "game:sounds/thud",
         "AttackAnimation": {"Main": ["combatoverhaul:sword-falx-slash-1", "combatoverhaul:sword-falx-slash-2"]},
+        "TpAttackAnimation": {"Main": "combatoverhaul-falx-slash"},
         "ReadyAnimation": "combatoverhaul:sword-falx-ready",
-        "IdleAnimation": "combatoverhaul:sword-falx-idle",
-        "AttackTpAnimation": "falx"
+        "IdleAnimation": "combatoverhaul:sword-falx-idle"
       }
     }
   },
