@@ -16,19 +16,9 @@ namespace Bullseye;
 
 public sealed class Settings
 {
-    public float DirectionsCursorAlpha { get; set; } = 1.0f;
-    public float DirectionsCursorScale { get; set; } = 1.0f;
-
     public string BowsAimingCursorType { get; set; } = "Moving";
     public float BowsAimingHorizontalLimit { get; set; } = 0.125f;
     public float BowsAimingVerticalLimit { get; set; } = 0.35f;
-
-    public bool PrintProjectilesHits { get; set; } = false;
-    public bool PrintMeleeHits { get; set; } = false;
-    public bool PrintPlayerBeingHit { get; set; } = false;
-
-    public float DirectionsControllerSensitivity { get; set; } = 1f;
-    public bool DirectionsControllerInvert { get; set; } = false;
 
     public bool HandsYawSmoothing { get; set; } = false;
 }
