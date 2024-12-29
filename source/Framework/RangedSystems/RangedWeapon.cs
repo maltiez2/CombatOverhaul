@@ -74,13 +74,13 @@ public class RangeWeaponClient : IClientWeaponLogic
     {
         if (mainHand && !player.LeftHandItemSlot.Empty)
         {
-            (player.World.Api as ICoreClientAPI)?.TriggerIngameError(this, "offhandShouldBeEmpty", Lang.Get("bullseye-continued:message-offhand-empty"));
+            (player.World.Api as ICoreClientAPI)?.TriggerIngameError(this, "offhandShouldBeEmpty", Lang.Get("bullseyecontinued:message-offhand-empty"));
             return false;
         }
 
         if (!mainHand && !player.RightHandItemSlot.Empty)
         {
-            (player.World.Api as ICoreClientAPI)?.TriggerIngameError(this, "mainHandShouldBeEmpty", Lang.Get("bullseye-continued:message-mainhand-empty"));
+            (player.World.Api as ICoreClientAPI)?.TriggerIngameError(this, "mainHandShouldBeEmpty", Lang.Get("bullseyecontinued:message-mainhand-empty"));
             return false;
         }
 

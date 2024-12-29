@@ -50,7 +50,7 @@ public sealed class BullseyeSystem : ModSystem
         api.RegisterCollectibleBehaviorClass("Bullseye:Projectile", typeof(ProjectileBehavior));
 
         api.RegisterItemClass("Bullseye:Bow", typeof(BowItem));
-        api.RegisterItemClass("Bullseye:MeleeWeapon", typeof(MeleeWeapon));
+        api.RegisterItemClass("Bullseye:MeleeWeapon", typeof(Spear));
 
         api.RegisterBlockEntityClass("Bullseye:GenericDisplayBlockEntity", typeof(GenericDisplayBlockEntity));
         api.RegisterBlockClass("Bullseye:GenericDisplayBlock", typeof(GenericDisplayBlock));
@@ -82,7 +82,7 @@ public sealed class BullseyeSystem : ModSystem
 
     public override void AssetsFinalize(ICoreAPI api)
     {
-        IAsset settingsAsset = api.Assets.Get("bullseye-continued:config/settings.json");
+        IAsset settingsAsset = api.Assets.Get("bullseyecontinued:config/settings.json");
         JsonObject settings = JsonObject.FromJson(settingsAsset.ToText());
         Settings = settings.AsObject<Settings>();
 

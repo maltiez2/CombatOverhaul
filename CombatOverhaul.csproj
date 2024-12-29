@@ -4,7 +4,7 @@
     <ModName>Bullseye</ModName>
     <ModType>code</ModType>
     <ModVersion>3.0.0</ModVersion>
-    <ModId>bullseye-continued</ModId>
+    <ModId>bullseyecontinued</ModId>
     <Description>A vanilla-friendly rebalance and overhaul of ranged weapons.</Description>
     <Side>Universal</Side>
     <RequiredOnClient>true</RequiredOnClient>

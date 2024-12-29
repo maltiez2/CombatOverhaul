@@ -64,9 +64,9 @@ public class ProjectileBehavior : CollectibleBehavior
         if (Stats != null)
         {
             dsc.AppendLine(Lang.Get(
-            "bullseye-continued:iteminfo-projectile",
+            "bullseyecontinued:iteminfo-projectile",
             Stats.DamageStats.Damage,
-            Lang.Get($"bullseye-continued:damage-type-{Stats.DamageStats.DamageType}"),
+            Lang.Get($"bullseyecontinued:damage-type-{Stats.DamageStats.DamageType}"),
             $"{(1 - Stats.DropChance) * 100:F1}"));
         }
 

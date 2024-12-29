@@ -503,7 +503,7 @@ public sealed class AmmoSelector
         SkillItem mode = new()
         {
             Code = new("none-0"),
-            Name = Lang.Get("bullseye-continued:toolmode-noselection")
+            Name = Lang.Get("bullseyecontinued:toolmode-noselection")
         };
 
         return modes.Prepend(mode).ToArray();
@@ -549,7 +549,7 @@ public class BowItem : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasIdleAni
 
         if (_stats == null) return;
 
-        dsc.AppendLine(Lang.Get("bullseye-continued:iteminfo-range-weapon-damage", _stats.ArrowDamageMultiplier, _stats.ArrowDamageStrength));
+        dsc.AppendLine(Lang.Get("bullseyecontinued:iteminfo-range-weapon-damage", _stats.ArrowDamageMultiplier, _stats.ArrowDamageStrength));
     }
 
     public override WorldInteraction[] GetHeldInteractionHelp(ItemSlot inSlot)
@@ -558,7 +558,7 @@ public class BowItem : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasIdleAni
 
         WorldInteraction ammoSelection = new()
         {
-            ActionLangCode = Lang.Get("bullseye-continued:interaction-ammoselection"),
+            ActionLangCode = Lang.Get("bullseyecontinued:interaction-ammoselection"),
             HotKeyCodes = new string[1] { "toolmodeselect" },
             MouseButton = EnumMouseButton.None
         };
