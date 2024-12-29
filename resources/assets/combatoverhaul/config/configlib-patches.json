@@ -361,7 +361,7 @@
       "type": "boolean",
       "ingui": "combatoverhaul:setting-print_player_hits",
       "comment": "Can causes lags in some cases",
-      "default": false
+      "default": true
     },
     {
       "code": "player_model_torso_damage",

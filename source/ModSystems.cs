@@ -56,8 +56,8 @@ public sealed class CombatOverhaulSystem : ModSystem
         (api as ServerCoreAPI)?.ClassRegistryNative.RegisterInventoryClass(GlobalConstants.characterInvClassName, typeof(ArmorInventory));
         (api as ClientCoreAPI)?.ClassRegistryNative.RegisterInventoryClass(GlobalConstants.characterInvClassName, typeof(ArmorInventory));
 
-        (api as ServerCoreAPI)?.ClassRegistryNative.RegisterInventoryClass(GlobalConstants.backpackInvClassName, typeof(InventoryPlayerBackPacksCombatOverhaul));
-        (api as ClientCoreAPI)?.ClassRegistryNative.RegisterInventoryClass(GlobalConstants.backpackInvClassName, typeof(InventoryPlayerBackPacksCombatOverhaul));
+        //(api as ServerCoreAPI)?.ClassRegistryNative.RegisterInventoryClass(GlobalConstants.backpackInvClassName, typeof(InventoryPlayerBackPacksCombatOverhaul));
+        //(api as ClientCoreAPI)?.ClassRegistryNative.RegisterInventoryClass(GlobalConstants.backpackInvClassName, typeof(InventoryPlayerBackPacksCombatOverhaul));
     }
     public override void Start(ICoreAPI api)
     {
@@ -240,16 +240,16 @@ public sealed class CombatOverhaulSystem : ModSystem
     }
     private void CheckStatusClientSide(ICoreClientAPI api)
     {
-        IInventory? backpackInventory = GetBackpackInventory(api);
+        /*IInventory? backpackInventory = GetBackpackInventory(api);
         if (backpackInventory is not InventoryPlayerBackPacksCombatOverhaul)
         {
             string className = backpackInventory == null ? "null" : LoggerUtil.GetCallerTypeName(backpackInventory);
             LoggerUtil.Error(api, this, $"Backpack inventory class was replaced by some other mod, so quivers cant work properly. New class: {className}");
             PrintInChat(api, "(error message) Backpack inventory class was replaced by some other mod, so quivers cant work properly. Report this issue into Combat Overhaul thread with client-main logs attached.");
-        }
+        }*/
 
         IInventory? gearInventory = GetGearInventory(api.World.Player.Entity);
-        if (gearInventory is not InventoryPlayerBackPacksCombatOverhaul)
+        if (gearInventory is not ArmorInventory)
         {
             string className = gearInventory == null ? "null" : LoggerUtil.GetCallerTypeName(gearInventory);
             LoggerUtil.Error(api, this, $"Gear inventory inventory class was replaced by some other mod. New class: {className}");

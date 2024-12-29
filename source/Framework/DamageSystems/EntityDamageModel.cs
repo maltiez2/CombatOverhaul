@@ -33,9 +33,14 @@ public sealed class SoundEffectData
     public float Volume { get; set; } = 1;
 }
 
-public delegate void OnEntityReceiveDamageDelegate(ref float damage, DamageSource damageSource, ColliderTypes damageZone);
+public interface IEntityDamageModel
+{
+    event OnEntityReceiveDamageDelegate? OnReceiveDamage;
+}
 
-public sealed class EntityDamageModelBehavior : EntityBehavior
+public delegate void OnEntityReceiveDamageDelegate(ref float damage, DamageSource damageSource, ColliderTypes damageZone, string? collider);
+
+public sealed class EntityDamageModelBehavior : EntityBehavior, IEntityDamageModel
 {
     public EntityDamageModelBehavior(Entity entity) : base(entity)
     {
@@ -106,10 +111,12 @@ public sealed class EntityDamageModelBehavior : EntityBehavior
     private float OnReceiveDamageHandler(float damage, DamageSource damageSource)
     {   
         ColliderTypes colliderType = ColliderTypes.Torso;
+        string? collider = null;
 
         if (_colliders != null && damageSource is ILocationalDamage locationalDamageSource)
         {
             if (_colliders.CollidersTypes.ContainsKey(locationalDamageSource.Collider)) colliderType = _colliders.CollidersTypes[locationalDamageSource.Collider];
+            collider = locationalDamageSource.Collider;
             float multiplier = DamageMultipliers[colliderType];
             damage *= multiplier;
         }
@@ -136,7 +143,7 @@ public sealed class EntityDamageModelBehavior : EntityBehavior
             entity.Api.World.PlaySoundAt(new AssetLocation(value.Code), entity, randomizePitch: value.RandomizePitch, range: value.Range, volume: value.Volume);
         }
 
-        OnReceiveDamage?.Invoke(ref damage, damageSource, colliderType);
+        OnReceiveDamage?.Invoke(ref damage, damageSource, colliderType, collider);
 
         return damage;
     }

@@ -70,6 +70,11 @@ internal static class HarmonyPatches
                 typeof(BlockDamageOnTouch).GetMethod("OnEntityCollide", AccessTools.all),
                 prefix: new HarmonyMethod(AccessTools.Method(typeof(HarmonyPatches), nameof(OnEntityCollide)))
             );
+
+        new Harmony(harmonyId).Patch(
+                typeof(BagInventory).GetMethod("ReloadBagInventory", AccessTools.all),
+                prefix: new HarmonyMethod(AccessTools.Method(typeof(HarmonyPatches), nameof(ReloadBagInventory)))
+            );
     }
 
     public static void Unpatch(string harmonyId)
@@ -83,6 +88,7 @@ internal static class HarmonyPatches
         new Harmony(harmonyId).Unpatch(typeof(EntityBehaviorHealth).GetMethod("OnFallToGround", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         new Harmony(harmonyId).Unpatch(typeof(BlockDamageOnTouch).GetMethod("OnEntityInside", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         new Harmony(harmonyId).Unpatch(typeof(BlockDamageOnTouch).GetMethod("OnEntityCollide", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
+        new Harmony(harmonyId).Unpatch(typeof(BagInventory).GetMethod("ReloadBagInventory", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         _animators.Clear();
         _reportedEntities.Clear();
     }
@@ -353,6 +359,29 @@ internal static class HarmonyPatches
         }
 
         return false;
+    }
+
+    private static void ReloadBagInventory(BagInventory __instance, ref InventoryBase parentinv, ref ItemSlot[] bagSlots)
+    {
+        if (parentinv is not InventoryBasePlayer inventory) return;
+
+        bagSlots = AppendGearInventorySlots(bagSlots, inventory.Owner);
+    }
+    private static ItemSlot[] AppendGearInventorySlots(ItemSlot[] backpackSlots, Entity owner)
+    {
+        InventoryBase? inventory = GetGearInventory(owner);
+
+        if (inventory == null) return backpackSlots;
+
+        if (backpackSlots.Any(slot => slot.Inventory == inventory)) return backpackSlots;
+
+        ItemSlot[] gearSlots = inventory?.ToArray() ?? Array.Empty<ItemSlot>();
+
+        return gearSlots.Concat(backpackSlots).ToArray();
+    }
+    private static InventoryBase? GetGearInventory(Entity entity)
+    {
+        return entity?.GetBehavior<EntityBehaviorPlayerInventory>()?.Inventory;
     }
 
     [HarmonyPatch(typeof(ClientAnimator), "calculateMatrices", typeof(int),

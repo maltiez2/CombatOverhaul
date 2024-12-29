@@ -61,7 +61,10 @@ public class GearEquipableBag : CollectibleBehavior, IHeldBag, IAttachedInteract
 
     public void Clear(ItemStack backPackStack)
     {
-        ITreeAttribute stackBackPackTree = backPackStack.Attributes.GetTreeAttribute("backpack");
+        ITreeAttribute? stackBackPackTree = backPackStack.Attributes.GetTreeAttribute("backpack");
+
+        if (stackBackPackTree == null) return;
+
         TreeAttribute slots = new();
 
         for (int slotIndex = 0; slotIndex < SlotsNumber; slotIndex++)

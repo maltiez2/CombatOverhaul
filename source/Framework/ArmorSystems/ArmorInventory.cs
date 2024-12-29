@@ -1,10 +1,12 @@
 ﻿using CombatOverhaul.DamageSystems;
 using CombatOverhaul.Utils;
+using System.Reflection;
 using Vintagestory.API.Common;
 using Vintagestory.API.Config;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.Common;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CombatOverhaul.Armor;
 
@@ -267,7 +269,7 @@ public sealed class ArmorInventory : InventoryCharacter
             bool containsBag = clothesSlot.Itemstack?.Collectible?.GetCollectibleInterface<IHeldBag>() != null;
             if (clothesSlot.PreviouslyHeldBag || containsBag)
             {
-                GetBackpackInventory()?.ReloadBagInventory();
+                ReloadBagInventory();
             }
             clothesSlot.PreviouslyHeldBag = containsBag;
         }
@@ -284,7 +286,7 @@ public sealed class ArmorInventory : InventoryCharacter
 
         if (slotId < _clothesSlotsCount)
         {
-            GetBackpackInventory()?.ReloadBagInventory();
+            ReloadBagInventory();
         }
 
         return result;
@@ -293,13 +295,13 @@ public sealed class ArmorInventory : InventoryCharacter
     {
         base.DiscardAll();
 
-        GetBackpackInventory()?.ReloadBagInventory();
+        ReloadBagInventory();
     }
     public override void DropAll(Vec3d pos, int maxStackSize = 0)
     {
         base.DropAll(pos, maxStackSize);
 
-        GetBackpackInventory()?.ReloadBagInventory();
+        ReloadBagInventory();
     }
 
     public static int IndexFromArmorType(ArmorLayers layer, DamageZone zone)
@@ -430,6 +432,8 @@ public sealed class ArmorInventory : InventoryCharacter
     internal static readonly int _totalSlotsNumber = _clothesSlotsCount + _clothesArmorSlots + _moddedArmorSlotsCount;
     internal event Action? OnSlotModified;
     internal event Action? OnArmorSlotModified;
+    private static readonly FieldInfo? _backpackBagInventory = typeof(InventoryPlayerBackPacks).GetField("bagInv", BindingFlags.NonPublic | BindingFlags.Instance);
+    private static readonly FieldInfo? _backpackBagSlots = typeof(InventoryPlayerBackPacks).GetField("bagSlots", BindingFlags.NonPublic | BindingFlags.Instance);
 
     protected override ItemSlot NewSlot(int slotId)
     {
@@ -562,8 +566,20 @@ public sealed class ArmorInventory : InventoryCharacter
         }
     }
 
-    private InventoryPlayerBackPacksCombatOverhaul? GetBackpackInventory()
+    private InventoryPlayerBackPacks? GetBackpackInventory()
     {
-        return Player?.InventoryManager.GetOwnInventory(GlobalConstants.backpackInvClassName) as InventoryPlayerBackPacksCombatOverhaul;
+        return Player?.InventoryManager.GetOwnInventory(GlobalConstants.backpackInvClassName) as InventoryPlayerBackPacks;
+    }
+
+    private void ReloadBagInventory()
+    {
+        InventoryPlayerBackPacks? backpack = GetBackpackInventory();
+        if (backpack == null) return;
+
+        BagInventory? bag = (BagInventory?)_backpackBagInventory?.GetValue(backpack);
+        ItemSlot[]? bagSlots = (ItemSlot[]?)_backpackBagSlots?.GetValue(backpack);
+        if (bag == null || bagSlots == null) return;
+
+        bag.ReloadBagInventory(backpack, bagSlots);
     }
 }
