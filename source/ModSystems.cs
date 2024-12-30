@@ -260,7 +260,7 @@ public sealed class CombatOverhaulSystem : ModSystem
         if (immersiveFirstPersonMode)
         {
             LoggerUtil.Error(api, this, $"Immersive first person mode is enabled. It is not supported. Turn this setting off.");
-            PrintInChat(api, "(Combat Overhaul) Immersive first person mode is enabled. It is not supported. Turn this setting off and reload the world to prevent this message.");
+            AnnoyPlayer(api, "(Combat Overhaul) Immersive first person mode is enabled. It is not supported. Turn this setting off and reload the world to prevent this message.");
         }
     }
 

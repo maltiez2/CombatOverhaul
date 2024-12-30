@@ -3,7 +3,7 @@
   <PropertyGroup>
     <ModName>Combat Overhaul</ModName>
     <ModType>code</ModType>
-    <ModVersion>0.0.108</ModVersion>
+    <ModVersion>0.0.110</ModVersion>
     <ModId>combatoverhaul</ModId>
     <Description></Description>
     <Side>Universal</Side>
@@ -18,8 +18,9 @@
     <ModInfoAuthors Include="Corat" />
   </ItemGroup>
 
-  <!-- Dependencies -->
+  <!-- Translators -->
   <ItemGroup>
+    <ModInfoTranslators Include="Gabriel Flame - Ukrainian" />
   </ItemGroup>
 
   <!-- Project settings -->
@@ -95,6 +96,7 @@
 
   "description": "$(Description)",
   "authors": [ @(ModInfoAuthors->'"%(Identity)"', ', ') ],
+  "translation": [ @(ModInfoTranslators->'"%(Identity)"', ', ') ],
 
   "dependencies": {
     @(Dependencies->'"%(Identity)": "%(Version)"', ', ')
