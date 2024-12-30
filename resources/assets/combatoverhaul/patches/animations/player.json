@@ -14,7 +14,7 @@
       "name": "combatoverhaul-spear-hit",
       "code": "combatoverhaul-spear-hit",
       "quantityframes": 13,
-      "onActivityStopped": "PlayTillEnd",
+      "onActivityStopped": "EaseOut",
       "onAnimationEnd": "EaseOut",
       "keyframes": [
         {
@@ -195,8 +195,8 @@
       "name": "combatoverhaul-falx-slash",
       "code": "combatoverhaul-falx-slash",
       "quantityframes": 15,
-      "onActivityStopped": "Stop",
-      "onAnimationEnd": "Stop",
+      "onActivityStopped": "EaseOut",
+      "onAnimationEnd": "EaseOut",
       "keyframes": [
         {
           "frame": 0,

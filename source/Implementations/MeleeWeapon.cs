@@ -76,7 +76,7 @@ public class StanceStats
     public string IdleAnimation { get; set; } = "";
 
     public Dictionary<string, string> TpAttackAnimation { get; set; } = new();
-    public string TpBlockAnimation { get; set; } = "";
+    public string BlockTpAnimation { get; set; } = "";
 }
 
 public class ThrowWeaponStats
@@ -710,7 +710,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
                 category: AnimationCategory(mainHand),
                 callback: () => BlockAnimationCallback(mainHand, player),
                 callbackHandler: code => BlockAnimationCallbackHandler(code, mainHand));
-            AnimationBehavior?.PlayVanillaAnimation(stats.TpBlockAnimation, mainHand);
+            AnimationBehavior?.PlayVanillaAnimation(stats.BlockTpAnimation, mainHand);
 
             ParryButtonReleased = false;
         }
@@ -725,7 +725,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
                 category: AnimationCategory(mainHand),
                 callback: () => BlockAnimationCallback(mainHand, player),
                 callbackHandler: code => BlockAnimationCallbackHandler(code, mainHand));
-            AnimationBehavior?.PlayVanillaAnimation(stats.TpBlockAnimation, mainHand);
+            AnimationBehavior?.PlayVanillaAnimation(stats.BlockTpAnimation, mainHand);
         }
 
         SetSpeedPenalty(mainHand, player);
@@ -791,7 +791,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
 
         MeleeBlockSystem.StopBlock(mainHand);
         AnimationBehavior?.PlayReadyAnimation(mainHand);
-        AnimationBehavior?.StopVanillaAnimation(GetStanceStats(mainHand)?.TpBlockAnimation ?? "", mainHand);
+        AnimationBehavior?.StopVanillaAnimation(GetStanceStats(mainHand)?.BlockTpAnimation ?? "", mainHand);
         SetState(MeleeWeaponState.Idle, mainHand);
 
         float cooldown = GetStanceStats(mainHand)?.BlockCooldownMs ?? 0;
@@ -1318,6 +1318,16 @@ public class MeleeWeapon : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasDyn
             ClientLogic = new(clientAPI, this);
             MeleeWeaponStats Stats = Attributes.AsObject<MeleeWeaponStats>();
             RenderingOffset = Stats.RenderingOffset;
+
+            if (Stats.OneHandedStance?.GripMinLength != Stats.OneHandedStance?.GripMaxLength || Stats.TwoHandedStance?.GripMinLength != Stats.TwoHandedStance?.GripMaxLength)
+            {
+                ChangeGripInteraction = new()
+                {
+                    MouseButton = EnumMouseButton.Wheel,
+                    ActionLangCode = "combatoverhaul:interaction-grip-change"
+                };
+            }
+
         }
 
         if (api is ICoreServerAPI serverAPI)
@@ -1372,7 +1382,12 @@ public class MeleeWeapon : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasDyn
 
     public override WorldInteraction?[]? GetHeldInteractionHelp(ItemSlot inSlot)
     {
-        WorldInteraction?[] interactionHelp = base.GetHeldInteractionHelp(inSlot);
+        WorldInteraction?[]? interactionHelp = base.GetHeldInteractionHelp(inSlot);
+
+        if (ChangeGripInteraction != null)
+        {
+            interactionHelp = interactionHelp?.Append(ChangeGripInteraction);
+        }
 
         return interactionHelp?.Append(AltForInteractions);
     }
@@ -1386,6 +1401,7 @@ public class MeleeWeapon : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasDyn
     public bool OnMouseWheel(ItemSlot slot, IClientPlayer byPlayer, float delta) => ClientLogic?.OnMouseWheel(slot, byPlayer, delta) ?? false;
 
     protected WorldInteraction? AltForInteractions;
+    protected WorldInteraction? ChangeGripInteraction;
 }
 
 public sealed class GripController
