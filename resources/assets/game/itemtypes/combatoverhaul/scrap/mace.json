@@ -21,7 +21,7 @@
         "CollideWithTerrain": true,
         "MaxReach": 9,
         "DamageTypesByType": {
-          "*-scrapmace-*": [{"Damage": {"DamageType": "BluntAttack", "Strength": 2, "Damage": 3.5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0.6, 0, 0.4, 1.1, 0, 0.4]}]
+          "*-scrapmace-*": [{"Damage": {"DamageType": "BluntAttack", "Tier": 2, "Damage": 3.5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0.6, 0, 0.4, 1.1, 0, 0.4]}]
         }
       },
       "AttackHitSound": "game:sounds/thud",

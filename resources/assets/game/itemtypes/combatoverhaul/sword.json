@@ -31,7 +31,7 @@
           "CollideWithTerrain": true,
           "MaxReach": 9,
           "DamageTypes": [
-            {"DamageByType": {"*": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5}}, "Knockback": 0.5, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.3, 0, 0.5]}
+            {"DamageByType": {"*": {"DamageType": "SlashingAttack", "Tier": 5, "Damage": 5}}, "Knockback": 0.5, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.3, 0, 0.5]}
           ]
         },
         "AttackHitSound": "game:sounds/thud",
@@ -61,7 +61,7 @@
           "CollideWithTerrain": true,
           "MaxReach": 9,
           "DamageTypes": [
-            {"DamageByType": {"*": {"DamageType": "SlashingAttack", "Strength": 4, "Damage": 5}}, "Knockback": 0.5, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.8, 0, 0.5]}
+            {"DamageByType": {"*": {"DamageType": "SlashingAttack", "Tier": 4, "Damage": 5}}, "Knockback": 0.5, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.8, 0, 0.5]}
           ]
         },
         "AttackHitSound": "game:sounds/thud",
@@ -93,13 +93,13 @@
           "DamageTypes": [
             {
               "DamageByType": {
-                "*-copper": {"DamageType": "SlashingAttack", "Strength": 3, "Damage": 4},
-                "*-*bronze": {"DamageType": "SlashingAttack", "Strength": 4, "Damage": 4.5},
-                "*-iron": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5},
-                "*-gold": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5},
-                "*-silver": {"DamageType": "SlashingAttack", "Strength": 5, "Damage": 5},
-                "*-meteoriciron": {"DamageType": "SlashingAttack", "Strength": 6, "Damage": 5},
-                "*-steel": {"DamageType": "SlashingAttack", "Strength": 7, "Damage": 5.5}
+                "*-copper": {"DamageType": "SlashingAttack", "Tier": 3, "Damage": 4},
+                "*-*bronze": {"DamageType": "SlashingAttack", "Tier": 4, "Damage": 4.5},
+                "*-iron": {"DamageType": "SlashingAttack", "Tier": 5, "Damage": 5},
+                "*-gold": {"DamageType": "SlashingAttack", "Tier": 5, "Damage": 5.2},
+                "*-silver": {"DamageType": "SlashingAttack", "Tier": 5, "Damage": 5.2},
+                "*-meteoriciron": {"DamageType": "SlashingAttack", "Tier": 6, "Damage": 5},
+                "*-steel": {"DamageType": "SlashingAttack", "Tier": 7, "Damage": 5.5}
               },
               "Knockback": -0.2,
               "DurabilityDamage": 1,
@@ -126,7 +126,7 @@
           "CollideWithTerrain": true,
           "MaxReach": 9,
           "DamageTypes": [
-            {"DamageByType": {"*": {"DamageType": "SlashingAttack", "Strength": 2, "Damage": 3.5}}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0.5, 0, 0.45, 1.4, 0, 0.45]}
+            {"DamageByType": {"*": {"DamageType": "SlashingAttack", "Tier": 2, "Damage": 3.5}}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0.5, 0, 0.45, 1.4, 0, 0.45]}
           ]
         },
         "AttackHitSound": "game:sounds/thud",

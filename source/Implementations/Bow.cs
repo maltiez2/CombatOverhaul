@@ -40,7 +40,7 @@ public sealed class BowStats : WeaponStats
     public string TpAimAnimation { get; set; } = "";
     public AimingStatsJson Aiming { get; set; } = new();
     public float ArrowDamageMultiplier { get; set; } = 1;
-    public float ArrowDamageStrength { get; set; } = 1;
+    public float ArrowDamageTier { get; set; } = 1;
     public float ArrowVelocity { get; set; } = 1;
     public string ArrowWildcard { get; set; } = "*arrow-*";
     public float Zeroing { get; set; } = 1.5f;
@@ -383,7 +383,7 @@ public class BowServer : RangeWeaponServer
         {
             ProducerEntityId = player.Entity.EntityId,
             DamageMultiplier = Stats.ArrowDamageMultiplier,
-            DamageStrength = Stats.ArrowDamageStrength,
+            DamageStrength = Stats.ArrowDamageTier,
             Position = new Vector3(packet.Position[0], packet.Position[1], packet.Position[2]),
             Velocity = GetDirectionWithDispersion(packet.Velocity, Stats.DispersionMOA) * Stats.ArrowVelocity
         };
@@ -563,7 +563,7 @@ public class BowItem : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasIdleAni
 
         if (_stats == null) return;
 
-        dsc.AppendLine(Lang.Get("combatoverhaul:iteminfo-range-weapon-damage", _stats.ArrowDamageMultiplier, _stats.ArrowDamageStrength));
+        dsc.AppendLine(Lang.Get("combatoverhaul:iteminfo-range-weapon-damage", _stats.ArrowDamageMultiplier, _stats.ArrowDamageTier));
     }
 
     public override WorldInteraction[] GetHeldInteractionHelp(ItemSlot inSlot)

@@ -53,14 +53,14 @@
         "StopOnEntityHit": false,
         "CollideWithTerrain": true,
         "MaxReach": 9,
-        "DamageTypes": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 2, "Damage": 3.5}, "Knockback": 0.5, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.5]}]
+        "DamageTypes": [{"Damage": {"DamageType": "PiercingAttack", "Tier": 2, "Damage": 3.5}, "Knockback": 0.5, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.5]}]
       },
       "HandleAttack": {
         "StopOnTerrainHit": true,
         "StopOnEntityHit": false,
         "CollideWithTerrain": true,
         "MaxReach": 9,
-        "DamageTypes": [{"Damage": {"DamageType": "BluntAttack", "Strength": 0, "Damage": 1}, "Knockback": 1, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, -2.5, 0, 0.5]}]
+        "DamageTypes": [{"Damage": {"DamageType": "BluntAttack", "Tier": 0, "Damage": 1}, "Knockback": 1, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, -2.5, 0, 0.5]}]
       },
       "HandleHitSound": "game:sounds/thud",
       "AttackAnimation": {"Main": ["combatoverhaul:spear-thrust-1h"]},
@@ -86,14 +86,14 @@
         "StopOnEntityHit": false,
         "CollideWithTerrain": true,
         "MaxReach": 15,
-        "DamageTypes": [{"Damage": {"DamageType": "PiercingAttack", "Strength": 2, "Damage": 4.5}, "Knockback": 0.5, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.5]}]
+        "DamageTypes": [{"Damage": {"DamageType": "PiercingAttack", "Tier": 2, "Damage": 4.5}, "Knockback": 0.5, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.2, 0, 0.5]}]
       },
       "HandleAttack": {
         "StopOnTerrainHit": true,
         "StopOnEntityHit": false,
         "CollideWithTerrain": true,
         "MaxReach": 9,
-        "DamageTypes": [{"Damage": {"DamageType": "BluntAttack", "Strength": 0, "Damage": 0}, "Knockback": 0, "DurabilityDamage": 0, "Collider": [0, 0, 0.5, -2.5, 0, 0.5]}]
+        "DamageTypes": [{"Damage": {"DamageType": "BluntAttack", "Tier": 0, "Damage": 0}, "Knockback": 0, "DurabilityDamage": 0, "Collider": [0, 0, 0.5, -2.5, 0, 0.5]}]
       },
       "HandleHitSound": "game:sounds/thud",
       "AttackDirectionsType": "TopBottom",
