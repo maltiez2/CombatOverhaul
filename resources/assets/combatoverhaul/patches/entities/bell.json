@@ -65,18 +65,6 @@
       }
     }
   },
-  {
-    "side": "Server",
-    "file": "game:entities/land/bell",
-    "op": "add",
-    "path": "/server/behaviors/2/currenthealth",
-    "value": 40
-  },
-  {
-    "side": "Server",
-    "file": "game:entities/land/bell",
-    "op": "add",
-    "path": "/server/behaviors/2/maxhealth",
-    "value": 40
-  }
+  {"side": "Server", "file": "game:entities/land/bell", "op": "add", "path": "/server/behaviors/2/currenthealth", "value": 40},
+  {"side": "Server", "file": "game:entities/land/bell", "op": "add", "path": "/server/behaviors/2/maxhealth", "value": 40}
 ]

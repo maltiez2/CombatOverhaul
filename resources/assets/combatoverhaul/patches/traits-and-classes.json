@@ -21,6 +21,7 @@
     ]
   },
   {"file": "game:config/traits", "op": "replace", "path": "/16/attributes", "value": {"maxhealthExtraPoints": -2.5}},
+  {"file": "game:config/traits", "op": "addmerge", "path": "/9/attributes", "value": {"armorManipulationSpeedAffectedness": -0.5}},
   {
     "file": "game:config/characterclasses",
     "op": "replace",

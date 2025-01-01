@@ -3,7 +3,7 @@ using Vintagestory.API.Common;
 
 namespace CombatOverhaul.Utils;
 
-internal static class LoggerUtil
+public static class LoggerUtil
 {
     private const string _prefix = "[Combat Overhaul]";
 
@@ -37,6 +37,12 @@ internal static class LoggerUtil
         api?.Logger?.Notification(Format(type, format));
 #endif
     }
+    public static void Dev(ICoreAPI? api, string format)
+    {
+#if DEBUG
+        api?.Logger?.Notification(Format(format));
+#endif
+    }
 
     public static string Format(object caller, string format)
     {
@@ -55,6 +61,13 @@ internal static class LoggerUtil
         defaultInterpolatedStringHandler.AppendLiteral(" [");
         defaultInterpolatedStringHandler.AppendFormatted(GetTypeName(type));
         defaultInterpolatedStringHandler.AppendLiteral("] ");
+        defaultInterpolatedStringHandler.AppendFormatted(format);
+        return defaultInterpolatedStringHandler.ToStringAndClear().Replace("{", "{{").Replace("}", "}}");
+    }
+    public static string Format(string format)
+    {
+        DefaultInterpolatedStringHandler defaultInterpolatedStringHandler = new(4, 3);
+        defaultInterpolatedStringHandler.AppendFormatted(_prefix);
         defaultInterpolatedStringHandler.AppendFormatted(format);
         return defaultInterpolatedStringHandler.ToStringAndClear().Replace("{", "{{").Replace("}", "}}");
     }

@@ -37,7 +37,7 @@
       "AttackTpAnimation": "falx"
     }
   },
-  {"file": "game:itemtypes/tool/axe-stone", "op": "replace", "path": "/class", "value": "CombatOverhaul:Axe"},
+  {"enabled": true, "file": "game:itemtypes/tool/axe-stone", "op": "replace", "path": "/class", "value": "CombatOverhaul:Axe"},
   {
     "file": "game:itemtypes/tool/axe-metal",
     "op": "addmerge",
@@ -78,8 +78,14 @@
       "AttackTpAnimation": "falx"
     }
   },
-  {"file": "game:itemtypes/tool/axe-metal", "op": "remove", "path": "/class"},
-  {"file": "game:itemtypes/tool/axe-metal", "op": "add", "path": "/classByType", "value": {"*-felling-*": "CombatOverhaul:Axe", "*-scrap-*": "CombatOverhaul:Axe", "*": "ItemAxe"}},
+  {"enabled": true, "file": "game:itemtypes/tool/axe-metal", "op": "remove", "path": "/class"},
+  {
+    "enabled": true,
+    "file": "game:itemtypes/tool/axe-metal",
+    "op": "add",
+    "path": "/classByType",
+    "value": {"*-felling-*": "CombatOverhaul:Axe", "*-scrap-*": "CombatOverhaul:Axe", "*": "ItemAxe"}
+  },
   {
     "file": "game:itemtypes/tool/axe-metal",
     "op": "replace",

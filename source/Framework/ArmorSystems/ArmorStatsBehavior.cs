@@ -94,7 +94,12 @@ public sealed class WearableStatsBehavior : EntityBehavior
         {
             value *= _player.Stats.GetBlended("armorWalkSpeedAffectedness");
         }
-        
+
+        if (stat == "manipulationSpeed" && value < 0)
+        {
+            value *= _player.Stats.GetBlended("armorManipulationSpeedAffectedness");
+        }
+
         if (!Stats.ContainsKey(stat))
         {
             Stats[stat] = value;

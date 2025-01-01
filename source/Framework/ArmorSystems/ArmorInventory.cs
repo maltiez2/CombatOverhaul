@@ -490,7 +490,7 @@ public sealed class ArmorInventory : InventoryCharacter
 
     private static bool IsVanillaArmorSlot(int index) => index >= _clothesSlotsCount && index < _clothesSlotsCount + _clothesArmorSlots;
 
-    private static ArmorType ArmorTypeFromIndex(int index)
+    internal static ArmorType ArmorTypeFromIndex(int index)
     {
         int zonesCount = Enum.GetValues<DamageZone>().Length - 1;
 

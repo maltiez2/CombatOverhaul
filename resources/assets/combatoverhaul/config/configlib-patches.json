@@ -13,11 +13,6 @@
         "4/file": "(modify_vanilla_classes) ? value : empty_string",
         "5/file": "(modify_vanilla_classes) ? value : empty_string"
       },
-      "combatoverhaul:patches/tools/axe.json": {
-        "1/value": "(axe_animation) ? value : vanilla_axe",
-        "4/value/*-felling-*": "(axe_animation) ? value : vanilla_axe",
-        "4/value/*-scrap-*": "(axe_animation) ? value : vanilla_axe"
-      },
       "combatoverhaul:patches/tools/pickaxe.json": {
         "1/value": "(pickaxe_animation) ? value : vanilla_item"
       },
@@ -33,7 +28,10 @@
         "0/value/RenderingOffset": "not(tool_rendering_offset)",
         "2/value/RenderingOffset": "not(tool_rendering_offset)",
         "0/value/CanSplitLogs": "axe_can_split_logs",
-        "2/value/CanSplitLogs": "axe_can_split_logs"
+        "2/value/CanSplitLogs": "axe_can_split_logs",
+        "1/enabled": "axe_animation",
+        "3/enabled": "axe_animation",
+        "4/enabled": "axe_animation"
       },
       "combatoverhaul:patches/tools/pickaxe.json": {
         "0/value/RenderingOffset": "not(tool_rendering_offset)"

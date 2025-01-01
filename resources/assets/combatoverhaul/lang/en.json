@@ -116,6 +116,7 @@
   "game:charattribute-steadyAim-0.5": "50% less aim drift",
   "game:charattribute-steadyAim--0.3": "30% more aim drift",
   "game:charattribute-armorWalkSpeedAffectedness--0.5": "walk speed penalty for wearing armor reduced by 50%",
+  "game:charattribute-armorManipulationSpeedAffectedness--0.5": "manipulation speed penalty for wearing armor reduced by 50%",
 
   "damagelog-missed-block-zone": "Player tried blocking, but {0} was not protected by block",
   "damagelog-missed-block-direction": "Player tried blocking, but directon ({0}) of incomming attack was not covered by block",
@@ -168,7 +169,7 @@
   "setting-spears_range_damage_multiplier": "Spears thrown damage multiplier",
   "setting-shields_protection_zones": "Shields protection zones",
   "setting-modify_vanilla_classes": "Modify vanilla classes",
-  "setting-axe_animation": "New axe animations",
+  "setting-axe_animation": "New axe animations (turn off for compatibility with other mods if necessary)",
   "setting-pickaxe_animation": "New pickaxe animations",
   "setting-shovel_animation": "New shovel animations",
   "setting-tool_rendering_offset": "Tools clipping through blocks",

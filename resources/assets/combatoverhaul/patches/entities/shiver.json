@@ -66,14 +66,14 @@
         "HeadDamageMultiplier": 1.25,
         "CriticalDamageMultiplier": 2,
         "DefaultResistsByType": {
-          "*-surface": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 4},
-          "*-deep": {"BluntAttack": 0, "SlashingAttack": 2, "PiercingAttack": 5},
-          "*-tainted": {"BluntAttack": 0, "SlashingAttack": 3, "PiercingAttack": 6},
-          "*-corrupt": {"BluntAttack": 0, "SlashingAttack": 4, "PiercingAttack": 6},
-          "*-nightmare": {"BluntAttack": 0, "SlashingAttack": 5, "PiercingAttack": 7},
-          "*-stilt": {"BluntAttack": 0, "SlashingAttack": 6, "PiercingAttack": 7},
-          "*-bellhead": {"BluntAttack": 0, "SlashingAttack": 6, "PiercingAttack": 7},
-          "*-deepsplit": {"BluntAttack": 0, "SlashingAttack": 7, "PiercingAttack": 7}
+          "*-surface": {"BluntAttack": 0, "SlashingAttack": 2, "PiercingAttack": 4},
+          "*-deep": {"BluntAttack": 0, "SlashingAttack": 3, "PiercingAttack": 5},
+          "*-tainted": {"BluntAttack": 0, "SlashingAttack": 4, "PiercingAttack": 6},
+          "*-corrupt": {"BluntAttack": 0, "SlashingAttack": 5, "PiercingAttack": 6},
+          "*-nightmare": {"BluntAttack": 0, "SlashingAttack": 6, "PiercingAttack": 7},
+          "*-stilt": {"BluntAttack": 0, "SlashingAttack": 7, "PiercingAttack": 8},
+          "*-bellhead": {"BluntAttack": 0, "SlashingAttack": 7, "PiercingAttack": 8},
+          "*-deepsplit": {"BluntAttack": 0, "SlashingAttack": 7, "PiercingAttack": 8}
         }
       }
     }
@@ -91,14 +91,14 @@
         "HeadDamageMultiplier": 1.25,
         "CriticalDamageMultiplier": 2,
         "DefaultResistsByType": {
-          "*-surface": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 4},
-          "*-deep": {"BluntAttack": 0, "SlashingAttack": 2, "PiercingAttack": 5},
-          "*-tainted": {"BluntAttack": 0, "SlashingAttack": 3, "PiercingAttack": 6},
-          "*-corrupt": {"BluntAttack": 0, "SlashingAttack": 4, "PiercingAttack": 6},
-          "*-nightmare": {"BluntAttack": 0, "SlashingAttack": 5, "PiercingAttack": 7},
-          "*-stilt": {"BluntAttack": 0, "SlashingAttack": 6, "PiercingAttack": 7},
-          "*-bellhead": {"BluntAttack": 0, "SlashingAttack": 6, "PiercingAttack": 7},
-          "*-deepsplit": {"BluntAttack": 0, "SlashingAttack": 7, "PiercingAttack": 7}
+          "*-surface": {"BluntAttack": 0, "SlashingAttack": 2, "PiercingAttack": 4},
+          "*-deep": {"BluntAttack": 0, "SlashingAttack": 3, "PiercingAttack": 5},
+          "*-tainted": {"BluntAttack": 0, "SlashingAttack": 4, "PiercingAttack": 6},
+          "*-corrupt": {"BluntAttack": 0, "SlashingAttack": 5, "PiercingAttack": 6},
+          "*-nightmare": {"BluntAttack": 0, "SlashingAttack": 6, "PiercingAttack": 7},
+          "*-stilt": {"BluntAttack": 0, "SlashingAttack": 7, "PiercingAttack": 8},
+          "*-bellhead": {"BluntAttack": 0, "SlashingAttack": 7, "PiercingAttack": 8},
+          "*-deepsplit": {"BluntAttack": 0, "SlashingAttack": 7, "PiercingAttack": 8}
         }
       }
     }
