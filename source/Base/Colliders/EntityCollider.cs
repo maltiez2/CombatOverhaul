@@ -489,7 +489,7 @@ public sealed class ShapeElementCollider
 
         return index + offset;
     }
-    private static float[] GetTransformMatrix(int jointId, float[] TransformationMatrices4x3)
+    private static float[] GetTransformMatrix(int jointId, float[] TransformationMatrices4x4)
     {
         float[] transformMatrix = new float[16];
         Mat4f.Identity(transformMatrix);
@@ -498,16 +498,16 @@ public sealed class ShapeElementCollider
             int? transformMatricesIndex = GetIndex(jointId, elementIndex);
             if (transformMatricesIndex != null)
             {
-                transformMatrix[elementIndex] = TransformationMatrices4x3[transformMatricesIndex.Value];
+                transformMatrix[elementIndex] = TransformationMatrices4x4[transformMatricesIndex.Value];
             }
         }
         return transformMatrix;
     }
-    private static void GetElementTransformMatrixA(Matrixf matrix, ShapeElement element, float[] TransformationMatrices4x3)
+    private static void GetElementTransformMatrixA(Matrixf matrix, ShapeElement element, float[] TransformationMatrices4x4)
     {
         if (element.ParentElement != null)
         {
-            GetElementTransformMatrixA(matrix, element.ParentElement, TransformationMatrices4x3);
+            GetElementTransformMatrixA(matrix, element.ParentElement, TransformationMatrices4x4);
         }
 
         matrix
