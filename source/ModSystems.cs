@@ -93,6 +93,8 @@ public sealed class CombatOverhaulSystem : ModSystem
         api.RegisterBlockBehaviorClass("CombatOverhaul:Splittable", typeof(Splittable));
 
         new Harmony("CombatOverhaulAuto").PatchAll();
+
+        InInventoryPlayerBehavior._reportedEntities.Clear();
     }
     public override void StartServerSide(ICoreServerAPI api)
     {
