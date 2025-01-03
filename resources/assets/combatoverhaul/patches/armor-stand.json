@@ -1,4 +1,4 @@
 ﻿[
-  {"file": "game:entities/land/armorstand", "op": "replace", "path": "/client/behaviors/2/code", "value": "CombatOverhaul:ArmorStandInventory"},
-  {"file": "game:entities/land/armorstand", "op": "replace", "path": "/server/behaviors/2/code", "value": "CombatOverhaul:ArmorStandInventory"}
+  {"enabled": false, "file": "game:entities/land/armorstand", "op": "replace", "path": "/client/behaviors/2/code", "value": "CombatOverhaul:ArmorStandInventory"},
+  {"enabled": false, "file": "game:entities/land/armorstand", "op": "replace", "path": "/server/behaviors/2/code", "value": "CombatOverhaul:ArmorStandInventory"}
 ]

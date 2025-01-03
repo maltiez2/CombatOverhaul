@@ -43,7 +43,7 @@ public class MeleeDamagePacket
         IServerPlayer? serverPlayer = (attacker as EntityPlayer)?.Player as IServerPlayer;
         if (serverPlayer != null)
         {
-            if (attacker is EntityPlayer && (!api.Server.Config.AllowPvP || !serverPlayer.HasPrivilege("attackplayers")))
+            if (target is EntityPlayer && (!api.Server.Config.AllowPvP || !serverPlayer.HasPrivilege("attackplayers")))
             {
                 return;
             }
