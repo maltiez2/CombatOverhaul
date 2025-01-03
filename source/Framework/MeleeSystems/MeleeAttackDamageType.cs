@@ -8,6 +8,8 @@ using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
+using Vintagestory.GameContent;
+using Vintagestory.Server;
 using static Microsoft.WindowsAPICodePack.Shell.PropertySystem.SystemProperties.System;
 
 namespace CombatOverhaul.MeleeSystems;
@@ -37,6 +39,20 @@ public class MeleeDamagePacket
 
         Entity attacker = api.World.GetEntityById(AttackerEntityId);
         string targetName = target.GetName();
+
+        IServerPlayer? serverPlayer = (attacker as EntityPlayer)?.Player as IServerPlayer;
+        if (serverPlayer != null)
+        {
+            if (attacker is EntityPlayer && (!api.Server.Config.AllowPvP || !serverPlayer.HasPrivilege("attackplayers")))
+            {
+                return;
+            }
+
+            if (target is EntityAgent && !serverPlayer.HasPrivilege("attackcreatures"))
+            {
+                return;
+            }
+        }
 
         bool damageReceived = target.ReceiveDamage(new DirectionalTypedDamageSource()
         {
