@@ -1,10 +1,7 @@
-﻿using CombatOverhaul.MeleeSystems;
-using HarmonyLib;
-using ImGuiNET;
+﻿using ImGuiNET;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ProtoBuf;
-using System.Globalization;
 using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -57,7 +54,7 @@ public class ParticleEffectsManager
 
         if (api is ICoreClientAPI clientApi)
         {
-            _clientChannel = clientApi.Network.RegisterChannel(_networkChannelId )
+            _clientChannel = clientApi.Network.RegisterChannel(_networkChannelId)
                 .RegisterMessageType<ParticleEffectsPacket>();
         }
 

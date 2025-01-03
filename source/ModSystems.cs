@@ -55,9 +55,6 @@ public sealed class CombatOverhaulSystem : ModSystem
     {
         (api as ServerCoreAPI)?.ClassRegistryNative.RegisterInventoryClass(GlobalConstants.characterInvClassName, typeof(ArmorInventory));
         (api as ClientCoreAPI)?.ClassRegistryNative.RegisterInventoryClass(GlobalConstants.characterInvClassName, typeof(ArmorInventory));
-
-        //(api as ServerCoreAPI)?.ClassRegistryNative.RegisterInventoryClass(GlobalConstants.backpackInvClassName, typeof(InventoryPlayerBackPacksCombatOverhaul));
-        //(api as ClientCoreAPI)?.ClassRegistryNative.RegisterInventoryClass(GlobalConstants.backpackInvClassName, typeof(InventoryPlayerBackPacksCombatOverhaul));
     }
     public override void Start(ICoreAPI api)
     {
@@ -243,27 +240,19 @@ public sealed class CombatOverhaulSystem : ModSystem
     }
     private void CheckStatusClientSide(ICoreClientAPI api)
     {
-        /*IInventory? backpackInventory = GetBackpackInventory(api);
-        if (backpackInventory is not InventoryPlayerBackPacksCombatOverhaul)
-        {
-            string className = backpackInventory == null ? "null" : LoggerUtil.GetCallerTypeName(backpackInventory);
-            LoggerUtil.Error(api, this, $"Backpack inventory class was replaced by some other mod, so quivers cant work properly. New class: {className}");
-            PrintInChat(api, "(error message) Backpack inventory class was replaced by some other mod, so quivers cant work properly. Report this issue into Combat Overhaul thread with client-main logs attached.");
-        }*/
-
         IInventory? gearInventory = GetGearInventory(api.World.Player.Entity);
         if (gearInventory is not ArmorInventory)
         {
             string className = gearInventory == null ? "null" : LoggerUtil.GetCallerTypeName(gearInventory);
-            LoggerUtil.Error(api, this, $"Gear inventory inventory class was replaced by some other mod. New class: {className}");
-            ThrowException(api, "(Combat Overhaul) Gear inventory class was replaced by some other mod, shutting down the client. Report this issue into Combat Overhaul thread with client-main logs attached.");
+            LoggerUtil.Error(api, this, $"Gear inventory class was replaced by some other mod, with {className}");
+            ThrowException(api, $"(Combat Overhaul) Gear inventory class was replaced with '{className}' by some other mod, shutting down the client. Report this issue into Combat Overhaul thread with client-main logs attached.");
         }
 
         bool immersiveFirstPersonMode = api.Settings.Bool["immersiveFpMode"];
         if (immersiveFirstPersonMode)
         {
             LoggerUtil.Error(api, this, $"Immersive first person mode is enabled. It is not supported. Turn this setting off.");
-            AnnoyPlayer(api, "(Combat Overhaul) Immersive first person mode is enabled. It is not supported. Turn this setting off and reload the world to prevent this message.");
+            AnnoyPlayer(api, "(Combat Overhaul) Immersive first person mode is enabled. It is not supported. Turn this setting off to prevent this message.", () => api.Settings.Bool["immersiveFpMode"]);
         }
     }
 
@@ -279,12 +268,12 @@ public sealed class CombatOverhaulSystem : ModSystem
     {
         api.World.RegisterCallback(_ => throw new Exception(message), 1);
     }
-    private void AnnoyPlayer(ICoreClientAPI api, string message)
+    private void AnnoyPlayer(ICoreClientAPI api, string message, System.Func<bool> continueDelegate)
     {
         api.World.RegisterCallback(_ =>
         {
             api.TriggerIngameError(this, "error", message);
-            if (!Disposed) AnnoyPlayer(api, message);
+            if (!Disposed && continueDelegate()) AnnoyPlayer(api, message, continueDelegate);
         }, 5000);
     }
     private void PrintInChat(ICoreClientAPI api, string message)
@@ -313,7 +302,6 @@ public sealed class CombatOverhaulAnimationsSystem : ModSystem
         _api = api;
 
         HarmonyPatches.Patch("CombatOverhaul");
-
     }
 
     public override void StartClientSide(ICoreClientAPI api)

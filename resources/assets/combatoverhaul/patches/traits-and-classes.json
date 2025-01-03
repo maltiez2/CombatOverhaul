@@ -1,5 +1,6 @@
 ﻿[
   {
+    "enabled": true,
     "file": "game:config/traits",
     "op": "addeach",
     "path": "/-",
@@ -21,9 +22,10 @@
       {"code": "armorWalkSpeedAffectedness", "type": "positive", "attributes": {"armorWalkSpeedAffectedness": -0.5}}
     ]
   },
-  {"file": "game:config/traits", "op": "replace", "path": "/16/attributes", "value": {"maxhealthExtraPoints": -2.5}},
-  {"file": "game:config/traits", "op": "addmerge", "path": "/9/attributes", "value": {"armorManipulationSpeedAffectedness": -0.5}},
+  {"enabled": true, "file": "game:config/traits", "op": "replace", "path": "/16/attributes", "value": {"maxhealthExtraPoints": -2.5}},
+  {"enabled": true, "file": "game:config/traits", "op": "addmerge", "path": "/9/attributes", "value": {"armorManipulationSpeedAffectedness": -0.5}},
   {
+    "enabled": true,
     "file": "game:config/characterclasses",
     "op": "replace",
     "path": "/1/traits",
@@ -40,19 +42,21 @@
       "halberdsProficiency"
     ]
   },
-  {"file": "game:config/characterclasses", "op": "addeach", "path": "/2/traits/-", "value": ["javelinsProficiency", "macesProficiency", "clubsProficiency", "axesProficiency"]},
+  {"enabled": true, "file": "game:config/characterclasses", "op": "addeach", "path": "/2/traits/-", "value": ["javelinsProficiency", "macesProficiency", "clubsProficiency", "axesProficiency"]},
   {
+    "enabled": true,
     "file": "game:config/characterclasses",
     "op": "replace",
     "path": "/3/traits",
     "value": ["precise", "technical", "fleetfooted", "frail", "nervous", "tinkerer", "crossbowsProficiency", "firearmsProficiency", "quarterstaffProficiency"]
   },
   {
+    "enabled": true,
     "file": "game:config/characterclasses",
     "op": "replace",
     "path": "/4/traits",
     "value": ["soldier", "hardy", "merciless", "ravenous", "heavyhanded", "oneHandedSwordsProficiency", "twoHandedSwordsProficiency", "tremblingAim"]
   },
-  {"file": "game:config/characterclasses", "op": "addeach", "path": "/5/traits/-", "value": ["tremblingAim"]},
-  {"file": "game:config/traits", "op": "replace", "path": "/9/attributes/armorWalkSpeedAffectedness", "value": -0.5}
+  {"enabled": true, "file": "game:config/characterclasses", "op": "addeach", "path": "/5/traits/-", "value": ["tremblingAim"]},
+  {"enabled": true, "file": "game:config/traits", "op": "replace", "path": "/9/attributes/armorWalkSpeedAffectedness", "value": -0.5}
 ]

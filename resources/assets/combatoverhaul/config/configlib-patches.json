@@ -6,13 +6,6 @@
         "attributes/ThrowAttack/Aiming/CursorType": "spears_aiming_cursor_type",
         "behaviors/1/properties/stats/HitSound": "(arrow_ping_sound_on_hit) ? value : empty_string"
       },
-      "combatoverhaul:patches/traits-and-classes.json": {
-        "1/file": "(modify_vanilla_classes) ? value : empty_string",
-        "2/file": "(modify_vanilla_classes) ? value : empty_string",
-        "3/file": "(modify_vanilla_classes) ? value : empty_string",
-        "4/file": "(modify_vanilla_classes) ? value : empty_string",
-        "5/file": "(modify_vanilla_classes) ? value : empty_string"
-      },
       "combatoverhaul:patches/tools/pickaxe.json": {
         "1/value": "(pickaxe_animation) ? value : vanilla_item"
       },
@@ -50,7 +43,18 @@
         "PrintMeleeHits": "print_melee_hits",
         "PrintPlayerBeingHit": "print_player_hits",
         "DirectionsControllerInvert": "directions_invert"
-      }
+      },
+      "combatoverhaul:patches/traits-and-classes.json": {
+        "0/enabled": "modify_vanilla_classes",
+        "1/enabled": "modify_vanilla_classes",
+        "2/enabled": "modify_vanilla_classes",
+        "3/enabled": "modify_vanilla_classes",
+        "4/enabled": "modify_vanilla_classes",
+        "5/enabled": "modify_vanilla_classes",
+        "6/enabled": "modify_vanilla_classes",
+        "7/enabled": "modify_vanilla_classes",
+        "8/enabled": "modify_vanilla_classes"
+      },
     },
     "number": {
       "combatoverhaul:config/animations/tool/axe.json": {

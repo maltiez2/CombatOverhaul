@@ -84,7 +84,8 @@
   "stat-healingeffectivness": "Ефективність зцілення",
   "stat-hungerrate": "Рівень голоду",
   "stat-meleeWeaponsDamage": "Шкода ближньої зброї",
-    "game:trait-bowsProficiency": "<font color=\"#84ff84\">• Володіння луками</font> <font color=\"#eeee84\">(Переробка бою)</font> ",
+  
+  "game:trait-bowsProficiency": "<font color=\"#84ff84\">• Володіння луками</font> <font color=\"#eeee84\">(Переробка бою)</font> ",
   "game:trait-crossbowsProficiency": "<font color=\"#84ff84\">• Володіння арбалетами</font> <font color=\"#eeee84\">(Переробка бою)</font> ",
   "game:trait-firearmsProficiency": "<font color=\"#84ff84\">• Володіння вогнепальною зброєю</font> <font color=\"#eeee84\">(Переробка бою)</font> ",
   "game:trait-oneHandedSwordsProficiency": "<font color=\"#84ff84\">• Володіння одноручними мечами</font> <font color=\"#eeee84\">(Переробка бою)</font> ",
