@@ -3,7 +3,7 @@
   <PropertyGroup>
     <ModName>Combat Overhaul</ModName>
     <ModType>code</ModType>
-    <ModVersion>0.0.115</ModVersion>
+    <ModVersion>0.0.116</ModVersion>
     <ModId>combatoverhaul</ModId>
     <Description></Description>
     <Side>Universal</Side>
@@ -22,6 +22,7 @@
   <ItemGroup>
     <ModInfoTranslators Include="Gabriel Flame - Ukrainian" />
     <ModInfoTranslators Include="Ouk - Czech" />
+    <ModInfoTranslators Include="Nikolashka - Russian" />
   </ItemGroup>
 
   <!-- Project settings -->
