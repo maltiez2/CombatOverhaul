@@ -161,7 +161,11 @@ public sealed class AnimatableShape : ITexPositionSource, IDisposable
         {
             for (int i = 0; shape.Animations != null && i < shape.Animations.Length; i++)
             {
-                shape.Animations[i].GenerateAllFrames(shape.Elements, shape.JointsById);
+                try
+                {
+                    shape.Animations[i].GenerateAllFrames(shape.Elements, shape.JointsById);
+                }
+                catch (Exception ex) { }
             }
 
             animator = clientApi.Side == EnumAppSide.Client ?

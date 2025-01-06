@@ -28,6 +28,20 @@ public class VanillaShield : MeleeWeapon, IContainedMeshSource
         AddAllTypesToCreativeInventory();
     }
 
+    public override void OnUnloaded(ICoreAPI api)
+    {
+        if (api.ObjectCache.ContainsKey("shieldmeshrefs") && Meshrefs.Count > 0)
+        {
+            foreach (var (_, meshRef) in Meshrefs)
+            {
+                meshRef.Dispose();
+            }
+
+            ObjectCacheUtil.Delete(api, "shieldmeshrefs");
+        }
+        base.OnUnloaded(api);
+    }
+
     public override int GetMaxDurability(ItemStack itemstack)
     {
         int gain = 0;

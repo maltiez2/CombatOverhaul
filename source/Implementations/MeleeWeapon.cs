@@ -1200,7 +1200,14 @@ public class MeleeWeaponServer : RangeWeaponServer
     public MeleeWeaponServer(ICoreServerAPI api, Item item) : base(api, item)
     {
         ProjectileSystem = api.ModLoader.GetModSystem<CombatOverhaulSystem>().ServerProjectileSystem ?? throw new Exception();
-        Stats = item.Attributes.AsObject<MeleeWeaponStats>();
+        try
+        {
+            Stats = item.Attributes.AsObject<MeleeWeaponStats>();
+        }
+        catch (Exception exception)
+        {
+            throw new Exception($"Error while getting stats for item '{item.Code}' on server side: {exception.Message}");
+        }
     }
 
     public override bool Shoot(IServerPlayer player, ItemSlot slot, ShotPacket packet, Entity shooter)
