@@ -52,9 +52,13 @@ public class AnimatableAttachable : Animatable
         ActiveAttachments[entityId].Clear();
         return true;
     }
+    public void SetSwitchModels(long entityId, bool switchModels) => SwitchModelsPerEntity[entityId] = switchModels;
 
     public override void BeforeRender(ICoreClientAPI clientApi, ItemStack itemStack, Entity player, EnumItemRenderTarget target, float dt)
     {
+        SwitchModelsPerEntity.TryGetValue(player.EntityId, out bool switchModels);
+        SwitchModels = switchModels;
+
         base.BeforeRender(clientApi, itemStack, player, target, dt);
 
         foreach (Attachment attachment in Attachments.SelectMany(entry => entry.Value).Select(entry => entry.Value))
@@ -74,9 +78,13 @@ public class AnimatableAttachable : Animatable
 
     protected readonly Dictionary<long, Dictionary<string, Attachment>> Attachments = new();
     protected readonly Dictionary<long, Dictionary<string, bool>> ActiveAttachments = new();
+    protected readonly Dictionary<long, bool> SwitchModelsPerEntity = new();
 
     protected override void RenderShape(IShaderProgram shaderProgram, IWorldAccessor world, AnimatableShape shape, ItemRenderInfo itemStackRenderInfo, IRenderAPI render, ItemStack itemStack, Vec4f lightrgbs, Matrixf itemModelMat, ItemSlot itemSlot, Entity entity, float dt)
     {
+        SwitchModelsPerEntity.TryGetValue(entity.EntityId, out bool switchModels);
+        SwitchModels = switchModels;
+
         base.RenderShape(shaderProgram, world, shape, itemStackRenderInfo, render, itemStack, lightrgbs, ItemModelMat, itemSlot, entity, dt);
 
         if (Shape?.GetAnimator(entity.EntityId) == null) return;

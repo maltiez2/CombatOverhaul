@@ -17,6 +17,7 @@ public class RangeWeaponClient : IClientWeaponLogic
         CombatOverhaulSystem system = api.ModLoader.GetModSystem<CombatOverhaulSystem>();
 
         RangedWeaponSystem = system.ClientRangedWeaponSystem ?? throw new Exception();
+        AttachmentSystem = system.ClientAttachmentSystem ?? throw new Exception();
 
         Item = item;
         Api = api;
@@ -34,6 +35,7 @@ public class RangeWeaponClient : IClientWeaponLogic
     {
         PlayerBehavior = behavior;
         AnimationBehavior = behavior.entity.GetBehavior<FirstPersonAnimationsBehavior>();
+        TpAnimationBehavior = behavior.entity.GetBehavior<ThirdPersonAnimationsBehavior>();
     }
     public virtual void OnSelected(ItemSlot slot, EntityPlayer player, bool mainHand, ref int state)
     {
@@ -43,9 +45,11 @@ public class RangeWeaponClient : IClientWeaponLogic
     protected readonly Item Item;
     protected readonly ICoreClientAPI Api;
     protected readonly RangedWeaponSystemClient RangedWeaponSystem;
+    protected readonly AttachableSystemClient AttachmentSystem;
     protected FirstPersonAnimationsBehavior? AnimationBehavior;
+    protected ThirdPersonAnimationsBehavior? TpAnimationBehavior;
     protected ActionsManagerPlayerBehavior? PlayerBehavior;
-
+    
     protected static bool CheckState<TState>(int state, params TState[] statesToCheck)
         where TState : struct, Enum
     {

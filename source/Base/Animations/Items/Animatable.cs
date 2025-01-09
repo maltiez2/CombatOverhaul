@@ -1,4 +1,5 @@
 ﻿using CombatOverhaul.Integration;
+using System.Diagnostics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -10,11 +11,12 @@ namespace CombatOverhaul.Animations;
 public class Animatable : CollectibleBehavior
 {
     public Shape? CurrentShape => CurrentAnimatableShape?.Shape;
-    public AnimatableShape? CurrentAnimatableShape => (CurrentFirstPerson ? ShapeFirstPerson : Shape) ?? Shape ?? ShapeFirstPerson;
+    public AnimatableShape? CurrentAnimatableShape => (CurrentFirstPerson || SwitchModels ? ShapeFirstPerson : Shape) ?? Shape ?? ShapeFirstPerson;
     public Shape? FirstPersonShape => ShapeFirstPerson?.Shape;
     public Shape? ThirdPersonShape => Shape?.Shape;
     public bool DetachedAnchor { get; set; } = false;
     public bool SwitchArms { get; set; } = false;
+    public bool SwitchModels { get; protected set; } = false;
 
     public Animatable(CollectibleObject collObj) : base(collObj)
     {
@@ -75,11 +77,11 @@ public class Animatable : CollectibleBehavior
 
         if (itemStackRenderInfo == null) return false;
 
-        if (!AnimationsManager.PlayAnimationsInThirdPerson && (!IsOwner(entity) || !IsFirstPerson(entity)))
+        /*if (!AnimationsManager.PlayAnimationsInThirdPerson && (!IsOwner(entity) || !IsFirstPerson(entity)))
         {
             //ClientApi?.Render.RenderMultiTextureMesh(renderInfo.ModelRef);
             return false;
-        }
+        }*/
 
         if (isShadowPass)
         {
@@ -138,7 +140,7 @@ public class Animatable : CollectibleBehavior
     protected virtual AnimatableShape? GetCurrentShape(ItemStack itemStack)
     {
         int renderVariant = itemStack.Attributes.GetAsInt("renderVariant", 0);
-        if (renderVariant == 0) return (CurrentFirstPerson ? ShapeFirstPerson : Shape) ?? Shape ?? ShapeFirstPerson;
+        if (renderVariant == 0) return (CurrentFirstPerson || SwitchModels ? ShapeFirstPerson : Shape) ?? Shape ?? ShapeFirstPerson;
         renderVariant -= RenderVariantOffset;
 
         if (CurrentFirstPerson && ShapeFirstPerson != null)

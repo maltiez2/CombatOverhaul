@@ -2,7 +2,6 @@
 using ImGuiNET;
 using System.Numerics;
 using Vintagestory.API.Common;
-using Vintagestory.Common;
 
 namespace CombatOverhaul.Animations;
 
@@ -78,7 +77,7 @@ public sealed class Animation
         {
             previousDuration = TimeSpan.FromMilliseconds(-1); // to fix sounds at 0 progress not playing
         }
-        
+
         foreach (SoundFrame frame in SoundFrames.Where(frame => frame.DurationFraction * TotalDuration > previousDuration && frame.DurationFraction * TotalDuration <= currentDuration))
         {
             soundsManager.Play(frame);
@@ -177,7 +176,7 @@ public sealed class Animation
     public PlayerItemFrame StillPlayerFrame(int playerFrame, float frameProgress)
     {
         TimeSpan timestamp;
-        
+
         if (playerFrame == 0)
         {
             timestamp = PlayerKeyFrames[playerFrame].Time * frameProgress - TimeSpan.FromMilliseconds(1);
@@ -186,7 +185,7 @@ public sealed class Animation
         {
             timestamp = PlayerKeyFrames[playerFrame - 1].Time + (PlayerKeyFrames[playerFrame].Time - PlayerKeyFrames[playerFrame - 1].Time) * frameProgress - TimeSpan.FromMilliseconds(1);
         }
-        
+
         if (timestamp < TimeSpan.Zero) timestamp = TimeSpan.Zero;
 
         return Interpolate(PlayerItemFrame.Zero, timestamp);
@@ -195,7 +194,7 @@ public sealed class Animation
     {
         TimeSpan timeStamp = ItemAnimationStart + (ItemAnimationEnd - ItemAnimationStart) * ItemKeyFrames[itemFrame].DurationFraction * frameProgress;
 
-        return StillFrame((float)(timeStamp/ TotalDuration));
+        return StillFrame((float)(timeStamp / TotalDuration));
     }
     public PlayerItemFrame StillFrame(float progress)
     {
@@ -266,7 +265,7 @@ public sealed class Animation
         for (nextPlayerKeyFrame = 0; nextPlayerKeyFrame < PlayerKeyFrames.Count; nextPlayerKeyFrame++)
         {
             if (PlayerKeyFrames[nextPlayerKeyFrame].Time > currentDuration) break;
-        } 
+        }
 
         if (nextPlayerKeyFrame == 0)
         {
@@ -660,7 +659,7 @@ public sealed class PLayerKeyFrameJson
         }
 
         if (frame.Frame.UpperTorso != null) result.Elements.Add("UpperTorso", frame.Frame.UpperTorso.Value.ToArray());
-        if (frame.Frame.DetachedAnchorFrame != null)  result.Elements.Add("DetachedAnchor", frame.Frame.DetachedAnchorFrame.Value.ToArray());
+        if (frame.Frame.DetachedAnchorFrame != null) result.Elements.Add("DetachedAnchor", frame.Frame.DetachedAnchorFrame.Value.ToArray());
 
         return result;
     }

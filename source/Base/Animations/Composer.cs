@@ -1,4 +1,5 @@
 ﻿using CombatOverhaul.Utils;
+using ProtoBuf;
 using Vintagestory.API.Common;
 
 namespace CombatOverhaul.Animations;
@@ -7,7 +8,7 @@ public delegate bool AnimationSpeedModifierDelegate(TimeSpan duration, ref TimeS
 
 public sealed class Composer
 {
-    public Composer(SoundsSynchronizerClient soundsManager, ParticleEffectsManager particleEffectsManager, EntityPlayer player)
+    public Composer(SoundsSynchronizerClient? soundsManager, ParticleEffectsManager? particleEffectsManager, EntityPlayer player)
     {
         _soundsManager = soundsManager;
         _particleEffectsManager = particleEffectsManager;
@@ -153,8 +154,8 @@ public sealed class Composer
     private readonly Dictionary<string, TimeSpan> _currentTimes = new();
     private readonly Dictionary<string, bool> _callbacksCalled = new();
     private readonly Queue<AnimationRequest> _requestsQueue = new();
-    private readonly SoundsSynchronizerClient _soundsManager;
-    private readonly ParticleEffectsManager _particleEffectsManager;
+    private readonly SoundsSynchronizerClient? _soundsManager;
+    private readonly ParticleEffectsManager? _particleEffectsManager;
     private readonly EntityPlayer _player;
     private TimeSpan _speedModifierDuration = TimeSpan.Zero;
     private AnimationSpeedModifierDelegate? _speedModifierDelegate;
@@ -295,7 +296,7 @@ public readonly struct AnimationRequestByCode
 
 internal class Animator
 {
-    public Animator(Animation animation, SoundsSynchronizerClient soundsManager, ParticleEffectsManager particleEffectsManager, EntityPlayer player, float animationSpeed)
+    public Animator(Animation animation, SoundsSynchronizerClient? soundsManager, ParticleEffectsManager? particleEffectsManager, EntityPlayer player, float animationSpeed)
     {
         _currentAnimation = animation;
         _soundsManager = soundsManager;
@@ -321,8 +322,8 @@ internal class Animator
         _currentDuration += delta;
         TimeSpan adjustedDuration = _currentDuration * _animationSpeed;
 
-        _currentAnimation.PlaySounds(_soundsManager, previousDuration, adjustedDuration);
-        _currentAnimation.SpawnParticles(_player, _particleEffectsManager, previousDuration, adjustedDuration);
+        if (_soundsManager != null) _currentAnimation.PlaySounds(_soundsManager, previousDuration, adjustedDuration);
+        if (_particleEffectsManager != null) _currentAnimation.SpawnParticles(_player, _particleEffectsManager, previousDuration, adjustedDuration);
         callbacks = _currentAnimation.GetCallbacks(previousDuration, adjustedDuration);
 
         _lastFrame = _currentAnimation.Interpolate(_previousAnimationFrame, adjustedDuration);
@@ -334,9 +335,9 @@ internal class Animator
     private PlayerItemFrame _previousAnimationFrame = PlayerItemFrame.Zero;
     private PlayerItemFrame _lastFrame = PlayerItemFrame.Zero;
     private TimeSpan _currentDuration = TimeSpan.Zero;
-    private float _animationSpeed = 1;
+    private float _animationSpeed;
     private Animation _currentAnimation;
-    private readonly SoundsSynchronizerClient _soundsManager;
-    private readonly ParticleEffectsManager _particleEffectsManager;
+    private readonly SoundsSynchronizerClient? _soundsManager;
+    private readonly ParticleEffectsManager? _particleEffectsManager;
     private readonly EntityPlayer _player;
 }

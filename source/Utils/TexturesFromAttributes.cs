@@ -227,7 +227,21 @@ public class TexturesFromAttributes : CollectibleBehavior, IContainedMeshSource
         }
     }
 
-    public MeshData GenMesh(ItemStack itemstack, ITextureAtlasAPI targetAtlas)
+    public MultiTextureMeshRef GetMeshRef(ICoreClientAPI capi, ItemStack itemstack, EnumItemRenderTarget target, ref ItemRenderInfo renderinfo, Shape shape)
+    {
+        int meshrefId = itemstack.TempAttributes.GetInt("meshRefId");
+        if (meshrefId == 0 || !Meshrefs.TryGetValue(meshrefId, out renderinfo.ModelRef))
+        {
+            int id = Meshrefs.Count + 1;
+            MultiTextureMeshRef modelref = capi.Render.UploadMultiTextureMesh(GenMesh(itemstack, capi.ItemTextureAtlas, shape));
+            renderinfo.ModelRef = Meshrefs[id] = modelref;
+
+            itemstack.TempAttributes.SetInt("meshRefId", id);
+        }
+        return renderinfo.ModelRef;
+    }
+
+    public MeshData GenMesh(ItemStack itemstack, ITextureAtlasAPI targetAtlas, Shape? overrideShape = null)
     {
         ContainedTextureSource textureSource = new(_api as ICoreClientAPI, targetAtlas, new Dictionary<string, AssetLocation>(), $"For render in '{_item.Code}'");
 
@@ -235,7 +249,7 @@ public class TexturesFromAttributes : CollectibleBehavior, IContainedMeshSource
 
         if (_clientAPI == null || _properties == null) return new MeshData();
 
-        Shape? shape = _clientAPI.TesselatorManager.GetCachedShape(_item.Shape.Base);
+        Shape? shape = overrideShape ?? _clientAPI.TesselatorManager.GetCachedShape(_item.Shape.Base);
 
         if (shape == null) return new MeshData();
 

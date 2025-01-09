@@ -1,11 +1,15 @@
 ﻿using CombatOverhaul.Integration;
 using CombatOverhaul.Utils;
+using ProtoBuf;
+using System.Diagnostics;
 using System.Numerics;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.MathTools;
+using Vintagestory.API.Server;
 using Vintagestory.Client.NoObf;
 using Vintagestory.GameContent;
 
@@ -142,7 +146,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     public void PlayVanillaAnimation(string code, bool mainHand)
     {
         if (code == "") return;
-        
+
         _vanillaAnimationsManager?.StartAnimation(code);
         if (mainHand)
         {
@@ -476,5 +480,543 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     {
         HarmonyPatches.OnBeforeFrame -= OnBeforeFrame;
         HarmonyPatches.OnFrame -= OnFrame;
+    }
+}
+
+public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
+{
+    public ThirdPersonAnimationsBehavior(Entity entity) : base(entity)
+    {
+        if (entity is not EntityPlayer player) throw new ArgumentException("Only for players");
+        _player = player;
+        _api = player.Api as ICoreClientAPI;
+        _animationsManager = player.Api.ModLoader.GetModSystem<CombatOverhaulAnimationsSystem>().PlayerAnimationsManager;
+        _animationSystem = player.Api.ModLoader.GetModSystem<CombatOverhaulAnimationsSystem>().ClientTpAnimationSystem;
+
+        _composer = new(null, null, player);
+
+        HarmonyPatches.OnBeforeFrame += OnBeforeFrame;
+        HarmonyPatches.OnFrame += OnFrame;
+        player.Api.ModLoader.GetModSystem<CombatOverhaulSystem>().OnDispose += Dispose;
+
+        _mainPlayer = (entity as EntityPlayer)?.PlayerUID == _api?.Settings.String["playeruid"];
+    }
+
+    public override string PropertyName() => "ThirdPersonAnimations";
+
+    public override void OnGameTick(float deltaTime)
+    {
+        if (_player.RightHandItemSlot == null || _player.LeftHandItemSlot == null) return;
+
+        int mainHandItemId = _player.RightHandItemSlot.Itemstack?.Item?.Id ?? 0;
+        int offhandItemId = _player.LeftHandItemSlot.Itemstack?.Item?.Id ?? 0;
+
+        if (_mainPlayer)
+        {
+            if (_mainHandItemId != mainHandItemId)
+            {
+                _mainHandItemId = mainHandItemId;
+                MainHandItemChanged();
+            }
+
+            if (_offHandItemId != offhandItemId)
+            {
+                _offHandItemId = offhandItemId;
+                OffhandItemChanged();
+            }
+        }
+        
+
+        while (_playRequests.Any())
+        {
+            (AnimationRequest request, bool mainHand) = _playRequests.Dequeue();
+            PlayRequest(request, mainHand);
+        }
+    }
+
+    public PlayerItemFrame? FrameOverride { get; set; } = null;
+
+    
+    public void Play(AnimationRequestByCode requestByCode, bool mainHand = true)
+    {
+        if (_animationsManager == null) return;
+        if (!_animationsManager.Animations.TryGetValue(requestByCode.Animation + "-tp", out Animation? animation))
+        {
+            if (!_animationsManager.Animations.TryGetValue(requestByCode.Animation, out animation))
+            {
+                return;
+            }
+        }
+
+        AnimationRequest request = new(animation, requestByCode);
+
+        Play(request, mainHand);
+        if (_mainPlayer) _animationSystem.SendPlayPacket(requestByCode, mainHand, entity.EntityId);
+    }
+    public void Play(bool mainHand, string animation, string category = "main", float animationSpeed = 1, float weight = 1, bool easeOut = true)
+    {
+        AnimationRequestByCode request = new(animation, animationSpeed, weight, category, TimeSpan.FromSeconds(0.1), TimeSpan.FromSeconds(0.1), easeOut, null, null);
+        Play(request, mainHand);
+    }
+    public void PlayReadyAnimation(bool mainHand = true)
+    {
+        if (mainHand)
+        {
+            if (_player.RightHandItemSlot.Itemstack?.Item is IHasIdleAnimations item)
+            {
+                Play(item.ReadyAnimation, mainHand);
+                StartIdleTimer(item.IdleAnimation, mainHand);
+            }
+            if (_player.RightHandItemSlot.Itemstack?.Item is IHasDynamicIdleAnimations item2)
+            {
+                AnimationRequestByCode? readyAnimation = item2.GetReadyAnimation(mainHand: mainHand);
+                AnimationRequestByCode? idleAnimation = item2.GetIdleAnimation(mainHand: mainHand);
+
+                if (readyAnimation != null && idleAnimation != null)
+                {
+                    Play(readyAnimation.Value, mainHand);
+                    StartIdleTimer(idleAnimation.Value, mainHand);
+                }
+            }
+        }
+        else
+        {
+            if (_player.LeftHandItemSlot.Itemstack?.Item is IHasIdleAnimations item)
+            {
+                Play(item.ReadyAnimation, mainHand);
+                StartIdleTimer(item.IdleAnimation, mainHand);
+            }
+            if (_player.LeftHandItemSlot.Itemstack?.Item is IHasDynamicIdleAnimations item2)
+            {
+                AnimationRequestByCode? readyAnimation = item2.GetReadyAnimation(mainHand: mainHand);
+                AnimationRequestByCode? idleAnimation = item2.GetIdleAnimation(mainHand: mainHand);
+
+                if (readyAnimation != null && idleAnimation != null)
+                {
+                    Play(readyAnimation.Value, mainHand);
+                    StartIdleTimer(idleAnimation.Value, mainHand);
+                }
+            }
+        }
+    }
+    public void Stop(string category)
+    {
+        _composer.Stop(category);
+        if (_mainPlayer) _animationSystem.SendStopPacket(category, entity.EntityId);
+    }
+
+
+    private readonly Composer _composer;
+    private readonly EntityPlayer _player;
+    private readonly AnimationsManager? _animationsManager;
+    private readonly AnimationSystemClient _animationSystem;
+    
+    private PlayerItemFrame _lastFrame = PlayerItemFrame.Zero;
+    private readonly List<string> _offhandCategories = new();
+    private readonly List<string> _mainHandCategories = new();
+    private readonly bool _mainPlayer = false;
+    private int _offHandItemId = 0;
+    private int _mainHandItemId = 0;
+    private long _mainHandIdleTimer = -1;
+    private long _offHandIdleTimer = -1;
+    private readonly ICoreClientAPI? _api;
+    private readonly Queue<(AnimationRequest request, bool mainHand)> _playRequests = new();
+
+    private static readonly TimeSpan _readyTimeout = TimeSpan.FromSeconds(3);
+
+    private void Play(AnimationRequest request, bool mainHand = true)
+    {
+        _playRequests.Enqueue((request, mainHand));
+        StopIdleTimer(mainHand);
+    }
+
+    private void OnBeforeFrame(Entity targetEntity, float dt)
+    {
+        if (entity.EntityId != targetEntity.EntityId) return;
+        
+        float factor = (entity.Api as ICoreClientAPI)?.IsSinglePlayer == true ? 0.5f : 1f;
+
+        double dtAdjusted = GameMath.Clamp(dt * factor, -TimeSpan.MaxValue.TotalSeconds / 2, TimeSpan.MaxValue.TotalSeconds / 2);
+
+        _lastFrame = _composer.Compose(TimeSpan.FromSeconds(dtAdjusted));
+    }
+    private void OnFrame(Entity entity, ElementPose pose)
+    {
+        if (AnimationsManager.PlayAnimationsInThirdPerson || IsFirstPerson(entity)) return;
+
+        Animatable? animatable = (entity as EntityAgent)?.RightHandItemSlot?.Itemstack?.Item?.GetCollectibleBehavior(typeof(Animatable), true) as Animatable;
+
+        if (FrameOverride != null)
+        {
+            ApplyFrame(FrameOverride.Value, entity, pose, animatable);
+        }
+        else
+        {
+            ApplyFrame(_lastFrame, entity, pose, animatable);
+        }
+    }
+    private void ApplyFrame(PlayerItemFrame frame, Entity targetEntity, ElementPose pose, Animatable? animatable)
+    {
+        if (entity.EntityId != targetEntity.EntityId) return;
+        
+        if (pose.ForElement.Name == "LowerTorso") return;
+
+        /*if (!frame.DetachedAnchor)
+        {
+            if (pose.ForElement.Name == "UpperTorso")
+            {
+                AdjustForCameraPitch(entity as EntityPlayer, pose);
+                return;
+            }
+
+            if (pose.ForElement.Name == "Neck")
+            {
+                AdjustNeckForCameraPitch(entity as EntityPlayer, pose);
+                return;
+            }
+        }*/
+
+        float pitch = targetEntity.Pos.HeadPitch;
+        Vector3 eyePosition = new((float)entity.LocalEyePos.X, (float)entity.LocalEyePos.Y, (float)entity.LocalEyePos.Z);
+
+        frame.Apply(pose, eyePosition, pitch, true);
+
+        if (animatable != null && frame.DetachedAnchor)
+        {
+            animatable.DetachedAnchor = true;
+        }
+
+        if (animatable != null && frame.SwitchArms)
+        {
+            animatable.SwitchArms = true;
+        }
+    }
+    private static bool IsFirstPerson(Entity entity)
+    {
+        bool owner = (entity.Api as ICoreClientAPI)?.World.Player.Entity.EntityId == entity.EntityId;
+        if (!owner) return false;
+
+        bool firstPerson = entity.Api is ICoreClientAPI { World.Player.CameraMode: EnumCameraMode.FirstPerson };
+
+        return firstPerson;
+    }
+    private void PlayRequest(AnimationRequest request, bool mainHand = true)
+    {
+        _composer.Play(request);
+        if (mainHand)
+        {
+            _mainHandCategories.Add(request.Category);
+        }
+        else
+        {
+            _offhandCategories.Add(request.Category);
+        }
+    }
+
+    private void MainHandItemChanged()
+    {
+        StopIdleTimer(mainHand: true);
+
+        if (_player.RightHandItemSlot.Itemstack?.Item is IHasIdleAnimations item)
+        {
+            string readyCategory = item.ReadyAnimation.Category;
+
+            foreach (string category in _mainHandCategories.Where(element => element != readyCategory))
+            {
+                Stop(category);
+            }
+            _mainHandCategories.Clear();
+
+            Play(item.ReadyAnimation, true);
+            StartIdleTimer(item.IdleAnimation, true);
+        }
+        else if (_player.RightHandItemSlot.Itemstack?.Item is IHasDynamicIdleAnimations item2)
+        {
+            AnimationRequestByCode? readyAnimation = item2.GetReadyAnimation(mainHand: true);
+            AnimationRequestByCode? idleAnimation = item2.GetIdleAnimation(mainHand: true);
+
+            if (readyAnimation == null || idleAnimation == null)
+            {
+                foreach (string category in _mainHandCategories)
+                {
+                    Stop(category);
+                }
+                _mainHandCategories.Clear();
+            }
+            else
+            {
+                string readyCategory = readyAnimation.Value.Category;
+
+                foreach (string category in _mainHandCategories.Where(element => element != readyCategory))
+                {
+                    Stop(category);
+                }
+                _mainHandCategories.Clear();
+
+                Play(readyAnimation.Value, true);
+                StartIdleTimer(idleAnimation.Value, true);
+            }
+        }
+        else
+        {
+            foreach (string category in _mainHandCategories)
+            {
+                Stop(category);
+            }
+            _mainHandCategories.Clear();
+        }
+    }
+    private void OffhandItemChanged()
+    {
+        StopIdleTimer(false);
+
+        if (_player.LeftHandItemSlot.Itemstack?.Item is IHasIdleAnimations item)
+        {
+            string readyCategory = item.ReadyAnimation.Category;
+
+            foreach (string category in _offhandCategories.Where(element => element != readyCategory))
+            {
+                Stop(category);
+            }
+            _offhandCategories.Clear();
+
+            Play(item.ReadyAnimation, false);
+            StartIdleTimer(item.IdleAnimation, false);
+        }
+        else if (_player.LeftHandItemSlot.Itemstack?.Item is IHasDynamicIdleAnimations item2)
+        {
+            AnimationRequestByCode? readyAnimation = item2.GetReadyAnimation(mainHand: false);
+            AnimationRequestByCode? idleAnimation = item2.GetIdleAnimation(mainHand: false);
+
+            if (readyAnimation == null || idleAnimation == null)
+            {
+                foreach (string category in _offhandCategories)
+                {
+                    Stop(category);
+                }
+                _offhandCategories.Clear();
+            }
+            else
+            {
+                string readyCategory = readyAnimation.Value.Category;
+
+                foreach (string category in _offhandCategories.Where(element => element != readyCategory))
+                {
+                    Stop(category);
+                }
+                _offhandCategories.Clear();
+
+                Play(readyAnimation.Value, false);
+                StartIdleTimer(idleAnimation.Value, false);
+            }
+        }
+        else
+        {
+            foreach (string category in _offhandCategories)
+            {
+                Stop(category);
+            }
+            _offhandCategories.Clear();
+        }
+    }
+
+    private void StartIdleTimer(AnimationRequestByCode request, bool mainHand)
+    {
+        if (_api?.IsGamePaused == true || !_mainPlayer) return;
+
+        long timer = _api?.World.RegisterCallback(_ => PlayIdleAnimation(request, mainHand), (int)_readyTimeout.TotalMilliseconds) ?? -1;
+        if (mainHand)
+        {
+            _mainHandIdleTimer = timer;
+        }
+        else
+        {
+            _offHandIdleTimer = timer;
+        }
+    }
+    private void StopIdleTimer(bool mainHand)
+    {
+        if (mainHand)
+        {
+            if (_mainHandIdleTimer != -1)
+            {
+                _api?.World.UnregisterCallback(_mainHandIdleTimer);
+                _mainHandIdleTimer = -1;
+            }
+        }
+        else
+        {
+            if (_offHandIdleTimer != -1)
+            {
+                _api?.World.UnregisterCallback(_offHandIdleTimer);
+                _offHandIdleTimer = -1;
+            }
+        }
+    }
+    private void PlayIdleAnimation(AnimationRequestByCode request, bool mainHand)
+    {
+        if (mainHand && _mainHandIdleTimer == -1) return;
+        if (!mainHand && _offHandIdleTimer == -1) return;
+
+        if (mainHand)
+        {
+            _mainHandIdleTimer = -1;
+        }
+        else
+        {
+            _offHandIdleTimer = -1;
+        }
+
+        Play(request, mainHand);
+    }
+    private void AdjustForCameraPitch(EntityPlayer player, ElementPose pose)
+    {
+        float pitch = player.Pos.HeadPitch;
+        float minAngle = -45;
+        float maxAngle = 75;
+
+        pose.translateX = 0;
+        pose.translateY = 0;
+        pose.translateZ = 0;
+        //pose.degX = 0;
+        //pose.degY = 0;
+        pose.degZ = GameMath.Clamp(pitch * GameMath.RAD2DEG, minAngle, maxAngle);
+    }
+    private void AdjustNeckForCameraPitch(EntityPlayer player, ElementPose pose)
+    {
+        float pitch = player.Pos.HeadPitch;
+        float minAngle = -45;
+        float maxAngle = 75;
+
+        pose.translateX = 0;
+        pose.translateY = 0;
+        pose.translateZ = 0;
+        //pose.degX = 0;
+        //pose.degY = 0;
+        pose.degZ = -GameMath.Clamp(pitch * GameMath.RAD2DEG, minAngle, maxAngle) / 2;
+    }
+    private void Dispose()
+    {
+        HarmonyPatches.OnBeforeFrame -= OnBeforeFrame;
+        HarmonyPatches.OnFrame -= OnFrame;
+    }
+}
+
+[ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
+public sealed class AnimationRequestPacket
+{
+    public bool MainHand { get; set; }
+    public string Animation { get; set; }
+    public float AnimationSpeed { get; set; }
+    public float Weight { get; set; }
+    public string Category { get; set; }
+    public double EaseOutDurationMs { get; set; }
+    public double EaseInDurationMs { get; set; }
+    public bool EaseOut { get; set; }
+    public long EntityId { get; set; }
+
+    public AnimationRequestPacket()
+    {
+
+    }
+
+    public AnimationRequestPacket(AnimationRequestByCode request, bool mainHand, long entityId)
+    {
+        MainHand = mainHand;
+        Animation = request.Animation;
+        AnimationSpeed = request.AnimationSpeed;
+        Weight = request.Weight;
+        Category = request.Category;
+        EaseOutDurationMs = request.EaseOutDuration.TotalMilliseconds;
+        EaseInDurationMs = request.EaseInDuration.TotalMilliseconds;
+        EaseOut = request.EaseOut;
+        EntityId = entityId;
+    }
+
+    public (AnimationRequestByCode request, bool mainHand) ToRequest()
+    {
+        AnimationRequestByCode request = new(Animation, AnimationSpeed, Weight, Category, TimeSpan.FromMilliseconds(EaseOutDurationMs), TimeSpan.FromMilliseconds(EaseInDurationMs), EaseOut);
+        return (request, MainHand);
+    }
+}
+
+[ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
+public sealed class AnimationStopRequestPacket
+{
+    public string Category { get; set; }
+    public long EntityId { get; set; }
+
+    public AnimationStopRequestPacket()
+    {
+
+    }
+
+    public AnimationStopRequestPacket(string category, long entityId)
+    {
+        Category = category;
+        EntityId = entityId;
+    }
+}
+
+
+public sealed class AnimationSystemClient
+{
+    public AnimationSystemClient(ICoreClientAPI api)
+    {
+        _api = api;
+        _clientChannel = api.Network.RegisterChannel("CO-animationsystem")
+            .RegisterMessageType<AnimationRequestPacket>()
+            .RegisterMessageType<AnimationStopRequestPacket>()
+            .SetMessageHandler<AnimationRequestPacket>(HandlePacket)
+            .SetMessageHandler<AnimationStopRequestPacket>(HandlePacket);
+    }
+
+    public void SendPlayPacket(AnimationRequestByCode request, bool mainHand, long entityId)
+    {
+        _clientChannel.SendPacket(new AnimationRequestPacket(request, mainHand, entityId));
+    }
+    public void SendStopPacket(string category, long entityId)
+    {
+        _clientChannel.SendPacket(new AnimationStopRequestPacket(category, entityId));
+    }
+
+    private readonly IClientNetworkChannel _clientChannel;
+    private readonly ICoreClientAPI _api;
+
+    private void HandlePacket(AnimationRequestPacket packet)
+    {
+        (AnimationRequestByCode request, bool mainHnad) = packet.ToRequest();
+
+        _api.World.GetEntityById(packet.EntityId)?.GetBehavior<ThirdPersonAnimationsBehavior>()?.Play(request, mainHnad);
+    }
+
+    private void HandlePacket(AnimationStopRequestPacket packet)
+    {
+        _api.World.GetEntityById(packet.EntityId)?.GetBehavior<ThirdPersonAnimationsBehavior>()?.Stop(packet.Category);
+    }
+}
+
+public sealed class AnimationSystemServer
+{
+    public AnimationSystemServer(ICoreServerAPI api)
+    {
+        _serverChannel = api.Network.RegisterChannel("CO-animationsystem")
+            .RegisterMessageType<AnimationRequestPacket>()
+            .RegisterMessageType<AnimationStopRequestPacket>()
+            .SetMessageHandler<AnimationRequestPacket>(HandlePacket)
+            .SetMessageHandler<AnimationStopRequestPacket>(HandlePacket);
+    }
+
+
+    private readonly IServerNetworkChannel _serverChannel;
+
+    private void HandlePacket(IServerPlayer player, AnimationRequestPacket packet)
+    {
+        _serverChannel.BroadcastPacket(packet, player);
+    }
+
+    private void HandlePacket(IServerPlayer player, AnimationStopRequestPacket packet)
+    {
+        _serverChannel.BroadcastPacket(packet, player);
     }
 }

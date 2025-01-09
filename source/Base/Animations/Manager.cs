@@ -12,7 +12,6 @@ using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Util;
 using Vintagestory.Client.NoObf;
-using Vintagestory.GameContent;
 using VSImGui;
 using VSImGui.API;
 
@@ -106,6 +105,9 @@ public sealed class AnimationsManager
     private int _colliderItemIndex = 0;
     private int _colliderIndex = 0;
     private readonly Dictionary<string, ModelTransform> _transforms = new();
+    private static Dictionary<string, Dictionary<string, (Action<LineSegmentCollider> setter, System.Func<LineSegmentCollider> getter)>> _colliders = new();
+    internal static LineSegmentCollider? _currentCollider = null;
+
     private Dictionary<string, Animation> FromAsset(IAsset asset)
     {
         Dictionary<string, Animation> result = new();
@@ -144,8 +146,6 @@ public sealed class AnimationsManager
 
         return result;
     }
-    private static Dictionary<string, Dictionary<string, (Action<LineSegmentCollider> setter, System.Func<LineSegmentCollider> getter)>> _colliders = new();
-    internal static LineSegmentCollider? _currentCollider = null;
 
 #if DEBUG
     private CallbackGUIStatus DrawEditor(float deltaSeconds)
@@ -306,6 +306,16 @@ public sealed class AnimationsManager
         bool tpAnimations = PlayAnimationsInThirdPerson;
         ImGui.Checkbox("Third person animations", ref tpAnimations);
         PlayAnimationsInThirdPerson = tpAnimations;
+
+        if (ImGui.Button("Render fp model in tp"))
+        {
+            _api.World.Player.Entity.ActiveHandItemSlot.Itemstack?.Collectible?.GetCollectibleBehavior<AnimatableAttachable>(true)?.SetSwitchModels(_api.World.Player.Entity.EntityId, true);
+        }
+        ImGui.SameLine();
+        if (ImGui.Button("Switch back"))
+        {
+            _api.World.Player.Entity.ActiveHandItemSlot.Itemstack?.Collectible?.GetCollectibleBehavior<AnimatableAttachable>(true)?.SetSwitchModels(_api.World.Player.Entity.EntityId, false);
+        }
 
         ImGui.InputTextWithHint("Filter##" + "animations", "supports wildcards", ref _animationsFilter, 200);
         EditorsUtils.FilterElements(_animationsFilter, Animations.Keys, out IEnumerable<string> filtered, out IEnumerable<int> indexes);
@@ -504,7 +514,7 @@ public sealed class AnimationsManager
         {
             _currentBlock?.RegenerateMeshes();
         }
-        
+
     }
 
     private void CreateAnimationGui()

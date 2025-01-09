@@ -16,7 +16,7 @@ public class ItemSlotBagContentWithWildcardMatch : ItemSlotBagContent
     public ItemSlotBagContentWithWildcardMatch(InventoryBase inventory, int BagIndex, int SlotIndex, EnumItemStorageFlags storageType, string? color, string[] canHoldWildcard) : base(inventory, BagIndex, SlotIndex, storageType)
     {
         CanHoldWildcard = canHoldWildcard;
-        HexBackgroundColor = color;
+        HexBackgroundColor = "#84b054"; // color; // Vanilla gui is fucking mess and inventory too. No custom colors until Tyrons fixes his code.
     }
 
     public override bool CanTakeFrom(ItemSlot sourceSlot, EnumMergePriority priority = EnumMergePriority.AutoMerge)
@@ -138,9 +138,8 @@ public class GearEquipableBag : CollectibleBehavior, IHeldBag, IAttachedInteract
     {
         List<ItemSlotBagContent?> bagContents = new();
 
-        //string bgcolhex = GetSlotBgColor(bagstack);
-        EnumItemStorageFlags flags = (EnumItemStorageFlags)defaultFlags;// GetStorageFlags(bagstack);
-        int quantitySlots = SlotsNumber;// GetQuantitySlots(bagstack);
+        EnumItemStorageFlags flags = (EnumItemStorageFlags)defaultFlags;
+        int quantitySlots = SlotsNumber;
 
         ITreeAttribute stackBackPackTree = bagstack.Attributes.GetTreeAttribute("backpack");
         if (stackBackPackTree == null)
@@ -151,7 +150,6 @@ public class GearEquipableBag : CollectibleBehavior, IHeldBag, IAttachedInteract
             for (int slotIndex = 0; slotIndex < quantitySlots; slotIndex++)
             {
                 ItemSlotBagContentWithWildcardMatch slot = new(parentinv, bagIndex, slotIndex, flags, SlotColor, CanHoldWildcard);
-                //slot.HexBackgroundColor = bgcolhex;
                 bagContents.Add(slot);
                 slotsTree["slot-" + slotIndex] = new ItemstackAttribute(null);
             }
@@ -167,7 +165,6 @@ public class GearEquipableBag : CollectibleBehavior, IHeldBag, IAttachedInteract
             {
                 int slotIndex = val.Key.Split("-")[1].ToInt();
                 ItemSlotBagContentWithWildcardMatch slot = new(parentinv, bagIndex, slotIndex, flags, SlotColor, CanHoldWildcard);
-                //slot.HexBackgroundColor = bgcolhex;
 
                 if (val.Value?.GetValue() != null)
                 {

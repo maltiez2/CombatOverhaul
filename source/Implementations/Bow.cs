@@ -71,11 +71,13 @@ public class BowClient : RangeWeaponClient
     public override void OnSelected(ItemSlot slot, EntityPlayer player, bool mainHand, ref int state)
     {
         Attachable.ClearAttachments(player.EntityId);
+        AttachmentSystem.SendClearPacket(player.EntityId);
     }
 
     public override void OnDeselected(EntityPlayer player, bool mainHand, ref int state)
     {
         Attachable.ClearAttachments(player.EntityId);
+        AttachmentSystem.SendClearPacket(player.EntityId);
         PlayerBehavior?.SetState((int)BowState.Unloaded);
         AimingSystem.StopAiming();
 
@@ -108,9 +110,11 @@ public class BowClient : RangeWeaponClient
         if (arrowSlot == null) return false;
 
         Attachable.SetAttachment(player.EntityId, "Arrow", arrowSlot.Itemstack, ArrowTransform);
+        AttachmentSystem.SendAttachPacket(player.EntityId, "Arrow", arrowSlot.Itemstack, ArrowTransform);
         RangedWeaponSystem.Reload(slot, arrowSlot, 1, mainHand, ReloadCallback);
 
         AnimationBehavior?.Play(mainHand, Stats.LoadAnimation, animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat), callback: LoadAnimationCallback);
+        TpAnimationBehavior?.Play(mainHand, Stats.LoadAnimation, animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat));
 
         AimingSystem.ResetAim();
         AimingSystem.StartAiming(AimingStats);
@@ -143,6 +147,7 @@ public class BowClient : RangeWeaponClient
         else
         {
             AnimationBehavior?.PlayReadyAnimation(true);
+            TpAnimationBehavior?.PlayReadyAnimation(true);
             SetState(BowState.Unloaded, mainHand: true);
         }
     }
@@ -170,6 +175,7 @@ public class BowClient : RangeWeaponClient
 
         AnimationRequestByCode request = new(AfterLoad ? Stats.DrawAfterLoadAnimation : Stats.DrawAnimation, GetAnimationSpeed(player, Stats.ProficiencyStat), 1, "main", TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), true, FullLoadCallback);
         AnimationBehavior?.Play(request, mainHand);
+        TpAnimationBehavior?.Play(request, mainHand);
 
         AfterLoad = false;
 
@@ -183,7 +189,7 @@ public class BowClient : RangeWeaponClient
             AimingAnimationController?.Play(mainHand);
         }
 
-        AnimationBehavior?.PlayVanillaAnimation(Stats.TpAimAnimation, mainHand);
+        if (TpAnimationBehavior == null) AnimationBehavior?.PlayVanillaAnimation(Stats.TpAimAnimation, mainHand);
 
         return true;
     }
@@ -198,7 +204,9 @@ public class BowClient : RangeWeaponClient
         if (CheckState(state, BowState.Load, BowState.PreLoaded))
         {
             AnimationBehavior?.PlayReadyAnimation(mainHand);
+            TpAnimationBehavior?.PlayReadyAnimation(mainHand);
             Attachable.ClearAttachments(player.EntityId);
+            AttachmentSystem.SendClearPacket(player.EntityId);
             state = (int)BowState.Unloaded;
             return true;
         }
@@ -206,6 +214,7 @@ public class BowClient : RangeWeaponClient
         if (CheckState(state, BowState.Draw, BowState.Loaded))
         {
             AnimationBehavior?.PlayReadyAnimation(mainHand);
+            TpAnimationBehavior?.PlayReadyAnimation(mainHand);
             state = (int)BowState.Loaded;
             AfterLoad = false;
             return true;
@@ -214,6 +223,7 @@ public class BowClient : RangeWeaponClient
         if (state != (int)BowState.Drawn) return false;
 
         AnimationBehavior?.Play(mainHand, Stats.ReleaseAnimation, callback: () => ShootCallback(slot, player, mainHand));
+        TpAnimationBehavior?.Play(mainHand, Stats.ReleaseAnimation);
 
         return true;
     }
@@ -228,9 +238,11 @@ public class BowClient : RangeWeaponClient
 
         RangedWeaponSystem.Shoot(slot, 1, new((float)position.X, (float)position.Y, (float)position.Z), new(targetDirection.X, targetDirection.Y, targetDirection.Z), mainHand, _ => { });
         Attachable.ClearAttachments(player.EntityId);
+        AttachmentSystem.SendClearPacket(player.EntityId);
         AimingAnimationController?.Stop(mainHand);
 
         AnimationBehavior?.PlayReadyAnimation(mainHand);
+        TpAnimationBehavior?.PlayReadyAnimation(mainHand);
 
         return true;
     }

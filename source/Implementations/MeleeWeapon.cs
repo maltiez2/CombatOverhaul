@@ -231,6 +231,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
     {
         PlayerBehavior = behavior;
         AnimationBehavior = behavior.entity.GetBehavior<FirstPersonAnimationsBehavior>();
+        TpAnimationBehavior = behavior.entity.GetBehavior<ThirdPersonAnimationsBehavior>();
         GripController = new(AnimationBehavior);
 
         if (AimingStats != null) AimingAnimationController = new(AimingSystem, AnimationBehavior, AimingStats);
@@ -463,6 +464,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
     protected readonly RangedWeaponSystemClient RangedWeaponSystem;
     protected readonly ClientAimingSystem AimingSystem;
     protected FirstPersonAnimationsBehavior? AnimationBehavior;
+    protected ThirdPersonAnimationsBehavior? TpAnimationBehavior;
     protected ActionsManagerPlayerBehavior? PlayerBehavior;
     protected SoundsSynchronizerClient SoundsSystem;
     protected AimingAnimationController? AimingAnimationController;
@@ -554,7 +556,12 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
                         category: AnimationCategory(mainHand),
                         callback: () => AttackAnimationCallback(mainHand),
                         callbackHandler: code => AttackAnimationCallbackHandler(code, mainHand));
-                    AnimationBehavior?.PlayVanillaAnimation(tpAttackAnimation, mainHand);
+                    TpAnimationBehavior?.Play(
+                        mainHand,
+                        attackAnimation,
+                        animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat),
+                        category: AnimationCategory(mainHand));
+                    if (TpAnimationBehavior == null) AnimationBehavior?.PlayVanillaAnimation(tpAttackAnimation, mainHand);
 
                     if (mainHand)
                     {
@@ -633,6 +640,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
     protected virtual bool AttackAnimationCallback(bool mainHand)
     {
         AnimationBehavior?.PlayReadyAnimation(mainHand);
+        TpAnimationBehavior?.PlayReadyAnimation(mainHand);
         SetState(MeleeWeaponState.Idle, mainHand);
 
         if (mainHand)
@@ -666,20 +674,6 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
     protected virtual bool StopAttack(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
         return false;
-
-        /*if (!CheckState(mainHand, MeleeWeaponState.Attacking, MeleeWeaponState.WindingUp)) return false;
-
-        AnimationBehavior?.PlayReadyAnimation(mainHand);
-        AnimationBehavior?.StopVanillaAnimation(GetStanceStats(mainHand)?.AttackTpAnimation ?? "", mainHand);
-        SetState(MeleeWeaponState.Idle, mainHand);
-
-        float cooldown = GetStanceStats(mainHand)?.AttackCooldownMs ?? 0;
-        if (cooldown != 0)
-        {
-            StartAttackCooldown(mainHand, TimeSpan.FromMilliseconds(cooldown));
-        }
-
-        return true;*/
     }
 
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Active)]
@@ -710,7 +704,12 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
                 category: AnimationCategory(mainHand),
                 callback: () => BlockAnimationCallback(mainHand, player),
                 callbackHandler: code => BlockAnimationCallbackHandler(code, mainHand));
-            AnimationBehavior?.PlayVanillaAnimation(stats.BlockTpAnimation, mainHand);
+            TpAnimationBehavior?.Play(
+                mainHand,
+                stats.BlockAnimation,
+                animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1,
+                category: AnimationCategory(mainHand));
+            if (TpAnimationBehavior == null) AnimationBehavior?.PlayVanillaAnimation(stats.BlockTpAnimation, mainHand);
 
             ParryButtonReleased = false;
         }
@@ -725,7 +724,12 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
                 category: AnimationCategory(mainHand),
                 callback: () => BlockAnimationCallback(mainHand, player),
                 callbackHandler: code => BlockAnimationCallbackHandler(code, mainHand));
-            AnimationBehavior?.PlayVanillaAnimation(stats.BlockTpAnimation, mainHand);
+            TpAnimationBehavior?.Play(
+                mainHand,
+                stats.BlockAnimation,
+                animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat),
+                category: AnimationCategory(mainHand));
+            if (TpAnimationBehavior == null) AnimationBehavior?.PlayVanillaAnimation(stats.BlockTpAnimation, mainHand);
         }
 
         SetSpeedPenalty(mainHand, player);
@@ -771,6 +775,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
 
         SetState(MeleeWeaponState.Idle, mainHand);
         AnimationBehavior?.PlayReadyAnimation(mainHand);
+        TpAnimationBehavior?.PlayReadyAnimation(mainHand);
 
         float cooldown = GetStanceStats(mainHand)?.BlockCooldownMs ?? 0;
         if (cooldown != 0)
@@ -791,6 +796,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
 
         MeleeBlockSystem.StopBlock(mainHand);
         AnimationBehavior?.PlayReadyAnimation(mainHand);
+        TpAnimationBehavior?.PlayReadyAnimation(mainHand);
         AnimationBehavior?.StopVanillaAnimation(GetStanceStats(mainHand)?.BlockTpAnimation ?? "", mainHand);
         SetState(MeleeWeaponState.Idle, mainHand);
 
@@ -815,6 +821,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
             if (currentStance != MeleeWeaponStance.OffHand)
             {
                 AnimationBehavior?.PlayReadyAnimation(mainHand);
+                TpAnimationBehavior?.PlayReadyAnimation(mainHand);
             }
             return;
         }
@@ -826,6 +833,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
             if (currentStance != MeleeWeaponStance.TwoHanded)
             {
                 AnimationBehavior?.PlayReadyAnimation(mainHand);
+                TpAnimationBehavior?.PlayReadyAnimation(mainHand);
             }
             DirectionsType = Enum.Parse<DirectionsConfiguration>(Stats.TwoHandedStance.AttackDirectionsType);
         }
@@ -835,6 +843,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
             if (currentStance != MeleeWeaponStance.MainHand)
             {
                 AnimationBehavior?.PlayReadyAnimation(mainHand);
+                TpAnimationBehavior?.PlayReadyAnimation(mainHand);
             }
             if (Stats.OneHandedStance != null) DirectionsType = Enum.Parse<DirectionsConfiguration>(Stats.OneHandedStance.AttackDirectionsType);
         }
@@ -854,7 +863,8 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
         AimingSystem.StartAiming(AimingStats);
 
         AnimationBehavior?.Play(mainHand, Stats.ThrowAttack.AimAnimation, animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat), callback: () => AimAnimationCallback(slot, mainHand));
-        AnimationBehavior?.PlayVanillaAnimation(Stats.ThrowAttack.TpAimAnimation, mainHand);
+        TpAnimationBehavior?.Play(mainHand, Stats.ThrowAttack.AimAnimation, animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat));
+        if (TpAnimationBehavior == null) AnimationBehavior?.PlayVanillaAnimation(Stats.ThrowAttack.TpAimAnimation, mainHand);
 
         return true;
     }
@@ -874,8 +884,9 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
 
         SetState(MeleeWeaponState.Throwing, mainHand);
         AnimationBehavior?.Play(mainHand, Stats.ThrowAttack.ThrowAnimation, animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat), callback: () => ThrowAnimationCallback(slot, player, mainHand));
+        TpAnimationBehavior?.Play(mainHand, Stats.ThrowAttack.ThrowAnimation, animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat));
         AnimationBehavior?.StopVanillaAnimation(Stats.ThrowAttack.TpAimAnimation, mainHand);
-        AnimationBehavior?.PlayVanillaAnimation(Stats.ThrowAttack.TpThrowAnimation, mainHand);
+        if (TpAnimationBehavior == null) AnimationBehavior?.PlayVanillaAnimation(Stats.ThrowAttack.TpThrowAnimation, mainHand);
 
         return true;
     }
@@ -904,6 +915,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
         if (!CheckState(mainHand, MeleeWeaponState.StartingAim, MeleeWeaponState.Aiming)) return false;
 
         AnimationBehavior?.PlayReadyAnimation(mainHand);
+        TpAnimationBehavior?.PlayReadyAnimation(mainHand);
         SetState(MeleeWeaponState.Idle, mainHand);
         AimingAnimationController?.Stop(mainHand);
         AimingSystem.StopAiming();

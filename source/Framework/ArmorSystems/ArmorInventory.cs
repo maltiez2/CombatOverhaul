@@ -80,6 +80,20 @@ public class ClothesSlot : ItemSlotCharacter
             LoggerUtil.Error(World?.Api, this, $"Error on emptying bag '{stack?.Collectible?.Code}': \n{exception}");
         }
     }
+
+    protected void ModifyBackpackSlot()
+    {
+        InventoryPlayerBackPacks? backpack = GetBackpackInventory();
+        if (backpack != null)
+        {
+            backpack[0].MarkDirty();
+        }
+    }
+
+    protected InventoryPlayerBackPacks? GetBackpackInventory()
+    {
+        return World?.PlayerByUid(OwnerUUID)?.InventoryManager.GetOwnInventory(GlobalConstants.backpackInvClassName) as InventoryPlayerBackPacks;
+    }
 }
 
 public class ArmorSlot : ItemSlot

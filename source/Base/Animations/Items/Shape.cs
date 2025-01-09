@@ -331,7 +331,7 @@ internal class AnimatableShapeRenderer
             if (index % 4 == 3) continue;
             elementTransforms.Add(animator.TransformationMatrices[index]);
         }
-        
+
         ZeroTransformCorrection(elementTransforms);
 
         shaderProgram.UniformMatrices4x3(

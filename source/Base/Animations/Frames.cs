@@ -1,4 +1,5 @@
 ﻿using ImGuiNET;
+using System.Diagnostics;
 using System.Numerics;
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
@@ -23,9 +24,9 @@ public readonly struct PlayerItemFrame
     public static readonly PlayerItemFrame Zero = new(PlayerFrame.Zero, null);
     public static readonly PlayerItemFrame Empty = new(PlayerFrame.Empty, null);
 
-    public void Apply(ElementPose pose, Vector3 eyePosition)
+    public void Apply(ElementPose pose, Vector3 eyePosition, float cameraPitch = 0, bool applyCameraPitch = false)
     {
-        Player.Apply(pose, eyePosition);
+        Player.Apply(pose, eyePosition, cameraPitch, applyCameraPitch);
         Item?.Apply(pose);
     }
 
@@ -452,12 +453,15 @@ public readonly struct PlayerFrame
     public readonly float PitchFollow = DefaultPitchFollow;
     public readonly float FovMultiplier = 1;
     public readonly float BobbingAmplitude = 1;
+    public readonly float DetachedAnchorFollow = 1;
 
     public const float DefaultPitchFollow = 0.8f;
     public const float PerfectPitchFollow = 1.0f;
     public const float Epsilon = 1E-6f;
     public const float DefaultEyesHeight = 1.7f;
     public const float EyeHeightToAnimationDistanceMultiplier = 14.7f;
+    public const float PitchAngleMin = -45;
+    public const float PitchAngleMax = 75;
 
     public PlayerFrame(
         RightHandFrame? rightHand = null,
@@ -469,6 +473,7 @@ public readonly struct PlayerFrame
         float pitchFollow = DefaultPitchFollow,
         float fovMultiplier = 1.0f,
         float bobbingAmplitude = 1.0f,
+        float? detachedAnchorFollow = null,
         AnimationElement? lowerTorso = null)
     {
         RightHand = rightHand;
@@ -481,12 +486,13 @@ public readonly struct PlayerFrame
         FovMultiplier = fovMultiplier;
         BobbingAmplitude = bobbingAmplitude;
         LowerTorso = lowerTorso;
+        DetachedAnchorFollow = detachedAnchorFollow ?? (detachedAnchor ? 0 : 1);
     }
 
     public static readonly PlayerFrame Zero = new(RightHandFrame.Zero, LeftHandFrame.Zero);
     public static readonly PlayerFrame Empty = new();
 
-    public void Apply(ElementPose pose, Vector3 eyePosition)
+    public void Apply(ElementPose pose, Vector3 eyePosition, float cameraPitch, bool applyCameraPitch)
     {
         switch (pose.ForElement.Name)
         {
@@ -495,6 +501,16 @@ public readonly struct PlayerFrame
                 break;
             case "UpperTorso":
                 UpperTorso?.Apply(pose);
+                if (applyCameraPitch)
+                {
+                    pose.degZ += GameMath.Clamp(cameraPitch * GameMath.RAD2DEG * PitchFollow * DetachedAnchorFollow, PitchAngleMin, PitchAngleMax);
+                }
+                break;
+            case "Neck":
+                if (applyCameraPitch)
+                {
+                    pose.degZ = -GameMath.Clamp(cameraPitch * GameMath.RAD2DEG * PitchFollow * DetachedAnchorFollow, PitchAngleMin, PitchAngleMax) / 2;
+                }
                 break;
             case "LowerTorso":
                 AnimationElement torso = new(0, (eyePosition.Y - DefaultEyesHeight) * EyeHeightToAnimationDistanceMultiplier, 0, 0, 0, 0);
@@ -604,12 +620,12 @@ public readonly struct PlayerFrame
         float pitchFollow = from.PitchFollow + (to.PitchFollow - from.PitchFollow) * progress;
         float fov = from.FovMultiplier + (to.FovMultiplier - from.FovMultiplier) * progress;
         float bobbing = from.BobbingAmplitude + (to.BobbingAmplitude - from.BobbingAmplitude) * progress;
+        float detachedAnchorFollow = from.DetachedAnchorFollow + (to.DetachedAnchorFollow - from.DetachedAnchorFollow) * progress;
 
-        return new(righthand, leftHand, torso, anchor, to.DetachedAnchor, to.SwitchArms, pitchFollow, fov, bobbing);
+        return new(righthand, leftHand, torso, anchor, to.DetachedAnchor, to.SwitchArms, pitchFollow, fov, bobbing, detachedAnchorFollow);
     }
     public static PlayerFrame Compose(IEnumerable<(PlayerFrame element, float weight)> frames)
     {
-#pragma warning disable CS8629 // Nullable value type may be null.
         RightHandFrame rightHand = RightHandFrame.Compose(frames.Where(entry => entry.element.RightHand != null).Select(entry => (entry.element.RightHand.Value, entry.weight)));
         LeftHandFrame leftHand = LeftHandFrame.Compose(frames.Where(entry => entry.element.LeftHand != null).Select(entry => (entry.element.LeftHand.Value, entry.weight)));
 
@@ -625,9 +641,9 @@ public readonly struct PlayerFrame
             frames.Select(entry => entry.element.SwitchArms).Aggregate((first, second) => first || second),
             frames.Select(entry => entry.element.PitchFollow).Where(value => Math.Abs(value - DefaultPitchFollow) > 1E-6f).FirstOrDefault(DefaultPitchFollow),
             frames.Select(entry => entry.element.FovMultiplier).Min(),
-            frames.Select(entry => entry.element.BobbingAmplitude).Min()
+            frames.Select(entry => entry.element.BobbingAmplitude).Min(),
+            frames.Select(entry => entry.element.DetachedAnchorFollow).Min()
             );
-#pragma warning restore CS8629 // Nullable value type may be null.
     }
 }
 

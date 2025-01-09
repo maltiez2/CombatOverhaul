@@ -59,6 +59,7 @@ public sealed class CombatOverhaulSystem : ModSystem
     public override void Start(ICoreAPI api)
     {
         api.RegisterEntityBehaviorClass("CombatOverhaul:FirstPersonAnimations", typeof(FirstPersonAnimationsBehavior));
+        api.RegisterEntityBehaviorClass("CombatOverhaul:ThirdPersonAnimations", typeof(ThirdPersonAnimationsBehavior));
         api.RegisterEntityBehaviorClass("CombatOverhaul:EntityColliders", typeof(CollidersEntityBehavior));
         api.RegisterEntityBehaviorClass("CombatOverhaul:EntityDamageModel", typeof(EntityDamageModelBehavior));
         api.RegisterEntityBehaviorClass("CombatOverhaul:PlayerDamageModel", typeof(PlayerDamageModelBehavior));
@@ -104,6 +105,8 @@ public sealed class CombatOverhaulSystem : ModSystem
         ServerBlockSystem = new(api);
         ServerStatsSystem = new(api);
         ServerBlockBreakingSystem = new(api);
+        ServerAttachmentSystem = new(api);
+
     }
     public override void StartClientSide(ICoreClientAPI api)
     {
@@ -121,6 +124,7 @@ public sealed class CombatOverhaulSystem : ModSystem
         ClientBlockSystem = new(api);
         ClientStatsSystem = new(api);
         ClientBlockBreakingSystem = new(api);
+        ClientAttachmentSystem = new(api);
 
         api.Event.RegisterRenderer(ReticleRenderer, EnumRenderStage.Ortho);
         api.Event.RegisterRenderer(DirectionCursorRenderer, EnumRenderStage.Ortho);
@@ -215,6 +219,8 @@ public sealed class CombatOverhaulSystem : ModSystem
     public StatsSystemServer? ServerStatsSystem { get; private set; }
     public BlockBreakingSystemClient? ClientBlockBreakingSystem { get; private set; }
     public BlockBreakingSystemServer? ServerBlockBreakingSystem { get; private set; }
+    public AttachableSystemClient? ClientAttachmentSystem { get; private set; }
+    public AttachableSystemServer? ServerAttachmentSystem { get; private set; }
 
     private ICoreClientAPI? _clientApi;
     private readonly Vector4 _iconScale = new(-0.1f, -0.1f, 1.2f, 1.2f);
@@ -295,6 +301,8 @@ public sealed class CombatOverhaulAnimationsSystem : ModSystem
     public ParticleEffectsManager? ParticleEffectsManager { get; private set; }
     public VanillaAnimationsSystemClient? ClientVanillaAnimations { get; private set; }
     public VanillaAnimationsSystemServer? ServerVanillaAnimations { get; private set; }
+    public AnimationSystemClient? ClientTpAnimationSystem { get; private set; }
+    public AnimationSystemServer? ServerTpAnimationSystem { get; private set; }
 
     public IShaderProgram? AnimatedItemShaderProgram => _shaderProgram;
     public IShaderProgram? AnimatedItemShaderProgramFirstPerson => _shaderProgramFirstPerson;
@@ -313,12 +321,14 @@ public sealed class CombatOverhaulAnimationsSystem : ModSystem
         ParticleEffectsManager = new(api);
         PlayerAnimationsManager = new(api, ParticleEffectsManager);
         ClientVanillaAnimations = new(api);
+        ClientTpAnimationSystem = new(api);
     }
 
     public override void StartServerSide(ICoreServerAPI api)
     {
         ParticleEffectsManager = new(api);
         ServerVanillaAnimations = new(api);
+        ServerTpAnimationSystem = new(api);
     }
 
     public override void AssetsFinalize(ICoreAPI api)
