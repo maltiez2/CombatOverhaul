@@ -108,8 +108,8 @@
       "code": "meleeattack",
       "entityCodes": ["player"],
       "priority": 2,
-      "damageByType": {"*-normal": 2, "*-deep": 3, "*-tainted": 6, "*-corrupt": 10, "*-nightmare": 14, "*-double-headed": 18},
-      "damageTierByType": {"*-normal": 1, "*-deep": 2, "*-tainted": 3, "*-corrupt": 4, "*-nightmare": 5, "*-double-headed": 6},
+      "damageByType": {"*-normal": 2, "*-deep": 3, "*-tainted": 6, "*-corrupt": 10, "*-nightmare": 12, "*-double-headed": 16},
+      "damageTierByType": {"*-normal": 1, "*-deep": 1, "*-tainted": 3, "*-corrupt": 4, "*-nightmare": 5, "*-double-headed": 6},
       "damageTypeByType": {
         "*-normal": "BluntAttack",
         "*-deep": "BluntAttack",
@@ -137,7 +137,7 @@
       "code": "meleeattack",
       "entityCodes": ["player"],
       "priority": 2,
-      "damageByType": {"*-normal": 2, "*-deep": 3, "*-tainted": 6, "*-corrupt": 10, "*-nightmare": 14, "*-double-headed": 18},
+      "damageByType": {"*-normal": 2, "*-deep": 3, "*-tainted": 6, "*-corrupt": 8, "*-nightmare": 10, "*-double-headed": 14},
       "damageTierByType": {"*-normal": 1, "*-deep": 1, "*-tainted": 2, "*-corrupt": 2, "*-nightmare": 3, "*-double-headed": 4},
       "damageTypeByType": {
         "*-normal": "BluntAttack",

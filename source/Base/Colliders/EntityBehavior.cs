@@ -1,5 +1,4 @@
 ﻿using CombatOverhaul.Utils;
-using System;
 using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -80,7 +79,7 @@ public sealed class CollidersEntityBehavior : EntityBehavior
                 LoggerUtil.Error(entity.Api, this, $"Error on parsing behavior properties for entity: {entity.Code}. 'elements' attribute was not found.");
                 return;
             }
-            
+
             ColliderTypesJson types = attributes["elements"].AsObject<ColliderTypesJson>();
             foreach (string collider in types.Torso)
             {
@@ -115,7 +114,7 @@ public sealed class CollidersEntityBehavior : EntityBehavior
 
             UnprocessedElementsLeft = true;
             HasOBBCollider = true;
-            
+
         }
         catch (Exception exception)
         {
@@ -132,7 +131,7 @@ public sealed class CollidersEntityBehavior : EntityBehavior
     public void SetColliderElement(ShapeElement element)
     {
         if (element?.Name == null) return;
-        
+
         if (UnprocessedElementsLeft && ShapeElementsToProcess.Contains(element.Name) && !Colliders.ContainsKey(element.Name))
         {
             Colliders.Add(element.Name, new ShapeElementCollider(element));
@@ -230,7 +229,7 @@ public sealed class CollidersEntityBehavior : EntityBehavior
         intersections = new();
         bool foundIntersection = false;
 
-        
+
 
         if (!HasOBBCollider)
         {

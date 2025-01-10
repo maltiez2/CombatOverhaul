@@ -186,7 +186,7 @@ public class MeleeDamageType : IHasLineCollider
         {
             bool intersects = colliders.Collide(InWorldCollider.Position, InWorldCollider.Direction, out collider, out parameter, out collisionPoint);
 
-            if (intersects) colliderType = colliders.CollidersTypes[collider];
+            if (intersects) colliders.CollidersTypes.TryGetValue(collider, out colliderType);
 
             return intersects;
         }

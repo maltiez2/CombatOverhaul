@@ -156,6 +156,10 @@ internal static class HarmonyPatches
                 }
                 
             }
+            else
+            {
+                LoggerUtil.Debug(entity.Api, typeof(HarmonyPatches), $"Entity '{entity.Code}' does not have colliders behavior");
+            }
         }
 
 
