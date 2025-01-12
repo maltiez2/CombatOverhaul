@@ -42,7 +42,8 @@
         "PrintProjectilesHits": "print_range_hits",
         "PrintMeleeHits": "print_melee_hits",
         "PrintPlayerBeingHit": "print_player_hits",
-        "DirectionsControllerInvert": "directions_invert"
+        "DirectionsControllerInvert": "directions_invert",
+        "DoVanillaActionsWhileBlocking": "vanilla_actions_while_blocking"
       },
       "combatoverhaul:patches/traits-and-classes.json": {
         "0/enabled": "modify_vanilla_classes",
@@ -120,7 +121,6 @@
         "2/value/damageModel/Zones/9/DamageMultiplier": "player_model_legs_damage",
         "2/value/damageModel/Zones/10/DamageMultiplier": "player_model_legs_damage",
         "2/value/damageModel/Zones/11/DamageMultiplier": "player_model_legs_damage"
-
       }
     }
   },
@@ -170,6 +170,13 @@
       "ingui": "combatoverhaul:setting-directions_invert",
       "clientSide": true,
       "default": false
+    },
+    {
+      "code": "vanilla_actions_while_blocking",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-vanilla_actions_while_blocking",
+      "clientSide": true,
+      "default": true
     },
     {
       "code": "bow_aiming_difficulty",

@@ -16,11 +16,9 @@
           "armplateR",
           "shoulderR",
           "shoulderL1",
-          "hood-top",
           "hood-R1",
           "hood-R2",
           "hood-L1",
-          "hood-L2",
           "hood-back2",
           "hood-back3",
           "chest-backplate",
@@ -52,11 +50,9 @@
           "armplateR",
           "shoulderR",
           "shoulderL1",
-          "hood-top",
           "hood-R1",
           "hood-R2",
           "hood-L1",
-          "hood-L2",
           "hood-back2",
           "hood-back3",
           "chest-backplate",
@@ -103,6 +99,6 @@
       }
     }
   },
-  {"side": "Server", "file": "game:entities/land/eidolon-immobilized", "op": "replace", "path": "/server/behaviors/5/aitasks/0/damageTier", "value": 4},
+  {"side": "Server", "file": "game:entities/land/eidolon-immobilized", "op": "replace", "path": "/server/behaviors/5/aitasks/0/damageTier", "value": 5},
   {"side": "Server", "file": "game:entities/land/eidolon-immobilized", "op": "replace", "path": "/server/behaviors/5/aitasks/0/damage", "value": 16}
 ]

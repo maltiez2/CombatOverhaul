@@ -42,6 +42,8 @@ public sealed class Settings
     public bool DirectionsControllerInvert { get; set; } = false;
 
     public bool HandsYawSmoothing { get; set; } = false;
+
+    public bool DoVanillaActionsWhileBlocking { get; set; } = true;
 }
 
 public sealed class CombatOverhaulSystem : ModSystem

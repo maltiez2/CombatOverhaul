@@ -189,6 +189,6 @@
     "file": "game:entities/land/bowtorn",
     "op": "replace",
     "path": "/server/behaviors/8/aitasks/5/projectileDamageTierByType",
-    "value": {"*-surface": 1, "*-deep": 1, "*-tainted": 2, "*-corrupt": 2, "*-nightmare": 3, "*-gearfoot": 4}
+    "value": {"*-surface": 1, "*-deep": 1, "*-tainted": 2, "*-corrupt": 3, "*-nightmare": 4, "*-gearfoot": 5}
   }
 ]

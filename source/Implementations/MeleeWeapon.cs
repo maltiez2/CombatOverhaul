@@ -116,6 +116,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
         SoundsSystem = system.ClientSoundsSynchronizer ?? throw new Exception();
         RangedWeaponSystem = system.ClientRangedWeaponSystem ?? throw new Exception();
         AimingSystem = system.AimingSystem ?? throw new Exception();
+        Settings = system.Settings;
 
         Stats = item.Attributes.AsObject<MeleeWeaponStats>();
         AimingStats = Stats.ThrowAttack?.Aiming.ToStats();
@@ -469,6 +470,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
     protected SoundsSynchronizerClient SoundsSystem;
     protected AimingAnimationController? AimingAnimationController;
     protected GripController? GripController;
+    protected Settings Settings;
     internal const int _maxStates = 100;
     protected const int MaxState = _maxStates;
     protected readonly MeleeWeaponStats Stats;
@@ -679,14 +681,15 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
     [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Active)]
     protected virtual bool Block(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
+        bool handleEvent = !Settings.DoVanillaActionsWhileBlocking;
+        
         if (eventData.AltPressed) return false;
         if (!CanBlock(mainHand) && !CanParry(mainHand)) return false;
-        if (!CheckState(mainHand, MeleeWeaponState.Idle, MeleeWeaponState.WindingUp, MeleeWeaponState.Attacking)) return true;
-        if (IsBlockOnCooldown(mainHand)) return true;
+        if (!CheckState(mainHand, MeleeWeaponState.Idle, MeleeWeaponState.WindingUp, MeleeWeaponState.Attacking)) return handleEvent;
+        if (IsBlockOnCooldown(mainHand)) return handleEvent;
         EnsureStance(player, mainHand);
-        if (mainHand && CanBlockWithOtherHand(player, mainHand)) return true;
-        if (ActionRestricted(player, mainHand)) return true;
-        //if (GetState<MeleeWeaponState>(!mainHand) == MeleeWeaponState.Attacking) return false;
+        if (mainHand && CanBlockWithOtherHand(player, mainHand)) return handleEvent;
+        if (ActionRestricted(player, mainHand)) return handleEvent;
 
         StanceStats? stats = GetStanceStats(mainHand);
         DamageBlockJson? parryStats = stats?.Parry;
@@ -694,7 +697,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
 
         if (CanParry(mainHand) && parryStats != null && stats != null)
         {
-            if (!ParryButtonReleased) return true;
+            if (!ParryButtonReleased) return handleEvent;
 
             SetState(MeleeWeaponState.Parrying, mainHand);
             AnimationBehavior?.Play(
@@ -734,7 +737,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
 
         SetSpeedPenalty(mainHand, player);
 
-        return true;
+        return handleEvent;
     }
     protected virtual void BlockAnimationCallbackHandler(string callbackCode, bool mainHand)
     {

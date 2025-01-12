@@ -8,5 +8,6 @@
   "PrintMeleeHits": false,
   "PrintPlayerBeingHit": false,
   "DirectionsControllerSensitivity": 1.0,
-  "DirectionsControllerInvert": false
+  "DirectionsControllerInvert": false,
+  "DoVanillaActionsWhileBlocking": true
 }

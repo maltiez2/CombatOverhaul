@@ -166,7 +166,7 @@
             "Zones": ["Torso", "Arms", "Hands"],
             "Resists": {"PiercingAttack": 1, "SlashingAttack": 4, "BluntAttack": 0},
             "FlatReduction": {},
-            "PlayerStats": {"walkspeed": -0.02, "manipulationSpeed": -0.075, "steadyAim": -0.05, "healingeffectivness": -0.06, "hungerrate": 0.05}
+            "PlayerStats": {"walkspeed": -0.02, "manipulationSpeed": -0.05, "steadyAim": -0.05, "healingeffectivness": -0.03, "hungerrate": 0.05}
           },
           "armor-legs-chain-copper": {
             "Layers": ["Middle"],
@@ -187,7 +187,7 @@
             "Zones": ["Torso", "Arms", "Hands"],
             "Resists": {"PiercingAttack": 3, "SlashingAttack": 4, "BluntAttack": 1},
             "FlatReduction": {},
-            "PlayerStats": {"walkspeed": -0.02, "manipulationSpeed": -0.075, "steadyAim": -0.05, "healingeffectivness": -0.06, "hungerrate": 0.05}
+            "PlayerStats": {"walkspeed": -0.02, "manipulationSpeed": -0.05, "steadyAim": -0.05, "healingeffectivness": -0.03, "hungerrate": 0.05}
           },
           "armor-legs-scale-copper": {
             "Layers": ["Outer", "Middle"],
@@ -271,7 +271,7 @@
             "Zones": ["Torso", "Arms", "Hands"],
             "Resists": {"PiercingAttack": 1, "SlashingAttack": 6, "BluntAttack": 1},
             "FlatReduction": {},
-            "PlayerStats": {"walkspeed": -0.02, "manipulationSpeed": -0.075, "steadyAim": -0.05, "healingeffectivness": -0.06, "hungerrate": 0.05}
+            "PlayerStats": {"walkspeed": -0.02, "manipulationSpeed": -0.05, "steadyAim": -0.05, "healingeffectivness": -0.03, "hungerrate": 0.05}
           },
           "armor-legs-chain-*bronze": {
             "Layers": ["Middle"],
@@ -292,7 +292,7 @@
             "Zones": ["Torso", "Arms", "Hands"],
             "Resists": {"PiercingAttack": 4, "SlashingAttack": 6, "BluntAttack": 1},
             "FlatReduction": {},
-            "PlayerStats": {"walkspeed": -0.02, "manipulationSpeed": -0.075, "steadyAim": -0.05, "healingeffectivness": -0.06, "hungerrate": 0.05}
+            "PlayerStats": {"walkspeed": -0.02, "manipulationSpeed": -0.05, "steadyAim": -0.05, "healingeffectivness": -0.03, "hungerrate": 0.05}
           },
           "armor-legs-scale-*bronze": {
             "Layers": ["Outer", "Middle"],
@@ -355,7 +355,7 @@
             "Zones": ["Torso", "Arms", "Hands"],
             "Resists": {"PiercingAttack": 2, "SlashingAttack": 8, "BluntAttack": 1},
             "FlatReduction": {},
-            "PlayerStats": {"walkspeed": -0.02, "manipulationSpeed": -0.075, "steadyAim": -0.05, "healingeffectivness": -0.06, "hungerrate": 0.05}
+            "PlayerStats": {"walkspeed": -0.02, "manipulationSpeed": -0.05, "steadyAim": -0.05, "healingeffectivness": -0.03, "hungerrate": 0.05}
           },
           "armor-legs-chain-*iron": {
             "Layers": ["Middle"],
@@ -376,7 +376,7 @@
             "Zones": ["Torso", "Arms", "Hands"],
             "Resists": {"PiercingAttack": 6, "SlashingAttack": 8, "BluntAttack": 2},
             "FlatReduction": {"PiercingAttack": 0, "SlashingAttack": 1, "BluntAttack": 0},
-            "PlayerStats": {"walkspeed": -0.02, "manipulationSpeed": -0.075, "steadyAim": -0.05, "healingeffectivness": -0.06, "hungerrate": 0.05}
+            "PlayerStats": {"walkspeed": -0.02, "manipulationSpeed": -0.05, "steadyAim": -0.05, "healingeffectivness": -0.03, "hungerrate": 0.05}
           },
           "armor-legs-scale-*iron": {
             "Layers": ["Outer", "Middle"],
@@ -439,7 +439,7 @@
             "Zones": ["Torso", "Arms", "Hands"],
             "Resists": {"PiercingAttack": 2, "SlashingAttack": 9, "BluntAttack": 2},
             "FlatReduction": {},
-            "PlayerStats": {"walkspeed": -0.02, "manipulationSpeed": -0.075, "steadyAim": -0.05, "healingeffectivness": -0.06, "hungerrate": 0.05}
+            "PlayerStats": {"walkspeed": -0.02, "manipulationSpeed": -0.05, "steadyAim": -0.05, "healingeffectivness": -0.03, "hungerrate": 0.05}
           },
           "armor-legs-chain-steel": {
             "Layers": ["Middle"],
@@ -460,7 +460,7 @@
             "Zones": ["Torso", "Arms", "Hands"],
             "Resists": {"PiercingAttack": 7, "SlashingAttack": 9, "BluntAttack": 3},
             "FlatReduction": {"PiercingAttack": 1, "SlashingAttack": 1, "BluntAttack": 0},
-            "PlayerStats": {"walkspeed": -0.02, "manipulationSpeed": -0.075, "steadyAim": -0.05, "healingeffectivness": -0.06, "hungerrate": 0.05}
+            "PlayerStats": {"walkspeed": -0.02, "manipulationSpeed": -0.05, "steadyAim": -0.05, "healingeffectivness": -0.03, "hungerrate": 0.05}
           },
           "armor-legs-scale-steel": {
             "Layers": ["Outer", "Middle"],
