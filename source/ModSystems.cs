@@ -46,6 +46,39 @@ public sealed class Settings
     public bool DoVanillaActionsWhileBlocking { get; set; } = true;
 }
 
+public sealed class ArmorConfig
+{
+    public int MaxAttackTier { get; set; } = 9;
+    public int MaxArmorTier { get; set; } = 24;
+    public float[][] DamageReduction { get; set; } = new float[][]
+    {
+        new float[] { 0.75f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f },
+        new float[] { 0.50f, 0.75f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f },
+        new float[] { 0.25f, 0.50f, 0.75f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f },
+        new float[] { 0.10f, 0.25f, 0.50f, 0.75f, 1.00f, 1.00f, 1.00f, 1.00f, 1.00f },
+        new float[] { 0.05f, 0.15f, 0.33f, 0.50f, 0.75f, 1.00f, 1.00f, 1.00f, 1.00f },
+        new float[] { 0.03f, 0.10f, 0.25f, 0.40f, 0.50f, 0.75f, 1.00f, 1.00f, 1.00f },
+        new float[] { 0.02f, 0.05f, 0.20f, 0.33f, 0.40f, 0.50f, 0.75f, 1.00f, 1.00f },
+        new float[] { 0.01f, 0.03f, 0.15f, 0.25f, 0.35f, 0.45f, 0.50f, 0.75f, 1.00f },
+        new float[] { 0.01f, 0.02f, 0.10f, 0.20f, 0.30f, 0.40f, 0.45f, 0.50f, 0.75f },
+        new float[] { 0.01f, 0.01f, 0.05f, 0.15f, 0.25f, 0.35f, 0.40f, 0.45f, 0.50f },
+        new float[] { 0.01f, 0.01f, 0.03f, 0.10f, 0.20f, 0.30f, 0.35f, 0.41f, 0.46f },
+        new float[] { 0.01f, 0.01f, 0.02f, 0.07f, 0.15f, 0.25f, 0.30f, 0.37f, 0.42f },
+        new float[] { 0.01f, 0.01f, 0.01f, 0.05f, 0.10f, 0.20f, 0.25f, 0.33f, 0.39f },
+        new float[] { 0.01f, 0.01f, 0.01f, 0.03f, 0.07f, 0.15f, 0.20f, 0.29f, 0.36f },
+        new float[] { 0.01f, 0.01f, 0.01f, 0.02f, 0.06f, 0.10f, 0.17f, 0.25f, 0.33f },
+        new float[] { 0.01f, 0.01f, 0.01f, 0.01f, 0.05f, 0.08f, 0.15f, 0.21f, 0.30f },
+        new float[] { 0.01f, 0.01f, 0.01f, 0.01f, 0.03f, 0.07f, 0.12f, 0.18f, 0.27f },
+        new float[] { 0.01f, 0.01f, 0.01f, 0.01f, 0.02f, 0.06f, 0.10f, 0.15f, 0.24f },
+        new float[] { 0.01f, 0.01f, 0.01f, 0.01f, 0.01f, 0.05f, 0.08f, 0.12f, 0.21f },
+        new float[] { 0.01f, 0.01f, 0.01f, 0.01f, 0.01f, 0.03f, 0.07f, 0.10f, 0.18f },
+        new float[] { 0.01f, 0.01f, 0.01f, 0.01f, 0.01f, 0.02f, 0.06f, 0.08f, 0.15f },
+        new float[] { 0.01f, 0.01f, 0.01f, 0.01f, 0.01f, 0.01f, 0.05f, 0.07f, 0.12f },
+        new float[] { 0.01f, 0.01f, 0.01f, 0.01f, 0.01f, 0.01f, 0.03f, 0.06f, 0.10f },
+        new float[] { 0.01f, 0.01f, 0.01f, 0.01f, 0.01f, 0.01f, 0.02f, 0.05f, 0.08f }
+    };
+}
+
 public sealed class CombatOverhaulSystem : ModSystem
 {
     public event Action? OnDispose;
@@ -174,6 +207,16 @@ public sealed class CombatOverhaulSystem : ModSystem
         HarmonyPatches.YawSmoothing = Settings.HandsYawSmoothing;
 
         SettingsLoaded?.Invoke(Settings);
+
+
+        IAsset armorConfigAsset = api.Assets.Get("combatoverhaul:config/armor-config.json");
+        JsonObject armorConfig = JsonObject.FromJson(armorConfigAsset.ToText());
+        ArmorConfig armorConfigObj = armorConfig.AsObject<ArmorConfig>();
+
+        DamageResistData.MaxAttackTier = armorConfigObj.MaxAttackTier;
+        DamageResistData.MaxArmorTier = armorConfigObj.MaxArmorTier;
+        DamageResistData.DamageReduction = armorConfigObj.DamageReduction;
+
 
         if (api is ICoreServerAPI serverApi)
         {

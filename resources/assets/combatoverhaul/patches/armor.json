@@ -50,21 +50,21 @@
             "PlayerStats": {"walkspeed": -0.02, "manipulationSpeed": 0, "steadyAim": 0, "healingeffectivness": -0.02, "hungerrate": 0.02}
           },
           "armor-head-sewn-leather": {
-            "Layers": ["Outer"],
+            "Layers": ["Outer", "Middle"],
             "Zones": ["Head", "Neck", "Face"],
             "Resists": {"PiercingAttack": 2, "SlashingAttack": 4, "BluntAttack": 3},
             "FlatReduction": {},
             "PlayerStats": {"walkspeed": 0, "manipulationSpeed": 0, "steadyAim": -0.05, "healingeffectivness": -0.05, "hungerrate": 0.05}
           },
           "armor-body-sewn-leather": {
-            "Layers": ["Outer"],
+            "Layers": ["Outer", "Middle"],
             "Zones": ["Torso", "Arms", "Hands"],
             "Resists": {"PiercingAttack": 2, "SlashingAttack": 4, "BluntAttack": 3},
             "FlatReduction": {},
-            "PlayerStats": {"walkspeed": -0.05, "manipulationSpeed": -0.05, "steadyAim": -0.1, "healingeffectivness": -0.1, "hungerrate": 0.05}
+            "PlayerStats": {"walkspeed": -0.05, "manipulationSpeed": -0.1, "steadyAim": -0.1, "healingeffectivness": -0.1, "hungerrate": 0.05}
           },
           "armor-legs-sewn-leather": {
-            "Layers": ["Outer"],
+            "Layers": ["Outer", "Middle"],
             "Zones": ["Legs", "Feet"],
             "Resists": {"PiercingAttack": 2, "SlashingAttack": 4, "BluntAttack": 3},
             "FlatReduction": {},
