@@ -19,7 +19,8 @@
       {"code": "quarterstaffProficiency", "type": "positive", "attributes": {"quarterstaffProficiency": 0.3}},
       {"code": "steadyAim", "type": "positive", "attributes": {"steadyAim": 0.5}},
       {"code": "tremblingAim", "type": "negative", "attributes": {"steadyAim": -0.3}},
-      {"code": "armorWalkSpeedAffectedness", "type": "positive", "attributes": {"armorWalkSpeedAffectedness": -0.5}}
+      {"code": "armorWalkSpeedAffectedness", "type": "positive", "attributes": {"armorWalkSpeedAffectedness": -0.5}},
+      {"code": "clumsyHands", "type": "negative", "attributes": {"bowsProficiency": -0.3, "crossbowsProficiency": -0.3, "firearmsProficiency": -0.3}}
     ]
   },
   {"enabled": true, "file": "game:config/traits", "op": "replace", "path": "/16/attributes", "value": {"maxhealthExtraPoints": -2.5}},
@@ -61,7 +62,7 @@
     "file": "game:config/characterclasses",
     "op": "replace",
     "path": "/4/traits",
-    "value": ["soldier", "hardy", "merciless", "ravenous", "heavyhanded", "oneHandedSwordsProficiency", "twoHandedSwordsProficiency", "tremblingAim"]
+    "value": ["soldier", "hardy", "merciless", "ravenous", "heavyhanded", "oneHandedSwordsProficiency", "twoHandedSwordsProficiency", "tremblingAim", "clumsyHands"]
   },
   {"enabled": true, "file": "game:config/characterclasses", "op": "addeach", "path": "/5/traits/-", "value": ["tremblingAim"]},
   {"enabled": true, "file": "game:config/traits", "op": "replace", "path": "/9/attributes/armorWalkSpeedAffectedness", "value": -0.5}

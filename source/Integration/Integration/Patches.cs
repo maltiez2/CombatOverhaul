@@ -2,8 +2,6 @@
 using CombatOverhaul.Colliders;
 using CombatOverhaul.Utils;
 using HarmonyLib;
-using System.Diagnostics;
-using System.Numerics;
 using System.Reflection;
 using System.Reflection.Emit;
 using Vintagestory.API.Client;
@@ -11,7 +9,6 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
-using static Microsoft.WindowsAPICodePack.Shell.PropertySystem.SystemProperties.System;
 
 namespace CombatOverhaul.Integration;
 
@@ -131,13 +128,13 @@ internal static class HarmonyPatches
         {
             _animators.Add(animator, entity);
             CollidersEntityBehavior? colliders = entity.GetBehavior<CollidersEntityBehavior>();
-            List<ElementPose> poses = animator.RootPoses;
+            //List<ElementPose> poses = animator.RootPoses;
 
             if (colliders != null)
             {
-                colliders.Animator = animator;
+                //colliders.Animator = animator; // set in colliders behavior itself
 
-                try
+                /*try
                 {
                     foreach (ElementPose pose in poses)
                     {
@@ -153,8 +150,8 @@ internal static class HarmonyPatches
                 catch (Exception exception)
                 {
                     LoggerUtil.Error(entity.Api, typeof(HarmonyPatches), $"({entity.Code}) Error during creating colliders: \n{exception}");
-                }
-                
+                }*/
+
             }
             else
             {
@@ -164,7 +161,7 @@ internal static class HarmonyPatches
 
 
         // To catch not reproducable bug with nullref in calculateMatrices
-        try
+        /*try
         {
             ICoreClientAPI clientApi = entity.Api as ICoreClientAPI;
 
@@ -206,15 +203,15 @@ internal static class HarmonyPatches
                 LoggerUtil.Error(entity.Api, typeof(HarmonyPatches), $"({entity.Code}) Error during client frame (not directly related to CO): \n{exception}");
                 _reportedEntities.Add(entity.EntityId);
             }
-        }
+        }*/
 
-        return false;
+        return true;
     }
 
     internal static readonly Dictionary<ClientAnimator, EntityAgent> _animators = new();
     internal static readonly HashSet<long> _reportedEntities = new();
 
-    private static void AddPoseShapeElements(ElementPose pose, CollidersEntityBehavior colliders)
+    /*private static void AddPoseShapeElements(ElementPose pose, CollidersEntityBehavior colliders)
     {
         colliders.SetColliderElement(pose.ForElement);
 
@@ -222,7 +219,7 @@ internal static class HarmonyPatches
         {
             AddPoseShapeElements(childPose, colliders);
         }
-    }
+    }*/
 
     private static bool RenderHeldItem(EntityShapeRenderer __instance, float dt, bool isShadowPass, bool right)
     {
@@ -285,7 +282,7 @@ internal static class HarmonyPatches
         {
             return true;
         }
-        
+
         if (__instance.entity is not EntityPlayer player)
         {
             return true;

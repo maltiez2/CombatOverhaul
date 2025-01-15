@@ -102,6 +102,7 @@
   "game:trait-quarterstaffProficiency": "<font color=\"#84ff84\">• Quarterstaffs proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
   "game:trait-steadyAim": "<font color=\"#84ff84\">• Steady aim</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
   "game:trait-tremblingAim": "<font color=\"#ff8484\">• Trembling aim</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
+  "game:trait-clumsyHands": "<font color=\"#ff8484\">• Clumsy hands</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
 
   "game:charattribute-bowsProficiency-0.5": "+50% draw speed",
   "game:charattribute-crossbowsProficiency-0.5": "+50% reload speed",
@@ -119,6 +120,9 @@
   "game:charattribute-steadyAim--0.3": "30% more aim drift",
   "game:charattribute-armorWalkSpeedAffectedness--0.5": "walk speed penalty for wearing armor reduced by 50%",
   "game:charattribute-armorManipulationSpeedAffectedness--0.5": "manipulation speed penalty for wearing armor reduced by 50%",
+  "game:charattribute-bowsProficiency--0.3": "-30% bows draw speed",
+  "game:charattribute-crossbowsProficiency--0.3": "-30% crossbows reload speed",
+  "game:charattribute-firearmsProficiency--0.3": "-30% firearms reload speed",
 
   "damagelog-missed-block-zone": "Player tried blocking, but {0} was not protected by block",
   "damagelog-missed-block-direction": "Player tried blocking, but directon ({0}) of incomming attack was not covered by block",

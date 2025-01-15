@@ -96,8 +96,8 @@
                 "*-copper": {"DamageType": "SlashingAttack", "Tier": 3, "Damage": 4},
                 "*-*bronze": {"DamageType": "SlashingAttack", "Tier": 4, "Damage": 4.5},
                 "*-iron": {"DamageType": "SlashingAttack", "Tier": 5, "Damage": 5},
-                "*-gold": {"DamageType": "SlashingAttack", "Tier": 5, "Damage": 5.2},
-                "*-silver": {"DamageType": "SlashingAttack", "Tier": 5, "Damage": 5.2},
+                "*-gold": {"DamageType": "SlashingAttack", "Tier": 7, "Damage": 5.5},
+                "*-silver": {"DamageType": "SlashingAttack", "Tier": 7, "Damage": 5.5},
                 "*-meteoriciron": {"DamageType": "SlashingAttack", "Tier": 6, "Damage": 5},
                 "*-steel": {"DamageType": "SlashingAttack", "Tier": 7, "Damage": 5.5}
               },

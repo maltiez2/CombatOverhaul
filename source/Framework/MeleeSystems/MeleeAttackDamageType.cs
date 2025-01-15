@@ -1,16 +1,12 @@
 ﻿using CombatOverhaul.Colliders;
 using CombatOverhaul.DamageSystems;
 using ProtoBuf;
-using System.Diagnostics;
 using System.Numerics;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
-using Vintagestory.GameContent;
-using Vintagestory.Server;
-using static Microsoft.WindowsAPICodePack.Shell.PropertySystem.SystemProperties.System;
 
 namespace CombatOverhaul.MeleeSystems;
 
@@ -70,8 +66,11 @@ public class MeleeDamagePacket
         if (DurabilityDamage > 0)
         {
             ItemSlot? slot = (MainHand ? (attacker as EntityAgent)?.RightHandItemSlot : (attacker as EntityAgent)?.LeftHandItemSlot);
-            slot?.Itemstack.Collectible.DamageItem(target.Api.World, attacker, slot, DurabilityDamage);
-            slot?.MarkDirty();
+            if (slot?.Itemstack?.Collectible != null && attacker != null)
+            {
+                slot?.Itemstack.Collectible.DamageItem(attacker.Api.World, attacker, slot, DurabilityDamage);
+                slot?.MarkDirty();
+            }
         }
 
         if (printIntoChat)

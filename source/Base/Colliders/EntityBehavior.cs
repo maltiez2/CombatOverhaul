@@ -1,4 +1,5 @@
-﻿using CombatOverhaul.Utils;
+﻿using CombatOverhaul.Integration;
+using CombatOverhaul.Utils;
 using System.Numerics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -125,20 +126,37 @@ public sealed class CollidersEntityBehavior : EntityBehavior
     }
     public override void OnGameTick(float deltaTime)
     {
-        if (HasOBBCollider && Animator != null && entity.Api is ICoreClientAPI clientApi && entity.IsRendered) RecalculateColliders(Animator, clientApi);
-    }
+        if (entity.Api is not ICoreClientAPI clientApi || !HasOBBCollider) return;
+        
+        Animator = entity.AnimManager?.Animator as ClientAnimator;
 
-    public void SetColliderElement(ShapeElement element)
-    {
-        if (element?.Name == null) return;
+        if (Animator == null) return;
 
-        if (UnprocessedElementsLeft && ShapeElementsToProcess.Contains(element.Name) && !Colliders.ContainsKey(element.Name))
+        if (UnprocessedElementsLeft && !_reportedMissingColliders)
         {
-            Colliders.Add(element.Name, new ShapeElementCollider(element));
-            ShapeElementsToProcess.Remove(element.Name);
-            UnprocessedElementsLeft = ShapeElementsToProcess.Count > 0;
+            try
+            {
+                foreach (ElementPose pose in Animator.RootPoses)
+                {
+                    AddPoseShapeElements(pose);
+                }
+
+                if (ShapeElementsToProcess.Any() && !_reportedMissingColliders)
+                {
+                    string missingColliders = ShapeElementsToProcess.Aggregate((first, second) => $"{first}, {second}");
+                    LoggerUtil.Warn(entity.Api, typeof(HarmonyPatches), $"({entity.Code}) Listed colliders that were not found in shape: {missingColliders}");
+                    _reportedMissingColliders = true;
+                }
+            }
+            catch (Exception exception)
+            {
+                LoggerUtil.Error(entity.Api, typeof(HarmonyPatches), $"({entity.Code}) Error during creating colliders: \n{exception}");
+            }
         }
+
+        if (entity.IsRendered) RecalculateColliders(Animator, clientApi);
     }
+    
     public void Render(ICoreClientAPI api, EntityAgent entityPlayer, EntityShapeRenderer renderer, int color = ColorUtil.WhiteArgb)
     {
         if (api.World.Player.Entity.EntityId == entityPlayer.EntityId) return;
@@ -294,7 +312,28 @@ public sealed class CollidersEntityBehavior : EntityBehavior
         { ColliderTypes.Critical, ColorUtil.ColorFromRgba(255, 255, 0, 255 ) }, // Yellow
         { ColliderTypes.Resistant, ColorUtil.ColorFromRgba(255, 0, 255, 255 ) } // Magenta
     };
+    private bool _reportedMissingColliders = false;
 
+    private void SetColliderElement(ShapeElement element)
+    {
+        if (element?.Name == null) return;
+
+        if (UnprocessedElementsLeft && ShapeElementsToProcess.Contains(element.Name) && !Colliders.ContainsKey(element.Name))
+        {
+            Colliders.Add(element.Name, new ShapeElementCollider(element));
+            ShapeElementsToProcess.Remove(element.Name);
+            UnprocessedElementsLeft = ShapeElementsToProcess.Count > 0;
+        }
+    }
+    private void AddPoseShapeElements(ElementPose pose)
+    {
+        SetColliderElement(pose.ForElement);
+
+        foreach (ElementPose childPose in pose.ChildElementPoses)
+        {
+            AddPoseShapeElements(childPose);
+        }
+    }
     private void RecalculateColliders(ClientAnimator animator, ICoreClientAPI clientApi)
     {
         foreach ((_, ShapeElementCollider collider) in Colliders)

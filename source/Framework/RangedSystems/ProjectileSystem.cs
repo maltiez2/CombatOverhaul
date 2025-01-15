@@ -203,51 +203,51 @@ public sealed class ProjectileSystemClient : ProjectileSystemBase
         collider = "";
         point = new();
 
-        if (colliders != null)
+        if (colliders == null)
         {
-            bool result = colliders.Collide(currentPosition, previousPosition, radius, penetrationDistance, out List<(string key, float parameter, Vector3 point)> intersections);
+            CuboidAABBCollider collisionBox = GetCollisionBox(target);
+            return collisionBox.Collide(currentPosition, previousPosition, radius, out point);
+        }
 
-            if (!result) return false;
+        bool result = colliders.Collide(currentPosition, previousPosition, radius, penetrationDistance, out List<(string key, float parameter, Vector3 point)> intersections);
 
-            if (damageModel == null && intersections.Count > 0)
+        if (!result) return false;
+
+        if (damageModel == null && intersections.Count > 0)
+        {
+            collider = intersections[0].key;
+            point = intersections[0].point;
+        }
+
+        if (damageModel != null && intersections.Count > 0)
+        {
+            float maxDamageMultiplier = 0;
+
+            foreach ((string key, float parameter, Vector3 intersectionPoint) in intersections)
             {
-                collider = intersections[0].key;
-                point = intersections[0].point;
-            }
-
-            if (damageModel != null && intersections.Count > 0)
-            {
-                float maxDamageMultiplier = 0;
-
-                foreach ((string key, float parameter, Vector3 intersectionPoint) in intersections)
+                ColliderTypes colliderType = colliders.CollidersTypes[key];
+                if (colliderType == ColliderTypes.Resistant)
                 {
-                    ColliderTypes colliderType = colliders.CollidersTypes[key];
-                    if (colliderType == ColliderTypes.Resistant)
+                    if (collider == "")
                     {
-                        if (collider == "")
-                        {
-                            collider = key;
-                            point = intersectionPoint;
-                        }
-
-                        break;
-                    }
-
-                    float damageMultiplier = damageModel.DamageMultipliers[colliderType];
-                    if (damageMultiplier >= maxDamageMultiplier)
-                    {
-                        maxDamageMultiplier = damageMultiplier;
                         collider = key;
                         point = intersectionPoint;
                     }
+
+                    break;
+                }
+
+                float damageMultiplier = damageModel.DamageMultipliers[colliderType];
+                if (damageMultiplier >= maxDamageMultiplier)
+                {
+                    maxDamageMultiplier = damageMultiplier;
+                    collider = key;
+                    point = intersectionPoint;
                 }
             }
-
-            return true;
         }
 
-        CuboidAABBCollider collisionBox = GetCollisionBox(target);
-        return collisionBox.Collide(currentPosition, previousPosition, radius, out _);
+        return true;
     }
     private static CuboidAABBCollider GetCollisionBox(Entity entity)
     {

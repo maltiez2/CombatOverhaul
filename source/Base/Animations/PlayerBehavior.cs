@@ -869,32 +869,6 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
 
         Play(request, mainHand);
     }
-    private void AdjustForCameraPitch(EntityPlayer player, ElementPose pose)
-    {
-        float pitch = player.Pos.HeadPitch;
-        float minAngle = -45;
-        float maxAngle = 75;
-
-        pose.translateX = 0;
-        pose.translateY = 0;
-        pose.translateZ = 0;
-        //pose.degX = 0;
-        //pose.degY = 0;
-        pose.degZ = GameMath.Clamp(pitch * GameMath.RAD2DEG, minAngle, maxAngle);
-    }
-    private void AdjustNeckForCameraPitch(EntityPlayer player, ElementPose pose)
-    {
-        float pitch = player.Pos.HeadPitch;
-        float minAngle = -45;
-        float maxAngle = 75;
-
-        pose.translateX = 0;
-        pose.translateY = 0;
-        pose.translateZ = 0;
-        //pose.degX = 0;
-        //pose.degY = 0;
-        pose.degZ = -GameMath.Clamp(pitch * GameMath.RAD2DEG, minAngle, maxAngle) / 2;
-    }
     private void Dispose()
     {
         HarmonyPatches.OnBeforeFrame -= OnBeforeFrame;

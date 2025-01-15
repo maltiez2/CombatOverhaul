@@ -1,4 +1,5 @@
 ﻿using CombatOverhaul.Colliders;
+using CombatOverhaul.Utils;
 using System.Text;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -104,6 +105,11 @@ public sealed class EntityDamageModelBehavior : EntityBehavior, IEntityDamageMod
         _colliders = entity.GetBehavior<CollidersEntityBehavior>();
         EntityBehaviorHealth? healthBehavior = entity.GetBehavior<EntityBehaviorHealth>();
         if (healthBehavior != null) healthBehavior.onDamaged += OnReceiveDamageHandler;
+
+        if (_colliders == null)
+        {
+            LoggerUtil.Warn(entity.Api, this, $"Entity '{entity.Code}' does not have colliders behavior");
+        }
     }
 
     private CollidersEntityBehavior? _colliders;

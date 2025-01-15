@@ -685,7 +685,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
         
         if (eventData.AltPressed) return false;
         if (!CanBlock(mainHand) && !CanParry(mainHand)) return false;
-        if (!CheckState(mainHand, MeleeWeaponState.Idle, MeleeWeaponState.WindingUp, MeleeWeaponState.Attacking)) return handleEvent;
+        if (!CheckState(mainHand, MeleeWeaponState.Idle, MeleeWeaponState.WindingUp, MeleeWeaponState.Cooldown)) return handleEvent;
         if (IsBlockOnCooldown(mainHand)) return handleEvent;
         EnsureStance(player, mainHand);
         if (mainHand && CanBlockWithOtherHand(player, mainHand)) return handleEvent;
