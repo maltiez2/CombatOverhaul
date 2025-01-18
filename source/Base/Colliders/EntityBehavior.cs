@@ -1,6 +1,6 @@
 ﻿using CombatOverhaul.Integration;
 using CombatOverhaul.Utils;
-using System.Numerics;
+using OpenTK.Mathematics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -178,13 +178,13 @@ public sealed class CollidersEntityBehavior : EntityBehavior
 
         currentShader?.Use();
     }
-    public bool Collide(Vector3 segmentStart, Vector3 segmentDirection, out string collider, out float parameter, out Vector3 intersection)
+    public bool Collide(Vector3d segmentStart, Vector3d segmentDirection, out string collider, out double parameter, out Vector3d intersection)
     {
 
         parameter = float.MaxValue;
         bool foundIntersection = false;
         collider = "";
-        intersection = Vector3.Zero;
+        intersection = Vector3d.Zero;
 
         if (!HasOBBCollider)
         {
@@ -201,7 +201,7 @@ public sealed class CollidersEntityBehavior : EntityBehavior
 
         foreach ((string key, ShapeElementCollider shapeElementCollider) in Colliders)
         {
-            if (shapeElementCollider.Collide(segmentStart, segmentDirection, out float currentParameter, out Vector3 currentIntersection) && currentParameter < parameter)
+            if (shapeElementCollider.Collide(segmentStart, segmentDirection, out double currentParameter, out Vector3d currentIntersection) && currentParameter < parameter)
             {
                 parameter = currentParameter;
                 collider = key;
@@ -212,9 +212,9 @@ public sealed class CollidersEntityBehavior : EntityBehavior
 
         return foundIntersection;
     }
-    public bool Collide(Vector3 thisTickOrigin, Vector3 previousTickOrigin, float radius, out string collider, out float distance, out Vector3 intersection)
+    public bool Collide(Vector3d thisTickOrigin, Vector3d previousTickOrigin, double radius, out string collider, out double distance, out Vector3d intersection)
     {
-        distance = float.MaxValue;
+        distance = double.MaxValue;
         bool foundIntersection = false;
         collider = "";
 
@@ -231,7 +231,7 @@ public sealed class CollidersEntityBehavior : EntityBehavior
 
         foreach ((string key, ShapeElementCollider shapeElementCollider) in Colliders)
         {
-            if (shapeElementCollider.Collide(thisTickOrigin, previousTickOrigin, radius, out float currentDistance, out Vector3 currentIntersection) && currentDistance < distance)
+            if (shapeElementCollider.Collide(thisTickOrigin, previousTickOrigin, radius, out double currentDistance, out Vector3d currentIntersection) && currentDistance < distance)
             {
                 distance = currentDistance;
                 collider = key;
@@ -242,17 +242,15 @@ public sealed class CollidersEntityBehavior : EntityBehavior
 
         return foundIntersection;
     }
-    public bool Collide(Vector3 thisTickOrigin, Vector3 previousTickOrigin, float radius, float penetrationDistance, out List<(string, float, Vector3)> intersections)
+    public bool Collide(Vector3d thisTickOrigin, Vector3d previousTickOrigin, float radius, float penetrationDistance, out List<(string, double, Vector3d)> intersections)
     {
         intersections = new();
         bool foundIntersection = false;
 
-
-
         if (!HasOBBCollider)
         {
             CuboidAABBCollider AABBCollider = new(entity);
-            return AABBCollider.Collide(thisTickOrigin, previousTickOrigin, radius, out Vector3 intersection);
+            return AABBCollider.Collide(thisTickOrigin, previousTickOrigin, radius, out Vector3d intersection);
         }
 
         if (!BoundingBox.Collide(thisTickOrigin, previousTickOrigin, radius, out _))
@@ -260,15 +258,15 @@ public sealed class CollidersEntityBehavior : EntityBehavior
             return false;
         }
 
-        Vector3 firstIntersection = previousTickOrigin;
-        float lowestParameter = 1;
+        Vector3d firstIntersection = previousTickOrigin;
+        double lowestParameter = 1;
 
         foreach ((string key, ShapeElementCollider shapeElementCollider) in Colliders)
         {
-            if (shapeElementCollider.Collide(thisTickOrigin, previousTickOrigin, radius, out _, out _, out Vector3 segmentClosestPoint))
+            if (shapeElementCollider.Collide(thisTickOrigin, previousTickOrigin, radius, out _, out _, out Vector3d segmentClosestPoint))
             {
-                Vector3 segmentPoint = segmentClosestPoint - previousTickOrigin;
-                float parameter = segmentPoint.Length() / (thisTickOrigin - previousTickOrigin).Length();
+                Vector3d segmentPoint = segmentClosestPoint - previousTickOrigin;
+                double parameter = segmentPoint.Length / (thisTickOrigin - previousTickOrigin).Length;
 
                 if (lowestParameter >= parameter)
                 {
@@ -280,17 +278,17 @@ public sealed class CollidersEntityBehavior : EntityBehavior
             }
         }
 
-        Vector3 thisTickOriginAdjustedForPenetration = firstIntersection + Vector3.Normalize(thisTickOrigin - previousTickOrigin) * penetrationDistance;
+        Vector3d thisTickOriginAdjustedForPenetration = firstIntersection + Vector3d.Normalize(thisTickOrigin - previousTickOrigin) * penetrationDistance;
 
         if (foundIntersection)
         {
             foundIntersection = false;
             foreach ((string key, ShapeElementCollider shapeElementCollider) in Colliders)
             {
-                if (shapeElementCollider.Collide(thisTickOriginAdjustedForPenetration, previousTickOrigin, radius, out float currentDistance, out Vector3 currentIntersection, out Vector3 segmentClosestPoint))
+                if (shapeElementCollider.Collide(thisTickOriginAdjustedForPenetration, previousTickOrigin, radius, out double currentDistance, out Vector3d currentIntersection, out Vector3d segmentClosestPoint))
                 {
-                    Vector3 segmentPoint = segmentClosestPoint - previousTickOrigin;
-                    float parameter = (segmentPoint.Length() + currentDistance) / (thisTickOrigin - previousTickOrigin).Length();
+                    Vector3d segmentPoint = segmentClosestPoint - previousTickOrigin;
+                    double parameter = (segmentPoint.Length + currentDistance) / (thisTickOrigin - previousTickOrigin).Length;
 
                     intersections.Add((key, parameter, currentIntersection));
                     foundIntersection = true;
@@ -344,14 +342,14 @@ public sealed class CollidersEntityBehavior : EntityBehavior
     }
     private void CalculateBoundingBox()
     {
-        Vector3 min = new(float.MaxValue, float.MaxValue, float.MaxValue);
-        Vector3 max = new(float.MinValue, float.MinValue, float.MinValue);
+        Vector3d min = new(float.MaxValue, float.MaxValue, float.MaxValue);
+        Vector3d max = new(float.MinValue, float.MinValue, float.MinValue);
 
         foreach (ShapeElementCollider collider in Colliders.Values)
         {
             for (int vertex = 0; vertex < ShapeElementCollider.VertexCount; vertex++)
             {
-                Vector4 inworldVertex = collider.InworldVertices[vertex];
+                Vector4d inworldVertex = collider.InworldVertices[vertex];
                 min.X = Math.Min(min.X, inworldVertex.X);
                 min.Y = Math.Min(min.Y, inworldVertex.Y);
                 min.Z = Math.Min(min.Z, inworldVertex.Z);

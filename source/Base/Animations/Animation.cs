@@ -1,6 +1,6 @@
 ﻿using CombatOverhaul.Utils;
 using ImGuiNET;
-using System.Numerics;
+using OpenTK.Mathematics;
 using Vintagestory.API.Common;
 
 namespace CombatOverhaul.Animations;

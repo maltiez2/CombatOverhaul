@@ -5,7 +5,7 @@ using CombatOverhaul.Integration;
 using CombatOverhaul.MeleeSystems;
 using CombatOverhaul.RangedSystems;
 using CombatOverhaul.RangedSystems.Aiming;
-using System.Numerics;
+using OpenTK.Mathematics;
 using System.Text;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -596,8 +596,8 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
                         player.Player,
                         slot,
                         mainHand,
-                        out IEnumerable<(Block block, System.Numerics.Vector3 point)> handleTerrainCollision,
-                        out IEnumerable<(Vintagestory.API.Common.Entities.Entity entity, System.Numerics.Vector3 point)> handleEntitiesCollision);
+                        out IEnumerable<(Block block, Vector3d point)> handleTerrainCollision,
+                        out IEnumerable<(Vintagestory.API.Common.Entities.Entity entity, Vector3d point)> handleEntitiesCollision);
 
             if (!HandleHitTerrain && handleTerrainCollision.Any())
             {
@@ -612,8 +612,8 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
             player.Player,
             slot,
             mainHand,
-            out IEnumerable<(Block block, System.Numerics.Vector3 point)> terrainCollision,
-            out IEnumerable<(Vintagestory.API.Common.Entities.Entity entity, System.Numerics.Vector3 point)> entitiesCollision);
+            out IEnumerable<(Block block, Vector3d point)> terrainCollision,
+            out IEnumerable<(Vintagestory.API.Common.Entities.Entity entity, Vector3d point)> entitiesCollision);
 
         if (handle != null) handle.AddAttackedEntities(attack);
 
@@ -1241,13 +1241,13 @@ public class MeleeWeaponServer : RangeWeaponServer
             ProducerEntityId = player.Entity.EntityId,
             DamageMultiplier = 1,
             DamageStrength = Stats.ThrowAttack?.DamageStrength ?? 0,
-            Position = new Vector3(packet.Position[0], packet.Position[1], packet.Position[2]),
-            Velocity = Vector3.Normalize(new Vector3(packet.Velocity[0], packet.Velocity[1], packet.Velocity[2])) * (Stats.ThrowAttack?.Velocity ?? 1)
+            Position = new Vector3d(packet.Position[0], packet.Position[1], packet.Position[2]),
+            Velocity = Vector3d.Normalize(new Vector3d(packet.Velocity[0], packet.Velocity[1], packet.Velocity[2])) * (Stats.ThrowAttack?.Velocity ?? 1)
         };
 
         AssetLocation projectileCode = slot.Itemstack.Item.Code.Clone();
 
-        ProjectileSystem.Spawn(packet.ProjectileId[0], stats, spawnStats, slot.TakeOut(1), shooter);
+        ProjectileSystem.Spawn(packet.ProjectileId[0], stats, spawnStats, slot.TakeOut(1), slot.Itemstack, shooter);
 
         SwapToNewProjectile(player, slot, projectileCode);
 

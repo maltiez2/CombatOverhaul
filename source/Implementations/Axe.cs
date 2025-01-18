@@ -3,7 +3,7 @@ using CombatOverhaul.Colliders;
 using CombatOverhaul.Inputs;
 using CombatOverhaul.MeleeSystems;
 using ProtoBuf;
-using System.Numerics;
+using OpenTK.Mathematics;
 using System.Reflection;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -219,7 +219,7 @@ public class AxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
 
         if (selection?.Position == null) return false;
 
-        (Block block, Vector3 position, float parameter)? collision = collider.Value.IntersectBlock(Api, selection.Position);
+        (Block block, Vector3d position, double parameter)? collision = collider.Value.IntersectBlock(Api, selection.Position);
 
         if (collision == null) return true;
 
@@ -271,7 +271,7 @@ public class AxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
                     if (collider == null) return true;
                     BlockSelection selection = player.BlockSelection;
                     if (selection?.Position == null) return true;
-                    (Block block, Vector3 position, float parameter)? collision = collider.Value.IntersectBlock(Api, selection.Position);
+                    (Block block, Vector3d position, double parameter)? collision = collider.Value.IntersectBlock(Api, selection.Position);
                     if (collision == null) return true;
 
                     SplitAnimationCallback(slot, player, mainHand);
@@ -356,8 +356,8 @@ public class AxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
             player.Player,
             slot,
             mainHand,
-            out IEnumerable<(Block block, System.Numerics.Vector3 point)> terrainCollision,
-            out IEnumerable<(Vintagestory.API.Common.Entities.Entity entity, System.Numerics.Vector3 point)> entitiesCollision);
+            out IEnumerable<(Block block, Vector3d point)> terrainCollision,
+            out IEnumerable<(Vintagestory.API.Common.Entities.Entity entity, Vector3d point)> entitiesCollision);
 
         if (entitiesCollision.Any() && Stats.AnimationStaggerOnHitDurationMs > 0)
         {

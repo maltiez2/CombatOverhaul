@@ -17,8 +17,8 @@
       "*": {"base": "combatoverhaul:ammo/arrows/insert"}
     },
     "texturesByType": {"*-crude": {}, "*-flint": {"material": {"base": "game:block/stone/flint"}}, "*": {"material": {"base": "game:block/metal/ingot/{material}"}}},
-    "behaviors": [{"code": "passivephysics", "groundDragFactor": 1, "airDragFactor": 0.25, "gravityFactor": 0.75}, {"code": "interpolateposition"}]
+    "behaviors": [{"code": "passivephysics", "groundDragFactor": 1, "airDragFactor": 0.25, "gravityFactor": 0.5}, {"code": "interpolateposition"}]
   },
-  "server": {"behaviors": [{"code": "passivephysics", "groundDragFactor": 1, "airDragFactor": 0.25, "gravityFactor": 0.75}, {"code": "despawn", "minSeconds": 600}]},
+  "server": {"behaviors": [{"code": "passivephysics", "groundDragFactor": 1, "airDragFactor": 0.25, "gravityFactor": 0.5}, {"code": "despawn", "minSeconds": 600}]},
   "sounds": {}
 }

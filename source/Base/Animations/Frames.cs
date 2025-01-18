@@ -1,6 +1,6 @@
-﻿using ImGuiNET;
-using System.Diagnostics;
-using System.Numerics;
+﻿using CombatOverhaul.Utils;
+using ImGuiNET;
+using OpenTK.Mathematics;
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 
@@ -114,16 +114,16 @@ public readonly struct ParticlesFrame
         float time = DurationFraction * (float)totalDuration.TotalMilliseconds;
         ImGui.InputFloat($"Time##{title}", ref time);
 
-        Vector3 position = Position;
+        var position = Position.toSystem();
         ImGui.DragFloat3($"Position ##{title}", ref position);
 
-        Vector3 velocity = Velocity;
+        var velocity = Velocity.toSystem();
         ImGui.DragFloat3($"Velocity ##{title}", ref velocity);
 
         float intensity = Intensity;
         ImGui.InputFloat($"Intensity ##{title}", ref intensity, 0.1f, 1);
 
-        return new(code, time / (float)totalDuration.TotalMilliseconds, position, velocity, intensity);
+        return new(code, time / (float)totalDuration.TotalMilliseconds, position.toOpenTK(), velocity.toOpenTK(), intensity);
     }
 #endif
 }

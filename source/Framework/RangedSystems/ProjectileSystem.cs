@@ -1,7 +1,8 @@
 ﻿using CombatOverhaul.Colliders;
 using CombatOverhaul.DamageSystems;
 using ProtoBuf;
-using System.Numerics;
+using System.Diagnostics;
+using OpenTK.Mathematics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -33,17 +34,17 @@ public struct ProjectileSpawnStats
     public long ProducerEntityId { get; set; }
     public float DamageMultiplier { get; set; }
     public float DamageStrength { get; set; }
-    public Vector3 Position { get; set; }
-    public Vector3 Velocity { get; set; }
+    public Vector3d Position { get; set; }
+    public Vector3d Velocity { get; set; }
 }
 
 [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
 public class ProjectileCollisionPacket
 {
     public Guid Id { get; set; }
-    public float[] CollisionPoint { get; set; } = Array.Empty<float>();
-    public float[] AfterCollisionVelocity { get; set; } = Array.Empty<float>();
-    public float RelativeSpeed { get; set; }
+    public double[] CollisionPoint { get; set; } = Array.Empty<double>();
+    public double[] AfterCollisionVelocity { get; set; } = Array.Empty<double>();
+    public double RelativeSpeed { get; set; }
     public string Collider { get; set; } = "";
     public long ReceiverEntity { get; set; }
     public int PacketVersion { get; set; }
@@ -54,9 +55,9 @@ public class ProjectileCollisionCheckRequest
 {
     public Guid ProjectileId { get; set; }
     public long ProjectileEntityId { get; set; }
-    public float[] CurrentPosition { get; set; } = Array.Empty<float>();
-    public float[] PreviousPosition { get; set; } = Array.Empty<float>();
-    public float[] Velocity { get; set; } = Array.Empty<float>();
+    public double[] CurrentPosition { get; set; } = Array.Empty<double>();
+    public double[] PreviousPosition { get; set; } = Array.Empty<double>();
+    public double[] Velocity { get; set; } = Array.Empty<double>();
     public float Radius { get; set; }
     public float PenetrationDistance { get; set; }
     public bool CollideWithShooter { get; set; }
@@ -66,7 +67,7 @@ public class ProjectileCollisionCheckRequest
 
 public abstract class ProjectileSystemBase
 {
-    protected static ProjectileEntity SpawnProjectile(Guid id, ItemStack projectileStack, ProjectileStats stats, ProjectileSpawnStats spawnStats, ICoreAPI api, Entity shooter)
+    protected static ProjectileEntity SpawnProjectile(Guid id, ItemStack projectileStack, ItemStack? weaponStack, ProjectileStats stats, ProjectileSpawnStats spawnStats, ICoreAPI api, Entity shooter)
     {
         AssetLocation entityTypeAsset = new(stats.EntityCode);
 
@@ -79,6 +80,7 @@ public abstract class ProjectileSystemBase
 
         projectile.ProjectileId = id;
         projectile.ProjectileStack = projectileStack;
+        projectile.WeaponStack = weaponStack;
         projectile.DropOnImpactChance = stats.DropChance;
         projectile.ColliderRadius = stats.CollisionRadius;
         projectile.PenetrationDistance = stats.PenetrationDistance;
@@ -113,13 +115,13 @@ public sealed class ProjectileSystemClient : ProjectileSystemBase
         _entityPartitioning = entityPartitioning;
     }
 
-    public void Collide(Guid id, Entity target, Vector3 point, Vector3 velocity, float relativeSpeed, string collider, ProjectileCollisionCheckRequest packet)
+    public void Collide(Guid id, Entity target, Vector3d point, Vector3d velocity, double relativeSpeed, string collider, ProjectileCollisionCheckRequest packet)
     {
         ProjectileCollisionPacket newPacket = new()
         {
             Id = id,
-            CollisionPoint = new float[] { point.X, point.Y, point.Z },
-            AfterCollisionVelocity = new float[] { velocity.X, velocity.Y, velocity.Z },
+            CollisionPoint = new double[] { point.X, point.Y, point.Z },
+            AfterCollisionVelocity = new double[] { velocity.X, velocity.Y, velocity.Z },
             RelativeSpeed = relativeSpeed,
             ReceiverEntity = target.EntityId,
             Collider = collider,
@@ -141,20 +143,9 @@ public sealed class ProjectileSystemClient : ProjectileSystemBase
             _entityCollisionRadius + packet.Radius,
             _entityCollisionRadius + packet.Radius);
 
-        Vector3 currentPosition = new(packet.CurrentPosition[0], packet.CurrentPosition[1], packet.CurrentPosition[2]);
-        Vector3 previousPosition = new(packet.PreviousPosition[0], packet.PreviousPosition[1], packet.PreviousPosition[2]);
-        Vector3 velocity = new(packet.Velocity[0], packet.Velocity[1], packet.Velocity[2]);
-
-        /*foreach (Entity entity in entities)
-        {
-            if (entity.EntityId == packet.ProjectileEntityId && entity is ProjectileEntity projectile)
-            {
-                currentPosition = new Vector3((float)projectile.Pos.X, (float)projectile.Pos.Y, (float)projectile.Pos.Z);
-                previousPosition = new Vector3((float)projectile.PreviousPosition.X, (float)projectile.PreviousPosition.Y, (float)projectile.PreviousPosition.Z);
-                velocity = new Vector3((float)projectile.PreviousVelocity.X, (float)projectile.PreviousVelocity.Y, (float)projectile.PreviousVelocity.Z);
-                break;
-            }
-        }*/
+        Vector3d currentPosition = new(packet.CurrentPosition[0], packet.CurrentPosition[1], packet.CurrentPosition[2]);
+        Vector3d previousPosition = new(packet.PreviousPosition[0], packet.PreviousPosition[1], packet.PreviousPosition[2]);
+        Vector3d velocity = new(packet.Velocity[0], packet.Velocity[1], packet.Velocity[2]);
 
         foreach (Entity entity in entities.Where(entity => entity.IsCreature))
         {
@@ -164,7 +155,7 @@ public sealed class ProjectileSystemClient : ProjectileSystemBase
             }
         }
     }
-    private bool Collide(Entity target, ProjectileCollisionCheckRequest packet, Vector3 currentPosition, Vector3 previousPosition, Vector3 velocity)
+    private bool Collide(Entity target, ProjectileCollisionCheckRequest packet, Vector3d currentPosition, Vector3d previousPosition, Vector3d velocity)
     {
         if (target.EntityId == packet.ProjectileEntityId) return false;
 
@@ -172,17 +163,17 @@ public sealed class ProjectileSystemClient : ProjectileSystemBase
 
         if (packet.IgnoreEntities.Contains(target.EntityId)) return false;
 
-        if (!CheckCollision(target, out string collider, out Vector3 point, currentPosition, previousPosition, packet.Radius, packet.PenetrationDistance)) return false;
+        if (!CheckCollision(target, out string collider, out Vector3d point, currentPosition, previousPosition, packet.Radius, packet.PenetrationDistance)) return false;
 
-        Vector3 targetVelocity = new((float)target.Pos.Motion.X, (float)target.Pos.Motion.Y, (float)target.Pos.Motion.Z);
+        Vector3d targetVelocity = new((float)target.Pos.Motion.X, (float)target.Pos.Motion.Y, (float)target.Pos.Motion.Z);
 
-        float relativeSpeed = (targetVelocity - velocity).Length();
+        double relativeSpeed = (targetVelocity - velocity).Length;
 
         Collide(packet.ProjectileId, target, point, targetVelocity, relativeSpeed, collider, packet);
 
         return true;
     }
-    private bool CheckCollision(Entity target, out string collider, out Vector3 point, Vector3 currentPosition, Vector3 previousPosition, float radius)
+    private bool CheckCollision(Entity target, out string collider, out Vector3d point, Vector3d currentPosition, Vector3d previousPosition, float radius)
     {
         CollidersEntityBehavior? colliders = target.GetBehavior<CollidersEntityBehavior>();
         if (colliders != null)
@@ -196,7 +187,7 @@ public sealed class ProjectileSystemClient : ProjectileSystemBase
         CuboidAABBCollider collisionBox = GetCollisionBox(target);
         return collisionBox.Collide(currentPosition, previousPosition, radius, out point);
     }
-    private bool CheckCollision(Entity target, out string collider, out Vector3 point, Vector3 currentPosition, Vector3 previousPosition, float radius, float penetrationDistance)
+    private bool CheckCollision(Entity target, out string collider, out Vector3d point, Vector3d currentPosition, Vector3d previousPosition, float radius, float penetrationDistance)
     {
         CollidersEntityBehavior? colliders = target.GetBehavior<CollidersEntityBehavior>();
         EntityDamageModelBehavior? damageModel = target.GetBehavior<EntityDamageModelBehavior>();
@@ -209,7 +200,7 @@ public sealed class ProjectileSystemClient : ProjectileSystemBase
             return collisionBox.Collide(currentPosition, previousPosition, radius, out point);
         }
 
-        bool result = colliders.Collide(currentPosition, previousPosition, radius, penetrationDistance, out List<(string key, float parameter, Vector3 point)> intersections);
+        bool result = colliders.Collide(currentPosition, previousPosition, radius, penetrationDistance, out List<(string key, double parameter, Vector3d point)> intersections);
 
         if (!result) return false;
 
@@ -223,7 +214,7 @@ public sealed class ProjectileSystemClient : ProjectileSystemBase
         {
             float maxDamageMultiplier = 0;
 
-            foreach ((string key, float parameter, Vector3 intersectionPoint) in intersections)
+            foreach ((string key, double parameter, Vector3d intersectionPoint) in intersections)
             {
                 ColliderTypes colliderType = colliders.CollidersTypes[key];
                 if (colliderType == ColliderTypes.Resistant)
@@ -276,9 +267,9 @@ public sealed class ProjectileSystemServer : ProjectileSystemBase
 
     public const string NetworkChannelId = "CombatOverhaul:projectiles";
 
-    public void Spawn(Guid id, ProjectileStats projectileStats, ProjectileSpawnStats spawnStats, ItemStack projectileStack, Entity shooter)
+    public void Spawn(Guid id, ProjectileStats projectileStats, ProjectileSpawnStats spawnStats, ItemStack projectileStack, ItemStack? weaponStack, Entity shooter)
     {
-        ProjectileEntity projectile = SpawnProjectile(id, projectileStack, projectileStats, spawnStats, _api, shooter);
+        ProjectileEntity projectile = SpawnProjectile(id, projectileStack, weaponStack, projectileStats, spawnStats, _api, shooter);
 
         _projectiles.Add(id, new(projectile, projectileStats, spawnStats, _api, ClearId, projectileStack));
 
@@ -290,9 +281,9 @@ public sealed class ProjectileSystemServer : ProjectileSystemBase
         {
             ProjectileId = projectile.ProjectileId,
             ProjectileEntityId = projectile.EntityId,
-            CurrentPosition = new float[3] { (float)projectile.ServerPos.X, (float)projectile.ServerPos.Y, (float)projectile.ServerPos.Z },
-            PreviousPosition = new float[3] { (float)projectile.PreviousPosition.X, (float)projectile.PreviousPosition.Y, (float)projectile.PreviousPosition.Z },
-            Velocity = new float[3] { (float)projectile.PreviousVelocity.X, (float)projectile.PreviousVelocity.Y, (float)projectile.PreviousVelocity.Z },
+            CurrentPosition = new double[3] { projectile.ServerPos.X, projectile.ServerPos.Y, projectile.ServerPos.Z },
+            PreviousPosition = new double[3] { projectile.PreviousPosition.X, projectile.PreviousPosition.Y, projectile.PreviousPosition.Z },
+            Velocity = new double[3] { projectile.PreviousVelocity.X, projectile.PreviousVelocity.Y, projectile.PreviousVelocity.Z },
             Radius = projectile.ColliderRadius,
             PenetrationDistance = projectile.PenetrationDistance,
             CollideWithShooter = false,
@@ -314,9 +305,9 @@ public sealed class ProjectileSystemServer : ProjectileSystemBase
     {
         if (_projectiles.TryGetValue(packet.Id, out ProjectileServer? projectileServer))
         {
-            if (projectileServer.PacketVersion != packet.PacketVersion) return;
-
-            projectileServer.PacketVersion++;
+            // No packets should be ignored to not allow projectiles to phase through objects
+            //if (projectileServer.PacketVersion != packet.PacketVersion) return;
+            //projectileServer.PacketVersion++;
 
             projectileServer._entity.CollidedWith.Add(packet.ReceiverEntity);
             projectileServer._entity.Stuck = false;

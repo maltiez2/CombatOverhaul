@@ -38,6 +38,8 @@
     "path": "/server/behaviors/-",
     "value": {
       "code": "CombatOverhaul:PlayerDamageModel",
+      "secondChanceCooldownSec": 300,
+      "secondChanceAvailable": true,
       "bodyParts": {
         "LowerTorso": "Torso",
         "UpperTorso": "Torso",

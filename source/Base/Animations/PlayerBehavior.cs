@@ -2,7 +2,7 @@
 using CombatOverhaul.Utils;
 using ProtoBuf;
 using System.Diagnostics;
-using System.Numerics;
+using OpenTK.Mathematics;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Vintagestory.API.Client;
@@ -50,7 +50,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
 
     public override string PropertyName() => "FirstPersonAnimations";
 
-    public override void OnGameTick(float deltaTime) // @TODO refactor this brunching hell
+    public override void OnGameTick(float deltaTime)
     {
         if (!_mainPlayer || _player.RightHandItemSlot == null || _player.LeftHandItemSlot == null) return;
 
@@ -511,21 +511,18 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
         int mainHandItemId = _player.RightHandItemSlot.Itemstack?.Item?.Id ?? 0;
         int offhandItemId = _player.LeftHandItemSlot.Itemstack?.Item?.Id ?? 0;
 
-        if (_mainPlayer)
-        {
-            if (_mainHandItemId != mainHandItemId)
-            {
-                _mainHandItemId = mainHandItemId;
-                MainHandItemChanged();
-            }
-
-            if (_offHandItemId != offhandItemId)
-            {
-                _offHandItemId = offhandItemId;
-                OffhandItemChanged();
-            }
-        }
         
+        if (_mainHandItemId != mainHandItemId)
+        {
+            _mainHandItemId = mainHandItemId;
+            MainHandItemChanged();
+        }
+
+        if (_offHandItemId != offhandItemId)
+        {
+            _offHandItemId = offhandItemId;
+            OffhandItemChanged();
+        }
 
         while (_playRequests.Any())
         {
@@ -727,8 +724,11 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
             }
             _mainHandCategories.Clear();
 
-            Play(item.ReadyAnimation, true);
-            StartIdleTimer(item.IdleAnimation, true);
+            if (_mainPlayer)
+            {
+                Play(item.ReadyAnimation, true);
+                StartIdleTimer(item.IdleAnimation, true);
+            }
         }
         else if (_player.RightHandItemSlot.Itemstack?.Item is IHasDynamicIdleAnimations item2)
         {
@@ -753,8 +753,11 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
                 }
                 _mainHandCategories.Clear();
 
-                Play(readyAnimation.Value, true);
-                StartIdleTimer(idleAnimation.Value, true);
+                if (_mainPlayer)
+                {
+                    Play(readyAnimation.Value, true);
+                    StartIdleTimer(idleAnimation.Value, true);
+                } 
             }
         }
         else
@@ -780,8 +783,11 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
             }
             _offhandCategories.Clear();
 
-            Play(item.ReadyAnimation, false);
-            StartIdleTimer(item.IdleAnimation, false);
+            if (_mainPlayer)
+            {
+                Play(item.ReadyAnimation, false);
+                StartIdleTimer(item.IdleAnimation, false);
+            }  
         }
         else if (_player.LeftHandItemSlot.Itemstack?.Item is IHasDynamicIdleAnimations item2)
         {
@@ -806,8 +812,11 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
                 }
                 _offhandCategories.Clear();
 
-                Play(readyAnimation.Value, false);
-                StartIdleTimer(idleAnimation.Value, false);
+                if (_mainPlayer)
+                {
+                    Play(readyAnimation.Value, false);
+                    StartIdleTimer(idleAnimation.Value, false);
+                }
             }
         }
         else

@@ -1,5 +1,5 @@
 ﻿using HarmonyLib;
-using System.Numerics;
+using OpenTK.Mathematics;
 using System.Reflection;
 using Vintagestory.Client.NoObf;
 

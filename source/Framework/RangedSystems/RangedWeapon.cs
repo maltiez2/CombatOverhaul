@@ -1,6 +1,6 @@
 ﻿using CombatOverhaul.Animations;
 using CombatOverhaul.Inputs;
-using System.Numerics;
+using OpenTK.Mathematics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -120,30 +120,30 @@ public class RangeWeaponServer : IServerRangedWeaponLogic
     protected readonly NatFloat RandomFloat = new(0, 1, EnumDistribution.GAUSSIAN);
     protected const float MinutesInRadian = 180f * 60f;
 
-    protected Vector3 GetDirectionWithDispersion(float[] direction, float[] dispersionMOA)
+    protected Vector3d GetDirectionWithDispersion(double[] direction, float[] dispersionMOA)
     {
-        Vector3 directionVector = new(direction);
-        Vector2 dispersionVector = new(dispersionMOA);
+        Vector3d directionVector = new(direction[0], direction[1], direction[2]);
+        Vector2 dispersionVector = new(dispersionMOA[0], dispersionMOA[1]);
 
         return GetDirectionWithDispersion(directionVector, dispersionVector);
     }
 
-    protected Vector3 GetDirectionWithDispersion(Vector3 direction, Vector2 dispersionMOA)
+    protected Vector3d GetDirectionWithDispersion(Vector3d direction, Vector2 dispersionMOA)
     {
         float randomPitch = RandomFloat.nextFloat() * dispersionMOA.Y * MathF.PI / MinutesInRadian;
         float randomYaw = RandomFloat.nextFloat() * dispersionMOA.X * MathF.PI / MinutesInRadian;
 
         Vector3 verticalAxis = new(0, 0, 1);
-        bool directionIsVertical = (verticalAxis - direction).Length() < 1E6 || (verticalAxis + direction).Length() < 1E6;
+        bool directionIsVertical = (verticalAxis - direction).Length < 1E6 || (verticalAxis + direction).Length < 1E6;
         if (directionIsVertical) verticalAxis = new(0, 1, 0);
 
-        Vector3 forwardAxis = Vector3.Normalize(direction);
-        Vector3 yawAxis = Vector3.Normalize(Vector3.Cross(forwardAxis, verticalAxis));
-        Vector3 pitchAxis = Vector3.Normalize(Vector3.Cross(yawAxis, forwardAxis));
+        Vector3d forwardAxis = Vector3d.Normalize(direction);
+        Vector3d yawAxis = Vector3d.Normalize(Vector3d.Cross(forwardAxis, verticalAxis));
+        Vector3d pitchAxis = Vector3d.Normalize(Vector3d.Cross(yawAxis, forwardAxis));
 
-        Vector3 yawComponent = yawAxis * MathF.Tan(randomYaw);
-        Vector3 pitchComponent = pitchAxis * MathF.Tan(randomPitch);
+        Vector3d yawComponent = yawAxis * Math.Tan(randomYaw);
+        Vector3d pitchComponent = pitchAxis * Math.Tan(randomPitch);
 
-        return Vector3.Normalize(forwardAxis + yawComponent + pitchComponent);
+        return Vector3d.Normalize(forwardAxis + yawComponent + pitchComponent);
     }
 }

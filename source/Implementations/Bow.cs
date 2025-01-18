@@ -3,7 +3,7 @@ using CombatOverhaul.Inputs;
 using CombatOverhaul.RangedSystems;
 using CombatOverhaul.RangedSystems.Aiming;
 using CombatOverhaul.Utils;
-using System.Numerics;
+using OpenTK.Mathematics;
 using System.Text;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -396,11 +396,11 @@ public class BowServer : RangeWeaponServer
             ProducerEntityId = player.Entity.EntityId,
             DamageMultiplier = Stats.ArrowDamageMultiplier,
             DamageStrength = Stats.ArrowDamageTier,
-            Position = new Vector3(packet.Position[0], packet.Position[1], packet.Position[2]),
+            Position = new Vector3d(packet.Position[0], packet.Position[1], packet.Position[2]),
             Velocity = GetDirectionWithDispersion(packet.Velocity, Stats.DispersionMOA) * Stats.ArrowVelocity
         };
 
-        ProjectileSystem.Spawn(packet.ProjectileId[0], stats, spawnStats, arrowSlot.TakeOut(1), shooter);
+        ProjectileSystem.Spawn(packet.ProjectileId[0], stats, spawnStats, arrowSlot.TakeOut(1), slot.Itemstack, shooter);
 
         slot.Itemstack.Item.DamageItem(player.Entity.World, player.Entity, slot, 1 + stats.AdditionalDurabilityCost);
 

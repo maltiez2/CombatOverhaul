@@ -1,7 +1,7 @@
 ﻿using CombatOverhaul.Armor;
 using CombatOverhaul.Colliders;
 using CombatOverhaul.DamageSystems;
-using System.Numerics;
+using OpenTK.Mathematics;
 using System.Text;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -34,7 +34,7 @@ public sealed class ProjectileServer
     {
         Entity receiver = _api.World.GetEntityById(packet.ReceiverEntity);
 
-        Vector3 collisionPoint = new(packet.CollisionPoint[0], packet.CollisionPoint[1], packet.CollisionPoint[2]);
+        Vector3d collisionPoint = new(packet.CollisionPoint[0], packet.CollisionPoint[1], packet.CollisionPoint[2]);
 
         bool hit = Attack(_shooter, receiver, collisionPoint, packet.Collider, packet.RelativeSpeed);
 
@@ -61,7 +61,7 @@ public sealed class ProjectileServer
     private readonly ProjectileSystemServer _system;
     private readonly bool _printIntoChat = false;
 
-    private bool Attack(Entity attacker, Entity target, Vector3 position, string collider, float relativeSpeed)
+    private bool Attack(Entity attacker, Entity target, Vector3d position, string collider, double relativeSpeed)
     {
         if (!CheckPermissions(attacker, target)) return false;
         if (relativeSpeed < _stats.SpeedThreshold) return false;
@@ -83,7 +83,8 @@ public sealed class ProjectileServer
             Collider = collider,
             DamageTypeData = damageData,
             DamageTier = (int)damageData.Tier,
-            KnockbackStrength = _stats.Knockback
+            KnockbackStrength = _stats.Knockback,
+            Weapon = _entity.WeaponStack
         }, damage);
 
         bool received = damageReceived || damage <= 0;
@@ -124,6 +125,7 @@ public class ProjectileEntity : Entity
     public ProjectileServer? ServerProjectile { get; set; }
     public Guid ProjectileId { get; set; }
     public ItemStack? ProjectileStack { get; set; }
+    public ItemStack? WeaponStack { get; set; }
     public int DurabilityDamageOnImpact { get; set; }
     public float DropOnImpactChance { get; set; }
     public Action<Guid>? ClearCallback { get; set; }
@@ -211,6 +213,7 @@ public class ProjectileEntity : Entity
         writer.Write(ShooterId);
         writer.Write(ProjectileId.ToString());
         ProjectileStack?.ToBytes(writer);
+        WeaponStack?.ToBytes(writer);
     }
     public override void FromBytes(BinaryReader reader, bool fromServer)
     {
@@ -218,6 +221,7 @@ public class ProjectileEntity : Entity
         ShooterId = reader.ReadInt64();
         ProjectileId = Guid.Parse(reader.ReadString());
         ProjectileStack = new ItemStack(reader);
+        WeaponStack = new ItemStack(reader);
     }
     public override void OnEntityDespawn(EntityDespawnData despawn)
     {

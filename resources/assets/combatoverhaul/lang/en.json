@@ -133,6 +133,8 @@
   "damagelog-received-damage": "Player receives {0} {2} damage to {1}",
   "damagelog-dealt-damage": "Player hit {0} of {1} dealing {2} damage",
   "damagelog-dealt-damage-with-projectile": "Player's {3} hit {0} of {1} dealing {2} damage",
+  "damagelog-second-chance": "Player used second chance to survive fatal damage",
+  "damagelog-second-chance-cooldown": "Player received fatal damage, but second chance was on cooldown ({0} seconds left)",
 
   "item-creature-arrow-*": "arrow",
   "item-creature-spear-*": "spear",
@@ -189,6 +191,8 @@
   "setting-print_range_hits": "Print range attacks results",
   "setting-print_melee_hits": "Print melee attacks results",
   "setting-print_player_hits": "Print damage received by player",
+  "setting-second_chance_available": "Second chance mechanics",
+  "setting-second_chance_cooldown": "Second chance cooldown (seconds)",
   "setting-player_model_torso_damage": "Player torso damage multiplier",
   "setting-player_model_head_damage": "Player head damage multiplier",
   "setting-player_model_neck_damage": "Player neck damage multiplier",

@@ -4,7 +4,6 @@ using CombatOverhaul.MeleeSystems;
 using CombatOverhaul.Utils;
 using ImGuiNET;
 using Newtonsoft.Json.Linq;
-using System.Numerics;
 using System.Reflection;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -197,19 +196,19 @@ public sealed class AnimationsManager
                     if (collidersTypes.Length > 0)
                     {
                         (Action<LineSegmentCollider> setter, Func<LineSegmentCollider> getter) = selectedColliders[collidersTypes[_colliderIndex]];
-                        Vector3 position = getter().Position;
-                        Vector3 direction = getter().Direction;
+                        System.Numerics.Vector3 position = getter().Position.toSystem();
+                        System.Numerics.Vector3 direction = getter().Direction.toSystem();
 
                         float sliderSpeed = ImGui.IsKeyPressed(ImGuiKey.LeftShift) ? 0.01f : 0.1f;
 
                         ImGui.DragFloat3("Position##colliders", ref position, sliderSpeed);
                         ImGui.DragFloat3("Direction##colliders", ref direction, sliderSpeed);
 
-                        _currentCollider = new(position, direction);
+                        _currentCollider = new(position.toOpenTK(), direction.toOpenTK());
 
                         setter(_currentCollider.Value);
 
-                        Vector3 head = position + direction;
+                        System.Numerics.Vector3 head = position + direction;
 
                         string json = $"[{position.X}, {position.Y}, {position.Z}, {head.X}, {head.Y}, {head.Z}]";
                         if (ImGui.Button("To clipboard##colliders"))
@@ -416,9 +415,9 @@ public sealed class AnimationsManager
         ImGui.DragFloat("Scale##transform", ref scale);
         transform.Scale = scale;
 
-        Vector3 translation = new(transform.Translation.X, transform.Translation.Y, transform.Translation.Z);
-        Vector3 origin = new(transform.Origin.X, transform.Origin.Y, transform.Origin.Z);
-        Vector3 rotation = new(transform.Rotation.X, transform.Rotation.Y, transform.Rotation.Z);
+        System.Numerics.Vector3 translation = new(transform.Translation.X, transform.Translation.Y, transform.Translation.Z);
+        System.Numerics.Vector3 origin = new(transform.Origin.X, transform.Origin.Y, transform.Origin.Z);
+        System.Numerics.Vector3 rotation = new(transform.Rotation.X, transform.Rotation.Y, transform.Rotation.Z);
 
         ImGui.DragFloat3("Translation##transform", ref translation, speed);
         ImGui.DragFloat3("Origin##transform", ref origin, speed);
@@ -492,9 +491,9 @@ public sealed class AnimationsManager
         ImGui.DragFloat("Scale##GenericDisplayTab", ref scale, speed * 0.1f);
         transform.Scale = scale;
 
-        Vector3 translation = new(transform.Translation.X, transform.Translation.Y, transform.Translation.Z);
-        Vector3 origin = new(transform.Origin.X, transform.Origin.Y, transform.Origin.Z);
-        Vector3 rotation = new(transform.Rotation.X, transform.Rotation.Y, transform.Rotation.Z);
+        System.Numerics.Vector3 translation = new(transform.Translation.X, transform.Translation.Y, transform.Translation.Z);
+        System.Numerics.Vector3 origin = new(transform.Origin.X, transform.Origin.Y, transform.Origin.Z);
+        System.Numerics.Vector3 rotation = new(transform.Rotation.X, transform.Rotation.Y, transform.Rotation.Z);
 
         ImGui.DragFloat3("Translation##GenericDisplayTab", ref translation, speed * 0.1f);
         ImGui.DragFloat3("Origin##GenericDisplayTab", ref origin, speed * 0.1f);

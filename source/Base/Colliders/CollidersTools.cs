@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+﻿using OpenTK.Mathematics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -22,6 +22,20 @@ internal static class ColliderTools
         _outputBuffer.Z += (float)playerPos.Z;
 
         return new(_outputBuffer.X, _outputBuffer.Y, _outputBuffer.Z);
+    }
+    public static Vector3d TransformVector(Vector3d value, Matrixf modelMatrix, EntityPos playerPos)
+    {
+        _inputBufferD.X = value.X;
+        _inputBufferD.Y = value.Y;
+        _inputBufferD.Z = value.Z;
+
+        Mat4f.MulWithVec4(modelMatrix.Values, _inputBufferD, _outputBufferD);
+
+        _outputBufferD.X += playerPos.X;
+        _outputBufferD.Y += playerPos.Y;
+        _outputBufferD.Z += playerPos.Z;
+
+        return new(_outputBufferD.X, _outputBufferD.Y, _outputBufferD.Z);
     }
     public static Matrixf? GetHeldItemModelMatrix(EntityAgent entity, ItemSlot itemSlot, ICoreClientAPI api, bool right = true)
     {
@@ -61,5 +75,7 @@ internal static class ColliderTools
 
     private static readonly Vec4f _inputBuffer = new(0, 0, 0, 1);
     private static readonly Vec4f _outputBuffer = new(0, 0, 0, 1);
+    private static readonly Vec4d _inputBufferD = new(0, 0, 0, 1);
+    private static readonly Vec4d _outputBufferD = new(0, 0, 0, 1);
     private static readonly Matrixf _matrixBuffer = new();
 }

@@ -1,7 +1,7 @@
 ﻿using CombatOverhaul.Colliders;
 using CombatOverhaul.DamageSystems;
 using ProtoBuf;
-using System.Numerics;
+using OpenTK.Mathematics;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
@@ -17,7 +17,7 @@ public class MeleeDamagePacket
     public float Strength { get; set; }
     public float Damage { get; set; }
     public float Knockback { get; set; }
-    public float[] Position { get; set; }
+    public double[] Position { get; set; }
     public string Collider { get; set; }
     public int ColliderType { get; set; }
     public long AttackerEntityId { get; set; }
@@ -56,11 +56,12 @@ public class MeleeDamagePacket
             SourceEntity = attacker,
             CauseEntity = attacker,
             DamageTypeData = new DamageData(Enum.Parse<EnumDamageType>(DamageType), Strength),
-            Position = new Vector3(Position[0], Position[1], Position[2]),
+            Position = new Vector3d(Position[0], Position[1], Position[2]),
             Collider = Collider,
             KnockbackStrength = Knockback,
             DamageTier = (int)Strength,
-            Type = Enum.Parse<EnumDamageType>(DamageType)
+            Type = Enum.Parse<EnumDamageType>(DamageType),
+            Weapon = MainHand ? serverPlayer?.Entity.RightHandItemSlot.Itemstack : serverPlayer?.Entity.LeftHandItemSlot.Itemstack
         }, Damage);
 
         if (DurabilityDamage > 0)
@@ -114,9 +115,9 @@ public class MeleeDamageType : IHasLineCollider
         DurabilityDamage = stats.DurabilityDamage;
     }
 
-    public bool TryAttack(IPlayer attacker, Entity target, out string collider, out Vector3 collisionPoint, out MeleeDamagePacket packet, bool mainHand, float maximumParameter)
+    public bool TryAttack(IPlayer attacker, Entity target, out string collider, out Vector3d collisionPoint, out MeleeDamagePacket packet, bool mainHand, double maximumParameter)
     {
-        bool collided = Collide(target, out collider, out collisionPoint, out float parameter, out ColliderTypes colliderType);
+        bool collided = Collide(target, out collider, out collisionPoint, out double parameter, out ColliderTypes colliderType);
 
         packet = new();
 
@@ -127,7 +128,7 @@ public class MeleeDamageType : IHasLineCollider
 
         return received;
     }
-    public bool Attack(Entity attacker, Entity target, Vector3 position, string collider, out MeleeDamagePacket packet, bool mainHand, ColliderTypes colliderType)
+    public bool Attack(Entity attacker, Entity target, Vector3d position, string collider, out MeleeDamagePacket packet, bool mainHand, ColliderTypes colliderType)
     {
         packet = new();
 
@@ -162,7 +163,7 @@ public class MeleeDamageType : IHasLineCollider
             Strength = DamageTypeData.Tier,
             Damage = damage,
             Knockback = Knockback,
-            Position = new float[3] { position.X, position.Y, position.Z },
+            Position = new double[3] { position.X, position.Y, position.Z },
             Collider = collider,
             ColliderType = (int)colliderType,
             AttackerEntityId = attacker.EntityId,
@@ -174,7 +175,7 @@ public class MeleeDamageType : IHasLineCollider
         return received;
     }
 
-    private bool Collide(Entity target, out string collider, out Vector3 collisionPoint, out float parameter, out ColliderTypes colliderType)
+    private bool Collide(Entity target, out string collider, out Vector3d collisionPoint, out double parameter, out ColliderTypes colliderType)
     {
         parameter = 1f;
 
@@ -194,7 +195,7 @@ public class MeleeDamageType : IHasLineCollider
 
         Cuboidf collisionBox = GetCollisionBox(target);
         if (!InWorldCollider.RoughIntersect(collisionBox)) return false;
-        Vector3? point = InWorldCollider.IntersectCuboid(collisionBox, out parameter);
+        Vector3d? point = InWorldCollider.IntersectCuboid(collisionBox, out parameter);
 
         if (point == null) return false;
 

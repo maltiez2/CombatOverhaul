@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+﻿using OpenTK.Mathematics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -29,17 +29,17 @@ public interface IHasLineCollider
 public interface IWeaponCollider : ICollider
 {
     bool RoughIntersect(Cuboidf collisionBox);
-    Vector3? IntersectCuboids(IEnumerable<Cuboidf> collisionBoxes);
-    Vector3? IntersectCuboid(Cuboidf collisionBox, out float parameter);
-    (Block block, Vector3 position, float parameter)? IntersectTerrain(ICoreClientAPI api);
+    Vector3d? IntersectCuboids(IEnumerable<Cuboidf> collisionBoxes);
+    Vector3d? IntersectCuboid(Cuboidf collisionBox, out double parameter);
+    (Block block, Vector3d position, double parameter)? IntersectTerrain(ICoreClientAPI api);
 }
 
 public readonly struct LineSegmentCollider : IWeaponCollider
 {
-    public readonly Vector3 Position;
-    public readonly Vector3 Direction;
+    public readonly Vector3d Position;
+    public readonly Vector3d Direction;
 
-    public LineSegmentCollider(Vector3 position, Vector3 direction)
+    public LineSegmentCollider(Vector3d position, Vector3d direction)
     {
         Position = position;
         Direction = direction;
@@ -60,12 +60,12 @@ public readonly struct LineSegmentCollider : IWeaponCollider
     public void Render(ICoreClientAPI api, EntityAgent entityPlayer, int color = ColorUtil.WhiteArgb)
     {
         BlockPos playerPos = entityPlayer.Pos.AsBlockPos;
-        Vector3 playerPosVector = new(playerPos.X, playerPos.Y, playerPos.Z);
+        Vector3d playerPosVector = new(playerPos.X, playerPos.Y, playerPos.Z);
 
-        Vector3 tail = Position - playerPosVector;
-        Vector3 head = Position + Direction - playerPosVector;
+        Vector3d tail = Position - playerPosVector;
+        Vector3d head = Position + Direction - playerPosVector;
 
-        api.Render.RenderLine(playerPos, tail.X, tail.Y, tail.Z, head.X, head.Y, head.Z, color);
+        api.Render.RenderLine(playerPos, (float)tail.X, (float)tail.Y, (float)tail.Z, (float)head.X, (float)head.Y, (float)head.Z, color);
     }
     public ICollider? Transform(EntityPos origin, EntityAgent entity, ItemSlot itemSlot, ICoreClientAPI api, bool right = true)
     {
@@ -76,8 +76,8 @@ public readonly struct LineSegmentCollider : IWeaponCollider
     }
     public ICollider Transform(Matrixf modelMatrix, EntityPos origin)
     {
-        Vector3 tail = ColliderTools.TransformVector(Position, modelMatrix, origin);
-        Vector3 head = ColliderTools.TransformVector(Direction + Position, modelMatrix, origin);
+        Vector3d tail = ColliderTools.TransformVector(Position, modelMatrix, origin);
+        Vector3d head = ColliderTools.TransformVector(Direction + Position, modelMatrix, origin);
 
         return new LineSegmentCollider(tail, head - tail);
     }
@@ -102,10 +102,10 @@ public readonly struct LineSegmentCollider : IWeaponCollider
 
         return true;
     }
-    public Vector3? IntersectCuboids(IEnumerable<Cuboidf> collisionBoxes)
+    public Vector3d? IntersectCuboids(IEnumerable<Cuboidf> collisionBoxes)
     {
-        float tMin = 0.0f;
-        float tMax = 1.0f;
+        double tMin = 0.0f;
+        double tMax = 1.0f;
 
         foreach (Cuboidf collisionBox in collisionBoxes)
         {
@@ -116,10 +116,10 @@ public readonly struct LineSegmentCollider : IWeaponCollider
 
         return Position + tMin * Direction;
     }
-    public Vector3? IntersectCuboid(Cuboidf collisionBox, out float parameter)
+    public Vector3d? IntersectCuboid(Cuboidf collisionBox, out double parameter)
     {
-        float tMin = 0.0f;
-        float tMax = 1.0f;
+        double tMin = 0.0f;
+        double tMax = 1.0f;
 
         parameter = 1f;
 
@@ -131,23 +131,23 @@ public readonly struct LineSegmentCollider : IWeaponCollider
 
         return Position + tMin * Direction;
     }
-    public (Block block, Vector3 position, float parameter)? IntersectBlock(ICoreClientAPI api, BlockPos position)
+    public (Block block, Vector3d position, double parameter)? IntersectBlock(ICoreClientAPI api, BlockPos position)
     {
-        (Block, Vector3, float parameter)? intersection = IntersectBlock(api.World.BlockAccessor, position.X, position.Y, position.Z);
+        (Block, Vector3d, double parameter)? intersection = IntersectBlock(api.World.BlockAccessor, position.X, position.Y, position.Z);
 
         return intersection;
     }
-    public (Block block, Vector3 position, float parameter)? IntersectTerrain(ICoreClientAPI api)
+    public (Block block, Vector3d position, double parameter)? IntersectTerrain(ICoreClientAPI api)
     {
-        int minX = (int)MathF.Min(Position.X, Position.X + Direction.X);
-        int minY = (int)MathF.Min(Position.Y, Position.Y + Direction.Y);
-        int minZ = (int)MathF.Min(Position.Z, Position.Z + Direction.Z);
+        int minX = (int)Math.Min(Position.X, Position.X + Direction.X);
+        int minY = (int)Math.Min(Position.Y, Position.Y + Direction.Y);
+        int minZ = (int)Math.Min(Position.Z, Position.Z + Direction.Z);
 
-        int maxX = (int)MathF.Max(Position.X, Position.X + Direction.X);
-        int maxY = (int)MathF.Max(Position.Y, Position.Y + Direction.Y);
-        int maxZ = (int)MathF.Max(Position.Z, Position.Z + Direction.Z);
+        int maxX = (int)Math.Max(Position.X, Position.X + Direction.X);
+        int maxY = (int)Math.Max(Position.Y, Position.Y + Direction.Y);
+        int maxZ = (int)Math.Max(Position.Z, Position.Z + Direction.Z);
 
-        (Block block, Vector3 position, float parameter)? closestIntersection = null;
+        (Block block, Vector3d position, double parameter)? closestIntersection = null;
 
         for (int y = minY; y <= maxY; y++)
         {
@@ -155,7 +155,7 @@ public readonly struct LineSegmentCollider : IWeaponCollider
             {
                 for (int z = minZ; z <= maxZ; z++)
                 {
-                    (Block, Vector3, float parameter)? intersection = IntersectBlock(api.World.BlockAccessor, x, y, z);
+                    (Block, Vector3d, double parameter)? intersection = IntersectBlock(api.World.BlockAccessor, x, y, z);
                     
                     closestIntersection ??= intersection;
                     if (closestIntersection != null && intersection != null && closestIntersection.Value.parameter > intersection.Value.parameter)
@@ -197,14 +197,14 @@ public readonly struct LineSegmentCollider : IWeaponCollider
 
     private static LineSegmentCollider TransformSegment(LineSegmentCollider value, Matrixf modelMatrix, EntityPos playerPos)
     {
-        Vector3 tail = ColliderTools.TransformVector(value.Position, modelMatrix, playerPos);
-        Vector3 head = ColliderTools.TransformVector(value.Direction + value.Position, modelMatrix, playerPos);
+        Vector3d tail = ColliderTools.TransformVector(value.Position, modelMatrix, playerPos);
+        Vector3d head = ColliderTools.TransformVector(value.Direction + value.Position, modelMatrix, playerPos);
 
         return new(tail, head - tail);
     }
-    private static bool CheckAxisIntersection(float dirComponent, float startComponent, float minComponent, float maxComponent, ref float tMin, ref float tMax)
+    private static bool CheckAxisIntersection(double dirComponent, double startComponent, double minComponent, double maxComponent, ref double tMin, ref double tMax)
     {
-        if (MathF.Abs(dirComponent) < _epsilon)
+        if (Math.Abs(dirComponent) < _epsilon)
         {
             // Ray is parallel to the slab, check if it's within the slab's extent
             if (startComponent < minComponent || startComponent > maxComponent) return false;
@@ -212,8 +212,8 @@ public readonly struct LineSegmentCollider : IWeaponCollider
         else
         {
             // Calculate intersection distances to the slab
-            float t1 = (minComponent - startComponent) / dirComponent;
-            float t2 = (maxComponent - startComponent) / dirComponent;
+            double t1 = (minComponent - startComponent) / dirComponent;
+            double t2 = (maxComponent - startComponent) / dirComponent;
 
             // Swap t1 and t2 if needed so that t1 is the intersection with the near plane
             if (t1 > t2)
@@ -222,9 +222,9 @@ public readonly struct LineSegmentCollider : IWeaponCollider
             }
 
             // Update the minimum intersection distance
-            tMin = MathF.Max(tMin, t1);
+            tMin = Math.Max(tMin, t1);
             // Update the maximum intersection distance
-            tMax = MathF.Min(tMax, t2);
+            tMax = Math.Min(tMax, t2);
 
             // Early exit if intersection is not possible
             if (tMin > tMax) return false;
@@ -232,10 +232,10 @@ public readonly struct LineSegmentCollider : IWeaponCollider
 
         return true;
     }
-    private (float, Vector3?) IntersectBlockCollisionBox(Cuboidf collisionBox, int x, int y, int z)
+    private (double, Vector3d?) IntersectBlockCollisionBox(Cuboidf collisionBox, int x, int y, int z)
     {
-        float tMin = 0.0f;
-        float tMax = 1.0f;
+        double tMin = 0.0f;
+        double tMax = 1.0f;
 
         if (!CheckAxisIntersection(Direction.X, Position.X, collisionBox.MinX + x, collisionBox.MaxX + x, ref tMin, ref tMax)) return (0, null);
         if (!CheckAxisIntersection(Direction.Y, Position.Y, collisionBox.MinY + y, collisionBox.MaxY + y, ref tMin, ref tMax)) return (0, null);
@@ -243,7 +243,7 @@ public readonly struct LineSegmentCollider : IWeaponCollider
 
         return (tMin, Position + tMin * Direction);
     }
-    private (Block, Vector3, float)? IntersectBlock(IBlockAccessor blockAccessor, int x, int y, int z)
+    private (Block, Vector3d, double)? IntersectBlock(IBlockAccessor blockAccessor, int x, int y, int z)
     {
         BlockPos position = new(x, y, z, 0);
         Block block = blockAccessor.GetBlock(position, BlockLayersAccess.MostSolid);
@@ -252,8 +252,8 @@ public readonly struct LineSegmentCollider : IWeaponCollider
         Cuboidf[] collisionBoxes = block.GetCollisionBoxes(blockAccessor, _blockPosBuffer);
         if (collisionBoxes == null || collisionBoxes.Length == 0) return null;
 
-        float closestIntersectionParameter = 1;
-        Vector3? closestIntersection = null;
+        double closestIntersectionParameter = 1;
+        Vector3d? closestIntersection = null;
 
         _blockPosVecBuffer.Set(x, y, z);
         for (int i = 0; i < collisionBoxes.Length; i++)
@@ -261,11 +261,11 @@ public readonly struct LineSegmentCollider : IWeaponCollider
             Cuboidf? collBox = collisionBoxes[i];
             if (collBox == null) continue;
 
-            (float t, Vector3? intersection) = IntersectBlockCollisionBox(collBox, x, y, z);
+            (double t, Vector3d? intersection) = IntersectBlockCollisionBox(collBox, x, y, z);
 
             if (intersection == null) continue;
 
-            closestIntersectionParameter = MathF.Min(closestIntersectionParameter, t);
+            closestIntersectionParameter = Math.Min(closestIntersectionParameter, t);
             closestIntersection = intersection;
         }
 

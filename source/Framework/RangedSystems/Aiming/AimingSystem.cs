@@ -1,6 +1,6 @@
 ﻿using CombatOverhaul.Animations;
 using CombatOverhaul.Integration;
-using System.Numerics;
+using OpenTK.Mathematics;
 using Vintagestory.API.Client;
 using Vintagestory.API.MathTools;
 using Vintagestory.Client.NoObf;

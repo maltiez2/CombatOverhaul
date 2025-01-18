@@ -1,6 +1,6 @@
 ﻿using ProtoBuf;
 using System.Data;
-using System.Numerics;
+using OpenTK.Mathematics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -32,8 +32,8 @@ public class ShotPacket
 {
     public Guid[] ProjectileId { get; set; } = Array.Empty<Guid>();
     public int ShotId { get; set; }
-    public float[] Position { get; set; }
-    public float[] Velocity { get; set; }
+    public double[] Position { get; set; }
+    public double[] Velocity { get; set; }
     public int ItemId { get; set; }
     public int Amount { get; set; }
     public bool RightHand { get; set; }
@@ -123,7 +123,7 @@ public class RangedWeaponSystemClient
 
         _clientChannel.SendPacket(packet);
     }
-    public void Shoot(ItemSlot weapon, int amount, Vector3 position, Vector3 velocity, bool rightHand, Action<bool> shootCallback, byte[]? data = null)
+    public void Shoot(ItemSlot weapon, int amount, Vector3d position, Vector3d velocity, bool rightHand, Action<bool> shootCallback, byte[]? data = null)
     {
         List<Guid> projectilesIds = new();
         for (int count = 0; count < amount; count++)
@@ -139,8 +139,8 @@ public class RangedWeaponSystemClient
         {
             ProjectileId = projectilesIds.ToArray(),
             ShotId = id,
-            Position = new float[3] { position.X, position.Y, position.Z },
-            Velocity = new float[3] { velocity.X, velocity.Y, velocity.Z },
+            Position = new double[3] { position.X, position.Y, position.Z },
+            Velocity = new double[3] { velocity.X, velocity.Y, velocity.Z },
             ItemId = weapon.Itemstack?.Item?.Id ?? 0,
             Amount = amount,
             RightHand = rightHand,

@@ -99,6 +99,9 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
         EnumDamageType.SlashingAttack,
         EnumDamageType.BluntAttack
     };
+    public TimeSpan SecondDefaultChanceCooldown { get; set; }
+    public TimeSpan SecondChanceCooldown => SecondDefaultChanceCooldown * entity.Stats.GetBlended("secondChanceCooldown");
+    public bool SecondChanceAvailable { get; set; }
 
     public DamageBlockStats? CurrentDamageBlock { get; set; } = null;
 
@@ -123,6 +126,9 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
                 CollidersToBodyParts.Add(property.Name, Enum.Parse<PlayerBodyPart>(value.AsString("Torso")));
             }
         }
+
+        SecondDefaultChanceCooldown = TimeSpan.FromSeconds(attributes["secondChanceCooldownSec"].AsFloat(60 * 5));
+        SecondChanceAvailable = attributes["secondChanceAvailable"].AsBool(true);
     }
 
     public override void AfterInitialized(bool onFirstSpawn)
@@ -131,8 +137,16 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
         entity.GetBehavior<EntityBehaviorHealth>().onDamaged += OnReceiveDamageHandler;
     }
 
+    public override void OnGameTick(float deltaTime)
+    {
+        float secondChanceCooldown = entity.WatchedAttributes.GetFloat("secondChanceCooldown", 0);
+        secondChanceCooldown = Math.Clamp(secondChanceCooldown - deltaTime, 0, secondChanceCooldown);
+        entity.WatchedAttributes.SetFloat("secondChanceCooldown", secondChanceCooldown);
+    }
+
     private readonly bool _printIntoChat = false;
     private CollidersEntityBehavior? _colliders;
+    private float _healthAfterSecondChance = 1;
 
     private float OnReceiveDamageHandler(float damage, DamageSource damageSource)
     {
@@ -149,6 +163,8 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
         PrintToDamageLog(armorDamageLogMessage);
 
         damage *= multiplier;
+
+        if (SecondChanceAvailable) ApplySecondChance(ref damage);
 
         OnReceiveDamage?.Invoke(ref damage, damageSource, detailedDamageZone);
 
@@ -295,6 +311,24 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
     private void ApplyBlockResists(float blockTier, float damageTier, ref float damage)
     {
         damage *= 1 - MathF.Exp((blockTier - damageTier) / 2f);
+    }
+    private void ApplySecondChance(ref float damage)
+    {
+        float currentHealth = entity.GetBehavior<EntityBehaviorHealth>().Health;
+        
+        if (currentHealth > damage) return;
+
+        float secondChanceCooldown = entity.WatchedAttributes.GetFloat("secondChanceCooldown", 0);
+        if (secondChanceCooldown > 0)
+        {
+            PrintToDamageLog(Lang.Get("combatoverhaul:damagelog-second-chance-cooldown", (int)secondChanceCooldown));
+            return;
+        }
+
+        entity.WatchedAttributes.SetFloat("secondChanceCooldown", (float)SecondChanceCooldown.TotalSeconds);
+        damage = currentHealth - _healthAfterSecondChance;
+
+        PrintToDamageLog(Lang.Get("combatoverhaul:damagelog-second-chance"));
     }
 }
 public sealed class PlayerDamageModel

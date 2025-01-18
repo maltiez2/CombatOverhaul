@@ -56,6 +56,9 @@
         "7/enabled": "modify_vanilla_classes",
         "8/enabled": "modify_vanilla_classes"
       },
+      "combatoverhaul:patches/entities/player.json": {
+        "2/value/secondChanceAvailable": "second_chance_available"
+      }
     },
     "number": {
       "combatoverhaul:config/animations/tool/axe.json": {
@@ -109,6 +112,7 @@
         "0/value/AnimationSpeedBonusFromMiningSpeed": "tool_animation_speed_bonus"
       },
       "combatoverhaul:patches/entities/player.json": {
+        "2/value/secondChanceCooldownSec": "second_chance_cooldown",
         "2/value/damageModel/Zones/0/DamageMultiplier": "player_model_torso_damage",
         "2/value/damageModel/Zones/1/DamageMultiplier": "player_model_head_damage",
         "2/value/damageModel/Zones/2/DamageMultiplier": "player_model_neck_damage",
@@ -371,6 +375,18 @@
       "ingui": "combatoverhaul:setting-print_player_hits",
       "comment": "Can causes lags in some cases",
       "default": true
+    },
+    {
+      "code": "second_chance_available",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-second_chance_available",
+      "default": true
+    },
+    {
+      "code": "second_chance_cooldown",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-second_chance_cooldown",
+      "default": 300.0
     },
     {
       "code": "player_model_torso_damage",

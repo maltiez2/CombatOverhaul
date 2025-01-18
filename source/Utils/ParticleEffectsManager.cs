@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ProtoBuf;
-using System.Numerics;
+using OpenTK.Mathematics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -562,8 +562,8 @@ public static class ParticleEditor
 
     private static void NatFloatVecEditor(string id, string name, ref NatFloat[] vector)
     {
-        Vector3 average = new(vector[0].avg, vector[1].avg, vector[2].avg);
-        Vector3 variance = new(vector[0].var, vector[1].var, vector[2].var);
+        System.Numerics.Vector3 average = new(vector[0].avg, vector[1].avg, vector[2].avg);
+        System.Numerics.Vector3 variance = new(vector[0].var, vector[1].var, vector[2].var);
         ImGui.Text($"{name}");
         ImGui.Text("average:  "); ImGui.SameLine();
         ImGui.InputFloat3($"##average{name}{id}", ref average, "%.2f");

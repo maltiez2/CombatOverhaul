@@ -1,8 +1,13 @@
-﻿using System.Numerics;
+﻿using OpenTK.Mathematics;
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 
 namespace CombatOverhaul.DamageSystems;
+
+public interface IWeaponDamageSource
+{
+    ItemStack? Weapon { get; set; }
+}
 
 public interface ITypedDamage
 {
@@ -41,20 +46,22 @@ public readonly struct DamageData
 
 public interface ILocationalDamage
 {
-    public Vector3 Position { get; set; }
+    public Vector3d Position { get; set; }
     public string Collider { get; set; }
 }
 
-public class DirectionalTypedDamageSource : DamageSource, ILocationalDamage, ITypedDamage
+public class DirectionalTypedDamageSource : DamageSource, ILocationalDamage, ITypedDamage, IWeaponDamageSource
 {
-    public Vector3 Position { get; set; }
+    public Vector3d Position { get; set; }
     public string Collider { get; set; } = "";
     public DamageData DamageTypeData { get; set; }
+    public ItemStack? Weapon { get; set; }
 }
 
-public class TypedDamageSource : DamageSource, ITypedDamage
+public class TypedDamageSource : DamageSource, ITypedDamage, IWeaponDamageSource
 {
     public DamageData DamageTypeData { get; set; }
+    public ItemStack? Weapon { get; set; }
 }
 
 public class DamageResistData

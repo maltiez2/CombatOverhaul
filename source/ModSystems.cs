@@ -11,7 +11,7 @@ using CombatOverhaul.RangedSystems;
 using CombatOverhaul.RangedSystems.Aiming;
 using CombatOverhaul.Utils;
 using HarmonyLib;
-using System.Numerics;
+using OpenTK.Mathematics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -419,8 +419,9 @@ public sealed class CombatOverhaulAnimationsSystem : ModSystem
 
 public interface IFueledItem
 {
-    double GetFuelHours(ItemSlot slot);
-    void AddFuelHours(ItemSlot slot, double hours);
+    double GetFuelHours(IPlayer player, ItemSlot slot);
+    void AddFuelHours(IPlayer player, ItemSlot slot, double hours);
+    bool ConsumeFuelWhenSleeping(IPlayer player, ItemSlot slot);
 }
 
 
@@ -499,7 +500,9 @@ public sealed class NightVisionSystem : ModSystem, IRenderer
                     IFueledItem? item = slot.Itemstack?.Collectible?.GetCollectibleInterface<IFueledItem>();
                     if (item == null) continue;
 
-                    item.AddFuelHours(slot, -hoursPassed);
+                    if (IsSleeping(player.Entity) && !item.ConsumeFuelWhenSleeping(player, slot)) continue;
+
+                    item.AddFuelHours(player, slot, -hoursPassed);
                     slot.MarkDirty();
                 }
             }
@@ -507,6 +510,8 @@ public sealed class NightVisionSystem : ModSystem, IRenderer
             _lastCheckTotalHours = totalHours;
         }
     }
+
+    private bool IsSleeping(EntityPlayer ep) => ep.GetBehavior<EntityBehaviorTiredness>()?.IsSleeping == true;
 
     private void OnLevelFinalize()
     {
