@@ -305,9 +305,8 @@ public sealed class ProjectileSystemServer : ProjectileSystemBase
     {
         if (_projectiles.TryGetValue(packet.Id, out ProjectileServer? projectileServer))
         {
-            // No packets should be ignored to not allow projectiles to phase through objects
-            //if (projectileServer.PacketVersion != packet.PacketVersion) return;
-            //projectileServer.PacketVersion++;
+            if (projectileServer.PacketVersion != packet.PacketVersion) return;
+            projectileServer.PacketVersion++;
 
             projectileServer._entity.CollidedWith.Add(packet.ReceiverEntity);
             projectileServer._entity.Stuck = false;

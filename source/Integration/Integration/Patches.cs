@@ -127,14 +127,14 @@ internal static class HarmonyPatches
         if (animator != null && !_animators.ContainsKey(animator))
         {
             _animators.Add(animator, entity);
-            CollidersEntityBehavior? colliders = entity.GetBehavior<CollidersEntityBehavior>();
+            /*CollidersEntityBehavior? colliders = entity.GetBehavior<CollidersEntityBehavior>();
             //List<ElementPose> poses = animator.RootPoses;
 
             if (colliders != null)
             {
                 //colliders.Animator = animator; // set in colliders behavior itself
 
-                /*try
+                *//*try
                 {
                     foreach (ElementPose pose in poses)
                     {
@@ -150,13 +150,13 @@ internal static class HarmonyPatches
                 catch (Exception exception)
                 {
                     LoggerUtil.Error(entity.Api, typeof(HarmonyPatches), $"({entity.Code}) Error during creating colliders: \n{exception}");
-                }*/
+                }*//*
 
             }
             else
             {
-                LoggerUtil.Debug(entity.Api, typeof(HarmonyPatches), $"Entity '{entity.Code}' does not have colliders behavior");
-            }
+                //LoggerUtil.Debug(entity.Api, typeof(HarmonyPatches), $"Entity '{entity.Code}' does not have colliders behavior");
+            }*/
         }
 
 

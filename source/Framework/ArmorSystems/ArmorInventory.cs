@@ -6,7 +6,6 @@ using Vintagestory.API.Config;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.Common;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CombatOverhaul.Armor;
 

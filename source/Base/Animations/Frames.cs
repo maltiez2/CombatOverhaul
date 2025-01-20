@@ -24,9 +24,9 @@ public readonly struct PlayerItemFrame
     public static readonly PlayerItemFrame Zero = new(PlayerFrame.Zero, null);
     public static readonly PlayerItemFrame Empty = new(PlayerFrame.Empty, null);
 
-    public void Apply(ElementPose pose, Vector3 eyePosition, float cameraPitch = 0, bool applyCameraPitch = false)
+    public void Apply(ElementPose pose, Vector3 eyePosition, float cameraPitch = 0, bool applyCameraPitch = false, bool overrideTorso = true)
     {
-        Player.Apply(pose, eyePosition, cameraPitch, applyCameraPitch);
+        Player.Apply(pose, eyePosition, cameraPitch, applyCameraPitch, overrideTorso);
         Item?.Apply(pose);
     }
 
@@ -492,7 +492,7 @@ public readonly struct PlayerFrame
     public static readonly PlayerFrame Zero = new(RightHandFrame.Zero, LeftHandFrame.Zero);
     public static readonly PlayerFrame Empty = new();
 
-    public void Apply(ElementPose pose, Vector3 eyePosition, float cameraPitch, bool applyCameraPitch)
+    public void Apply(ElementPose pose, Vector3 eyePosition, float cameraPitch, bool applyCameraPitch, bool overrideTorso)
     {
         switch (pose.ForElement.Name)
         {
@@ -513,8 +513,15 @@ public readonly struct PlayerFrame
                 }
                 break;
             case "LowerTorso":
-                AnimationElement torso = new(0, (eyePosition.Y - DefaultEyesHeight) * EyeHeightToAnimationDistanceMultiplier, 0, 0, 0, 0);
-                torso.Apply(pose);
+                if (overrideTorso)
+                {
+                    AnimationElement torso = new(0, (eyePosition.Y - DefaultEyesHeight) * EyeHeightToAnimationDistanceMultiplier, 0, 0, 0, 0);
+                    torso.Apply(pose);
+                }
+                else
+                {
+                    pose.translateY = (eyePosition.Y - DefaultEyesHeight) * EyeHeightToAnimationDistanceMultiplier / 16;
+                }
                 break;
             default:
                 RightHand?.Apply(pose);

@@ -79,7 +79,6 @@ public class AxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
     public int ItemId { get; }
     public DirectionsConfiguration DirectionsType => DirectionsConfiguration.None;
 
-
     public virtual void OnSelected(ItemSlot slot, EntityPlayer player, bool mainHand, ref int state)
     {
 
@@ -147,7 +146,7 @@ public class AxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
                         animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1,
                         category: AnimationCategory(mainHand),
                         callback: () => SwingForwardAnimationCallback(slot, player, mainHand));
-                    AnimationBehavior?.PlayVanillaAnimation(Stats.SwingTpAnimation, mainHand);
+                    //AnimationBehavior?.PlayVanillaAnimation(Stats.SwingTpAnimation, mainHand);
 
                     state = (int)AxeState.SwingForward;
 

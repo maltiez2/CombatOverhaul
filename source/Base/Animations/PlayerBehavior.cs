@@ -658,25 +658,10 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
         
         if (pose.ForElement.Name == "LowerTorso") return;
 
-        /*if (!frame.DetachedAnchor)
-        {
-            if (pose.ForElement.Name == "UpperTorso")
-            {
-                AdjustForCameraPitch(entity as EntityPlayer, pose);
-                return;
-            }
-
-            if (pose.ForElement.Name == "Neck")
-            {
-                AdjustNeckForCameraPitch(entity as EntityPlayer, pose);
-                return;
-            }
-        }*/
-
         float pitch = targetEntity.Pos.HeadPitch;
         Vector3 eyePosition = new((float)entity.LocalEyePos.X, (float)entity.LocalEyePos.Y, (float)entity.LocalEyePos.Z);
 
-        frame.Apply(pose, eyePosition, pitch, true);
+        frame.Apply(pose, eyePosition, pitch, true, false);
 
         if (animatable != null && frame.DetachedAnchor)
         {

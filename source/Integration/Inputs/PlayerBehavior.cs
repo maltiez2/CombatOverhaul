@@ -75,9 +75,8 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
         if (_mainPlayer)
         {
             RegisterWeapons();
+            clientApi.Event.RegisterGameTickListener(OnGameFrame, 0);
         }
-
-        clientApi.Event.RegisterGameTickListener(OnGameFrame, 0);
     }
     public override string PropertyName() => _statCategory;
     public void OnGameFrame(float deltaTime)
@@ -95,13 +94,13 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
 
         if (_player.LeftHandItemSlot.Itemstack?.Item is IOnGameTick offhandTickListener)
         {
-            offhandTickListener.OnGameTick(_player.LeftHandItemSlot, _player, ref _mainHandState, false);
+            offhandTickListener.OnGameTick(_player.LeftHandItemSlot, _player, ref _offHandState, false);
         }
 
         ActionListener.SuppressLMB = SuppressLMB;
         ActionListener.SuppressRMB = SuppressRMB;
     }
-    
+
     public int GetState(bool mainHand = true) => mainHand ? _mainHandState : _offHandState;
     public void SetState(int state, bool mainHand = true)
     {
@@ -116,6 +115,8 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
     }
     public void SetStat(string stat, string category, float value = 0)
     {
+        if (!_mainPlayer) return;
+
         _statsSystem.SetStat(stat, category, value);
     }
 

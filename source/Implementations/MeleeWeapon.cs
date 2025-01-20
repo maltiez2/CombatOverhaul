@@ -189,7 +189,6 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
 
     public AnimationRequestByCode? GetIdleAnimation(bool mainHand)
     {
-        EnsureStance(Api.World.Player.Entity, mainHand);
         return GetStance<MeleeWeaponStance>(mainHand) switch
         {
             MeleeWeaponStance.MainHand => Stats?.OneHandedStance?.IdleAnimation == null ? null : new(Stats.OneHandedStance.IdleAnimation, 1, 1, global::CombatOverhaul.Implementations.MeleeWeaponClient.AnimationCategory(mainHand), TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), false),
@@ -200,7 +199,6 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
     }
     public AnimationRequestByCode? GetReadyAnimation(bool mainHand)
     {
-        EnsureStance(Api.World.Player.Entity, mainHand);
         return GetStance<MeleeWeaponStance>(mainHand) switch
         {
             MeleeWeaponStance.MainHand => Stats?.OneHandedStance?.ReadyAnimation == null ? null : new(Stats.OneHandedStance.ReadyAnimation, 1, 1, global::CombatOverhaul.Implementations.MeleeWeaponClient.AnimationCategory(mainHand), TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), false),

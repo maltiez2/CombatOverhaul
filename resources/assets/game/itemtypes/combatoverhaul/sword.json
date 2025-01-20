@@ -61,7 +61,7 @@
           "CollideWithTerrain": true,
           "MaxReach": 9,
           "DamageTypes": [
-            {"DamageByType": {"*": {"DamageType": "SlashingAttack", "Tier": 4, "Damage": 5}}, "Knockback": 1, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.8, 0, 0.5]}
+            {"DamageByType": {"*": {"DamageType": "SlashingAttack", "Tier": 4, "Damage": 5.5}}, "Knockback": 1, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.8, 0, 0.5]}
           ]
         },
         "AttackHitSound": "game:sounds/thud",
