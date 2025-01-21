@@ -8,8 +8,8 @@
       "code": "CombatOverhaul:EntityColliders",
       "elementsByType": {
         "*-baby": {
-          "Torso": ["neck2", "neck", "Body", "Midsection", "abdomen", "L back Thigh", "L front Thigh", "R back Thigh", "R front Thigh"],
-          "Head": ["head", "mouth up", "nose", "jaw2"],
+          "Torso": ["neck2", "neck", "Body", "Midsection", "rear", "L back Thigh", "L front Thigh", "R back Thigh", "R front Thigh"],
+          "Head": ["head", "mouth up", "nose", "jaw"],
           "Arm": ["L front Upper Arm", "L front lower arm", "R front Upper Arm", "R front lower arm"],
           "Leg": ["L back Upper Arm", "L back lower arm", "R back Upper Arm", "R back lower arm"],
           "Critical": [],
@@ -35,8 +35,8 @@
       "code": "CombatOverhaul:EntityColliders",
       "elementsByType": {
         "*-baby": {
-          "Torso": ["neck2", "neck", "Body", "Midsection", "abdomen", "L back Thigh", "L front Thigh", "R back Thigh", "R front Thigh"],
-          "Head": ["head", "mouth up", "nose", "jaw2"],
+          "Torso": ["neck2", "neck", "Body", "Midsection", "rear", "L back Thigh", "L front Thigh", "R back Thigh", "R front Thigh"],
+          "Head": ["head", "mouth up", "nose", "jaw"],
           "Arm": ["L front Upper Arm", "L front lower arm", "R front Upper Arm", "R front lower arm"],
           "Leg": ["L back Upper Arm", "L back lower arm", "R back Upper Arm", "R back lower arm"],
           "Critical": [],

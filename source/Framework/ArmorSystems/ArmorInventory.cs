@@ -105,6 +105,9 @@ public class ArmorSlot : ItemSlot
     public override int MaxSlotStackSize => 1;
     public bool Available => _inventory.IsSlotAvailable(ArmorType);
     public List<int> SlotsWithSameItem { get; } = new();
+    public IWorldAccessor? World { get; set; }
+    public string? OwnerUUID { get; set; }
+    public bool PreviouslyHeldBag { get; set; } = false;
 
     public ArmorSlot(InventoryBase inventory, ArmorType armorType) : base(inventory)
     {
@@ -120,9 +123,78 @@ public class ArmorSlot : ItemSlot
 
         return armor.ArmorType.Intersect(ArmorType);
     }
+    public override void ActivateSlot(ItemSlot sourceSlot, ref ItemStackMoveOperation op)
+    {
+        if (Itemstack != null) EmptyBag(Itemstack);
+
+        base.ActivateSlot(sourceSlot, ref op);
+        OnItemSlotModified(null);
+    }
+    public override ItemStack? TakeOutWhole()
+    {
+        ItemStack itemStack = base.TakeOutWhole();
+
+        if (itemStack != null) EmptyBag(itemStack);
+
+        return itemStack;
+    }
+    public override ItemStack? TakeOut(int quantity)
+    {
+        ItemStack stack = base.TakeOut(quantity);
+
+        EmptyBag(stack);
+
+        return stack;
+    }
+    
+    protected override void FlipWith(ItemSlot itemSlot)
+    {
+        base.FlipWith(itemSlot);
+
+        ItemStack stack = itemSlot.Itemstack;
+
+        if (stack != null) EmptyBag(stack);
+    }
+    protected void EmptyBag(ItemStack stack)
+    {
+        IHeldBag? bag = stack?.Item?.GetCollectibleInterface<IHeldBag>();
+
+        try
+        {
+            if (bag != null && World != null && World.PlayerByUid(OwnerUUID)?.Entity != null)
+            {
+                ItemStack?[] bagContent = bag.GetContents(stack, World);
+                if (bagContent != null)
+                {
+                    foreach (ItemStack? bagContentStack in bagContent)
+                    {
+                        if (bagContentStack != null) World.SpawnItemEntity(bagContentStack, World.PlayerByUid(OwnerUUID)?.Entity?.SidedPos.AsBlockPos);
+                    }
+                }
+
+                bag.Clear(stack);
+            }
+        }
+        catch (Exception exception)
+        {
+            LoggerUtil.Error(World?.Api, this, $"Error on emptying bag '{stack?.Collectible?.Code}': \n{exception}");
+        }
+    }
+    protected void ModifyBackpackSlot()
+    {
+        InventoryPlayerBackPacks? backpack = GetBackpackInventory();
+        if (backpack != null)
+        {
+            backpack[0].MarkDirty();
+        }
+    }
+    protected InventoryPlayerBackPacks? GetBackpackInventory()
+    {
+        return World?.PlayerByUid(OwnerUUID)?.InventoryManager.GetOwnInventory(GlobalConstants.backpackInvClassName) as InventoryPlayerBackPacks;
+    }
+
 
     private readonly ArmorInventory _inventory;
-
     private ArmorType GetStoredArmorType()
     {
         if (Itemstack?.Item != null && IsArmor(Itemstack.Collectible, out IArmor? armor) && armor != null)
@@ -149,7 +221,6 @@ public class ArmorSlot : ItemSlot
             return DamageResistData.Empty;
         }
     }
-
     private static bool IsArmor(CollectibleObject item, out IArmor? armor)
     {
         if (item is IArmor armorItem)
@@ -285,6 +356,16 @@ public sealed class ArmorInventory : InventoryCharacter
                 ReloadBagInventory();
             }
             clothesSlot.PreviouslyHeldBag = containsBag;
+        }
+
+        if (slot is ArmorSlot armorSlot)
+        {
+            bool containsBag = armorSlot.Itemstack?.Collectible?.GetCollectibleInterface<IHeldBag>() != null;
+            if (armorSlot.PreviouslyHeldBag || containsBag)
+            {
+                ReloadBagInventory();
+            }
+            armorSlot.PreviouslyHeldBag = containsBag;
         }
 
         OnSlotModified?.Invoke();
@@ -480,6 +561,11 @@ public sealed class ArmorInventory : InventoryCharacter
             {
                 clothesSlot.OwnerUUID = playerUID;
                 clothesSlot.World = Api.World;
+            }
+            else if (slot is ArmorSlot armorSlot)
+            {
+                armorSlot.OwnerUUID = playerUID;
+                armorSlot.World = Api.World;
             }
         }
     }

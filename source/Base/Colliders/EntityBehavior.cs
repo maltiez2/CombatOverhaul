@@ -150,7 +150,11 @@ public sealed class CollidersEntityBehavior : EntityBehavior
             }
             catch (Exception exception)
             {
-                LoggerUtil.Error(entity.Api, typeof(HarmonyPatches), $"({entity.Code}) Error during creating colliders: \n{exception}");
+                if (_reportedMissingColliders)
+                {
+                    LoggerUtil.Error(entity.Api, typeof(HarmonyPatches), $"({entity.Code}) Error during creating colliders: \n{exception}");
+                    _reportedMissingColliders = true;
+                }
             }
         }
 
@@ -314,7 +318,7 @@ public sealed class CollidersEntityBehavior : EntityBehavior
 
     private void SetColliderElement(ShapeElement element)
     {
-        if (element?.Name == null) return;
+        if (element?.Name == null || element.From == null || element.To == null) return;
 
         if (UnprocessedElementsLeft && ShapeElementsToProcess.Contains(element.Name) && !Colliders.ContainsKey(element.Name))
         {

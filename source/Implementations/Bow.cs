@@ -611,6 +611,11 @@ public class BowItem : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasIdleAni
         }
     }
 
+    public override void OnHeldAttackStart(ItemSlot slot, EntityAgent byEntity, BlockSelection blockSel, EntitySelection entitySel, ref EnumHandHandling handling)
+    {
+        handling = EnumHandHandling.PreventDefault;
+    }
+
     private BowStats? _stats;
     private AmmoSelector? _ammoSelector;
     private ICoreClientAPI? _clientApi;

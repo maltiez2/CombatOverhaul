@@ -288,7 +288,7 @@ public class TexturesFromAttributes : CollectibleBehavior, IContainedMeshSource
 
         foreach (TextureConfig textureProperty in _properties.Textures)
         {
-            cacheKey += "-" + itemstack.Attributes.GetString(textureProperty.Attribute).Replace('/', '-');
+            cacheKey += "-" + itemstack.Attributes.GetString(textureProperty.Attribute)?.Replace('/', '-') ?? "default";
         }
 
         return cacheKey;

@@ -12,6 +12,7 @@ using CombatOverhaul.RangedSystems.Aiming;
 using CombatOverhaul.Utils;
 using HarmonyLib;
 using OpenTK.Mathematics;
+using ProtoBuf;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -22,6 +23,7 @@ using Vintagestory.API.Server;
 using Vintagestory.Client.NoObf;
 using Vintagestory.GameContent;
 using Vintagestory.Server;
+using static Microsoft.WindowsAPICodePack.Shell.PropertySystem.SystemProperties.System;
 
 namespace CombatOverhaul;
 
@@ -79,6 +81,12 @@ public sealed class ArmorConfig
     };
 }
 
+[ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
+public sealed class TogglePacket
+{
+    public string HotKeyCode { get; set; } = "";
+}
+
 public sealed class CombatOverhaulSystem : ModSystem
 {
     public event Action? OnDispose;
@@ -119,6 +127,7 @@ public sealed class CombatOverhaulSystem : ModSystem
         api.RegisterItemClass("CombatOverhaul:Axe", typeof(Axe));
         api.RegisterItemClass("CombatOverhaul:Pickaxe", typeof(Pickaxe));
         api.RegisterItemClass("CombatOverhaul:WearableArmor", typeof(ItemWearableArmor));
+        api.RegisterItemClass("CombatOverhaul:WearableFueledLightSource", typeof(WearableFueledLightSource));
 
         api.RegisterEntity("CombatOverhaul:Projectile", typeof(ProjectileEntity));
 
@@ -141,6 +150,10 @@ public sealed class CombatOverhaulSystem : ModSystem
         ServerStatsSystem = new(api);
         ServerBlockBreakingSystem = new(api);
         ServerAttachmentSystem = new(api);
+
+        _serverTOggleChannel = api.Network.RegisterChannel("combatOverhaulToggleItem")
+            .RegisterMessageType<TogglePacket>()
+            .SetMessageHandler<TogglePacket>(ToggleWearableItem);
 
     }
     public override void StartClientSide(ICoreClientAPI api)
@@ -168,6 +181,12 @@ public sealed class CombatOverhaulSystem : ModSystem
 
         AimingPatches.Patch("CombatOverhaulAiming");
         MouseWheelPatch.Patch("CombatOverhaul", api);
+
+        _clientToggleChannel = api.Network.RegisterChannel("combatOverhaulToggleItem")
+            .RegisterMessageType<TogglePacket>();
+
+        api.Input.RegisterHotKey("toggleWearableLight", "Toggle wearable light source", GlKeys.L);
+        api.Input.SetHotKeyHandler("toggleWearableLight", _ => ToggleWearableItem(api.World.Player, "toggleWearableLight"));
     }
     public override void AssetsLoaded(ICoreAPI api)
     {
@@ -245,6 +264,28 @@ public sealed class CombatOverhaulSystem : ModSystem
         Disposed = true;
     }
 
+    public bool ToggleWearableItem(IPlayer player, string hotkeyCode)
+    {
+        IInventory? gearInventory = player.Entity.GetBehavior<EntityBehaviorPlayerInventory>().Inventory;
+        bool toggled = false;
+        foreach (ItemSlot slot in gearInventory)
+        {
+            if (slot?.Itemstack?.Collectible?.GetCollectibleInterface<ITogglableItem>() is ITogglableItem togglableItem && togglableItem.HotKeyCode == hotkeyCode)
+            {
+                togglableItem.Toggle(player, slot);
+                toggled = true;
+            }
+        }
+
+        if (player is IClientPlayer)
+        {
+            _clientToggleChannel?.SendPacket(new TogglePacket() { HotKeyCode = hotkeyCode });
+        }
+
+        return toggled;
+    }
+    public void ToggleWearableItem(IServerPlayer player, TogglePacket packet) => ToggleWearableItem(player, packet.HotKeyCode);
+
     public ProjectileSystemClient? ClientProjectileSystem { get; private set; }
     public ProjectileSystemServer? ServerProjectileSystem { get; private set; }
     public ActionListener? ActionListener { get; private set; }
@@ -269,6 +310,8 @@ public sealed class CombatOverhaulSystem : ModSystem
 
     private ICoreClientAPI? _clientApi;
     private readonly Vector4 _iconScale = new(-0.1f, -0.1f, 1.2f, 1.2f);
+    private IClientNetworkChannel? _clientToggleChannel;
+    private IServerNetworkChannel? _serverTOggleChannel;
 
     private void RegisterCustomIcon(ICoreClientAPI api, string key, string path)
     {
@@ -422,6 +465,16 @@ public interface IFueledItem
     double GetFuelHours(IPlayer player, ItemSlot slot);
     void AddFuelHours(IPlayer player, ItemSlot slot, double hours);
     bool ConsumeFuelWhenSleeping(IPlayer player, ItemSlot slot);
+}
+
+public interface ITogglableItem
+{
+    string HotKeyCode { get; }
+    
+    bool TurnedOn(IPlayer player, ItemSlot slot);
+    void TurnOn(IPlayer player, ItemSlot slot);
+    void TurnOff(IPlayer player, ItemSlot slot);
+    void Toggle(IPlayer player, ItemSlot slot);
 }
 
 

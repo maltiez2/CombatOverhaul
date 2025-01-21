@@ -12,6 +12,7 @@ namespace CombatOverhaul.Armor;
 public class ItemSlotBagContentWithWildcardMatch : ItemSlotBagContent
 {
     public string[] CanHoldWildcard { get; private set; }
+    public ItemStack SourceBag { get; set; }
 
     public ItemSlotBagContentWithWildcardMatch(InventoryBase inventory, int BagIndex, int SlotIndex, EnumItemStorageFlags storageType, string? color, string[] canHoldWildcard) : base(inventory, BagIndex, SlotIndex, storageType)
     {
@@ -150,6 +151,7 @@ public class GearEquipableBag : CollectibleBehavior, IHeldBag, IAttachedInteract
             for (int slotIndex = 0; slotIndex < quantitySlots; slotIndex++)
             {
                 ItemSlotBagContentWithWildcardMatch slot = new(parentinv, bagIndex, slotIndex, flags, SlotColor, CanHoldWildcard);
+                slot.SourceBag = bagstack;
                 bagContents.Add(slot);
                 slotsTree["slot-" + slotIndex] = new ItemstackAttribute(null);
             }
@@ -165,6 +167,7 @@ public class GearEquipableBag : CollectibleBehavior, IHeldBag, IAttachedInteract
             {
                 int slotIndex = val.Key.Split("-")[1].ToInt();
                 ItemSlotBagContentWithWildcardMatch slot = new(parentinv, bagIndex, slotIndex, flags, SlotColor, CanHoldWildcard);
+                slot.SourceBag = bagstack;
 
                 if (val.Value?.GetValue() != null)
                 {

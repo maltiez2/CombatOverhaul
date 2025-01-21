@@ -12,7 +12,7 @@
         "Arm": ["R back foot", "L back foot"],
         "Leg": ["R front leg", "R front foot", "L front leg", "L front foot"],
         "Critical": [],
-        "Resistant": ["R horn base", "R horn 2", "R horn 3", "R horn 4", "L horn base20", "L horn 21", "L horn 22", "L horn 23"]
+        "Resistant": ["R horn base", " R horn 2", "R horn 3", "R horn 4", "L horn base20", "L horn 21", "L horn 22", "L horn 23"]
       }
     }
   },
@@ -29,7 +29,7 @@
         "Arm": ["R back foot", "L back foot"],
         "Leg": ["R front leg", "R front foot", "L front leg", "L front foot"],
         "Critical": [],
-        "Resistant": ["R horn base", "R horn 2", "R horn 3", "R horn 4", "L horn base20", "L horn 21", "L horn 22", "L horn 23"]
+        "Resistant": ["R horn base", " R horn 2", "R horn 3", "R horn 4", "L horn base20", "L horn 21", "L horn 22", "L horn 23"]
       }
     }
   },

@@ -1,14 +1,15 @@
 ﻿using CombatOverhaul.Animations;
 using CombatOverhaul.Colliders;
-using CombatOverhaul.Utils;
 using HarmonyLib;
 using System.Reflection;
 using System.Reflection.Emit;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
+using Vintagestory.API.Config;
 using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CombatOverhaul.Integration;
 
@@ -72,6 +73,11 @@ internal static class HarmonyPatches
                 typeof(BagInventory).GetMethod("ReloadBagInventory", AccessTools.all),
                 prefix: new HarmonyMethod(AccessTools.Method(typeof(HarmonyPatches), nameof(ReloadBagInventory)))
             );
+
+        new Harmony(harmonyId).Patch(
+                typeof(EntityPlayer).GetProperty("LightHsv", AccessTools.all).GetAccessors()[0],
+                postfix: new HarmonyMethod(AccessTools.Method(typeof(HarmonyPatches), nameof(LightHsv)))
+            );
     }
 
     public static void Unpatch(string harmonyId)
@@ -86,6 +92,7 @@ internal static class HarmonyPatches
         new Harmony(harmonyId).Unpatch(typeof(BlockDamageOnTouch).GetMethod("OnEntityInside", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         new Harmony(harmonyId).Unpatch(typeof(BlockDamageOnTouch).GetMethod("OnEntityCollide", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         new Harmony(harmonyId).Unpatch(typeof(BagInventory).GetMethod("ReloadBagInventory", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
+        new Harmony(harmonyId).Unpatch(typeof(EntityPlayer).GetProperty("LightHsv", AccessTools.all).GetAccessors()[0], HarmonyPatchType.Postfix, harmonyId);
         _animators.Clear();
         _reportedEntities.Clear();
     }
@@ -127,99 +134,13 @@ internal static class HarmonyPatches
         if (animator != null && !_animators.ContainsKey(animator))
         {
             _animators.Add(animator, entity);
-            /*CollidersEntityBehavior? colliders = entity.GetBehavior<CollidersEntityBehavior>();
-            //List<ElementPose> poses = animator.RootPoses;
-
-            if (colliders != null)
-            {
-                //colliders.Animator = animator; // set in colliders behavior itself
-
-                *//*try
-                {
-                    foreach (ElementPose pose in poses)
-                    {
-                        AddPoseShapeElements(pose, colliders);
-                    }
-
-                    if (colliders.ShapeElementsToProcess.Any() && entity.Api.Side == EnumAppSide.Client)
-                    {
-                        string missingColliders = colliders.ShapeElementsToProcess.Aggregate((first, second) => $"{first}, {second}");
-                        LoggerUtil.Warn(entity.Api, typeof(HarmonyPatches), $"({entity.Code}) Listed colliders that were not found in shape: {missingColliders}");
-                    }
-                }
-                catch (Exception exception)
-                {
-                    LoggerUtil.Error(entity.Api, typeof(HarmonyPatches), $"({entity.Code}) Error during creating colliders: \n{exception}");
-                }*//*
-
-            }
-            else
-            {
-                //LoggerUtil.Debug(entity.Api, typeof(HarmonyPatches), $"Entity '{entity.Code}' does not have colliders behavior");
-            }*/
         }
-
-
-        // To catch not reproducable bug with nullref in calculateMatrices
-        /*try
-        {
-            ICoreClientAPI clientApi = entity.Api as ICoreClientAPI;
-
-            if (!clientApi.IsGamePaused && __instance.Animator != null)
-            {
-                if (__instance.HeadController != null)
-                {
-                    __instance.HeadController.OnFrame(dt);
-                }
-
-                if (entity.IsRendered || entity.IsShadowRendered || !entity.Alive)
-                {
-                    __instance.Animator.OnFrame(__instance.ActiveAnimationsByAnimCode, dt);
-
-                    if (__instance.Triggers != null)
-                    {
-                        for (int i = 0; i < __instance.Triggers.Count; i++)
-                        {
-                            AnimFrameCallback animFrameCallback = __instance.Triggers[i];
-                            if (__instance.ActiveAnimationsByAnimCode.ContainsKey(animFrameCallback.Animation))
-                            {
-                                RunningAnimation animationState = __instance.Animator.GetAnimationState(animFrameCallback.Animation);
-                                if (animationState != null && animationState.CurrentFrame >= animFrameCallback.Frame)
-                                {
-                                    __instance.Triggers.RemoveAt(i);
-                                    animFrameCallback.Callback();
-                                    i--;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        catch (Exception exception)
-        {
-            if (!_reportedEntities.Contains(entity.EntityId))
-            {
-                LoggerUtil.Error(entity.Api, typeof(HarmonyPatches), $"({entity.Code}) Error during client frame (not directly related to CO): \n{exception}");
-                _reportedEntities.Add(entity.EntityId);
-            }
-        }*/
 
         return true;
     }
 
     internal static readonly Dictionary<ClientAnimator, EntityAgent> _animators = new();
     internal static readonly HashSet<long> _reportedEntities = new();
-
-    /*private static void AddPoseShapeElements(ElementPose pose, CollidersEntityBehavior colliders)
-    {
-        colliders.SetColliderElement(pose.ForElement);
-
-        foreach (ElementPose childPose in pose.ChildElementPoses)
-        {
-            AddPoseShapeElements(childPose, colliders);
-        }
-    }*/
 
     private static bool RenderHeldItem(EntityShapeRenderer __instance, float dt, bool isShadowPass, bool right)
     {
@@ -370,7 +291,7 @@ internal static class HarmonyPatches
     }
     private static ItemSlot[] AppendGearInventorySlots(ItemSlot[] backpackSlots, Entity owner)
     {
-        InventoryBase? inventory = GetGearInventory(owner);
+        IInventory? inventory = GetGearInventory(owner);
 
         if (inventory == null) return backpackSlots;
 
@@ -380,10 +301,57 @@ internal static class HarmonyPatches
 
         return gearSlots.Concat(backpackSlots).ToArray();
     }
-    private static InventoryBase? GetGearInventory(Entity entity)
+    private static IInventory? GetGearInventory(Entity entity)
     {
         return entity?.GetBehavior<EntityBehaviorPlayerInventory>()?.Inventory;
     }
+    private static IInventory? GetBackpackInventory(EntityPlayer player)
+    {
+        return player.Player.InventoryManager.GetOwnInventory(GlobalConstants.backpackInvClassName);
+    }
+
+    private static void LightHsv(EntityPlayer __instance, ref byte[] __result)
+    {
+        if (__instance?.Player == null || !__instance.Alive || __instance.Player.WorldData.CurrentGameMode == EnumGameMode.Spectator) return;
+
+        if (__result == null) __result = new byte[3] { 0, 0, 0 };
+
+        IInventory? gearInventory = GetGearInventory(__instance);
+        if (gearInventory == null) return;
+
+        foreach (ItemSlot slot in gearInventory.Where(slot => slot?.Empty == false).Where(slot => slot.Itemstack?.Collectible.GetCollectibleInterface<IWearableLightSource>() != null))
+        {
+            AddLight(ref __result, slot.Itemstack.Collectible.GetCollectibleInterface<IWearableLightSource>().GetLightHsv(__instance, slot));
+        }
+
+        foreach (ItemSlot slot in gearInventory.Where(slot => slot?.Empty == false).Where(slot => slot.Itemstack?.Collectible?.LightHsv?[2] > 0))
+        {
+            AddLight(ref __result, slot.Itemstack.Collectible.LightHsv);
+        }
+
+        /*IInventory? backpackInventory = GetBackpackInventory(__instance);
+        if (backpackInventory == null) return;
+
+        foreach (ItemSlot slot in backpackInventory.Where(slot => slot?.Empty == false).Where(slot => slot.Itemstack?.Collectible.GetCollectibleInterface<IWearableLightSource>() != null))
+        {
+            AddLight(ref __result, slot.Itemstack.Collectible.GetCollectibleInterface<IWearableLightSource>().GetLightHsv(__instance, slot));
+        }
+
+        foreach (ItemSlot slot in backpackInventory.Where(slot => slot?.Empty == false).Where(slot => slot.Itemstack?.Collectible?.LightHsv?[2] > 0))
+        {
+            AddLight(ref __result, slot.Itemstack.Collectible.LightHsv);
+        }*/
+    }
+    public static void AddLight(ref byte[] result, byte[] hsv)
+    {
+        float totalBrightness = result[2] + hsv[2];
+        float brightnessFraction = hsv[2] / totalBrightness;
+
+        result[0] = (byte)(hsv[0] * brightnessFraction + result[0] * (1 - brightnessFraction));
+        result[1] = (byte)(hsv[1] * brightnessFraction + result[1] * (1 - brightnessFraction));
+        result[2] = Math.Max(hsv[2], result[2]);
+    }
+
 
     [HarmonyPatch(typeof(ClientAnimator), "calculateMatrices", typeof(int),
         typeof(float),
