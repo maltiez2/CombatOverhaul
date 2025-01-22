@@ -35,6 +35,9 @@ out vec4 worldPos;
 flat out int renderFlags;
 
 out vec3 normal;
+#if SSAOLEVEL > 0
+out vec4 gnormal;
+#endif
 
 #include vertexflagbits.ash
 #include shadowcoords.vsh
@@ -75,4 +78,8 @@ void main(void)
 	
 	normal = unpackNormal(flags);
 	normal = normalize((modelMatrix * vec4(normal.x, normal.y, normal.z, 0)).xyz);
+	
+	#if SSAOLEVEL > 0
+		gnormal = viewMatrix * vec4(normal, 0);
+	#endif
 }

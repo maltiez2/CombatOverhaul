@@ -159,6 +159,8 @@
 
   "interaction-hold-alt": "Hold 'Alt' to interact with objects or place on tool-rack/ground",
   "interaction-grip-change": "Hold 'Right mouse button' and rotate 'mouse wheel' to change grip length",
+  "interaction-toggle-light-source": "Toggle wearable light source",
+  "interaction-toggle-light-source-hotkey": "Toggle wearable light source",
 
   "setting-directions_cursor_transparency": "Directions selection cursor transparency",
   "setting-directions_cursor_scale": "Directions selection cursor scale",

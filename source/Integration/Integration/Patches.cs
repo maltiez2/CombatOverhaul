@@ -329,28 +329,43 @@ internal static class HarmonyPatches
             AddLight(ref __result, slot.Itemstack.Collectible.LightHsv);
         }
 
-        /*IInventory? backpackInventory = GetBackpackInventory(__instance);
+        IInventory? backpackInventory = GetBackpackInventory(__instance);
         if (backpackInventory == null) return;
 
-        foreach (ItemSlot slot in backpackInventory.Where(slot => slot?.Empty == false).Where(slot => slot.Itemstack?.Collectible.GetCollectibleInterface<IWearableLightSource>() != null))
+        for (int index = 0; index < 4; index++)
         {
-            AddLight(ref __result, slot.Itemstack.Collectible.GetCollectibleInterface<IWearableLightSource>().GetLightHsv(__instance, slot));
-        }
+            ItemSlot slot = backpackInventory[index];
 
-        foreach (ItemSlot slot in backpackInventory.Where(slot => slot?.Empty == false).Where(slot => slot.Itemstack?.Collectible?.LightHsv?[2] > 0))
-        {
-            AddLight(ref __result, slot.Itemstack.Collectible.LightHsv);
-        }*/
+
+            if (slot?.Empty == false && slot.Itemstack?.Collectible.GetCollectibleInterface<IWearableLightSource>() != null)
+            {
+                AddLight(ref __result, slot.Itemstack.Collectible.GetCollectibleInterface<IWearableLightSource>().GetLightHsv(__instance, slot));
+            }
+
+            if (slot?.Empty == false && slot.Itemstack?.Collectible?.LightHsv?[2] > 0)
+            {
+                AddLight(ref __result, slot.Itemstack.Collectible.LightHsv);
+            }
+        }
     }
-    public static void AddLight(ref byte[] result, byte[] hsv)
+
+    private static readonly byte[] _lightHsvBuffer = new byte[3] { 0, 0, 0 };
+    private static void AddLight(ref byte[] result, byte[] hsv)
     {
         float totalBrightness = result[2] + hsv[2];
         float brightnessFraction = hsv[2] / totalBrightness;
+
+        _lightHsvBuffer[0] = result[0];
+        _lightHsvBuffer[1] = result[1];
+        _lightHsvBuffer[2] = result[2];
+
+        result = _lightHsvBuffer;
 
         result[0] = (byte)(hsv[0] * brightnessFraction + result[0] * (1 - brightnessFraction));
         result[1] = (byte)(hsv[1] * brightnessFraction + result[1] * (1 - brightnessFraction));
         result[2] = Math.Max(hsv[2], result[2]);
     }
+    
 
 
     [HarmonyPatch(typeof(ClientAnimator), "calculateMatrices", typeof(int),

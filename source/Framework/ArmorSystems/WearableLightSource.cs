@@ -40,6 +40,19 @@ public class WearableFueledLightSource : ItemWearable, IWearableLightSource, IFu
         {
             LoggerUtil.Error(api, this, $"Item '{Code}' has max stack size > 1 while WearableFueledLightSource supposed to have it set to 1");
         }
+
+        _clickToToggle = new()
+        {
+            MouseButton = EnumMouseButton.Right,
+            ActionLangCode = "combatoverhaul:interaction-toggle-light-source"
+        };
+
+        _hotkeyToToggle = new()
+        {
+            ActionLangCode = Lang.Get("combatoverhaul:interaction-toggle-light-source-hotkey"),
+            HotKeyCodes = new string[1] { "toggleWearableLight" },
+            MouseButton = EnumMouseButton.None
+        };
     }
     public override int GetMergableQuantity(ItemStack sinkStack, ItemStack sourceStack, EnumMergePriority priority)
     {
@@ -102,6 +115,12 @@ public class WearableFueledLightSource : ItemWearable, IWearableLightSource, IFu
         
         base.OnHeldInteractStart(slot, byEntity, blockSel, entitySel, firstEvent, ref handHandling);
     }
+    public override WorldInteraction[] GetHeldInteractionHelp(ItemSlot inSlot)
+    {
+        WorldInteraction[] interactions = base.GetHeldInteractionHelp(inSlot);
+
+        return interactions.Append(_clickToToggle).Append(_hotkeyToToggle).ToArray();
+    }
 
     public virtual void AddFuelHours(IPlayer player, ItemSlot slot, double hours)
     {
@@ -157,4 +176,7 @@ public class WearableFueledLightSource : ItemWearable, IWearableLightSource, IFu
             TurnOn(player, slot);
         }
     }
+
+    private WorldInteraction? _clickToToggle;
+    private WorldInteraction? _hotkeyToToggle;
 }
