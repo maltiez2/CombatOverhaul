@@ -83,6 +83,19 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
     {
         if (!_mainPlayer) return;
 
+        if (!entity.Alive)
+        {
+            foreach (string stat in _currentMainHandPlayerStats)
+            {
+                _player.Stats.Remove(_statCategory, stat);
+            }
+
+            foreach (string stat in _currentOffHandPlayerStats)
+            {
+                _player.Stats.Remove(_statCategory, stat);
+            }
+        }
+
         bool configurationChanged = SetRenderDirectionCursorForMainHand();
         _directionController.OnGameTick(forceNewDirection: configurationChanged);
         _ = CheckIfItemsInHandsChanged();

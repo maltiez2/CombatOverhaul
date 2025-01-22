@@ -152,7 +152,7 @@
           "Resistant": []
         },
         "*-pampas-*-baby": {
-          "Torso": ["neck", "Body", "midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
+          "Torso": ["neck", "Body", "Cube2", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
           "Head": ["head", "nose bridge", "mouth up"],
           "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
           "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
@@ -331,7 +331,7 @@
           "Resistant": []
         },
         "*-pampas-*-baby": {
-          "Torso": ["neck", "Body", "midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
+          "Torso": ["neck", "Body", "Cube2", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
           "Head": ["head", "nose bridge", "mouth up"],
           "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
           "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],

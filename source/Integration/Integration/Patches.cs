@@ -9,7 +9,6 @@ using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
 using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CombatOverhaul.Integration;
 
@@ -20,7 +19,7 @@ internal static class HarmonyPatches
 
     public static bool YawSmoothing { get; set; } = false;
 
-    public static void Patch(string harmonyId)
+    public static void Patch(string harmonyId, ICoreAPI api)
     {
         _animators.Clear();
         _reportedEntities.Clear();
@@ -78,9 +77,11 @@ internal static class HarmonyPatches
                 typeof(EntityPlayer).GetProperty("LightHsv", AccessTools.all).GetAccessors()[0],
                 postfix: new HarmonyMethod(AccessTools.Method(typeof(HarmonyPatches), nameof(LightHsv)))
             );
+
+        _cleanUpTickListener = api.World.RegisterGameTickListener(_ => OnCleanUpTick(), 5 * 60 * 1000, 5 * 60 * 1000);
     }
 
-    public static void Unpatch(string harmonyId)
+    public static void Unpatch(string harmonyId, ICoreAPI api)
     {
         new Harmony(harmonyId).Unpatch(typeof(EntityShapeRenderer).GetMethod("RenderHeldItem", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         new Harmony(harmonyId).Unpatch(typeof(EntityShapeRenderer).GetMethod("DoRender3DOpaque", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
@@ -95,16 +96,36 @@ internal static class HarmonyPatches
         new Harmony(harmonyId).Unpatch(typeof(EntityPlayer).GetProperty("LightHsv", AccessTools.all).GetAccessors()[0], HarmonyPatchType.Postfix, harmonyId);
         _animators.Clear();
         _reportedEntities.Clear();
+
+        api.World.UnregisterGameTickListener(_cleanUpTickListener);
     }
 
     public static void OnFrameInvoke(ClientAnimator animator, ElementPose pose)
     {
-        if (!_animators.ContainsKey(animator)) return;
-
-        OnFrame?.Invoke(_animators[animator], pose);
+        if (animator == null) return;
+        
+        if (_animators.TryGetValue(animator, out EntityAgent? entity))
+        {
+            OnFrame?.Invoke(entity, pose);
+        }
     }
 
     private static readonly FieldInfo? _entity = typeof(Vintagestory.API.Common.AnimationManager).GetField("entity", BindingFlags.NonPublic | BindingFlags.Instance);
+    private static long _cleanUpTickListener = 0;
+
+    private static void OnCleanUpTick()
+    {
+        List<ClientAnimator> animatorsToRemove = new();
+        foreach (ClientAnimator animator in _animators.Where(entry => !entry.Value.Alive).Select(entry => entry.Key))
+        {
+            animatorsToRemove.Add(animator);
+        }
+
+        foreach (ClientAnimator animator in animatorsToRemove)
+        {
+            _animators.Remove(animator);
+        }
+    }
 
     private static void BeforeRender(EntityShapeRenderer __instance, float dt)
     {
@@ -365,7 +386,7 @@ internal static class HarmonyPatches
         result[1] = (byte)(hsv[1] * brightnessFraction + result[1] * (1 - brightnessFraction));
         result[2] = Math.Max(hsv[2], result[2]);
     }
-    
+
 
 
     [HarmonyPatch(typeof(ClientAnimator), "calculateMatrices", typeof(int),

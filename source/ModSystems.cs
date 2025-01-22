@@ -399,7 +399,7 @@ public sealed class CombatOverhaulAnimationsSystem : ModSystem
     {
         _api = api;
 
-        HarmonyPatches.Patch("CombatOverhaul");
+        HarmonyPatches.Patch("CombatOverhaul", api);
     }
 
     public override void StartClientSide(ICoreClientAPI api)
@@ -426,7 +426,7 @@ public sealed class CombatOverhaulAnimationsSystem : ModSystem
 
     public override void Dispose()
     {
-        HarmonyPatches.Unpatch("CombatOverhaul");
+        HarmonyPatches.Unpatch("CombatOverhaul", _api);
 
         if (_api is ICoreClientAPI clientApi)
         {
