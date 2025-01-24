@@ -222,7 +222,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
         {
             if (_resetFov)
             {
-                SetFov(1);
+                SetFov(1, false);
                 _player.HeadBobbingAmplitude = 1;
                 _resetFov = false;
             }
@@ -271,7 +271,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
             }
         }
 
-        SetFov(frame.Player.FovMultiplier);
+        SetFov(frame.Player.FovMultiplier, true);
         _player.HeadBobbingAmplitude = frame.Player.BobbingAmplitude;
         _resetFov = true;
     }
@@ -291,7 +291,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
 
         renderer.HeldItemPitchFollowOverride = 0.8f * value;
     }
-    private void SetFov(float multiplier)
+    private void SetFov(float multiplier, bool equalizeFov = true)
     {
         ClientMain? client = _api?.World as ClientMain;
         if (client == null) return;
@@ -302,7 +302,9 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
         float? fovField = (float?)_cameraFov.GetValue(camera);
         if (fovField == null) return;
 
-        PlayerRenderingPatches.HandsFovMultiplier = multiplier;
+        float equalizeMultiplier = MathF.Sqrt((float)ClientSettings.FieldOfView / (float)ClientSettings.FpHandsFoV);
+
+        PlayerRenderingPatches.HandsFovMultiplier = multiplier * (equalizeFov ? equalizeMultiplier : 1);
         _cameraFov.SetValue(camera, ClientSettings.FieldOfView * GameMath.DEG2RAD * multiplier);
 
         CurrentFov = ClientSettings.FieldOfView * multiplier;

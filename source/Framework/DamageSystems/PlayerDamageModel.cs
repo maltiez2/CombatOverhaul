@@ -4,6 +4,7 @@ using CombatOverhaul.MeleeSystems;
 using CombatOverhaul.Utils;
 using Newtonsoft.Json.Linq;
 using ProtoBuf;
+using System.Diagnostics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -350,6 +351,9 @@ public sealed class PlayerDamageModel
     public (PlayerBodyPart zone, float damageMultiplier) GetZone(DirectionOffset? direction = null, PlayerBodyPart target = PlayerBodyPart.None, float multiplier = 1f)
     {
         IEnumerable<DamageZoneStats> zones = direction == null ? DamageZones : DamageZones.Where(zone => zone.Directions.Check(direction.Value));
+
+        Trace.WriteLine(direction);
+        Trace.WriteLine(zones.Select(zone => zone.ZoneType.ToString()).Aggregate((zone1, zone2) => $"{zone1}, {zone2}"));
 
         foreach ((PlayerBodyPart zone, _) in _weights)
         {

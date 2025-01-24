@@ -1,5 +1,4 @@
 ﻿using CombatOverhaul.Utils;
-using ProtoBuf;
 using Vintagestory.API.Common;
 
 namespace CombatOverhaul.Animations;

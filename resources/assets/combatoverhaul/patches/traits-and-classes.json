@@ -53,9 +53,9 @@
   {
     "enabled": true,
     "file": "game:config/characterclasses",
-    "op": "replace",
-    "path": "/3/traits",
-    "value": ["precise", "technical", "fleetfooted", "frail", "nervous", "tinkerer", "crossbowsProficiency", "firearmsProficiency", "quarterstaffProficiency"]
+    "op": "addeach",
+    "path": "/3/traits/-",
+    "value": ["crossbowsProficiency", "firearmsProficiency", "quarterstaffProficiency"]
   },
   {
     "enabled": true,

@@ -1,6 +1,9 @@
-﻿using HarmonyLib;
+﻿using CombatOverhaul.Animations;
+using HarmonyLib;
 using System.Reflection;
 using System.Reflection.Emit;
+using Vintagestory.API.MathTools;
+using Vintagestory.Client.NoObf;
 using Vintagestory.GameContent;
 
 namespace CombatOverhaul.Integration;
@@ -13,7 +16,8 @@ internal static class PlayerRenderingPatches
 
     public static float ResetOffset() => FpHandsOffset = DefaultFpHandsOffset;
     public static float SetOffset(float offset) => FpHandsOffset = offset;
-    public static float GetOffset(ModSystemFpHands modSys) => FpHandsOffset;
+    public static float GetOffset(ModSystemFpHands modSys) => FpHandsOffset + GameMath.Max(0f, ClientSettings.FieldOfView / 90f - 1f) / 2f;
+    public static float GetOffsetAdjusted(ModSystemFpHands modSys) => FpHandsOffset + GameMath.Max(0f, ClientSettings.FieldOfView / 90f - 1f) / 2f;
     public static float GetMultiplier() => HandsFovMultiplier;
 
     [HarmonyPatch(typeof(EntityPlayerShapeRenderer), "DoRender3DOpaque")]
@@ -34,7 +38,7 @@ internal static class PlayerRenderingPatches
                 if (codes[i].opcode == OpCodes.Ldc_R4 && (float)codes[i].operand == -0.3f)
                 {
                     codes[i].opcode = OpCodes.Call;
-                    codes[i].operand = typeof(PlayerRenderingPatches).GetMethod("GetOffset");
+                    codes[i].operand = typeof(PlayerRenderingPatches).GetMethod("GetOffsetAdjusted");
 
                     codes.Insert(i, new CodeInstruction(OpCodes.Ldarg_0));
                     codes.Insert(i + 1, new CodeInstruction(OpCodes.Ldfld, typeof(EntityPlayerShapeRenderer).GetField("modSys", BindingFlags.NonPublic | BindingFlags.Instance)));

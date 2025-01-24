@@ -223,4 +223,24 @@ public class WearableAttachment : Item, IContainedMeshSource, IAttachableToEntit
     public string[] GetDisableElements(ItemStack stack) => throw new NotImplementedException();
     public string[] GetKeepElements(ItemStack stack) => throw new NotImplementedException();
     public string GetTexturePrefixCode(ItemStack stack) => throw new NotImplementedException();
+
+    protected static IAttachableToEntity FromAttributes(CollectibleObject cobj)
+    {
+        AttributeAttachableToEntity attributeAttachableToEntity = cobj.Attributes?["attachableToEntity"].AsObject<AttributeAttachableToEntity>(null, cobj.Code.Domain);
+        if (attributeAttachableToEntity == null)
+        {
+            JsonObject attributes = cobj.Attributes;
+            if (attributes != null && attributes["wearableAttachment"].Exists)
+            {
+                return new AttributeAttachableToEntity
+                {
+                    CategoryCode = cobj.Attributes["clothescategory"].AsString(),
+                    KeepElements = cobj.Attributes["keepElements"].AsStringArray(),
+                    DisableElements = cobj.Attributes["disableElements"].AsStringArray()
+                };
+            }
+        }
+
+        return attributeAttachableToEntity;
+    }
 }

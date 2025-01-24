@@ -296,6 +296,7 @@
       "code": "modify_vanilla_classes",
       "type": "boolean",
       "ingui": "combatoverhaul:setting-modify_vanilla_classes",
+      "comment": "combatoverhaul:setting-modify_vanilla_classes-comment",
       "default": true
     },
     {

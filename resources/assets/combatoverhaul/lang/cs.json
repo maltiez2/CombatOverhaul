@@ -102,8 +102,9 @@
   "game:trait-quarterstaffProficiency": "<font color=\"#84ff84\">• Znalost holí</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
   "game:trait-steadyAim": "<font color=\"#84ff84\">• Stabilita míření</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
   "game:trait-tremblingAim": "<font color=\"#ff8484\">• Třesoucí se ruce</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
+  "game:trait-clumsyHands": "<font color=\"#ff8484\">• Nemotorné ruce</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
 
-  "game:charattribute-bowsProficiency-0.5": "+50 % rychlost napnutí",
+  "game:charattribute-bowsProficiency-0.5": "+50 % rychlost napínání",
   "game:charattribute-crossbowsProficiency-0.5": "+50 % rychlost nabíjení",
   "game:charattribute-firearmsProficiency-0.5": "+50 % rychlost nabíjení",
   "game:charattribute-oneHandedSwordsProficiency-0.3": "+30 % rychlost útoku",
@@ -119,6 +120,9 @@
   "game:charattribute-steadyAim--0.3": "o 30 % větší třes rukou",
   "game:charattribute-armorWalkSpeedAffectedness--0.5": "Postih za rychlost chůze za nošení brnění snížen o 50 %",
   "game:charattribute-armorManipulationSpeedAffectedness--0.5": "Penalizace manipulační rychlosti za brnění snížena o 50 %",
+  "game:charattribute-bowsProficiency--0.3": "-30% rychlost napnutí luku",
+  "game:charattribute-crossbowsProficiency--0.3": "-30% rychlost nabíjení kuší",
+  "game:charattribute-firearmsProficiency--0.3": "-30% rychlost nabíjení palných zbraní",
 
   "damagelog-missed-block-zone": "Hráč se pokusil blokovat, ale {0} nebylo zblokováno",
   "damagelog-missed-block-direction": "Hráč se pokusil blokovat, ale směr ({0}) příchozího útoku nebyl pokryt blokem",
@@ -129,9 +133,11 @@
   "damagelog-received-damage": "Hráč obdrží {0} {2} poskození {1}",
   "damagelog-dealt-damage": "Hráč zasáhl {0} z {1} a způsobil {2} poskození",
   "damagelog-dealt-damage-with-projectile": "Hráčův {3} zásah {0} z {1} způsobil {2} poskození",
+  "damagelog-second-chance": "Hráč využil druhou šanci k přežití smrtelného poškození",
+  "damagelog-second-chance-cooldown": "Hráč utrpěl smrtelné poškození, ale druhá šance ještě nebyla připravená (zbývá {0} sek.)",
 
   "item-creature-arrow-*": "šíp",
-  "item-creature-spear-*": "Kopí",
+  "item-creature-spear-*": "kopí",
 
   "iteminfo-range-weapon-damage": "Násobitel poskození: {0}\nÚroveň poskození: {1}",
   "iteminfo-projectile": "Poškození: {0}\nTyp poskození: {1}\nŠance na zničení: {2}%",
@@ -185,6 +191,8 @@
   "setting-print_range_hits": "Tisk výsledku útoku na dálku",
   "setting-print_melee_hits": "Tisk výsledku útoku na blízko",
   "setting-print_player_hits": "Tisk poskození obdrzeného od hráce",
+  "setting-second_chance_available": "Mechanika Druhá sance",
+  "setting-second_chance_cooldown": "Cooldown Druhé sance (sekund)",
   "setting-player_model_torso_damage": "Multiplikátor poskození trupu hráce",
   "setting-player_model_head_damage": "Multiplikátor poskození hlavy hráce",
   "setting-player_model_neck_damage": "Multiplikátor poskození krku hráce",

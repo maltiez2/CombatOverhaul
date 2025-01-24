@@ -21,7 +21,10 @@ internal static class HarmonyPatches
 
     public static void Patch(string harmonyId, ICoreAPI api)
     {
+        _animatorsLock.AcquireWriterLock(1000);
         _animators.Clear();
+        _animatorsLock.ReleaseWriterLock();
+        
         _reportedEntities.Clear();
         new Harmony(harmonyId).Patch(
                 typeof(EntityShapeRenderer).GetMethod("RenderHeldItem", AccessTools.all),
@@ -94,7 +97,11 @@ internal static class HarmonyPatches
         new Harmony(harmonyId).Unpatch(typeof(BlockDamageOnTouch).GetMethod("OnEntityCollide", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         new Harmony(harmonyId).Unpatch(typeof(BagInventory).GetMethod("ReloadBagInventory", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         new Harmony(harmonyId).Unpatch(typeof(EntityPlayer).GetProperty("LightHsv", AccessTools.all).GetAccessors()[0], HarmonyPatchType.Postfix, harmonyId);
+
+        _animatorsLock.AcquireWriterLock(1000);
         _animators.Clear();
+        _animatorsLock.ReleaseWriterLock();
+
         _reportedEntities.Clear();
 
         api.World.UnregisterGameTickListener(_cleanUpTickListener);
@@ -103,10 +110,19 @@ internal static class HarmonyPatches
     public static void OnFrameInvoke(ClientAnimator animator, ElementPose pose)
     {
         if (animator == null) return;
-        
+
+        _animatorsLock.AcquireReaderLock(1000);
         if (_animators.TryGetValue(animator, out EntityAgent? entity))
         {
-            OnFrame?.Invoke(entity, pose);
+            _animatorsLock.ReleaseReaderLock();
+            if (entity is EntityPlayer)
+            {
+                OnFrame?.Invoke(entity, pose);
+            }
+        }
+        else
+        {
+            _animatorsLock.ReleaseReaderLock();
         }
     }
 
@@ -115,15 +131,24 @@ internal static class HarmonyPatches
 
     private static void OnCleanUpTick()
     {
-        List<ClientAnimator> animatorsToRemove = new();
-        foreach (ClientAnimator animator in _animators.Where(entry => !entry.Value.Alive).Select(entry => entry.Key))
-        {
-            animatorsToRemove.Add(animator);
-        }
+        _animatorsLock.AcquireWriterLock(1000);
 
-        foreach (ClientAnimator animator in animatorsToRemove)
+        try
         {
-            _animators.Remove(animator);
+            List<ClientAnimator> animatorsToRemove = new();
+            foreach (ClientAnimator animator in _animators.Where(entry => !entry.Value.Alive).Select(entry => entry.Key))
+            {
+                animatorsToRemove.Add(animator);
+            }
+
+            foreach (ClientAnimator animator in animatorsToRemove)
+            {
+                _animators.Remove(animator);
+            }
+        }
+        finally
+        {
+            _animatorsLock.ReleaseWriterLock();
         }
     }
 
@@ -152,15 +177,18 @@ internal static class HarmonyPatches
 
         ClientAnimator? animator = __instance.Animator as ClientAnimator;
 
+        _animatorsLock.AcquireWriterLock(1000);
         if (animator != null && !_animators.ContainsKey(animator))
         {
             _animators.Add(animator, entity);
         }
+        _animatorsLock.ReleaseWriterLock();
 
         return true;
     }
 
     internal static readonly Dictionary<ClientAnimator, EntityAgent> _animators = new();
+    internal static readonly ReaderWriterLock _animatorsLock = new();
     internal static readonly HashSet<long> _reportedEntities = new();
 
     private static bool RenderHeldItem(EntityShapeRenderer __instance, float dt, bool isShadowPass, bool right)

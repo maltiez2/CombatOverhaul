@@ -153,6 +153,9 @@
   "game:item-spear-generic-iron": "Iron spear",
   "game:item-spear-generic-meteoriciron": "Meteoric iron spear",
   "game:item-spear-generic-steel": "Steel spear",
+  "game:item-spearhead-iron": "Iron spear head",
+  "game:item-spearhead-meteoriciron": "Meteoric iron spear head",
+  "game:item-spearhead-steel": "Steel spear head",
 
   "prefixandcreature-arrow-*": "Arrow",
   "prefixandcreature-spear-*": "Spear",
@@ -200,5 +203,6 @@
   "setting-player_model_neck_damage": "Player neck damage multiplier",
   "setting-player_model_face_damage": "Player face damage multiplier",
   "setting-player_model_arms_damage": "Player arms damage multiplier",
-  "setting-player_model_legs_damage": "Player legs damage multiplier"
+  "setting-player_model_legs_damage": "Player legs damage multiplier",
+  "setting-modify_vanilla_classes-comment": "Works only in singleplayer"
 }
