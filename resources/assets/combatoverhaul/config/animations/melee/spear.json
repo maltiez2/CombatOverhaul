@@ -10,7 +10,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 0.8,
+        "BobbingAmplitude": 1,
         "Elements": {"ItemAnchor": [11.1, 0, 0, 0, 0, 17], "LowerArmR": [0, 0, 0, 0, 0, -62], "UpperArmR": [0, 0, 0, 8, 8, 37]}
       }
     ],
@@ -32,7 +32,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 0.8,
+        "BobbingAmplitude": 1,
         "Elements": {"ItemAnchor": [0, -0.9, 0, 0, 0, -62], "LowerArmR": [0, 0, 0, 0, 0, -42], "UpperArmR": [0, 0, 0, 0, 0, -29]}
       }
     ],
@@ -54,7 +54,7 @@
         "PitchFollow": false,
         "PitchDontFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 0.8,
+        "BobbingAmplitude": 1,
         "Elements": {
           "ItemAnchor": [0, 0, 0, 0, 6, 24],
           "LowerArmR": [0, 0, 0, 0, 0, -86],
@@ -82,7 +82,7 @@
         "SwitchArms": false,
         "PitchFollow": false,
         "FOVMultiplier": 1,
-        "BobbingAmplitude": 0.8,
+        "BobbingAmplitude": 1,
         "Elements": {
           "ItemAnchor": [0, 0, 0, 0, 24, -15],
           "LowerArmR": [0, 0, 0, 0, 0, -41],

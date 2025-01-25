@@ -260,7 +260,7 @@ public sealed class ClientAimingSystem : IDisposable
     private readonly double[] _rayEnd = new double[4];
     private float _aimingDt;
     private long _lastAimingEndTime = 0;
-    private const long _aimResetTime = 1000;
+    private const long _aimResetTime = 5000;
     private const float _aimStartInterpolationTime = 0.3f;
     private Vector2 _currentAim = new();
     private float _currentFovRatio;

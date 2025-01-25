@@ -1,10 +1,8 @@
 ﻿using CombatOverhaul.Integration;
 using CombatOverhaul.Utils;
-using ProtoBuf;
-using System.Diagnostics;
 using OpenTK.Mathematics;
+using ProtoBuf;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -302,7 +300,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
         float? fovField = (float?)_cameraFov.GetValue(camera);
         if (fovField == null) return;
 
-        float equalizeMultiplier = MathF.Sqrt((float)ClientSettings.FieldOfView / (float)ClientSettings.FpHandsFoV);
+        float equalizeMultiplier = MathF.Sqrt(ClientSettings.FieldOfView / (float)ClientSettings.FpHandsFoV);
 
         PlayerRenderingPatches.HandsFovMultiplier = multiplier * (equalizeFov ? equalizeMultiplier : 1);
         _cameraFov.SetValue(camera, ClientSettings.FieldOfView * GameMath.DEG2RAD * multiplier);
@@ -513,7 +511,6 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
         int mainHandItemId = _player.RightHandItemSlot.Itemstack?.Item?.Id ?? 0;
         int offhandItemId = _player.LeftHandItemSlot.Itemstack?.Item?.Id ?? 0;
 
-        
         if (_mainHandItemId != mainHandItemId)
         {
             _mainHandItemId = mainHandItemId;
@@ -535,7 +532,7 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
 
     public PlayerItemFrame? FrameOverride { get; set; } = null;
 
-    
+
     public void Play(AnimationRequestByCode requestByCode, bool mainHand = true)
     {
         if (_animationsManager == null) return;
@@ -550,7 +547,7 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
         AnimationRequest request = new(animation, requestByCode);
 
         Play(request, mainHand);
-        if (_mainPlayer) _animationSystem.SendPlayPacket(requestByCode, mainHand, entity.EntityId);
+        if (_mainPlayer) _animationSystem.SendPlayPacket(requestByCode, mainHand, entity.EntityId, GetCurrentItemId(mainHand));
     }
     public void Play(bool mainHand, string animation, string category = "main", float animationSpeed = 1, float weight = 1, bool easeOut = true)
     {
@@ -601,6 +598,20 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
     public void Stop(string category)
     {
         _composer.Stop(category);
+
+        while (_playRequests.Any())
+        {
+            (AnimationRequest request, bool mainHand) item = _playRequests.Dequeue();
+            if (item.request.Category != category)
+            {
+                _playRequestBuffer.Enqueue(item);
+            }
+        }
+
+        Queue<(AnimationRequest request, bool mainHand)> buffer = _playRequests;
+        _playRequests = _playRequestBuffer;
+        _playRequestBuffer = buffer;
+
         if (_mainPlayer) _animationSystem.SendStopPacket(category, entity.EntityId);
     }
 
@@ -609,7 +620,7 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
     private readonly EntityPlayer _player;
     private readonly AnimationsManager? _animationsManager;
     private readonly AnimationSystemClient _animationSystem;
-    
+
     private PlayerItemFrame _lastFrame = PlayerItemFrame.Zero;
     private readonly List<string> _offhandCategories = new();
     private readonly List<string> _mainHandCategories = new();
@@ -619,7 +630,8 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
     private long _mainHandIdleTimer = -1;
     private long _offHandIdleTimer = -1;
     private readonly ICoreClientAPI? _api;
-    private readonly Queue<(AnimationRequest request, bool mainHand)> _playRequests = new();
+    private Queue<(AnimationRequest request, bool mainHand)> _playRequests = new();
+    private Queue<(AnimationRequest request, bool mainHand)> _playRequestBuffer = new();
 
     private static readonly TimeSpan _readyTimeout = TimeSpan.FromSeconds(3);
 
@@ -632,7 +644,7 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
     private void OnBeforeFrame(Entity targetEntity, float dt)
     {
         if (entity.EntityId != targetEntity.EntityId) return;
-        
+
         float factor = (entity.Api as ICoreClientAPI)?.IsSinglePlayer == true ? 0.5f : 1f;
 
         double dtAdjusted = GameMath.Clamp(dt * factor, -TimeSpan.MaxValue.TotalSeconds / 2, TimeSpan.MaxValue.TotalSeconds / 2);
@@ -657,7 +669,7 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
     private void ApplyFrame(PlayerItemFrame frame, Entity targetEntity, ElementPose pose, Animatable? animatable)
     {
         if (entity.EntityId != targetEntity.EntityId) return;
-        
+
         if (pose.ForElement.Name == "LowerTorso") return;
 
         float pitch = targetEntity.Pos.HeadPitch;
@@ -744,7 +756,7 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
                 {
                     Play(readyAnimation.Value, true);
                     StartIdleTimer(idleAnimation.Value, true);
-                } 
+                }
             }
         }
         else
@@ -774,7 +786,7 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
             {
                 Play(item.ReadyAnimation, false);
                 StartIdleTimer(item.IdleAnimation, false);
-            }  
+            }
         }
         else if (_player.LeftHandItemSlot.Itemstack?.Item is IHasDynamicIdleAnimations item2)
         {
@@ -865,6 +877,8 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
 
         Play(request, mainHand);
     }
+
+    private int GetCurrentItemId(bool mainHand) => mainHand ? _player.RightHandItemSlot.Itemstack?.Item?.Id ?? 0 : _player.LeftHandItemSlot.Itemstack?.Item?.Id ?? 0;
     private void Dispose()
     {
         HarmonyPatches.OnBeforeFrame -= OnBeforeFrame;
@@ -884,13 +898,14 @@ public sealed class AnimationRequestPacket
     public double EaseInDurationMs { get; set; }
     public bool EaseOut { get; set; }
     public long EntityId { get; set; }
+    public int ItemId { get; set; }
 
     public AnimationRequestPacket()
     {
 
     }
 
-    public AnimationRequestPacket(AnimationRequestByCode request, bool mainHand, long entityId)
+    public AnimationRequestPacket(AnimationRequestByCode request, bool mainHand, long entityId, int itemId)
     {
         MainHand = mainHand;
         Animation = request.Animation;
@@ -901,6 +916,7 @@ public sealed class AnimationRequestPacket
         EaseInDurationMs = request.EaseInDuration.TotalMilliseconds;
         EaseOut = request.EaseOut;
         EntityId = entityId;
+        ItemId = itemId;
     }
 
     public (AnimationRequestByCode request, bool mainHand) ToRequest()
@@ -941,9 +957,9 @@ public sealed class AnimationSystemClient
             .SetMessageHandler<AnimationStopRequestPacket>(HandlePacket);
     }
 
-    public void SendPlayPacket(AnimationRequestByCode request, bool mainHand, long entityId)
+    public void SendPlayPacket(AnimationRequestByCode request, bool mainHand, long entityId, int itemId)
     {
-        _clientChannel.SendPacket(new AnimationRequestPacket(request, mainHand, entityId));
+        _clientChannel.SendPacket(new AnimationRequestPacket(request, mainHand, entityId, itemId));
     }
     public void SendStopPacket(string category, long entityId)
     {
@@ -955,15 +971,23 @@ public sealed class AnimationSystemClient
 
     private void HandlePacket(AnimationRequestPacket packet)
     {
+        EntityPlayer? player = _api.World.GetEntityById(packet.EntityId) as EntityPlayer;
+
+        if (player == null) return;
+
+        if (GetCurrentItemId(packet.MainHand, player) != packet.ItemId) return;
+
         (AnimationRequestByCode request, bool mainHnad) = packet.ToRequest();
 
-        _api.World.GetEntityById(packet.EntityId)?.GetBehavior<ThirdPersonAnimationsBehavior>()?.Play(request, mainHnad);
+        player.GetBehavior<ThirdPersonAnimationsBehavior>()?.Play(request, mainHnad);
     }
 
     private void HandlePacket(AnimationStopRequestPacket packet)
     {
         _api.World.GetEntityById(packet.EntityId)?.GetBehavior<ThirdPersonAnimationsBehavior>()?.Stop(packet.Category);
     }
+
+    private int GetCurrentItemId(bool mainHand, EntityPlayer player) => mainHand ? player.RightHandItemSlot.Itemstack?.Item?.Id ?? 0 : player.LeftHandItemSlot.Itemstack?.Item?.Id ?? 0;
 }
 
 public sealed class AnimationSystemServer

@@ -34,6 +34,7 @@ public class AxeStats
     public Dictionary<string, string> HitParticleEffects { get; set; } = new();
     public float HitStaggerDurationMs { get; set; } = 100;
     public bool CanSplitLogs { get; set; } = true;
+    public bool HandleLMBInputs { get; set; } = true;
 
     public MeleeAttackStats Attack { get; set; } = new();
     public string AttackAnimation { get; set; } = "";
@@ -91,6 +92,7 @@ public class AxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
     {
         PlayerBehavior = behavior;
         AnimationBehavior = behavior.entity.GetBehavior<FirstPersonAnimationsBehavior>();
+        TpAnimationBehavior = behavior.entity.GetBehavior<ThirdPersonAnimationsBehavior>();
     }
     public virtual void RenderDebugCollider(ItemSlot inSlot, IClientPlayer byPlayer)
     {
@@ -118,6 +120,7 @@ public class AxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
     protected LineSegmentCollider Collider;
     protected ICoreClientAPI Api;
     protected FirstPersonAnimationsBehavior? AnimationBehavior;
+    protected ThirdPersonAnimationsBehavior? TpAnimationBehavior;
     protected ActionsManagerPlayerBehavior? PlayerBehavior;
     protected SoundsSynchronizerClient SoundsSystem;
     protected BlockBreakingSystemClient BlockBreakingNetworking;
@@ -147,6 +150,7 @@ public class AxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
                         category: AnimationCategory(mainHand),
                         callback: () => SwingForwardAnimationCallback(slot, player, mainHand));
                     //AnimationBehavior?.PlayVanillaAnimation(Stats.SwingTpAnimation, mainHand);
+                    TpAnimationBehavior?.Play(mainHand, Stats.SwingForwardAnimation, AnimationCategory(mainHand), PlayerBehavior?.ManipulationSpeed ?? 1);
 
                     state = (int)AxeState.SwingForward;
 
@@ -167,7 +171,7 @@ public class AxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
                 }
         }
 
-        return false;
+        return Stats.HandleLMBInputs;
     }
     protected virtual bool SwingForwardAnimationCallback(ItemSlot slot, EntityPlayer player, bool mainHand)
     {
@@ -177,6 +181,7 @@ public class AxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
             animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1,
             category: AnimationCategory(mainHand),
             callback: () => SwingBackAnimationCallback(mainHand));
+        TpAnimationBehavior?.Play(mainHand, Stats.SwingBackAnimation, AnimationCategory(mainHand), PlayerBehavior?.ManipulationSpeed ?? 1);
         PlayerBehavior?.SetState((int)AxeState.SwingBack, mainHand);
         AnimationBehavior?.StopVanillaAnimation(Stats.SwingTpAnimation, mainHand);
 
@@ -201,6 +206,7 @@ public class AxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
     protected virtual bool SwingBackAnimationCallback(bool mainHand)
     {
         AnimationBehavior?.PlayReadyAnimation(mainHand);
+        TpAnimationBehavior?.PlayReadyAnimation(mainHand);
         PlayerBehavior?.SetState((int)AxeState.Idle, mainHand);
         AnimationBehavior?.StopVanillaAnimation(Stats.SwingTpAnimation, mainHand);
 
@@ -258,7 +264,8 @@ public class AxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
                         category: AnimationCategory(mainHand),
                         callback: () => SplitAnimationCallback(slot, player, mainHand),
                         callbackHandler: code => SplitAnimationCallbackHandler(code, mainHand));
-                    AnimationBehavior?.PlayVanillaAnimation(Stats.SplitTpAnimation, mainHand);
+                    TpAnimationBehavior?.Play(mainHand, Stats.SplitAnimation, AnimationCategory(mainHand), PlayerBehavior?.ManipulationSpeed ?? 1);
+                    //AnimationBehavior?.PlayVanillaAnimation(Stats.SplitTpAnimation, mainHand);
 
                     state = (int)AxeState.SplittingWindUp;
 
@@ -295,6 +302,7 @@ public class AxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
                         animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1,
                         category: AnimationCategory(mainHand),
                         callback: () => SplitBackAnimationCallback(mainHand));
+        TpAnimationBehavior?.Play(mainHand, Stats.SplitBackAnimation, AnimationCategory(mainHand), PlayerBehavior?.ManipulationSpeed ?? 1);
         PlayerBehavior?.SetState((int)AxeState.SplittingBack, mainHand);
 
         BlockSelection selection = player.BlockSelection;
@@ -319,6 +327,7 @@ public class AxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
     protected virtual bool SplitBackAnimationCallback(bool mainHand)
     {
         AnimationBehavior?.PlayReadyAnimation(mainHand);
+        TpAnimationBehavior?.PlayReadyAnimation(mainHand);
         PlayerBehavior?.SetState((int)AxeState.Idle, mainHand);
         return true;
     }
@@ -342,7 +351,8 @@ public class AxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
                     category: AnimationCategory(mainHand),
                     callback: () => AttackAnimationCallback(mainHand),
                     callbackHandler: code => AttackAnimationCallbackHandler(code, mainHand));
-                AnimationBehavior?.PlayVanillaAnimation(Stats.AttackTpAnimation, mainHand);
+                TpAnimationBehavior?.Play(mainHand, Stats.AttackAnimation, AnimationCategory(mainHand), PlayerBehavior?.ManipulationSpeed ?? 1);
+                //AnimationBehavior?.PlayVanillaAnimation(Stats.AttackTpAnimation, mainHand);
 
                 return true;
             default:
@@ -374,6 +384,7 @@ public class AxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
     protected virtual bool AttackAnimationCallback(bool mainHand)
     {
         AnimationBehavior?.PlayReadyAnimation(mainHand);
+        TpAnimationBehavior?.PlayReadyAnimation(mainHand);
         PlayerBehavior?.SetState((int)AxeState.Idle, mainHand);
 
         return true;
@@ -397,8 +408,6 @@ public class AxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
     protected static string AnimationCategory(bool mainHand = true) => mainHand ? "main" : "mainOffhand";
     protected virtual float GetMiningSpeed(IItemStack itemStack, BlockSelection blockSel, Block block, EntityPlayer forPlayer)
     {
-        //float toolTierMultiplier = block.RequiredMiningTier <= Item.ToolTier ? 1 : 0;
-
         float traitRate = 1f;
 
         EnumBlockMaterial mat = block.GetBlockMaterial(Api.World.BlockAccessor, blockSel.Position);
@@ -410,11 +419,10 @@ public class AxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
 
         if (!Item.MiningSpeed.ContainsKey(mat)) return 0;
 
-        //if (Item.MiningSpeed == null || !Item.MiningSpeed.ContainsKey(mat)) return traitRate * toolTierMultiplier;
-
-        return Item.MiningSpeed[mat] * GlobalConstants.ToolMiningSpeedModifier * traitRate;
+        return Item.MiningSpeed[mat] * GlobalConstants.ToolMiningSpeedModifier * traitRate * GetIDGMultiplier(itemStack);
     }
     protected virtual bool IsSplittable(Block block) => block.HasBehavior<Splittable>();
+    protected virtual float GetIDGMultiplier(IItemStack stack) => stack?.Collectible?.Attributes?["choppingprops"]?["fellingmultiplier"]?.AsFloat(1) ?? 1;
 
     protected static bool ActionRestricted(EntityPlayer player, bool mainHand = true)
     {

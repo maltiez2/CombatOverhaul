@@ -81,6 +81,7 @@ public class PickaxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
     {
         PlayerBehavior = behavior;
         AnimationBehavior = behavior.entity.GetBehavior<FirstPersonAnimationsBehavior>();
+        TpAnimationBehavior = behavior.entity.GetBehavior<ThirdPersonAnimationsBehavior>();
     }
     public virtual void RenderDebugCollider(ItemSlot inSlot, IClientPlayer byPlayer)
     {
@@ -104,6 +105,7 @@ public class PickaxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
     protected LineSegmentCollider Collider;
     protected ICoreClientAPI Api;
     protected FirstPersonAnimationsBehavior? AnimationBehavior;
+    protected ThirdPersonAnimationsBehavior? TpAnimationBehavior;
     protected ActionsManagerPlayerBehavior? PlayerBehavior;
     protected SoundsSynchronizerClient SoundsSystem;
     protected BlockBreakingSystemClient BlockBreakingNetworking;
@@ -148,7 +150,8 @@ public class PickaxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
                         animationSpeed: PlayerBehavior?.ManipulationSpeed * animationSpeedMultiplier ?? animationSpeedMultiplier,
                         category: AnimationCategory(mainHand),
                         callback: () => SwingForwardAnimationCallback(slot, player, mainHand));
-                    AnimationBehavior?.PlayVanillaAnimation(Stats.SwingTpAnimation, mainHand);
+                    TpAnimationBehavior?.Play(mainHand, Stats.SwingForwardAnimation[animationIndex], AnimationCategory(mainHand), PlayerBehavior?.ManipulationSpeed ?? 1);
+                    //AnimationBehavior?.PlayVanillaAnimation(Stats.SwingTpAnimation, mainHand);
 
                     state = (int)PickaxeState.SwingForward;
 
@@ -169,7 +172,7 @@ public class PickaxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
                 }
         }
 
-        return false;
+        return true;
     }
     protected virtual bool SwingForwardAnimationCallback(ItemSlot slot, EntityPlayer player, bool mainHand)
     {
@@ -178,11 +181,12 @@ public class PickaxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
         if (selection?.Position == null)
         {
             AnimationBehavior?.Play(
-            mainHand,
-            Stats.SwingBackAnimation,
-            animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1,
-            category: AnimationCategory(mainHand),
-            callback: () => SwingBackAnimationCallback(mainHand));
+                mainHand,
+                Stats.SwingBackAnimation,
+                animationSpeed: PlayerBehavior?.ManipulationSpeed ?? 1,
+                category: AnimationCategory(mainHand),
+                callback: () => SwingBackAnimationCallback(mainHand));
+            TpAnimationBehavior?.Play(mainHand, Stats.SwingBackAnimation, AnimationCategory(mainHand), PlayerBehavior?.ManipulationSpeed ?? 1);
             PlayerBehavior?.SetState((int)PickaxeState.SwingBack, mainHand);
             AnimationBehavior?.StopVanillaAnimation(Stats.SwingTpAnimation, mainHand);
             return true;
@@ -197,6 +201,7 @@ public class PickaxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
             animationSpeed: PlayerBehavior?.ManipulationSpeed * animationSpeedMultiplier ?? animationSpeedMultiplier,
             category: AnimationCategory(mainHand),
             callback: () => SwingBackAnimationCallback(mainHand));
+        TpAnimationBehavior?.Play(mainHand, Stats.SwingBackAnimation, AnimationCategory(mainHand), PlayerBehavior?.ManipulationSpeed * animationSpeedMultiplier ?? animationSpeedMultiplier);
         PlayerBehavior?.SetState((int)PickaxeState.SwingBack, mainHand);
         AnimationBehavior?.StopVanillaAnimation(Stats.SwingTpAnimation, mainHand);
 
@@ -216,6 +221,7 @@ public class PickaxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
     protected virtual bool SwingBackAnimationCallback(bool mainHand)
     {
         AnimationBehavior?.PlayReadyAnimation(mainHand);
+        TpAnimationBehavior?.PlayReadyAnimation(mainHand);
         PlayerBehavior?.SetState((int)PickaxeState.Idle, mainHand);
         AnimationBehavior?.StopVanillaAnimation(Stats.SwingTpAnimation, mainHand);
 
@@ -270,7 +276,8 @@ public class PickaxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
                     category: AnimationCategory(mainHand),
                     callback: () => AttackAnimationCallback(mainHand),
                     callbackHandler: code => AttackAnimationCallbackHandler(code, mainHand));
-                AnimationBehavior?.PlayVanillaAnimation(Stats.AttackTpAnimation, mainHand);
+                TpAnimationBehavior?.Play(mainHand, Stats.AttackAnimation, AnimationCategory(mainHand), PlayerBehavior?.ManipulationSpeed ?? 1);
+                //AnimationBehavior?.PlayVanillaAnimation(Stats.AttackTpAnimation, mainHand);
 
                 return true;
             default:
@@ -302,6 +309,7 @@ public class PickaxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
     protected virtual bool AttackAnimationCallback(bool mainHand)
     {
         AnimationBehavior?.PlayReadyAnimation(mainHand);
+        TpAnimationBehavior?.PlayReadyAnimation(mainHand);
         PlayerBehavior?.SetState((int)PickaxeState.Idle, mainHand);
 
         return true;
@@ -328,6 +336,8 @@ public class PickaxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
     {
         float traitRate = 1f;
 
+        float toolTierMultiplier = block.RequiredMiningTier <= Item.ToolTier ? 1 : 0;
+
         EnumBlockMaterial mat = block.GetBlockMaterial(Api.World.BlockAccessor, blockSel.Position);
 
         if (mat == EnumBlockMaterial.Ore || mat == EnumBlockMaterial.Stone)
@@ -337,7 +347,9 @@ public class PickaxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
 
         if (Item.MiningSpeed == null || !Item.MiningSpeed.ContainsKey(mat)) return traitRate;
 
-        return Item.MiningSpeed[mat] * GlobalConstants.ToolMiningSpeedModifier * traitRate;
+        if (Item.MiningSpeed == null || !Item.MiningSpeed.ContainsKey(mat)) return traitRate * toolTierMultiplier;
+
+        return Item.MiningSpeed[mat] * GlobalConstants.ToolMiningSpeedModifier * traitRate * toolTierMultiplier;
     }
     protected static bool ActionRestricted(EntityPlayer player, bool mainHand = true)
     {
