@@ -122,6 +122,17 @@ public sealed class Composer
         _callbacksCalled.Remove(category);
     }
 
+    public void StopAll()
+    {
+        _animators.Clear();
+        _currentTimes.Clear();
+        _previousWeight.Clear();
+        _currentWeight.Clear();
+        _weightState.Clear();
+        _requests.Clear();
+        _callbacksCalled.Clear();
+    }
+
     public bool AnyActiveAnimations() => _animators.Any();
 
     public void SetSpeedModifier(AnimationSpeedModifierDelegate modifier)

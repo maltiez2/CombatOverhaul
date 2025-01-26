@@ -102,7 +102,8 @@
 "game:trait-quarterstaffProficiency": "<font color=\"#84ff84\">• Biegłość w kosturach</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
 "game:trait-steadyAim": "<font color=\"#84ff84\">• Stabilny cel</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
 "game:trait-tremblingAim": "<font color=\"#ff8484\">• Drżący cel</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
-
+"game:trait-clumsyHands": "<font color=\"#ff8484\">• Niezgrabne dłonie</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
+  
 "game:charattribute-bowsProficiency-0.5": "+50% szybkość naciągania",
 "game:charattribute-crossbowsProficiency-0.5": "+50% szybkość przeładowania",
 "game:charattribute-firearmsProficiency-0.5": "+50% szybkość przeładowania",
@@ -119,6 +120,9 @@
 "game:charattribute-steadyAim--0.3": "30% więcej rozchwiania celowania",
 "game:charattribute-armorWalkSpeedAffectedness--0.5": "kara do prędkości chodzenia za noszenie zbroi zmniejszona o 50%",
 "game:charattribute-armorManipulationSpeedAffectedness--0.5": "kara do prędkości manipulacji za noszenie zbroi zmniejszona o 50%",
+"game:charattribute-bowsProficiency--0.3": "-30% szybkość naciągu łuku",
+"game:charattribute-crossbowsProficiency--0.3": "-30% szybkość przeładowania kuszy",
+"game:charattribute-firearmsProficiency--0.3": "-30% szybkość przeładowania broni palnej",
 
 "damagelog-missed-block-zone": "Gracz próbował blokować, ale {0} nie było chronione przez blok",
 "damagelog-missed-block-direction": "Gracz próbował blokować, ale kierunek ({0}) nadchodzącego ataku nie był objęty blokiem",
@@ -129,7 +133,9 @@
 "damagelog-received-damage": "Gracz otrzymuje {0} obrażeń typu {2} do {1}",
 "damagelog-dealt-damage": "Gracz trafił {0} przeciwnika {1}, zadając {2} obrażeń",
 "damagelog-dealt-damage-with-projectile": "{3} gracza trafił {0} przeciwnika {1}, zadając {2} obrażeń",
-
+"damagelog-second-chance": "Gracz wykorzystał drugą szansę na przeżycie śmiertelnych obrażeń",
+"damagelog-second-chance-cooldown": "Gracz otrzymał obrażenia śmiertelne, ale druga szansa była w trakcie odnawiania (pozostało {0} sekund)",
+  
 "item-creature-arrow-*": "strzała",
 "item-creature-spear-*": "włócznia",
 
@@ -147,18 +153,24 @@
 "game:item-spear-generic-iron": "Żelazna włócznia",
 "game:item-spear-generic-meteoriciron": "Meteorytowa włócznia",
 "game:item-spear-generic-steel": "Stalowa włócznia",
+"game:item-spearhead-iron": "Żelazny grot włóczni",
+"game:item-spearhead-meteoriciron": "Grot włóczni z żelaza meteorytowego",
+"game:item-spearhead-steel": "Stalowy grot włóczni",
 
 "prefixandcreature-arrow-*": "Strzała",
 "prefixandcreature-spear-*": "Włócznia",
 
 "interaction-hold-alt": "Przytrzymaj 'Alt', aby wchodzić w interakcje z obiektami lub umieścić na stojaku/ziemi",
 "interaction-grip-change": "Przytrzymaj 'Prawy przycisk myszy' i obracaj 'kółkiem myszy', aby zmienić długość uchwytu",
-
+"interaction-toggle-light-source": "Włącz przenośne źródło światła",
+"interaction-toggle-light-source-hotkey": "Włącz przenośne źródło światła",
+  
 "setting-directions_cursor_transparency": "Przezroczystość kursora kierunku",
 "setting-directions_cursor_scale": "Skala kursora kierunku",
 "setting-directions_inertia": "Bezwładność kursora kierunku",
 "setting-directions_sensitivity": "Czułość kursora kierunku",
 "setting-directions_invert": "Odwróć kursor kierunku",
+"setting-vanilla_actions_while_blocking": "Wykonywanie akcji domyślnych podczas blokowania",
 "setting-bows_aiming_cursor_type": "Typ kursora celowania łuku",
 "setting-bow_aiming_difficulty": "Trudność celowania łukiem",
 "setting-spears_aiming_cursor_type": "Typ kursora celowania włócznią",
@@ -181,13 +193,16 @@
 "setting-tool_whoosh_sound": "Głośność dźwięku zamachu narzędziem",
 "setting-tool_animation_speed_bonus": "Bonus do prędkości animacji dla kilofów",
 "setting-comment-tool_animation_speed_bonus": "Bonus do prędkości animacji wynikający z bonusu prędkości kopania kilofa. Wyższy tier kilofów powoduje szybsze zamachy. Wartość 0.3 oznacza +30% prędkości animacji dla stalowego kilofa.",
-"setting-print_range_hits": "Drukuj wyniki ataków dystansowych",
-"setting-print_melee_hits": "Drukuj wyniki ataków wręcz",
-"setting-print_player_hits": "Drukuj obrażenia otrzymane przez gracza",
+"setting-print_range_hits": "Wyświetlaj wyniki ataków dystansowych",
+"setting-print_melee_hits": "Wyświetlaj wyniki ataków wręcz",
+"setting-print_player_hits": "Wyświetlaj obrażenia otrzymane przez gracza",
+"setting-second_chance_available": "Mechanika drugiej szansy",
+"setting-second_chance_cooldown": "Czas odnowienia drugiej szansy (sekundy)",
 "setting-player_model_torso_damage": "Mnożnik obrażeń dla torsu gracza",
 "setting-player_model_head_damage": "Mnożnik obrażeń dla głowy gracza",
 "setting-player_model_neck_damage": "Mnożnik obrażeń dla szyi gracza",
 "setting-player_model_face_damage": "Mnożnik obrażeń dla twarzy gracza",
 "setting-player_model_arms_damage": "Mnożnik obrażeń dla rąk gracza",
 "setting-player_model_legs_damage": "Mnożnik obrażeń dla nóg gracza",
+"setting-modify_vanilla_classes-comment": "Działa tylko w grze jednoosobowej"
 }

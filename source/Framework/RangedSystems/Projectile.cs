@@ -34,6 +34,8 @@ public sealed class ProjectileServer
     {
         Entity receiver = _api.World.GetEntityById(packet.ReceiverEntity);
 
+        if (receiver == null) return;
+
         Vector3d collisionPoint = new(packet.CollisionPoint[0], packet.CollisionPoint[1], packet.CollisionPoint[2]);
 
         bool hit = Attack(_shooter, receiver, collisionPoint, packet.Collider, packet.RelativeSpeed);

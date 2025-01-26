@@ -3,7 +3,7 @@
     "Hold": true,
     "PlayerKeyFrames": [
       {
-        "EasingTime": 300,
+        "EasingTime": 150,
         "EasingFunction": "Linear",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -23,7 +23,7 @@
         }
       },
       {
-        "EasingTime": 445,
+        "EasingTime": 266,
         "EasingFunction": "Sin",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -43,7 +43,7 @@
         }
       },
       {
-        "EasingTime": 637,
+        "EasingTime": 420,
         "EasingFunction": "Linear",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -63,7 +63,7 @@
         }
       },
       {
-        "EasingTime": 879,
+        "EasingTime": 613,
         "EasingFunction": "Sin",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -83,7 +83,7 @@
         }
       },
       {
-        "EasingTime": 1000,
+        "EasingTime": 710,
         "EasingFunction": "Sin",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -113,14 +113,14 @@
     "SoundFrames": [],
     "ParticlesFrames": [],
     "CallbackFrames": [],
-    "ItemAnimationStart": 300,
-    "ItemAnimationEnd": 1000
+    "ItemAnimationStart": 150,
+    "ItemAnimationEnd": 710
   },
   "bow-load-simple": {
     "Hold": true,
     "PlayerKeyFrames": [
       {
-        "EasingTime": 300,
+        "EasingTime": 150,
         "EasingFunction": "Linear",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -140,7 +140,7 @@
         }
       },
       {
-        "EasingTime": 445,
+        "EasingTime": 266,
         "EasingFunction": "Sin",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -160,7 +160,7 @@
         }
       },
       {
-        "EasingTime": 637,
+        "EasingTime": 420,
         "EasingFunction": "Linear",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -180,7 +180,7 @@
         }
       },
       {
-        "EasingTime": 879,
+        "EasingTime": 614,
         "EasingFunction": "Sin",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -200,7 +200,7 @@
         }
       },
       {
-        "EasingTime": 1000,
+        "EasingTime": 710,
         "EasingFunction": "Sin",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -230,14 +230,14 @@
     "SoundFrames": [],
     "ParticlesFrames": [],
     "CallbackFrames": [],
-    "ItemAnimationStart": 300,
-    "ItemAnimationEnd": 1000
+    "ItemAnimationStart": 150,
+    "ItemAnimationEnd": 710
   },
   "bow-load-long": {
     "Hold": true,
     "PlayerKeyFrames": [
       {
-        "EasingTime": 300,
+        "EasingTime": 150,
         "EasingFunction": "Linear",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -257,7 +257,7 @@
         }
       },
       {
-        "EasingTime": 445,
+        "EasingTime": 266,
         "EasingFunction": "Sin",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -277,7 +277,7 @@
         }
       },
       {
-        "EasingTime": 637,
+        "EasingTime": 420,
         "EasingFunction": "Linear",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -297,7 +297,7 @@
         }
       },
       {
-        "EasingTime": 879,
+        "EasingTime": 613,
         "EasingFunction": "Sin",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -317,7 +317,7 @@
         }
       },
       {
-        "EasingTime": 1000,
+        "EasingTime": 710,
         "EasingFunction": "Sin",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -347,14 +347,14 @@
     "SoundFrames": [],
     "ParticlesFrames": [],
     "CallbackFrames": [],
-    "ItemAnimationStart": 300,
-    "ItemAnimationEnd": 1000
+    "ItemAnimationStart": 150,
+    "ItemAnimationEnd": 710
   },
   "bow-load-recurve": {
     "Hold": true,
     "PlayerKeyFrames": [
       {
-        "EasingTime": 300,
+        "EasingTime": 150,
         "EasingFunction": "Linear",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -374,7 +374,7 @@
         }
       },
       {
-        "EasingTime": 445,
+        "EasingTime": 266,
         "EasingFunction": "Sin",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -394,7 +394,7 @@
         }
       },
       {
-        "EasingTime": 637,
+        "EasingTime": 420,
         "EasingFunction": "Linear",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -414,7 +414,7 @@
         }
       },
       {
-        "EasingTime": 879,
+        "EasingTime": 613,
         "EasingFunction": "Sin",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -434,7 +434,7 @@
         }
       },
       {
-        "EasingTime": 1000,
+        "EasingTime": 710,
         "EasingFunction": "Sin",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -464,8 +464,8 @@
     "SoundFrames": [],
     "ParticlesFrames": [],
     "CallbackFrames": [],
-    "ItemAnimationStart": 300,
-    "ItemAnimationEnd": 1000
+    "ItemAnimationStart": 150,
+    "ItemAnimationEnd": 710
   },
   "bow-draw-crude": {
     "Hold": true,
@@ -638,7 +638,7 @@
         }
       },
       {
-        "EasingTime": 1000,
+        "EasingTime": 800,
         "EasingFunction": "CosShifted",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -753,7 +753,7 @@
     ],
     "SoundFrames": [],
     "ItemAnimationStart": 300,
-    "ItemAnimationEnd": 1000
+    "ItemAnimationEnd": 800
   },
   "bow-draw-long": {
     "Hold": true,
@@ -778,7 +778,7 @@
         }
       },
       {
-        "EasingTime": 2000,
+        "EasingTime": 1500,
         "EasingFunction": "CosShifted",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -893,7 +893,7 @@
     ],
     "SoundFrames": [],
     "ItemAnimationStart": 300,
-    "ItemAnimationEnd": 2000
+    "ItemAnimationEnd": 1500
   },
   "bow-draw-recurve": {
     "Hold": true,
@@ -918,7 +918,7 @@
         }
       },
       {
-        "EasingTime": 1300,
+        "EasingTime": 800,
         "EasingFunction": "CosShifted",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -1017,7 +1017,7 @@
     ],
     "SoundFrames": [],
     "ItemAnimationStart": 300,
-    "ItemAnimationEnd": 1300
+    "ItemAnimationEnd": 800
   },
   "bow-draw-short-crude": {
     "Hold": true,
@@ -1190,7 +1190,7 @@
         }
       },
       {
-        "EasingTime": 700,
+        "EasingTime": 500,
         "EasingFunction": "CosShifted",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -1305,7 +1305,7 @@
     ],
     "SoundFrames": [],
     "ItemAnimationStart": 0,
-    "ItemAnimationEnd": 700
+    "ItemAnimationEnd": 500
   },
   "bow-draw-short-long": {
     "Hold": true,
@@ -1330,7 +1330,7 @@
         }
       },
       {
-        "EasingTime": 1700,
+        "EasingTime": 1200,
         "EasingFunction": "CosShifted",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -1445,7 +1445,7 @@
     ],
     "SoundFrames": [],
     "ItemAnimationStart": 0,
-    "ItemAnimationEnd": 1700
+    "ItemAnimationEnd": 1200
   },
   "bow-draw-short-recurve": {
     "Hold": true,
@@ -1470,7 +1470,7 @@
         }
       },
       {
-        "EasingTime": 1000,
+        "EasingTime": 500,
         "EasingFunction": "CosShifted",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -1569,7 +1569,7 @@
     ],
     "SoundFrames": [],
     "ItemAnimationStart": 0,
-    "ItemAnimationEnd": 1000
+    "ItemAnimationEnd": 500
   },
   "bow-idle": {
     "Hold": true,

@@ -511,6 +511,14 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
         int mainHandItemId = _player.RightHandItemSlot.Itemstack?.Item?.Id ?? 0;
         int offhandItemId = _player.LeftHandItemSlot.Itemstack?.Item?.Id ?? 0;
 
+        if (!_mainPlayer && (_mainHandItemId != mainHandItemId || _offHandItemId != offhandItemId))
+        {
+            if (!ItemHasIdleAnimations(mainHand: true) && !ItemHasIdleAnimations(mainHand: false))
+            {
+                _composer.StopAll();
+            }
+        }
+
         if (_mainHandItemId != mainHandItemId)
         {
             _mainHandItemId = mainHandItemId;
@@ -521,12 +529,6 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
         {
             _offHandItemId = offhandItemId;
             OffhandItemChanged();
-        }
-
-        while (_playRequests.Any())
-        {
-            (AnimationRequest request, bool mainHand) = _playRequests.Dequeue();
-            PlayRequest(request, mainHand);
         }
     }
 
@@ -546,7 +548,9 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
 
         AnimationRequest request = new(animation, requestByCode);
 
-        Play(request, mainHand);
+        PlayRequest(request, mainHand);
+        StopIdleTimer(mainHand);
+        
         if (_mainPlayer) _animationSystem.SendPlayPacket(requestByCode, mainHand, entity.EntityId, GetCurrentItemId(mainHand));
     }
     public void Play(bool mainHand, string animation, string category = "main", float animationSpeed = 1, float weight = 1, bool easeOut = true)
@@ -598,20 +602,6 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
     public void Stop(string category)
     {
         _composer.Stop(category);
-
-        while (_playRequests.Any())
-        {
-            (AnimationRequest request, bool mainHand) item = _playRequests.Dequeue();
-            if (item.request.Category != category)
-            {
-                _playRequestBuffer.Enqueue(item);
-            }
-        }
-
-        Queue<(AnimationRequest request, bool mainHand)> buffer = _playRequests;
-        _playRequests = _playRequestBuffer;
-        _playRequestBuffer = buffer;
-
         if (_mainPlayer) _animationSystem.SendStopPacket(category, entity.EntityId);
     }
 
@@ -630,16 +620,8 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
     private long _mainHandIdleTimer = -1;
     private long _offHandIdleTimer = -1;
     private readonly ICoreClientAPI? _api;
-    private Queue<(AnimationRequest request, bool mainHand)> _playRequests = new();
-    private Queue<(AnimationRequest request, bool mainHand)> _playRequestBuffer = new();
 
     private static readonly TimeSpan _readyTimeout = TimeSpan.FromSeconds(3);
-
-    private void Play(AnimationRequest request, bool mainHand = true)
-    {
-        _playRequests.Enqueue((request, mainHand));
-        StopIdleTimer(mainHand);
-    }
 
     private void OnBeforeFrame(Entity targetEntity, float dt)
     {
@@ -711,6 +693,16 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
 
     private void MainHandItemChanged()
     {
+        if (!_mainPlayer)
+        {
+            foreach (string category in _mainHandCategories)
+            {
+                Stop(category);
+            }
+            _mainHandCategories.Clear();
+            return;
+        }
+        
         StopIdleTimer(mainHand: true);
 
         if (_player.RightHandItemSlot.Itemstack?.Item is IHasIdleAnimations item)
@@ -723,11 +715,8 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
             }
             _mainHandCategories.Clear();
 
-            if (_mainPlayer)
-            {
-                Play(item.ReadyAnimation, true);
-                StartIdleTimer(item.IdleAnimation, true);
-            }
+            Play(item.ReadyAnimation, true);
+            StartIdleTimer(item.IdleAnimation, true);
         }
         else if (_player.RightHandItemSlot.Itemstack?.Item is IHasDynamicIdleAnimations item2)
         {
@@ -752,11 +741,8 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
                 }
                 _mainHandCategories.Clear();
 
-                if (_mainPlayer)
-                {
-                    Play(readyAnimation.Value, true);
-                    StartIdleTimer(idleAnimation.Value, true);
-                }
+                Play(readyAnimation.Value, true);
+                StartIdleTimer(idleAnimation.Value, true);
             }
         }
         else
@@ -770,6 +756,16 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
     }
     private void OffhandItemChanged()
     {
+        if (!_mainPlayer)
+        {
+            foreach (string category in _offhandCategories)
+            {
+                Stop(category);
+            }
+            _offhandCategories.Clear();
+            return;
+        }
+
         StopIdleTimer(false);
 
         if (_player.LeftHandItemSlot.Itemstack?.Item is IHasIdleAnimations item)
@@ -782,11 +778,8 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
             }
             _offhandCategories.Clear();
 
-            if (_mainPlayer)
-            {
-                Play(item.ReadyAnimation, false);
-                StartIdleTimer(item.IdleAnimation, false);
-            }
+            Play(item.ReadyAnimation, false);
+            StartIdleTimer(item.IdleAnimation, false);
         }
         else if (_player.LeftHandItemSlot.Itemstack?.Item is IHasDynamicIdleAnimations item2)
         {
@@ -811,11 +804,8 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
                 }
                 _offhandCategories.Clear();
 
-                if (_mainPlayer)
-                {
-                    Play(readyAnimation.Value, false);
-                    StartIdleTimer(idleAnimation.Value, false);
-                }
+                Play(readyAnimation.Value, false);
+                StartIdleTimer(idleAnimation.Value, false);
             }
         }
         else
@@ -876,6 +866,16 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
         }
 
         Play(request, mainHand);
+    }
+
+    private bool ItemHasIdleAnimations(bool mainHand)
+    {
+        ItemSlot? slot = mainHand ? _player.RightHandItemSlot : _player.LeftHandItemSlot;
+        if (slot == null) return false;
+
+        Item? item = slot.Itemstack?.Item;
+
+        return item is IHasDynamicIdleAnimations || item is IHasIdleAnimations;
     }
 
     private int GetCurrentItemId(bool mainHand) => mainHand ? _player.RightHandItemSlot.Itemstack?.Item?.Id ?? 0 : _player.LeftHandItemSlot.Itemstack?.Item?.Id ?? 0;
