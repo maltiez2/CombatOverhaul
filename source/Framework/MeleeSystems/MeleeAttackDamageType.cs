@@ -1,7 +1,7 @@
 ﻿using CombatOverhaul.Colliders;
 using CombatOverhaul.DamageSystems;
-using ProtoBuf;
 using OpenTK.Mathematics;
+using ProtoBuf;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
@@ -24,65 +24,6 @@ public class MeleeDamagePacket
     public long TargetEntityId { get; set; }
     public int DurabilityDamage { get; set; }
     public bool MainHand { get; set; }
-
-    public void Attack(ICoreServerAPI api)
-    {
-        Entity? target = api.World.GetEntityById(TargetEntityId);
-
-        if (target == null || !target.Alive) return;
-
-        bool printIntoChat = api.ModLoader.GetModSystem<CombatOverhaulSystem>().Settings.PrintMeleeHits;
-
-        Entity attacker = api.World.GetEntityById(AttackerEntityId);
-        string targetName = target.GetName();
-
-        IServerPlayer? serverPlayer = (attacker as EntityPlayer)?.Player as IServerPlayer;
-        if (serverPlayer != null)
-        {
-            if (target is EntityPlayer && (!api.Server.Config.AllowPvP || !serverPlayer.HasPrivilege("attackplayers")))
-            {
-                return;
-            }
-
-            if (target is EntityAgent && !serverPlayer.HasPrivilege("attackcreatures"))
-            {
-                return;
-            }
-        }
-
-        bool damageReceived = target.ReceiveDamage(new DirectionalTypedDamageSource()
-        {
-            Source = attacker is EntityPlayer ? EnumDamageSource.Player : EnumDamageSource.Entity,
-            SourceEntity = attacker,
-            CauseEntity = attacker,
-            DamageTypeData = new DamageData(Enum.Parse<EnumDamageType>(DamageType), Strength),
-            Position = new Vector3d(Position[0], Position[1], Position[2]),
-            Collider = Collider,
-            KnockbackStrength = Knockback,
-            DamageTier = (int)Strength,
-            Type = Enum.Parse<EnumDamageType>(DamageType),
-            Weapon = MainHand ? serverPlayer?.Entity.RightHandItemSlot.Itemstack : serverPlayer?.Entity.LeftHandItemSlot.Itemstack
-        }, Damage);
-
-        if (DurabilityDamage > 0)
-        {
-            ItemSlot? slot = (MainHand ? (attacker as EntityAgent)?.RightHandItemSlot : (attacker as EntityAgent)?.LeftHandItemSlot);
-            if (slot?.Itemstack?.Collectible != null && attacker != null)
-            {
-                slot?.Itemstack.Collectible.DamageItem(attacker.Api.World, attacker, slot, DurabilityDamage);
-                slot?.MarkDirty();
-            }
-        }
-
-        if (printIntoChat)
-        {
-            float damage = damageReceived ? target.WatchedAttributes.GetFloat("onHurt") : 0;
-
-            string damageLogMessage = Lang.Get("combatoverhaul:damagelog-dealt-damage", Lang.Get($"combatoverhaul:entity-damage-zone-{(ColliderTypes)ColliderType}"), targetName, $"{damage:F2}");
-
-            ((attacker as EntityPlayer)?.Player as IServerPlayer)?.SendMessage(GlobalConstants.DamageLogChatGroup, damageLogMessage, EnumChatType.Notification);
-        }
-    }
 }
 
 public class MeleeDamageTypeJson

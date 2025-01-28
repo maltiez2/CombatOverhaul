@@ -1037,7 +1037,7 @@ public sealed class AnimationSystemClient
         _api.World.GetEntityById(packet.EntityId)?.GetBehavior<ThirdPersonAnimationsBehavior>()?.Stop(packet.Category);
     }
 
-    private int GetCurrentItemId(bool mainHand, EntityPlayer player) => mainHand ? player.RightHandItemSlot.Itemstack?.Item?.Id ?? 0 : player.LeftHandItemSlot.Itemstack?.Item?.Id ?? 0;
+    private int GetCurrentItemId(bool mainHand, EntityPlayer player) => mainHand ? player?.RightHandItemSlot?.Itemstack?.Item?.Id ?? 0 : player?.LeftHandItemSlot?.Itemstack?.Item?.Id ?? 0;
 }
 
 public sealed class AnimationSystemServer
