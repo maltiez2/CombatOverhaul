@@ -17,7 +17,7 @@ internal static class MouseWheelPatch
     {
         _clientApi = api;
 
-        new Harmony("maltiezspears").Patch(
+        new Harmony(harmonyId).Patch(
             typeof(HudHotbar).GetMethod("OnMouseWheel", AccessTools.all),
             prefix: new HarmonyMethod(AccessTools.Method(typeof(MouseWheelPatch), nameof(OnMouseWheel)))
             );
@@ -25,7 +25,7 @@ internal static class MouseWheelPatch
 
     public static void Unpatch(string harmonyId)
     {
-        new Harmony("maltiezspears").Unpatch(typeof(HudHotbar).GetMethod("OnMouseWheel", AccessTools.all), HarmonyPatchType.Prefix, "maltiezspears");
+        new Harmony(harmonyId).Unpatch(typeof(HudHotbar).GetMethod("OnMouseWheel", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
     }
 
     private static ICoreClientAPI? _clientApi;
