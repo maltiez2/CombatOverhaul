@@ -75,7 +75,7 @@ public sealed class ProjectileServer
         float damage = _stats.DamageStats.Damage * _spawnStats.DamageMultiplier;
         DamageData damageData = new(Enum.Parse<EnumDamageType>(_stats.DamageStats.DamageType), _spawnStats.DamageStrength);
 
-        bool damageReceived = target.ReceiveDamage(new DirectionalTypedDamageSource()
+        DirectionalTypedDamageSource damageSource = new()
         {
             Source = EnumDamageSource.Entity,
             SourceEntity = _entity,
@@ -87,7 +87,11 @@ public sealed class ProjectileServer
             DamageTier = (int)damageData.Tier,
             KnockbackStrength = _stats.Knockback,
             Weapon = _entity.WeaponStack
-        }, damage);
+        };
+
+        _system.OnDealDamage(target, damageSource, _entity.WeaponStack, ref damage);
+
+        bool damageReceived = target.ReceiveDamage(damageSource, damage);
 
         bool received = damageReceived || damage <= 0;
 

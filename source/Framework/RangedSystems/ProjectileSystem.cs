@@ -256,6 +256,10 @@ public sealed class ProjectileSystemClient : ProjectileSystemBase
 
 public sealed class ProjectileSystemServer : ProjectileSystemBase
 {
+    public delegate void RangedDamageDelegate(Entity target, DamageSource damageSource, ItemStack? weaponStack, ref float damage);
+
+    public event RangedDamageDelegate? OnDealRangedDamage;
+
     public ProjectileSystemServer(ICoreServerAPI api)
     {
         _api = api;
@@ -294,6 +298,10 @@ public sealed class ProjectileSystemServer : ProjectileSystemBase
         IServerPlayer? player = (_api.World.GetEntityById(projectile.ShooterId) as EntityPlayer)?.Player as IServerPlayer;
 
         if (player != null) _serverChannel.SendPacket(packet, player);
+    }
+    public void OnDealDamage(Entity target, DamageSource damageSource, ItemStack? weaponStack, ref float damage)
+    {
+        OnDealRangedDamage?.Invoke(target, damageSource, weaponStack, ref damage);
     }
 
     private readonly ICoreServerAPI _api;
