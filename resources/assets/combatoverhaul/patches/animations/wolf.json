@@ -1,5 +1,17 @@
 ﻿[
   {
+    "file": "game:entities/land/wolf-male",
+    "op": "add",
+    "path": "/client/animations/-",
+    "value": {"code": "attack-withwindup", "animation": "attack-withwindup", "animationSpeed": 1, "blendMode": "Average", "weight": 100}
+  },
+  {
+    "file": "game:entities/land/wolf-female",
+    "op": "add",
+    "path": "/client/animations/-",
+    "value": {"code": "attack-withwindup", "animation": "attack-withwindup", "animationSpeed": 1, "blendMode": "Average", "weight": 100}
+  },
+  {
     "file": "game:shapes/entity/land/wolf-adult",
     "op": "add",
     "path": "/animations/-",
