@@ -13,5 +13,6 @@
   {"file": "game:recipes/grid/armor/scale", "op": "add", "path": "/2/enabled", "value": false},
   {"file": "game:recipes/grid/armor/brigandine", "op": "add", "path": "/0/enabled", "value": false},
   {"file": "game:recipes/grid/armor/brigandine", "op": "add", "path": "/1/enabled", "value": false},
-  {"file": "game:recipes/grid/armor/brigandine", "op": "add", "path": "/2/enabled", "value": false}
+  {"file": "game:recipes/grid/armor/brigandine", "op": "add", "path": "/2/enabled", "value": false},
+  {"file": "game:recipes/smithing/chain", "op": "addmerge", "path": "/output", "value": {"quantity": 2}}
 ]

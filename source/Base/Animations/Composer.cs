@@ -276,6 +276,12 @@ public readonly struct AnimationRequest
         FinishCallback = callback;
         CallbackHandler = request.CallbackHandler;
     }
+
+    public AnimationRequest()
+    {
+        Animation = Animation.Zero;
+        Category = "";
+    }
 }
 
 public readonly struct AnimationRequestByCode

@@ -2,6 +2,7 @@
 using CombatOverhaul.Utils;
 using OpenTK.Mathematics;
 using ProtoBuf;
+using System.Diagnostics;
 using System.Reflection;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -67,11 +68,11 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
             OffhandItemChanged();
         }
 
-        while (_playRequests.Any())
+        foreach ((AnimationRequest request, bool mainHand, bool skip) in _playRequests)
         {
-            (AnimationRequest request, bool mainHand) = _playRequests.Dequeue();
-            PlayRequest(request, mainHand);
+            if (!skip) PlayRequest(request, mainHand);
         }
+        _playRequests.Clear();
     }
 
     public PlayerItemFrame? FrameOverride { get; set; } = null;
@@ -79,7 +80,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
 
     public void Play(AnimationRequest request, bool mainHand = true)
     {
-        _playRequests.Enqueue((request, mainHand));
+        _playRequests.Add((request, mainHand, false));
         StopIdleTimer(mainHand);
     }
     public void Play(AnimationRequestByCode requestByCode, bool mainHand = true)
@@ -140,6 +141,13 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     public void Stop(string category)
     {
         _composer.Stop(category);
+        for (int index = 0; index < _playRequests.Count; index++)
+        {
+            if (_playRequests[index].request.Category == category)
+            {
+                _playRequests[index] = (new (), _playRequests[index].mainHand, true);
+            }
+        }
     }
     public void PlayVanillaAnimation(string code, bool mainHand)
     {
@@ -179,7 +187,6 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     public void StopSpeedModifier() => _composer.StopSpeedModifier();
     public bool IsSpeedModifierActive() => _composer.IsSpeedModifierActive();
 
-
     private readonly Composer _composer;
     private readonly EntityPlayer _player;
     private readonly AnimationsManager? _animationsManager;
@@ -196,7 +203,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     private long _offHandIdleTimer = -1;
     private bool _resetFov = false;
     private readonly ICoreClientAPI? _api;
-    private readonly Queue<(AnimationRequest request, bool mainHand)> _playRequests = new();
+    private readonly List<(AnimationRequest request, bool mainHand, bool skip)> _playRequests = new();
 
     private static readonly TimeSpan _readyTimeout = TimeSpan.FromSeconds(3);
 
@@ -330,7 +337,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
 
             foreach (string category in _mainHandCategories.Where(element => element != readyCategory))
             {
-                _composer.Stop(category);
+                Stop(category);
             }
             _mainHandCategories.Clear();
 
@@ -346,7 +353,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
             {
                 foreach (string category in _mainHandCategories)
                 {
-                    _composer.Stop(category);
+                    Stop(category);
                 }
                 _mainHandCategories.Clear();
             }
@@ -356,7 +363,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
 
                 foreach (string category in _mainHandCategories.Where(element => element != readyCategory))
                 {
-                    _composer.Stop(category);
+                    Stop(category);
                 }
                 _mainHandCategories.Clear();
 
@@ -368,7 +375,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
         {
             foreach (string category in _mainHandCategories)
             {
-                _composer.Stop(category);
+                Stop(category);
             }
             _mainHandCategories.Clear();
         }

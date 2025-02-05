@@ -1,4 +1,5 @@
 ﻿using CombatOverhaul.Integration;
+using System.Diagnostics;
 using System.Reflection;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -213,7 +214,7 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
     }
     private bool HandleActionEvent(ActionEventData eventData, int itemId, ActionEventCallbackDelegate callback)
     {
-        int mainHandId = _player.ActiveHandItemSlot.Itemstack?.Item?.Id ?? -1;
+        int mainHandId = _player.RightHandItemSlot.Itemstack?.Item?.Id ?? -1;
         int offHandId = _player.LeftHandItemSlot.Itemstack?.Item?.Id ?? -1;
 
         bool mainHandHandled = false;
@@ -221,7 +222,7 @@ public sealed class ActionsManagerPlayerBehavior : EntityBehavior
 
         if (mainHandId == itemId)
         {
-            mainHandHandled = callback.Invoke(_player.ActiveHandItemSlot, _player, ref _mainHandState, eventData, true, _directionController.CurrentDirection);
+            mainHandHandled = callback.Invoke(_player.RightHandItemSlot, _player, ref _mainHandState, eventData, true, _directionController.CurrentDirection);
         }
 
         if (offHandId == itemId)

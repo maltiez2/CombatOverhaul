@@ -17,7 +17,7 @@ public class ItemSlotBagContentWithWildcardMatch : ItemSlotBagContent
     public ItemSlotBagContentWithWildcardMatch(InventoryBase inventory, int BagIndex, int SlotIndex, EnumItemStorageFlags storageType, string? color, string[] canHoldWildcard) : base(inventory, BagIndex, SlotIndex, storageType)
     {
         CanHoldWildcard = canHoldWildcard;
-        HexBackgroundColor = "#84b054"; // color; // Vanilla gui is fucking mess and inventory too. No custom colors until Tyrons fixes his code.
+        HexBackgroundColor = color;
     }
 
     public override bool CanTakeFrom(ItemSlot sourceSlot, EnumMergePriority priority = EnumMergePriority.AutoMerge)

@@ -3,7 +3,7 @@
 		"ingredientPattern": "_T_,T_T",
 		"recipeGroup": 1,
 		"ingredients": {
-			"T": { "type": "item", "code": "metalchain-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"], "quantity": 1 }, 
+			"T": { "type": "item", "code": "metalchain-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"], "quantity": 1 }
 		},
 		"width": 3,
 		"height": 2,
@@ -11,11 +11,10 @@
 		"output": { "type": "item", "code": "armor-head-chain-{metal}"  }
 	},
 	{
-		"ingredientPattern": "T_T,CCC,TTT",
+		"ingredientPattern": "T_T,TTT,TTT",
 		"recipeGroup": 1,
 		"ingredients": {
-			"T": { "type": "item", "code": "metalchain-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"], "quantity": 1 },
-			"C": { "type": "item", "code": "metalchain-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"], "quantity": 1 }
+			"T": { "type": "item", "code": "metalchain-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"], "quantity": 1 }
 		},
 		"width": 3,
 		"height": 3,
@@ -23,11 +22,10 @@
 		"output": { "type": "item", "code": "armor-body-chain-{metal}"  }
 	},
 	{
-		"ingredientPattern": "TCT,T_T",
+		"ingredientPattern": "TTT,T_T",
 		"recipeGroup": 1,
 		"ingredients": {
-			"T": { "type": "item", "code": "metalchain-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"], "quantity": 1 },
-			"C": { "type": "item", "code": "metalchain-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"], "quantity": 2 }
+			"T": { "type": "item", "code": "metalchain-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"], "quantity": 1 }
 		},
 		"width": 3,
 		"height": 2,

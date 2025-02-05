@@ -23,7 +23,6 @@ using Vintagestory.API.Server;
 using Vintagestory.Client.NoObf;
 using Vintagestory.GameContent;
 using Vintagestory.Server;
-using static Microsoft.WindowsAPICodePack.Shell.PropertySystem.SystemProperties.System;
 
 namespace CombatOverhaul;
 
@@ -250,7 +249,7 @@ public sealed class CombatOverhaulSystem : ModSystem
     public override void Dispose()
     {
         if (Disposed) return;
-        
+
         new Harmony("CombatOverhaulAuto").UnpatchAll();
 
         _clientApi?.Event.UnregisterRenderer(ReticleRenderer, EnumRenderStage.Ortho);
@@ -470,7 +469,7 @@ public interface IFueledItem
 public interface ITogglableItem
 {
     string HotKeyCode { get; }
-    
+
     bool TurnedOn(IPlayer player, ItemSlot slot);
     void TurnOn(IPlayer player, ItemSlot slot);
     void TurnOff(IPlayer player, ItemSlot slot);

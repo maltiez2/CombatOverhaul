@@ -417,6 +417,8 @@ public class AxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
             traitRate = forPlayer.Stats.GetBlended("miningSpeedMul");
         }
 
+        if (Item.MiningSpeed == null) return 0;
+
         if (!Item.MiningSpeed.ContainsKey(mat)) return 0;
 
         return Item.MiningSpeed[mat] * GlobalConstants.ToolMiningSpeedModifier * traitRate * GetIDGMultiplier(itemStack);

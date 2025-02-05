@@ -130,5 +130,6 @@
   {"side": "Server", "file": "game:entities/land/shiver", "op": "replace", "path": "/server/behaviors/8/aitasks/2/damagePlayerAtMs", "value": 900},
   {"side": "Server", "file": "game:entities/land/shiver", "op": "replace", "path": "/server/behaviors/8/aitasks/2/animation", "value": "bite-withwindup"},
   {"side": "Server", "file": "game:entities/land/shiver", "op": "replace", "path": "/server/behaviors/2/currenthealthByType/*-deep", "value": 16},
-  {"side": "Server", "file": "game:entities/land/shiver", "op": "replace", "path": "/server/behaviors/2/maxhealthByType/*-deep", "value": 16}
+  {"side": "Server", "file": "game:entities/land/shiver", "op": "replace", "path": "/server/behaviors/2/maxhealthByType/*-deep", "value": 16},
+  {"side": "Server", "file": "game:entities/land/shiver", "op": "replace", "path": "/hitboxSize/x", "value": 1.9}
 ]

@@ -59,6 +59,18 @@
       }
     }
   },
+  {"file": "game:entities/land/shiver", "op": "addmerge", "path": "/client/animations/9", "value": {"weight": 1, "blendMode": "Average"}},
+  {"file": "game:entities/land/shiver", "op": "addmerge", "path": "/client/animations/10", "value": {"weight": 1, "blendMode": "Average"}},
+  {"file": "game:entities/land/shiver", "op": "addmerge", "path": "/client/animations/11", "value": {"weight": 1, "blendMode": "Average"}},
+  {"file": "game:entities/land/shiver", "op": "addmerge", "path": "/client/animations/12", "value": {"weight": 1, "blendMode": "Average"}},
+  {"file": "game:entities/land/shiver", "op": "addmerge", "path": "/client/animations/13", "value": {"weight": 1, "blendMode": "Average"}},
+  {"file": "game:entities/land/shiver", "op": "addmerge", "path": "/client/animations/14", "value": {"weight": 1, "blendMode": "Average"}},
+  {"file": "game:entities/land/shiver", "op": "addmerge", "path": "/client/animations/15", "value": {"weight": 1, "blendMode": "Average"}},
+  {"file": "game:entities/land/shiver", "op": "addmerge", "path": "/client/animations/16", "value": {"weight": 1, "blendMode": "Average"}},
+  {"file": "game:entities/land/shiver", "op": "addmerge", "path": "/client/animations/17", "value": {"weight": 1, "blendMode": "Average"}},
+  {"file": "game:entities/land/shiver", "op": "addmerge", "path": "/client/animations/18", "value": {"weight": 1, "blendMode": "Average"}},
+  {"file": "game:entities/land/shiver", "op": "addmerge", "path": "/client/animations/19", "value": {"weight": 1, "blendMode": "Average"}},
+  {"file": "game:entities/land/shiver", "op": "addmerge", "path": "/client/animations/20", "value": {"weight": 1, "blendMode": "Average"}},
   {
     "file": "game:shapes/entity/land/shiver/bellhead",
     "op": "add",

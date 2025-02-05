@@ -176,9 +176,9 @@ public sealed class MeleeAttack
             bool attacked = false;
 
             foreach (Entity entity in entities
+                    .Where(entity => entity.IsCreature)
                     .Where(entity => entity.Alive)
                     .Where(entity => entity.EntityId != entityId && entity.EntityId != mountedOn)
-                    .Where(entity => _attackedEntities.ContainsKey(entityId))
                     .Where(entity => !_attackedEntities[entityId].Contains(entity.EntityId)))
             {
                 attacked = damageType.TryAttack(player, entity, out string collider, out Vector3d point, out MeleeDamagePacket packet, mainHand, maximumParameter);
