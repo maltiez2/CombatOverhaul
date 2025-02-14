@@ -389,6 +389,6 @@
       }
     }
   },
-  {"side": "Server", "file": "game:entities/land/hooved/deer", "op": "replace", "path": "/server/behaviors/10/aitasks/0/damageType", "value": "BluntAttack"},
-  {"side": "Server", "file": "game:entities/land/hooved/deer", "op": "replace", "path": "/server/behaviors/10/aitasks/0/damageTier", "value": 2}
+  {"side": "Server", "file": "game:entities/land/hooved/deer", "op": "replace", "path": "/server/behaviors/11/aitasks/0/damageType", "value": "BluntAttack"},
+  {"side": "Server", "file": "game:entities/land/hooved/deer", "op": "replace", "path": "/server/behaviors/11/aitasks/0/damageTier", "value": 2}
 ]
