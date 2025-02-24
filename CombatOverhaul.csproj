@@ -50,10 +50,9 @@
 
   <!-- Startup settings -->
   <PropertyGroup>
-    <DataFolderName>VintagestoryDataDev</DataFolderName>
-    <AppDataDir>$(AppData)</AppDataDir>                 
-    <DataFolder>$(AppDataDir)\$(DataFolderName)</DataFolder>
-    <AditionalModsFolder>$(AppDataDir)\$(DataFolderName)\Mods</AditionalModsFolder>
+    <DataFolderName>VintagestoryDataDev</DataFolderName>               
+    <DataFolder>$(AppData)\$(DataFolderName)</DataFolder>
+    <AditionalModsFolder>$(AppData)\$(DataFolderName)\Mods</AditionalModsFolder>
     <WorldName>test_$(ModId)</WorldName>
     <ModDir>$(ProjectDir)\$(OutputDir)</ModDir>
   </PropertyGroup>
