@@ -150,15 +150,20 @@
   "iteminfo-melee-weapon-blockStats": "{2} blok\n Úroveň: {0}\n Chráněné části těla: {1}",
   "iteminfo-melee-weapon-parryStats": "{2} Odražení\n Úroveň: {0}\n Chráněné části těla: {1}",
   
-  "game:item-spear-generic-iron": "Železné kopí",
-  "game:item-spear-generic-meteoriciron": "Kopí z meteorického zeleza",
-  "game:item-spear-generic-steel": "Ocelové kopí",
+  "game:item-spear-generic-iron": "Kopí ze železa",
+  "game:item-spear-generic-meteoriciron": "Kopí z meteorického železa",
+  "game:item-spear-generic-steel": "Kopí z oceli",
+  "game:item-spearhead-iron": "Hlava kopí ze železa",
+  "game:item-spearhead-meteoriciron": "Hlava kopí z meteorického železa",
+  "game:item-spearhead-steel": "Hlava kopí z oceli",
 
   "prefixandcreature-arrow-*": "Šíp",
   "prefixandcreature-spear-*": "Kopí",
 
   "interaction-hold-alt": "Chcete-li interagovat s předměty nebo je umístit na stojan na nářadí/země, podržte klávesu 'Alt'",
   "interaction-grip-change": "Chcete-li změnit délku uchopení zbraně, podržte „pravé tlačítko myši“ a otočte „kolečkem myši“.",
+  "interaction-toggle-light-source": "Přepínání nositelného zdroje světla",
+  "interaction-toggle-light-source-hotkey": "Přepínání nositelného zdroje světla",
 
   "setting-directions_cursor_transparency": "Pruhlednost kurzoru vyberu smeru",
   "setting-directions_cursor_scale": "Merítko kurzoru vyberu smeru",
@@ -198,5 +203,6 @@
   "setting-player_model_neck_damage": "Multiplikátor poskození krku hráce",
   "setting-player_model_face_damage": "Multiplikátor poskození obliceje hráce",
   "setting-player_model_arms_damage": "Multiplikátor poskození pazí hráce",
-  "setting-player_model_legs_damage": "Násobitel poskození nohou hráce"
+  "setting-player_model_legs_damage": "Násobitel poskození nohou hráce",  
+  "setting-modify_vanilla_classes-comment": "Funguje pouze v singleplayeru"
 }
