@@ -235,6 +235,7 @@ public sealed class CombatOverhaulSystem : ModSystem
         DamageResistData.MaxArmorTier = armorConfigObj.MaxArmorTier;
         DamageResistData.DamageReduction = armorConfigObj.DamageReduction;
 
+        ArmorAutoPatcher.Patch(api);
 
         if (api is ICoreServerAPI serverApi)
         {
@@ -398,7 +399,7 @@ public sealed class CombatOverhaulAnimationsSystem : ModSystem
     {
         _api = api;
 
-        HarmonyPatches.Patch("CombatOverhaul", api);
+        HarmonyPatches.Patch("SomeUnknownMod", api);
     }
 
     public override void StartClientSide(ICoreClientAPI api)
@@ -425,7 +426,7 @@ public sealed class CombatOverhaulAnimationsSystem : ModSystem
 
     public override void Dispose()
     {
-        HarmonyPatches.Unpatch("CombatOverhaul", _api);
+        HarmonyPatches.Unpatch("SomeUnknownMod", _api);
 
         if (_api is ICoreClientAPI clientApi)
         {

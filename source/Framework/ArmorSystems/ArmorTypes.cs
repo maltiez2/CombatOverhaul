@@ -1,5 +1,6 @@
 ﻿using CombatOverhaul.DamageSystems;
 using CombatOverhaul.Utils;
+using Newtonsoft.Json.Linq;
 using System.Text;
 using Vintagestory.API.Common;
 using Vintagestory.API.Config;
@@ -120,6 +121,15 @@ public class ArmorBehavior : CollectibleBehavior, IArmor, IAffectsPlayerStats
         Resists = new(
             stats.Resists.ToDictionary(entry => Enum.Parse<EnumDamageType>(entry.Key), entry => entry.Value),
             stats.FlatReduction.ToDictionary(entry => Enum.Parse<EnumDamageType>(entry.Key), entry => entry.Value));
+    }
+    public void Initialize(ArmorType armorType, DamageResistData resists, Dictionary<string, float> stats)
+    {
+        JsonObject properties = new(new JObject());
+        base.Initialize(properties);
+
+        Stats = stats;
+        ArmorType = armorType;
+        Resists = resists;
     }
 
     public override void GetHeldItemInfo(ItemSlot inSlot, StringBuilder dsc, IWorldAccessor world, bool withDebugInfo)
