@@ -1,15 +1,12 @@
-﻿using ProtoBuf;
-using Vintagestory.API.Client;
-using Vintagestory.API.Common.Entities;
-using Vintagestory.API.Common;
-using Vintagestory.API.Server;
-using CombatOverhaul.Colliders;
+﻿using CombatOverhaul.Colliders;
 using CombatOverhaul.DamageSystems;
-using CompactExifLib;
 using OpenTK.Mathematics;
+using ProtoBuf;
+using Vintagestory.API.Client;
+using Vintagestory.API.Common;
+using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
-using csogg;
-using System.Net.Sockets;
+using Vintagestory.API.Server;
 
 namespace CombatOverhaul.MeleeSystems;
 
@@ -60,7 +57,7 @@ public sealed class MeleeSystemServer : MeleeSystem
     public delegate void MeleeDamageDelegate(Entity target, DamageSource damageSource, ItemSlot? slot, ref float damage);
 
     public event MeleeDamageDelegate? OnDealMeleeDamage;
-    
+
     public MeleeSystemServer(ICoreServerAPI api)
     {
         _api = api;
@@ -135,7 +132,7 @@ public sealed class MeleeSystemServer : MeleeSystem
     private void DealDurabilityDamage(ItemSlot? slot, MeleeDamagePacket packet, Entity? attacker)
     {
         if (packet.DurabilityDamage <= 0) return;
-        
+
         if (slot?.Itemstack?.Collectible != null && attacker != null)
         {
             slot.Itemstack.Collectible.DamageItem(attacker.Api.World, attacker, slot, packet.DurabilityDamage);

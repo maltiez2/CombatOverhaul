@@ -51,11 +51,6 @@ void main(void)
 	
 	worldPos = animModelMat * vec4(vertexPositionIn, 1.0);
 	
-	if (dontWarpVertices == 0) {
-		worldPos = applyVertexWarping(flags | addRenderFlags, worldPos);
-		worldPos = applyGlobalWarping(worldPos);
-	}
-	
 	camPos = viewMatrix * worldPos;
 	
 	uv = uvIn;

@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Vintagestory.API.Common;
+﻿using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.MathTools;
 
@@ -59,13 +58,13 @@ public readonly struct DirectionOffset
 
         float yawSin = (from[2] * to[0] - from[0] * to[2]) / MathF.Sqrt((from[0] * from[0] + from[2] * from[2]) * (to[0] * to[0] + to[2] * to[2]));
         float pitchSin = (from[2] * to[1] - from[1] * to[2]) / MathF.Sqrt((from[1] * from[1] + from[2] * from[2]) * (to[1] * to[1] + to[2] * to[2]));
-        
+
         Yaw = Angle.FromRadians(GameMath.Clamp(MathF.Asin(yawSin), -2f * MathF.PI, 2f * MathF.PI));
         Pitch = Angle.FromRadians(GameMath.Clamp(MathF.Asin(pitchSin), -2f * MathF.PI, 2f * MathF.PI));
     }
     public DirectionOffset(Vec3f direction, Vec3f reference)
     {
-        
+
         // (x1 * z2 - x2 * z1) / sqrt( (x2^2 + z2^2) * (x1^2 + z1^2) )
         float yawSin = (reference.Z * direction.X - reference.X * direction.Z) / MathF.Sqrt((reference.X * reference.X + reference.Z * reference.Z) * (direction.X * direction.X + direction.Z * direction.Z));
         float pitchSin = (reference.Z * direction.Y - reference.Y * direction.Z) / MathF.Sqrt((reference.Y * reference.Y + reference.Z * reference.Z) * (direction.Y * direction.Y + direction.Z * direction.Z));
@@ -89,10 +88,10 @@ public readonly struct DirectionOffset
             {
                 Pitch = Angle.FromDegrees(-90);
             }
-            
+
             return;
         }
-        
+
         float yawSin = direction.X / MathF.Sqrt(direction.X * direction.X + direction.Z * direction.Z);
         float pitchSin = direction.Y / MathF.Sqrt(direction.X * direction.X + direction.Y * direction.Y + direction.Z * direction.Z);
         float yawCos = direction.Z / MathF.Sqrt(direction.X * direction.X + direction.Z * direction.Z);

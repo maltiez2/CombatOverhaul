@@ -1,5 +1,4 @@
-﻿using CombatOverhaul.Armor;
-using CombatOverhaul.Colliders;
+﻿using CombatOverhaul.Colliders;
 using CombatOverhaul.DamageSystems;
 using OpenTK.Mathematics;
 using System.Text;
@@ -229,7 +228,7 @@ public class ProjectileEntity : Entity
         ShooterId = reader.ReadInt64();
         ProjectileId = Guid.Parse(reader.ReadString());
         if (reader.ReadBoolean()) ProjectileStack = new ItemStack(reader);
-        if (reader.ReadBoolean())  WeaponStack = new ItemStack(reader);
+        if (reader.ReadBoolean()) WeaponStack = new ItemStack(reader);
     }
     public override void OnEntityDespawn(EntityDespawnData despawn)
     {
@@ -332,7 +331,7 @@ public class ProjectileBehavior : CollectibleBehavior
     public override void Initialize(JsonObject properties)
     {
         base.Initialize(properties);
-        
+
         Stats = properties["stats"].AsObject<ProjectileStats>();
     }
 

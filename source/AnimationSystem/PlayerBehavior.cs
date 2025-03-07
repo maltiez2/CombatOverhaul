@@ -2,7 +2,6 @@
 using CombatOverhaul.Utils;
 using OpenTK.Mathematics;
 using ProtoBuf;
-using System.Diagnostics;
 using System.Reflection;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -145,7 +144,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
         {
             if (_playRequests[index].request.Category == category)
             {
-                _playRequests[index] = (new (), _playRequests[index].mainHand, true);
+                _playRequests[index] = (new(), _playRequests[index].mainHand, true);
             }
         }
     }
@@ -222,7 +221,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     }
     private void OnFrame(Entity entity, ElementPose pose)
     {
-        if (!AnimationsManager.PlayAnimationsInThirdPerson && !IsFirstPerson(entity)) return;
+        if (!DebugManager.PlayAnimationsInThirdPerson && !IsFirstPerson(entity)) return;
         if (!_composer.AnyActiveAnimations() && FrameOverride == null)
         {
             if (_resetFov)
@@ -677,7 +676,7 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
     }
     private void OnFrame(Entity entity, ElementPose pose)
     {
-        if (AnimationsManager.PlayAnimationsInThirdPerson || IsFirstPerson(entity)) return;
+        if (DebugManager.PlayAnimationsInThirdPerson || IsFirstPerson(entity)) return;
 
         Animatable? animatable = (entity as EntityAgent)?.RightHandItemSlot?.Itemstack?.Item?.GetCollectibleBehavior(typeof(Animatable), true) as Animatable;
 

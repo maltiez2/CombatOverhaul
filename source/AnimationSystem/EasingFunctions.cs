@@ -110,7 +110,39 @@ public enum EasingFunctionType
     ///  <seealso href="https://www.wolframalpha.com/input?i=plot+0.5-0.5*Cos+x*pi+%2B+0.35*Sin^2+x*pi+from+0+to+1">Progress curve</seealso>.
     ///  <seealso href="https://www.wolframalpha.com/input?i=plot+derivative+0.5-0.5*Cos+x*pi+%2B+0.35*Sin^2+x*pi+from+0+to+1">Speed curve</seealso>.
     /// </summary>
-    Bounce
+    Bounce,
+
+    // Standard easing functions from https://easings.net/
+    EaseInSine,
+    EaseOutSine,
+    EaseInOutSine,
+    EaseInQuad,
+    EaseOutQuad,
+    EaseInOutQuad,
+    EaseInCubic,
+    EaseOutCubic,
+    EaseInOutCubic,
+    EaseInQuart,
+    EaseOutQuart,
+    EaseInOutQuart,
+    EaseInQuint,
+    EaseOutQuint,
+    EaseInOutQuint,
+    EaseInExpo,
+    EaseOutExpo,
+    EaseInOutExpo,
+    EaseInCirc,
+    EaseOutCirc,
+    EaseInOutCirc,
+    EaseInBack,
+    EaseOutBack,
+    EaseInOutBack,
+    EaseInElastic,
+    EaseOutElastic,
+    EaseInOutElastic,
+    EaseInBounce,
+    EaseOutBounce,
+    EaseInOutBounce
 }
 
 /// <summary>
@@ -136,8 +168,8 @@ static public class EasingFunctions // @TODO add clean up on mod system dispose
         { EasingFunctionType.Bounce,       (float progress) => 0.5f - GameMath.Cos(progress * GameMath.PI) / 2 + MathF.Pow(GameMath.Sin(progress * GameMath.PI), 2) * 0.35f },
     };
 
-    public static EasingFunctionDelegate Get(EasingFunctionType id) => _modifiers[id];
-    public static EasingFunctionDelegate Get(int id) => _modifiers[(EasingFunctionType)id];
+    public static EasingFunctionDelegate Get(EasingFunctionType id) => id <= EasingFunctionType.Bounce ? _modifiers[id] : (float x) => StandardEasingFunctions.Calculate(id, x);
+    public static EasingFunctionDelegate Get(int id) => Get((EasingFunctionType)id);
     public static EasingFunctionDelegate Get(string name) => Get((EasingFunctionType)Enum.Parse(typeof(EasingFunctionType), name));
     /// <summary>
     /// Registers <see cref="EasingFunctionDelegate"/> by given id.<br/>
@@ -156,4 +188,77 @@ static public class EasingFunctions // @TODO add clean up on mod system dispose
     public static bool Register(string name, EasingFunctionDelegate modifier) => _modifiers.TryAdd((EasingFunctionType)ToCrc32(name), modifier);
 
     internal static uint ToCrc32(string value) => GameMath.Crc32(value.ToLowerInvariant()) & int.MaxValue;
+}
+
+/// <summary>
+/// https://easings.net/
+/// </summary>
+static public class StandardEasingFunctions
+{
+    public const float BackC1 = 1.70158f;
+    public const float BackC2 = BackC1 * 1.525f;
+    public const float BackC3 = BackC1 + 1;
+    public const float ElasticC1 = 2f * MathF.PI / 3f;
+    public const float ElasticC2 = 2f * MathF.PI / 4.5f;
+    public const float BounceN1 = 7.5625f;
+    public const float BounceD1 = 2.75f;
+
+    public static float Calculate(EasingFunctionType function, float x)
+    {
+        return function switch
+        {
+            EasingFunctionType.Linear => x,
+            EasingFunctionType.EaseInSine => 1 - MathF.Cos((x * MathF.PI) / 2),
+            EasingFunctionType.EaseOutSine => MathF.Sin((x * MathF.PI) / 2),
+            EasingFunctionType.EaseInOutSine => -(MathF.Cos(MathF.PI * x) - 1) / 2,
+            EasingFunctionType.EaseInQuad => x * x,
+            EasingFunctionType.EaseOutQuad => 1 - (1 - x) * (1 - x),
+            EasingFunctionType.EaseInOutQuad => x < 0.5 ? 2 * x * x : 1 - MathF.Pow(-2 * x + 2, 2) / 2,
+            EasingFunctionType.EaseInCubic => x * x * x,
+            EasingFunctionType.EaseOutCubic => 1 - MathF.Pow(1 - x, 3),
+            EasingFunctionType.EaseInOutCubic => x < 0.5 ? 4 * x * x * x : 1 - MathF.Pow(-2 * x + 2, 3) / 2,
+            EasingFunctionType.EaseInQuart => x * x * x * x,
+            EasingFunctionType.EaseOutQuart => 1 - MathF.Pow(1 - x, 4),
+            EasingFunctionType.EaseInOutQuart => x < 0.5 ? 8 * x * x * x * x : 1 - MathF.Pow(-2 * x + 2, 4) / 2,
+            EasingFunctionType.EaseInQuint => x * x * x * x * x,
+            EasingFunctionType.EaseOutQuint => 1 - MathF.Pow(1 - x, 5),
+            EasingFunctionType.EaseInOutQuint => x < 0.5 ? 16 * x * x * x * x * x : 1 - MathF.Pow(-2 * x + 2, 5) / 2,
+            EasingFunctionType.EaseInExpo => x == 0 ? 0 : MathF.Pow(2, 10 * x - 10),
+            EasingFunctionType.EaseOutExpo => x == 1 ? 1 : 1 - MathF.Pow(2, -10 * x),
+            EasingFunctionType.EaseInOutExpo => x == 0 ? 0 : x == 1 ? 1 : x < 0.5 ? MathF.Pow(2, 20 * x - 10) / 2 : (2 - MathF.Pow(2, -20 * x + 10)) / 2,
+            EasingFunctionType.EaseInCirc => 1 - MathF.Sqrt(1 - MathF.Pow(x, 2)),
+            EasingFunctionType.EaseOutCirc => MathF.Sqrt(1 - MathF.Pow(x - 1, 2)),
+            EasingFunctionType.EaseInOutCirc => x < 0.5 ? (1 - MathF.Sqrt(1 - MathF.Pow(2 * x, 2))) / 2 : (MathF.Sqrt(1 - MathF.Pow(-2 * x + 2, 2)) + 1) / 2,
+            EasingFunctionType.EaseInBack => BackC3 * x * x * x - BackC1 * x * x,
+            EasingFunctionType.EaseOutBack => 1 + BackC3 * MathF.Pow(x - 1, 3) + BackC1 * MathF.Pow(x - 1, 2),
+            EasingFunctionType.EaseInOutBack => x < 0.5 ? (MathF.Pow(2 * x, 2) * ((BackC2 + 1) * 2 * x - BackC2)) / 2 : (MathF.Pow(2 * x - 2, 2) * ((BackC2 + 1) * (x * 2 - 2) + BackC2) + 2) / 2,
+            EasingFunctionType.EaseInElastic => x == 0 ? 0 : x == 1 ? 1 : -MathF.Pow(2, 10 * x - 10) * MathF.Sin((x * 10 - 10.75f) * ElasticC1),
+            EasingFunctionType.EaseOutElastic => x == 0 ? 0 : x == 1 ? 1 : MathF.Pow(2, -10 * x) * MathF.Sin((x * 10 - 0.75f) * ElasticC1) + 1,
+            EasingFunctionType.EaseInOutElastic => x == 0 ? 0 : x == 1 ? 1 : x < 0.5 ? -(MathF.Pow(2, 20 * x - 10) * MathF.Sin((20 * x - 11.125f) * ElasticC2)) / 2 : (MathF.Pow(2, -20 * x + 10) * MathF.Sin((20 * x - 11.125f) * ElasticC2)) / 2 + 1,
+            EasingFunctionType.EaseInBounce => 1 - Bounce(1 - x),
+            EasingFunctionType.EaseOutBounce => Bounce(x),
+            EasingFunctionType.EaseInOutBounce => x < 0.5 ? (1 - Bounce(1 - 2 * x)) / 2 : (1 + Bounce(2 * x - 1)) / 2,
+            _ => x
+        };
+    }
+
+    public static float Bounce(float x)
+    {
+        if (x < 1 / BounceD1)
+        {
+            return BounceN1 * x * x;
+        }
+        else if (x < 2 / BounceD1)
+        {
+            return BounceN1 * ((x - 1.5f) / BounceD1) * (x - 1.5f) + 0.75f;
+        }
+        else if (x < 2.5 / BounceD1)
+        {
+            return BounceN1 * ((x - 2.25f) / BounceD1) * (x - 2.25f) + 0.9375f;
+        }
+        else
+        {
+            return BounceN1 * ((x - 2.625f) / BounceD1) * (x - 2.625f) + 0.984375f;
+        }
+    }
 }

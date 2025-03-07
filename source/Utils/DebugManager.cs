@@ -3,11 +3,9 @@ using CombatOverhaul.Integration;
 using CombatOverhaul.MeleeSystems;
 using CombatOverhaul.Utils;
 using ImGuiNET;
-using Newtonsoft.Json.Linq;
 using System.Reflection;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
-using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Util;
 using Vintagestory.Client.NoObf;
@@ -16,13 +14,12 @@ using VSImGui.API;
 
 namespace CombatOverhaul.Animations;
 
-public sealed class AnimationsManager
+public sealed class DebugManager
 {
-    public Dictionary<string, Animation> Animations { get; private set; } = new();
     public static bool PlayAnimationsInThirdPerson { get; set; } = false;
     public static bool RenderDebugColliders { get; set; } = false;
 
-    public AnimationsManager(ICoreClientAPI api, ParticleEffectsManager particleEffectsManager)
+    public DebugManager(ICoreClientAPI api, ParticleEffectsManager particleEffectsManager)
     {
 #if DEBUG
         api.ModLoader.GetModSystem<ImGuiModSystem>().Draw += DrawEditor;
@@ -34,23 +31,6 @@ public sealed class AnimationsManager
         _api = api;
         _particleEffectsManager = particleEffectsManager;
         _colliders.Clear();
-    }
-    public void Load()
-    {
-        List<IAsset> animations = _api.Assets.GetManyInCategory("config", "animations");
-
-        Dictionary<string, Animation> animationsByCode = new();
-        foreach (Dictionary<string, Animation> assetAnimations in animations.Select(FromAsset))
-        {
-            foreach ((string code, Animation animation) in assetAnimations)
-            {
-                animationsByCode.Add(code, animation);
-            }
-        }
-
-        Animations = animationsByCode;
-
-        _behavior = _api.World.Player.Entity.GetBehavior<FirstPersonAnimationsBehavior>();
     }
 
     public static void RegisterTransformByCode(ModelTransform transform, string code)
@@ -95,7 +75,7 @@ public sealed class AnimationsManager
     private float _animationSpeed = 1;
     private ParticleEffectsManager _particleEffectsManager;
     private AnimationJson _animationBuffer;
-    private static AnimationsManager _instance;
+    private static DebugManager _instance;
 
     private string _animationsFilter = "";
     private string _filter = "";
@@ -106,45 +86,6 @@ public sealed class AnimationsManager
     private readonly Dictionary<string, ModelTransform> _transforms = new();
     private static Dictionary<string, Dictionary<string, (Action<LineSegmentCollider> setter, System.Func<LineSegmentCollider> getter)>> _colliders = new();
     internal static LineSegmentCollider? _currentCollider = null;
-
-    private Dictionary<string, Animation> FromAsset(IAsset asset)
-    {
-        Dictionary<string, Animation> result = new();
-
-        string domain = asset.Location.Domain;
-
-        JsonObject json;
-
-        try
-        {
-            json = JsonObject.FromJson(asset.ToText());
-        }
-        catch (Exception exception)
-        {
-            LoggerUtil.Error(_api, this, $"Error on parsing animations file '{asset.Location}'.\nException: {exception}");
-            return result;
-        }
-
-        foreach (KeyValuePair<string, JToken?> entry in json.Token as JObject)
-        {
-            string code = entry.Key;
-
-            try
-            {
-                JsonObject animationJson = new(entry.Value);
-
-                Animation animation = animationJson.AsObject<AnimationJson>().ToAnimation();
-
-                result.Add($"{domain}:{code}", animation);
-            }
-            catch (Exception exception)
-            {
-                LoggerUtil.Error(_api, this, $"Error on parsing animation '{code}' from '{asset.Location}'.\nException: {exception}");
-            }
-        }
-
-        return result;
-    }
 
 #if DEBUG
     private CallbackGUIStatus DrawEditor(float deltaSeconds)
@@ -266,17 +207,17 @@ public sealed class AnimationsManager
 
     private void AnimationsTab()
     {
-        string[] codes = Animations.Keys.ToArray();
+        string[] codes = AnimationsManager._instance.Animations.Keys.ToArray();
 
         if (ImGui.Button("Save to buffer"))
         {
-            _animationBuffer = AnimationJson.FromAnimation(Animations[codes[_selectedAnimationIndex]]);
+            _animationBuffer = AnimationJson.FromAnimation(AnimationsManager._instance.Animations[codes[_selectedAnimationIndex]]);
         }
         ImGui.SameLine();
 
         if (ImGui.Button("Load from buffer"))
         {
-            Animations[codes[_selectedAnimationIndex]] = _animationBuffer.ToAnimation();
+            AnimationsManager._instance.Animations[codes[_selectedAnimationIndex]] = _animationBuffer.ToAnimation();
         }
 
         if (ImGui.Button("Save buffer to file"))
@@ -317,7 +258,7 @@ public sealed class AnimationsManager
         }
 
         ImGui.InputTextWithHint("Filter##" + "animations", "supports wildcards", ref _animationsFilter, 200);
-        EditorsUtils.FilterElements(_animationsFilter, Animations.Keys, out IEnumerable<string> filtered, out IEnumerable<int> indexes);
+        EditorsUtils.FilterElements(_animationsFilter, AnimationsManager._instance.Animations.Keys, out IEnumerable<string> filtered, out IEnumerable<int> indexes);
 
         ImGui.ListBox("transforms", ref _selectedAnimationIndexFiltered, filtered.ToArray(), filtered.Count());
 
@@ -325,7 +266,7 @@ public sealed class AnimationsManager
 
         if (_selectedAnimationIndexFiltered >= filtered.Count()) _selectedAnimationIndexFiltered = 0;
 
-        _selectedAnimationIndex = Animations.Keys.ToArray().IndexOf(filtered.ToArray()[_selectedAnimationIndexFiltered]);
+        _selectedAnimationIndex = AnimationsManager._instance.Animations.Keys.ToArray().IndexOf(filtered.ToArray()[_selectedAnimationIndexFiltered]);
 
         /*if (ImGui.Button("Remove##animations"))
         {
@@ -334,21 +275,21 @@ public sealed class AnimationsManager
             if (_selectedAnimationIndex < 0) _selectedAnimationIndex = 0;
         }*/
 
-        codes = Animations.Keys.ToArray();
+        codes = AnimationsManager._instance.Animations.Keys.ToArray();
 
         if (ImGui.CollapsingHeader($"Add animation"))
         {
             CreateAnimationGui();
         }
 
-        if (_selectedAnimationIndex < Animations.Count)
+        if (_selectedAnimationIndex < AnimationsManager._instance.Animations.Count)
         {
             ImGui.SeparatorText("Animation");
 
-            if (ImGui.Button("Play") && Animations.Count > 0)
+            if (ImGui.Button("Play") && AnimationsManager._instance.Animations.Count > 0)
             {
                 AnimationRequest request = new(
-                    Animations[codes[_selectedAnimationIndex]],
+                    AnimationsManager._instance.Animations[codes[_selectedAnimationIndex]],
                     _animationSpeed,
                     1,
                     "main",
@@ -361,25 +302,25 @@ public sealed class AnimationsManager
             }
             ImGui.SameLine();
 
-            if (ImGui.Button("Export to clipboard") && Animations.Count > 0)
+            if (ImGui.Button("Export to clipboard") && AnimationsManager._instance.Animations.Count > 0)
             {
-                ImGui.SetClipboardText(Animations[codes[_selectedAnimationIndex]].ToString());
+                ImGui.SetClipboardText(AnimationsManager._instance.Animations[codes[_selectedAnimationIndex]].ToString());
             }
             ImGui.SameLine();
 
             ImGui.SetNextItemWidth(200);
             ImGui.SliderFloat("Animation speed", ref _animationSpeed, 0.1f, 2);
             ImGui.Checkbox("Overwrite current frame", ref _overwriteFrame);
-            Animations[codes[_selectedAnimationIndex]].Edit(codes[_selectedAnimationIndex]);
+            AnimationsManager._instance.Animations[codes[_selectedAnimationIndex]].Edit(codes[_selectedAnimationIndex]);
             if (_overwriteFrame)
             {
-                if (Animations[codes[_selectedAnimationIndex]]._playerFrameEdited)
+                if (AnimationsManager._instance.Animations[codes[_selectedAnimationIndex]]._playerFrameEdited)
                 {
-                    _behavior.FrameOverride = Animations[codes[_selectedAnimationIndex]].StillPlayerFrame(Animations[codes[_selectedAnimationIndex]]._playerFrameIndex, Animations[codes[_selectedAnimationIndex]]._frameProgress);
+                    _behavior.FrameOverride = AnimationsManager._instance.Animations[codes[_selectedAnimationIndex]].StillPlayerFrame(AnimationsManager._instance.Animations[codes[_selectedAnimationIndex]]._playerFrameIndex, AnimationsManager._instance.Animations[codes[_selectedAnimationIndex]]._frameProgress);
                 }
                 else
                 {
-                    _behavior.FrameOverride = Animations[codes[_selectedAnimationIndex]].StillItemFrame(Animations[codes[_selectedAnimationIndex]]._itemFrameIndex, Animations[codes[_selectedAnimationIndex]]._frameProgress);
+                    _behavior.FrameOverride = AnimationsManager._instance.Animations[codes[_selectedAnimationIndex]].StillItemFrame(AnimationsManager._instance.Animations[codes[_selectedAnimationIndex]]._itemFrameIndex, AnimationsManager._instance.Animations[codes[_selectedAnimationIndex]]._frameProgress);
                 }
             }
             else
@@ -523,11 +464,11 @@ public sealed class AnimationsManager
 
         ImGui.InputText("Animation code##playeranimation", ref _playerAnimationKey, 300);
 
-        bool canAddAnimation = !Animations.ContainsKey(_playerAnimationKey) && _playerAnimationKey != "";
+        bool canAddAnimation = !AnimationsManager._instance.Animations.ContainsKey(_playerAnimationKey) && _playerAnimationKey != "";
         if (!canAddAnimation) ImGui.BeginDisabled();
         if (ImGui.Button($"Create##playeranimation"))
         {
-            Animations.Add(_playerAnimationKey, new Animation(new PLayerKeyFrame[] { PLayerKeyFrame.Zero }));
+            AnimationsManager._instance.Animations.Add(_playerAnimationKey, new Animation(new PLayerKeyFrame[] { PLayerKeyFrame.Zero }));
         }
         if (!canAddAnimation) ImGui.EndDisabled();
 
@@ -561,14 +502,14 @@ public sealed class AnimationsManager
         ImGui.InputText($"Item animation code", ref _itemAnimation, 300);
         ImGui.InputText($"New animation code", ref _animationKey, 300);
 
-        bool canCreate = !Animations.ContainsKey(_animationKey);
+        bool canCreate = !AnimationsManager._instance.Animations.ContainsKey(_animationKey);
 
         if (!canCreate) ImGui.BeginDisabled();
         if (ImGui.Button("Create##itemanimation"))
         {
             try
             {
-                Animations.Add(_animationKey, new Animation(new PLayerKeyFrame[] { PLayerKeyFrame.Zero }, _itemAnimation, shape));
+                AnimationsManager._instance.Animations.Add(_animationKey, new Animation(new PLayerKeyFrame[] { PLayerKeyFrame.Zero }, _itemAnimation, shape));
             }
             catch (Exception exception)
             {
