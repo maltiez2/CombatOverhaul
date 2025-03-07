@@ -31,6 +31,8 @@ public sealed class DebugManager
         _api = api;
         _particleEffectsManager = particleEffectsManager;
         _colliders.Clear();
+
+        _behavior = api.World.Player.Entity.GetBehavior<FirstPersonAnimationsBehavior>();
     }
 
     public static void RegisterTransformByCode(ModelTransform transform, string code)
@@ -75,7 +77,7 @@ public sealed class DebugManager
     private float _animationSpeed = 1;
     private ParticleEffectsManager _particleEffectsManager;
     private AnimationJson _animationBuffer;
-    private static DebugManager _instance;
+    internal static DebugManager _instance;
 
     private string _animationsFilter = "";
     private string _filter = "";

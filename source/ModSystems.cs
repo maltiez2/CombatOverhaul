@@ -386,6 +386,7 @@ public sealed class CombatOverhaulSystem : ModSystem
 public sealed class CombatOverhaulAnimationsSystem : ModSystem
 {
     public AnimationsManager? PlayerAnimationsManager { get; private set; }
+    public DebugManager? DebugManager { get; private set; }
     public ParticleEffectsManager? ParticleEffectsManager { get; private set; }
     public VanillaAnimationsSystemClient? ClientVanillaAnimations { get; private set; }
     public VanillaAnimationsSystemServer? ServerVanillaAnimations { get; private set; }
@@ -408,6 +409,7 @@ public sealed class CombatOverhaulAnimationsSystem : ModSystem
         LoadAnimatedItemShaders();
         ParticleEffectsManager = new(api);
         PlayerAnimationsManager = new(api, ParticleEffectsManager);
+        DebugManager = new(api, ParticleEffectsManager);
         ClientVanillaAnimations = new(api);
         ClientTpAnimationSystem = new(api);
     }

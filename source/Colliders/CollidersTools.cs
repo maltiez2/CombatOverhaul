@@ -7,7 +7,7 @@ using Vintagestory.GameContent;
 
 namespace CombatOverhaul.Colliders;
 
-internal static class ColliderTools
+public static class ColliderTools
 {
     public static Vector3 TransformVector(Vector3 value, Matrixf modelMatrix, EntityPos playerPos)
     {
