@@ -1,6 +1,4 @@
 ﻿using CombatOverhaul.Colliders;
-using System.Collections.Generic;
-using System.Diagnostics;
 using OpenTK.Mathematics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;

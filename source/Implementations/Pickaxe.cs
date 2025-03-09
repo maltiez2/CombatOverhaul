@@ -2,9 +2,7 @@
 using CombatOverhaul.Colliders;
 using CombatOverhaul.Inputs;
 using CombatOverhaul.MeleeSystems;
-using System.Diagnostics;
 using OpenTK.Mathematics;
-using System.Reflection.Metadata;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Config;
@@ -23,7 +21,7 @@ public class PickaxeStats
     public float[] Collider { get; set; } = Array.Empty<float>();
     public Dictionary<string, string> HitParticleEffects { get; set; } = new();
     public float HitStaggerDurationMs { get; set; } = 100;
-    
+
     public MeleeAttackStats Attack { get; set; } = new();
     public string AttackAnimation { get; set; } = "";
     public string AttackTpAnimation { get; set; } = "";
@@ -61,7 +59,7 @@ public class PickaxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
         MeleeAttack = new(api, Stats.Attack);
 
 #if DEBUG
-        DebugManager.RegisterCollider(item.Code.ToString(), "tool head", value => Collider = value, () => Collider);
+        DebugWindowManager.RegisterCollider(item.Code.ToString(), "tool head", value => Collider = value, () => Collider);
 #endif
     }
     public int ItemId { get; }
@@ -85,9 +83,9 @@ public class PickaxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
     }
     public virtual void RenderDebugCollider(ItemSlot inSlot, IClientPlayer byPlayer)
     {
-        if (DebugManager._currentCollider != null)
+        if (DebugWindowManager._currentCollider != null)
         {
-            DebugManager._currentCollider.Value.Transform(byPlayer.Entity.Pos, byPlayer.Entity, inSlot, Api, right: true)?.Render(Api, byPlayer.Entity, ColorUtil.ColorFromRgba(255, 125, 125, 255));
+            DebugWindowManager._currentCollider.Value.Transform(byPlayer.Entity.Pos, byPlayer.Entity, inSlot, Api, right: true)?.Render(Api, byPlayer.Entity, ColorUtil.ColorFromRgba(255, 125, 125, 255));
             return;
         }
 
@@ -329,7 +327,7 @@ public class PickaxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
                 break;
         }
     }
-    
+
 
     protected static string AnimationCategory(bool mainHand = true) => mainHand ? "main" : "mainOffhand";
     protected virtual float GetMiningSpeed(IItemStack itemStack, BlockSelection blockSel, Block block, EntityPlayer forPlayer)
@@ -399,7 +397,7 @@ public class Pickaxe : Item, IHasWeaponLogic, ISetsRenderingOffset, IHasIdleAnim
     {
         base.OnHeldRenderOpaque(inSlot, byPlayer);
 
-        if (DebugManager.RenderDebugColliders)
+        if (DebugWindowManager.RenderDebugColliders)
         {
             Client?.RenderDebugCollider(inSlot, byPlayer);
         }

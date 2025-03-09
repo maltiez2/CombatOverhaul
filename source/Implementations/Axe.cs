@@ -74,7 +74,7 @@ public class AxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
         MeleeAttack = new(api, Stats.Attack);
 
 #if DEBUG
-        DebugManager.RegisterCollider(item.Code.ToString(), "tool head", value => Collider = value, () => Collider);
+        DebugWindowManager.RegisterCollider(item.Code.ToString(), "tool head", value => Collider = value, () => Collider);
 #endif
     }
     public int ItemId { get; }
@@ -96,9 +96,9 @@ public class AxeClient : IClientWeaponLogic, IOnGameTick, IRestrictAction
     }
     public virtual void RenderDebugCollider(ItemSlot inSlot, IClientPlayer byPlayer)
     {
-        if (DebugManager._currentCollider != null)
+        if (DebugWindowManager._currentCollider != null)
         {
-            DebugManager._currentCollider.Value.Transform(byPlayer.Entity.Pos, byPlayer.Entity, inSlot, Api, right: true)?.Render(Api, byPlayer.Entity, ColorUtil.ColorFromRgba(255, 125, 125, 255));
+            DebugWindowManager._currentCollider.Value.Transform(byPlayer.Entity.Pos, byPlayer.Entity, inSlot, Api, right: true)?.Render(Api, byPlayer.Entity, ColorUtil.ColorFromRgba(255, 125, 125, 255));
             return;
         }
 
@@ -484,7 +484,7 @@ public class Axe : ItemAxe, IHasWeaponLogic, ISetsRenderingOffset, IHasIdleAnima
     {
         base.OnHeldRenderOpaque(inSlot, byPlayer);
 
-        if (DebugManager.RenderDebugColliders)
+        if (DebugWindowManager.RenderDebugColliders)
         {
             Client?.RenderDebugCollider(inSlot, byPlayer);
         }

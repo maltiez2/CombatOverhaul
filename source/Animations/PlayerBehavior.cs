@@ -221,7 +221,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     }
     private void OnFrame(Entity entity, ElementPose pose)
     {
-        if (!DebugManager.PlayAnimationsInThirdPerson && !IsFirstPerson(entity)) return;
+        if (!DebugWindowManager.PlayAnimationsInThirdPerson && !IsFirstPerson(entity)) return;
         if (!_composer.AnyActiveAnimations() && FrameOverride == null)
         {
             if (_resetFov)
@@ -676,7 +676,7 @@ public sealed class ThirdPersonAnimationsBehavior : EntityBehavior
     }
     private void OnFrame(Entity entity, ElementPose pose)
     {
-        if (DebugManager.PlayAnimationsInThirdPerson || IsFirstPerson(entity)) return;
+        if (DebugWindowManager.PlayAnimationsInThirdPerson || IsFirstPerson(entity)) return;
 
         Animatable? animatable = (entity as EntityAgent)?.RightHandItemSlot?.Itemstack?.Item?.GetCollectibleBehavior(typeof(Animatable), true) as Animatable;
 

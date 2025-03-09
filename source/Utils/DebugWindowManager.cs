@@ -14,12 +14,12 @@ using VSImGui.API;
 
 namespace CombatOverhaul.Animations;
 
-public sealed class DebugManager
+public sealed class DebugWindowManager
 {
     public static bool PlayAnimationsInThirdPerson { get; set; } = false;
     public static bool RenderDebugColliders { get; set; } = false;
 
-    public DebugManager(ICoreClientAPI api, ParticleEffectsManager particleEffectsManager)
+    public DebugWindowManager(ICoreClientAPI api, ParticleEffectsManager particleEffectsManager)
     {
 #if DEBUG
         api.ModLoader.GetModSystem<ImGuiModSystem>().Draw += DrawEditor;
@@ -31,7 +31,10 @@ public sealed class DebugManager
         _api = api;
         _particleEffectsManager = particleEffectsManager;
         _colliders.Clear();
+    }
 
+    public void Load(ICoreClientAPI api)
+    {
         _behavior = api.World.Player.Entity.GetBehavior<FirstPersonAnimationsBehavior>();
     }
 
@@ -77,7 +80,7 @@ public sealed class DebugManager
     private float _animationSpeed = 1;
     private ParticleEffectsManager _particleEffectsManager;
     private AnimationJson _animationBuffer;
-    internal static DebugManager _instance;
+    internal static DebugWindowManager _instance;
 
     private string _animationsFilter = "";
     private string _filter = "";

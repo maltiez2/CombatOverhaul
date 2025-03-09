@@ -35,14 +35,14 @@ public sealed class AnimationsManager
         Animations = animationsByCode;
     }
 
-    [Obsolete("Use one from DebugManager")]
-    public static void RegisterTransformByCode(ModelTransform transform, string code) => DebugManager.RegisterTransformByCode(transform, code);
-    [Obsolete("Use one from DebugManager")]
-    public void RegisterTransform(ModelTransform transform, string code) => DebugManager._instance.RegisterTransform(transform, code);
-    [Obsolete("Use one from DebugManager")]
-    public static void RegisterCollider(string item, string type, MeleeDamageType collider) => DebugManager.RegisterCollider(item, type, collider);
-    [Obsolete("Use one from DebugManager")]
-    public static void RegisterCollider(string item, string type, Action<LineSegmentCollider> setter, System.Func<LineSegmentCollider> getter) => DebugManager.RegisterCollider(item, type, setter, getter);
+    [Obsolete("Use one from DebugWindowManager")]
+    public static void RegisterTransformByCode(ModelTransform transform, string code) => DebugWindowManager.RegisterTransformByCode(transform, code);
+    [Obsolete("Use one from DebugWindowManager")]
+    public void RegisterTransform(ModelTransform transform, string code) => DebugWindowManager._instance.RegisterTransform(transform, code);
+    [Obsolete("Use one from DebugWindowManager")]
+    public static void RegisterCollider(string item, string type, MeleeDamageType collider) => DebugWindowManager.RegisterCollider(item, type, collider);
+    [Obsolete("Use one from DebugWindowManager")]
+    public static void RegisterCollider(string item, string type, Action<LineSegmentCollider> setter, System.Func<LineSegmentCollider> getter) => DebugWindowManager.RegisterCollider(item, type, setter, getter);
 
     private readonly ICoreClientAPI _api;
     private static Dictionary<string, Dictionary<string, (Action<LineSegmentCollider> setter, System.Func<LineSegmentCollider> getter)>> _colliders = new();

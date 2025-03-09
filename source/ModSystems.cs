@@ -386,7 +386,7 @@ public sealed class CombatOverhaulSystem : ModSystem
 public sealed class CombatOverhaulAnimationsSystem : ModSystem
 {
     public AnimationsManager? PlayerAnimationsManager { get; private set; }
-    public DebugManager? DebugManager { get; private set; }
+    public DebugWindowManager? DebugManager { get; private set; }
     public ParticleEffectsManager? ParticleEffectsManager { get; private set; }
     public VanillaAnimationsSystemClient? ClientVanillaAnimations { get; private set; }
     public VanillaAnimationsSystemServer? ServerVanillaAnimations { get; private set; }
@@ -424,6 +424,7 @@ public sealed class CombatOverhaulAnimationsSystem : ModSystem
     public override void AssetsFinalize(ICoreAPI api)
     {
         PlayerAnimationsManager?.Load();
+        if (api is ICoreClientAPI) DebugManager?.Load(api as ICoreClientAPI);
     }
 
     public override void Dispose()

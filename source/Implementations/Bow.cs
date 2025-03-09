@@ -293,11 +293,13 @@ public class BowClient : RangeWeaponClient
 
 public sealed class AimingAnimationController
 {
+    public AimingStats Stats { get; set; }
+
     public AimingAnimationController(ClientAimingSystem aimingSystem, FirstPersonAnimationsBehavior? animationBehavior, AimingStats stats)
     {
         _aimingSystem = aimingSystem;
         _animationBehavior = animationBehavior;
-        _aimingStats = stats;
+        Stats = stats;
     }
 
     public void Play(bool mainHand)
@@ -318,7 +320,6 @@ public sealed class AimingAnimationController
     private readonly Animations.Animation _cursorStopFollowAnimation = Animations.Animation.Zero.Clone();
     private const float _animationFollowMultiplier = 0.01f;
     private readonly ClientAimingSystem _aimingSystem;
-    private readonly AimingStats _aimingStats;
     private readonly FirstPersonAnimationsBehavior? _animationBehavior;
 
     private PLayerKeyFrame GetAimingFrame()
@@ -330,8 +331,8 @@ public sealed class AimingAnimationController
         DebugWidgets.FloatDrag("tweaks", "animation", "offsetX", () => _aimingStats.AnimationOffsetX, value => _aimingStats.AnimationOffsetX = value);
         DebugWidgets.FloatDrag("tweaks", "animation", "offsetY", () => _aimingStats.AnimationOffsetY, value => _aimingStats.AnimationOffsetY = value);*/
 
-        float yaw = 0 - currentAim.X * _animationFollowMultiplier * _aimingStats.AnimationFollowX + _aimingStats.AnimationOffsetX;
-        float pitch = currentAim.Y * _animationFollowMultiplier * _aimingStats.AnimationFollowY + _aimingStats.AnimationOffsetY;
+        float yaw = 0 - currentAim.X * _animationFollowMultiplier * Stats.AnimationFollowX + Stats.AnimationOffsetX;
+        float pitch = currentAim.Y * _animationFollowMultiplier * Stats.AnimationFollowY + Stats.AnimationOffsetY;
 
         AnimationElement element = new(0, 0, 0, 0, yaw, pitch);
 

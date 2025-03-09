@@ -1,5 +1,4 @@
-﻿using csogg;
-using ProtoBuf;
+﻿using ProtoBuf;
 using Vintagestory.API.Client;
 using Vintagestory.API.Server;
 
@@ -33,7 +32,7 @@ public class StatsSystemClient
 
         _api.World.Player.Entity.Stats.Set(stat, category, value);
     }
-    
+
     private const string _networkChannelId = "CombatOverhaul:stats";
     private readonly IClientNetworkChannel _clientChannel;
     private readonly ICoreClientAPI _api;

@@ -238,9 +238,9 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
 
     public virtual void RenderDebugCollider(ItemSlot inSlot, IClientPlayer byPlayer)
     {
-        if (DebugManager._currentCollider != null)
+        if (DebugWindowManager._currentCollider != null)
         {
-            DebugManager._currentCollider.Value.Transform(byPlayer.Entity.Pos, byPlayer.Entity, inSlot, Api, right: true)?.Render(Api, byPlayer.Entity, ColorUtil.ColorFromRgba(255, 125, 125, 255));
+            DebugWindowManager._currentCollider.Value.Transform(byPlayer.Entity.Pos, byPlayer.Entity, inSlot, Api, right: true)?.Render(Api, byPlayer.Entity, ColorUtil.ColorFromRgba(255, 125, 125, 255));
             return;
         }
 
@@ -1176,7 +1176,7 @@ public class MeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleAnimations, 
         int typeIndex = 0;
         foreach (MeleeDamageType damageType in attack.DamageTypes)
         {
-            DebugManager.RegisterCollider(item, type + typeIndex++, damageType);
+            DebugWindowManager.RegisterCollider(item, type + typeIndex++, damageType);
         }
 #endif
     }
@@ -1370,7 +1370,7 @@ public class MeleeWeapon : Item, IHasWeaponLogic, IHasRangedWeaponLogic, IHasDyn
     {
         base.OnHeldRenderOpaque(inSlot, byPlayer);
 
-        if (DebugManager.RenderDebugColliders)
+        if (DebugWindowManager.RenderDebugColliders)
         {
             ClientLogic?.RenderDebugCollider(inSlot, byPlayer);
         }
