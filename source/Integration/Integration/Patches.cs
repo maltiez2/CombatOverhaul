@@ -273,28 +273,6 @@ internal static class HarmonyPatches
         }, (float)fallDamage);
 
         return false;
-
-        /*if (!__instance.entity.Properties.FallDamage) return false;
-
-        double speedThreshold = Math.Abs(EntityBehaviorHealth.FallDamageYMotionThreshold);
-        double speed = Math.Abs(withYMotion);
-
-        if (speed < speedThreshold) return false;
-
-        if (__instance.entity is EntityPlayer player)
-        {
-            speedThreshold *= Math.Sqrt(player.Stats.GetBlended(_fallDamageMultiplierStat));
-        }
-
-        double fallDamage = Math.Sqrt((speed - speedThreshold) / speedThreshold);
-
-        __instance.entity.ReceiveDamage(new DamageSource()
-        {
-            Source = EnumDamageSource.Fall,
-            Type = EnumDamageType.Gravity
-        }, (float)fallDamage);
-
-        return false;*/
     }
 
     private static readonly FieldInfo? _immuneCreatures = typeof(BlockDamageOnTouch).GetField("immuneCreatures", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -414,8 +392,6 @@ internal static class HarmonyPatches
         result[1] = (byte)(hsv[1] * brightnessFraction + result[1] * (1 - brightnessFraction));
         result[2] = Math.Max(hsv[2], result[2]);
     }
-
-
 
     [HarmonyPatch(typeof(ClientAnimator), "calculateMatrices", typeof(int),
         typeof(float),

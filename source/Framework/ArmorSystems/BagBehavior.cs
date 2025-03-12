@@ -34,7 +34,7 @@ public class ItemSlotBagContentWithWildcardMatch : ItemSlotBagContent
     {
         if (base.CanHold(sourceSlot) && sourceSlot?.Itemstack?.Collectible?.Code != null)
         {
-            return WildcardUtil.Match(CanHoldWildcard, sourceSlot.Itemstack.Collectible.Code.ToShortString());
+            return WildcardUtil.Match(CanHoldWildcard, sourceSlot.Itemstack.Collectible.Code.Path);
         }
 
         return false;
