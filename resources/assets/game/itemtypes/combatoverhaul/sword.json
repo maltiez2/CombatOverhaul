@@ -41,7 +41,8 @@
           "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
           "Directions": [60, 60, 60, 60],
           "Sound": "game:sounds/held/shieldblock-metal-heavy",
-          "BlockTier": {"BluntAttack": 9, "SlashingAttack": 9, "PiercingAttack": 9}
+          "BlockTier": {"BluntAttack": 9, "SlashingAttack": 9, "PiercingAttack": 9},
+          "CanBlockProjectiles": false
         },
         "BlockCooldownMs": 300,
         "BlockAnimation": "combatoverhaul:sword-short-parry",
@@ -71,7 +72,8 @@
           "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
           "Directions": [60, 60, 60, 60],
           "Sound": "game:sounds/held/shieldblock-metal-heavy",
-          "BlockTier": {"BluntAttack": 9, "SlashingAttack": 9, "PiercingAttack": 9}
+          "BlockTier": {"BluntAttack": 9, "SlashingAttack": 9, "PiercingAttack": 9},
+          "CanBlockProjectiles": false
         },
         "BlockCooldownMs": 300,
         "BlockAnimation": "combatoverhaul:sword-short-parry",

@@ -1,6 +1,5 @@
-﻿using ProtoBuf;
-using System.Data;
-using OpenTK.Mathematics;
+﻿using OpenTK.Mathematics;
+using ProtoBuf;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -81,7 +80,7 @@ public class RangedWeaponSystemClient
             ItemId = weapon.Itemstack?.Item?.Id ?? 0,
             ReloadId = id,
             Data = data ?? Array.Empty<byte>()
-    };
+        };
 
         _clientChannel.SendPacket(packet);
     }

@@ -108,7 +108,14 @@
     "file": "game:entities/land/shiver",
     "op": "replace",
     "path": "/server/behaviors/8/aitasks/2/damageTierByType",
-    "value": {"*-surface": 1, "*-deep": 1, "*-tainted": 2, "*-corrupt": 3, "*-nightmare": 4, "*-stilt": 5, "*-deepsplit": 6, "*-bellhead": 6}
+    "value": {"*-surface": 1, "*-deep": 1, "*-tainted": 2, "*-corrupt": 2, "*-nightmare": 3, "*-stilt": 4, "*-deepsplit": 5, "*-bellhead": 6}
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/shiver",
+    "op": "replace",
+    "path": "/server/behaviors/8/aitasks/2/damageByType",
+    "value": {"*-surface": 4, "*-deep": 7, "*-tainted": 10, "*-corrupt": 15, "*-nightmare": 20, "*-stilt": 25, "*-deepsplit": 30, "*-bellhead": 30}
   },
   {
     "side": "Server",

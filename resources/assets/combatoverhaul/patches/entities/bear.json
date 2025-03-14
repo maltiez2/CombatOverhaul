@@ -82,15 +82,31 @@
     "file": "game:entities/land/bear",
     "op": "add",
     "path": "/server/behaviors/9/aitasks/0/damageTierByType",
-    "value": {"*-black": 5, "*-brown": 6, "*-sun": 5, "*-panda": 5, "*-polar": 7}
+    "value": {"*-black": 4, "*-brown": 5, "*-sun": 4, "*-panda": 4, "*-polar": 5}
   },
   {
     "side": "Server",
     "file": "game:entities/land/bear",
     "op": "add",
     "path": "/server/behaviors/9/aitasks/1/damageTierByType",
-    "value": {"*-black": 5, "*-brown": 6, "*-sun": 5, "*-panda": 5, "*-polar": 7}
+    "value": {"*-black": 4, "*-brown": 5, "*-sun": 4, "*-panda": 4, "*-polar": 5}
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/bear",
+    "op": "add",
+    "path": "/server/behaviors/9/aitasks/0/damageByType",
+    "value": {"*-black": 10, "*-brown": 16, "*-sun": 6, "*-panda": 10, "*-polar": 16}
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/bear",
+    "op": "add",
+    "path": "/server/behaviors/9/aitasks/1/damageByType",
+    "value": {"*-black": 10, "*-brown": 16, "*-sun": 6, "*-panda": 10, "*-polar": 16}
   },
   {"side": "Server", "file": "game:entities/land/bear", "op": "replace", "path": "/server/behaviors/9/aitasks/0/damageType", "value": "SlashingAttack"},
-  {"side": "Server", "file": "game:entities/land/bear", "op": "remove", "path": "/server/behaviors/9/aitasks/0/damageTier"}
+  {"side": "Server", "file": "game:entities/land/bear", "op": "replace", "path": "/server/behaviors/9/aitasks/1/damageType", "value": "SlashingAttack"},
+  {"side": "Server", "file": "game:entities/land/bear", "op": "remove", "path": "/server/behaviors/9/aitasks/0/damageTier"},
+  {"side": "Server", "file": "game:entities/land/bear", "op": "remove", "path": "/server/behaviors/9/aitasks/1/damageTier"}
 ]

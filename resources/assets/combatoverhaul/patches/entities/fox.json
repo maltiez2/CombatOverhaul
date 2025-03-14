@@ -102,5 +102,6 @@
     }
   },
   {"side": "Server", "file": "game:entities/land/fox", "op": "replace", "path": "/server/behaviors/12/aitasks/0/damageType", "value": "SlashingAttack"},
-  {"side": "Server", "file": "game:entities/land/fox", "op": "add", "path": "/server/behaviors/12/aitasks/0/damageTier", "value": 1}
+  {"side": "Server", "file": "game:entities/land/fox", "op": "add", "path": "/server/behaviors/12/aitasks/0/damageTier", "value": 1},
+  {"side": "Server", "file": "game:entities/land/fox", "op": "add", "path": "/server/behaviors/12/aitasks/0/damage", "value": 4}
 ]

@@ -127,6 +127,7 @@
   "damagelog-missed-block-zone": "Player tried blocking, but {0} was not protected by block",
   "damagelog-missed-block-direction": "Player tried blocking, but directon ({0}) of incomming attack was not covered by block",
   "damagelog-missed-block-damageType": "Player tried blocking, but was not be able to block {0} damage",
+  "damagelog-missed-block-projectile": "Cant block projectiles with this weapon/shield",
   "damagelog-success-block": "Player successfully blocked {1} damage to {0}",
   "damagelog-partial-block": "Player partialy blocked {1} damage to {0}",
   "damagelog-armor-damage-negation": "Armor negated {0} amount of {3} ({4} tier) damage to {1} and lost {2} durability",
@@ -135,6 +136,7 @@
   "damagelog-dealt-damage-with-projectile": "Player's {3} hit {0} of {1} dealing {2} damage",
   "damagelog-second-chance": "Player used second chance to survive fatal damage",
   "damagelog-second-chance-cooldown": "Player received fatal damage, but second chance was on cooldown ({0} seconds left)",
+  
 
   "item-creature-arrow-*": "arrow",
   "item-creature-spear-*": "spear",

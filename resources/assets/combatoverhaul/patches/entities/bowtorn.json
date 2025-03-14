@@ -167,13 +167,6 @@
     "side": "Server",
     "file": "game:entities/land/bowtorn",
     "op": "replace",
-    "path": "/server/behaviors/8/aitasks/0/damageTierByType",
-    "value": {"*-surface": 1, "*-deep": 1, "*-tainted": 2, "*-corrupt": 3, "*-nightmare": 4, "*-gearfoot": 5}
-  },
-  {
-    "side": "Server",
-    "file": "game:entities/land/bowtorn",
-    "op": "replace",
     "path": "/server/behaviors/8/aitasks/0/damageTypeByType",
     "value": {
       "*-surface": "PiercingAttack",
@@ -188,7 +181,21 @@
     "side": "Server",
     "file": "game:entities/land/bowtorn",
     "op": "replace",
-    "path": "/server/behaviors/8/aitasks/5/projectileDamageTierByType",
+    "path": "/server/behaviors/8/aitasks/0/damageTierByType",
     "value": {"*-surface": 1, "*-deep": 1, "*-tainted": 2, "*-corrupt": 3, "*-nightmare": 4, "*-gearfoot": 5}
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/bowtorn",
+    "op": "replace",
+    "path": "/server/behaviors/8/aitasks/5/projectileDamageTierByType",
+    "value": {"*-surface": 1, "*-deep": 2, "*-tainted": 4, "*-corrupt": 6, "*-nightmare": 8, "*-gearfoot": 9}
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/land/bowtorn",
+    "op": "replace",
+    "path": "/server/behaviors/8/aitasks/5/projectileDamageByType",
+    "value": {"*-surface": 2, "*-deep": 2.5, "*-tainted": 3, "*-corrupt": 3.5, "*-nightmare": 4, "*-gearfoot": 4.5}
   }
 ]

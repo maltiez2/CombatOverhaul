@@ -275,10 +275,6 @@ public class DamageResistData
         {
             return 0;
         }
-        else if (protection >= MaxArmorTier || attackTier >= MaxAttackTier)
-        {
-            return PenetrationPercentage(protection, attackTier, 2, 0.01f);
-        }
 
         return DamageReduction[GameMath.Clamp(protection - 1, 0, MaxArmorTier - 1)][GameMath.Clamp(attackTier - 1, 0, MaxAttackTier - 1)];
     }

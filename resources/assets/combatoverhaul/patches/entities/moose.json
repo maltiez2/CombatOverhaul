@@ -86,5 +86,12 @@
     }
   },
   {"side": "Server", "file": "game:entities/land/hooved/moose", "op": "replace", "path": "/server/behaviors/10/aitasks/0/damageType", "value": "BluntAttack"},
-  {"side": "Server", "file": "game:entities/land/hooved/moose", "op": "replace", "path": "/server/behaviors/10/aitasks/0/damageTier", "value": 3}
+  {"side": "Server", "file": "game:entities/land/hooved/moose", "op": "replace", "path": "/server/behaviors/10/aitasks/0/damageTier", "value": 3},
+  {
+    "side": "Server",
+    "file": "game:entities/land/hooved/moose",
+    "op": "replace",
+    "path": "/server/behaviors/10/aitasks/0/damageByType",
+    "value": {"*-male-adult": 10, "*-female-adult": 9, "*-baby": 0.1}
+  }
 ]

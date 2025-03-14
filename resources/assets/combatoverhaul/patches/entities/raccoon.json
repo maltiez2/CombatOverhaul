@@ -199,6 +199,8 @@
   },
   {"side": "Server", "file": "game:entities/land/raccoon-female", "op": "add", "path": "/server/behaviors/10/aitasks/0/damageType", "value": "SlashingAttack"},
   {"side": "Server", "file": "game:entities/land/raccoon-female", "op": "add", "path": "/server/behaviors/10/aitasks/0/damageTier", "value": 1},
+  {"side": "Server", "file": "game:entities/land/raccoon-female", "op": "add", "path": "/server/behaviors/10/aitasks/0/damage", "value": 4},
   {"side": "Server", "file": "game:entities/land/raccoon-male", "op": "add", "path": "/server/behaviors/10/aitasks/0/damageType", "value": "SlashingAttack"},
-  {"side": "Server", "file": "game:entities/land/raccoon-male", "op": "add", "path": "/server/behaviors/10/aitasks/0/damageTier", "value": 1}
+  {"side": "Server", "file": "game:entities/land/raccoon-male", "op": "add", "path": "/server/behaviors/10/aitasks/0/damageTier", "value": 1},
+  {"side": "Server", "file": "game:entities/land/raccoon-male", "op": "add", "path": "/server/behaviors/10/aitasks/0/damage", "value": 4}
 ]

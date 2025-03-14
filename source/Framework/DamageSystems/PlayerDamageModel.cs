@@ -214,6 +214,12 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
 
         if (CurrentDamageBlock == null) return;
 
+        if (!CurrentDamageBlock.CanBlockProjectiles && IsCausedByProjectile(damageSource))
+        {
+            damageLogMessage = Lang.Get("combatoverhaul:damagelog-missed-block-projectile");
+            return;
+        }
+
         if ((zone & CurrentDamageBlock.ZoneType) == 0)
         {
             damageLogMessage = Lang.Get("combatoverhaul:damagelog-missed-block-zone", Lang.Get($"combatoverhaul:detailed-damage-zone-{zone}"));
@@ -316,7 +322,7 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
     private void ApplySecondChance(ref float damage)
     {
         float currentHealth = entity.GetBehavior<EntityBehaviorHealth>().Health;
-        
+
         if (currentHealth > damage) return;
 
         float secondChanceCooldown = entity.WatchedAttributes.GetFloat("secondChanceCooldown", 0);
@@ -330,6 +336,13 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
         damage = currentHealth - _healthAfterSecondChance;
 
         PrintToDamageLog(Lang.Get("combatoverhaul:damagelog-second-chance"));
+    }
+    private bool IsCausedByProjectile(DamageSource damageSource)
+    {
+        Entity? sourceEntity = damageSource.SourceEntity;
+        Entity? causeEntity = damageSource.CauseEntity;
+
+        return sourceEntity != null && causeEntity != null && sourceEntity != causeEntity;
     }
 }
 public sealed class PlayerDamageModel
@@ -445,14 +458,16 @@ public sealed class DamageBlockStats
     public readonly Action<float> Callback;
     public readonly string? Sound;
     public readonly Dictionary<EnumDamageType, float>? BlockTier;
+    public readonly bool CanBlockProjectiles;
 
-    public DamageBlockStats(PlayerBodyPart type, DirectionConstrain directions, Action<float> callback, string? sound, Dictionary<EnumDamageType, float>? blockTier)
+    public DamageBlockStats(PlayerBodyPart type, DirectionConstrain directions, Action<float> callback, string? sound, Dictionary<EnumDamageType, float>? blockTier, bool canBlockProjectiles)
     {
         ZoneType = type;
         Directions = directions;
         Callback = callback;
         Sound = sound;
         BlockTier = blockTier;
+        CanBlockProjectiles = canBlockProjectiles;
     }
 }
 
@@ -464,10 +479,11 @@ public sealed class DamageBlockPacket
     public bool MainHand { get; set; }
     public string? Sound { get; set; } = null;
     public Dictionary<EnumDamageType, float>? BlockTier { get; set; }
+    public bool CanBlockProjectiles { get; set; }
 
     public DamageBlockStats ToBlockStats(Action<float> callback)
     {
-        return new((PlayerBodyPart)Zones, DirectionConstrain.FromArray(Directions), callback, Sound, BlockTier);
+        return new((PlayerBodyPart)Zones, DirectionConstrain.FromArray(Directions), callback, Sound, BlockTier, CanBlockProjectiles);
     }
 }
 
@@ -483,6 +499,7 @@ public sealed class DamageBlockJson
     public float[] Directions { get; set; } = Array.Empty<float>();
     public string? Sound { get; set; } = null;
     public Dictionary<string, float>? BlockTier { get; set; }
+    public bool CanBlockProjectiles { get; set; } = true;
 
     public DamageBlockPacket ToPacket()
     {
@@ -491,7 +508,8 @@ public sealed class DamageBlockJson
             Zones = (int)Zones.Select(Enum.Parse<PlayerBodyPart>).Aggregate((first, second) => first | second),
             Directions = Directions,
             Sound = Sound,
-            BlockTier = BlockTier?.ToDictionary(entry => Enum.Parse<EnumDamageType>(entry.Key), entry => entry.Value)
+            BlockTier = BlockTier?.ToDictionary(entry => Enum.Parse<EnumDamageType>(entry.Key), entry => entry.Value),
+            CanBlockProjectiles = CanBlockProjectiles
         };
     }
 }
