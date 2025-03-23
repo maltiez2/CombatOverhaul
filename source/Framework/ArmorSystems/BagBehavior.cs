@@ -226,7 +226,7 @@ public class GearEquipableBag : CollectibleBehavior, IHeldBag, IAttachedInteract
         int first10Bits = (1 << 11) - 1;
         packetid = packetid & first10Bits;
 
-        getOrCreateContainerWorkspace(slotIndex, onEntity, onRequireSave).OnReceivedClientPacket(player, packetid, data, ref handled);
+        getOrCreateContainerWorkspace(slotIndex, onEntity, onRequireSave).OnReceivedClientPacket(player, packetid, data, bagSlot, slotIndex, ref handled);
     }
 
     public bool OnTryAttach(ItemSlot itemslot, int slotIndex, Entity toEntity)

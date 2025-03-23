@@ -261,6 +261,7 @@ public sealed class PlayerDamageModelBehavior : EntityBehavior
             if (blockTier < damageTier)
             {
                 ApplyBlockResists(blockTier, damageTier, ref damage);
+                damageSource.DamageTier = (int)(damageTier - blockTier);
                 damageLogMessage = Lang.Get("combatoverhaul:damagelog-partial-block", Lang.Get($"combatoverhaul:detailed-damage-zone-{zone}"), $"{initialDamage - damage:F1}");
             }
             else

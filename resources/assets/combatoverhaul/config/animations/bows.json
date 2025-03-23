@@ -2191,7 +2191,7 @@
         }
       },
       {
-        "EasingTime": 445,
+        "EasingTime": 382,
         "EasingFunction": "Sin",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -2211,7 +2211,7 @@
         }
       },
       {
-        "EasingTime": 637,
+        "EasingTime": 492,
         "EasingFunction": "Linear",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -2231,7 +2231,7 @@
         }
       },
       {
-        "EasingTime": 879,
+        "EasingTime": 630,
         "EasingFunction": "Sin",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -2251,7 +2251,7 @@
         }
       },
       {
-        "EasingTime": 1000,
+        "EasingTime": 700,
         "EasingFunction": "Sin",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -2282,7 +2282,7 @@
     "ParticlesFrames": [],
     "CallbackFrames": [],
     "ItemAnimationStart": 300,
-    "ItemAnimationEnd": 1000
+    "ItemAnimationEnd": 700
   },
   "bow-load-simple-tp": {
     "Hold": true,
@@ -2308,7 +2308,7 @@
         }
       },
       {
-        "EasingTime": 445,
+        "EasingTime": 382,
         "EasingFunction": "Sin",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -2328,7 +2328,7 @@
         }
       },
       {
-        "EasingTime": 637,
+        "EasingTime": 492,
         "EasingFunction": "Linear",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -2348,7 +2348,7 @@
         }
       },
       {
-        "EasingTime": 879,
+        "EasingTime": 630,
         "EasingFunction": "Sin",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -2368,7 +2368,7 @@
         }
       },
       {
-        "EasingTime": 1000,
+        "EasingTime": 700,
         "EasingFunction": "Sin",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -2399,7 +2399,7 @@
     "ParticlesFrames": [],
     "CallbackFrames": [],
     "ItemAnimationStart": 300,
-    "ItemAnimationEnd": 1000
+    "ItemAnimationEnd": 700
   },
   "bow-load-long-tp": {
     "Hold": true,
@@ -2425,7 +2425,7 @@
         }
       },
       {
-        "EasingTime": 445,
+        "EasingTime": 382,
         "EasingFunction": "Sin",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -2445,7 +2445,7 @@
         }
       },
       {
-        "EasingTime": 637,
+        "EasingTime": 492,
         "EasingFunction": "Linear",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -2465,7 +2465,7 @@
         }
       },
       {
-        "EasingTime": 879,
+        "EasingTime": 630,
         "EasingFunction": "Sin",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -2485,7 +2485,7 @@
         }
       },
       {
-        "EasingTime": 1000,
+        "EasingTime": 700,
         "EasingFunction": "Sin",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -2516,7 +2516,7 @@
     "ParticlesFrames": [],
     "CallbackFrames": [],
     "ItemAnimationStart": 300,
-    "ItemAnimationEnd": 1000
+    "ItemAnimationEnd": 700
   },
   "bow-load-recurve-tp": {
     "Hold": true,
@@ -2542,7 +2542,7 @@
         }
       },
       {
-        "EasingTime": 445,
+        "EasingTime": 382,
         "EasingFunction": "Sin",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -2562,7 +2562,7 @@
         }
       },
       {
-        "EasingTime": 637,
+        "EasingTime": 492,
         "EasingFunction": "Linear",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -2582,7 +2582,7 @@
         }
       },
       {
-        "EasingTime": 879,
+        "EasingTime": 630,
         "EasingFunction": "Sin",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -2602,7 +2602,7 @@
         }
       },
       {
-        "EasingTime": 1000,
+        "EasingTime": 700,
         "EasingFunction": "Sin",
         "DetachedAnchor": false,
         "SwitchArms": true,
@@ -2633,7 +2633,7 @@
     "ParticlesFrames": [],
     "CallbackFrames": [],
     "ItemAnimationStart": 300,
-    "ItemAnimationEnd": 1000
+    "ItemAnimationEnd": 700
   },
   "bow-draw-crude-tp": {
     "Hold": true,

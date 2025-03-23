@@ -52,23 +52,23 @@
           "armor-head-sewn-leather": {
             "Layers": ["Outer"],
             "Zones": ["Head", "Neck", "Face"],
-            "Resists": {"PiercingAttack": 3, "SlashingAttack": 3, "BluntAttack": 2},
+            "Resists": {"PiercingAttack": 3, "SlashingAttack": 3, "BluntAttack": 3},
             "FlatReduction": {},
-            "PlayerStats": {"walkspeed": 0, "manipulationSpeed": 0, "steadyAim": -0.15, "healingeffectivness": -0.09, "hungerrate": 0.15}
+            "PlayerStats": {"walkspeed": 0, "manipulationSpeed": 0, "steadyAim": -0.05, "healingeffectivness": -0.09, "hungerrate": 0.09}
           },
           "armor-body-sewn-leather": {
             "Layers": ["Outer"],
             "Zones": ["Torso", "Arms", "Hands"],
-            "Resists": {"PiercingAttack": 3, "SlashingAttack": 3, "BluntAttack": 2},
+            "Resists": {"PiercingAttack": 3, "SlashingAttack": 3, "BluntAttack": 3},
             "FlatReduction": {},
-            "PlayerStats": {"walkspeed": -0.04, "manipulationSpeed": -0.15, "steadyAim": -0.2, "healingeffectivness": -0.09, "hungerrate": 0.15}
+            "PlayerStats": {"walkspeed": -0.02, "manipulationSpeed": -0.09, "steadyAim": -0.1, "healingeffectivness": -0.09, "hungerrate": 0.09}
           },
           "armor-legs-sewn-leather": {
             "Layers": ["Outer"],
             "Zones": ["Legs", "Feet"],
-            "Resists": {"PiercingAttack": 3, "SlashingAttack": 3, "BluntAttack": 2},
+            "Resists": {"PiercingAttack": 3, "SlashingAttack": 3, "BluntAttack": 3},
             "FlatReduction": {},
-            "PlayerStats": {"walkspeed": -0.12, "manipulationSpeed": 0, "steadyAim": 0, "healingeffectivness": -0.06, "hungerrate": 0.1}
+            "PlayerStats": {"walkspeed": -0.06, "manipulationSpeed": 0, "steadyAim": 0, "healingeffectivness": -0.06, "hungerrate": 0.06}
           },
           "armor-head-sewn-linen": {
             "Layers": ["Skin"],
@@ -96,7 +96,7 @@
             "Zones": ["Head", "Neck", "Face"],
             "Resists": {"PiercingAttack": 2, "SlashingAttack": 2, "BluntAttack": 6},
             "FlatReduction": {},
-            "PlayerStats":{"walkspeed": 0, "manipulationSpeed": 0, "steadyAim": 0, "healingeffectivness": -0.09, "hungerrate": 0.03}
+            "PlayerStats": {"walkspeed": 0, "manipulationSpeed": 0, "steadyAim": 0, "healingeffectivness": -0.09, "hungerrate": 0.03}
           },
           "armor-body-tailored-*-linen": {
             "Layers": ["Skin"],
