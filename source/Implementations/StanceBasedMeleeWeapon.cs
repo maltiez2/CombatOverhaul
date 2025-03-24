@@ -34,7 +34,6 @@ public class StanceBasedMeleeWeaponAttackStats : MeleeAttackStats
     public MeleeAttackStats? HandleAttack { get; set; }
     public string? AttackHitSound { get; set; } = null;
     public string? HandleHitSound { get; set; } = null;
-    public string[] Animations { get; set; } = Array.Empty<string>();
 }
 
 public class StanceBasedMeleeWeaponGripStats
@@ -50,18 +49,20 @@ public class StanceBasedMeleeWeaponGripStats
     public Dictionary<string, StanceBasedMeleeWeaponAttackStats> StanceToStanceRightClickAttacks { get; set; } = new();
     public StanceBasedMeleeWeaponAttackStats? DefaultLeftClickAttack { get; set; } = null;
     public Dictionary<string, StanceBasedMeleeWeaponAttackStats> StanceToStanceLeftClickAttacks { get; set; } = new();
-    public DamageBlockJson DefaultBlock { get; set; } = new();
+    public DamageBlockJson? DefaultBlock { get; set; } = null;
     public Dictionary<string, DamageBlockJson> BlockByStance { get; set; } = new();
-    public Dictionary<string, string> StanceAnimation { get; set; } = new();
+    public Dictionary<string, string> StanceAnimations { get; set; } = new();
+    public Dictionary<string, string[]> RightClickAttacksAnimations { get; set; } = new();
+    public Dictionary<string, string[]> LeftClickAttacksAnimations { get; set; } = new();
 }
 
 public class StanceBasedMeleeWeaponStats
 {
     public string ProficiencyStat { get; set; } = "";
 
-    public StanceBasedMeleeWeaponGripStats OneHandedStats { get; set; } = new();
-    public StanceBasedMeleeWeaponGripStats TwoHandedStats { get; set; } = new();
-    public StanceBasedMeleeWeaponGripStats OffHandStats { get; set; } = new();
+    public StanceBasedMeleeWeaponGripStats? OneHanded { get; set; } = null;
+    public StanceBasedMeleeWeaponGripStats? TwoHanded { get; set; } = null;
+    public StanceBasedMeleeWeaponGripStats? OffHand { get; set; } = null;
 
     public bool RenderingOffset { get; set; } = false;
     public float AnimationStaggerOnHitDurationMs { get; set; } = 100;
@@ -77,18 +78,22 @@ public class GripSpecificStats
         LeftClickHandleAttacks = new();
         LeftClickParries = new();
         LeftClickAttackStats = new();
+        LeftClickAttacksAnimations = new();
         RightClickAttacks = new();
         RightClickHandleAttacks = new();
         RightClickParries = new();
         RightClickAttackStats = new();
+        RightClickAttacksAnimations = new();
         Blocks = new();
 
         DirectionsType = Enum.Parse<DirectionsConfiguration>(stats.AttackDirectionsType);
         InitialStance = Enum.Parse<AttackDirection>(stats.InitialStance);
 
-        foreach (AttackDirection fromStance in Enum.GetValues<AttackDirection>())
+        IEnumerable<AttackDirection> directions = DirectionController.Configurations[DirectionsType].Select(element => (AttackDirection)element);
+
+        foreach (AttackDirection fromStance in directions)
         {
-            foreach (AttackDirection toStance in Enum.GetValues<AttackDirection>())
+            foreach (AttackDirection toStance in directions)
             {
                 string attackCode = $"{fromStance}-{toStance}";
 
@@ -98,6 +103,7 @@ public class GripSpecificStats
                     LeftClickHandleAttacks.Add((fromStance, toStance), stats.StanceToStanceLeftClickAttacks[attackCode].HandleAttack == null ? null : new(api, stats.StanceToStanceLeftClickAttacks[attackCode].HandleAttack));
                     LeftClickParries.Add((fromStance, toStance), stats.StanceToStanceLeftClickAttacks[attackCode].Parry);
                     LeftClickAttackStats.Add((fromStance, toStance), stats.StanceToStanceLeftClickAttacks[attackCode]);
+                    LeftClickAttacksAnimations.Add((fromStance, toStance), stats.LeftClickAttacksAnimations[attackCode]);
 
                     RegisterCollider(item.Code.ToString(), $"left-click-{fromStance}-{toStance}", LeftClickAttacks[(fromStance, toStance)]);
                     if (LeftClickHandleAttacks[(fromStance, toStance)] != null) RegisterCollider(item.Code.ToString(), $"left-click-handle-{fromStance}-{toStance}", LeftClickHandleAttacks[(fromStance, toStance)]);
@@ -108,6 +114,7 @@ public class GripSpecificStats
                     LeftClickHandleAttacks.Add((fromStance, toStance), stats.DefaultLeftClickAttack.HandleAttack == null ? null : new(api, stats.DefaultLeftClickAttack.HandleAttack));
                     LeftClickParries.Add((fromStance, toStance), stats.DefaultLeftClickAttack.Parry);
                     LeftClickAttackStats.Add((fromStance, toStance), stats.DefaultLeftClickAttack);
+                    LeftClickAttacksAnimations.Add((fromStance, toStance), stats.LeftClickAttacksAnimations[attackCode]);
 
                     RegisterCollider(item.Code.ToString(), $"left-click-{fromStance}-{toStance}", LeftClickAttacks[(fromStance, toStance)]);
                     if (LeftClickHandleAttacks[(fromStance, toStance)] != null) RegisterCollider(item.Code.ToString(), $"left-click-handle-{fromStance}-{toStance}", LeftClickHandleAttacks[(fromStance, toStance)]);
@@ -119,6 +126,7 @@ public class GripSpecificStats
                     RightClickHandleAttacks.Add((fromStance, toStance), stats.StanceToStanceRightClickAttacks[attackCode].HandleAttack == null ? null : new(api, stats.StanceToStanceRightClickAttacks[attackCode].HandleAttack));
                     RightClickParries.Add((fromStance, toStance), stats.StanceToStanceRightClickAttacks[attackCode].Parry);
                     RightClickAttackStats.Add((fromStance, toStance), stats.StanceToStanceRightClickAttacks[attackCode]);
+                    RightClickAttacksAnimations.Add((fromStance, toStance), stats.RightClickAttacksAnimations[attackCode]);
 
                     RegisterCollider(item.Code.ToString(), $"right-click-{fromStance}-{toStance}", RightClickAttacks[(fromStance, toStance)]);
                     if (RightClickHandleAttacks[(fromStance, toStance)] != null) RegisterCollider(item.Code.ToString(), $"right-click-handle-{fromStance}-{toStance}", RightClickHandleAttacks[(fromStance, toStance)]);
@@ -129,6 +137,7 @@ public class GripSpecificStats
                     RightClickHandleAttacks.Add((fromStance, toStance), stats.DefaultRightClickAttack.HandleAttack == null ? null : new(api, stats.DefaultRightClickAttack.HandleAttack));
                     RightClickParries.Add((fromStance, toStance), stats.DefaultRightClickAttack.Parry);
                     RightClickAttackStats.Add((fromStance, toStance), stats.DefaultRightClickAttack);
+                    RightClickAttacksAnimations.Add((fromStance, toStance), stats.RightClickAttacksAnimations[attackCode]);
 
                     RegisterCollider(item.Code.ToString(), $"right-click-{fromStance}-{toStance}", RightClickAttacks[(fromStance, toStance)]);
                     if (RightClickHandleAttacks[(fromStance, toStance)] != null) RegisterCollider(item.Code.ToString(), $"right-click-handle-{fromStance}-{toStance}", RightClickHandleAttacks[(fromStance, toStance)]);
@@ -157,10 +166,12 @@ public class GripSpecificStats
     public Dictionary<(AttackDirection, AttackDirection), MeleeAttack?> RightClickHandleAttacks { get; }
     public Dictionary<(AttackDirection, AttackDirection), DamageBlockJson?> RightClickParries { get; }
     public Dictionary<(AttackDirection, AttackDirection), StanceBasedMeleeWeaponAttackStats> RightClickAttackStats { get; }
+    public Dictionary<(AttackDirection, AttackDirection), string[]> RightClickAttacksAnimations { get; }
     public Dictionary<(AttackDirection, AttackDirection), MeleeAttack> LeftClickAttacks { get; }
     public Dictionary<(AttackDirection, AttackDirection), MeleeAttack?> LeftClickHandleAttacks { get; }
     public Dictionary<(AttackDirection, AttackDirection), DamageBlockJson?> LeftClickParries { get; }
     public Dictionary<(AttackDirection, AttackDirection), StanceBasedMeleeWeaponAttackStats> LeftClickAttackStats { get; }
+    public Dictionary<(AttackDirection, AttackDirection), string[]> LeftClickAttacksAnimations { get; }
     public Dictionary<AttackDirection, DamageBlockJson?> Blocks { get; }
     public AttackDirection InitialStance { get; }
 
@@ -200,9 +211,9 @@ public class StanceBasedMeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleA
 
         Stats = item.Attributes.AsObject<StanceBasedMeleeWeaponStats>();
 
-        OneHandedStats = new(api, item, Stats.OneHandedStats);
-        TwoHandedStats = new(api, item, Stats.TwoHandedStats);
-        OffHandStats = new(api, item, Stats.OffHandStats);
+        if (Stats.OneHanded != null) OneHandedStats = new(api, item, Stats.OneHanded);
+        if (Stats.TwoHanded != null) TwoHandedStats = new(api, item, Stats.TwoHanded);
+        if (Stats.OffHand != null) OffHandStats = new(api, item, Stats.OffHand);
     }
 
     public int ItemId => Item.Id;
@@ -211,36 +222,42 @@ public class StanceBasedMeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleA
 
     public AnimationRequestByCode? GetIdleAnimation(bool mainHand)
     {
-        GripSpecificStats stats = GetGripSpecificStats(mainHand, PlayerBehavior?.entity as EntityPlayer);
+        GripSpecificStats? stats = GetGripSpecificStats(mainHand, PlayerBehavior?.entity as EntityPlayer);
 
-        string animation = stats.Stats.StanceAnimation[stats.Stats.InitialStance];
+        string animation = stats?.Stats.StanceAnimations[stats.Stats.InitialStance] ?? "";
 
         return new(animation, 1, 1, AnimationCategory(mainHand), TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), false);
     }
     public AnimationRequestByCode? GetReadyAnimation(bool mainHand)
     {
-        GripSpecificStats stats = GetGripSpecificStats(mainHand, PlayerBehavior?.entity as EntityPlayer);
+        GripSpecificStats? stats = GetGripSpecificStats(mainHand, PlayerBehavior?.entity as EntityPlayer);
 
-        string animation = stats.Stats.StanceAnimation[stats.Stats.InitialStance];
+        string animation = stats?.Stats.StanceAnimations[stats.Stats.InitialStance] ?? "";
 
         return new(animation, 1, 1, AnimationCategory(mainHand), TimeSpan.FromSeconds(0.2), TimeSpan.FromSeconds(0.2), false);
     }
 
     public virtual void OnSelected(ItemSlot slot, EntityPlayer player, bool mainHand, ref int state)
     {
-        GripSpecificStats stats = GetGripSpecificStats(mainHand, player);
+        GripSpecificStats? stats = GetGripSpecificStats(mainHand, player);
+
+        if (stats == null)
+        {
+            return;
+        }
+
         stats.CurrentStance = stats.InitialStance;
         DirectionsType = stats.DirectionsType;
 
         AnimationBehavior?.Play(
             mainHand,
-            stats.Stats.StanceAnimation[stats.CurrentStance.ToString()],
+            stats.Stats.StanceAnimations[stats.CurrentStance.ToString()],
             animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat),
             category: AnimationCategory(mainHand),
             callbackHandler: (code) => StanceAnimationCallbackHandler(code, mainHand, stats, stats.CurrentStance));
         TpAnimationBehavior?.Play(
             mainHand,
-            stats.Stats.StanceAnimation[stats.CurrentStance.ToString()],
+            stats.Stats.StanceAnimations[stats.CurrentStance.ToString()],
             animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat),
             category: AnimationCategory(mainHand));
 
@@ -255,8 +272,8 @@ public class StanceBasedMeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleA
         PlayerBehavior?.SetStat("walkspeed", mainHand ? PlayerStatsMainHandCategory : PlayerStatsOffHandCategory);
         AnimationBehavior?.StopAllVanillaAnimations(mainHand);
 
-        GripSpecificStats stats = GetGripSpecificStats(mainHand, player);
-        stats.CurrentStance = stats.InitialStance;
+        GripSpecificStats? stats = GetGripSpecificStats(mainHand, player);
+        if (stats != null) stats.CurrentStance = stats.InitialStance;
     }
     public virtual void OnRegistered(ActionsManagerPlayerBehavior behavior, ICoreClientAPI api)
     {
@@ -264,9 +281,9 @@ public class StanceBasedMeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleA
         AnimationBehavior = behavior.entity.GetBehavior<FirstPersonAnimationsBehavior>();
         TpAnimationBehavior = behavior.entity.GetBehavior<ThirdPersonAnimationsBehavior>();
 
-        OneHandedStats.GripController = new(AnimationBehavior);
-        TwoHandedStats.GripController = new(AnimationBehavior);
-        OffHandStats.GripController = new(AnimationBehavior);
+        if (OneHandedStats != null) OneHandedStats.GripController = new(AnimationBehavior);
+        if (TwoHandedStats != null) TwoHandedStats.GripController = new(AnimationBehavior);
+        if (OffHandStats != null) OffHandStats.GripController = new(AnimationBehavior);
     }
 
     public virtual void RenderDebugCollider(ItemSlot inSlot, IClientPlayer byPlayer)
@@ -281,7 +298,9 @@ public class StanceBasedMeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleA
     {
         if (PlayerBehavior?.ActionListener.IsActive(EnumEntityAction.RightMouseDown) == false) return false;
 
-        GripSpecificStats stats = GetGripSpecificStats(true, byPlayer.Entity);
+        GripSpecificStats? stats = GetGripSpecificStats(true, byPlayer.Entity);
+
+        if (stats == null) return false;
 
         bool mainHand = byPlayer.Entity.RightHandItemSlot == slot;
         float canChangeGrip = stats.Stats?.GripLengthFactor ?? 0;
@@ -300,9 +319,9 @@ public class StanceBasedMeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleA
 
     public virtual void OnGameTick(ItemSlot slot, EntityPlayer player, ref int state, bool mainHand)
     {
-        GripSpecificStats stats = GetGripSpecificStats(mainHand, player);
+        GripSpecificStats? stats = GetGripSpecificStats(mainHand, player);
 
-        if (stats.CurrentAttack == null || stats.CurrentHandleAttack == null) return;
+        if (stats?.CurrentAttack == null && stats?.CurrentHandleAttack == null) return;
 
         switch (GetState<StanceBasedMeleeWeaponState>(mainHand))
         {
@@ -340,9 +359,9 @@ public class StanceBasedMeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleA
     protected const string PlayerStatsMainHandCategory = "CombatOverhaul:held-item-mainhand";
     protected const string PlayerStatsOffHandCategory = "CombatOverhaul:held-item-offhand";
 
-    protected readonly GripSpecificStats OneHandedStats;
-    protected readonly GripSpecificStats TwoHandedStats;
-    protected readonly GripSpecificStats OffHandStats;
+    protected readonly GripSpecificStats? OneHandedStats;
+    protected readonly GripSpecificStats? TwoHandedStats;
+    protected readonly GripSpecificStats? OffHandStats;
 
     [ActionEventHandler(EnumEntityAction.LeftMouseDown, ActionState.Active)]
     protected virtual bool LeftClickAttack(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
@@ -353,6 +372,9 @@ public class StanceBasedMeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleA
         if (GetState<StanceBasedMeleeWeaponState>(mainHand) != StanceBasedMeleeWeaponState.Idle) return false;
 
         GripSpecificStats? stats = GetGripSpecificStats(mainHand, player);
+
+        if (stats == null) return false;
+
         MeleeAttack attack = stats.LeftClickAttacks[(stats.CurrentStance, direction)];
         MeleeAttack? handle = stats.LeftClickHandleAttacks[(stats.CurrentStance, direction)];
         StanceBasedMeleeWeaponAttackStats attackStats = stats.LeftClickAttackStats[(stats.CurrentStance, direction)];
@@ -367,7 +389,8 @@ public class StanceBasedMeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleA
             stats.AttackCounter = 0;
         }
 
-        string attackAnimation = attackStats.Animations[stats.AttackCounter % attackStats.Animations.Length];
+        string[] animations = stats.LeftClickAttacksAnimations[(stats.CurrentStance, direction)];
+        string attackAnimation = animations[stats.AttackCounter % animations.Length];
 
         stats.AttackCounter++;
 
@@ -380,7 +403,7 @@ public class StanceBasedMeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleA
             attackAnimation,
             animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat),
             category: AnimationCategory(mainHand),
-            callback: () => LeftClickAttackCallback(mainHand, player),
+            callback: () => LeftClickAttackCallback(mainHand, player, direction),
             callbackHandler: code => LeftClickAttackCallbackHandler(code, mainHand, stats, direction));
         TpAnimationBehavior?.Play(
             mainHand,
@@ -392,14 +415,19 @@ public class StanceBasedMeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleA
 
         return true;
     }
-    protected virtual bool LeftClickAttackCallback(bool mainHand, EntityPlayer player)
+    protected virtual bool LeftClickAttackCallback(bool mainHand, EntityPlayer player, AttackDirection direction)
     {
         SetState(StanceBasedMeleeWeaponState.Idle, mainHand);
 
-        GripSpecificStats stats = GetGripSpecificStats(mainHand, player);
-        if (stats.Blocks[stats.CurrentStance] != null)
+        GripSpecificStats? stats = GetGripSpecificStats(mainHand, player);
+        if (stats?.Blocks[stats.CurrentStance] != null)
         {
             MeleeBlockSystem.StartBlock(stats.Blocks[stats.CurrentStance], mainHand);
+        }
+
+        if (stats != null)
+        {
+            stats.CurrentStance = direction;
         }
 
         return true;
@@ -423,11 +451,12 @@ public class StanceBasedMeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleA
                 break;
             case "ready":
                 SetState(StanceBasedMeleeWeaponState.Idle, mainHand);
+                stats.CurrentStance = stance;
                 break;
         }
     }
 
-    [ActionEventHandler(EnumEntityAction.LeftMouseDown, ActionState.Active)]
+    [ActionEventHandler(EnumEntityAction.RightMouseDown, ActionState.Active)]
     protected virtual bool RightClickAttack(ItemSlot slot, EntityPlayer player, ref int state, ActionEventData eventData, bool mainHand, AttackDirection direction)
     {
         if (eventData.AltPressed) return false;
@@ -436,6 +465,9 @@ public class StanceBasedMeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleA
         if (GetState<StanceBasedMeleeWeaponState>(mainHand) != StanceBasedMeleeWeaponState.Idle) return false;
 
         GripSpecificStats? stats = GetGripSpecificStats(mainHand, player);
+
+        if (stats == null) return false;
+
         MeleeAttack attack = stats.RightClickAttacks[(stats.CurrentStance, direction)];
         MeleeAttack? handle = stats.RightClickHandleAttacks[(stats.CurrentStance, direction)];
         StanceBasedMeleeWeaponAttackStats attackStats = stats.RightClickAttackStats[(stats.CurrentStance, direction)];
@@ -450,7 +482,8 @@ public class StanceBasedMeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleA
             stats.AttackCounter = 0;
         }
 
-        string attackAnimation = attackStats.Animations[stats.AttackCounter % attackStats.Animations.Length];
+        string[] animations = stats.RightClickAttacksAnimations[(stats.CurrentStance, direction)];
+        string attackAnimation = animations[stats.AttackCounter % animations.Length];
 
         stats.AttackCounter++;
 
@@ -463,7 +496,7 @@ public class StanceBasedMeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleA
             attackAnimation,
             animationSpeed: GetAnimationSpeed(player, Stats.ProficiencyStat),
             category: AnimationCategory(mainHand),
-            callback: () => RightClickAttackCallback(mainHand, player),
+            callback: () => RightClickAttackCallback(mainHand, player, direction),
             callbackHandler: code => RightClickAttackCallbackHandler(code, mainHand, stats, direction));
         TpAnimationBehavior?.Play(
             mainHand,
@@ -475,14 +508,19 @@ public class StanceBasedMeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleA
 
         return true;
     }
-    protected virtual bool RightClickAttackCallback(bool mainHand, EntityPlayer player)
+    protected virtual bool RightClickAttackCallback(bool mainHand, EntityPlayer player, AttackDirection direction)
     {
         SetState(StanceBasedMeleeWeaponState.Idle, mainHand);
 
-        GripSpecificStats stats = GetGripSpecificStats(mainHand, player);
-        if (stats.Blocks[stats.CurrentStance] != null)
+        GripSpecificStats? stats = GetGripSpecificStats(mainHand, player);
+        if (stats?.Blocks[stats.CurrentStance] != null)
         {
             MeleeBlockSystem.StartBlock(stats.Blocks[stats.CurrentStance], mainHand);
+        }
+
+        if (stats != null)
+        {
+            stats.CurrentStance = direction;
         }
 
         return true;
@@ -506,6 +544,7 @@ public class StanceBasedMeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleA
                 break;
             case "ready":
                 SetState(StanceBasedMeleeWeaponState.Idle, mainHand);
+                stats.CurrentStance = stance;
                 break;
         }
     }
@@ -521,7 +560,7 @@ public class StanceBasedMeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleA
                 MeleeBlockSystem.StopBlock(mainHand);
                 break;
             case "ready":
-                SetState(MeleeWeaponState.Idle, mainHand);
+                SetState(StanceBasedMeleeWeaponState.Idle, mainHand);
                 break;
         }
     }
@@ -611,14 +650,14 @@ public class StanceBasedMeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleA
             return GripType.OneHanded;
         }
     }
-    public GripSpecificStats GetGripSpecificStats(bool mainHand, EntityPlayer player)
+    public GripSpecificStats? GetGripSpecificStats(bool mainHand, EntityPlayer player)
     {
         GripType gripType = GetGripType(mainHand, player);
 
         return gripType switch
         {
             GripType.OneHanded => OneHandedStats,
-            GripType.TwoHanded => TwoHandedStats,
+            GripType.TwoHanded => TwoHandedStats ?? OneHandedStats,
             GripType.OffHand => OffHandStats,
             _ => throw new Exception()
         };

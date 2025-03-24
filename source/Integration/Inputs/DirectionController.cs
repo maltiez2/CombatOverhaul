@@ -51,6 +51,15 @@ public sealed class DirectionController
     public AttackDirection CurrentDirectionWithInversion => Invert ? _inversionMapping[CurrentDirection] : CurrentDirection;
     public int CurrentDirectionNormalized { get; private set; }
 
+    public static readonly Dictionary<DirectionsConfiguration, List<int>> Configurations = new()
+    {
+        { DirectionsConfiguration.TopBottom, new() {0, 4} },
+        { DirectionsConfiguration.Triangle, new() {0, 3, 5} },
+        { DirectionsConfiguration.Square, new() {0, 2, 4, 6} },
+        { DirectionsConfiguration.Star, new() {0, 1, 3, 5, 7} },
+        { DirectionsConfiguration.Eight, new() {0, 1, 2, 3, 4, 5, 6, 7} }
+    };
+
     public DirectionController(ICoreClientAPI api, DirectionCursorRenderer renderer)
     {
         _api = api;
@@ -93,7 +102,7 @@ public sealed class DirectionController
         if (forceNewDirection || delta > _sensitivityFactor / Sensitivity)
         {
             CurrentDirectionNormalized = direction;
-            CurrentDirection = (AttackDirection)_configurations[DirectionsConfiguration][CurrentDirectionNormalized];
+            CurrentDirection = (AttackDirection)Configurations[DirectionsConfiguration][CurrentDirectionNormalized];
             _directionCursorRenderer.CurrentDirection = (int)CurrentDirectionWithInversion;
         }
     }
@@ -103,14 +112,7 @@ public sealed class DirectionController
     private readonly ICoreClientAPI _api;
     private readonly Queue<MouseMovementData> _directionQueue = new();
     private readonly DirectionCursorRenderer _directionCursorRenderer;
-    private readonly Dictionary<DirectionsConfiguration, List<int>> _configurations = new()
-    {
-        { DirectionsConfiguration.TopBottom, new() {0, 4} },
-        { DirectionsConfiguration.Triangle, new() {0, 3, 5} },
-        { DirectionsConfiguration.Square, new() {0, 2, 4, 6} },
-        { DirectionsConfiguration.Star, new() {0, 1, 3, 5, 7} },
-        { DirectionsConfiguration.Eight, new() {0, 1, 2, 3, 4, 5, 6, 7} }
-    };
+    
     private readonly Dictionary<DirectionsConfiguration, List<int>> _invertedConfigurations = new();
     private readonly Dictionary<AttackDirection, AttackDirection> _inversionMapping = new()
     {
@@ -137,7 +139,7 @@ public sealed class DirectionController
 
     private void ConstructInvertedConfigurations()
     {
-        foreach ((DirectionsConfiguration configuration, List<int> directions) in _configurations)
+        foreach ((DirectionsConfiguration configuration, List<int> directions) in Configurations)
         {
             _invertedConfigurations.Add(configuration, new());
             foreach (int direction in directions)
