@@ -39,10 +39,7 @@
           "BlockTier": {"BluntAttack": 4, "SlashingAttack": 4, "PiercingAttack": 4}
         }
       },
-      "StanceAnimations": {
-        "Top": "combatoverhaul:club-idle-1h",
-        "Bottom": "combatoverhaul:club-idle-1h"
-      },
+      "StanceAnimations": {"Top": "combatoverhaul:club-idle-1h", "Bottom": "combatoverhaul:club-idle-1h"},
       "RightClickAttacksAnimations": {
         "Top-Top": "combatoverhaul:club-strike-1h-1",
         "Top-Bottom": "combatoverhaul:club-strike-1h-2",
@@ -56,9 +53,6 @@
         "Bottom-Bottom": "combatoverhaul:club-strike-1h-4"
       }
     },
-    
-    
-    
     "OneHandedStance": {
       "CanAttack": true,
       "CanParry": false,

@@ -425,10 +425,10 @@ public class StanceBasedMeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleA
     {
         switch (callbackCode)
         {
-            case "startAttack":
+            case "start":
                 SetState(StanceBasedMeleeWeaponState.Attack, mainHand);
                 break;
-            case "stopAttack":
+            case "stop":
                 SetState(StanceBasedMeleeWeaponState.Cooldown, mainHand);
                 break;
             case "startParry":
@@ -512,10 +512,10 @@ public class StanceBasedMeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleA
     {
         switch (callbackCode)
         {
-            case "startAttack":
+            case "start":
                 SetState(StanceBasedMeleeWeaponState.Attack, mainHand);
                 break;
-            case "stopAttack":
+            case "stop":
                 SetState(StanceBasedMeleeWeaponState.Cooldown, mainHand);
                 break;
             case "startParry":
