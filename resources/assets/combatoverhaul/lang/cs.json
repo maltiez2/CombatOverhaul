@@ -170,6 +170,8 @@
   "setting-directions_inertia": "Setrvacnost smerového kurzoru",
   "setting-directions_sensitivity": "Citlivost smerového kurzoru",
   "setting-directions_invert": "Invertovat smerový kurzor",
+  "setting-directions_cursor_requires_hotkey": "Directions cursor requires hotkey",
+  "setting-directions_cursor_requires_hotkey-comment": "Configurable via controls",
   "setting-vanilla_actions_while_blocking": "Moznost provádet vanila akce (otevíraní dverí, sbíraní atd.)se stítem v ruce",
   "setting-bows_aiming_cursor_type": "Typ zamerovacího kurzoru luku",
   "setting-bow_aiming_difficulty": "Obtíznost mírení luku",

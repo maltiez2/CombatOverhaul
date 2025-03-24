@@ -149,6 +149,8 @@
   "setting-directions_inertia": "Інерція курсору вибору напрямку",
   "setting-directions_sensitivity": "Чутливість курсору вибору напрямку",
   "setting-directions_invert": "Інверсія курсору вибору напрямку",
+  "setting-directions_cursor_requires_hotkey": "Directions cursor requires hotkey",
+  "setting-directions_cursor_requires_hotkey-comment": "Configurable via controls",
   "setting-bows_aiming_cursor_type": "Тип курсору прицілу для лука",
   "setting-bow_aiming_difficulty": "Складність прицілювання луком",
   "setting-spears_aiming_cursor_type": "Тип курсору прицілу для списа",

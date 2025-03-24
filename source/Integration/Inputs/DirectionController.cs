@@ -47,6 +47,7 @@ public sealed class DirectionController
     public int Depth { get; set; } = 5;
     public float Sensitivity { get; set; } = 1.0f;
     public bool Invert { get; set; } = false;
+    public bool RequiresHotkey { get; set; } = false;
     public AttackDirection CurrentDirection { get; private set; }
     public AttackDirection CurrentDirectionWithInversion => Invert ? _inversionMapping[CurrentDirection] : CurrentDirection;
     public int CurrentDirectionNormalized { get; private set; }
@@ -77,7 +78,7 @@ public sealed class DirectionController
             return;
         }
 
-        _directionCursorRenderer.Show = true;
+        _directionCursorRenderer.Show = RequiresHotkey ? _api.Input.IsHotKeyPressed("changeAttackDirection") : true;
 
         float pitch = _api.Input.MousePitch;
         float yaw = _api.Input.MouseYaw;
@@ -90,7 +91,7 @@ public sealed class DirectionController
 
         float delta = _directionQueue.Last().DeltaPitch * _directionQueue.Last().DeltaPitch + _directionQueue.Last().DeltaYaw * _directionQueue.Last().DeltaYaw;
 
-        if (forceNewDirection || delta > _sensitivityFactor / Sensitivity)
+        if (forceNewDirection || RequiresHotkey ? delta > _sensitivityFactor / Sensitivity && _api.Input.IsHotKeyPressed("changeAttackDirection") : delta > _sensitivityFactor / Sensitivity)
         {
             CurrentDirectionNormalized = direction;
             CurrentDirection = (AttackDirection)_configurations[DirectionsConfiguration][CurrentDirectionNormalized];

@@ -9,5 +9,6 @@
   "PrintPlayerBeingHit": true,
   "DirectionsControllerSensitivity": 1.0,
   "DirectionsControllerInvert": false,
+  "DirectionsCursorRequiresHotkey": false,
   "DoVanillaActionsWhileBlocking": true
 }
