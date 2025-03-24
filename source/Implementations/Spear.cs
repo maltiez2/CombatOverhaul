@@ -1198,6 +1198,10 @@ public class SpearItem : ItemSpear, IHasWeaponLogic, IHasRangedWeaponLogic
     {
         return remainingResistance;
     }*/
+    public override void OnHeldInteractStart(ItemSlot itemslot, EntityAgent byEntity, BlockSelection blockSel, EntitySelection entitySel, bool firstEvent, ref EnumHandHandling handling)
+    {
+        handling = EnumHandHandling.Handled;
+    }
 
     public override void GetHeldItemInfo(ItemSlot inSlot, StringBuilder dsc, IWorldAccessor world, bool withDebugInfo)
     {

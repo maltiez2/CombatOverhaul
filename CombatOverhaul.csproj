@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <!-- Mod info -->
   <PropertyGroup>
-    <ModName>Combat Overhaul</ModName>
+    <ModName>Bullseye</ModName>
     <ModType>code</ModType>
-    <ModVersion>3.0.0-pre.1</ModVersion>
+    <ModVersion>3.0.0-pre.3</ModVersion>
     <ModId>bullseyecontinued</ModId>
     <Description></Description>
     <Side>Universal</Side>
@@ -106,6 +106,7 @@
 }
       </ModInfo>
     </PropertyGroup>
+    <RemoveDir Directories="$(OutputDir)" />
     <Message Text="Generating modinfo.json" Importance="high" />
     <WriteLinesToFile File="$(OutputPath)/modinfo.json" Lines="$(ModInfo)" Overwrite="true" WriteOnlyWhenDifferent="true" />
   </Target>
@@ -122,7 +123,6 @@
       <ModIcon Include="$(ModIconFile)" />
     </ItemGroup>
     <Message Text="Clearing assets folder in build directory" Importance="high" />
-    <RemoveDir Directories="$(OutputDir)" />
     <Message Text="Copying assets to build directory" Importance="high" />
     <Copy SourceFiles="@(AssetsFolder)" DestinationFiles="@(AssetsFolder->'$(OutputPath)assets\%(RecursiveDir)%(Filename)%(Extension)')" Condition="Exists('$(AssetsDir)')" OverwriteReadOnlyFiles="true" />
     <Copy SourceFiles="@(ModIcon)" DestinationFolder="$(OutputPath)" Condition="Exists('$(ModIconFile)')" OverwriteReadOnlyFiles="true" />

@@ -455,11 +455,11 @@ public sealed class CombatOverhaulAnimationsSystem : ModSystem
 
         if (_shaderProgram == null || _shaderProgramFirstPerson == null) return false;
 
-        _shaderProgram.AssetDomain = Mod.Info.ModID;
+        _shaderProgram.AssetDomain = "combatoverhaul";
         clientApi.Shader.RegisterFileShaderProgram("customstandard", AnimatedItemShaderProgram);
         _shaderProgram.Compile();
 
-        _shaderProgramFirstPerson.AssetDomain = Mod.Info.ModID;
+        _shaderProgramFirstPerson.AssetDomain = "combatoverhaul";
         clientApi.Shader.RegisterFileShaderProgram("customstandardfirstperson", AnimatedItemShaderProgramFirstPerson);
         _shaderProgramFirstPerson.Compile();
 

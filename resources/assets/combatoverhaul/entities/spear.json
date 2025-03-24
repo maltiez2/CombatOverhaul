@@ -20,6 +20,9 @@
         "blackbronze",
         "ornategold",
         "ornatesilver",
+        "iron",
+        "meteoriciron",
+        "steel",
         "hacking",
         "ruined",
         "erel"
@@ -39,6 +42,7 @@
       "spear-generic-ornatesilver": {"base": "game:item/tool/spear/ornatesilver"},
       "@spear-generic-(chert|granite|andesite|basalt|obsidian|peridotite|flint)": {"base": "game:item/tool/spear/stone"},
       "@spear-generic-(copper|tinbronze|bismuthbronze|blackbronze)": {"base": "game:item/tool/spear/copper"},
+      "@spear-generic-(iron|meteoriciron|steel)": {"base": "combatoverhaul:spear-iron"},
       "*-ruined": {"base": "game:item/tool/spear/ruined/{type}"}
     },
     "texturesByType": {"@spear-generic-(chert|granite|andesite|basalt|obsidian|peridotite)": {"head": {"base": "game:block/stone/rock/{material}1"}}},
