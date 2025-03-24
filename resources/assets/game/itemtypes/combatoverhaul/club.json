@@ -1,6 +1,6 @@
 ﻿{
   "code": "club",
-  "class": "CombatOverhaul:StanceBasedMeleeWeapon",
+  "class": "CombatOverhaul:MeleeWeapon",
   "variantgroups": [{"code": "type", "states": ["generic", "scrap", "scrapmace"]}, {"code": "material", "states": ["wood", "scrap"]}],
   "allowedVariants": ["club-generic-wood", "club-scrap-scrap"],
   "shapeByType": {"*-generic-*": {"base": "combatoverhaul:weapons/clubs/club"}, "*-scrap-*": {"base": "combatoverhaul:weapons/clubs/scrap"}},
@@ -39,19 +39,69 @@
           "BlockTier": {"BluntAttack": 4, "SlashingAttack": 4, "PiercingAttack": 4}
         }
       },
-      "StanceAnimations": {"Top": "combatoverhaul:club-idle-1h", "Bottom": "combatoverhaul:club-idle-1h"},
+      "StanceAnimations": {
+        "Top": "combatoverhaul:club-idle-1h",
+        "Bottom": "combatoverhaul:club-idle-1h"
+      },
       "RightClickAttacksAnimations": {
-        "Top-Top": ["combatoverhaul:club-strike-1h-1", "combatoverhaul:club-strike-1h-2"],
-        "Top-Bottom": ["combatoverhaul:club-strike-1h-1", "combatoverhaul:club-strike-1h-2"],
-        "Bottom-Top": ["combatoverhaul:club-strike-1h-1", "combatoverhaul:club-strike-1h-2"],
-        "Bottom-Bottom": ["combatoverhaul:club-strike-1h-1", "combatoverhaul:club-strike-1h-2"]
+        "Top-Top": "combatoverhaul:club-strike-1h-1",
+        "Top-Bottom": "combatoverhaul:club-strike-1h-2",
+        "Bottom-Top": "combatoverhaul:club-strike-1h-3",
+        "Bottom-Bottom": "combatoverhaul:club-strike-1h-4"
       },
       "LeftClickAttacksAnimations": {
-        "Top-Top": ["combatoverhaul:club-strike-1h-1", "combatoverhaul:club-strike-1h-2"],
-        "Top-Bottom": ["combatoverhaul:club-strike-1h-1", "combatoverhaul:club-strike-1h-2"],
-        "Bottom-Top": ["combatoverhaul:club-strike-1h-1", "combatoverhaul:club-strike-1h-2"],
-        "Bottom-Bottom": ["combatoverhaul:club-strike-1h-1", "combatoverhaul:club-strike-1h-2"]
+        "Top-Top": "combatoverhaul:club-strike-1h-1",
+        "Top-Bottom": "combatoverhaul:club-strike-1h-2",
+        "Bottom-Top": "combatoverhaul:club-strike-1h-3",
+        "Bottom-Bottom": "combatoverhaul:club-strike-1h-4"
       }
+    },
+    
+    
+    
+    "OneHandedStance": {
+      "CanAttack": true,
+      "CanParry": false,
+      "CanBlock": false,
+      "CanSprint": true,
+      "Attack": {
+        "StopOnTerrainHit": false,
+        "StopOnEntityHit": true,
+        "CollideWithTerrain": true,
+        "MaxReach": 9,
+        "DamageTypesByType": {
+          "*-generic-*": [{"Damage": {"DamageType": "BluntAttack", "Tier": 1, "Damage": 3}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.6, 0, 0.5]}],
+          "*-scrap-*": [{"Damage": {"DamageType": "BluntAttack", "Tier": 2, "Damage": 3.5}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.6, 0, 0.5]}]
+        }
+      },
+      "AttackHitSound": "game:sounds/thud",
+      "AttackAnimation": {"Main": ["combatoverhaul:club-strike-1h-1", "combatoverhaul:club-strike-1h-2"]},
+      "TpAttackAnimation": {"Main": "combatoverhaul-falx-slash"},
+      "AttackTpAnimation": "falx",
+      "ReadyAnimation": "combatoverhaul:club-ready-1h",
+      "IdleAnimation": "combatoverhaul:club-idle-1h"
+    },
+    "TwoHandedStance": {
+      "CanAttack": true,
+      "CanParry": false,
+      "CanBlock": false,
+      "CanSprint": true,
+      "Attack": {
+        "StopOnTerrainHit": false,
+        "StopOnEntityHit": true,
+        "CollideWithTerrain": true,
+        "MaxReach": 9,
+        "DamageTypesByType": {
+          "*-generic-*": [{"Damage": {"DamageType": "BluntAttack", "Tier": 1, "Damage": 4}, "Knockback": 1, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.6, 0, 0.5]}],
+          "*-scrap-*": [{"Damage": {"DamageType": "BluntAttack", "Tier": 2, "Damage": 4.5}, "Knockback": 1, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.6, 0, 0.5]}]
+        }
+      },
+      "AttackHitSound": "game:sounds/thud",
+      "AttackAnimation": {"Main": ["combatoverhaul:club-strike-2h-1", "combatoverhaul:club-strike-2h-2"]},
+      "TpAttackAnimation": {"Main": "combatoverhaul-falx-slash"},
+      "ReadyAnimation": "combatoverhaul:club-ready-2h",
+      "AttackTpAnimation": "falx",
+      "IdleAnimation": "combatoverhaul:club-idle-2h"
     }
   },
   "behaviors": [

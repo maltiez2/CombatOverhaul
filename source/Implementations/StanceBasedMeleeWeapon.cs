@@ -419,17 +419,6 @@ public class StanceBasedMeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleA
     {
         SetState(StanceBasedMeleeWeaponState.Idle, mainHand);
 
-        GripSpecificStats? stats = GetGripSpecificStats(mainHand, player);
-        if (stats?.Blocks[stats.CurrentStance] != null)
-        {
-            MeleeBlockSystem.StartBlock(stats.Blocks[stats.CurrentStance], mainHand);
-        }
-
-        if (stats != null)
-        {
-            stats.CurrentStance = direction;
-        }
-
         return true;
     }
     protected virtual void LeftClickAttackCallbackHandler(string callbackCode, bool mainHand, GripSpecificStats stats, AttackDirection stance)
@@ -452,6 +441,11 @@ public class StanceBasedMeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleA
             case "ready":
                 SetState(StanceBasedMeleeWeaponState.Idle, mainHand);
                 stats.CurrentStance = stance;
+
+                if (stats?.Blocks[stats.CurrentStance] != null)
+                {
+                    MeleeBlockSystem.StartBlock(stats.Blocks[stats.CurrentStance], mainHand);
+                }
                 break;
         }
     }
@@ -512,17 +506,6 @@ public class StanceBasedMeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleA
     {
         SetState(StanceBasedMeleeWeaponState.Idle, mainHand);
 
-        GripSpecificStats? stats = GetGripSpecificStats(mainHand, player);
-        if (stats?.Blocks[stats.CurrentStance] != null)
-        {
-            MeleeBlockSystem.StartBlock(stats.Blocks[stats.CurrentStance], mainHand);
-        }
-
-        if (stats != null)
-        {
-            stats.CurrentStance = direction;
-        }
-
         return true;
     }
     protected virtual void RightClickAttackCallbackHandler(string callbackCode, bool mainHand, GripSpecificStats stats, AttackDirection stance)
@@ -545,6 +528,11 @@ public class StanceBasedMeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleA
             case "ready":
                 SetState(StanceBasedMeleeWeaponState.Idle, mainHand);
                 stats.CurrentStance = stance;
+
+                if (stats?.Blocks[stats.CurrentStance] != null)
+                {
+                    MeleeBlockSystem.StartBlock(stats.Blocks[stats.CurrentStance], mainHand);
+                }
                 break;
         }
     }
