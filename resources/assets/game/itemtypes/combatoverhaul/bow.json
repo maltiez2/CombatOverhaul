@@ -2,7 +2,7 @@
   "code": "bow",
   "class": "CombatOverhaul:Bow",
   "variantgroups": [{"code": "type", "states": ["crude", "simple", "long", "recurve"]}],
-  "creativeinventory": {"general": ["*"], "items": ["*"], "tools": ["*"], "combatoverhaul": ["*"]},
+  "creativeinventory": {"general": ["*"], "items": ["*"], "tools": ["*"]},
   "maxstacksize": 1,
   "durabilityByType": {"*-crude": 180, "*-simple": 240, "*-long": 750, "*-recurve": 600},
   "tool": "bow",

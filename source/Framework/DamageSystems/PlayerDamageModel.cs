@@ -559,12 +559,12 @@ public sealed class MeleeBlockSystemServer : MeleeSystem
 
     private void HandlePacket(IServerPlayer player, DamageBlockPacket packet)
     {
-        player.Entity.GetBehavior<PlayerDamageModelBehavior>().CurrentDamageBlock = packet.ToBlockStats(damageBlocked => BlockCallback(player, packet.MainHand, damageBlocked));
+        //player.Entity.GetBehavior<PlayerDamageModelBehavior>().CurrentDamageBlock = packet.ToBlockStats(damageBlocked => BlockCallback(player, packet.MainHand, damageBlocked));
     }
 
     private void HandlePacket(IServerPlayer player, DamageStopBlockPacket packet)
     {
-        player.Entity.GetBehavior<PlayerDamageModelBehavior>().CurrentDamageBlock = null;
+        //player.Entity.GetBehavior<PlayerDamageModelBehavior>().CurrentDamageBlock = null;
     }
 
     private static void BlockCallback(IServerPlayer player, bool mainHand, float damageBlocked)

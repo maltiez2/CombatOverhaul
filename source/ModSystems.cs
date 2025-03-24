@@ -13,6 +13,7 @@ using CombatOverhaul.Utils;
 using HarmonyLib;
 using OpenTK.Mathematics;
 using ProtoBuf;
+using System;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -95,8 +96,8 @@ public sealed class CombatOverhaulSystem : ModSystem
 
     public override void StartPre(ICoreAPI api)
     {
-        (api as ServerCoreAPI)?.ClassRegistryNative.RegisterInventoryClass(GlobalConstants.characterInvClassName, typeof(ArmorInventory));
-        (api as ClientCoreAPI)?.ClassRegistryNative.RegisterInventoryClass(GlobalConstants.characterInvClassName, typeof(ArmorInventory));
+        //(api as ServerCoreAPI)?.ClassRegistryNative.RegisterInventoryClass(GlobalConstants.characterInvClassName, typeof(ArmorInventory));
+        //(api as ClientCoreAPI)?.ClassRegistryNative.RegisterInventoryClass(GlobalConstants.characterInvClassName, typeof(ArmorInventory));
     }
     public override void Start(ICoreAPI api)
     {
@@ -129,6 +130,8 @@ public sealed class CombatOverhaulSystem : ModSystem
         api.RegisterItemClass("CombatOverhaul:WearableArmor", typeof(ItemWearableArmor));
         api.RegisterItemClass("CombatOverhaul:WearableFueledLightSource", typeof(WearableFueledLightSource));
 
+        api.RegisterItemClass("Bullseye:Spear", typeof(SpearItem));
+
         api.RegisterEntity("CombatOverhaul:Projectile", typeof(ProjectileEntity));
 
         api.RegisterBlockEntityClass("CombatOverhaul:GenericDisplayBlockEntity", typeof(GenericDisplayBlockEntity));
@@ -151,7 +154,7 @@ public sealed class CombatOverhaulSystem : ModSystem
         ServerBlockBreakingSystem = new(api);
         ServerAttachmentSystem = new(api);
 
-        _serverTOggleChannel = api.Network.RegisterChannel("combatOverhaulToggleItem")
+        _serverToggleChannel = api.Network.RegisterChannel("combatOverhaulToggleItem")
             .RegisterMessageType<TogglePacket>()
             .SetMessageHandler<TogglePacket>(ToggleWearableItem);
 
@@ -177,10 +180,10 @@ public sealed class CombatOverhaulSystem : ModSystem
         api.Event.RegisterRenderer(ReticleRenderer, EnumRenderStage.Ortho);
         api.Event.RegisterRenderer(DirectionCursorRenderer, EnumRenderStage.Ortho);
 
-        api.Gui.RegisterDialog(new GuiDialogArmorInventory(api));
+        //api.Gui.RegisterDialog(new GuiDialogArmorInventory(api));
 
         AimingPatches.Patch("CombatOverhaulAiming");
-        MouseWheelPatch.Patch("CombatOverhaul", api);
+        //MouseWheelPatch.Patch("CombatOverhaul", api);
 
         _clientToggleChannel = api.Network.RegisterChannel("combatOverhaulToggleItem")
             .RegisterMessageType<TogglePacket>();
@@ -236,7 +239,7 @@ public sealed class CombatOverhaulSystem : ModSystem
         DamageResistData.MaxArmorTier = armorConfigObj.MaxArmorTier;
         DamageResistData.DamageReduction = armorConfigObj.DamageReduction;
 
-        ArmorAutoPatcher.Patch(api);
+        //ArmorAutoPatcher.Patch(api);
 
         if (api is ICoreServerAPI serverApi)
         {
@@ -258,7 +261,7 @@ public sealed class CombatOverhaulSystem : ModSystem
         _clientApi?.Event.UnregisterRenderer(DirectionCursorRenderer, EnumRenderStage.Ortho);
 
         AimingPatches.Unpatch("CombatOverhaulAiming");
-        MouseWheelPatch.Unpatch("CombatOverhaul");
+        //MouseWheelPatch.Unpatch("CombatOverhaul");
 
         OnDispose?.Invoke();
 
@@ -312,7 +315,7 @@ public sealed class CombatOverhaulSystem : ModSystem
     private ICoreClientAPI? _clientApi;
     private readonly Vector4 _iconScale = new(-0.1f, -0.1f, 1.2f, 1.2f);
     private IClientNetworkChannel? _clientToggleChannel;
-    private IServerNetworkChannel? _serverTOggleChannel;
+    private IServerNetworkChannel? _serverToggleChannel;
 
     private void RegisterCustomIcon(ICoreClientAPI api, string key, string path)
     {
@@ -337,7 +340,7 @@ public sealed class CombatOverhaulSystem : ModSystem
     }
     private void CheckStatusClientSide(ICoreClientAPI api)
     {
-        IInventory? gearInventory = GetGearInventory(api.World.Player.Entity);
+        /*IInventory? gearInventory = GetGearInventory(api.World.Player.Entity);
         if (gearInventory is not ArmorInventory)
         {
             string className = gearInventory == null ? "null" : LoggerUtil.GetCallerTypeName(gearInventory);
@@ -350,7 +353,7 @@ public sealed class CombatOverhaulSystem : ModSystem
         {
             LoggerUtil.Error(api, this, $"Immersive first person mode is enabled. It is not supported. Turn this setting off.");
             AnnoyPlayer(api, "(Combat Overhaul) Immersive first person mode is enabled. It is not supported. Turn this setting off to prevent this message.", () => api.Settings.Bool["immersiveFpMode"]);
-        }
+        }*/
     }
 
     private static IInventory? GetBackpackInventory(ICoreClientAPI api)

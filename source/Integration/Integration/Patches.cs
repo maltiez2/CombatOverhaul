@@ -31,15 +31,15 @@ internal static class HarmonyPatches
                 prefix: new HarmonyMethod(AccessTools.Method(typeof(HarmonyPatches), nameof(RenderHeldItem)))
             );
 
-        new Harmony(harmonyId).Patch(
+        /*new Harmony(harmonyId).Patch(
                 typeof(EntityShapeRenderer).GetMethod("DoRender3DOpaque", AccessTools.all),
                 prefix: new HarmonyMethod(AccessTools.Method(typeof(HarmonyPatches), nameof(DoRender3DOpaque)))
-            );
+            );*/
 
-        new Harmony(harmonyId).Patch(
+        /*new Harmony(harmonyId).Patch(
                 typeof(EntityPlayerShapeRenderer).GetMethod("DoRender3DOpaque", AccessTools.all),
                 prefix: new HarmonyMethod(AccessTools.Method(typeof(HarmonyPatches), nameof(DoRender3DOpaquePlayer)))
-            );
+            );*/
 
         new Harmony(harmonyId).Patch(
                 typeof(EntityShapeRenderer).GetMethod("BeforeRender", AccessTools.all),
@@ -56,30 +56,30 @@ internal static class HarmonyPatches
                 prefix: new HarmonyMethod(AccessTools.Method(typeof(HarmonyPatches), nameof(HarmonyPatches.SmoothCameraTurning)))
             );
 
-        new Harmony(harmonyId).Patch(
+        /*new Harmony(harmonyId).Patch(
                 typeof(EntityBehaviorHealth).GetMethod("OnFallToGround", AccessTools.all),
                 prefix: new HarmonyMethod(AccessTools.Method(typeof(HarmonyPatches), nameof(HarmonyPatches.OnFallToGround)))
-            );
+            );*/
 
-        new Harmony(harmonyId).Patch(
+        /*new Harmony(harmonyId).Patch(
                 typeof(BlockDamageOnTouch).GetMethod("OnEntityInside", AccessTools.all),
                 prefix: new HarmonyMethod(AccessTools.Method(typeof(HarmonyPatches), nameof(OnEntityInside)))
-            );
+            );*/
 
-        new Harmony(harmonyId).Patch(
+        /*new Harmony(harmonyId).Patch(
                 typeof(BlockDamageOnTouch).GetMethod("OnEntityCollide", AccessTools.all),
                 prefix: new HarmonyMethod(AccessTools.Method(typeof(HarmonyPatches), nameof(OnEntityCollide)))
-            );
+            );*/
 
-        new Harmony(harmonyId).Patch(
+        /*new Harmony(harmonyId).Patch(
                 typeof(BagInventory).GetMethod("ReloadBagInventory", AccessTools.all),
                 prefix: new HarmonyMethod(AccessTools.Method(typeof(HarmonyPatches), nameof(ReloadBagInventory)))
-            );
+            );*/
 
-        new Harmony(harmonyId).Patch(
+        /*new Harmony(harmonyId).Patch(
                 typeof(EntityPlayer).GetProperty("LightHsv", AccessTools.all).GetAccessors()[0],
                 postfix: new HarmonyMethod(AccessTools.Method(typeof(HarmonyPatches), nameof(LightHsv)))
-            );
+            );*/
 
         _cleanUpTickListener = api.World.RegisterGameTickListener(_ => OnCleanUpTick(), 5 * 60 * 1000, 5 * 60 * 1000);
     }
@@ -87,16 +87,16 @@ internal static class HarmonyPatches
     public static void Unpatch(string harmonyId, ICoreAPI api)
     {
         new Harmony(harmonyId).Unpatch(typeof(EntityShapeRenderer).GetMethod("RenderHeldItem", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
-        new Harmony(harmonyId).Unpatch(typeof(EntityShapeRenderer).GetMethod("DoRender3DOpaque", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
+        //new Harmony(harmonyId).Unpatch(typeof(EntityShapeRenderer).GetMethod("DoRender3DOpaque", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         new Harmony(harmonyId).Unpatch(typeof(Vintagestory.API.Common.AnimationManager).GetMethod("OnClientFrame", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         new Harmony(harmonyId).Unpatch(typeof(EntityPlayer).GetMethod("OnSelfBeforeRender", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         new Harmony(harmonyId).Unpatch(typeof(EntityPlayer).GetMethod("updateEyeHeight", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         new Harmony(harmonyId).Unpatch(typeof(EntityPlayerShapeRenderer).GetMethod("smoothCameraTurning", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
-        new Harmony(harmonyId).Unpatch(typeof(EntityBehaviorHealth).GetMethod("OnFallToGround", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
-        new Harmony(harmonyId).Unpatch(typeof(BlockDamageOnTouch).GetMethod("OnEntityInside", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
-        new Harmony(harmonyId).Unpatch(typeof(BlockDamageOnTouch).GetMethod("OnEntityCollide", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
-        new Harmony(harmonyId).Unpatch(typeof(BagInventory).GetMethod("ReloadBagInventory", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
-        new Harmony(harmonyId).Unpatch(typeof(EntityPlayer).GetProperty("LightHsv", AccessTools.all).GetAccessors()[0], HarmonyPatchType.Postfix, harmonyId);
+        //new Harmony(harmonyId).Unpatch(typeof(EntityBehaviorHealth).GetMethod("OnFallToGround", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
+        //new Harmony(harmonyId).Unpatch(typeof(BlockDamageOnTouch).GetMethod("OnEntityInside", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
+        //new Harmony(harmonyId).Unpatch(typeof(BlockDamageOnTouch).GetMethod("OnEntityCollide", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
+        //new Harmony(harmonyId).Unpatch(typeof(BagInventory).GetMethod("ReloadBagInventory", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
+        //new Harmony(harmonyId).Unpatch(typeof(EntityPlayer).GetProperty("LightHsv", AccessTools.all).GetAccessors()[0], HarmonyPatchType.Postfix, harmonyId);
 
         _animatorsLock.AcquireWriterLock(1000);
         _animators.Clear();
