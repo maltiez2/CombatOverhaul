@@ -1,11 +1,13 @@
 ﻿[
+  {"side": "Server", "file": "game:entities/land/sheep-bighorn-male", "op": "add", "path": "/client/behaviors/-", "value": {"code": "CombatOverhaul:EntityColliders"}},
+  {"side": "Server", "file": "game:entities/land/sheep-bighorn-male", "op": "add", "path": "/server/behaviors/-", "value": {"code": "CombatOverhaul:EntityColliders"}},
+  {"side": "Server", "file": "game:entities/land/sheep-bighorn-male", "op": "addMerge", "path": "/behaviorConfigs", "value": {}},
   {
     "side": "Server",
     "file": "game:entities/land/sheep-bighorn-male",
     "op": "add",
-    "path": "/client/behaviors/-",
+    "path": "/behaviorConfigs/CombatOverhaul:EntityColliders",
     "value": {
-      "code": "CombatOverhaul:EntityColliders",
       "elements": {
         "Torso": ["neck", "Body", "R back leg", "L back leg"],
         "Head": ["head", "mouth up"],
@@ -19,27 +21,29 @@
   {
     "side": "Server",
     "file": "game:entities/land/sheep-bighorn-male",
-    "op": "add",
-    "path": "/server/behaviors/-",
+    "op": "replace",
+    "path": "/behaviorConfigs/CombatOverhaul:EntityColliders",
     "value": {
-      "code": "CombatOverhaul:EntityColliders",
       "elements": {
-        "Torso": ["neck", "Body", "R back leg", "L back leg"],
-        "Head": ["head", "mouth up"],
-        "Arm": ["R back foot", "L back foot"],
-        "Leg": ["R front leg", "R front foot", "L front leg", "L front foot"],
-        "Critical": [],
-        "Resistant": ["R horn base", " R horn 2", "R horn 3", "R horn 4", "L horn base20", "L horn 21", "L horn 22", "L horn 23"]
+        "Torso": ["Chest", "Body", "Booty", "Belly", "LB thigh", " RB thigh", "RF shoulder", "LF shoulder"],
+        "Head": ["head", "Muzzle", "Lips"],
+        "Arm": ["LF elbow", "LF Arm", "LF foot", "RF Elbow", "RF Arm", "RF foot"],
+        "Leg": ["RB knee", "RB leg", "RB foot", "LB knee", "LB leg", "LB foot"],
+        "Critical": ["Neck"],
+        "Resistant": ["L Horn 1", "L Horn 2", "L Horn 3", "L Horn 4", "R Horn 1", "R Horn 2", "R Horn 3", "R Horn 4"]
       }
-    }
+    },
+    "dependsOn": [{"modid": "improvedsheep"}]
   },
+  {"side": "Server", "file": "game:entities/land/sheep-bighorn-female", "op": "add", "path": "/client/behaviors/-", "value": {"code": "CombatOverhaul:EntityColliders"}},
+  {"side": "Server", "file": "game:entities/land/sheep-bighorn-female", "op": "add", "path": "/server/behaviors/-", "value": {"code": "CombatOverhaul:EntityColliders"}},
+  {"side": "Server", "file": "game:entities/land/sheep-bighorn-female", "op": "addMerge", "path": "/behaviorConfigs", "value": {}},
   {
     "side": "Server",
     "file": "game:entities/land/sheep-bighorn-female",
     "op": "add",
-    "path": "/client/behaviors/-",
+    "path": "/behaviorConfigs/CombatOverhaul:EntityColliders",
     "value": {
-      "code": "CombatOverhaul:EntityColliders",
       "elements": {
         "Torso": ["neck", "Body", "R back leg", "L back leg"],
         "Head": ["head", "mouth up"],
@@ -53,27 +57,29 @@
   {
     "side": "Server",
     "file": "game:entities/land/sheep-bighorn-female",
-    "op": "add",
-    "path": "/server/behaviors/-",
+    "op": "replace",
+    "path": "/behaviorConfigs/CombatOverhaul:EntityColliders",
     "value": {
-      "code": "CombatOverhaul:EntityColliders",
       "elements": {
-        "Torso": ["neck", "Body", "R back leg", "L back leg"],
-        "Head": ["head", "mouth up"],
-        "Arm": ["R back foot", "L back foot"],
-        "Leg": ["R front leg", "R front foot", "L front leg", "L front foot"],
-        "Critical": [],
+        "Torso": ["Chest", "Body", "Booty", "Belly", "LB thigh", " RB thigh", "RF shoulder", "LF shoulder"],
+        "Head": ["head", "Muzzle", "Lips"],
+        "Arm": ["LF elbow", "LF Arm", "LF foot", "RF Elbow", "RF Arm", "RF foot"],
+        "Leg": ["RB knee", "RB leg", "RB foot", "LB knee", "LB leg", "LB foot"],
+        "Critical": ["Neck"],
         "Resistant": []
       }
-    }
+    },
+    "dependsOn": [{"modid": "improvedsheep"}]
   },
+  {"side": "Server", "file": "game:entities/land/sheep-bighorn-lamb", "op": "add", "path": "/client/behaviors/-", "value": {"code": "CombatOverhaul:EntityColliders"}},
+  {"side": "Server", "file": "game:entities/land/sheep-bighorn-lamb", "op": "add", "path": "/server/behaviors/-", "value": {"code": "CombatOverhaul:EntityColliders"}},
+  {"side": "Server", "file": "game:entities/land/sheep-bighorn-lamb", "op": "addMerge", "path": "/behaviorConfigs", "value": {}},
   {
     "side": "Server",
     "file": "game:entities/land/sheep-bighorn-lamb",
     "op": "add",
-    "path": "/client/behaviors/-",
+    "path": "/behaviorConfigs/CombatOverhaul:EntityColliders",
     "value": {
-      "code": "CombatOverhaul:EntityColliders",
       "elements": {
         "Torso": ["neck", "Body", "R back leg", "L back leg"],
         "Head": ["head", "mouth"],
@@ -87,19 +93,19 @@
   {
     "side": "Server",
     "file": "game:entities/land/sheep-bighorn-lamb",
-    "op": "add",
-    "path": "/server/behaviors/-",
+    "op": "replace",
+    "path": "/behaviorConfigs/CombatOverhaul:EntityColliders",
     "value": {
-      "code": "CombatOverhaul:EntityColliders",
       "elements": {
-        "Torso": ["neck", "Body", "R back leg", "L back leg"],
-        "Head": ["head", "mouth"],
-        "Arm": ["R back foot", "L back foot"],
-        "Leg": ["R front leg", "R front foot", "L front leg", "L front foot"],
-        "Critical": [],
+        "Torso": ["Chest", "Body", "Booty", "LB thigh", " RB thigh", "RF shoulder", "LF shoulder"],
+        "Head": ["head", "Muzzle", "Lips"],
+        "Arm": ["LF elbow", "LF Arm", "LF foot", "RF Elbow", "RF Arm", "RF foot"],
+        "Leg": ["RB knee", "RB leg", "RB foot", "LB knee", "LB leg", "LB foot"],
+        "Critical": ["Neck"],
         "Resistant": []
       }
-    }
+    },
+    "dependsOn": [{"modid": "improvedsheep"}]
   },
   {
     "side": "Server",
@@ -112,7 +118,7 @@
         "TorsoDamageMultiplier": 1,
         "LimbsDamageMultiplier": 0.75,
         "HeadDamageMultiplier": 1.5,
-        "CriticalDamageMultiplier": 4,
+        "CriticalDamageMultiplier": 2,
         "DefaultResists": {"BluntAttack": 6, "SlashingAttack": 3, "PiercingAttack": 0}
       }
     }
@@ -128,7 +134,7 @@
         "TorsoDamageMultiplier": 1,
         "LimbsDamageMultiplier": 0.75,
         "HeadDamageMultiplier": 1.5,
-        "CriticalDamageMultiplier": 4,
+        "CriticalDamageMultiplier": 2,
         "DefaultResists": {"BluntAttack": 6, "SlashingAttack": 3, "PiercingAttack": 0}
       }
     }
@@ -144,7 +150,7 @@
         "TorsoDamageMultiplier": 1,
         "LimbsDamageMultiplier": 0.75,
         "HeadDamageMultiplier": 1.5,
-        "CriticalDamageMultiplier": 4,
+        "CriticalDamageMultiplier": 2,
         "DefaultResists": {"BluntAttack": 6, "SlashingAttack": 3, "PiercingAttack": 0}
       }
     }

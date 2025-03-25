@@ -9,8 +9,11 @@ using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
+using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
 using Vintagestory.API.Util;
+using Vintagestory.Client.NoObf;
+using VSImGui.Debug;
 
 namespace CombatOverhaul.Implementations;
 
@@ -66,6 +69,9 @@ public class BowClient : RangeWeaponClient
             AimingStats.VerticalLimit = settings.BowsAimingVerticalLimit;
             AimingStats.HorizontalLimit = settings.BowsAimingHorizontalLimit;
         };
+
+        DebugWidgets.FloatDrag("test", "test3", $"{item.Code}-followX", () => AimingStats.AnimationFollowX, (value) => AimingStats.AnimationFollowX = value);
+        DebugWidgets.FloatDrag("test", "test3", $"{item.Code}-followY", () => AimingStats.AnimationFollowY, (value) => AimingStats.AnimationFollowY = value);
     }
 
     public override void OnSelected(ItemSlot slot, EntityPlayer player, bool mainHand, ref int state)
@@ -300,6 +306,8 @@ public sealed class AimingAnimationController
         _aimingSystem = aimingSystem;
         _animationBehavior = animationBehavior;
         Stats = stats;
+
+        DebugWidgets.FloatDrag("test", "test2", $"fovMult-{stats.AimDrift}", () => _fovMultiplier, value => _fovMultiplier = value);
     }
 
     public void Play(bool mainHand)
@@ -321,6 +329,7 @@ public sealed class AimingAnimationController
     private const float _animationFollowMultiplier = 0.01f;
     private readonly ClientAimingSystem _aimingSystem;
     private readonly FirstPersonAnimationsBehavior? _animationBehavior;
+    private float _fovMultiplier = 0.79f;
 
     private PLayerKeyFrame GetAimingFrame()
     {
@@ -331,8 +340,10 @@ public sealed class AimingAnimationController
         DebugWidgets.FloatDrag("tweaks", "animation", "offsetX", () => _aimingStats.AnimationOffsetX, value => _aimingStats.AnimationOffsetX = value);
         DebugWidgets.FloatDrag("tweaks", "animation", "offsetY", () => _aimingStats.AnimationOffsetY, value => _aimingStats.AnimationOffsetY = value);*/
 
-        float yaw = 0 - currentAim.X * _animationFollowMultiplier * Stats.AnimationFollowX + Stats.AnimationOffsetX;
-        float pitch = currentAim.Y * _animationFollowMultiplier * Stats.AnimationFollowY + Stats.AnimationOffsetY;
+        float fovAdjustment = 1f - MathF.Cos(ClientSettings.FieldOfView * GameMath.DEG2RAD) * _fovMultiplier;
+
+        float yaw = 0 - currentAim.X * _animationFollowMultiplier * Stats.AnimationFollowX * fovAdjustment + Stats.AnimationOffsetX;
+        float pitch = currentAim.Y * _animationFollowMultiplier * Stats.AnimationFollowY * fovAdjustment + Stats.AnimationOffsetY;
 
         AnimationElement element = new(0, 0, 0, 0, yaw, pitch);
 

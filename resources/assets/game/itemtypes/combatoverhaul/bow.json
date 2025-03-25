@@ -56,8 +56,8 @@
         "MoveSpeedPenalty": 0.4,
         "AimDrift": 130,
         "AimTwitch": 32,
-        "AnimationFollowX": 5.5,
-        "AnimationFollowY": 5.5,
+        "AnimationFollowX": 7.5,
+        "AnimationFollowY": 7.0,
         "VerticalLimit": 0.25,
         "VerticalOffset": -0.05
       },
@@ -71,8 +71,8 @@
         "MoveSpeedPenalty": 0.4,
         "AimDrift": 130,
         "AimTwitch": 32,
-        "AnimationFollowX": 5,
-        "AnimationFollowY": 5,
+        "AnimationFollowX": 6.3,
+        "AnimationFollowY": 6.2,
         "VerticalLimit": 0.25,
         "VerticalOffset": -0.05
       },
@@ -86,8 +86,8 @@
         "MoveSpeedPenalty": 0.7,
         "AimDrift": 150,
         "AimTwitch": 45,
-        "AnimationFollowX": 4,
-        "AnimationFollowY": 4,
+        "AnimationFollowX": 5.5,
+        "AnimationFollowY": 5.4,
         "VerticalLimit": 0.25,
         "VerticalOffset": -0.05
       },
@@ -101,8 +101,8 @@
         "MoveSpeedPenalty": 0,
         "AimDrift": 180,
         "AimTwitch": 35,
-        "AnimationFollowX": 5,
-        "AnimationFollowY": 5,
+        "AnimationFollowX": 6.5,
+        "AnimationFollowY": 6.1,
         "VerticalLimit": 0.25,
         "VerticalOffset": -0.05
       }
