@@ -3,6 +3,7 @@ using ImGuiNET;
 using OpenTK.Mathematics;
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
+using VSImGui.Debug;
 
 namespace CombatOverhaul.Animations;
 
@@ -459,7 +460,7 @@ public readonly struct PlayerFrame
     public const float PerfectPitchFollow = 1.0f;
     public const float Epsilon = 1E-6f;
     public const float DefaultEyesHeight = 1.7f;
-    public const float EyeHeightToAnimationDistanceMultiplier = 14.7f;
+    public const float EyeHeightToAnimationDistanceMultiplier = 16.1f;
     public const float PitchAngleMin = -45;
     public const float PitchAngleMax = 75;
 

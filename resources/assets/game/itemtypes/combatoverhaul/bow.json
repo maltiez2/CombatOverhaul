@@ -57,7 +57,7 @@
         "AimDrift": 130,
         "AimTwitch": 32,
         "AnimationFollowX": 7.5,
-        "AnimationFollowY": 7.0,
+        "AnimationFollowY": 7,
         "VerticalLimit": 0.25,
         "VerticalOffset": -0.05
       },

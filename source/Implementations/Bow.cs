@@ -70,8 +70,8 @@ public class BowClient : RangeWeaponClient
             AimingStats.HorizontalLimit = settings.BowsAimingHorizontalLimit;
         };
 
-        DebugWidgets.FloatDrag("test", "test3", $"{item.Code}-followX", () => AimingStats.AnimationFollowX, (value) => AimingStats.AnimationFollowX = value);
-        DebugWidgets.FloatDrag("test", "test3", $"{item.Code}-followY", () => AimingStats.AnimationFollowY, (value) => AimingStats.AnimationFollowY = value);
+        //DebugWidgets.FloatDrag("test", "test3", $"{item.Code}-followX", () => AimingStats.AnimationFollowX, (value) => AimingStats.AnimationFollowX = value);
+        //DebugWidgets.FloatDrag("test", "test3", $"{item.Code}-followY", () => AimingStats.AnimationFollowY, (value) => AimingStats.AnimationFollowY = value);
     }
 
     public override void OnSelected(ItemSlot slot, EntityPlayer player, bool mainHand, ref int state)
@@ -307,7 +307,7 @@ public sealed class AimingAnimationController
         _animationBehavior = animationBehavior;
         Stats = stats;
 
-        DebugWidgets.FloatDrag("test", "test2", $"fovMult-{stats.AimDrift}", () => _fovMultiplier, value => _fovMultiplier = value);
+        //DebugWidgets.FloatDrag("test", "test2", $"fovMult-{stats.AimDrift}", () => _fovMultiplier, value => _fovMultiplier = value);
     }
 
     public void Play(bool mainHand)
