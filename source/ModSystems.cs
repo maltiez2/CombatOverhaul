@@ -130,6 +130,7 @@ public sealed class CombatOverhaulSystem : ModSystem
         api.RegisterItemClass("CombatOverhaul:WearableFueledLightSource", typeof(WearableFueledLightSource));
 
         api.RegisterEntity("CombatOverhaul:Projectile", typeof(ProjectileEntity));
+        //api.RegisterEntity("CombatOverhaul:ArmorStand", typeof(EntityCOArmorStand));
 
         api.RegisterBlockEntityClass("CombatOverhaul:GenericDisplayBlockEntity", typeof(GenericDisplayBlockEntity));
         api.RegisterBlockClass("CombatOverhaul:GenericDisplayBlock", typeof(GenericDisplayBlock));

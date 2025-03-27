@@ -32,7 +32,6 @@ public static class ArmorAutoPatcher
         RemoveVanillaStats(item);
     }
 
-
     private static List<string> _vanillaArmorParts = new()
     {
         "armorhead",
@@ -46,7 +45,7 @@ public static class ArmorAutoPatcher
         { "armorlegs", "[\"Legs\", \"Feet\"]" }
     };
     private const int _minProtectionTier = 2;
-    private const int _maxProtectionTier = 22;
+    private const int _maxProtectionTier = 14;
     private const float _minVanillaRelativeProtection = 0.4f;
     private const float _maxVanillaRelativeProtection = 0.97f;
     private const int _minVanillaProtectionTier = 0;
