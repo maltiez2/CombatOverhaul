@@ -829,8 +829,10 @@ public class SpearClient : IClientWeaponLogic, IHasDynamicIdleAnimations, IOnGam
     {
         if (!CheckState(mainHand, MeleeWeaponState.StartingAim, MeleeWeaponState.Aiming)) return false;
 
-        AnimationBehavior?.PlayReadyAnimation(mainHand);
-        TpAnimationBehavior?.PlayReadyAnimation(mainHand);
+        //AnimationBehavior?.PlayReadyAnimation(mainHand);
+        //TpAnimationBehavior?.PlayReadyAnimation(mainHand);
+        AnimationBehavior?.Stop(AnimationCategory(mainHand));
+        TpAnimationBehavior?.Stop(AnimationCategory(mainHand));
         SetState(MeleeWeaponState.Idle, mainHand);
         AimingAnimationController?.Stop(mainHand);
         AimingSystem.StopAiming();
@@ -1201,6 +1203,14 @@ public class SpearItem : ItemSpear, IHasWeaponLogic, IHasRangedWeaponLogic
     public override void OnHeldInteractStart(ItemSlot itemslot, EntityAgent byEntity, BlockSelection blockSel, EntitySelection entitySel, bool firstEvent, ref EnumHandHandling handling)
     {
         handling = EnumHandHandling.Handled;
+    }
+    public override bool OnHeldInteractStep(float secondsUsed, ItemSlot slot, EntityAgent byEntity, BlockSelection blockSel, EntitySelection entitySel)
+    {
+        return false;
+    }
+    public override void OnHeldInteractStop(float secondsUsed, ItemSlot slot, EntityAgent byEntity, BlockSelection blockSel, EntitySelection entitySel)
+    {
+
     }
 
     public override void GetHeldItemInfo(ItemSlot inSlot, StringBuilder dsc, IWorldAccessor world, bool withDebugInfo)

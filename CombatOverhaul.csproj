@@ -3,7 +3,7 @@
   <PropertyGroup>
     <ModName>Bullseye</ModName>
     <ModType>code</ModType>
-    <ModVersion>3.0.0-pre.3</ModVersion>
+    <ModVersion>3.0.0-pre.4</ModVersion>
     <ModId>bullseyecontinued</ModId>
     <Description></Description>
     <Side>Universal</Side>
