@@ -147,10 +147,14 @@ public class Animatable : CollectibleBehavior
         {
             if (renderVariant < ShapeAlternatesFirstPerson.Count)
             {
+                if (ShapeAlternatesFirstPerson.Count >= renderVariant) return ShapeFirstPerson;
+
                 return ShapeAlternatesFirstPerson[renderVariant];
             }
             else if (renderVariant < ShapeAlternates.Count)
             {
+                if (ShapeAlternates.Count >= renderVariant) return ShapeFirstPerson;
+
                 return ShapeAlternates[renderVariant];
             }
             else
@@ -169,7 +173,6 @@ public class Animatable : CollectibleBehavior
                 return ShapeAlternates[renderVariant];
             }
         }
-
     }
     protected virtual void RenderShape(IShaderProgram shaderProgram, IWorldAccessor world, AnimatableShape shape, ItemRenderInfo itemStackRenderInfo, IRenderAPI render, ItemStack itemStack, Vec4f lightrgbs, Matrixf itemModelMat, ItemSlot itemSlot, Entity entity, float dt)
     {
