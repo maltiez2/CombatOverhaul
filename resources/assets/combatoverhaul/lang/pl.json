@@ -170,6 +170,8 @@
 "setting-directions_inertia": "Bezwładność kursora kierunku",
 "setting-directions_sensitivity": "Czułość kursora kierunku",
 "setting-directions_invert": "Odwróć kursor kierunku",
+"setting-directions_cursor_requires_hotkey": "Directions cursor requires hotkey",
+"setting-directions_cursor_requires_hotkey-comment": "Configurable via controls",
 "setting-vanilla_actions_while_blocking": "Wykonywanie akcji domyślnych podczas blokowania",
 "setting-bows_aiming_cursor_type": "Typ kursora celowania łuku",
 "setting-bow_aiming_difficulty": "Trudność celowania łukiem",

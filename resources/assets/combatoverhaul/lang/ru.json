@@ -170,6 +170,8 @@
   "setting-directions_inertia": "Directions cursor inertia",
   "setting-directions_sensitivity": "Directions cursor sensitivity",
   "setting-directions_invert": "Invert directions cursor",
+  "setting-directions_cursor_requires_hotkey": "Directions cursor requires hotkey",
+  "setting-directions_cursor_requires_hotkey-comment": "Configurable via controls",
   "setting-bows_aiming_cursor_type": "Bows aiming cursor type",
   "setting-bow_aiming_difficulty": "Bows aiming difficulty",
   "setting-spears_aiming_cursor_type": "Spears aiming cursor type",
