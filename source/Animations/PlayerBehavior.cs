@@ -221,6 +221,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     }
     private void OnFrame(Entity entity, ElementPose pose)
     {
+        if (IsImmersiveFirstPerson(entity)) return;
         if (!DebugWindowManager.PlayAnimationsInThirdPerson && !IsFirstPerson(entity)) return;
         if (!_composer.AnyActiveAnimations() && FrameOverride == null)
         {
@@ -288,6 +289,10 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
         bool firstPerson = entity.Api is ICoreClientAPI { World.Player.CameraMode: EnumCameraMode.FirstPerson };
 
         return firstPerson;
+    }
+    private static bool IsImmersiveFirstPerson(Entity entity)
+    {
+        return ((entity.Api as ICoreClientAPI)?.Settings.Bool["immersiveFpMode"] ?? false) && IsFirstPerson(entity);
     }
     public static void SetFirstPersonHandsPitch(IClientPlayer player, float value)
     {
