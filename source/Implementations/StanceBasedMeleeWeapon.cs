@@ -25,7 +25,7 @@ public enum GripType
 {
     OneHanded,
     TwoHanded,
-    OffHand
+    OffHanded
 }
 
 public class StanceBasedMeleeWeaponAttackStats : MeleeAttackStats
@@ -627,7 +627,7 @@ public class StanceBasedMeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleA
     protected static string AnimationCategory(bool mainHand = true) => mainHand ? "main" : "mainOffhand";
     protected GripType GetGripType(bool mainHand, EntityPlayer player)
     {
-        if (!mainHand) return GripType.OffHand;
+        if (!mainHand) return GripType.OffHanded;
 
         if (player.LeftHandItemSlot.Empty)
         {
@@ -646,7 +646,7 @@ public class StanceBasedMeleeWeaponClient : IClientWeaponLogic, IHasDynamicIdleA
         {
             GripType.OneHanded => OneHandedStats,
             GripType.TwoHanded => TwoHandedStats ?? OneHandedStats,
-            GripType.OffHand => OffHandStats,
+            GripType.OffHanded => OffHandStats,
             _ => throw new Exception()
         };
     }
