@@ -425,4 +425,24 @@ internal static class HarmonyPatches
             return code;
         }
     }
+
+    [HarmonyPatch(typeof(Entity), "ReceiveDamage")]
+    [HarmonyPatchCategory("combatoverhaul")]
+    public class InvulnerabilityTimePatch
+    {
+        [HarmonyTranspiler]
+        public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+        {
+            List<CodeInstruction> codes = new(instructions);
+            for (int i = 0; i < codes.Count; i++)
+            {
+                if (codes[i].opcode == OpCodes.Ldstr && codes[i].operand is string activity && activity == "invulnerable")
+                {
+                    codes[i].operand = "combat-overhaul-invulnerability-patch-fake-activity";
+                }
+            }
+
+            return codes;
+        }
+    }
 }

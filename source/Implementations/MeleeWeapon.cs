@@ -1261,9 +1261,9 @@ public class MeleeWeaponServer : RangeWeaponServer
         if (slot.Itemstack == null || slot.Itemstack.StackSize == 0)
         {
             ItemSlot? replacementSlot = null;
-            player.Entity.WalkInventory(slot =>
+            WalkInventory(player.Entity, slot =>
             {
-                if (slot?.Itemstack?.Item == null) return true;
+                if (slot?.Itemstack?.Item?.Code == null) return true;
 
                 if (slot.Itemstack.Item.Code.ToString() == projectileCode.ToString())
                 {
@@ -1284,9 +1284,9 @@ public class MeleeWeaponServer : RangeWeaponServer
                     projectilePath = projectilePath.Substring(0, delimiterIndex);
                     string wildcard = $"{projectilePath}-*";
 
-                    player.Entity.WalkInventory(slot =>
+                    WalkInventory(player.Entity, slot =>
                     {
-                        if (slot?.Itemstack?.Item == null) return true;
+                        if (slot?.Itemstack?.Item?.Code == null) return true;
 
                         if (WildcardUtil.Match(wildcard, slot.Itemstack.Item.Code.ToShortString()))
                         {
@@ -1305,6 +1305,25 @@ public class MeleeWeaponServer : RangeWeaponServer
             {
                 slot.TryFlipWith(replacementSlot);
                 replacementSlot.MarkDirty();
+            }
+        }
+    }
+
+    protected static void WalkInventory(EntityPlayer player, System.Func<ItemSlot, bool> selector)
+    {
+        foreach (ItemSlot hotbarSlot in player.Player.InventoryManager.GetOwnInventory(GlobalConstants.hotBarInvClassName))
+        {
+            if (selector.Invoke(hotbarSlot))
+            {
+                return;
+            }
+        }
+
+        foreach (ItemSlot backpackSlot in player.Player.InventoryManager.GetOwnInventory(GlobalConstants.backpackInvClassName))
+        {
+            if (selector.Invoke(backpackSlot))
+            {
+                return;
             }
         }
     }

@@ -23,8 +23,9 @@
       {"code": "clumsyHands", "type": "negative", "attributes": {"bowsProficiency": -0.3, "crossbowsProficiency": -0.3, "firearmsProficiency": -0.3}}
     ]
   },
-  {"enabled": true, "file": "game:config/traits", "op": "replace", "path": "/16/attributes", "value": {"maxhealthExtraPoints": -2.5}},
+  {"enabled": true, "file": "game:config/traits", "op": "remove", "path": "/16/attributes/bowDrawingStrength"},
   {"enabled": true, "file": "game:config/traits", "op": "addmerge", "path": "/9/attributes", "value": {"armorManipulationSpeedAffectedness": -0.5}},
+  {"enabled": true, "file": "game:config/traits", "op": "replace", "path": "/9/attributes/armorWalkSpeedAffectedness", "value": -0.5},
   {
     "enabled": true,
     "file": "game:config/characterclasses",
@@ -64,6 +65,5 @@
     "path": "/4/traits",
     "value": ["soldier", "hardy", "merciless", "ravenous", "heavyhanded", "oneHandedSwordsProficiency", "twoHandedSwordsProficiency", "tremblingAim", "clumsyHands"]
   },
-  {"enabled": true, "file": "game:config/characterclasses", "op": "addeach", "path": "/5/traits/-", "value": ["tremblingAim"]},
-  {"enabled": true, "file": "game:config/traits", "op": "replace", "path": "/9/attributes/armorWalkSpeedAffectedness", "value": -0.5}
+  {"enabled": true, "file": "game:config/characterclasses", "op": "addeach", "path": "/5/traits/-", "value": ["tremblingAim"]}
 ]
