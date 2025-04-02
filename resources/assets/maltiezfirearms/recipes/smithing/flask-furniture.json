@@ -1,0 +1,32 @@
+{
+  "ingredient": {"type": "item", "code": "game:ingot-*", "name": "metal", "allowedVariants": ["brass", "copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel"]},
+  "pattern": [
+    [
+      "#####_####",
+      "#####_####",
+      "#####_####"
+    ],
+    [
+      "__________",
+      "_______#_#",
+      "__________"
+    ],
+    [
+      "__________",
+      "_______#_#",
+      "__________"
+    ],
+    [
+      "__________",
+      "_______##_",
+      "__________"
+    ],
+    [
+      "__________",
+      "______##__",
+      "__________"
+    ]
+  ],
+  "name": "Flask furniture",
+  "output": {"type": "item", "code": "maltiezfirearms:flaskfurniture-{metal}"}
+}

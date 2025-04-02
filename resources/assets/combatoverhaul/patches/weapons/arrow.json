@@ -1,8 +1,0 @@
-﻿[
-  {
-    "file": "game:itemtypes/tool/arrow",
-    "op": "add",
-    "path": "/skipVariants",
-    "value": ["*-crude", "*-flint", "*-copper", "*-tinbronze", "*-bismuthbronze", "*-blackbronze", "*-gold", "*-silver", "*-iron", "*-meteoriciron", "*-steel"]
-  }
-]

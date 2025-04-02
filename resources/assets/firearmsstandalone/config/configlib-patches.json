@@ -1,0 +1,164 @@
+{
+  "version": 3,
+  "patches": {
+    "float": {
+      "maltiezfirearms:itemtypes/firearms/pistol.json": {
+        "attributes/BulletDamageMultiplier": "value * damage_multiplier",
+        "attributes/Aiming/AimDifficulty": "aiming_difficulty"
+      },
+      "maltiezfirearms:itemtypes/firearms/arquebus.json": {
+        "attributes/BulletDamageMultiplier": "value * damage_multiplier",
+        "attributes/Aiming/AimDifficulty": "aiming_difficulty"
+      },
+      "maltiezfirearms:itemtypes/firearms/carbine.json": {
+        "attributes/BulletDamageMultiplier": "value * damage_multiplier",
+        "attributes/Aiming/AimDifficulty": "aiming_difficulty"
+      },
+      "maltiezfirearms:itemtypes/firearms/musket.json": {
+        "attributes/BulletDamageMultiplier": "value * damage_multiplier",
+        "attributes/Aiming/AimDifficulty": "aiming_difficulty"
+      },
+      "maltiezfirearms:itemtypes/firearms/superimposed.json": {
+        "attributes/BulletDamageMultiplier": "value * damage_multiplier",
+        "attributes/Aiming/AimDifficulty": "aiming_difficulty"
+      },
+      "maltiezfirearms:itemtypes/firearms/blunderbuss.json": {
+        "attributes/BulletDamageMultiplier": "value * damage_multiplier",
+        "attributes/Aiming/AimDifficulty": "aiming_difficulty",
+        "attributes/DispersionMOA/0": "blunderbuss_spread",
+        "attributes/DispersionMOA/1": "blunderbuss_spread"
+      },
+      "maltiezfirearms:itemtypes/firearms/blunderbuss-flintlock.json": {
+        "attributes/BulletDamageMultiplier": "value * damage_multiplier",
+        "attributes/Aiming/AimDifficulty": "aiming_difficulty",
+        "attributes/DispersionMOA/0": "blunderbuss_spread",
+        "attributes/DispersionMOA/1": "blunderbuss_spread"
+      },
+      "maltiezfirearms:patches/schematics.json": {
+        "0/value/chance": "value * schematic_drop_chance",
+        "1/value/chance": "value * schematic_drop_chance"
+      }
+    },
+    "boolean": {
+      "maltiezfirearms:itemtypes/firearms/arquebus.json": {
+        "attributes/CancelReloadOnInAir": "cancel_reload_on_inair"
+      },
+      "maltiezfirearms:itemtypes/firearms/carbine.json": {
+        "attributes/CancelReloadOnInAir": "cancel_reload_on_inair"
+      },
+      "maltiezfirearms:itemtypes/firearms/musket.json": {
+        "attributes/CancelReloadOnInAir": "cancel_reload_on_inair"
+      },
+      "maltiezfirearms:itemtypes/firearms/superimposed.json": {
+        "attributes/CancelReloadOnInAir": "cancel_reload_on_inair"
+      },
+      "maltiezfirearms:itemtypes/firearms/blunderbuss.json": {
+        "attributes/CancelReloadOnInAir": "cancel_reload_on_inair"
+      },
+      "maltiezfirearms:itemtypes/firearms/blunderbuss-flintlock.json": {
+        "attributes/CancelReloadOnInAir": "cancel_reload_on_inair"
+      }
+    },
+    "string": {
+      "maltiezfirearms:itemtypes/firearms/pistol.json": {
+        "attributes/Aiming/CursorType": "aiming_cursor_type"
+      },
+      "maltiezfirearms:itemtypes/firearms/arquebus.json": {
+        "attributes/Aiming/CursorType": "aiming_cursor_type"
+      },
+      "maltiezfirearms:itemtypes/firearms/carbine.json": {
+        "attributes/Aiming/CursorType": "aiming_cursor_type"
+      },
+      "maltiezfirearms:itemtypes/firearms/musket.json": {
+        "attributes/Aiming/CursorType": "aiming_cursor_type"
+      },
+      "maltiezfirearms:itemtypes/firearms/superimposed.json": {
+        "attributes/Aiming/CursorType": "aiming_cursor_type"
+      },
+      "maltiezfirearms:itemtypes/firearms/blunderbuss.json": {
+        "attributes/Aiming/CursorType": "aiming_cursor_type"
+      },
+      "maltiezfirearms:itemtypes/firearms/blunderbuss-flintlock.json": {
+        "attributes/Aiming/CursorType": "aiming_cursor_type"
+      }
+    },
+    "other": {
+      "maltiezfirearms:recipes/grid/firearms/locks.json": {
+        "0/requiresTrait": "trait_requirement",
+        "1/requiresTrait": "trait_requirement",
+        "2/requiresTrait": "trait_requirement",
+        "6/requiresTrait": "trait_requirement"
+      }
+    }
+  },
+  "settings": [
+    {
+      "code": "damage_multiplier",
+      "type": "float",
+      "ingui": "maltiezfirearms:setting-damage-multiplier",
+      "default": 1.0,
+      "range": {
+        "min": 0.1,
+        "max": 5.0
+      }
+    },
+    {
+      "code": "trait_requirement",
+      "type": "other",
+      "ingui": "maltiezfirearms:setting-trait",
+      "default": "Required",
+      "mapping": {
+        "Required": "tinkerer",
+        "Not Required": null
+      }
+    },
+    {
+      "code": "aiming_cursor_type",
+      "type": "string",
+      "ingui": "maltiezfirearms:setting-cursortype",
+      "default": "None",
+      "values": [
+        "None",
+        "Vanilla",
+        "Fixed",
+        "Moving"
+      ]
+    },
+    {
+      "code": "aiming_difficulty",
+      "type": "float",
+      "ingui": "maltiezfirearms:setting-aiming_difficulty",
+      "default": 1.0,
+      "range": {
+        "min": 0.0,
+        "max": 2.0
+      }
+    },
+    {
+      "code": "blunderbuss_spread",
+      "type": "float",
+      "ingui": "maltiezfirearms:setting-blunderbuss_spread",
+      "default": 120,
+      "range": {
+        "min": 0,
+        "max": 300
+      }
+    },
+    {
+      "code": "cancel_reload_on_inair",
+      "type": "boolean",
+      "ingui": "maltiezfirearms:setting-cancel_reload_on_inair",
+      "default": true
+    },
+    {
+      "code": "schematic_drop_chance",
+      "type": "float",
+      "ingui": "maltiezfirearms:setting-schematic_drop_chance",
+      "default": 1.0,
+      "range": {
+        "min": 0.0,
+        "max": 10.0
+      }
+    }
+  ]
+}

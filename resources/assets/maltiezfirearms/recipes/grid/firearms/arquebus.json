@@ -1,0 +1,26 @@
+﻿[
+  {
+    "ingredientPattern": "WLB,_WR",
+    "ingredients": {
+      "B": {"type": "item", "code": "maltiezfirearms:barrel-arquebus-iron", "quantity": 1},
+      "L": {"type": "item", "code": "maltiezfirearms:lock-matchlock-iron", "quantity": 1},
+      "W": {"type": "item", "code": "game:plank-*", "quantity": 1},
+      "R": {"type": "item", "code": "maltiezfirearms:ramrod-arquebus-iron", "quantity": 1}
+    },
+    "width": 3,
+    "height": 2,
+    "output": {"type": "item", "code": "maltiezfirearms:firearm-arquebus-iron"}
+  },
+  {
+    "ingredientPattern": "WLB,_WR",
+    "ingredients": {
+      "B": {"type": "item", "code": "maltiezfirearms:barrel-arquebus-meteoriciron", "quantity": 1},
+      "L": {"type": "item", "code": "maltiezfirearms:lock-matchlock-meteoriciron", "quantity": 1},
+      "W": {"type": "item", "code": "game:plank-*", "quantity": 1},
+      "R": {"type": "item", "code": "maltiezfirearms:ramrod-arquebus-meteoriciron", "quantity": 1}
+    },
+    "width": 3,
+    "height": 2,
+    "output": {"type": "item", "code": "maltiezfirearms:firearm-arquebus-meteoriciron"}
+  }
+]

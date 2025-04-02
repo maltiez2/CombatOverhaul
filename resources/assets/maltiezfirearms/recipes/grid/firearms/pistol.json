@@ -1,0 +1,41 @@
+﻿[
+  {
+    "ingredientPattern": "WLB,MWR",
+    "ingredients": {
+      "B": {"type": "item", "code": "maltiezfirearms:barrel-pistol-tinbronze", "quantity": 1},
+      "M": {"type": "item", "code": "game:metalplate-brass", "quantity": 1},
+      "L": {"type": "item", "code": "maltiezfirearms:lock-wheellock-tinbronze", "quantity": 1},
+      "W": {"type": "item", "code": "game:plank-*", "quantity": 1},
+      "R": {"type": "item", "code": "maltiezfirearms:ramrod-pistol-tinbronze", "quantity": 1}
+    },
+    "width": 3,
+    "height": 2,
+    "output": {"type": "item", "code": "maltiezfirearms:firearm-pistol-tinbronze"}
+  },
+  {
+    "ingredientPattern": "WLB,MWR",
+    "ingredients": {
+      "B": {"type": "item", "code": "maltiezfirearms:barrel-pistol-bismuthbronze", "quantity": 1},
+      "M": {"type": "item", "code": "game:metalplate-brass", "quantity": 1},
+      "L": {"type": "item", "code": "maltiezfirearms:lock-wheellock-bismuthbronze", "quantity": 1},
+      "W": {"type": "item", "code": "game:plank-*", "quantity": 1},
+      "R": {"type": "item", "code": "maltiezfirearms:ramrod-pistol-bismuthbronze", "quantity": 1}
+    },
+    "width": 3,
+    "height": 2,
+    "output": {"type": "item", "code": "maltiezfirearms:firearm-pistol-bismuthbronze"}
+  },
+  {
+    "ingredientPattern": "WLB,MWR",
+    "ingredients": {
+      "B": {"type": "item", "code": "maltiezfirearms:barrel-pistol-blackbronze", "quantity": 1},
+      "M": {"type": "item", "code": "game:metalplate-brass", "quantity": 1},
+      "L": {"type": "item", "code": "maltiezfirearms:lock-wheellock-blackbronze", "quantity": 1},
+      "W": {"type": "item", "code": "game:plank-*", "quantity": 1},
+      "R": {"type": "item", "code": "maltiezfirearms:ramrod-pistol-blackbronze", "quantity": 1}
+    },
+    "width": 3,
+    "height": 2,
+    "output": {"type": "item", "code": "maltiezfirearms:firearm-pistol-blackbronze"}
+  }
+]

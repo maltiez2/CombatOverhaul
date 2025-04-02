@@ -10,6 +10,7 @@ using CombatOverhaul.MeleeSystems;
 using CombatOverhaul.RangedSystems;
 using CombatOverhaul.RangedSystems.Aiming;
 using CombatOverhaul.Utils;
+using Firearms;
 using HarmonyLib;
 using OpenTK.Mathematics;
 using ProtoBuf;
@@ -115,29 +116,20 @@ public sealed class CombatOverhaulSystem : ModSystem
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:Animatable", typeof(Animatable));
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:AnimatableAttachable", typeof(AnimatableAttachable));
         api.RegisterCollectibleBehaviorClass("CombatOverhaul:Projectile", typeof(ProjectileBehavior));
-        api.RegisterCollectibleBehaviorClass("CombatOverhaul:Armor", typeof(ArmorBehavior));
-        api.RegisterCollectibleBehaviorClass("CombatOverhaul:WearableWithStats", typeof(WearableWithStatsBehavior));
-        api.RegisterCollectibleBehaviorClass("CombatOverhaul:GearEquipableBag", typeof(GearEquipableBag));
-        api.RegisterCollectibleBehaviorClass("CombatOverhaul:TextureFromAttributes", typeof(TextureFromAttributes));
-        api.RegisterCollectibleBehaviorClass("CombatOverhaul:TexturesFromAttributes", typeof(TexturesFromAttributes));
-
-        api.RegisterItemClass("CombatOverhaul:Bow", typeof(BowItem));
-        api.RegisterItemClass("CombatOverhaul:MeleeWeapon", typeof(MeleeWeapon));
-        api.RegisterItemClass("CombatOverhaul:StanceBasedMeleeWeapon", typeof(StanceBasedMeleeWeapon));
-        api.RegisterItemClass("CombatOverhaul:VanillaShield", typeof(VanillaShield));
-        api.RegisterItemClass("CombatOverhaul:Axe", typeof(Axe));
-        api.RegisterItemClass("CombatOverhaul:Pickaxe", typeof(Pickaxe));
-        api.RegisterItemClass("CombatOverhaul:WearableArmor", typeof(ItemWearableArmor));
-        api.RegisterItemClass("CombatOverhaul:WearableFueledLightSource", typeof(WearableFueledLightSource));
-
-        api.RegisterItemClass("Bullseye:Spear", typeof(SpearItem));
 
         api.RegisterEntity("CombatOverhaul:Projectile", typeof(ProjectileEntity));
 
         api.RegisterBlockEntityClass("CombatOverhaul:GenericDisplayBlockEntity", typeof(GenericDisplayBlockEntity));
         api.RegisterBlockClass("CombatOverhaul:GenericDisplayBlock", typeof(GenericDisplayBlock));
 
-        api.RegisterBlockBehaviorClass("CombatOverhaul:Splittable", typeof(Splittable));
+        api.RegisterItemClass("Firearms:Muzzleloader", typeof(MuzzleloaderItem));
+        api.RegisterItemClass("Firearms:Matchlock", typeof(MatchlockItem));
+        api.RegisterItemClass("Firearms:Musket", typeof(MusketItem));
+        api.RegisterItemClass("Firearms:PowderFlask", typeof(PowderFlask));
+        api.RegisterItemClass("Firearms:Scoped", typeof(ScopedItem));
+
+        api.RegisterCollectibleBehaviorClass("Firearms:Wettable", typeof(Wettable));
+        api.RegisterCollectibleBehaviorClass("Firearms:Igniteable", typeof(Igniteable));
 
         new Harmony("CombatOverhaulAuto").PatchAll();
 

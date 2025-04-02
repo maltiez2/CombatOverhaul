@@ -1,0 +1,89 @@
+[
+  {
+    "ingredientPattern": "_F_,NGP",
+    "ingredients": {
+      "P": {"type": "item", "code": "game:metalplate-tinbronze", "quantity": 1},
+      "N": {"type": "item", "code": "game:metalplate-brass", "quantity": 1},
+      "G": {"type": "item", "code": "game:gear-rusty", "quantity": 1},
+      "F": {"type": "item", "code": "game:flint", "quantity": 1}
+    },
+    "width": 3,
+    "height": 2,
+    "requiresTrait": "tinkerer",
+    "output": {"type": "item", "code": "maltiezfirearms:lock-wheellock-tinbronze"}
+  },
+  {
+    "ingredientPattern": "_F_,NGP",
+    "ingredients": {
+      "P": {"type": "item", "code": "game:metalplate-bismuthbronze", "quantity": 1},
+      "N": {"type": "item", "code": "game:metalplate-brass", "quantity": 1},
+      "G": {"type": "item", "code": "game:gear-rusty", "quantity": 1},
+      "F": {"type": "item", "code": "game:flint", "quantity": 1}
+    },
+    "width": 3,
+    "height": 2,
+    "requiresTrait": "tinkerer",
+    "output": {"type": "item", "code": "maltiezfirearms:lock-wheellock-bismuthbronze"}
+  },
+  {
+    "ingredientPattern": "_F_,NGP",
+    "ingredients": {
+      "P": {"type": "item", "code": "game:metalplate-blackbronze", "quantity": 1},
+      "N": {"type": "item", "code": "game:metalplate-brass", "quantity": 1},
+      "G": {"type": "item", "code": "game:gear-rusty", "quantity": 1},
+      "F": {"type": "item", "code": "game:flint", "quantity": 1}
+    },
+    "width": 3,
+    "height": 2,
+    "requiresTrait": "tinkerer",
+    "output": {"type": "item", "code": "maltiezfirearms:lock-wheellock-blackbronze"}
+  },
+  {
+    "ingredientPattern": "INB",
+    "ingredients": {
+      "I": {"type": "item", "code": "game:metalplate-iron", "quantity": 1},
+      "N": {"type": "item", "code": "game:metalnailsandstrips-iron", "quantity": 1},
+      "B": {"type": "item", "code": "game:metalplate-brass", "quantity": 1}
+    },
+    "width": 3,
+    "height": 1,
+    "output": {"type": "item", "code": "maltiezfirearms:lock-matchlock-iron"}
+  },
+  {
+    "ingredientPattern": "INB",
+    "ingredients": {
+      "I": {"type": "item", "code": "game:metalplate-meteoriciron", "quantity": 1},
+      "N": {"type": "item", "code": "game:metalnailsandstrips-meteoriciron", "quantity": 1},
+      "B": {"type": "item", "code": "game:metalplate-brass", "quantity": 1}
+    },
+    "width": 3,
+    "height": 1,
+    "output": {"type": "item", "code": "maltiezfirearms:lock-matchlock-meteoriciron"}
+  },
+  {
+    "ingredientPattern": "ISF,CB_",
+    "ingredients": {
+      "I": {"type": "item", "code": "game:metalplate-iron", "quantity": 1},
+      "S": {"type": "item", "code": "game:metalnailsandstrips-steel", "quantity": 1},
+      "B": {"type": "item", "code": "game:metalplate-brass", "quantity": 1},
+      "F": {"type": "item", "code": "game:flint", "quantity": 1},
+      "C": {"type": "item", "code": "maltiezfirearms:schematic-flintlock"}
+    },
+    "width": 3,
+    "height": 2,
+    "output": {"type": "item", "code": "maltiezfirearms:lock-flintlock-steel"}
+  },
+  {
+    "ingredientPattern": "ISF,_B_",
+    "ingredients": {
+      "I": {"type": "item", "code": "game:metalplate-steel", "quantity": 1},
+      "S": {"type": "item", "code": "game:metalnailsandstrips-steel", "quantity": 1},
+      "B": {"type": "item", "code": "game:metalplate-brass", "quantity": 1},
+      "F": {"type": "item", "code": "game:flint", "quantity": 1}
+    },
+    "width": 3,
+    "height": 2,
+    "requiresTrait": "tinkerer",
+    "output": {"type": "item", "code": "maltiezfirearms:lock-flintlock-steel"}
+  }
+]
