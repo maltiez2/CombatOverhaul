@@ -106,6 +106,7 @@
 }
       </ModInfo>
     </PropertyGroup>
+    <!-- Remove all folders in output directory to get rid of builds from bullseye branch -->
     <RemoveDir Directories="$(OutputDir)" />
     <Message Text="Generating modinfo.json" Importance="high" />
     <WriteLinesToFile File="$(OutputPath)/modinfo.json" Lines="$(ModInfo)" Overwrite="true" WriteOnlyWhenDifferent="true" />

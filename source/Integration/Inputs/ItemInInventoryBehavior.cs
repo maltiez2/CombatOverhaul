@@ -22,7 +22,10 @@ public class InInventoryPlayerBehavior : EntityBehavior
     {
         try
         {
-            _player?.WalkInventory(ProcessSlot);
+            if (_player?.World != null)
+            {
+                _player.WalkInventory(ProcessSlot);
+            }
         }
         catch (Exception exception)
         {
