@@ -3,8 +3,8 @@
   <PropertyGroup>
     <ModName>Bullseye</ModName>
     <ModType>code</ModType>
-    <ModVersion>3.0.0-pre.6</ModVersion>
-    <ModId>bullseyecontinued</ModId>
+    <ModVersion>1.0.0</ModVersion>
+    <ModId>firearmsstandalone</ModId>
     <Description></Description>
     <Side>Universal</Side>
     <RequiredOnClient>true</RequiredOnClient>
@@ -14,16 +14,10 @@
   <!-- Authors -->
   <ItemGroup>
     <ModInfoAuthors Include="Maltiez" />
-    <ModInfoAuthors Include="Craluminum2413" />
-    <ModInfoAuthors Include="Corat" />
   </ItemGroup>
 
   <!-- Translators -->
   <ItemGroup>
-    <ModInfoTranslators Include="Gabriel Flame - Ukrainian" />
-    <ModInfoTranslators Include="Ouk - Czech" />
-    <ModInfoTranslators Include="Nikolashka - Russian" />
-    <ModInfoTranslators Include="Pawelot - Polish" />
   </ItemGroup>
 
   <!-- Project settings -->
