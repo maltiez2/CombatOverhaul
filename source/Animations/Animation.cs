@@ -611,13 +611,27 @@ public sealed class PLayerKeyFrameJson
                 );
         }
 
+        OtherPartsFrame? otherParts = null;
+        if (Elements.ContainsKey("Neck") || Elements.ContainsKey("Head") || Elements.ContainsKey("UpperFootR") || Elements.ContainsKey("UpperFootL") || Elements.ContainsKey("LowerFootR") || Elements.ContainsKey("LowerFootL"))
+        {
+            otherParts = new(
+                Elements.ContainsKey("Neck") ? new AnimationElement(Elements["Neck"]) : AnimationElement.Zero,
+                Elements.ContainsKey("Head") ? new AnimationElement(Elements["Head"]) : AnimationElement.Zero,
+                Elements.ContainsKey("UpperFootR") ? new AnimationElement(Elements["UpperFootR"]) : AnimationElement.Zero,
+                Elements.ContainsKey("UpperFootL") ? new AnimationElement(Elements["UpperFootL"]) : AnimationElement.Zero,
+                Elements.ContainsKey("LowerFootR") ? new AnimationElement(Elements["LowerFootR"]) : AnimationElement.Zero,
+                Elements.ContainsKey("LowerFootL") ? new AnimationElement(Elements["LowerFootL"]) : AnimationElement.Zero
+                );
+        }
+
         AnimationElement? torso = Elements.ContainsKey("UpperTorso") ? new(Elements["UpperTorso"]) : null;
         AnimationElement? anchor = Elements.ContainsKey("DetachedAnchor") ? new(Elements["DetachedAnchor"]) : null;
+        AnimationElement? lowerTorso = Elements.ContainsKey("LowerTorso") ? new(Elements["LowerTorso"]) : null;
 
         float pitch = PitchFollow ? PlayerFrame.PerfectPitchFollow : PlayerFrame.DefaultPitchFollow;
         pitch = PitchDontFollow ? 0 : pitch;
 
-        PlayerFrame frame = new(rightHand, leftHand, torso, anchor, DetachedAnchor, SwitchArms, pitch, FOVMultiplier, BobbingAmplitude);
+        PlayerFrame frame = new(rightHand, leftHand, otherParts, torso, anchor, DetachedAnchor, SwitchArms, pitch, FOVMultiplier, BobbingAmplitude, lowerTorso: lowerTorso);
 
         return new(
             frame,
@@ -658,7 +672,20 @@ public sealed class PLayerKeyFrameJson
             result.Elements.Add("UpperArmL", leftHand.UpperArmL.ToArray());
         }
 
+        if (frame.Frame.OtherParts != null)
+        {
+            OtherPartsFrame otherParts = frame.Frame.OtherParts.Value;
+
+            result.Elements.Add("Neck", otherParts.Neck.ToArray());
+            result.Elements.Add("Head", otherParts.Head.ToArray());
+            result.Elements.Add("UpperFootR", otherParts.UpperFootR.ToArray());
+            result.Elements.Add("UpperFootL", otherParts.UpperFootL.ToArray());
+            result.Elements.Add("LowerFootR", otherParts.LowerFootR.ToArray());
+            result.Elements.Add("LowerFootL", otherParts.LowerFootL.ToArray());
+        }
+
         if (frame.Frame.UpperTorso != null) result.Elements.Add("UpperTorso", frame.Frame.UpperTorso.Value.ToArray());
+        if (frame.Frame.LowerTorso != null) result.Elements.Add("LowerTorso", frame.Frame.UpperTorso.Value.ToArray());
         if (frame.Frame.DetachedAnchorFrame != null) result.Elements.Add("DetachedAnchor", frame.Frame.DetachedAnchorFrame.Value.ToArray());
 
         return result;
