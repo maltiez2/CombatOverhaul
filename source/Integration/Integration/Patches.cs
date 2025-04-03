@@ -21,7 +21,7 @@ internal static class HarmonyPatches
 
     public static void Patch(string harmonyId, ICoreAPI api)
     {
-        _animatorsLock.AcquireWriterLock(1000);
+        _animatorsLock.AcquireWriterLock(5000);
         _animators.Clear();
         _animatorsLock.ReleaseWriterLock();
         
@@ -98,7 +98,7 @@ internal static class HarmonyPatches
         new Harmony(harmonyId).Unpatch(typeof(BagInventory).GetMethod("ReloadBagInventory", AccessTools.all), HarmonyPatchType.Prefix, harmonyId);
         new Harmony(harmonyId).Unpatch(typeof(EntityPlayer).GetProperty("LightHsv", AccessTools.all).GetAccessors()[0], HarmonyPatchType.Postfix, harmonyId);
 
-        _animatorsLock.AcquireWriterLock(1000);
+        _animatorsLock.AcquireWriterLock(5000);
         _animators.Clear();
         _animatorsLock.ReleaseWriterLock();
 
@@ -111,7 +111,7 @@ internal static class HarmonyPatches
     {
         if (animator == null) return;
 
-        _animatorsLock.AcquireReaderLock(1000);
+        _animatorsLock.AcquireReaderLock(5000);
         if (_animators.TryGetValue(animator, out EntityAgent? entity))
         {
             _animatorsLock.ReleaseReaderLock();
@@ -131,7 +131,7 @@ internal static class HarmonyPatches
 
     private static void OnCleanUpTick()
     {
-        _animatorsLock.AcquireWriterLock(1000);
+        _animatorsLock.AcquireWriterLock(5000);
 
         try
         {
@@ -177,7 +177,7 @@ internal static class HarmonyPatches
 
         ClientAnimator? animator = __instance.Animator as ClientAnimator;
 
-        _animatorsLock.AcquireWriterLock(1000);
+        _animatorsLock.AcquireWriterLock(5000);
         if (animator != null && !_animators.ContainsKey(animator))
         {
             _animators.Add(animator, entity);

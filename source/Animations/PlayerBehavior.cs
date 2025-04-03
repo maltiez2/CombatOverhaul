@@ -2,6 +2,7 @@
 using CombatOverhaul.Utils;
 using OpenTK.Mathematics;
 using ProtoBuf;
+using System.Diagnostics;
 using System.Reflection;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -67,7 +68,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
             OffhandItemChanged();
         }
 
-        foreach ((AnimationRequest request, bool mainHand, bool skip) in _playRequests)
+        foreach ((AnimationRequest request, bool mainHand, bool skip, int itemId) in _playRequests)
         {
             if (!skip) PlayRequest(request, mainHand);
         }
@@ -79,7 +80,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
 
     public void Play(AnimationRequest request, bool mainHand = true)
     {
-        _playRequests.Add((request, mainHand, false));
+        _playRequests.Add((request, mainHand, false, CurrentItemId(mainHand)));
         StopIdleTimer(mainHand);
     }
     public void Play(AnimationRequestByCode requestByCode, bool mainHand = true)
@@ -144,7 +145,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
         {
             if (_playRequests[index].request.Category == category)
             {
-                _playRequests[index] = (new(), _playRequests[index].mainHand, true);
+                _playRequests[index] = (new(), _playRequests[index].mainHand, true, -1);
             }
         }
     }
@@ -202,7 +203,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
     private long _offHandIdleTimer = -1;
     private bool _resetFov = false;
     private readonly ICoreClientAPI? _api;
-    private readonly List<(AnimationRequest request, bool mainHand, bool skip)> _playRequests = new();
+    private readonly List<(AnimationRequest request, bool mainHand, bool skip, int itemId)> _playRequests = new();
 
     private static readonly TimeSpan _readyTimeout = TimeSpan.FromSeconds(3);
 
@@ -330,6 +331,17 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
             _offhandCategories.Add(request.Category);
         }
     }
+    private void StopRequestFromPreviousItem(bool mainHand)
+    {
+        int currentItem = CurrentItemId(mainHand);
+        for (int index = 0; index < _playRequests.Count; index++)
+        {
+            if (_playRequests[index].itemId != currentItem)
+            {
+                _playRequests[index] = (new(), _playRequests[index].mainHand, true, -1);
+            }
+        }
+    }
 
     private void MainHandItemChanged()
     {
@@ -341,8 +353,9 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
 
             foreach (string category in _mainHandCategories.Where(element => element != readyCategory))
             {
-                Stop(category);
+                _composer.Stop(category);
             }
+            StopRequestFromPreviousItem(true);
             _mainHandCategories.Clear();
 
             Play(item.ReadyAnimation, true);
@@ -357,8 +370,9 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
             {
                 foreach (string category in _mainHandCategories)
                 {
-                    Stop(category);
+                    _composer.Stop(category);
                 }
+                StopRequestFromPreviousItem(true);
                 _mainHandCategories.Clear();
             }
             else
@@ -367,8 +381,9 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
 
                 foreach (string category in _mainHandCategories.Where(element => element != readyCategory))
                 {
-                    Stop(category);
+                    _composer.Stop(category);
                 }
+                StopRequestFromPreviousItem(true);
                 _mainHandCategories.Clear();
 
                 Play(readyAnimation.Value, true);
@@ -379,8 +394,9 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
         {
             foreach (string category in _mainHandCategories)
             {
-                Stop(category);
+                _composer.Stop(category);
             }
+            StopRequestFromPreviousItem(true);
             _mainHandCategories.Clear();
         }
     }
@@ -396,6 +412,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
             {
                 _composer.Stop(category);
             }
+            StopRequestFromPreviousItem(false);
             _offhandCategories.Clear();
 
             Play(item.ReadyAnimation, false);
@@ -412,6 +429,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
                 {
                     _composer.Stop(category);
                 }
+                StopRequestFromPreviousItem(false);
                 _offhandCategories.Clear();
             }
             else
@@ -422,6 +440,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
                 {
                     _composer.Stop(category);
                 }
+                StopRequestFromPreviousItem(false);
                 _offhandCategories.Clear();
 
                 Play(readyAnimation.Value, false);
@@ -434,6 +453,7 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
             {
                 _composer.Stop(category);
             }
+            StopRequestFromPreviousItem(false);
             _offhandCategories.Clear();
         }
     }
@@ -486,6 +506,17 @@ public sealed class FirstPersonAnimationsBehavior : EntityBehavior
         }
 
         Play(request, mainHand);
+    }
+    private int CurrentItemId(bool mainHand)
+    {
+        if (mainHand)
+        {
+            return _player.RightHandItemSlot.Itemstack?.Item?.Id ?? 0;
+        }
+        else
+        {
+            return _player.LeftHandItemSlot.Itemstack?.Item?.Id ?? 0;
+        }
     }
     private void Dispose()
     {
