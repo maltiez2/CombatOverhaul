@@ -1,7 +1,6 @@
 ﻿using CombatOverhaul.Colliders;
 using CombatOverhaul.DamageSystems;
 using ProtoBuf;
-using System.Diagnostics;
 using OpenTK.Mathematics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -20,6 +19,7 @@ public class ProjectileStats
     public float CollisionRadius { get; set; } = 0;
     public float PenetrationDistance { get; set; } = 0;
     public ProjectileDamageDataJson DamageStats { get; set; } = new();
+    public int DamageTierBonus { get; set; } = 0;
     public float SpeedThreshold { get; set; } = 0;
     public float Knockback { get; set; } = 0;
     public string EntityCode { get; set; } = "";

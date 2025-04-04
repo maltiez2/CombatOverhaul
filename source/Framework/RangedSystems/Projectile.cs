@@ -72,7 +72,8 @@ public sealed class ProjectileServer
         string projectileName = _entity.GetName();
 
         float damage = _stats.DamageStats.Damage * _spawnStats.DamageMultiplier;
-        DamageData damageData = new(Enum.Parse<EnumDamageType>(_stats.DamageStats.DamageType), _spawnStats.DamageStrength);
+        int damageTierBonus = _stats.DamageTierBonus;
+        DamageData damageData = new(Enum.Parse<EnumDamageType>(_stats.DamageStats.DamageType), _spawnStats.DamageStrength + damageTierBonus);
 
         DirectionalTypedDamageSource damageSource = new()
         {
@@ -344,6 +345,11 @@ public class ProjectileBehavior : CollectibleBehavior
             Stats.DamageStats.Damage,
             Lang.Get($"combatoverhaul:damage-type-{Stats.DamageStats.DamageType}"),
             $"{(1 - Stats.DropChance) * 100:F1}"));
+
+            if (Stats.DamageTierBonus > 0)
+            {
+                dsc.AppendLine(Lang.Get("combatoverhaul:iteminfo-projectile-bonus-damagetier", Stats.DamageTierBonus));
+            }
         }
 
         base.GetHeldItemInfo(inSlot, dsc, world, withDebugInfo);
