@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
+using Vintagestory.GameContent;
 
 namespace CombatOverhaul.Integration;
 
@@ -128,13 +129,30 @@ public static class ArmorAutoPatcher
     }
     private static void RemoveVanillaStats(Item item)
     {
-        SetToZero(item.Attributes["protectionModifiers"]["relativeProtection"]);
-        SetToZero(item.Attributes["protectionModifiers"]["flatDamageReduction"]);
-        SetToZero(item.Attributes["protectionModifiers"]["protectionTier"]);
-    }
-    private static void SetToZero(JsonObject json)
-    {
-        json.Token = new JValue(0);
-    }
+        (item.Attributes.Token as JObject)?.Remove("protectionModifiers");
+        (item.Attributes.Token as JObject)?.Remove("statModifiers");
 
+        if (item is ItemWearable armor)
+        {
+            if (armor.StatModifers != null)
+            {
+                armor.StatModifers.rangedWeaponsAcc = 0;
+                armor.StatModifers.rangedWeaponsSpeed = 0;
+                armor.StatModifers.walkSpeed = 0;
+                armor.StatModifers.healingeffectivness = 0;
+                armor.StatModifers.hungerrate = 0;
+                armor.StatModifers.canEat = true;
+            }
+            
+            if (armor.ProtectionModifiers != null)
+            {
+                armor.ProtectionModifiers.RelativeProtection = 0;
+                armor.ProtectionModifiers.PerTierRelativeProtectionLoss = new float[0];
+                armor.ProtectionModifiers.FlatDamageReduction = 0;
+                armor.ProtectionModifiers.PerTierFlatDamageReductionLoss = new float[0];
+                armor.ProtectionModifiers.ProtectionTier = 0;
+                armor.ProtectionModifiers.HighDamageTierResistant = false;
+            }
+        }
+    }
 }
