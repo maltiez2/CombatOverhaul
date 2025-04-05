@@ -1,5 +1,7 @@
-﻿using CombatOverhaul.Animations;
+﻿using CombatOverhaul;
+using CombatOverhaul.Animations;
 using CombatOverhaul.DamageSystems;
+using CombatOverhaul.Implementations;
 using CombatOverhaul.Inputs;
 using CombatOverhaul.Integration;
 using CombatOverhaul.MeleeSystems;
@@ -16,7 +18,7 @@ using Vintagestory.API.Server;
 using Vintagestory.API.Util;
 using Vintagestory.GameContent;
 
-namespace CombatOverhaul.Implementations;
+namespace Bullseye;
 
 public class SpearClient : IClientWeaponLogic, IHasDynamicIdleAnimations, IOnGameTick, IRestrictAction
 {
@@ -152,11 +154,11 @@ public class SpearClient : IClientWeaponLogic, IHasDynamicIdleAnimations, IOnGam
 
     public virtual void RenderDebugCollider(ItemSlot inSlot, IClientPlayer byPlayer)
     {
-        if (DebugWindowManager._currentCollider != null)
+        /*if (DebugWindowManager._currentCollider != null)
         {
             DebugWindowManager._currentCollider.Value.Transform(byPlayer.Entity.Pos, byPlayer.Entity, inSlot, Api, right: true)?.Render(Api, byPlayer.Entity, ColorUtil.ColorFromRgba(255, 125, 125, 255));
             return;
-        }
+        }*/
 
         MeleeAttack? attack = GetStanceAttack(true, CurrentMainHandDirection);
         if (attack != null)

@@ -61,6 +61,7 @@
     <Scripts>$(ProjectDir)\scripts</Scripts>
     <Formatter>$(Scripts)\formatter.py</Formatter>
   </PropertyGroup>
+  
   <ItemGroup>
     <AssetsToFormat Include="$(AssetsDir)\$(ModId)\blocktypes" />
     <AssetsToFormat Include="$(AssetsDir)\$(ModId)\itemtypes" />
@@ -74,6 +75,7 @@
   <ItemGroup>
     <PackageReference Include="VSImGui" Version="0.0.6" />
     <Reference Include="$(GameDirectory)/**/*.dll" Private="false" />
+    <Reference Include="$(ProjectDir)/../Overhaullib/bin/Release/Mods/overhaullib/Overhaullib.dll" Private="false" />
   </ItemGroup>
 
   <!-- Forces rebuild -->
