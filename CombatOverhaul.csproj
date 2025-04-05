@@ -26,6 +26,13 @@
     <ModInfoTranslators Include="Pawelot - Polish" />
   </ItemGroup>
 
+  <!-- Dependencies -->
+  <ItemGroup>
+    <Dependencies Include="overhaullib">
+      <Version>*</Version>
+    </Dependencies>
+  </ItemGroup>
+
   <!-- Project settings -->
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
