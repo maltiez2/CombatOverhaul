@@ -41,6 +41,7 @@ public sealed class Settings
 
     public float DirectionsControllerSensitivity { get; set; } = 1f;
     public bool DirectionsControllerInvert { get; set; } = false;
+    public bool DirectionsCursorRequiresHotkey { get; set; } = false;
 
     public bool HandsYawSmoothing { get; set; } = false;
 
@@ -188,6 +189,8 @@ public sealed class CombatOverhaulSystem : ModSystem
 
         api.Input.RegisterHotKey("toggleWearableLight", "Toggle wearable light source", GlKeys.L);
         api.Input.SetHotKeyHandler("toggleWearableLight", _ => ToggleWearableItem(api.World.Player, "toggleWearableLight"));
+
+        api.Input.RegisterHotKey("changeAttackDirection", "Change attack direction", GlKeys.R);
     }
     public override void AssetsLoaded(ICoreAPI api)
     {
@@ -222,6 +225,7 @@ public sealed class CombatOverhaulSystem : ModSystem
         {
             DirectionController.Sensitivity = Settings.DirectionsControllerSensitivity;
             DirectionController.Invert = Settings.DirectionsControllerInvert;
+            DirectionController.RequiresHotkey = Settings.DirectionsCursorRequiresHotkey;
         }
 
         HarmonyPatches.YawSmoothing = Settings.HandsYawSmoothing;

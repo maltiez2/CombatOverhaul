@@ -43,6 +43,7 @@
         "PrintMeleeHits": "print_melee_hits",
         "PrintPlayerBeingHit": "print_player_hits",
         "DirectionsControllerInvert": "directions_invert",
+        "DirectionsCursorRequiresHotkey": "directions_cursor_requires_hotkey",
         "DoVanillaActionsWhileBlocking": "vanilla_actions_while_blocking"
       },
       "combatoverhaul:patches/traits-and-classes.json": {
@@ -172,6 +173,14 @@
       "code": "directions_invert",
       "type": "boolean",
       "ingui": "combatoverhaul:setting-directions_invert",
+      "clientSide": true,
+      "default": false
+    },
+    {
+      "code": "directions_cursor_requires_hotkey",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-directions_cursor_requires_hotkey",
+      "comment": "combatoverhaul:setting-directions_cursor_requires_hotkey-comment",
       "clientSide": true,
       "default": false
     },
