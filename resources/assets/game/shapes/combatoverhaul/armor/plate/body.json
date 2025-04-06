@@ -7,32 +7,9 @@
 	},
 	"textureWidth": 64,
 	"textureHeight": 64,
-	"textureSizes": {
-		"iron": [64,64],
-		"steel - Copy": [64,64],
-		"steel": [64,64],
-		"steel2": [64,64],
-		"steel3": [64,64],
-		"steel4": [64,64],
-		"steel5": [64,64],
-		"steel6": [64,64],
-		"steel7": [64,64],
-		"steel8": [64,64],
-		"steel9": [64,64],
-		"steel10": [64,64],
-		"steel11": [64,64],
-		"steel12": [64,64],
-		"tailored-red": [64,64],
-		"bismuthbronze": [64,64],
-		"blackbronze": [64,64],
-		"copper": [64,64],
-		"tinbronze": [64,64],
-		"gold": [64,64],
-		"meteoriciron": [64,64],
-		"silver": [64,64]
-	},
+	"textureSizes": {},
 	"textures": {
-		"tinbronze": "entity/humanoid/serapharmor/plate/tinbronze"
+		"material": "entity/humanoid/serapharmor/plate/tinbronze"
 	},
 	"elements": [
 		{
