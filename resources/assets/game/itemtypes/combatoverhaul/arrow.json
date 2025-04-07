@@ -41,7 +41,20 @@
             "*-meteoriciron": {"DamageType": "SlashingAttack", "Damage": 5.8},
             "*-steel": {"DamageType": "SlashingAttack", "Damage": 6}
           },
-          "DamageTierBonusByType": {"*-meteoriciron": 1, "*-steel": 2, "*": 0},
+          "DamageTierBonusByType": {
+            "*-crude": 0,
+            "*-flint": 0,
+            "*-obsidian": 0,
+            "*-copper": 0,
+            "*-tinbronze": 0,
+            "*-bismuthbronze": 0,
+            "*-blackbronze": 0,
+            "*-iron": 1,
+            "*-gold": 1,
+            "*-silver": 1,
+            "*-meteoriciron": 2,
+            "*-steel": 3
+          },
           "SpeedThreshold": 0.3,
           "Knockback": 0.5,
           "EntityCode": "combatoverhaul:arrow-{material}",
