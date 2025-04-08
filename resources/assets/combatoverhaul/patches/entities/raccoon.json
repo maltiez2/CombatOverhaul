@@ -13,7 +13,8 @@
         "Leg": ["L back feet", "R back feet"],
         "Critical": ["neck"],
         "Resistant": []
-      }
+      },
+      "defaultPenetrationResistance": 2
     }
   },
   {
@@ -30,7 +31,8 @@
         "Leg": ["L back feet", "R back feet"],
         "Critical": ["neck"],
         "Resistant": []
-      }
+      },
+      "defaultPenetrationResistance": 2
     }
   },
   {
@@ -47,7 +49,8 @@
         "Leg": ["L back feet", "R back feet"],
         "Critical": ["neck"],
         "Resistant": []
-      }
+      },
+      "defaultPenetrationResistance": 2
     }
   },
   {
@@ -64,7 +67,8 @@
         "Leg": ["L back feet", "R back feet"],
         "Critical": ["neck"],
         "Resistant": []
-      }
+      },
+      "defaultPenetrationResistance": 2
     }
   },
   {
@@ -81,7 +85,8 @@
         "Leg": ["L back feet", "R back feet"],
         "Critical": ["neck"],
         "Resistant": []
-      }
+      },
+      "defaultPenetrationResistance": 0
     }
   },
   {
@@ -98,7 +103,8 @@
         "Leg": ["L back feet", "R back feet"],
         "Critical": ["neck"],
         "Resistant": []
-      }
+      },
+      "defaultPenetrationResistance": 0
     }
   },
   {

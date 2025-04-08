@@ -13,7 +13,8 @@
         "Leg": ["L back leg", "L back feet", "R back feet", "R back leg", "L back paw", "R back paw"],
         "Critical": [],
         "Resistant": []
-      }
+      },
+      "defaultPenetrationResistance": 9
     }
   },
   {
@@ -30,7 +31,8 @@
         "Leg": ["L back leg", "L back feet", "R back feet", "R back leg", "L back paw", "R back paw"],
         "Critical": [],
         "Resistant": []
-      }
+      },
+      "defaultPenetrationResistance": 9
     }
   },
   {

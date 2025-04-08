@@ -6,7 +6,8 @@
     "path": "/client/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
-      "elements": {"Torso": ["abdomen", "body", "L back leg", "R back leg"], "Head": ["head", "mouth"], "Arm": [], "Leg": [], "Critical": ["neck"], "Resistant": []}
+      "elements": {"Torso": ["abdomen", "body", "L back leg", "R back leg"], "Head": ["head", "mouth"], "Arm": [], "Leg": [], "Critical": ["neck"], "Resistant": []},
+      "defaultPenetrationResistance": 2
     }
   },
   {
@@ -16,7 +17,8 @@
     "path": "/server/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
-      "elements": {"Torso": ["abdomen", "body", "L back leg", "R back leg"], "Head": ["head", "mouth"], "Arm": [], "Leg": [], "Critical": ["neck"], "Resistant": []}
+      "elements": {"Torso": ["abdomen", "body", "L back leg", "R back leg"], "Head": ["head", "mouth"], "Arm": [], "Leg": [], "Critical": ["neck"], "Resistant": []},
+      "defaultPenetrationResistance": 2
     }
   },
   {
@@ -26,7 +28,8 @@
     "path": "/client/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
-      "elements": {"Torso": ["abdomen", "body", "L back leg", "R back leg"], "Head": ["head", "mouth"], "Arm": [], "Leg": [], "Critical": ["neck"], "Resistant": []}
+      "elements": {"Torso": ["abdomen", "body", "L back leg", "R back leg"], "Head": ["head", "mouth"], "Arm": [], "Leg": [], "Critical": ["neck"], "Resistant": []},
+      "defaultPenetrationResistance": 2
     }
   },
   {
@@ -36,7 +39,8 @@
     "path": "/server/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
-      "elements": {"Torso": ["abdomen", "body", "L back leg", "R back leg"], "Head": ["head", "mouth"], "Arm": [], "Leg": [], "Critical": ["neck"], "Resistant": []}
+      "elements": {"Torso": ["abdomen", "body", "L back leg", "R back leg"], "Head": ["head", "mouth"], "Arm": [], "Leg": [], "Critical": ["neck"], "Resistant": []},
+      "defaultPenetrationResistance": 2
     }
   },
   {
@@ -46,7 +50,8 @@
     "path": "/client/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
-      "elements": {"Torso": ["abdomen", "body", "L back leg", "R back leg"], "Head": ["head", "mouth"], "Arm": [], "Leg": [], "Critical": ["neck"], "Resistant": []}
+      "elements": {"Torso": ["abdomen", "body", "L back leg", "R back leg"], "Head": ["head", "mouth"], "Arm": [], "Leg": [], "Critical": ["neck"], "Resistant": []},
+      "defaultPenetrationResistance": 0
     }
   },
   {
@@ -56,7 +61,8 @@
     "path": "/server/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
-      "elements": {"Torso": ["abdomen", "body", "L back leg", "R back leg"], "Head": ["head", "mouth"], "Arm": [], "Leg": [], "Critical": ["neck"], "Resistant": []}
+      "elements": {"Torso": ["abdomen", "body", "L back leg", "R back leg"], "Head": ["head", "mouth"], "Arm": [], "Leg": [], "Critical": ["neck"], "Resistant": []},
+      "defaultPenetrationResistance": 0
     }
   },
   {

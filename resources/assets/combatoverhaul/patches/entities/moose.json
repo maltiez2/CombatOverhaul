@@ -23,7 +23,8 @@
           "Critical": [],
           "Resistant": []
         }
-      }
+      },
+      "defaultPenetrationResistance": 6
     }
   },
   {
@@ -50,7 +51,8 @@
           "Critical": [],
           "Resistant": []
         }
-      }
+      },
+      "defaultPenetrationResistance": 6
     }
   },
   {

@@ -6,7 +6,8 @@
     "path": "/client/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
-      "elements": {"Torso": ["body"], "Head": ["head"], "Arm": [], "Leg": ["R feet", "L feet"], "Critical": ["neck"], "Resistant": []}
+      "elements": {"Torso": ["body"], "Head": ["head"], "Arm": [], "Leg": ["R feet", "L feet"], "Critical": ["neck"], "Resistant": []},
+      "defaultPenetrationResistance": 1
     }
   },
   {
@@ -16,7 +17,8 @@
     "path": "/server/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
-      "elements": {"Torso": ["body"], "Head": ["head"], "Arm": [], "Leg": ["R feet", "L feet"], "Critical": ["neck"], "Resistant": []}
+      "elements": {"Torso": ["body"], "Head": ["head"], "Arm": [], "Leg": ["R feet", "L feet"], "Critical": ["neck"], "Resistant": []},
+      "defaultPenetrationResistance": 1
     }
   },
   {
@@ -26,7 +28,8 @@
     "path": "/client/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
-      "elements": {"Torso": ["Body"], "Head": ["head"], "Arm": [], "Leg": ["leg right", "leg left", "thighs right", "thighs left"], "Critical": ["throat"], "Resistant": []}
+      "elements": {"Torso": ["Body"], "Head": ["head"], "Arm": [], "Leg": ["leg right", "leg left", "thighs right", "thighs left"], "Critical": ["throat"], "Resistant": []},
+      "defaultPenetrationResistance": 1
     }
   },
   {
@@ -36,7 +39,8 @@
     "path": "/server/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
-      "elements": {"Torso": ["Body"], "Head": ["head"], "Arm": [], "Leg": ["leg right", "leg left", "thighs right", "thighs left"], "Critical": ["throat"], "Resistant": []}
+      "elements": {"Torso": ["Body"], "Head": ["head"], "Arm": [], "Leg": ["leg right", "leg left", "thighs right", "thighs left"], "Critical": ["throat"], "Resistant": []},
+      "defaultPenetrationResistance": 1
     }
   },
   {
@@ -44,14 +48,16 @@
     "file": "game:entities/land/chicken-baby",
     "op": "add",
     "path": "/client/behaviors/-",
-    "value": {"code": "CombatOverhaul:EntityColliders", "elements": {"Torso": ["body"], "Head": ["head"], "Arm": [], "Leg": [], "Critical": [], "Resistant": []}}
+    "value": {"code": "CombatOverhaul:EntityColliders", "elements": {"Torso": ["body"], "Head": ["head"], "Arm": [], "Leg": [], "Critical": [], "Resistant": []}},
+    "defaultPenetrationResistance": 0
   },
   {
     "side": "Server",
     "file": "game:entities/land/chicken-baby",
     "op": "add",
     "path": "/server/behaviors/-",
-    "value": {"code": "CombatOverhaul:EntityColliders", "elements": {"Torso": ["body"], "Head": ["head"], "Arm": [], "Leg": [], "Critical": [], "Resistant": []}}
+    "value": {"code": "CombatOverhaul:EntityColliders", "elements": {"Torso": ["body"], "Head": ["head"], "Arm": [], "Leg": [], "Critical": [], "Resistant": []}},
+    "defaultPenetrationResistance": 0
   },
   {
     "side": "Server",
