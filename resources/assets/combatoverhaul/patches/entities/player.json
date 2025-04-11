@@ -14,11 +14,7 @@
         "Critical": ["Neck"]
       },
       "defaultPenetrationResistance": 6,
-      "penetrationResistances": {
-        "LowerTorso": 9,
-        "UpperTorso": 9,
-        "Head": 9
-      }
+      "penetrationResistances": {"LowerTorso": 9, "UpperTorso": 9, "Head": 9}
     }
   },
   {
@@ -35,11 +31,7 @@
         "Leg": ["UpperFootL", "UpperFootR", "LowerFootL", "LowerFootR"],
         "Critical": ["Neck"]
       },
-      "penetrationResistances": {
-        "LowerTorso": 9,
-        "UpperTorso": 9,
-        "Head": 9
-      }
+      "penetrationResistances": {"LowerTorso": 9, "UpperTorso": 9, "Head": 9}
     }
   },
   {

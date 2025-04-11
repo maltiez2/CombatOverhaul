@@ -1,4 +1,5 @@
 ﻿using CombatOverhaul.Armor;
+using CombatOverhaul.Integration;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Config;
@@ -17,5 +18,10 @@ public sealed class CombatOverhaulAdditionalSystem : ModSystem
     public override void StartClientSide(ICoreClientAPI api)
     {
         api.Gui.RegisterDialog(new GuiDialogArmorInventory(api));
+    }
+
+    public override void AssetsFinalize(ICoreAPI api)
+    {
+        ArmorAutoPatcher.Patch(api);
     }
 }
