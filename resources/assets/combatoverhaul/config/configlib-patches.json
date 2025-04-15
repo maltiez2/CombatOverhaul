@@ -54,7 +54,8 @@
       },
       "game:itemtypes/combatoverhaul/bow.json": {
         "attributes/AimingByType/@@*/AimDifficulty": "bow_aiming_difficulty",
-        "attributes/ArrowDamageMultiplierByType/@@*": "value * bows_damage_multiplier"
+        "attributes/ArrowDamageMultiplierByType/@@*": "value * bows_damage_multiplier",
+        "attributes/ScreenShakeStrengthByType/@@*": "value * bow_screenshake"
       },
       "game:itemtypes/combatoverhaul/spear.json": {
         "attributes/ThrowAttack/Aiming/AimDifficulty": "spears_aiming_difficulty",
@@ -84,9 +85,6 @@
         "BowsAimingHorizontalLimit": "value * bow_aiming_horisontal_limit",
         "BowsAimingVerticalLimit": "value * bow_aiming_vertical_limit",
         "DirectionsControllerSensitivity": "directions_sensitivity"
-      },
-      "combatoverhaul:patches/tools/pickaxe.json": {
-        "0/value/AnimationSpeedBonusFromMiningSpeed": "tool_animation_speed_bonus"
       },
       "combatoverhaul:patches/entities/player.json": {
         "2/value/secondChanceCooldownSec": "second_chance_cooldown",
@@ -158,6 +156,16 @@
       "ingui": "combatoverhaul:setting-vanilla_actions_while_blocking",
       "clientSide": true,
       "default": true
+    },
+    {
+      "code": "bow_screenshake",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-bow_screenshake",
+      "default": 1.0,
+      "range": {
+        "min": 0.0,
+        "max": 2.0
+      }
     },
     {
       "code": "bow_aiming_difficulty",

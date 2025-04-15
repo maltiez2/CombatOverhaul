@@ -45,6 +45,7 @@
     "ReleaseAnimation": "combatoverhaul:bow-release-{type}",
     "TpAimAnimationByType": {"*-crude": "bowaimcrude", "*-simple": "bowaim", "*-long": "bowaimlong", "*-recurve": "bowaimrecurve"},
     "ZeroingByType": {"*-crude": 1, "*-simple": 1, "*-long": 0.5, "*-recurve": 0.5},
+    "ScreenShakeStrengthByType": {"*-crude": 0, "*-simple": 0.1, "*-long": 0.25, "*-recurve": 0.15},
     "AimingByType": {
       "*-crude": {
         "AimDifficulty": 1,
