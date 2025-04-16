@@ -84,7 +84,8 @@
         "DirectionsCursorScale": "directions_cursor_scale",
         "BowsAimingHorizontalLimit": "value * bow_aiming_horisontal_limit",
         "BowsAimingVerticalLimit": "value * bow_aiming_vertical_limit",
-        "DirectionsControllerSensitivity": "directions_sensitivity"
+        "DirectionsControllerSensitivity": "directions_sensitivity",
+        "AlternativeDirectionControls": "directions_movement_controls"
       },
       "combatoverhaul:patches/entities/player.json": {
         "2/value/secondChanceCooldownSec": "second_chance_cooldown",
@@ -147,6 +148,13 @@
       "code": "directions_invert",
       "type": "boolean",
       "ingui": "combatoverhaul:setting-directions_invert",
+      "clientSide": true,
+      "default": false
+    },
+    {
+      "code": "directions_movement_controls",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-directions_movement_controls",
       "clientSide": true,
       "default": false
     },

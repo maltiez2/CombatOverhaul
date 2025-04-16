@@ -59,6 +59,7 @@
   "setting-directions_inertia": "Directions cursor inertia",
   "setting-directions_sensitivity": "Directions cursor sensitivity",
   "setting-directions_invert": "Invert directions cursor",
+  "setting-directions_movement_controls": "Directions cursor alternative controls",
   "setting-vanilla_actions_while_blocking": "Perform vanilla actions while blocking",
   "setting-bow_screenshake": "Screenshake on bow release",
   "setting-bows_aiming_cursor_type": "Bows aiming cursor type",
