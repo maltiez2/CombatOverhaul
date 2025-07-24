@@ -2,7 +2,7 @@
   "code": "spear",
   "class": "CombatOverhaul:Projectile",
   "variantgroups": [
-    {"code": "type", "states": ["generic"]},
+    {"code": "type", "states": ["generic", "scrap", "boar", "voulge", "fork", "ranseur"]},
     {
       "code": "material",
       "states": [
@@ -13,19 +13,24 @@
         "obsidian",
         "peridotite",
         "flint",
+        "scrap",
         "copper",
         "tinbronze",
         "bismuthbronze",
         "blackbronze",
+        "ornategold",
+        "ornatesilver",
         "iron",
         "meteoriciron",
         "steel",
-        "ornategold",
-        "ornatesilver",
-        "scrap"
+        "hacking",
+        "ruined",
+        "erel"
       ]
     }
   ],
+  "skipVariants": ["spear-generic-ruined", "spear-generic-scrap"],
+  "allowedVariants": ["spear-generic-*", "spear-scrap-scrap", "spear-boar-ruined", "spear-voulge-ruined", "spear-fork-ruined", "spear-ranseur-ruined"],
   "hitboxSize": {"x": 0.125, "y": 0.125},
   "client": {
     "size": 0.8,
@@ -33,11 +38,17 @@
     "shapeByType": {
       "@spear-generic-(chert|granite|andesite|basalt|obsidian|peridotite|flint)": {"base": "combatoverhaul:weapons/spears/spear-flint"},
       "*-scrap": {"base": "combatoverhaul:weapons/spears/spear-{material}"},
-      "*": {"base": "combatoverhaul:weapons/spears/spear-{material}"}
+      "spear-generic-erel": {"base": "game:entity/nonliving/projectile/erel-large-usable"},
+      "spear-generic-hacking": {"base": "game:item/tool/spear/hacking"},
+      "spear-generic-ornategold": {"base": "game:item/tool/spear/ornategold"},
+      "spear-generic-ornatesilver": {"base": "game:item/tool/spear/ornatesilver"},
+      "@spear-generic-(copper|tinbronze|bismuthbronze|blackbronze)": {"base": "combatoverhaul:weapons/spears/spear-{material}"},
+      "@spear-generic-(iron|meteoriciron|steel)": {"base": "combatoverhaul:weapons/spears/spear-{material}"},
+      "*-ruined": {"base": "game:item/tool/spear/ruined/{type}"}
     },
     "texturesByType": {"@spear-generic-(chert|granite|andesite|basalt|obsidian|peridotite)": {"head": {"base": "game:block/stone/rock/{material}1"}}},
-    "behaviors": [{"code": "passivephysics", "groundDragFactor": 1, "airDragFactor": 2.5, "gravityFactor": 2.5}, {"code": "interpolateposition"}]
+    "behaviors": [{"code": "passivephysics", "groundDragFactor": 1, "airDragFactor": 1, "gravityFactor": 1}, {"code": "interpolateposition"}]
   },
-  "server": {"behaviors": [{"code": "passivephysics", "groundDragFactor": 1, "airDragFactor": 2.5, "gravityFactor": 2.5}, {"code": "despawn", "minSeconds": 600}]},
+  "server": {"behaviors": [{"code": "passivephysics", "groundDragFactor": 1, "airDragFactor": 1, "gravityFactor": 1}, {"code": "despawn", "minSeconds": 600}]},
   "sounds": {}
 }

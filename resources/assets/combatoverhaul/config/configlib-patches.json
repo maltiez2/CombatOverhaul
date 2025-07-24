@@ -43,6 +43,9 @@
       },
       "combatoverhaul:patches/entities/player.json": {
         "2/value/secondChanceAvailable": "second_chance_available"
+      },
+      "game:itemtypes/combatoverhaul/bow.json": {
+        "attributes/TwoHanded": "bow_two_handed"
       }
     },
     "number": {
@@ -184,6 +187,12 @@
         "min": 0.0,
         "max": 2.0
       }
+    },
+    {
+      "code": "bow_two_handed",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-bow_two_handed",
+      "default": true
     },
     {
       "code": "bows_aiming_cursor_type",

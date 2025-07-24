@@ -2,7 +2,10 @@
   "code": "arrow",
   "class": "Item",
   "variantgroups": [
-    {"code": "material", "states": ["crude", "flint", "obsidian", "copper", "tinbronze", "bismuthbronze", "blackbronze", "gold", "silver", "iron", "meteoriciron", "steel"]}
+    {
+      "code": "material",
+      "states": ["crude", "flint", "obsidian", "copper", "tinbronze", "bismuthbronze", "blackbronze", "gold", "silver", "iron", "meteoriciron", "steel", "erel", "bone"]
+    }
   ],
   "behaviors": [
     {
@@ -10,7 +13,12 @@
       "properties": {
         "layout": "Stacking",
         "placeRemoveSound": "game:sounds/block/ceramicplace",
-        "stackingModelByType": {"*-crude": "combatoverhaul:ammo/pile-arrows-crude", "*": "combatoverhaul:ammo/pile-arrows-fletched"},
+        "stackingModelByType": {
+          "*-crude": "combatoverhaul:ammo/pile-arrows-crude",
+          "*-erel": "combatoverhaul:ammo/pile-arrows-crude",
+          "*-bone": "combatoverhaul:ammo/pile-arrows-crude",
+          "*": "combatoverhaul:ammo/pile-arrows-fletched"
+        },
         "modelItemsToStackSizeRatio": 4.2,
         "stackingCapacity": 160,
         "upSolid": true,
@@ -24,7 +32,7 @@
       "name": "CombatOverhaul:Projectile",
       "properties": {
         "stats": {
-          "AdditionalDurabilityCost": 0,
+          "AdditionalDurabilityCostByType": {"*-erel": 2, "*-bone": 1, "*": 0},
           "CollisionRadius": 0.05,
           "PenetrationDistance": 0.1,
           "DamageStatsByType": {
@@ -39,7 +47,9 @@
             "*-gold": {"DamageType": "SlashingAttack", "Damage": 5.6},
             "*-silver": {"DamageType": "SlashingAttack", "Damage": 5.6},
             "*-meteoriciron": {"DamageType": "SlashingAttack", "Damage": 5.8},
-            "*-steel": {"DamageType": "SlashingAttack", "Damage": 6}
+            "*-steel": {"DamageType": "SlashingAttack", "Damage": 6},
+            "*-erel": {"DamageType": "PiercingAttack", "Damage": 5},
+            "*-bone": {"DamageType": "PiercingAttack", "Damage": 5}
           },
           "DamageTierBonusByType": {
             "*-crude": 0,
@@ -53,7 +63,9 @@
             "*-gold": 1,
             "*-silver": 1,
             "*-meteoriciron": 2,
-            "*-steel": 3
+            "*-steel": 3,
+            "*-erel": 0,
+            "*-bone": 0
           },
           "SpeedThreshold": 0.3,
           "Knockback": 0.5,
@@ -72,7 +84,9 @@
             "*-gold": 0.98,
             "*-silver": 0.98,
             "*-meteoriciron": 0.98,
-            "*-steel": 0.995
+            "*-steel": 0.995,
+            "*-erel": 0,
+            "*-bone": 0.75
           }
         }
       }
@@ -89,10 +103,14 @@
     "*-iron": {"base": "combatoverhaul:ammo/arrows/envelop"},
     "*-gold": {"base": "combatoverhaul:ammo/arrows/gold"},
     "*-silver": {"base": "combatoverhaul:ammo/arrows/silver"},
+    "*-erel": {"base": "combatoverhaul:ammo/arrows/erel"},
+    "*-bone": {"base": "combatoverhaul:ammo/arrows/bone"},
     "*": {"base": "combatoverhaul:ammo/arrows/insert"}
   },
   "texturesByType": {
     "*-crude": {},
+    "*-erel": {},
+    "*-bone": {},
     "*-flint": {"material": {"base": "game:block/stone/flint"}},
     "*-obsidian": {"material": {"base": "game:block/stone/rock/obsidian1"}},
     "*": {"material": {"base": "game:block/metal/ingot/{material}"}}

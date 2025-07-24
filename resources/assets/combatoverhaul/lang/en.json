@@ -62,6 +62,7 @@
   "setting-directions_movement_controls": "Directions cursor alternative controls",
   "setting-vanilla_actions_while_blocking": "Perform vanilla actions while blocking",
   "setting-bow_screenshake": "Screenshake on bow release",
+  "setting-bow_two_handed": "Bow requires offhand empty",
   "setting-bows_aiming_cursor_type": "Bows aiming cursor type",
   "setting-bow_aiming_difficulty": "Bows aiming difficulty",
   "setting-spears_aiming_cursor_type": "Spears aiming cursor type",

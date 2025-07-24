@@ -2,7 +2,10 @@
   "code": "arrow",
   "class": "CombatOverhaul:Projectile",
   "variantgroups": [
-    {"code": "material", "states": ["crude", "flint", "obsidian", "copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "gold", "silver", "steel", "meteoriciron"]}
+    {
+      "code": "material",
+      "states": ["crude", "flint", "obsidian", "copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "gold", "silver", "steel", "meteoriciron", "erel", "bone"]
+    }
   ],
   "hitboxSize": {"x": 0.125, "y": 0.125},
   "client": {
@@ -17,10 +20,14 @@
       "*-iron": {"base": "combatoverhaul:ammo/arrows/envelop"},
       "*-gold": {"base": "combatoverhaul:ammo/arrows/gold"},
       "*-silver": {"base": "combatoverhaul:ammo/arrows/silver"},
+      "*-erel": {"base": "combatoverhaul:ammo/arrows/erel"},
+      "*-bone": {"base": "combatoverhaul:ammo/arrows/bone"},
       "*": {"base": "combatoverhaul:ammo/arrows/insert"}
     },
     "texturesByType": {
       "*-crude": {},
+      "*-erel": {},
+      "*-bone": {},
       "*-flint": {"material": {"base": "game:block/stone/flint"}},
       "*-obsidian": {"material": {"base": "game:block/stone/rock/obsidian1"}},
       "*": {"material": {"base": "game:block/metal/ingot/{material}"}}
