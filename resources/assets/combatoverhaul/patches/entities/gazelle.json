@@ -1,7 +1,7 @@
 ﻿[
   {
     "side": "Server",
-    "file": "game:entities/land/gazelle",
+    "file": "game:entities/animal/mammal/hooved/gazelle-adult",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
@@ -22,8 +22,19 @@
           "Leg": ["L back Upper Arm", "L back lower arm", "R back Upper Arm", "R back lower arm"],
           "Critical": [],
           "Resistant": []
-        },
-        "*-calf": {
+        }
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/gazelle-baby",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*": {
           "Torso": ["Body", "abdomen", "L front Thigh", "R front Thigh", "L back Thigh", "R back Thigh", "neck"],
           "Head": ["head", "mouth-up"],
           "Arm": ["L front Upper Arm", "L front lower arm", "R front Upper Arm", "R front lower arm"],
@@ -36,7 +47,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/gazelle",
+    "file": "game:entities/animal/mammal/hooved/gazelle-adult",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
@@ -57,8 +68,19 @@
           "Leg": ["L back Upper Arm", "L back lower arm", "R back Upper Arm", "R back lower arm"],
           "Critical": [],
           "Resistant": []
-        },
-        "*-calf": {
+        }
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/gazelle-baby",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*": {
           "Torso": ["Body", "abdomen", "L front Thigh", "R front Thigh", "L back Thigh", "R back Thigh", "neck"],
           "Head": ["head", "mouth-up"],
           "Arm": ["L front Upper Arm", "L front lower arm", "R front Upper Arm", "R front lower arm"],
@@ -71,7 +93,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/gazelle",
+    "file": "game:entities/animal/mammal/hooved/gazelle-adult",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
@@ -87,7 +109,39 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/gazelle",
+    "file": "game:entities/animal/mammal/hooved/gazelle-adult",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 4,
+        "DefaultResists": {"BluntAttack": 4, "SlashingAttack": 2, "PiercingAttack": 0}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/gazelle-baby",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 4,
+        "DefaultResists": {"BluntAttack": 4, "SlashingAttack": 2, "PiercingAttack": 0}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/gazelle-baby",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {

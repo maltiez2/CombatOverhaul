@@ -1,7 +1,7 @@
 ﻿[
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-male",
+    "file": "game:entities/animal/mammal/hyena-adult",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
@@ -18,7 +18,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-male",
+    "file": "game:entities/animal/mammal/hyena-adult",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
@@ -35,41 +35,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-female",
-    "op": "add",
-    "path": "/client/behaviors/-",
-    "value": {
-      "code": "CombatOverhaul:EntityColliders",
-      "elements": {
-        "Torso": ["R back leg", "L back leg", "R front leg", "L front leg", "neck", "Body", "abdomen"],
-        "Head": ["head", "mouth"],
-        "Arm": ["L front feet", "R front feet"],
-        "Leg": ["L back feet", "R back feet"],
-        "Critical": [],
-        "Resistant": []
-      }
-    }
-  },
-  {
-    "side": "Server",
-    "file": "game:entities/land/hyena-female",
-    "op": "add",
-    "path": "/server/behaviors/-",
-    "value": {
-      "code": "CombatOverhaul:EntityColliders",
-      "elements": {
-        "Torso": ["R back leg", "L back leg", "R front leg", "L front leg", "neck", "Body", "abdomen"],
-        "Head": ["head", "mouth"],
-        "Arm": ["L front feet", "R front feet"],
-        "Leg": ["L back feet", "R back feet"],
-        "Critical": [],
-        "Resistant": []
-      }
-    }
-  },
-  {
-    "side": "Server",
-    "file": "game:entities/land/hyena-pup",
+    "file": "game:entities/animal/mammal/hyena-baby",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
@@ -86,7 +52,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-pup",
+    "file": "game:entities/animal/mammal/hyena-baby",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
@@ -103,7 +69,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-male",
+    "file": "game:entities/animal/mammal/hyena-adult",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
@@ -119,7 +85,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-male",
+    "file": "game:entities/animal/mammal/hyena-adult",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
@@ -135,39 +101,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-female",
-    "op": "add",
-    "path": "/server/behaviors/-",
-    "value": {
-      "code": "CombatOverhaul:EntityDamageModel",
-      "damageModel": {
-        "TorsoDamageMultiplier": 1,
-        "LimbsDamageMultiplier": 0.75,
-        "HeadDamageMultiplier": 1.5,
-        "CriticalDamageMultiplier": 4,
-        "DefaultResists": {"BluntAttack": 4, "SlashingAttack": 0, "PiercingAttack": 0}
-      }
-    }
-  },
-  {
-    "side": "Server",
-    "file": "game:entities/land/hyena-female",
-    "op": "add",
-    "path": "/client/behaviors/-",
-    "value": {
-      "code": "CombatOverhaul:EntityDamageModel",
-      "damageModel": {
-        "TorsoDamageMultiplier": 1,
-        "LimbsDamageMultiplier": 0.75,
-        "HeadDamageMultiplier": 1.5,
-        "CriticalDamageMultiplier": 4,
-        "DefaultResists": {"BluntAttack": 4, "SlashingAttack": 2, "PiercingAttack": 0}
-      }
-    }
-  },
-  {
-    "side": "Server",
-    "file": "game:entities/land/hyena-pup",
+    "file": "game:entities/animal/mammal/hyena-baby",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
@@ -183,7 +117,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hyena-pup",
+    "file": "game:entities/animal/mammal/hyena-baby",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
@@ -197,8 +131,6 @@
       }
     }
   },
-  {"side": "Server", "file": "game:entities/land/hyena-male", "op": "replace", "path": "/server/behaviors/10/aitasks/1/damageType", "value": "SlashingAttack"},
-  {"side": "Server", "file": "game:entities/land/hyena-male", "op": "add", "path": "/server/behaviors/10/aitasks/1/damageTier", "value": 2},
-  {"side": "Server", "file": "game:entities/land/hyena-female", "op": "replace", "path": "/server/behaviors/11/aitasks/1/damageType", "value": "SlashingAttack"},
-  {"side": "Server", "file": "game:entities/land/hyena-female", "op": "add", "path": "/server/behaviors/11/aitasks/1/damageTier", "value": 2}
+  {"side": "Server", "file": "game:entities/animal/mammal/hyena-adult", "op": "replace", "path": "/server/behaviors/11/aitasks/1/damageType", "value": "SlashingAttack"},
+  {"side": "Server", "file": "game:entities/animal/mammal/hyena-adult", "op": "add", "path": "/server/behaviors/11/aitasks/1/damageTier", "value": 2}
 ]

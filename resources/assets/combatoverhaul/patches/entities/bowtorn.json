@@ -1,7 +1,7 @@
 ﻿[
   {
     "side": "Server",
-    "file": "game:entities/land/bowtorn",
+    "file": "game:entities/lore/bowtorn",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
@@ -60,7 +60,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/bowtorn",
+    "file": "game:entities/lore/bowtorn",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
@@ -119,7 +119,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/bowtorn",
+    "file": "game:entities/lore/bowtorn",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
@@ -142,7 +142,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/bowtorn",
+    "file": "game:entities/lore/bowtorn",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
@@ -165,7 +165,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/bowtorn",
+    "file": "game:entities/lore/bowtorn",
     "op": "replace",
     "path": "/server/behaviors/8/aitasks/0/damageTypeByType",
     "value": {
@@ -179,21 +179,21 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/bowtorn",
+    "file": "game:entities/lore/bowtorn",
     "op": "replace",
     "path": "/server/behaviors/8/aitasks/0/damageTierByType",
     "value": {"*-surface": 1, "*-deep": 1, "*-tainted": 2, "*-corrupt": 3, "*-nightmare": 4, "*-gearfoot": 5}
   },
   {
     "side": "Server",
-    "file": "game:entities/land/bowtorn",
+    "file": "game:entities/lore/bowtorn",
     "op": "replace",
     "path": "/server/behaviors/8/aitasks/5/projectileDamageTierByType",
     "value": {"*-surface": 2, "*-deep": 3, "*-tainted": 4, "*-corrupt": 6, "*-nightmare": 8, "*-gearfoot": 9}
   },
   {
     "side": "Server",
-    "file": "game:entities/land/bowtorn",
+    "file": "game:entities/lore/bowtorn",
     "op": "replace",
     "path": "/server/behaviors/8/aitasks/5/projectileDamageByType",
     "value": {"*-surface": 2, "*-deep": 2.5, "*-tainted": 3, "*-corrupt": 3.5, "*-nightmare": 4, "*-gearfoot": 4.5}

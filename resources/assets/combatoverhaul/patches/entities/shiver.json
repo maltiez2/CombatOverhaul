@@ -1,7 +1,7 @@
 ﻿[
   {
     "side": "Server",
-    "file": "game:entities/land/shiver",
+    "file": "game:entities/lore/shiver",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
@@ -28,7 +28,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/shiver",
+    "file": "game:entities/lore/shiver",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
@@ -55,7 +55,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/shiver",
+    "file": "game:entities/lore/shiver",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
@@ -80,7 +80,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/shiver",
+    "file": "game:entities/lore/shiver",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
@@ -105,21 +105,21 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/shiver",
+    "file": "game:entities/lore/shiver",
     "op": "replace",
     "path": "/server/behaviors/8/aitasks/2/damageTierByType",
     "value": {"*-surface": 1, "*-deep": 1, "*-tainted": 2, "*-corrupt": 2, "*-nightmare": 3, "*-stilt": 3, "*-deepsplit": 4, "*-bellhead": 5}
   },
   {
     "side": "Server",
-    "file": "game:entities/land/shiver",
+    "file": "game:entities/lore/shiver",
     "op": "replace",
     "path": "/server/behaviors/8/aitasks/2/damageByType",
     "value": {"*-surface": 4, "*-deep": 7, "*-tainted": 10, "*-corrupt": 15, "*-nightmare": 20, "*-stilt": 25, "*-deepsplit": 30, "*-bellhead": 30}
   },
   {
     "side": "Server",
-    "file": "game:entities/land/shiver",
+    "file": "game:entities/lore/shiver",
     "op": "replace",
     "path": "/server/behaviors/8/aitasks/2/damageTypeByType",
     "value": {
@@ -133,10 +133,10 @@
       "*-bellhead": "BluntAttack"
     }
   },
-  {"side": "Server", "file": "game:entities/land/shiver", "op": "replace", "path": "/server/behaviors/8/aitasks/2/attackDurationMs", "value": 1500},
-  {"side": "Server", "file": "game:entities/land/shiver", "op": "replace", "path": "/server/behaviors/8/aitasks/2/damagePlayerAtMs", "value": 900},
-  {"side": "Server", "file": "game:entities/land/shiver", "op": "replace", "path": "/server/behaviors/8/aitasks/2/animation", "value": "bite-withwindup"},
-  {"side": "Server", "file": "game:entities/land/shiver", "op": "replace", "path": "/server/behaviors/2/currenthealthByType/*-deep", "value": 16},
-  {"side": "Server", "file": "game:entities/land/shiver", "op": "replace", "path": "/server/behaviors/2/maxhealthByType/*-deep", "value": 16},
-  {"side": "Server", "file": "game:entities/land/shiver", "op": "replace", "path": "/hitboxSize/x", "value": 1.9}
+  {"side": "Server", "file": "game:entities/lore/shiver", "op": "replace", "path": "/server/behaviors/8/aitasks/2/attackDurationMs", "value": 1500},
+  {"side": "Server", "file": "game:entities/lore/shiver", "op": "replace", "path": "/server/behaviors/8/aitasks/2/damagePlayerAtMs", "value": 900},
+  {"side": "Server", "file": "game:entities/lore/shiver", "op": "replace", "path": "/server/behaviors/8/aitasks/2/animation", "value": "bite-withwindup"},
+  {"side": "Server", "file": "game:entities/lore/shiver", "op": "replace", "path": "/server/behaviors/2/currenthealthByType/*-deep", "value": 16},
+  {"side": "Server", "file": "game:entities/lore/shiver", "op": "replace", "path": "/server/behaviors/2/maxhealthByType/*-deep", "value": 16},
+  {"side": "Server", "file": "game:entities/lore/shiver", "op": "replace", "path": "/hitboxSize/x", "value": 1.9}
 ]

@@ -1,7 +1,7 @@
 ﻿[
   {
     "side": "Server",
-    "file": "game:entities/land/bell",
+    "file": "game:entities/lore/bell",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
@@ -18,7 +18,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/bell",
+    "file": "game:entities/lore/bell",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
@@ -35,7 +35,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/bell",
+    "file": "game:entities/lore/bell",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
@@ -52,7 +52,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/bell",
+    "file": "game:entities/lore/bell",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
@@ -67,6 +67,6 @@
       }
     }
   },
-  {"side": "Server", "file": "game:entities/land/bell", "op": "add", "path": "/server/behaviors/2/currenthealth", "value": 40},
-  {"side": "Server", "file": "game:entities/land/bell", "op": "add", "path": "/server/behaviors/2/maxhealth", "value": 40}
+  {"side": "Server", "file": "game:entities/lore/bell", "op": "add", "path": "/server/behaviors/2/currenthealth", "value": 40},
+  {"side": "Server", "file": "game:entities/lore/bell", "op": "add", "path": "/server/behaviors/2/maxhealth", "value": 40}
 ]

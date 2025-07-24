@@ -1,7 +1,7 @@
 ﻿[
   {
     "side": "Server",
-    "file": "game:entities/land/drifter",
+    "file": "game:entities/lore/drifter",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
@@ -28,7 +28,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/drifter",
+    "file": "game:entities/lore/drifter",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
@@ -55,7 +55,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/drifter",
+    "file": "game:entities/lore/drifter",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
@@ -78,7 +78,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/drifter",
+    "file": "game:entities/lore/drifter",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
@@ -101,7 +101,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/drifter",
+    "file": "game:entities/lore/drifter",
     "op": "replace",
     "path": "/server/behaviors/8/aitasks/2",
     "value": {
@@ -130,7 +130,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/drifter",
+    "file": "game:entities/lore/drifter",
     "op": "add",
     "path": "/server/behaviors/8/aitasks/-",
     "value": {

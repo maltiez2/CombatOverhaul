@@ -1,21 +1,21 @@
 ﻿[
   {
     "side": "Server",
-    "file": "game:entities/land/strawdummy",
+    "file": "game:entities/nonliving/strawdummy",
     "op": "add",
     "path": "/client/behaviors/0",
     "value": {"code": "CombatOverhaul:EntityColliders", "elements": {"Torso": ["upper body", "body"], "Head": ["Head"], "Arm": ["hands"], "Leg": [], "Critical": []}}
   },
   {
     "side": "Server",
-    "file": "game:entities/land/strawdummy",
+    "file": "game:entities/nonliving/strawdummy",
     "op": "add",
     "path": "/server/behaviors/0",
     "value": {"code": "CombatOverhaul:EntityColliders", "elements": {"Torso": ["upper body", "body"], "Head": ["Head"], "Arm": ["hands"], "Leg": [], "Critical": []}}
   },
   {
     "side": "Server",
-    "file": "game:entities/land/strawdummy",
+    "file": "game:entities/nonliving/strawdummy",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
@@ -31,7 +31,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/strawdummy",
+    "file": "game:entities/nonliving/strawdummy",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {

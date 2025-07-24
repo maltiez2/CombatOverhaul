@@ -1,51 +1,35 @@
 ﻿[
   {
     "side": "Server",
-    "file": "game:entities/land/chicken-rooster",
+    "file": "game:entities/animal/bird/chicken-adult",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
-      "elements": {"Torso": ["body"], "Head": ["head"], "Arm": [], "Leg": ["R feet", "L feet"], "Critical": ["neck"], "Resistant": []},
+      "elementsByType": {
+        "*-rooster*": {"Torso": ["body"], "Head": ["head"], "Arm": [], "Leg": ["R feet", "L feet"], "Critical": ["neck"], "Resistant": []},
+        "*-hen*": {"Torso": ["Body"], "Head": ["head"], "Arm": [], "Leg": ["leg right", "leg left", "thighs right", "thighs left"], "Critical": ["throat"], "Resistant": []}
+      },
       "defaultPenetrationResistance": 1
     }
   },
   {
     "side": "Server",
-    "file": "game:entities/land/chicken-rooster",
+    "file": "game:entities/animal/bird/chicken-adult",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
-      "elements": {"Torso": ["body"], "Head": ["head"], "Arm": [], "Leg": ["R feet", "L feet"], "Critical": ["neck"], "Resistant": []},
+      "elementsByType": {
+        "*-rooster*": {"Torso": ["body"], "Head": ["head"], "Arm": [], "Leg": ["R feet", "L feet"], "Critical": ["neck"], "Resistant": []},
+        "*-hen*": {"Torso": ["Body"], "Head": ["head"], "Arm": [], "Leg": ["leg right", "leg left", "thighs right", "thighs left"], "Critical": ["throat"], "Resistant": []}
+      },
       "defaultPenetrationResistance": 1
     }
   },
   {
     "side": "Server",
-    "file": "game:entities/land/chicken-hen",
-    "op": "add",
-    "path": "/client/behaviors/-",
-    "value": {
-      "code": "CombatOverhaul:EntityColliders",
-      "elements": {"Torso": ["Body"], "Head": ["head"], "Arm": [], "Leg": ["leg right", "leg left", "thighs right", "thighs left"], "Critical": ["throat"], "Resistant": []},
-      "defaultPenetrationResistance": 1
-    }
-  },
-  {
-    "side": "Server",
-    "file": "game:entities/land/chicken-hen",
-    "op": "add",
-    "path": "/server/behaviors/-",
-    "value": {
-      "code": "CombatOverhaul:EntityColliders",
-      "elements": {"Torso": ["Body"], "Head": ["head"], "Arm": [], "Leg": ["leg right", "leg left", "thighs right", "thighs left"], "Critical": ["throat"], "Resistant": []},
-      "defaultPenetrationResistance": 1
-    }
-  },
-  {
-    "side": "Server",
-    "file": "game:entities/land/chicken-baby",
+    "file": "game:entities/animal/bird/chicken-baby",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {"code": "CombatOverhaul:EntityColliders", "elements": {"Torso": ["body"], "Head": ["head"], "Arm": [], "Leg": [], "Critical": [], "Resistant": []}},
@@ -53,7 +37,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/chicken-baby",
+    "file": "game:entities/animal/bird/chicken-baby",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {"code": "CombatOverhaul:EntityColliders", "elements": {"Torso": ["body"], "Head": ["head"], "Arm": [], "Leg": [], "Critical": [], "Resistant": []}},
@@ -61,7 +45,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/chicken-rooster",
+    "file": "game:entities/animal/bird/chicken-adult",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
@@ -77,7 +61,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/chicken-rooster",
+    "file": "game:entities/animal/bird/chicken-adult",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
@@ -93,39 +77,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/chicken-hen",
-    "op": "add",
-    "path": "/server/behaviors/-",
-    "value": {
-      "code": "CombatOverhaul:EntityDamageModel",
-      "damageModel": {
-        "TorsoDamageMultiplier": 1,
-        "LimbsDamageMultiplier": 1,
-        "HeadDamageMultiplier": 1.5,
-        "CriticalDamageMultiplier": 1.5,
-        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}
-      }
-    }
-  },
-  {
-    "side": "Server",
-    "file": "game:entities/land/chicken-hen",
-    "op": "add",
-    "path": "/client/behaviors/-",
-    "value": {
-      "code": "CombatOverhaul:EntityDamageModel",
-      "damageModel": {
-        "TorsoDamageMultiplier": 1,
-        "LimbsDamageMultiplier": 1,
-        "HeadDamageMultiplier": 1.5,
-        "CriticalDamageMultiplier": 1.5,
-        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}
-      }
-    }
-  },
-  {
-    "side": "Server",
-    "file": "game:entities/land/chicken-baby",
+    "file": "game:entities/animal/bird/chicken-baby",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
@@ -141,7 +93,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/chicken-baby",
+    "file": "game:entities/animal/bird/chicken-baby",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {

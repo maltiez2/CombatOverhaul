@@ -1,7 +1,34 @@
 ﻿[
   {
     "side": "Server",
-    "file": "game:entities/land/hooved/goat",
+    "file": "game:entities/animal/mammal/hooved/goat-adult",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*-sirohi-*": {
+          "Torso": ["neck", "Body", "midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
+          "Head": ["head", "ConvexBridge1", "ConvexBridge2", "mouth up"],
+          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
+          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
+          "Critical": ["neck2"],
+          "Resistant": []
+        },
+        "*": {
+          "Torso": ["neck", "Body", "midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
+          "Head": ["head", "nose bridge", "mouth up"],
+          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
+          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
+          "Critical": ["neck2"],
+          "Resistant": []
+        }
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/goat-baby",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
@@ -20,7 +47,34 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hooved/goat",
+    "file": "game:entities/animal/mammal/hooved/goat-adult",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elementsByType": {
+        "*-sirohi-*": {
+          "Torso": ["neck", "Body", "midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
+          "Head": ["head", "ConvexBridge1", "ConvexBridge2", "mouth up"],
+          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
+          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
+          "Critical": ["neck2"],
+          "Resistant": []
+        },
+        "*": {
+          "Torso": ["neck", "Body", "midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
+          "Head": ["head", "nose bridge", "mouth up"],
+          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
+          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
+          "Critical": ["neck2"],
+          "Resistant": []
+        }
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/goat-baby",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
@@ -39,7 +93,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hooved/goat",
+    "file": "game:entities/animal/mammal/hooved/goat-adult",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
@@ -55,7 +109,23 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/land/hooved/goat",
+    "file": "game:entities/animal/mammal/hooved/goat-baby",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResists": {"BluntAttack": 4, "SlashingAttack": 2, "PiercingAttack": 0}
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/goat-adult",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
@@ -69,6 +139,22 @@
       }
     }
   },
-  {"side": "Server", "file": "game:entities/land/hooved/goat", "op": "replace", "path": "/server/behaviors/13/aitasks/0/damageType", "value": "BluntAttack"},
-  {"side": "Server", "file": "game:entities/land/hooved/goat", "op": "replace", "path": "/server/behaviors/13/aitasks/0/damageTier", "value": 1}
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/goat-baby",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityDamageModel",
+      "damageModel": {
+        "TorsoDamageMultiplier": 1,
+        "LimbsDamageMultiplier": 0.75,
+        "HeadDamageMultiplier": 1.5,
+        "CriticalDamageMultiplier": 2,
+        "DefaultResists": {"BluntAttack": 4, "SlashingAttack": 2, "PiercingAttack": 0}
+      }
+    }
+  },
+  {"side": "Server", "file": "game:entities/animal/mammal/hooved/goat-adult", "op": "replace", "path": "/server/behaviors/12/aitasks/0/damageType", "value": "BluntAttack"},
+  {"side": "Server", "file": "game:entities/animal/mammal/hooved/goat-adult", "op": "replace", "path": "/server/behaviors/12/aitasks/0/damageTier", "value": 1}
 ]

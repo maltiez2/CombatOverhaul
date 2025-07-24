@@ -1,7 +1,7 @@
 ﻿[
   {
     "side": "Server",
-    "file": "game:entities/air/erel",
+    "file": "game:entities/lore/boos/erel",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
@@ -52,7 +52,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/air/erel",
+    "file": "game:entities/lore/boos/erel",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
@@ -103,7 +103,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/air/erel",
+    "file": "game:entities/lore/boos/erel",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
@@ -119,7 +119,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/air/erel",
+    "file": "game:entities/lore/boos/erel",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
@@ -133,12 +133,12 @@
       }
     }
   },
-  {"side": "Server", "file": "game:entities/air/erel", "op": "add", "path": "/server/behaviors/7/aitasks/1/damageTier", "value": 5},
-  {"side": "Server", "file": "game:entities/air/erel", "op": "replace", "path": "/server/behaviors/7/aitasks/1/damageType", "value": "SlashingAttack"},
-  {"side": "Server", "file": "game:entities/air/erel", "op": "replace", "path": "/server/behaviors/7/aitasks/1/damage", "value": 20},
-  {"side": "Server", "file": "game:entities/air/erel", "op": "add", "path": "/server/behaviors/7/aitasks/2/damageTier", "value": 5},
-  {"side": "Server", "file": "game:entities/air/erel", "op": "replace", "path": "/server/behaviors/7/aitasks/2/damageType", "value": "SlashingAttack"},
-  {"side": "Server", "file": "game:entities/air/erel", "op": "replace", "path": "/server/behaviors/7/aitasks/2/damage", "value": 15},
-  {"side": "Server", "file": "game:entities/air/erel", "op": "replace", "path": "/server/behaviors/2/health", "value": 500},
-  {"side": "Server", "file": "game:entities/air/erel", "op": "replace", "path": "/server/behaviors/2/maxhealth", "value": 500}
+  {"side": "Server", "file": "game:entities/lore/boos/erel", "op": "add", "path": "/server/behaviors/7/aitasks/1/damageTier", "value": 5},
+  {"side": "Server", "file": "game:entities/lore/boos/erel", "op": "replace", "path": "/server/behaviors/7/aitasks/1/damageType", "value": "SlashingAttack"},
+  {"side": "Server", "file": "game:entities/lore/boos/erel", "op": "replace", "path": "/server/behaviors/7/aitasks/1/damage", "value": 20},
+  {"side": "Server", "file": "game:entities/lore/boos/erel", "op": "add", "path": "/server/behaviors/7/aitasks/2/damageTier", "value": 5},
+  {"side": "Server", "file": "game:entities/lore/boos/erel", "op": "replace", "path": "/server/behaviors/7/aitasks/2/damageType", "value": "SlashingAttack"},
+  {"side": "Server", "file": "game:entities/lore/boos/erel", "op": "replace", "path": "/server/behaviors/7/aitasks/2/damage", "value": 15},
+  {"side": "Server", "file": "game:entities/lore/boos/erel", "op": "replace", "path": "/server/behaviors/2/health", "value": 500},
+  {"side": "Server", "file": "game:entities/lore/boos/erel", "op": "replace", "path": "/server/behaviors/2/maxhealth", "value": 500}
 ]
