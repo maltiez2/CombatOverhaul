@@ -8,22 +8,6 @@
 	"textureWidth": 64,
 	"textureHeight": 64,
 	"textureSizes": {
-		"iron": [64,64],
-		"steel": [64,64],
-		"steel2": [64,64],
-		"steel3": [64,64],
-		"steel4": [64,64],
-		"steel5": [64,64],
-		"steel6": [64,64],
-		"steel7": [64,64],
-		"steel8": [64,64],
-		"steel9": [64,64],
-		"steel10": [64,64],
-		"steel11": [64,64],
-		"steel12": [64,64],
-		"tailored-red": [64,64],
-		"tailored-plain": [64,64],
-		"tailored-pink": [64,64]
 	},
 	"textures": {
 		"material": "entity/humanoid/serapharmor/sewn/leather"

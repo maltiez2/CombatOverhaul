@@ -3,10 +3,10 @@
   <PropertyGroup>
     <ModName>Combat Overhaul</ModName>
     <ModType>code</ModType>
-    <ModVersion>0.3.9</ModVersion>
+    <ModVersion>0.4.0</ModVersion>
     <ModId>combatoverhaul</ModId>
     <Description></Description>
-    <Side>Universal</Side>
+    <Side>universal</Side>
     <RequiredOnClient>true</RequiredOnClient>
     <RequiredOnServer>true</RequiredOnServer>
   </PropertyGroup>
@@ -36,7 +36,7 @@
 
   <!-- Project settings -->
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -103,7 +103,6 @@
 
   "description": "$(Description)",
   "authors": [ @(ModInfoAuthors->'"%(Identity)"', ', ') ],
-  "translation": [ @(ModInfoTranslators->'"%(Identity)"', ', ') ],
 
   "dependencies": {
     @(Dependencies->'"%(Identity)": "%(Version)"', ', ')
