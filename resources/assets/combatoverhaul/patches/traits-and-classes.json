@@ -2,23 +2,14 @@
   {"enabled": true, "file": "game:config/traits", "op": "remove", "path": "/16/attributes/bowDrawingStrength"},
   {"enabled": true, "file": "game:config/traits", "op": "addmerge", "path": "/9/attributes", "value": {"armorManipulationSpeedAffectedness": -0.5}},
   {"enabled": true, "file": "game:config/traits", "op": "replace", "path": "/9/attributes/armorWalkSpeedAffectedness", "value": -0.5},
+  {"enabled": true, "file": "game:config/characterclasses", "op": "remove", "path": "/1/traits/0"},
+  {"enabled": true, "file": "game:config/characterclasses", "op": "remove", "path": "/4/traits/4"},
   {
     "enabled": true,
     "file": "game:config/characterclasses",
-    "op": "replace",
-    "path": "/1/traits",
-    "value": [
-      "resourceful",
-      "fleetfooted",
-      "bowyer",
-      "claustrophobic",
-      "farsighted",
-      "bowsProficiency",
-      "crossbowsProficiency",
-      "steadyAim",
-      "spearsProficiency",
-      "halberdsProficiency"
-    ]
+    "op": "addeach",
+    "path": "/1/traits/-",
+    "value": ["bowsProficiency", "crossbowsProficiency", "steadyAim", "spearsProficiency", "halberdsProficiency"]
   },
   {
     "enabled": true,
@@ -37,9 +28,9 @@
   {
     "enabled": true,
     "file": "game:config/characterclasses",
-    "op": "replace",
-    "path": "/4/traits",
-    "value": ["soldier", "hardy", "merciless", "ravenous", "heavyhanded", "oneHandedSwordsProficiency", "twoHandedSwordsProficiency", "tremblingAim", "clumsyHands"]
+    "op": "addeach",
+    "path": "/4/traits/-",
+    "value": ["oneHandedSwordsProficiency", "twoHandedSwordsProficiency", "tremblingAim", "clumsyHands"]
   },
   {"enabled": true, "file": "game:config/characterclasses", "op": "addeach", "path": "/5/traits/-", "value": ["tremblingAim"]}
 ]
