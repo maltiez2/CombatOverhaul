@@ -1,15 +1,11 @@
 {
 	"editor": {
-		"backDropShape": "E:/Programs/VSModelCreator/seraph-faceless",
 		"allAngles": true,
 		"entityTextureMode": true
 	},
 	"textureWidth": 64,
 	"textureHeight": 64,
 	"textureSizes": {
-		"copper": [64,64],
-		"linen": [64,64],
-		"bismuthbronze": [64,64]
 	},
 	"textures": {
 		"material": "entity/humanoid/serapharmor/chain/iron"
@@ -21,7 +17,7 @@
 			"from": [ 0.14, -0.2, -0.55 ],
 			"to": [ 5.86, 5.42, 5.55 ],
 			"unwrapMode": 1,
-			"autoUnwrap": false,
+			
 			"uv": [ 36.0, 17.5 ],
 			"rotationOrigin": [ 0.1, -0.2, -0.6 ],
 			"faces": {
@@ -54,7 +50,7 @@
 					"from": [ -0.32, 3.3, 0.0 ],
 					"to": [ 0.0, 5.62, 6.1 ],
 					"unwrapMode": 1,
-					"autoUnwrap": false,
+					
 					"uv": [ 32.0, 36.0 ],
 					"rotationOrigin": [ -0.5, 3.3, 0.0 ],
 					"faces": {
@@ -87,7 +83,7 @@
 					"from": [ 0.5, 4.38, 0.5 ],
 					"to": [ 5.2, 5.18, 5.6 ],
 					"unwrapMode": 1,
-					"autoUnwrap": false,
+					
 					"uv": [ 31.0, 30.0 ],
 					"rotationOrigin": [ 0.5, 4.5, 0.5 ],
 					"faces": {
@@ -103,7 +99,7 @@
 					"from": [ -0.32, 0.0, 0.0 ],
 					"to": [ 0.0, 2.02, 6.1 ],
 					"unwrapMode": 1,
-					"autoUnwrap": false,
+					
 					"uv": [ 32.0, 36.0 ],
 					"rotationOrigin": [ -0.5, 0.0, 0.0 ],
 					"faces": {

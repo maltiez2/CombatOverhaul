@@ -1,6 +1,5 @@
 {
 	"editor": {
-		"backDropShape": "entity/humanoid/seraph-hairless",
 		"allAngles": true,
 		"entityTextureMode": true
 	},
@@ -78,7 +77,7 @@
 							"name": "OcularR",
 							"from": [ 0.0, -1.8, 0.0 ],
 							"to": [ 0.7, 0.0, 1.0 ],
-							"autoUnwrap": false,
+							
 							"uv": [ 54.5, 31.5 ],
 							"rotationOrigin": [ 0.0, -1.8, 0.0 ],
 							"faces": {
@@ -92,7 +91,7 @@
 									"name": "CheekR",
 									"from": [ 0.0, -0.3, 1.0 ],
 									"to": [ 0.5, 0.7, 2.6 ],
-									"autoUnwrap": false,
+									
 									"uv": [ 49.5, 39.0 ],
 									"rotationOrigin": [ 0.0, -0.3, 1.0 ],
 									"faces": {
@@ -109,7 +108,7 @@
 							"name": "OcularL",
 							"from": [ 0.0, -1.8, 5.3 ],
 							"to": [ 0.7, 0.0, 6.3 ],
-							"autoUnwrap": false,
+							
 							"uv": [ 0.0, 0.0 ],
 							"rotationOrigin": [ 0.0, -1.8, 5.3 ],
 							"faces": {
@@ -123,7 +122,7 @@
 									"name": "CheekL",
 									"from": [ 0.0, -0.3, -1.7 ],
 									"to": [ 0.5, 0.7, 0.0 ],
-									"autoUnwrap": false,
+									
 									"uv": [ 53.5, 36.0 ],
 									"rotationOrigin": [ 0.0, -0.3, -1.7 ],
 									"faces": {

@@ -1,6 +1,7 @@
 ﻿{
   "code": "arrow",
   "class": "CombatOverhaul:Projectile",
+  "tags": ["projectile", "inanimate"],
   "variantgroups": [
     {
       "code": "material",

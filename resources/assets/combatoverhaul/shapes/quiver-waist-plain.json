@@ -95,7 +95,7 @@
 									"to": [ 1.0, 4.2, 0.3 ],
 									"rotationOrigin": [ 0.2, 1.6, 0.3 ],
 									"faces": {
-										"north": { "texture": "#feather1", "uv": [ 6.0, 10.5, 10.0, 16.0 ], "autoUv": false }
+										"north": { "texture": "#feather1", "uv": [ 6.0, 10.5, 10.0, 16.0 ] }
 									}
 								},
 								{
@@ -105,7 +105,7 @@
 									"rotationOrigin": [ 0.2, 1.6, 0.3 ],
 									"rotationY": 90.0,
 									"faces": {
-										"north": { "texture": "#feather1", "uv": [ 6.0, 10.5, 10.0, 16.0 ], "autoUv": false }
+										"north": { "texture": "#feather1", "uv": [ 6.0, 10.5, 10.0, 16.0 ] }
 									}
 								}
 							]
@@ -132,7 +132,7 @@
 									"to": [ 1.0, 4.2, 0.3 ],
 									"rotationOrigin": [ 0.2, 1.6, 0.3 ],
 									"faces": {
-										"north": { "texture": "#feather1", "uv": [ 6.0, 10.5, 10.0, 16.0 ], "autoUv": false }
+										"north": { "texture": "#feather1", "uv": [ 6.0, 10.5, 10.0, 16.0 ] }
 									}
 								},
 								{
@@ -142,7 +142,7 @@
 									"rotationOrigin": [ 0.2, 1.6, 0.3 ],
 									"rotationY": 90.0,
 									"faces": {
-										"north": { "texture": "#feather1", "uv": [ 6.0, 10.5, 10.0, 16.0 ], "autoUv": false }
+										"north": { "texture": "#feather1", "uv": [ 6.0, 10.5, 10.0, 16.0 ] }
 									}
 								}
 							]
@@ -169,7 +169,7 @@
 									"to": [ 1.0, 4.2, 0.3 ],
 									"rotationOrigin": [ 0.2, 1.6, 0.3 ],
 									"faces": {
-										"north": { "texture": "#feather1", "uv": [ 6.0, 10.5, 10.0, 16.0 ], "autoUv": false }
+										"north": { "texture": "#feather1", "uv": [ 6.0, 10.5, 10.0, 16.0 ] }
 									}
 								},
 								{
@@ -179,7 +179,7 @@
 									"rotationOrigin": [ 0.2, 1.6, 0.3 ],
 									"rotationY": 90.0,
 									"faces": {
-										"north": { "texture": "#feather1", "uv": [ 6.0, 10.5, 10.0, 16.0 ], "autoUv": false }
+										"north": { "texture": "#feather1", "uv": [ 6.0, 10.5, 10.0, 16.0 ] }
 									}
 								}
 							]
@@ -206,7 +206,7 @@
 									"to": [ 1.0, 4.2, 0.3 ],
 									"rotationOrigin": [ 0.2, 1.6, 0.3 ],
 									"faces": {
-										"north": { "texture": "#feather1", "uv": [ 6.0, 10.5, 10.0, 16.0 ], "autoUv": false }
+										"north": { "texture": "#feather1", "uv": [ 6.0, 10.5, 10.0, 16.0 ] }
 									}
 								},
 								{
@@ -216,7 +216,7 @@
 									"rotationOrigin": [ 0.2, 1.6, 0.3 ],
 									"rotationY": 90.0,
 									"faces": {
-										"north": { "texture": "#feather1", "uv": [ 6.0, 10.5, 10.0, 16.0 ], "autoUv": false }
+										"north": { "texture": "#feather1", "uv": [ 6.0, 10.5, 10.0, 16.0 ] }
 									}
 								}
 							]

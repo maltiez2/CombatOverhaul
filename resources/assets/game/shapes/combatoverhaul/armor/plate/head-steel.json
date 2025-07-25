@@ -1,6 +1,5 @@
 {
 	"editor": {
-		"backDropShape": "E:/Programs/VSModelCreator/seraph-faceless",
 		"allAngles": true,
 		"entityTextureMode": true
 	},
@@ -18,7 +17,7 @@
 			"from": [ 0.8, -0.5, -0.6 ],
 			"to": [ 5.9, 5.5, 5.7 ],
 			"unwrapMode": 4,
-			"autoUnwrap": false,
+			
 			"uv": [ 28.0, 15.5 ],
 			"rotationOrigin": [ 0.8, -0.5, -0.6 ],
 			"faces": {
@@ -34,7 +33,7 @@
 					"name": "ArmorHelmetTop",
 					"from": [ -0.5, 6.0, 0.5 ],
 					"to": [ 4.6, 6.5, 5.8 ],
-					"autoUnwrap": false,
+					
 					"uv": [ 41.0, 28.5 ],
 					"rotationOrigin": [ -0.5, 6.0, 0.5 ],
 					"faces": {
@@ -49,7 +48,7 @@
 					"name": "ArmorHelmetFront",
 					"from": [ -1.5, 0.0, 1.0 ],
 					"to": [ 0.0, 6.0, 5.3 ],
-					"autoUnwrap": false,
+					
 					"uv": [ 48.5, 26.0 ],
 					"rotationOrigin": [ -1.5, 0.0, 1.0 ],
 					"faces": {
@@ -64,7 +63,7 @@
 					"name": "ArmorHelmetFront2",
 					"from": [ -1.0, 0.0, 0.0 ],
 					"to": [ 0.0, 6.0, 1.0 ],
-					"autoUnwrap": false,
+					
 					"uv": [ 52.0, 29.5 ],
 					"rotationOrigin": [ -1.0, 0.0, 0.0 ],
 					"faces": {
@@ -78,7 +77,7 @@
 					"name": "ArmorHelmetFront3",
 					"from": [ -1.0, 0.0, 5.3 ],
 					"to": [ 0.0, 6.0, 6.3 ],
-					"autoUnwrap": false,
+					
 					"uv": [ 52.0, 29.5 ],
 					"rotationOrigin": [ -1.0, 0.0, 5.3 ],
 					"faces": {

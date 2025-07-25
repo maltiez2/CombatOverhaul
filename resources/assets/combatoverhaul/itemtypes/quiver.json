@@ -5,7 +5,7 @@
   "shape": {"base": "quiver-waist-plain"},
   "texturesByType": {"*": {"seraph": {"base": "game:block/transparent"}}},
   "storageFlags": 128,
-  "behaviors": [{"name": "CombatOverhaul:GearEquipableBag", "properties": {"canHoldWildcards": ["arrow-*"], "color": "#84b054", "slotsNumber": 3}}],
+  "behaviors": [{"name": "CombatOverhaul:GearEquipableBag", "properties": {"canHoldWildcards": ["*arrow-*"], "canHoldItemTags": ["arrow"], "color": "#84b054", "slotsNumber": 3}}],
   "attributes": {"wearableAttachment": true, "clothescategory": "waist", "warmthByType": {"*": 0}},
   "creativeinventory": {"combatoverhaul": ["*"]},
   "renderAlphaTest": 0.25,

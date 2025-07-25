@@ -1,14 +1,11 @@
 {
 	"editor": {
-		"backDropShape": "E:/Programs/VSModelCreator/seraph-faceless",
-		"collapsedPaths": "Root/SuspenderLFrontUpper,Root/LowertorsoWparented/SuspenderLFrontLower/SuspenderLRearLower2,Root/LowertorsoWparented",
 		"allAngles": true,
 		"entityTextureMode": true
 	},
 	"textureWidth": 64,
 	"textureHeight": 64,
 	"textureSizes": {
-		"pants": [32,36]
 	},
 	"textures": {
 		"material": "entity/humanoid/serapharmor/sewn/linen"

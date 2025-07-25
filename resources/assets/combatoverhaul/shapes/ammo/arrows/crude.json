@@ -107,12 +107,12 @@
 							"to": [ 2.2, 0.4, 0.9 ],
 							"rotationOrigin": [ 0.0, -0.2, 0.1 ],
 							"faces": {
-								"north": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 1.0 ], "autoUv": false },
+								"north": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
 								"east": { "texture": "#material", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
-								"south": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 1.0 ], "autoUv": false },
+								"south": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
 								"west": { "texture": "#material", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
-								"up": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 1.0 ], "autoUv": false },
-								"down": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 1.0 ], "autoUv": false }
+								"up": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
+								"down": { "texture": "#material", "uv": [ 0.0, 0.0, 2.0, 1.0 ] }
 							}
 						},
 						{

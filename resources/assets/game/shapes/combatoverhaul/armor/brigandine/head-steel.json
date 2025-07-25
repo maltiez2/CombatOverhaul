@@ -1,6 +1,5 @@
 {
 	"editor": {
-		"backDropShape": "entity/humanoid/seraph-hairless",
 		"allAngles": true,
 		"entityTextureMode": true
 	},
@@ -18,7 +17,7 @@
 			"from": [ 0.1, 0.3, -0.6 ],
 			"to": [ 6.1, 5.8, 5.7 ],
 			"unwrapMode": 1,
-			"autoUnwrap": false,
+			
 			"uv": [ 36.0, 17.5 ],
 			"rotationOrigin": [ 0.1, 0.3, -0.6 ],
 			"faces": {
@@ -66,7 +65,7 @@
 							"from": [ 0.0, -2.1, 2.6 ],
 							"to": [ 0.5, 0.0, 3.6 ],
 							"unwrapMode": 1,
-							"autoUnwrap": false,
+							
 							"uv": [ 32.5, 35.5 ],
 							"rotationOrigin": [ 0.0, -2.1, 2.6 ],
 							"faces": {
@@ -83,7 +82,7 @@
 					"from": [ 0.5, 5.5, 0.5 ],
 					"to": [ 5.5, 6.3, 5.7 ],
 					"unwrapMode": 1,
-					"autoUnwrap": false,
+					
 					"uv": [ 31.0, 30.0 ],
 					"rotationOrigin": [ 0.5, 5.5, 0.5 ],
 					"faces": {

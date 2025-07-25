@@ -1,6 +1,7 @@
 ﻿{
   "code": "bow",
   "class": "CombatOverhaul:Bow",
+  "tags": ["weapon", "weapon-ranged", "bow"],
   "variantgroups": [{"code": "type", "states": ["crude", "simple", "long", "recurve"]}],
   "creativeinventory": {"general": ["*"], "items": ["*"], "tools": ["*"], "combatoverhaul": ["*"]},
   "maxstacksize": 1,

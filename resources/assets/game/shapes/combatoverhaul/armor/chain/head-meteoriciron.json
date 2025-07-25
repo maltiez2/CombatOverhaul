@@ -1,16 +1,11 @@
 {
 	"editor": {
-		"backDropShape": "E:/Programs/VSModelCreator/seraph-faceless",
-		"collapsedPaths": "",
 		"allAngles": true,
 		"entityTextureMode": true
 	},
 	"textureWidth": 64,
 	"textureHeight": 64,
 	"textureSizes": {
-		"copper": [64,64],
-		"linen": [64,64],
-		"bismuthbronze": [64,64]
 	},
 	"textures": {
 		"material": "entity/humanoid/serapharmor/chain/iron",
@@ -23,7 +18,7 @@
 			"from": [ 0.14, 0.3, -0.55 ],
 			"to": [ 5.86, 5.42, 5.55 ],
 			"unwrapMode": 1,
-			"autoUnwrap": false,
+			
 			"uv": [ 36.0, 17.5 ],
 			"rotationOrigin": [ 0.1, 0.3, -0.6 ],
 			"faces": {
@@ -56,7 +51,7 @@
 					"from": [ -0.32, 2.8, 0.0 ],
 					"to": [ 0.0, 5.12, 6.1 ],
 					"unwrapMode": 1,
-					"autoUnwrap": false,
+					
 					"uv": [ 32.0, 36.0 ],
 					"rotationOrigin": [ -0.5, 2.8, 0.0 ],
 					"faces": {
@@ -85,7 +80,7 @@
 									"name": "ArmorOcularL",
 									"from": [ 0.01, -0.3, 1.44 ],
 									"to": [ 0.33, 0.2, 3.44 ],
-									"autoUnwrap": false,
+									
 									"uv": [ 42.0, 36.5 ],
 									"rotationOrigin": [ 0.1, 0.0, 3.0 ],
 									"rotationX": -36.0,
@@ -101,7 +96,7 @@
 									"name": "ArmorOcularR",
 									"from": [ 0.01, -0.3, -2.44 ],
 									"to": [ 0.33, 0.2, -0.44 ],
-									"autoUnwrap": false,
+									
 									"uv": [ 41.5, 18.0 ],
 									"rotationOrigin": [ 0.0, 0.0, -2.0 ],
 									"rotationX": 36.0,
@@ -117,7 +112,7 @@
 									"name": "R",
 									"from": [ 0.0, 0.0, -2.5 ],
 									"to": [ 0.32, 1.5, -2.0 ],
-									"autoUnwrap": false,
+									
 									"uv": [ 37.0, 21.0 ],
 									"rotationOrigin": [ 0.0, 0.0, -2.5 ],
 									"faces": {
@@ -131,7 +126,7 @@
 									"name": "L",
 									"from": [ 0.0, 0.0, 3.0 ],
 									"to": [ 0.32, 1.5, 3.5 ],
-									"autoUnwrap": false,
+									
 									"uv": [ 37.0, 21.0 ],
 									"rotationOrigin": [ 0.0, 0.0, 3.0 ],
 									"faces": {
@@ -150,7 +145,7 @@
 					"from": [ 0.5, 4.38, 0.5 ],
 					"to": [ 5.2, 5.18, 5.6 ],
 					"unwrapMode": 1,
-					"autoUnwrap": false,
+					
 					"uv": [ 31.0, 30.0 ],
 					"rotationOrigin": [ 0.5, 4.5, 0.5 ],
 					"faces": {
@@ -169,7 +164,7 @@
 			"from": [ 0.14, 0.3, -0.55 ],
 			"to": [ 5.86, 5.42, 5.55 ],
 			"unwrapMode": 1,
-			"autoUnwrap": false,
+			
 			"uv": [ 36.0, 17.5 ],
 			"renderInEditor": false,
 			"rotationOrigin": [ 0.1, 0.3, -0.6 ],
@@ -234,7 +229,7 @@
 					"from": [ 0.5, 4.38, 0.5 ],
 					"to": [ 5.2, 5.18, 5.7 ],
 					"unwrapMode": 1,
-					"autoUnwrap": false,
+					
 					"uv": [ 31.0, 30.0 ],
 					"rotationOrigin": [ 0.5, 4.5, 0.5 ],
 					"faces": {

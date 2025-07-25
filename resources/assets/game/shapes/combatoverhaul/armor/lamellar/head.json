@@ -1,6 +1,5 @@
 {
 	"editor": {
-		"backDropShape": "entity/humanoid/seraph-hairless",
 		"allAngles": true,
 		"entityTextureMode": true
 	},
@@ -18,7 +17,7 @@
 			"from": [ 0.1, 2.3, -0.6 ],
 			"to": [ 6.1, 5.8, 5.7 ],
 			"unwrapMode": 4,
-			"autoUnwrap": false,
+			
 			"uv": [ 36.5, 18.5 ],
 			"rotationOrigin": [ 0.1, 2.3, -0.6 ],
 			"faces": {
@@ -35,7 +34,7 @@
 					"from": [ 0.5, -2.5, 0.2 ],
 					"to": [ 2.0, 0.5, 6.1 ],
 					"unwrapMode": 5,
-					"autoUnwrap": false,
+					
 					"uv": [ 46.5, 1.0 ],
 					"rotationOrigin": [ 0.5, -2.5, 0.2 ],
 					"faces": {
@@ -51,7 +50,7 @@
 					"from": [ -0.7, 0.8, 0.0 ],
 					"to": [ 0.0, 3.5, 6.3 ],
 					"unwrapMode": 1,
-					"autoUnwrap": false,
+					
 					"uv": [ 32.0, 35.5 ],
 					"rotationOrigin": [ -0.5, 0.8, 0.0 ],
 					"faces": {
@@ -67,7 +66,7 @@
 					"from": [ 0.0, 3.5, 0.5 ],
 					"to": [ 5.5, 5.0, 5.8 ],
 					"unwrapMode": 5,
-					"autoUnwrap": false,
+					
 					"uv": [ 48.5, 16.5 ],
 					"rotationOrigin": [ 0.0, 3.5, 0.5 ],
 					"faces": {
@@ -99,7 +98,7 @@
 					"from": [ 2.1, -3.0, 0.2 ],
 					"to": [ 4.6, 0.3, 1.2 ],
 					"unwrapMode": 2,
-					"autoUnwrap": false,
+					
 					"uv": [ 50.0, 32.5 ],
 					"rotationOrigin": [ 3.1, 0.0, 1.2 ],
 					"faces": {
@@ -115,7 +114,7 @@
 					"from": [ 2.1, -3.0, 5.2 ],
 					"to": [ 4.6, 0.3, 6.2 ],
 					"unwrapMode": 2,
-					"autoUnwrap": false,
+					
 					"uv": [ 52.5, 33.0 ],
 					"rotationOrigin": [ 3.1, 0.0, 5.2 ],
 					"faces": {

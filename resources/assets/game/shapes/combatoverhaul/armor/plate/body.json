@@ -1,7 +1,5 @@
 {
 	"editor": {
-		"backDropShape": "D:/Vintage Story/Vintagestory/assets/game/shapes/entity/humanoid/seraph-hairless",
-		"collapsedPaths": "Root/ArmorLowerArmL,Root/ArmorLowerArmR",
 		"allAngles": true,
 		"entityTextureMode": true
 	},
@@ -251,16 +249,16 @@
 			"stepParentName": "UpperFootR",
 			"from": [ -0.9, 1.2, -0.85 ],
 			"to": [ 5.1, 7.2, 3.15 ],
-			"autoUnwrap": false,
+			
 			"uv": [ 19.0, 30.0 ],
 			"rotationOrigin": [ -0.9, 1.2, -1.0 ],
 			"faces": {
-				"north": { "texture": "#material", "uv": [ 19.0, 34.0, 24.5, 40.0 ], "autoUv": false },
-				"east": { "texture": "#material", "uv": [ 34.0, 34.0, 38.0, 40.0 ], "autoUv": false },
-				"south": { "texture": "#material", "uv": [ 28.5, 34.0, 34.0, 40.0 ], "autoUv": false },
-				"west": { "texture": "#material", "uv": [ 24.5, 34.0, 28.5, 40.0 ], "autoUv": false },
-				"up": { "texture": "#material", "uv": [ 19.0, 30.0, 24.5, 34.0 ], "rotation": 180, "autoUv": false },
-				"down": { "texture": "#material", "uv": [ 24.5, 30.0, 30.0, 34.0 ], "rotation": 180, "autoUv": false }
+				"north": { "texture": "#material", "uv": [ 19.0, 34.0, 24.5, 40.0 ] },
+				"east": { "texture": "#material", "uv": [ 34.0, 34.0, 38.0, 40.0 ] },
+				"south": { "texture": "#material", "uv": [ 28.5, 34.0, 34.0, 40.0 ] },
+				"west": { "texture": "#material", "uv": [ 24.5, 34.0, 28.5, 40.0 ] },
+				"up": { "texture": "#material", "uv": [ 19.0, 30.0, 24.5, 34.0 ], "rotation": 180 },
+				"down": { "texture": "#material", "uv": [ 24.5, 30.0, 30.0, 34.0 ], "rotation": 180 }
 			}
 		},
 		{
@@ -268,16 +266,16 @@
 			"stepParentName": "UpperFootL",
 			"from": [ -0.9, 1.2, 0.05 ],
 			"to": [ 5.1, 7.2, 4.05 ],
-			"autoUnwrap": false,
+			
 			"uv": [ 0.0, 30.0 ],
 			"rotationOrigin": [ -0.9, 1.2, -0.1 ],
 			"faces": {
-				"north": { "texture": "#material", "uv": [ 0.0, 34.0, 5.5, 40.0 ], "autoUv": false },
-				"east": { "texture": "#material", "uv": [ 15.0, 34.0, 19.0, 40.0 ], "autoUv": false },
-				"south": { "texture": "#material", "uv": [ 9.5, 34.0, 15.0, 40.0 ], "autoUv": false },
-				"west": { "texture": "#material", "uv": [ 5.5, 34.0, 9.5, 40.0 ], "autoUv": false },
-				"up": { "texture": "#material", "uv": [ 0.0, 30.0, 5.5, 34.0 ], "autoUv": false },
-				"down": { "texture": "#material", "uv": [ 5.5, 30.0, 11.0, 34.0 ], "autoUv": false }
+				"north": { "texture": "#material", "uv": [ 0.0, 34.0, 5.5, 40.0 ] },
+				"east": { "texture": "#material", "uv": [ 15.0, 34.0, 19.0, 40.0 ] },
+				"south": { "texture": "#material", "uv": [ 9.5, 34.0, 15.0, 40.0 ] },
+				"west": { "texture": "#material", "uv": [ 5.5, 34.0, 9.5, 40.0 ] },
+				"up": { "texture": "#material", "uv": [ 0.0, 30.0, 5.5, 34.0 ] },
+				"down": { "texture": "#material", "uv": [ 5.5, 30.0, 11.0, 34.0 ] }
 			}
 		}
 	]}

@@ -1,6 +1,5 @@
 {
 	"editor": {
-		"backDropShape": "entity/humanoid/seraph-hairless",
 		"allAngles": true,
 		"entityTextureMode": true
 	},
@@ -18,7 +17,7 @@
 			"from": [ -0.2, -0.5, -0.6 ],
 			"to": [ 5.9, 5.5, 5.7 ],
 			"unwrapMode": 4,
-			"autoUnwrap": false,
+			
 			"uv": [ 27.0, 14.5 ],
 			"rotationOrigin": [ -0.2, -0.5, -0.6 ],
 			"faces": {
@@ -34,7 +33,7 @@
 					"name": "ArmorFace",
 					"from": [ -0.5, 0.0, 2.0 ],
 					"to": [ 0.0, 6.0, 4.2 ],
-					"autoUnwrap": false,
+					
 					"uv": [ 44.0, 27.0 ],
 					"rotationOrigin": [ -0.5, 0.0, 2.0 ],
 					"faces": {
@@ -49,7 +48,7 @@
 					"name": "ArmorHelmetop",
 					"from": [ 0.5, 6.0, 0.5 ],
 					"to": [ 5.6, 6.5, 5.8 ],
-					"autoUnwrap": false,
+					
 					"uv": [ 39.5, 27.5 ],
 					"rotationOrigin": [ 0.5, 6.0, 0.5 ],
 					"faces": {

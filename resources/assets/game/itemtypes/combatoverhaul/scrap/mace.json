@@ -1,10 +1,11 @@
 ﻿{
   "code": "club",
   "class": "CombatOverhaul:MeleeWeapon",
+  "tags": ["weapon", "weapon-melee", "mace", "onehanded"],
   "variantgroups": [{"code": "type", "states": ["generic", "scrap", "scrapmace"]}, {"code": "material", "states": ["wood", "scrap"]}],
   "allowedVariants": ["club-scrapmace-scrap"],
   "shapeByType": {"*-scrapmace-*": {"base": "game:item/tool/club/{type}"}},
-  "tool": "spear",
+  "tool": "mace",
   "attributes": {
     "groundStorageTransform": {"translation": {"x": 0.6, "y": 1.6, "z": 0.7}, "rotation": {"x": 16, "y": -9, "z": -90}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.6},
     "toolrackTransform": {"translation": {"x": -0.9, "y": 0.6, "z": -0.1}, "rotation": {"x": 0, "y": 0, "z": -2}, "origin": {"x": 0, "y": 0, "z": 0}},

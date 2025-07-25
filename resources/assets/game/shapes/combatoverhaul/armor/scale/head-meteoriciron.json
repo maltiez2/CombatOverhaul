@@ -1,6 +1,5 @@
 {
 	"editor": {
-		"backDropShape": "entity/humanoid/seraph-hairless",
 		"allAngles": true,
 		"entityTextureMode": true
 	},
@@ -78,7 +77,7 @@
 									"name": "ArmorOcularL",
 									"from": [ 0.0, 0.5, 1.0 ],
 									"to": [ 0.5, 1.5, 3.0 ],
-									"autoUnwrap": false,
+									
 									"uv": [ 42.0, 36.5 ],
 									"rotationOrigin": [ 0.0, 0.5, 1.0 ],
 									"faces": {
@@ -93,7 +92,7 @@
 									"name": "ArmorOcularR",
 									"from": [ 0.0, 0.5, -2.0 ],
 									"to": [ 0.5, 1.5, 0.0 ],
-									"autoUnwrap": false,
+									
 									"uv": [ 41.5, 18.0 ],
 									"rotationOrigin": [ 0.0, 0.5, 0.0 ],
 									"faces": {
@@ -108,7 +107,7 @@
 									"name": "R",
 									"from": [ 0.0, 1.0, -2.5 ],
 									"to": [ 0.7, 2.5, -2.0 ],
-									"autoUnwrap": false,
+									
 									"uv": [ 37.0, 21.0 ],
 									"rotationOrigin": [ 0.0, 1.0, -2.5 ],
 									"faces": {
@@ -122,7 +121,7 @@
 									"name": "L",
 									"from": [ 0.0, 1.0, 3.0 ],
 									"to": [ 0.7, 2.5, 3.5 ],
-									"autoUnwrap": false,
+									
 									"uv": [ 37.0, 21.0 ],
 									"rotationOrigin": [ 0.0, 1.0, 3.0 ],
 									"faces": {

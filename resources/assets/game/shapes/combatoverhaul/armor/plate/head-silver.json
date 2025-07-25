@@ -1,6 +1,5 @@
 {
 	"editor": {
-		"backDropShape": "entity/humanoid/seraph-hairless",
 		"allAngles": true,
 		"entityTextureMode": true
 	},
@@ -33,7 +32,7 @@
 					"name": "ArmorHelmetFront",
 					"from": [ -1.7, 0.71, 1.4 ],
 					"to": [ 2.8, 5.71, 5.7 ],
-					"autoUnwrap": false,
+					
 					"uv": [ 48.5, 26.0 ],
 					"rotationOrigin": [ 0.0, 1.3, 3.2 ],
 					"rotationY": 45.0,
@@ -49,7 +48,7 @@
 					"name": "FaceplateR",
 					"from": [ 3.0, 2.0, -0.5 ],
 					"to": [ 5.0, 4.0, 0.0 ],
-					"autoUnwrap": false,
+					
 					"uv": [ 27.0, 8.0 ],
 					"rotationOrigin": [ 3.0, 2.0, -0.6 ],
 					"rotationZ": 45.0,
@@ -65,7 +64,7 @@
 							"name": "Plume1R",
 							"from": [ 2.1, 0.1, 0.1 ],
 							"to": [ 8.1, 1.1, 0.6 ],
-							"autoUnwrap": false,
+							
 							"uv": [ 50.5, 47.5 ],
 							"rotationOrigin": [ 2.0, 0.0, 0.0 ],
 							"rotationY": 5.0,
@@ -81,7 +80,7 @@
 							"name": "Plume2R",
 							"from": [ 1.4, 0.1, 0.3 ],
 							"to": [ 6.4, 1.1, 0.8 ],
-							"autoUnwrap": false,
+							
 							"uv": [ 0.0, 0.0 ],
 							"rotationOrigin": [ 2.0, 0.0, 0.0 ],
 							"rotationY": 7.0,
@@ -97,7 +96,7 @@
 							"name": "Plume3R",
 							"from": [ 1.4, 0.1, 0.3 ],
 							"to": [ 6.4, 1.1, 0.8 ],
-							"autoUnwrap": false,
+							
 							"uv": [ 0.0, 0.0 ],
 							"rotationOrigin": [ 1.5, 0.0, 1.2 ],
 							"rotationY": 8.0,
@@ -115,7 +114,7 @@
 					"name": "FaceplateL",
 					"from": [ 3.0, 2.0, 6.3 ],
 					"to": [ 5.0, 4.0, 6.8 ],
-					"autoUnwrap": false,
+					
 					"uv": [ 33.0, 8.0 ],
 					"rotationOrigin": [ 3.0, 2.0, 6.4 ],
 					"rotationZ": 45.0,
@@ -131,7 +130,7 @@
 							"name": "Plume1L",
 							"from": [ 1.9, 0.1, 0.0 ],
 							"to": [ 7.9, 1.1, 0.5 ],
-							"autoUnwrap": false,
+							
 							"uv": [ 0.0, 0.0 ],
 							"rotationOrigin": [ 2.0, 0.0, 0.2 ],
 							"rotationY": -5.0,
@@ -147,7 +146,7 @@
 							"name": "Plume2L",
 							"from": [ 1.4, 0.1, 0.0 ],
 							"to": [ 6.4, 1.1, 0.5 ],
-							"autoUnwrap": false,
+							
 							"uv": [ 0.0, 0.0 ],
 							"rotationOrigin": [ 2.0, 0.0, 0.2 ],
 							"rotationY": -7.0,
@@ -164,7 +163,7 @@
 							"name": "Plume3L",
 							"from": [ 1.4, 0.1, 0.0 ],
 							"to": [ 6.4, 1.1, 0.5 ],
-							"autoUnwrap": false,
+							
 							"uv": [ 0.0, 0.0 ],
 							"rotationOrigin": [ 1.4, 0.0, 0.0 ],
 							"rotationY": -8.0,

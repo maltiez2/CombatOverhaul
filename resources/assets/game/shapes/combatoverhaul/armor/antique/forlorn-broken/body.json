@@ -1,29 +1,11 @@
 {
 	"editor": {
-		"backDropShape": "D:/Vintage Story/Vintagestory/assets/game/shapes/entity/humanoid/seraph-hairless",
-		"collapsedPaths": "Root/ArmorUpperTorso,Root/ArmorLowerArmR",
 		"allAngles": false,
 		"entityTextureMode": true
 	},
 	"textureWidth": 64,
 	"textureHeight": 64,
 	"textureSizes": {
-		"iron": [64,64],
-		"steel - Copy": [64,64],
-		"steel": [64,64],
-		"steel2": [64,64],
-		"steel3": [64,64],
-		"steel4": [64,64],
-		"steel5": [64,64],
-		"steel6": [64,64],
-		"steel7": [64,64],
-		"steel8": [64,64],
-		"steel9": [64,64],
-		"steel10": [64,64],
-		"steel11": [64,64],
-		"steel12": [64,64],
-		"tailored-red": [64,64],
-		"gold": [64,64]
 	},
 	"textures": {
 		"forlornhope-destroyed": "entity/humanoid/serapharmor/forlorn/forlorn-broken"
@@ -34,7 +16,7 @@
 			"stepParentName": "UpperArmR",
 			"from": [ -0.2, -0.2, -0.55 ],
 			"to": [ 3.1, 7.2, 2.15 ],
-			"autoUnwrap": false,
+			
 			"uv": [ 47.0, 34.5 ],
 			"rotationOrigin": [ -0.2, -0.2, -0.3 ],
 			"faces": {
@@ -51,7 +33,7 @@
 			"stepParentName": "UpperArmL",
 			"from": [ -0.25, 1.8, -0.1 ],
 			"to": [ 3.15, 7.2, 2.4 ],
-			"autoUnwrap": false,
+			
 			"uv": [ 33.0, 37.5 ],
 			"rotationOrigin": [ -0.2, 1.8, -0.1 ],
 			"faces": {
@@ -68,7 +50,7 @@
 			"stepParentName": "LowerArmL",
 			"from": [ -0.2, -0.2, -0.3 ],
 			"to": [ 2.7, 7.2, 2.3 ],
-			"autoUnwrap": false,
+			
 			"uv": [ 32.5, 44.5 ],
 			"rotationOrigin": [ -0.2, -0.2, -0.3 ],
 			"faces": {
@@ -85,16 +67,16 @@
 			"stepParentName": "UpperTorso",
 			"from": [ -0.8, -0.4, -0.5 ],
 			"to": [ 5.5, 5.6, 6.6 ],
-			"autoUnwrap": false,
+			
 			"uv": [ 35.0, 0.0 ],
 			"rotationOrigin": [ 2.5, 3.6, 3.0 ],
 			"rotationX": -3.0,
 			"rotationZ": 5.0,
 			"faces": {
-				"north": { "texture": "#forlornhope-destroyed", "uv": [ 38.0, 6.0, 44.0, 11.5 ], "autoUv": false },
-				"east": { "texture": "#forlornhope-destroyed", "uv": [ 57.0, 6.0, 64.0, 11.5 ], "autoUv": false },
-				"south": { "texture": "#forlornhope-destroyed", "uv": [ 51.0, 6.0, 57.0, 11.5 ], "autoUv": false },
-				"west": { "texture": "#forlornhope-destroyed", "uv": [ 44.0, 6.0, 51.0, 11.5 ], "autoUv": false },
+				"north": { "texture": "#forlornhope-destroyed", "uv": [ 38.0, 6.0, 44.0, 11.5 ] },
+				"east": { "texture": "#forlornhope-destroyed", "uv": [ 57.0, 6.0, 64.0, 11.5 ] },
+				"south": { "texture": "#forlornhope-destroyed", "uv": [ 51.0, 6.0, 57.0, 11.5 ] },
+				"west": { "texture": "#forlornhope-destroyed", "uv": [ 44.0, 6.0, 51.0, 11.5 ] },
 				"up": { "texture": "#forlornhope-destroyed", "uv": [ 44.0, 0.0, 51.0, 6.0 ], "rotation": 90 },
 				"down": { "texture": "#forlornhope-destroyed", "uv": [ 51.0, 0.0, 58.0, 6.0 ], "rotation": 270 }
 			}
@@ -104,7 +86,7 @@
 			"stepParentName": "LowerTorso",
 			"from": [ -0.3, -0.5, -0.35 ],
 			"to": [ 5.3, 5.1, 6.35 ],
-			"autoUnwrap": false,
+			
 			"uv": [ 39.5, 8.0 ],
 			"rotationOrigin": [ -0.3, -0.5, -0.3 ],
 			"faces": {
@@ -121,7 +103,7 @@
 			"stepParentName": "LowerArmR",
 			"from": [ -0.2, -0.3, -0.27 ],
 			"to": [ 2.7, 7.1, 2.33 ],
-			"autoUnwrap": false,
+			
 			"uv": [ 50.5, 40.0 ],
 			"rotationOrigin": [ -0.2, -0.3, -0.4 ],
 			"faces": {
@@ -137,7 +119,7 @@
 					"name": "ArmorBracerR",
 					"from": [ -0.2, 2.9, -0.4 ],
 					"to": [ 3.1, 6.9, 0.9 ],
-					"autoUnwrap": false,
+					
 					"uv": [ 48.5, 34.5 ],
 					"rotationOrigin": [ 1.5, 2.9, -0.4 ],
 					"rotationX": -3.0,
@@ -158,7 +140,7 @@
 			"stepParentName": "UpperFootR",
 			"from": [ -1.0, 2.2, -0.6 ],
 			"to": [ 5.2, 7.2, 2.9 ],
-			"autoUnwrap": false,
+			
 			"uv": [ 26.0, 21.5 ],
 			"rotationOrigin": [ -0.7, 2.2, -0.5 ],
 			"faces": {
@@ -174,7 +156,7 @@
 			"stepParentName": "UpperFootL",
 			"from": [ -1.0, 1.2, 0.4 ],
 			"to": [ 5.2, 7.2, 3.9 ],
-			"autoUnwrap": false,
+			
 			"uv": [ 0.0, 23.0 ],
 			"rotationOrigin": [ -0.7, 0.3, -0.1 ],
 			"faces": {

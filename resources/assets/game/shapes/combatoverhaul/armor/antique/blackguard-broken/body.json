@@ -1,29 +1,11 @@
 {
 	"editor": {
-		"backDropShape": "D:/Vintage Story/Vintagestory/assets/game/shapes/entity/humanoid/seraph-hairless",
-		"collapsedPaths": "Root/ArmorUpperTorso,Root/ArmorLowerArmR",
 		"allAngles": true,
 		"entityTextureMode": true
 	},
 	"textureWidth": 64,
 	"textureHeight": 64,
 	"textureSizes": {
-		"iron": [64,64],
-		"steel - Copy": [64,64],
-		"steel": [64,64],
-		"steel2": [64,64],
-		"steel3": [64,64],
-		"steel4": [64,64],
-		"steel5": [64,64],
-		"steel6": [64,64],
-		"steel7": [64,64],
-		"steel8": [64,64],
-		"steel9": [64,64],
-		"steel10": [64,64],
-		"steel11": [64,64],
-		"steel12": [64,64],
-		"tailored-red": [64,64],
-		"gold": [64,64]
 	},
 	"textures": {
 		"blackguard-destroyed": "entity/humanoid/serapharmor/blackguard/blackguard-broken"
@@ -34,7 +16,7 @@
 			"stepParentName": "UpperArmL",
 			"from": [ -0.2, -0.2, -0.15 ],
 			"to": [ 3.1, 7.2, 2.35 ],
-			"autoUnwrap": false,
+			
 			"uv": [ 33.0, 37.5 ],
 			"rotationOrigin": [ -0.2, -0.2, -0.1 ],
 			"faces": {
@@ -51,7 +33,7 @@
 			"stepParentName": "UpperTorso",
 			"from": [ -0.5, -0.2, -0.4 ],
 			"to": [ 5.5, 5.2, 6.6 ],
-			"autoUnwrap": false,
+			
 			"uv": [ 35.0, 0.0 ],
 			"rotationOrigin": [ -0.5, -0.2, -0.4 ],
 			"faces": {
@@ -67,7 +49,7 @@
 					"name": "ArmorCollarRear",
 					"from": [ 5.2, 5.4, 0.2 ],
 					"to": [ 6.0, 8.7, 6.8 ],
-					"autoUnwrap": false,
+					
 					"uv": [ 22.0, 0.5 ],
 					"rotationOrigin": [ 5.2, 5.4, 3.1 ],
 					"rotationZ": -58.0,
@@ -86,7 +68,7 @@
 			"stepParentName": "LowerTorso",
 			"from": [ -0.3, -0.5, -0.35 ],
 			"to": [ 5.3, 5.1, 6.35 ],
-			"autoUnwrap": false,
+			
 			"uv": [ 39.5, 8.0 ],
 			"rotationOrigin": [ -0.3, -0.5, -0.3 ],
 			"faces": {
@@ -103,7 +85,7 @@
 			"stepParentName": "LowerArmR",
 			"from": [ -0.2, -0.3, -0.27 ],
 			"to": [ 2.7, 8.1, 2.26 ],
-			"autoUnwrap": false,
+			
 			"uv": [ 50.5, 40.0 ],
 			"rotationOrigin": [ -0.2, -0.3, -0.4 ],
 			"faces": {
@@ -119,7 +101,7 @@
 					"name": "ArmorLowerArmBand",
 					"from": [ -0.3, 6.0, -0.3 ],
 					"to": [ 3.1, 7.0, 2.8 ],
-					"autoUnwrap": false,
+					
 					"uv": [ 44.0, 33.5 ],
 					"rotationOrigin": [ 1.4, 6.0, 1.0 ],
 					"rotationX": -8.0,
@@ -140,7 +122,7 @@
 			"stepParentName": "UpperFootR",
 			"from": [ -1.0, -0.8, -0.6 ],
 			"to": [ 5.2, 7.2, 2.9 ],
-			"autoUnwrap": false,
+			
 			"uv": [ 26.0, 21.5 ],
 			"rotationOrigin": [ -0.7, -0.8, -0.5 ],
 			"faces": {
@@ -157,7 +139,7 @@
 			"stepParentName": "UpperFootL",
 			"from": [ -1.0, -0.8, 0.4 ],
 			"to": [ 5.2, 7.2, 3.9 ],
-			"autoUnwrap": false,
+			
 			"uv": [ 0.0, 23.0 ],
 			"rotationOrigin": [ -0.7, -0.8, -0.1 ],
 			"faces": {

@@ -1,6 +1,5 @@
 {
 	"editor": {
-		"backDropShape": "shapes/entity/humanoid/seraph",
 		"allAngles": true,
 		"singleTexture": true
 	},

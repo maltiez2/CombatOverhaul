@@ -14,7 +14,7 @@
 			"stepParentName": "UpperFootR",
 			"from": [ -0.19, -0.5, -0.1 ], 
 			"to": [ 4.41, 9.5, 3.7 ], 
-			"autoUnwrap": false,
+			
 			"uv": [ 17.5, 40.5 ],
 			"rotationOrigin": [ -0.2, -0.5, -0.1 ],
 			"faces": {
@@ -31,7 +31,7 @@
 			"stepParentName": "UpperFootL",
 			"from": [ -0.19, -0.5, -0.5 ], 
 			"to": [ 4.41, 9.5, 3.3 ], 
-			"autoUnwrap": false,
+			
 			"uv": [ 0.0, 40.0 ],
 			"rotationOrigin": [ -0.2, -0.5, -0.5 ],
 			"faces": {

@@ -1,6 +1,7 @@
 ﻿{
   "code": "spear",
   "class": "CombatOverhaul:MeleeWeapon",
+  "tags": ["weapon", "weapon-melee", "weapon-ranged", "projectile", "spear", "polearm", "onehanded", "twohanded"],
   "behaviors": [
     {
       "name": "GroundStorable",

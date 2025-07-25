@@ -1,7 +1,5 @@
 {
 	"editor": {
-		"backDropShape": "entity/humanoid/seraph-hairless",
-		"collapsedPaths": "Root/bandN/toothR1,Root/bandN/toothL1",
 		"allAngles": true,
 		"entityTextureMode": true
 	},
@@ -19,7 +17,7 @@
 			"from": [ 0.1, 1.8, -0.6 ],
 			"to": [ 6.2, 5.8, 5.7 ],
 			"unwrapMode": 5,
-			"autoUnwrap": false,
+			
 			"uv": [ 34.5, 0.5 ],
 			"rotationOrigin": [ 0.1, 1.8, -0.6 ],
 			"faces": {

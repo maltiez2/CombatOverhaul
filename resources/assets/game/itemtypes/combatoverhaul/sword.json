@@ -1,6 +1,7 @@
 ﻿{
   "code": "blade",
   "class": "CombatOverhaul:MeleeWeapon",
+  "tags": ["weapon", "weapon-melee", "sword", "onehanded"],
   "tool": "sword",
   "attributes": {
     "groundStorageTransformByType": {

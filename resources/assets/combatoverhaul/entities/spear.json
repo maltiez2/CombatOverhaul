@@ -1,6 +1,7 @@
 ﻿{
   "code": "spear",
   "class": "CombatOverhaul:Projectile",
+  "tags": ["projectile", "inanimate"],
   "variantgroups": [
     {"code": "type", "states": ["generic", "scrap", "boar", "voulge", "fork", "ranseur"]},
     {

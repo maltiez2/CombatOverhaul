@@ -1,16 +1,11 @@
 {
 	"editor": {
-		"backDropShape": "D:/Vintage Story/Vintagestory/assets/game/shapes/entity/humanoid/seraph-hairless",
-		"collapsedPaths": "Root/ArmorHelmet",
 		"allAngles": true,
 		"entityTextureMode": true
 	},
 	"textureWidth": 64,
 	"textureHeight": 64,
 	"textureSizes": {
-		"copper": [64,64],
-		"linen": [64,64],
-		"bismuthbronze": [64,64]
 	},
 	"textures": {
 		"material": "entity/humanoid/serapharmor/plate/iron"
@@ -22,7 +17,7 @@
 			"from": [ -0.2, -0.9, -0.6 ],
 			"to": [ 5.9, 5.5, 5.7 ],
 			"unwrapMode": 4,
-			"autoUnwrap": false,
+			
 			"uv": [ 27.0, 14.5 ],
 			"rotationOrigin": [ -0.2, -0.9, -0.6 ],
 			"faces": {

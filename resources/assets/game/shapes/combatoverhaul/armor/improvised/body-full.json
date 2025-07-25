@@ -1,6 +1,5 @@
 {
 	"editor": {
-		"backDropShape": "entity/humanoid/seraph",
 		"allAngles": true,
 		"singleTexture": true
 	},
@@ -15,7 +14,7 @@
 			"stepParentName": "UpperTorso",
 			"from": [ -0.3, -0.2, -0.3 ], 
 			"to": [ 5.3, 5.2, 6.5 ], 
-			"autoUnwrap": false,
+			
 			"uv": [ 0.0, 0.0 ],
 			"rotationOrigin": [ -0.3, -0.2, -0.3 ],
 			"faces": {
@@ -32,7 +31,7 @@
 			"stepParentName": "LowerTorso",
 			"from": [ -0.3, -0.5, -0.3 ], 
 			"to": [ 5.3, 5.1, 6.3 ], 
-			"autoUnwrap": false,
+			
 			"uv": [ 0.0, 11.5 ],
 			"rotationOrigin": [ -0.3, -0.5, -0.3 ],
 			"faces": {
@@ -49,7 +48,7 @@
 			"stepParentName": "UpperArmR",
 			"from": [ -0.2, -0.2, -0.4 ], 
 			"to": [ 3.1, 7.2, 2.0 ], 
-			"autoUnwrap": false,
+			
 			"uv": [ 36.0, 0.0 ],
 			"rotationOrigin": [ -0.2, -0.2, -0.4 ],
 			"faces": {
@@ -84,7 +83,7 @@
 			"stepParentName": "UpperArmL",
 			"from": [ -0.2, -0.2, -0.2 ], 
 			"to": [ 3.1, 7.2, 2.2 ], 
-			"autoUnwrap": false,
+			
 			"uv": [ 26.0, 0.0 ],
 			"rotationOrigin": [ -0.2, -0.2, -0.2 ],
 			"faces": {
@@ -151,7 +150,7 @@
 			"stepParentName": "UpperFootR",
 			"from": [ -0.7, -0.8, -0.35 ], 
 			"to": [ 4.9, 6.2, 3.15 ], 
-			"autoUnwrap": false,
+			
 			"uv": [ 18.0, 24.5 ],
 			"rotationOrigin": [ -0.7, -0.8, -0.5 ],
 			"faces": {
@@ -168,7 +167,7 @@
 			"stepParentName": "UpperFootL",
 			"from": [ -0.7, -0.8, 0.05 ], 
 			"to": [ 4.9, 6.2, 3.55 ], 
-			"autoUnwrap": false,
+			
 			"uv": [ 0.0, 24.5 ],
 			"rotationOrigin": [ -0.7, -0.8, -0.1 ],
 			"faces": {

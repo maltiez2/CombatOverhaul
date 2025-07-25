@@ -1,16 +1,11 @@
 {
 	"editor": {
-		"backDropShape": "D:/Vintage Story/Vintagestory/assets/game/shapes/entity/humanoid/seraph-hairless",
 		"allAngles": false,
 		"entityTextureMode": true
 	},
 	"textureWidth": 64,
 	"textureHeight": 64,
 	"textureSizes": {
-		"copper": [64,64],
-		"linen": [64,64],
-		"bismuthbronze": [64,64],
-		"steel": [64,64]
 	},
 	"textures": {
 		"blackguard": "entity/humanoid/serapharmor/blackguard/blackguard-pristine"
@@ -21,16 +16,16 @@
 			"stepParentName": "Head",
 			"from": [ -0.4, -0.3, -0.6 ],
 			"to": [ 6.3, 5.5, 5.6 ],
-			"autoUnwrap": false,
+			
 			"uv": [ 7.0, 0.0 ],
 			"rotationOrigin": [ -0.1, -0.2, 2.6 ],
 			"faces": {
-				"north": { "texture": "#blackguard", "uv": [ 0.0, 6.0, 5.5, 11.0 ], "autoUv": false },
-				"east": { "texture": "#blackguard", "uv": [ 17.0, 6.0, 22.0, 11.0 ], "autoUv": false },
-				"south": { "texture": "#blackguard", "uv": [ 11.5, 6.0, 17.0, 11.0 ], "autoUv": false },
-				"west": { "texture": "#blackguard", "uv": [ 5.5, 6.0, 11.5, 11.0 ], "autoUv": false },
-				"up": { "texture": "#blackguard", "uv": [ 6.0, 0.0, 11.0, 6.0 ], "rotation": 90, "autoUv": false },
-				"down": { "texture": "#blackguard", "uv": [ 0.5, 0.0, 5.5, 6.0 ], "rotation": 90, "autoUv": false }
+				"north": { "texture": "#blackguard", "uv": [ 0.0, 6.0, 5.5, 11.0 ] },
+				"east": { "texture": "#blackguard", "uv": [ 17.0, 6.0, 22.0, 11.0 ] },
+				"south": { "texture": "#blackguard", "uv": [ 11.5, 6.0, 17.0, 11.0 ] },
+				"west": { "texture": "#blackguard", "uv": [ 5.5, 6.0, 11.5, 11.0 ] },
+				"up": { "texture": "#blackguard", "uv": [ 6.0, 0.0, 11.0, 6.0 ], "rotation": 90 },
+				"down": { "texture": "#blackguard", "uv": [ 0.5, 0.0, 5.5, 6.0 ], "rotation": 90 }
 			},
 			"children": [
 				{
@@ -38,7 +33,7 @@
 					"stepParentName": "Neck",
 					"from": [ -0.1, 0.8, -0.1 ],
 					"to": [ 3.1, 2.4, 3.1 ],
-					"autoUnwrap": false,
+					
 					"uv": [ 11.5, 3.0 ],
 					"rotationOrigin": [ -0.1, 0.8, 1.5 ],
 					"faces": {
@@ -52,15 +47,15 @@
 					"name": "ArmorVisor",
 					"from": [ -1.6, 1.0, 0.5 ],
 					"to": [ 1.9, 5.0, 5.7 ],
-					"autoUnwrap": false,
+					
 					"uv": [ 16.0, -0.5 ],
 					"rotationOrigin": [ 0.0, 3.0, 2.6 ],
 					"rotationZ": -45.0,
 					"faces": {
-						"north": { "texture": "#blackguard", "uv": [ 22.5, 2.0, 25.5, 5.0 ], "autoUv": false },
-						"south": { "texture": "#blackguard", "uv": [ 30.5, 2.0, 33.5, 5.0 ], "autoUv": false },
-						"west": { "texture": "#blackguard", "uv": [ 25.5, 0.5, 30.5, 3.5 ], "autoUv": false },
-						"down": { "texture": "#blackguard", "uv": [ 25.5, 3.5, 30.5, 6.5 ], "rotation": 90, "autoUv": false }
+						"north": { "texture": "#blackguard", "uv": [ 22.5, 2.0, 25.5, 5.0 ] },
+						"south": { "texture": "#blackguard", "uv": [ 30.5, 2.0, 33.5, 5.0 ] },
+						"west": { "texture": "#blackguard", "uv": [ 25.5, 0.5, 30.5, 3.5 ] },
+						"down": { "texture": "#blackguard", "uv": [ 25.5, 3.5, 30.5, 6.5 ], "rotation": 90 }
 					}
 				},
 				{

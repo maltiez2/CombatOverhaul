@@ -1,6 +1,7 @@
 ﻿{
   "code": "arrow",
   "class": "Item",
+  "tags": ["projectile", "arrow"],
   "variantgroups": [
     {
       "code": "material",
