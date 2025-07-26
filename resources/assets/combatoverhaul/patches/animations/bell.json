@@ -1,6 +1,6 @@
 ﻿[
   {
-    "file": "game:shapes/entity/land/bell",
+    "file": "game:shapes/entity/lore/bell",
     "op": "replace",
     "path": "/animations/3",
     "value": {

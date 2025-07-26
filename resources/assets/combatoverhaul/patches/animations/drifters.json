@@ -1,6 +1,6 @@
 ﻿[
   {
-    "file": "game:shapes/entity/land/drifter/deerhorn",
+    "file": "game:shapes/entity/lore/drifter/deerhorn",
     "op": "add",
     "path": "/animations/-",
     "value": {
@@ -143,7 +143,7 @@
     }
   },
   {
-    "file": "game:shapes/entity/land/drifter/deerhorn",
+    "file": "game:shapes/entity/lore/drifter/deerhorn",
     "op": "add",
     "path": "/animations/-",
     "value": {
@@ -266,7 +266,7 @@
     }
   },
   {
-    "file": "game:shapes/entity/land/drifter/double-headed",
+    "file": "game:shapes/entity/lore/drifter/double-headed",
     "op": "add",
     "path": "/animations/-",
     "value": {
@@ -399,7 +399,7 @@
     }
   },
   {
-    "file": "game:shapes/entity/land/drifter/double-headed",
+    "file": "game:shapes/entity/lore/drifter/double-headed",
     "op": "add",
     "path": "/animations/-",
     "value": {
@@ -499,7 +499,7 @@
     }
   },
   {
-    "file": "game:shapes/entity/land/drifter/knife",
+    "file": "game:shapes/entity/lore/drifter/knife",
     "op": "add",
     "path": "/animations/-",
     "value": {
@@ -642,7 +642,7 @@
     }
   },
   {
-    "file": "game:shapes/entity/land/drifter/knife",
+    "file": "game:shapes/entity/lore/drifter/knife",
     "op": "add",
     "path": "/animations/-",
     "value": {
@@ -765,7 +765,7 @@
     }
   },
   {
-    "file": "game:shapes/entity/land/drifter/spiked1",
+    "file": "game:shapes/entity/lore/drifter/spiked1",
     "op": "add",
     "path": "/animations/-",
     "value": {
@@ -888,7 +888,7 @@
     }
   },
   {
-    "file": "game:shapes/entity/land/drifter/spiked2",
+    "file": "game:shapes/entity/lore/drifter/spiked2",
     "op": "add",
     "path": "/animations/-",
     "value": {
@@ -1011,7 +1011,7 @@
     }
   },
   {
-    "file": "game:shapes/entity/land/drifter/surface",
+    "file": "game:shapes/entity/lore/drifter/surface",
     "op": "add",
     "path": "/animations/-",
     "value": {
@@ -1154,7 +1154,7 @@
     }
   },
   {
-    "file": "game:shapes/entity/land/drifter/surface",
+    "file": "game:shapes/entity/lore/drifter/surface",
     "op": "add",
     "path": "/animations/-",
     "value": {
