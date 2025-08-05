@@ -3,7 +3,7 @@
   <PropertyGroup>
     <ModName>Combat Overhaul</ModName>
     <ModType>code</ModType>
-    <ModVersion>0.4.4</ModVersion>
+    <ModVersion>0.4.5</ModVersion>
     <ModId>combatoverhaul</ModId>
     <Description></Description>
     <Side>universal</Side>
@@ -54,6 +54,7 @@
     <ReleaseFile>$(ModId)_$(ModVersion)</ReleaseFile>
     <ReleasePath>$(ReleasesDir)\$(ReleaseFile).zip</ReleasePath>
     <ReleasePathDev>$(ReleasesDir)\$(ReleaseFile)_dev.zip</ReleasePathDev>
+    <ExternalLibDir>$(ProjectDir)\external</ExternalLibDir>
   </PropertyGroup>
 
   <!-- Startup settings -->
@@ -83,6 +84,7 @@
   <ItemGroup>
     <PackageReference Include="VSImGui" Version="0.0.6" />
     <Reference Include="$(GameDirectory)/**/*.dll" Private="false" />
+    <Reference Include="$(ExternalLibDir)/**/*.dll" Private="false" />
     <Reference Include="$(ProjectDir)/../Overhaullib/bin/Release/Mods/overhaullib/Overhaullib.dll" Private="false" />
   </ItemGroup>
 

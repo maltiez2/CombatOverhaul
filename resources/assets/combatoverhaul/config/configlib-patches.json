@@ -28,7 +28,8 @@
         "PrintMeleeHits": "print_melee_hits",
         "PrintPlayerBeingHit": "print_player_hits",
         "DirectionsControllerInvert": "directions_invert",
-        "DoVanillaActionsWhileBlocking": "vanilla_actions_while_blocking"
+        "DoVanillaActionsWhileBlocking": "vanilla_actions_while_blocking",
+        "AlternativeDirectionControls": "directions_movement_controls"
       },
       "combatoverhaul:patches/traits-and-classes.json": {
         "0/enabled": "modify_vanilla_classes",
@@ -87,8 +88,7 @@
         "DirectionsCursorScale": "directions_cursor_scale",
         "BowsAimingHorizontalLimit": "value * bow_aiming_horisontal_limit",
         "BowsAimingVerticalLimit": "value * bow_aiming_vertical_limit",
-        "DirectionsControllerSensitivity": "directions_sensitivity",
-        "AlternativeDirectionControls": "directions_movement_controls"
+        "DirectionsControllerSensitivity": "directions_sensitivity"
       },
       "combatoverhaul:patches/entities/player.json": {
         "2/value/secondChanceCooldownSec": "second_chance_cooldown",
@@ -230,9 +230,10 @@
       }
     },
     {
-      "code": "spears_aiming_cursor_type",
-      "type": "Fixed",
-      "ingui": "combatoverhaul:setting-spears_aiming_cursor_type",
+      "code": "thrown_weapons_cursor_type",
+      "type": "string",
+      "ingui": "combatoverhaul:setting-thrown_weapons_cursor_type",
+      "clientSide": true,
       "default": "Fixed",
       "values": [
         "None",

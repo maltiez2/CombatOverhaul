@@ -234,7 +234,7 @@
   },
   "creativeinventory": {"general": ["*"], "items": ["*"], "tools": ["*"], "combatoverhaul": ["*"]},
   "guiTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 39, "y": 0, "z": -130}, "origin": {"x": 1, "y": 0.1, "z": 0.3}, "scale": 2},
-  "groundTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 4},
+  "groundTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -90, "y": 0, "z": 0}, "origin": {"x": 0.8, "y": 0, "z": 0.4}, "scale": 4},
   "tpHandTransform": {"translation": {"x": -2.5, "y": 0.05, "z": 0.5}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8},
   "heldTpIdleAnimation": "combatoverhaul-spear-idle",
   "heldRightReadyAnimation": "combatoverhaul-spear-idle"
