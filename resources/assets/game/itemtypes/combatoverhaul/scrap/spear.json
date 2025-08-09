@@ -97,12 +97,10 @@
         "DamageTypes": [{"Damage": {"DamageType": "BluntAttack", "Tier": 0, "Damage": 0}, "Knockback": 0, "DurabilityDamage": 0, "Collider": [0, 0, 0.5, -2.5, 0, 0.5]}]
       },
       "HandleHitSound": "game:sounds/thud",
-      "AttackDirectionsType": "TopBottom",
-      "AttackAnimation": {"Top": ["combatoverhaul:spear-thrust-2h-top"], "Bottom": ["combatoverhaul:spear-thrust-2h-bottom"]},
-      "TpAttackAnimation": {"Top": "combatoverhaul-spear-hit", "Bottom": "combatoverhaul-spear-hit"},
+      "AttackDirectionsType": "None",
+      "AttackAnimation": {"Main": ["combatoverhaul:spear-thrust-2h-1", "combatoverhaul:spear-thrust-2h-2", "combatoverhaul:spear-thrust-2h-3"]},
       "ReadyAnimation": "combatoverhaul:spear-ready-2h",
-      "IdleAnimation": "combatoverhaul:spear-idle-2h",
-      "AttackTpAnimation": "spearhit"
+      "IdleAnimation": "combatoverhaul:spear-idle-2h"
     },
     "ThrowAttack": {
       "AimAnimation": "combatoverhaul:javelin-aim",
@@ -125,8 +123,8 @@
       "DamageStrengthByType": {"*-scrap": 3},
       "Knockback": 1,
       "DurabilityDamage": 1,
-      "Velocity": 0.7,
-      "Zeroing": 7.5
+      "Velocity": 0.9,
+      "Zeroing": 2.5
     }
   },
   "durabilitybytype": {
@@ -145,6 +143,6 @@
   },
   "creativeinventory": {"general": ["*"], "items": ["*"], "tools": ["*"], "combatoverhaul": ["*"]},
   "guiTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 39, "y": 0, "z": -130}, "origin": {"x": 1, "y": 0.1, "z": 0.3}, "scale": 2},
-  "groundTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 4},
+  "groundTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -90, "y": 0, "z": 0}, "origin": {"x": 0.6, "y": 0, "z": 0.4}, "scale": 4},
   "tpHandTransform": {"translation": {"x": -2.5, "y": 0.05, "z": 0.5}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.8}
 }

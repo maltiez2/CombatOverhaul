@@ -8,11 +8,11 @@
       "code": "CombatOverhaul:EntityColliders",
       "elementsByType": {
         "*": {
-          "Torso": ["neck2", "neck", "Body", "Midsection", "abdomen", "L back Thigh", "L front Thigh", "R back Thigh", "R front Thigh"],
-          "Head": ["head", "mouth up", "nose", "jaw2"],
-          "Arm": ["L front Upper Arm", "L front lower arm", "R front Upper Arm", "R front lower arm"],
-          "Leg": ["L back Upper Arm", "L back lower arm", "R back Upper Arm", "R back lower arm"],
-          "Critical": [],
+          "Torso": ["Neck", "Chest", "Midsection", "Rear", "L Shoulder", "L Haunch", "R Shoulder", "R Haunch"],
+          "Head": ["Head", "MouthUp", "Snout", "Jaw"],
+          "Arm": ["L ArmUp", "L ArmMid", "L ArmLow", "R ArmUp", "R ArmMid", "R ArmLow"],
+          "Leg": ["L LegUp", "L LegLow", "R LegUp", "R LegLow"],
+          "Critical": ["Neck2"],
           "Resistant": []
         }
       },
@@ -28,11 +28,11 @@
       "code": "CombatOverhaul:EntityColliders",
       "elementsByType": {
         "*": {
-          "Torso": ["neck2", "neck", "Body", "Midsection", "rear", "L back Thigh", "L front Thigh", "R back Thigh", "R front Thigh"],
-          "Head": ["head", "mouth up", "nose", "jaw"],
-          "Arm": ["L front Upper Arm", "L front lower arm", "R front Upper Arm", "R front lower arm"],
-          "Leg": ["L back Upper Arm", "L back lower arm", "R back Upper Arm", "R back lower arm"],
-          "Critical": [],
+          "Torso": ["Neck", "Chest", "Midsection", "Rear", "L Shoulder", "L Haunch", "R Shoulder", "R Haunch"],
+          "Head": ["Head", "MouthUp", "Snout", "Jaw"],
+          "Arm": ["L ArmUp", "L ArmMid", "L ArmLow", "R ArmUp", "R ArmMid", "R ArmLow"],
+          "Leg": ["L LegUp", "L LegLow", "R LegUp", "R LegLow"],
+          "Critical": ["Neck2"],
           "Resistant": []
         }
       },
@@ -48,11 +48,11 @@
       "code": "CombatOverhaul:EntityColliders",
       "elementsByType": {
         "*": {
-          "Torso": ["neck2", "neck", "Body", "Midsection", "abdomen", "L back Thigh", "L front Thigh", "R back Thigh", "R front Thigh"],
-          "Head": ["head", "mouth up", "nose", "jaw2"],
-          "Arm": ["L front Upper Arm", "L front lower arm", "R front Upper Arm", "R front lower arm"],
-          "Leg": ["L back Upper Arm", "L back lower arm", "R back Upper Arm", "R back lower arm"],
-          "Critical": [],
+          "Torso": ["Neck", "Chest", "Midsection", "Rear", "L Shoulder", "L Haunch", "R Shoulder", "R Haunch"],
+          "Head": ["Head", "MouthUp", "Snout", "Jaw"],
+          "Arm": ["L ArmUp", "L ArmMid", "L ArmLow", "R ArmUp", "R ArmMid", "R ArmLow"],
+          "Leg": ["L LegUp", "L LegLow", "R LegUp", "R LegLow"],
+          "Critical": ["Neck2"],
           "Resistant": []
         }
       },
@@ -68,11 +68,11 @@
       "code": "CombatOverhaul:EntityColliders",
       "elementsByType": {
         "*": {
-          "Torso": ["neck2", "neck", "Body", "Midsection", "rear", "L back Thigh", "L front Thigh", "R back Thigh", "R front Thigh"],
-          "Head": ["head", "mouth up", "nose", "jaw"],
-          "Arm": ["L front Upper Arm", "L front lower arm", "R front Upper Arm", "R front lower arm"],
-          "Leg": ["L back Upper Arm", "L back lower arm", "R back Upper Arm", "R back lower arm"],
-          "Critical": [],
+          "Torso": ["Neck", "Chest", "Midsection", "Rear", "L Shoulder", "L Haunch", "R Shoulder", "R Haunch"],
+          "Head": ["Head", "MouthUp", "Snout", "Jaw"],
+          "Arm": ["L ArmUp", "L ArmMid", "L ArmLow", "R ArmUp", "R ArmMid", "R ArmLow"],
+          "Leg": ["L LegUp", "L LegLow", "R LegUp", "R LegLow"],
+          "Critical": ["Neck2"],
           "Resistant": []
         }
       },

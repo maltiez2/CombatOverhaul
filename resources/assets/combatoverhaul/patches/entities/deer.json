@@ -7,92 +7,12 @@
     "value": {
       "code": "CombatOverhaul:EntityColliders",
       "elementsByType": {
-        "*-whitetail-*": {
-          "Torso": ["neck", "Body", "midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-redbrocket-*": {
-          "Torso": ["neck", "Body", "midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-marsh-*": {
-          "Torso": ["neck", "Body", "midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-caribou-*": {
-          "Torso": ["neck", "Body", "Midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-pudu-*": {
-          "Torso": ["neck", "Body", "Midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-elk-*": {
-          "Torso": ["Chest", "Midsection", "Rear", "Neck", "L Shoulder", "R Shoulder", "L Haunch", "R Haunch"],
-          "Head": ["Head", "MouthUp", "Nose"],
-          "Arm": ["R ArmMid", "L ArmMid", "R ArmLow", "L ArmLow"],
-          "Leg": ["R LegUp", "L LegUp", "R LegLow", "L LegLow"],
+        "*": {
+          "Torso": ["Neck", "Chest", "Midsection", "Rear", "L Shoulder", "L Haunch", "R Shoulder", "R Haunch"],
+          "Head": ["Head", "MouthUp", "Snout", "Jaw"],
+          "Arm": ["L ArmUp", "L ArmMid", "L ArmLow", "R ArmUp", "R ArmMid", "R ArmLow"],
+          "Leg": ["L LegUp", "L LegLow", "R LegUp", "R LegLow"],
           "Critical": ["Neck2"],
-          "Resistant": []
-        },
-        "*-taruca-*": {
-          "Torso": ["neck", "Body", "midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-chital-*": {
-          "Torso": ["neck", "Body", "Cube2", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-guemal-*": {
-          "Torso": ["neck", "Body", "Cube2", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-pampas-*": {
-          "Torso": ["neck", "Body", "Midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-fallow-*": {
-          "Torso": ["neck", "Body", "Cube2", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
           "Resistant": []
         }
       }
@@ -106,92 +26,12 @@
     "value": {
       "code": "CombatOverhaul:EntityColliders",
       "elementsByType": {
-        "*-whitetail-*": {
-          "Torso": ["neck", "Body", "midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-redbrocket-*": {
-          "Torso": ["neck", "Body", "midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-marsh-*": {
-          "Torso": ["neck", "Body", "midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-caribou-*": {
-          "Torso": ["neck", "Body", "Midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-pudu-*": {
-          "Torso": ["neck", "Body", "Midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-elk-*": {
-          "Torso": ["Chest", "Midsection", "Rear", "Neck", "L Shoulder", "R Shoulder", "L Haunch", "R Haunch"],
-          "Head": ["Head", "MouthUp", "Nose"],
-          "Arm": ["R ArmMid", "L ArmMid", "R ArmLow", "L ArmLow"],
-          "Leg": ["R LegUp", "L LegUp", "R LegLow", "L LegLow"],
+        "*": {
+          "Torso": ["Neck", "Chest", "Midsection", "Rear", "L Shoulder", "L Haunch", "R Shoulder", "R Haunch"],
+          "Head": ["Head", "MouthUp", "Snout", "Jaw"],
+          "Arm": ["L ArmUp", "L ArmMid", "L ArmLow", "R ArmUp", "R ArmMid", "R ArmLow"],
+          "Leg": ["L LegUp", "L LegLow", "R LegUp", "R LegLow"],
           "Critical": ["Neck2"],
-          "Resistant": []
-        },
-        "*-taruca-*": {
-          "Torso": ["neck", "Body", "midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-chital-*": {
-          "Torso": ["neck", "Body", "Cube2", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-guemal-*": {
-          "Torso": ["neck", "Body", "Cube2", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-pampas-*": {
-          "Torso": ["neck", "Body", "Midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-fallow-*": {
-          "Torso": ["neck", "Body", "Cube2", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
           "Resistant": []
         }
       }
@@ -205,100 +45,12 @@
     "value": {
       "code": "CombatOverhaul:EntityColliders",
       "elementsByType": {
-        "*-whitetail-*": {
-          "Torso": ["neck", "Body", "Midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-redbrocket-*": {
-          "Torso": ["neck", "Body", "Cube2", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-marsh-*": {
-          "Torso": ["neck", "Body", "Cube2", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-caribou-*": {
-          "Torso": ["neck", "Body", "Midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-water-*": {
-          "Torso": ["neck", "Body", "Cube2", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-pudu-*": {
-          "Torso": ["neck", "Body", "Midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-elk-*": {
-          "Torso": ["neck", "Body", "Midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-taruca-*": {
-          "Torso": ["neck", "Body", "Cube2", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-chital-*": {
-          "Torso": ["neck", "Body", "Midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-guemal-*": {
-          "Torso": ["neck", "Body", "Cube2", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-pampas-*": {
-          "Torso": ["neck", "Body", "Cube2", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-fallow-*": {
-          "Torso": ["neck", "Body", "Midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
+        "*": {
+          "Torso": ["Neck", "Chest", "Midsection", "Rear", "L Shoulder", "L Haunch", "R Shoulder", "R Haunch"],
+          "Head": ["Head", "MouthUp", "Snout", "Jaw"],
+          "Arm": ["L ArmUp", "L ArmMid", "L ArmLow", "R ArmUp", "R ArmMid", "R ArmLow"],
+          "Leg": ["L LegUp", "L LegLow", "R LegUp", "R LegLow"],
+          "Critical": ["Neck2"],
           "Resistant": []
         }
       }
@@ -312,100 +64,12 @@
     "value": {
       "code": "CombatOverhaul:EntityColliders",
       "elementsByType": {
-        "*-whitetail-*": {
-          "Torso": ["neck", "Body", "Midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-redbrocket-*": {
-          "Torso": ["neck", "Body", "Cube2", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-marsh-*": {
-          "Torso": ["neck", "Body", "Cube2", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-caribou-*": {
-          "Torso": ["neck", "Body", "Midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-water-*": {
-          "Torso": ["neck", "Body", "Cube2", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-pudu-*": {
-          "Torso": ["neck", "Body", "Midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-elk-*": {
-          "Torso": ["neck", "Body", "Midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-taruca-*": {
-          "Torso": ["neck", "Body", "Cube2", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-chital-*": {
-          "Torso": ["neck", "Body", "Midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-guemal-*": {
-          "Torso": ["neck", "Body", "Cube2", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-pampas-*": {
-          "Torso": ["neck", "Body", "Cube2", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
-          "Resistant": []
-        },
-        "*-fallow-*": {
-          "Torso": ["neck", "Body", "Midsection", "rear", "R front Thigh", "L front Thigh", "L back Thigh", "R back Thigh"],
-          "Head": ["head", "nose bridge", "mouth up"],
-          "Arm": ["L front Upper Arm", "R front Upper Arm", "R front lower arm", "L front lower arm"],
-          "Leg": ["R back Upper Arm", "L back Upper Arm", "R back lower arm", "L back lower arm"],
-          "Critical": ["neck2"],
+        "*": {
+          "Torso": ["Neck", "Chest", "Midsection", "Rear", "L Shoulder", "L Haunch", "R Shoulder", "R Haunch"],
+          "Head": ["Head", "MouthUp", "Snout", "Jaw"],
+          "Arm": ["L ArmUp", "L ArmMid", "L ArmLow", "R ArmUp", "R ArmMid", "R ArmLow"],
+          "Leg": ["L LegUp", "L LegLow", "R LegUp", "R LegLow"],
+          "Critical": ["Neck2"],
           "Resistant": []
         }
       }

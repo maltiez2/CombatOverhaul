@@ -3,7 +3,7 @@
   <PropertyGroup>
     <ModName>Combat Overhaul</ModName>
     <ModType>code</ModType>
-    <ModVersion>0.4.5</ModVersion>
+    <ModVersion>0.5.5</ModVersion>
     <ModId>combatoverhaul</ModId>
     <Description></Description>
     <Side>universal</Side>
@@ -86,6 +86,9 @@
     <Reference Include="$(GameDirectory)/**/*.dll" Private="false" />
     <Reference Include="$(ExternalLibDir)/**/*.dll" Private="false" />
     <Reference Include="$(ProjectDir)/../Overhaullib/bin/Release/Mods/overhaullib/Overhaullib.dll" Private="false" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="resources\assets\combatoverhaul\config\animations\" />
   </ItemGroup>
 
   <!-- Forces rebuild -->

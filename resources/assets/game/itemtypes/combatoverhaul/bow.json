@@ -36,7 +36,7 @@
     "ArrowTransform": {"translation": {"x": -3, "y": 0.3, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 1}, "scale": 0.75},
     "ArrowDamageMultiplierByType": {"*-crude": 0.8, "*-simple": 1, "*-long": 1.8, "*-recurve": 1.3},
     "ArrowDamageTierByType": {"*-crude": 1, "*-simple": 2, "*-long": 4, "*-recurve": 4},
-    "ArrowVelocityByType": {"*-crude": 0.9, "*-simple": 1, "*-long": 1.6, "*-recurve": 1.3},
+    "ArrowVelocityByType": {"*-crude": 1.2, "*-simple": 1.5, "*-long": 2.4, "*-recurve": 1.95},
     "ProficiencyStat": "bowsProficiency",
     "ReadyAnimation": "combatoverhaul:bow-ready",
     "IdleAnimation": "combatoverhaul:bow-idle",

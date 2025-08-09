@@ -1,7 +1,7 @@
 ﻿[
   {
     "side": "Server",
-    "file": "game:entities/lore/boos/eidolon-immobilized",
+    "file": "game:entities/lore/boss/eidolon-immobilized",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
@@ -35,7 +35,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/lore/boos/eidolon-immobilized",
+    "file": "game:entities/lore/boss/eidolon-immobilized",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
@@ -69,7 +69,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/lore/boos/eidolon-immobilized",
+    "file": "game:entities/lore/boss/eidolon-immobilized",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
@@ -85,7 +85,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/lore/boos/eidolon-immobilized",
+    "file": "game:entities/lore/boss/eidolon-immobilized",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
@@ -99,6 +99,6 @@
       }
     }
   },
-  {"side": "Server", "file": "game:entities/lore/boos/eidolon-immobilized", "op": "replace", "path": "/server/behaviors/5/aitasks/0/damageTier", "value": 5},
-  {"side": "Server", "file": "game:entities/lore/boos/eidolon-immobilized", "op": "replace", "path": "/server/behaviors/5/aitasks/0/damage", "value": 16}
+  {"side": "Server", "file": "game:entities/lore/boss/eidolon-immobilized", "op": "replace", "path": "/server/behaviors/5/aitasks/0/damageTier", "value": 5},
+  {"side": "Server", "file": "game:entities/lore/boss/eidolon-immobilized", "op": "replace", "path": "/server/behaviors/5/aitasks/0/damage", "value": 16}
 ]

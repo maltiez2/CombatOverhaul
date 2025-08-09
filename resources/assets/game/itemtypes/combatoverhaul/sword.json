@@ -2,6 +2,10 @@
   "code": "blade",
   "class": "CombatOverhaul:MeleeWeapon",
   "tags": ["weapon", "weapon-melee", "sword", "onehanded"],
+  "variantgroups": [
+    {"code": "type", "states": ["scrap", "falx", "blackguard", "forlorn"]},
+    {"code": "metal", "states": ["scrap", "copper", "tinbronze", "bismuthbronze", "blackbronze", "gold", "silver", "iron", "meteoriciron", "steel"]}
+  ],
   "tool": "sword",
   "attributes": {
     "groundStorageTransformByType": {
@@ -99,9 +103,9 @@
                 "*-copper": {"DamageType": "SlashingAttack", "Tier": 3, "Damage": 4},
                 "*-*bronze": {"DamageType": "SlashingAttack", "Tier": 4, "Damage": 4.5},
                 "*-iron": {"DamageType": "SlashingAttack", "Tier": 5, "Damage": 5},
+                "*-meteoriciron": {"DamageType": "SlashingAttack", "Tier": 6, "Damage": 5},
                 "*-gold": {"DamageType": "SlashingAttack", "Tier": 7, "Damage": 5.5},
                 "*-silver": {"DamageType": "SlashingAttack", "Tier": 7, "Damage": 5.5},
-                "*-meteoriciron": {"DamageType": "SlashingAttack", "Tier": 6, "Damage": 5},
                 "*-steel": {"DamageType": "SlashingAttack", "Tier": 7, "Damage": 5.5}
               },
               "Knockback": -0.5,
@@ -151,10 +155,6 @@
         "collisionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 0, "y2": 0, "z2": 0}
       }
     }
-  ],
-  "variantgroups": [
-    {"code": "type", "states": ["scrap", "falx", "blackguard", "forlorn"]},
-    {"code": "metal", "states": ["scrap", "copper", "tinbronze", "bismuthbronze", "blackbronze", "gold", "silver", "iron", "meteoriciron", "steel"]}
   ],
   "skipVariants": ["blade-falx-scrap"],
   "allowedVariants": ["blade-falx-*", "blade-blackguard-iron", "blade-forlorn-iron", "blade-scrap-scrap"],

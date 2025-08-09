@@ -34,7 +34,7 @@
       "properties": {
         "stats": {
           "AdditionalDurabilityCostByType": {"*-erel": 2, "*-bone": 1, "*": 0},
-          "CollisionRadius": 0.05,
+          "CollisionRadius": 0.02,
           "PenetrationDistance": 0.1,
           "DamageStatsByType": {
             "*-crude": {"DamageType": "SlashingAttack", "Damage": 3.5},

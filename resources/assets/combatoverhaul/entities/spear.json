@@ -32,7 +32,8 @@
   ],
   "skipVariants": ["spear-generic-ruined", "spear-generic-scrap"],
   "allowedVariants": ["spear-generic-*", "spear-scrap-scrap", "spear-boar-ruined", "spear-voulge-ruined", "spear-fork-ruined", "spear-ranseur-ruined"],
-  "hitboxSize": {"x": 0.125, "y": 0.125},
+  "SelectionBoxSize": {"x": 0.2, "y": 0.2},
+  "CollisionBoxSize": {"x": 0.01, "y": 0.01},
   "client": {
     "size": 0.8,
     "renderer": "Shape",
@@ -48,8 +49,8 @@
       "*-ruined": {"base": "game:item/tool/spear/ruined/{type}"}
     },
     "texturesByType": {"@spear-generic-(chert|granite|andesite|basalt|obsidian|peridotite)": {"head": {"base": "game:block/stone/rock/{material}1"}}},
-    "behaviors": [{"code": "passivephysics", "groundDragFactor": 1, "airDragFactor": 1, "gravityFactor": 1}, {"code": "interpolateposition"}]
+    "behaviors": [{"code": "CombatOverhaul:ProjectilePhysics", "groundDragFactor": 1, "airDragFactor": 3, "gravityFactor": 2}, {"code": "interpolateposition"}]
   },
-  "server": {"behaviors": [{"code": "passivephysics", "groundDragFactor": 1, "airDragFactor": 1, "gravityFactor": 1}, {"code": "despawn", "minSeconds": 600}]},
+  "server": {"behaviors": [{"code": "CombatOverhaul:ProjectilePhysics", "groundDragFactor": 1, "airDragFactor": 3, "gravityFactor": 2}, {"code": "despawn", "minSeconds": 600}]},
   "sounds": {}
 }

@@ -3,7 +3,7 @@
 		"ingredientPattern": "LNL,LL_,LL_",
 		"recipeGroup": 1,
 		"ingredients": {
-			"N": {"type": "item", "code": "game:metalnailsandstrips-*"},
+			"N": {"type": "item", "code": "game:metalnailsandstrips-{tada}"},
 			"L": { "type": "item", "code": "game:leather-normal-plain" }
 		},
 		"width": 3,
