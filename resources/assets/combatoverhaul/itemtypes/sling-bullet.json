@@ -1,0 +1,31 @@
+﻿{
+  "code": "slingbullet",
+  "class": "Item",
+  "maxstacksize": 32,
+  "storageFlags": 513,
+  "variantgroups": [{"code": "material", "states": ["lead"]}],
+  "shape": {"base": "combatoverhaul:ammo/sling-bullet"},
+  "textures": {"material": {"base": "game:block/metal/plate/{material}"}},
+  "creativeinventory": {"general": ["*"], "combatoverhaul": ["*"]},
+  "guiTransform": {"rotation": {"x": 66, "y": 0, "z": 45}, "origin": {"x": 0.6, "y": 0.1, "z": 0.6}, "scale": 4.1},
+  "fpHandTransform": {"translation": {"x": 0.15, "y": 0, "z": 0}, "rotation": {"x": 91, "y": 0, "z": -30}, "scale": 2},
+  "tpHandTransform": {"translation": {"x": -1.05, "y": -0.59, "z": -0.96}, "rotation": {"x": 0, "y": 2, "z": 3}, "scale": 0.48},
+  "groundTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0.37, "z": 0.5}, "scale": 3},
+  "behaviors": [
+    {
+      "name": "CombatOverhaul:Projectile",
+      "properties": {
+        "stats": {
+          "CollisionRadius": 0.04,
+          "PenetrationDistance": 1,
+          "DamageStatsByType": {"*-lead": {"DamageType": "BluntAttack", "Damage": 8}},
+          "SpeedThreshold": 0.5,
+          "Knockback": 0.5,
+          "EntityCode": "combatoverhaul:slingbullet-{material}",
+          "DropChanceByType": {"*-lead": 0.9},
+          "DamageTierBonusByType": {"*-lead": 3}
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+﻿{
+  "code": "slingbullet",
+  "class": "CombatOverhaul:Projectile",
+  "variantgroups": [{"code": "material", "states": ["lead"]}],
+  "SelectionBoxSize": {"x": 0.2, "y": 0.2},
+  "CollisionBoxSize": {"x": 0.01, "y": 0.01},
+  "client": {
+    "size": 1,
+    "renderer": "Shape",
+    "shape": {"base": "combatoverhaul:ammo/sling-bullet-shifted"},
+    "textures": {"material": {"base": "game:block/metal/plate/{material}"}},
+    "behaviors": [{"code": "CombatOverhaul:ProjectilePhysics", "groundDragFactor": 1, "airDragFactor": 1, "gravityFactor": 1}, {"code": "interpolateposition"}]
+  },
+  "server": {"behaviors": [{"code": "CombatOverhaul:ProjectilePhysics", "groundDragFactor": 1, "airDragFactor": 1, "gravityFactor": 1}, {"code": "despawn", "minSeconds": 0}]},
+  "sounds": {}
+}
