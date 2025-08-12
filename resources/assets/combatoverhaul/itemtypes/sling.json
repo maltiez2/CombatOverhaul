@@ -2,10 +2,10 @@
   "code": "sling",
   "class": "CombatOverhaul:Sling",
   "tags": ["weapon", "weapon-ranged", "sling"],
+  "variantgroups": [{"code": "type", "states": ["linen"]}],
   "maxstacksize": 1,
-  "durability": 120,
+  "durability": 600,
   "shape": {"base": "combatoverhaul:weapons/slings/sling"},
-  "textures": {"rope": {"base": "game:block/cloth/ropedcloth"}, "material": {"base": "game:block/cloth/ropedcloth"}},
   "tool": "sling",
   "behaviors": [
     {"name": "CombatOverhaul:AnimatableAttachable", "properties": {"animated-shape": "combatoverhaul:weapons/slings/sling"}},
@@ -17,6 +17,33 @@
         "sprintKey": true,
         "selectionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.1, "z2": 1},
         "collisionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 0, "y2": 0, "z2": 0}
+      }
+    },
+    {
+      "name": "CombatOverhaul:TexturesFromAttributes",
+      "properties": {
+        "Textures": [
+          {
+            "Code": "material",
+            "Attribute": "materialTexture",
+            "Default": "game:block/leather/plain",
+            "HandbookValues": [
+              "game:block/leather/plain",
+              "game:block/leather/black",
+              "game:block/leather/blue",
+              "game:block/leather/chromium",
+              "game:block/leather/gray",
+              "game:block/leather/green",
+              "game:block/leather/orange",
+              "game:block/leather/pink",
+              "game:block/leather/purple",
+              "game:block/leather/red",
+              "game:block/leather/white",
+              "game:block/leather/yellow"
+            ]
+          }
+        ],
+        "CreativeTabs": ["general", "combatovherual-colors"]
       }
     }
   ],
@@ -63,7 +90,7 @@
       "VerticalLimit": 0.25,
       "VerticalOffset": -0.05
     },
-    "DispersionMOA": [240, 30]
+    "DispersionMOA": [160, 30]
   },
   "guiTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 55, "y": 5, "z": 54}, "origin": {"x": 0.38, "y": 0, "z": 0.04}, "scale": 2.45},
   "groundTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0.3, "y": -0.05, "z": 0}, "scale": 4.8},

@@ -1,5 +1,6 @@
 {
   "game:tabname-combatoverhaul": "Combat Overhaul",
+  "game:tabname-combatovherual-colors": "Combat Overhaul (Colored)",
 
   "item-quiver-waist-*": "Quiver",
 
@@ -15,6 +16,7 @@
   "game:trait-halberdsProficiency": "<font color=\"#84ff84\">• Halberds proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
   "game:trait-axesProficiency": "<font color=\"#84ff84\">• Battleaxes proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
   "game:trait-quarterstaffProficiency": "<font color=\"#84ff84\">• Quarterstaffs proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
+  "game:trait-slingsProficiency": "<font color=\"#84ff84\">• Slings proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
   "game:trait-steadyAim": "<font color=\"#84ff84\">• Steady aim</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
   "game:trait-tremblingAim": "<font color=\"#ff8484\">• Trembling aim</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
   "game:trait-clumsyHands": "<font color=\"#ff8484\">• Clumsy hands</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
@@ -31,6 +33,7 @@
   "game:charattribute-halberdsProficiency-0.3": "+30% attack speed",
   "game:charattribute-axesProficiency-0.3": "+30% attack speed",
   "game:charattribute-quarterstaffProficiency-0.3": "+30% attack speed",
+  "game:charattribute-slingsProficiency-0.3": "+30% reload speed, +30% damage",
   "game:charattribute-steadyAim-0.5": "50% less aim drift",
   "game:charattribute-steadyAim--0.3": "30% more aim drift",
   "game:charattribute-armorWalkSpeedAffectedness--0.5": "walk speed penalty for wearing armor reduced by 50%",
@@ -41,6 +44,7 @@
 
   "item-creature-arrow-*": "arrow",
   "item-creature-spear-*": "spear",
+  "item-creature-slingbullet-*": "sling bullet",
 
   "game:item-spear-generic-iron": "Iron spear",
   "game:item-spear-generic-meteoriciron": "Meteoric iron spear",
@@ -50,9 +54,20 @@
   "game:item-spearhead-steel": "Steel spear head",
   "game:item-arrow-obsidian": "Obsidian arrow",
   "game:item-arrowhead-obsidian": "Obsidian arrow head",
+  "game:item-sling": "Improvised sling",
+  "item-sling-linen": "Sling",
+  "item-slingbullet-lead": "Lead sling bullet",
+  "item-slingbullet-obsidian": "Obsidian sling bullet",
+  "item-slingbullet-clay-*": "Raw clay sling bullet",
+  "item-slingbullet-redclay": "Clay sling bullet",
+  "item-slingbullet-blueclay": "Clay sling bullet",
+  "item-slingbullet-fireclay": "Clay sling bullet",
+  "item-slingbullet-*": "Stone sling bullet",
+  
 
   "prefixandcreature-arrow-*": "Arrow",
   "prefixandcreature-spear-*": "Spear",
+  "prefixandcreature-slingbullet-*": "Sling bullet",
 
   "setting-title-client-side": "Client side settings (no world reload required)",
   "setting-title-server-side": "Server side settings",

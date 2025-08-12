@@ -1,0 +1,19 @@
+[
+  {
+    "ingredient": {"type": "item", "code": "game:stone-*", "name": "rock", "allowedVariants": ["chert", "granite", "andesite", "basalt", "obsidian", "peridotite"]},
+    "pattern": [[
+      "####_#####",
+      "####_#####",
+      "####_#####",
+      "####_#####",
+      "__________",
+      "####_#####",
+      "####_#####",
+      "####_#####",
+      "####_#####",
+      "####_#####"
+    ]],
+    "name": "sling bullet",
+    "output": {"type": "item", "code": "combatoverhaul:slingbullet-{rock}", "quantity": 4}
+  }
+]

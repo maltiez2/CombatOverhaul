@@ -1,0 +1,6 @@
+﻿[
+  {"file": "game:itemtypes/tool/sling", "op": "addmerge", "path": "/enabled", "value": false},
+  {"file": "game:recipes/grid/tool/sling", "op": "addmerge", "path": "/0/enabled", "value": false},
+  {"file": "game:recipes/grid/tool/sling", "op": "addmerge", "path": "/1/enabled", "value": false},
+  {"file": "game:recipes/grid/tool/sling", "op": "addmerge", "path": "/2/enabled", "value": false}
+]

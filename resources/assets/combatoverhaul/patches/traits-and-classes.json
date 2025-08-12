@@ -16,7 +16,7 @@
     "file": "game:config/characterclasses",
     "op": "addeach",
     "path": "/2/traits/-",
-    "value": ["javelinsProficiency", "macesProficiency", "clubsProficiency", "axesProficiency"]
+    "value": ["javelinsProficiency", "slingsProficiency", "macesProficiency", "clubsProficiency", "axesProficiency"]
   },
   {
     "enabled": true,
