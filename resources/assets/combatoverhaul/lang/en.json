@@ -63,7 +63,9 @@
   "item-slingbullet-blueclay": "Clay sling bullet",
   "item-slingbullet-fireclay": "Clay sling bullet",
   "item-slingbullet-*": "Stone sling bullet",
-  
+
+  "block-ammomold-slingbullet-raw": "Raw sling bullets mold",
+  "block-ammomold-slingbullet-fired": "Sling bullets mold",
 
   "prefixandcreature-arrow-*": "Arrow",
   "prefixandcreature-spear-*": "Spear",

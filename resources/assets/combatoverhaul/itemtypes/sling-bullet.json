@@ -34,7 +34,7 @@
           "SpeedThreshold": 0.5,
           "Knockback": 0.5,
           "EntityCode": "combatoverhaul:slingbullet-{material}",
-          "DropChanceByType": {"*-lead": 0.99, "*-obsidian": 0.5, "*-*clay": 0, "*": 0.9},
+          "DropChanceByType": {"*-lead": 0.98, "*-obsidian": 0.5, "*-*clay": 0, "*": 0.9},
           "DamageTierBonusByType": {"*-lead": 3, "*-obsidian": 1, "*-*clay": 0, "*": 0},
           "AdditionalDurabilityCostByType": {"*-lead": 0, "*-obsidian": 2, "*-*clay": 0, "*": 0}
         }
