@@ -5,11 +5,11 @@
 		"ingredients": {
 			"N": {"type": "item", "code": "game:metalnailsandstrips-{tada}"},
 			"L": { "type": "item", "code": "game:leather-normal-plain" },
-			"B": { "type": "item", "code": "game:arrow-*", "isTool": true, "toolDurabilityCost": 0 }
+			"B": { "type": "item", "code": "combatoverhaul:slingbullet-*", "isTool": true, "toolDurabilityCost": 0 }
 		},
 		"width": 3,
 		"height": 2,
 		"name": "pouch",
-		"output": { "type": "item", "code": "quiver-waist-plain" }
+		"output": { "type": "item", "code": "slingpouch-waist-plain"  }
 	}
 ]

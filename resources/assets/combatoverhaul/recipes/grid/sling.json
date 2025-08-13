@@ -20,6 +20,6 @@
 		},
 		"width": 1,
 		"height": 3,
-		"output": { "type": "item", "code": "combatoverhaul:sling-linen", "quantity": 1  }
+		"output": { "type": "item", "code": "combatoverhaul:sling-linen", "quantity": 1 }
 	}
 ]

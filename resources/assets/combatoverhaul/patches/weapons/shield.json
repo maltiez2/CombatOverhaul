@@ -42,6 +42,7 @@
         "CanParry": true,
         "CanBlock": true,
         "CanSprint": true,
+        "CanBash": true,
         "SpeedPenalty": 0,
         "BlockSpeedPenalty": -0.05,
         "Parry": {
@@ -56,7 +57,22 @@
           "Sound": "game:sounds/held/shieldblock-wood-light",
           "BlockTier": {"BluntAttack": 4, "SlashingAttack": 4, "PiercingAttack": 4}
         },
+        "BlockBash": {
+          "StopOnTerrainHit": false,
+          "StopOnEntityHit": true,
+          "CollideWithTerrain": true,
+          "MaxReach": 9,
+          "DamageTypes": [
+            {
+              "DamageByType": {"*": {"DamageType": "BluntAttack", "Tier": 0, "Damage": 1}},
+              "Knockback": 2,
+              "DurabilityDamage": 1,
+              "Collider": [-0.3, -0.3, 0.2, 0.39999998, -0.3, 0.2]
+            }
+          ]
+        },
         "BlockCooldownMs": 300,
+        "BlockBashAnimation": {"Main": ["combatoverhaul:shield-light-bash"]},
         "BlockAnimation": "combatoverhaul:shield-light-parry",
         "ReadyAnimation": "combatoverhaul:shield-light-ready",
         "IdleAnimation": "combatoverhaul:shield-light-ready",
@@ -67,6 +83,7 @@
         "CanParry": true,
         "CanBlock": true,
         "CanSprint": true,
+        "CanBash": true,
         "SpeedPenalty": 0,
         "BlockSpeedPenalty": -0.05,
         "Parry": {
@@ -81,7 +98,22 @@
           "Sound": "game:sounds/held/shieldblock-wood-light",
           "BlockTier": {"BluntAttack": 5, "SlashingAttack": 5, "PiercingAttack": 5}
         },
+        "BlockBash": {
+          "StopOnTerrainHit": false,
+          "StopOnEntityHit": true,
+          "CollideWithTerrain": true,
+          "MaxReach": 9,
+          "DamageTypes": [
+            {
+              "DamageByType": {"*": {"DamageType": "BluntAttack", "Tier": 0, "Damage": 1}},
+              "Knockback": 2,
+              "DurabilityDamage": 1,
+              "Collider": [-0.3, -0.3, 0.2, 0.39999998, -0.3, 0.2]
+            }
+          ]
+        },
         "BlockCooldownMs": 300,
+        "BlockBashAnimation": {"Main": ["combatoverhaul:shield-light-bash"]},
         "BlockAnimation": "combatoverhaul:shield-light-parry",
         "ReadyAnimation": "combatoverhaul:shield-light-ready",
         "IdleAnimation": "combatoverhaul:shield-light-ready",
@@ -92,6 +124,7 @@
         "CanParry": true,
         "CanBlock": true,
         "CanSprint": true,
+        "CanBash": true,
         "SpeedPenalty": 0,
         "BlockSpeedPenalty": -0.1,
         "Parry": {
@@ -106,7 +139,22 @@
           "Sound": "game:sounds/held/shieldblock-metal-light",
           "BlockTier": {"BluntAttack": 6, "SlashingAttack": 6, "PiercingAttack": 6}
         },
+        "BlockBash": {
+          "StopOnTerrainHit": false,
+          "StopOnEntityHit": true,
+          "CollideWithTerrain": true,
+          "MaxReach": 9,
+          "DamageTypes": [
+            {
+              "DamageByType": {"*": {"DamageType": "BluntAttack", "Tier": 0, "Damage": 1}},
+              "Knockback": 2,
+              "DurabilityDamage": 1,
+              "Collider": [-0.3, -0.3, 0.2, 0.39999998, -0.3, 0.2]
+            }
+          ]
+        },
         "BlockCooldownMs": 300,
+        "BlockBashAnimation": {"Main": ["combatoverhaul:shield-light-bash"]},
         "BlockAnimation": "combatoverhaul:shield-light-parry",
         "ReadyAnimation": "combatoverhaul:shield-light-ready",
         "IdleAnimation": "combatoverhaul:shield-light-ready",
@@ -117,6 +165,7 @@
         "CanParry": true,
         "CanBlock": true,
         "CanSprint": true,
+        "CanBash": true,
         "SpeedPenalty": 0,
         "BlockSpeedPenalty": 0,
         "Parry": {
@@ -131,7 +180,22 @@
           "Sound": "game:sounds/held/shieldblock-metal-light",
           "BlockTier": {"BluntAttack": 5, "SlashingAttack": 5, "PiercingAttack": 5}
         },
+        "BlockBash": {
+          "StopOnTerrainHit": false,
+          "StopOnEntityHit": true,
+          "CollideWithTerrain": true,
+          "MaxReach": 9,
+          "DamageTypes": [
+            {
+              "DamageByType": {"*": {"DamageType": "BluntAttack", "Tier": 0, "Damage": 1}},
+              "Knockback": 2,
+              "DurabilityDamage": 1,
+              "Collider": [-0.3, -0.3, 0.2, 0.39999998, -0.3, 0.2]
+            }
+          ]
+        },
         "BlockCooldownMs": 300,
+        "BlockBashAnimation": {"Main": ["combatoverhaul:shield-light-bash"]},
         "BlockAnimation": "combatoverhaul:shield-light-parry",
         "ReadyAnimation": "combatoverhaul:shield-light-ready",
         "IdleAnimation": "combatoverhaul:shield-light-ready",

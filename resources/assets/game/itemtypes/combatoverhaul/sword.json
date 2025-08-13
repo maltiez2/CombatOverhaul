@@ -41,7 +41,6 @@
         },
         "AttackHitSound": "game:sounds/thud",
         "AttackAnimation": {"Main": ["combatoverhaul:sword-forlorn-thrust-1", "combatoverhaul:sword-forlorn-thrust-2", "combatoverhaul:sword-forlorn-thrust-3"]},
-        "TpAttackAnimation": {"Main": "combatoverhaul-falx-slash"},
         "Parry": {
           "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
           "Directions": [60, 60, 60, 60],
@@ -72,7 +71,6 @@
         },
         "AttackHitSound": "game:sounds/thud",
         "AttackAnimation": {"Main": ["combatoverhaul:sword-blackguard-thrust-1", "combatoverhaul:sword-blackguard-thrust-2", "combatoverhaul:sword-blackguard-thrust-3"]},
-        "TpAttackAnimation": {"Main": "combatoverhaul-falx-slash"},
         "Parry": {
           "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
           "Directions": [60, 60, 60, 60],
@@ -116,7 +114,6 @@
         },
         "AttackHitSound": "game:sounds/thud",
         "AttackAnimation": {"Main": ["combatoverhaul:sword-falx-slash-1", "combatoverhaul:sword-falx-slash-2"]},
-        "TpAttackAnimation": {"Main": "combatoverhaul-falx-slash"},
         "ReadyAnimation": "combatoverhaul:sword-falx-ready",
         "IdleAnimation": "combatoverhaul:sword-falx-idle"
       },
@@ -138,7 +135,6 @@
         },
         "AttackHitSound": "game:sounds/thud",
         "AttackAnimation": {"Main": ["combatoverhaul:sword-falx-slash-1", "combatoverhaul:sword-falx-slash-2"]},
-        "TpAttackAnimation": {"Main": "combatoverhaul-falx-slash"},
         "ReadyAnimation": "combatoverhaul:sword-falx-ready",
         "IdleAnimation": "combatoverhaul:sword-falx-idle"
       }
