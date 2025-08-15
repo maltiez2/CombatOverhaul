@@ -7,9 +7,6 @@
       },
       "game:itemtypes/combatoverhaul/arrow.json": {
         "behaviors/0/properties/stats/HitSound": "(arrow_ping_sound_on_hit) ? value : empty_string"
-      },
-      "combatoverhaul:config/settings.json": {
-        "BowsAimingCursorType": "bows_aiming_cursor_type"
       }
     },
     "other":  {
@@ -69,24 +66,14 @@
       "game:itemtypes/combatoverhaul/scrap/mace.json": {
         "attributes/OneHandedStance/Attack/DamageTypesByType/@@*/0/Damage/Damage": "value * melee_weapons_damage_multiplier"
       },
-      "combatoverhaul:config/settings.json": {
-        "BowsAimingHorizontalLimit": "value * bow_aiming_horisontal_limit",
-        "BowsAimingVerticalLimit": "value * bow_aiming_vertical_limit"
-      },
       "combatoverhaul:patches/entities/player.json": {
         "2/value/secondChanceCooldownSec": "second_chance_cooldown",
         "2/value/damageModel/Zones/0/DamageMultiplier": "player_model_torso_damage",
         "2/value/damageModel/Zones/1/DamageMultiplier": "player_model_head_damage",
         "2/value/damageModel/Zones/2/DamageMultiplier": "player_model_neck_damage",
         "2/value/damageModel/Zones/3/DamageMultiplier": "player_model_face_damage",
-        "2/value/damageModel/Zones/4/DamageMultiplier": "player_model_arms_damage",
-        "2/value/damageModel/Zones/5/DamageMultiplier": "player_model_arms_damage",
-        "2/value/damageModel/Zones/6/DamageMultiplier": "player_model_arms_damage",
-        "2/value/damageModel/Zones/7/DamageMultiplier": "player_model_arms_damage",
-        "2/value/damageModel/Zones/8/DamageMultiplier": "player_model_legs_damage",
-        "2/value/damageModel/Zones/9/DamageMultiplier": "player_model_legs_damage",
-        "2/value/damageModel/Zones/10/DamageMultiplier": "player_model_legs_damage",
-        "2/value/damageModel/Zones/11/DamageMultiplier": "player_model_legs_damage"
+        "2/value/damageModel/Zones/4-7/DamageMultiplier": "player_model_arms_damage",
+        "2/value/damageModel/Zones/8-11/DamageMultiplier": "player_model_legs_damage"
       }
     }
   },

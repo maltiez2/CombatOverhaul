@@ -61,7 +61,7 @@ public sealed class CombatOverhaulAdditionalSystem : ModSystem
     }
     private static InventoryBase? GetGearInventory(Entity entity)
     {
-        return entity.GetBehavior<EntityBehaviorPlayerInventory>().Inventory;
+        return entity.GetBehavior<EntityBehaviorPlayerInventory>()?.Inventory;
     }
     private static void ThrowException(ICoreAPI api, string message)
     {

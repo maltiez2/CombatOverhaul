@@ -2,8 +2,6 @@
   "game:tabname-combatoverhaul": "Combat Overhaul",
   "game:tabname-combatovherual-colors": "Combat Overhaul (Colored)",
 
-  "item-quiver-waist-*": "Quiver",
-
   "game:trait-bowsProficiency": "<font color=\"#84ff84\">• Bows proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
   "game:trait-crossbowsProficiency": "<font color=\"#84ff84\">• Crossbows proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
   "game:trait-firearmsProficiency": "<font color=\"#84ff84\">• Firearms proficiency</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
@@ -63,7 +61,13 @@
   "item-slingbullet-blueclay": "Clay sling bullet",
   "item-slingbullet-fireclay": "Clay sling bullet",
   "item-slingbullet-*": "Stone sling bullet",
-  "item-slingpouch-waist-plain": "Sling pouch",
+  "item-quiver-waist-*": "Quiver",
+  "item-slingpouch-waist-*": "Sling pouch",
+  "item-saydak-waist-*": "Quiver with bow case",
+
+  "itemdesc-quiver-waist-*": "Can hold arrows",
+  "itemdesc-slingpouch-waist-*": "Can hold sling bullets and sling. Press 'R' to select sling from pouch.",
+  "itemdesc-saydak-waist-*": "Can hold arrows and bow. Press 'R' to select bow from pouch.",
 
   "block-ammomold-slingbullet-raw": "Raw sling bullets mold",
   "block-ammomold-slingbullet-fired": "Sling bullets mold",
