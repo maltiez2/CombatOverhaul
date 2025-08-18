@@ -18,7 +18,10 @@
   "game:trait-steadyAim": "<font color=\"#84ff84\">• Steady aim</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
   "game:trait-tremblingAim": "<font color=\"#ff8484\">• Trembling aim</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
   "game:trait-clumsyHands": "<font color=\"#ff8484\">• Clumsy hands</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
+  "game:trait-canParryProjectiles": "<font color=\"#84ff84\">• Unnatural reflexes</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
 
+  "game:traitdesc-canParryProjectiles": "Can parry projectiles with melee weapons",
+  
   "game:charattribute-bowsProficiency-0.5": "+50% draw speed",
   "game:charattribute-crossbowsProficiency-0.5": "+50% reload speed",
   "game:charattribute-firearmsProficiency-0.5": "+50% reload speed",

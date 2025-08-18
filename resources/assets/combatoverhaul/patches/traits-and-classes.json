@@ -30,7 +30,7 @@
     "file": "game:config/characterclasses",
     "op": "addeach",
     "path": "/4/traits/-",
-    "value": ["oneHandedSwordsProficiency", "twoHandedSwordsProficiency", "tremblingAim", "clumsyHands"]
+    "value": ["oneHandedSwordsProficiency", "twoHandedSwordsProficiency", "tremblingAim", "clumsyHands", "canParryProjectiles"]
   },
   {"enabled": true, "file": "game:config/characterclasses", "op": "addeach", "path": "/5/traits/-", "value": ["tremblingAim"]}
 ]

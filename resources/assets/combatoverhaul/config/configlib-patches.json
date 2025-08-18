@@ -6,7 +6,7 @@
         "behaviors/1/properties/stats/HitSound": "(arrow_ping_sound_on_hit) ? value : empty_string"
       },
       "game:itemtypes/combatoverhaul/arrow.json": {
-        "behaviors/0/properties/stats/HitSound": "(arrow_ping_sound_on_hit) ? value : empty_string"
+        "behaviors/1/properties/stats/HitSound": "(arrow_ping_sound_on_hit) ? value : empty_string"
       }
     },
     "other":  {
@@ -34,10 +34,10 @@
     },
     "number": {
       "combatoverhaul:entities/spear.json": {
-        "client/behaviors/0/airDragFactor": "value / spears_thrown_distance",
-        "client/behaviors/0/gravityFactor": "value / spears_thrown_distance",
-        "server/behaviors/0/airDragFactor": "value / spears_thrown_distance",
-        "server/behaviors/0/gravityFactor": "value / spears_thrown_distance"
+        "client/behaviors/code=CombatOverhaul:ProjectilePhysics/airDragFactor": "value / spears_thrown_distance",
+        "client/behaviors/code=CombatOverhaul:ProjectilePhysics/gravityFactor": "value / spears_thrown_distance",
+        "server/behaviors/code=CombatOverhaul:ProjectilePhysics/airDragFactor": "value / spears_thrown_distance",
+        "server/behaviors/code=CombatOverhaul:ProjectilePhysics/gravityFactor": "value / spears_thrown_distance"
       },
       "game:itemtypes/combatoverhaul/bow.json": {
         "attributes/AimingByType/@@*/AimDifficulty": "bow_aiming_difficulty",
@@ -72,8 +72,8 @@
         "2/value/damageModel/Zones/1/DamageMultiplier": "player_model_head_damage",
         "2/value/damageModel/Zones/2/DamageMultiplier": "player_model_neck_damage",
         "2/value/damageModel/Zones/3/DamageMultiplier": "player_model_face_damage",
-        "2/value/damageModel/Zones/4-7/DamageMultiplier": "player_model_arms_damage",
-        "2/value/damageModel/Zones/8-11/DamageMultiplier": "player_model_legs_damage"
+        "2/value/damageModel/Zones/4-8/DamageMultiplier": "player_model_arms_damage",
+        "2/value/damageModel/Zones/8-12/DamageMultiplier": "player_model_legs_damage"
       }
     }
   },
