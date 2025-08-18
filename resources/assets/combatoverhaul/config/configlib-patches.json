@@ -28,7 +28,9 @@
         "PrintMeleeHits": "print_melee_hits",
         "PrintPlayerBeingHit": "print_player_hits",
         "DirectionsControllerInvert": "directions_invert",
-        "DoVanillaActionsWhileBlocking": "vanilla_actions_while_blocking"
+        "DoVanillaActionsWhileBlocking": "vanilla_actions_while_blocking",
+        "DisableAllAnimations": "disable_all_animations",
+        "DisableThirdPersonAnimations": "disable_third_person_animations"
       },
       "combatoverhaul:patches/traits-and-classes.json": {
         "0/enabled": "modify_vanilla_classes",
@@ -110,6 +112,18 @@
     "vanilla_item": "Item"
   },
   "settings": [
+    {
+      "code": "disable_all_animations",
+      "type": "boolean",
+      "clientSide": true,
+      "default": false
+    },
+    {
+      "code": "disable_third_person_animations",
+      "type": "boolean",
+      "clientSide": true,
+      "default": false
+    },
     {
       "code": "directions_cursor_transparency",
       "type": "float",
