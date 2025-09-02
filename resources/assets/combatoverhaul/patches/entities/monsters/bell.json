@@ -1,6 +1,13 @@
 ﻿[
   {
     "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/sheep-adult",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {"code": "CombatOverhaul:ShowStatsBehavior", "entriesByType": {"*": [["Vulnerable to {0} damage", "Blunt"], ["Bell part of this monster is resistant to damage."]]}}
+  },
+  {
+    "side": "Server",
     "file": "game:entities/lore/bell",
     "op": "add",
     "path": "/client/behaviors/-",

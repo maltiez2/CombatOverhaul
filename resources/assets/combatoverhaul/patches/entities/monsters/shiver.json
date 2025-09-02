@@ -5,6 +5,31 @@
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
+      "code": "CombatOverhaul:ShowStatsBehavior",
+      "entriesByType": {
+        "*-surface": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "4", "1", "Slashing"]],
+        "*-deep": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "7", "1", "Slashing"]],
+        "*-tainted": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "10", "2", "Slashing"]],
+        "*-corrupt": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "15", "2", "Slashing"]],
+        "*-nightmare": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "20", "3", "Slashing"]],
+        "*-stilt": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "25", "3", "Slashing"]],
+        "*-deepsplit": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "30", "4", "Slashing"]],
+        "*-bellhead": [
+          ["Vulnerable to {0} damage", "Blunt"],
+          ["Bell part of this monster is resistant to damage."],
+          ["Attacks:"],
+          ["  {0} ({1} tier) of {2} damage", "30", "5", "Blunt"]
+        ],
+        "*": []
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/shiver",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
       "code": "CombatOverhaul:EntityColliders",
       "elementsByType": {
         "*-bellhead": {

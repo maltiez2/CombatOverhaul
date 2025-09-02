@@ -5,6 +5,20 @@
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
+      "code": "CombatOverhaul:ShowStatsBehavior",
+      "entriesByType": {
+        "*-male": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "5", "1", "Blunt"]],
+        "*-female": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "4", "1", "Blunt"]],
+        "*": []
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/pig-adult",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
       "code": "CombatOverhaul:EntityColliders",
       "elements": {
         "Torso": ["body", "L back leg", "R back leg"],
@@ -118,5 +132,12 @@
     }
   },
   {"side": "Server", "file": "game:entities/animal/mammal/hooved/pig-adult", "op": "add", "path": "/server/behaviors/10/aitasks/0/damageType", "value": "BluntAttack"},
-  {"side": "Server", "file": "game:entities/animal/mammal/hooved/pig-adult", "op": "add", "path": "/server/behaviors/10/aitasks/0/damageTier", "value": 1}
+  {"side": "Server", "file": "game:entities/animal/mammal/hooved/pig-adult", "op": "replace", "path": "/server/behaviors/10/aitasks/0/damageTier", "value": 1},
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/pig-adult",
+    "op": "replace",
+    "path": "/server/behaviors/10/aitasks/0/damageByType",
+    "value": {"*-female": 4, "*": 5}
+  }
 ]

@@ -5,6 +5,55 @@
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
+      "code": "CombatOverhaul:ShowStatsBehavior",
+      "entriesByType": {
+        "*-surface": [
+          ["Vulnerable to {0} damage", "Blunt"],
+          ["Attacks:"],
+          ["  {0} ({1} tier) of {2} ranged damage", "2", "2", "Piercing"],
+          ["  {0} ({1} tier) of {2} damage", "2", "1", "Piercing"]
+        ],
+        "*-deep": [
+          ["Vulnerable to {0} damage", "Blunt"],
+          ["Attacks:"],
+          ["  {0} ({1} tier) of {2} ranged damage", "2.5", "3", "Piercing"],
+          ["  {0} ({1} tier) of {2} damage", "3", "1", "Piercing"]
+        ],
+        "*-tainted": [
+          ["Vulnerable to {0} damage", "Blunt"],
+          ["Attacks:"],
+          ["  {0} ({1} tier) of {2} ranged damage", "3", "4", "Piercing"],
+          ["  {0} ({1} tier) of {2} damage", "4", "2", "Piercing"]
+        ],
+        "*-corrupt": [
+          ["Vulnerable to {0} damage", "Blunt"],
+          ["Attacks:"],
+          ["  {0} ({1} tier) of {2} ranged damage", "3.5", "6", "Piercing"],
+          ["  {0} ({1} tier) of {2} damage", "5", "3", "Piercing"]
+        ],
+        "*-nightmare": [
+          ["Vulnerable to {0} damage", "Blunt"],
+          ["Armor parts of this monster is resistant to damage."],
+          ["Attacks:"],
+          ["  {0} ({1} tier) of {2} ranged damage", "4", "8", "Piercing"],
+          ["  {0} ({1} tier) of {2} damage", "6", "4", "Piercing"]
+        ],
+        "*-gearfoot": [
+          ["Vulnerable to {0} damage", "Blunt"],
+          ["Attacks:"],
+          ["  {0} ({1} tier) of {2} ranged damage", "4.5", "9", "Piercing"],
+          ["  {0} ({1} tier) of {2} damage", "7", "5", "Piercing"]
+        ],
+        "*": []
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/bowtorn",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
       "code": "CombatOverhaul:EntityColliders",
       "elementsByType": {
         "*-gearfoot": {
@@ -188,14 +237,86 @@
     "side": "Server",
     "file": "game:entities/lore/bowtorn",
     "op": "replace",
-    "path": "/server/behaviors/8/aitasks/5/projectileDamageTierByType",
-    "value": {"*-surface": 2, "*-deep": 3, "*-tainted": 4, "*-corrupt": 6, "*-nightmare": 8, "*-gearfoot": 9}
+    "path": "/server/behaviors/8/aitasks/0/damageByType",
+    "value": {"*-surface": 2, "*-deep": 3, "*-tainted": 4, "*-corrupt": 5, "*-nightmare": 6, "*-gearfoot": 7}
   },
   {
     "side": "Server",
     "file": "game:entities/lore/bowtorn",
     "op": "replace",
-    "path": "/server/behaviors/8/aitasks/5/projectileDamageByType",
-    "value": {"*-surface": 2, "*-deep": 2.5, "*-tainted": 3, "*-corrupt": 3.5, "*-nightmare": 4, "*-gearfoot": 4.5}
-  }
+    "path": "/server/behaviors/8/aitasks/5",
+    "value": {
+      "code": "turretmode-r",
+      "ExecutionChance": 1,
+      "Priority": 1.5,
+      "PriorityForCancel": 3.5,
+      "SeekingRangeByType": {"*-surface": 30, "*-deep": 30, "*-tainted": 45, "*-corrupt": 60, "*-nightmare": 75, "*-gearfoot": 90},
+      "FiringRangeMaxByType": {"*-surface": 25, "*-deep": 30, "*-tainted": 37, "*-corrupt": 45, "*-nightmare": 53, "*-gearfoot": 60},
+      "entityCodes": ["player"],
+      "EntityTags": [["player"]],
+      "SeekingRangeAffectedByPlayerStat": false,
+      "SneakRangeReduction": 0.5,
+      "DrawSound": "game:sounds/creature/bowtorn/draw",
+      "ReloadSound": "game:sounds/creature/bowtorn/reload",
+      "ProjectileCode": "bowtornprojectile",
+      "ProjectileItem": "arrow-bone",
+      "ProjectileDamageByType": {"*-surface": 2, "*-deep": 2.5, "*-tainted": 3, "*-corrupt": 3.5, "*-nightmare": 4, "*-gearfoot": 4.5},
+      "ProjectileDamageTierByType": {"*-surface": 2, "*-deep": 3, "*-tainted": 4, "*-corrupt": 6, "*-nightmare": 8, "*-gearfoot": 9},
+      "ProjectileDamageTypeByType": {"*": "PiercingAttack"},
+      "ProjectileSpeedByType": {"*-surface": 40, "*-deep": 48, "*-tainted": 56, "*-corrupt": 64, "*-nightmare": 72, "*-gearfoot": 80}
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/bowtorn",
+    "op": "add",
+    "path": "/server/behaviors/8/aitasks/4/targetRangeByType",
+    "value": {"*-surface": 20, "*-deep": 22, "*-tainted": 25, "*-corrupt": 30, "*-nightmare": 33, "*-gearfoot": 37}
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/bowtorn",
+    "op": "add",
+    "path": "/server/behaviors/8/aitasks/4/targetRangeToleranceByType",
+    "value": {"*-surface": 5, "*-deep": 8, "*-tainted": 11, "*-corrupt": 15, "*-nightmare": 19, "*-gearfoot": 23}
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/bowtorn",
+    "op": "add",
+    "path": "/server/behaviors/8/aitasks/4/searchRangeByType",
+    "value": {"*-surface": 30, "*-deep": 30, "*-tainted": 45, "*-corrupt": 60, "*-nightmare": 75, "*-gearfoot": 90}
+  },
+  {"side": "Server", "file": "game:entities/lore/bowtorn", "op": "remove", "path": "/server/behaviors/8/aitasks/4/targetRange"},
+  {"side": "Server", "file": "game:entities/lore/bowtorn", "op": "remove", "path": "/server/behaviors/8/aitasks/4/searchRange"},
+  {
+    "side": "Server",
+    "file": "game:entities/nonliving/projectile/bowtornprojectile",
+    "op": "replace",
+    "path": "/client/behaviors/0",
+    "value": {"code": "passivephysics", "groundDragFactor": 1, "airDragFactor": 0, "gravityFactor": 1}
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/nonliving/projectile/bowtornprojectile",
+    "op": "replace",
+    "path": "/server/behaviors/0",
+    "value": {"code": "passivephysics", "groundDragFactor": 1, "airDragFactor": 0, "gravityFactor": 1}
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/bowtorn",
+    "op": "add",
+    "path": "/server/behaviors/5/minPlayerDistanceByType",
+    "value": {"*-surface": 35, "*-deep": 35, "*-tainted": 50, "*-corrupt": 65, "*-nightmare": 80, "*-gearfoot": 95}
+  },
+  {"side": "Server", "file": "game:entities/lore/bowtorn", "op": "remove", "path": "/server/behaviors/5/minPlayerDistance"},
+  {
+    "side": "Server",
+    "file": "game:entities/lore/bowtorn",
+    "op": "add",
+    "path": "/server/behaviors/6/minPlayerDistanceByType",
+    "value": {"*-surface": 75, "*-deep": 75, "*-tainted": 90, "*-corrupt": 105, "*-nightmare": 120, "*-gearfoot": 135}
+  },
+  {"side": "Server", "file": "game:entities/lore/bowtorn", "op": "remove", "path": "/server/behaviors/6/minPlayerDistance"}
 ]

@@ -5,6 +5,60 @@
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
+      "code": "CombatOverhaul:ShowStatsBehavior",
+      "entriesByType": {
+        "*-normal": [
+          ["Vulnerable to {0} damage", "Blunt"],
+          ["Attacks:"],
+          ["  {0} ({1} tier) of {2} damage", "2", "1", "Blunt"],
+          ["  {0} ({1} tier) of {2} damage", "2", "1", "Blunt"],
+          ["  {0} ({1} tier) of {2} ranged damage", "1", "0", "Blunt"]
+        ],
+        "*-deep": [
+          ["Vulnerable to {0} damage", "Blunt"],
+          ["Attacks:"],
+          ["  {0} ({1} tier) of {2} damage", "3", "2", "Blunt"],
+          ["  {0} ({1} tier) of {2} damage", "3", "2", "Blunt"],
+          ["  {0} ({1} tier) of {2} ranged damage", "1", "0", "Blunt"]
+        ],
+        "*-tainted": [
+          ["Vulnerable to {0} damage", "Blunt"],
+          ["Attacks:"],
+          ["  {0} ({1} tier) of {2} damage", "5", "3", "Piercing"],
+          ["  {0} ({1} tier) of {2} damage", "5", "3", "Piercing"],
+          ["  {0} ({1} tier) of {2} ranged damage", "1", "0", "Blunt"]
+        ],
+        "*-corrupt": [
+          ["Vulnerable to {0} damage", "Blunt"],
+          ["Attacks:"],
+          ["  {0} ({1} tier) of {2} damage", "8", "4", "Piercing"],
+          ["  {0} ({1} tier) of {2} damage", "8", "4", "Blunt"],
+          ["  {0} ({1} tier) of {2} ranged damage", "1", "0", "Blunt"]
+        ],
+        "*-nightmare": [
+          ["Vulnerable to {0} damage", "Blunt"],
+          ["Attacks:"],
+          ["  {0} ({1} tier) of {2} damage", "11", "5", "Piercing"],
+          ["  {0} ({1} tier) of {2} damage", "11", "5", "Blunt"],
+          ["  {0} ({1} tier) of {2} ranged damage", "1", "0", "Blunt"]
+        ],
+        "*-double-headed": [
+          ["Vulnerable to {0} damage", "Blunt"],
+          ["Attacks:"],
+          ["  {0} ({1} tier) of {2} damage", "15", "6", "Piercing"],
+          ["  {0} ({1} tier) of {2} damage", "15", "6", "Blunt"],
+          ["  {0} ({1} tier) of {2} ranged damage", "1", "0", "Blunt"]
+        ],
+        "*": []
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/drifter",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
       "code": "CombatOverhaul:EntityColliders",
       "elementsByType": {
         "*-double-headed": {
@@ -103,7 +157,7 @@
     "side": "Server",
     "file": "game:entities/lore/drifter",
     "op": "replace",
-    "path": "/server/behaviors/8/aitasks/2",
+    "path": "/server/behaviors/8/aitasks/3",
     "value": {
       "code": "meleeattack",
       "entityCodes": ["player"],

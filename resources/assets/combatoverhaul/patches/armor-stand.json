@@ -1,6 +1,6 @@
 ﻿[
-  {"enabled": true, "file": "game:entities/land/armorstand", "op": "replace", "path": "/client/behaviors/2/code", "value": "CombatOverhaul:ArmorStandInventory"},
-  {"enabled": true, "file": "game:entities/land/armorstand", "op": "replace", "path": "/server/behaviors/2/code", "value": "CombatOverhaul:ArmorStandInventory"},
-  {"enabled": true, "file": "game:entities/land/armorstand-aged", "op": "replace", "path": "/client/behaviors/2/code", "value": "CombatOverhaul:ArmorStandInventory"},
-  {"enabled": true, "file": "game:entities/land/armorstand-aged", "op": "replace", "path": "/server/behaviors/2/code", "value": "CombatOverhaul:ArmorStandInventory"}
+  {"enabled": true, "file": "game:entities/nonliving/armorstand", "op": "replace", "path": "/client/behaviors/2/code", "value": "CombatOverhaul:ArmorStandInventory"},
+  {"enabled": true, "file": "game:entities/nonliving/armorstand", "op": "replace", "path": "/server/behaviors/2/code", "value": "CombatOverhaul:ArmorStandInventory"},
+  {"enabled": true, "file": "game:entities/nonliving/armorstand-aged", "op": "replace", "path": "/client/behaviors/2/code", "value": "CombatOverhaul:ArmorStandInventory"},
+  {"enabled": true, "file": "game:entities/nonliving/armorstand-aged", "op": "replace", "path": "/server/behaviors/2/code", "value": "CombatOverhaul:ArmorStandInventory"}
 ]

@@ -5,6 +5,30 @@
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
+      "code": "CombatOverhaul:ShowStatsBehavior",
+      "entriesByType": {
+        "goat-angora-adult-male": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "7", "1", "Blunt"]],
+        "goat-ibexalp-adult-male": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "7.5", "1", "Blunt"]],
+        "goat-ibexnub-adult-male": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "7.5", "1", "Blunt"]],
+        "goat-markhor-adult-male": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "8", "1", "Blunt"]],
+        "goat-mountain-adult-male": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "7.5", "1", "Blunt"]],
+        "goat-muskox-adult-male": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "9.5", "1", "Blunt"]],
+        "goat-nubian-adult-male": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "6", "1", "Blunt"]],
+        "goat-sirohi-adult-male": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "6", "1", "Blunt"]],
+        "goat-takingold-adult-male": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "9", "1", "Blunt"]],
+        "goat-turdag-adult-male": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "7.5", "1", "Blunt"]],
+        "goat-valais-adult-male": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "7", "1", "Blunt"]],
+        "*-female": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "3", "1", "Blunt"]],
+        "*": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "7.5", "1", "Blunt"]]
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/goat-adult",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
       "code": "CombatOverhaul:EntityColliders",
       "elementsByType": {
         "*-sirohi-*": {
@@ -156,5 +180,26 @@
     }
   },
   {"side": "Server", "file": "game:entities/animal/mammal/hooved/goat-adult", "op": "replace", "path": "/server/behaviors/12/aitasks/0/damageType", "value": "BluntAttack"},
-  {"side": "Server", "file": "game:entities/animal/mammal/hooved/goat-adult", "op": "replace", "path": "/server/behaviors/12/aitasks/0/damageTier", "value": 1}
+  {"side": "Server", "file": "game:entities/animal/mammal/hooved/goat-adult", "op": "replace", "path": "/server/behaviors/12/aitasks/0/damageTier", "value": 1},
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/goat-adult",
+    "op": "replace",
+    "path": "/server/behaviors/12/aitasks/0/damageByType",
+    "value": {
+      "goat-angora-adult-male": 7,
+      "goat-ibexalp-adult-male": 7.5,
+      "goat-ibexnub-adult-male": 7.5,
+      "goat-markhor-adult-male": 8,
+      "goat-mountain-adult-male": 7.5,
+      "goat-muskox-adult-male": 9.5,
+      "goat-nubian-adult-male": 6,
+      "goat-sirohi-adult-male": 6,
+      "goat-takingold-adult-male": 9,
+      "goat-turdag-adult-male": 7.5,
+      "goat-valais-adult-male": 7,
+      "*-female": 3,
+      "*": 7.5
+    }
+  }
 ]

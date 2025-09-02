@@ -5,6 +5,34 @@
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
+      "code": "CombatOverhaul:ShowStatsBehavior",
+      "entriesByType": {
+        "deer-whitetail-adult-male": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "8", "2", "Blunt"]],
+        "deer-redbrocket-adult-female": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "4", "2", "Blunt"]],
+        "deer-marsh-adult-male": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "7", "2", "Blunt"]],
+        "deer-marsh-adult-female": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "5", "2", "Blunt"]],
+        "deer-caribou-adult-male": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "10", "2", "Blunt"]],
+        "deer-caribou-adult-female": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "8", "2", "Blunt"]],
+        "deer-water-adult-female": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "4", "2", "Blunt"]],
+        "deer-pudu-adult-male": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "1", "2", "Blunt"]],
+        "deer-pudu-adult-female": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "0.6", "2", "Blunt"]],
+        "deer-elk-adult-male": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "12", "2", "Blunt"]],
+        "deer-elk-adult-female": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "9", "2", "Blunt"]],
+        "deer-taruca-adult-female": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "8", "4", "Blunt"]],
+        "deer-chital-adult-male": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "8", "2", "Blunt"]],
+        "deer-guemal-adult-female": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "4", "2", "Blunt"]],
+        "deer-pampas-adult-female": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "4", "2", "Blunt"]],
+        "deer-fallow-adult-male": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "8", "2", "Blunt"]],
+        "*": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "6", "2", "Blunt"]]
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/deer-adult",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
       "code": "CombatOverhaul:EntityColliders",
       "elementsByType": {
         "*": {
@@ -140,5 +168,30 @@
     }
   },
   {"side": "Server", "file": "game:entities/animal/mammal/hooved/deer-adult", "op": "replace", "path": "/server/behaviors/10/aitasks/0/damageType", "value": "BluntAttack"},
-  {"side": "Server", "file": "game:entities/animal/mammal/hooved/deer-adult", "op": "replace", "path": "/server/behaviors/10/aitasks/0/damageTier", "value": 2}
+  {"side": "Server", "file": "game:entities/animal/mammal/hooved/deer-adult", "op": "replace", "path": "/server/behaviors/10/aitasks/0/damageTier", "value": 2},
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/deer-adult",
+    "op": "replace",
+    "path": "/server/behaviors/10/aitasks/0/damageByType",
+    "value": {
+      "deer-whitetail-adult-male": 8,
+      "deer-redbrocket-adult-female": 4,
+      "deer-marsh-adult-male": 7,
+      "deer-marsh-adult-female": 5,
+      "deer-caribou-adult-male": 10,
+      "deer-caribou-adult-female": 8,
+      "deer-water-adult-female": 4,
+      "deer-pudu-adult-male": 1,
+      "deer-pudu-adult-female": 0.6,
+      "deer-elk-adult-male": 12,
+      "deer-elk-adult-female": 9,
+      "deer-taruca-adult-female": 4,
+      "deer-chital-adult-male": 8,
+      "deer-guemal-adult-female": 4,
+      "deer-pampas-adult-female": 4,
+      "deer-fallow-adult-male": 8,
+      "*": 6
+    }
+  }
 ]

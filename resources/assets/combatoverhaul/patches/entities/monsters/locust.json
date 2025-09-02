@@ -5,6 +5,21 @@
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
+      "code": "CombatOverhaul:ShowStatsBehavior",
+      "entriesByType": {
+        "*-bronze": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "2", "2", "Piercing"]],
+        "*-corrupt": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "4", "5", "Piercing"]],
+        "*-corrupt-sawblade": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "8", "8", "Slashing"]],
+        "*": []
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/locust",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
       "code": "CombatOverhaul:EntityColliders",
       "elementsByType": {
         "*-corrupt-sawblade": {

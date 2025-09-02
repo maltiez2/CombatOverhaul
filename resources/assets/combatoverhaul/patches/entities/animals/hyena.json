@@ -5,6 +5,16 @@
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
+      "code": "CombatOverhaul:ShowStatsBehavior",
+      "entriesByType": {"*": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "6", "2", "Slashing"]]}
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hyena-adult",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
       "code": "CombatOverhaul:EntityColliders",
       "elements": {
         "Torso": ["R back leg", "L back leg", "R front leg", "L front leg", "neck", "Body", "abdomen"],
@@ -132,5 +142,6 @@
     }
   },
   {"side": "Server", "file": "game:entities/animal/mammal/hyena-adult", "op": "replace", "path": "/server/behaviors/11/aitasks/1/damageType", "value": "SlashingAttack"},
-  {"side": "Server", "file": "game:entities/animal/mammal/hyena-adult", "op": "add", "path": "/server/behaviors/11/aitasks/1/damageTier", "value": 2}
+  {"side": "Server", "file": "game:entities/animal/mammal/hyena-adult", "op": "add", "path": "/server/behaviors/11/aitasks/1/damageTier", "value": 2},
+  {"side": "Server", "file": "game:entities/animal/mammal/hyena-adult", "op": "replace", "path": "/server/behaviors/11/aitasks/1/damage", "value": 6}
 ]

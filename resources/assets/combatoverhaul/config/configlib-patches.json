@@ -132,6 +132,13 @@
       "default": false
     },
     {
+      "code": "directions_hotkeys_controls",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-directions_hotkeys_controls",
+      "clientSide": true,
+      "default": false
+    },
+    {
       "code": "directions_cursor_transparency",
       "type": "float",
       "ingui": "combatoverhaul:setting-directions_cursor_transparency",
@@ -303,6 +310,12 @@
         "min": 0.2,
         "max": 5.0
       }
+    },
+    {
+      "code": "melee_weapon_stop_on_terrain_hit",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-melee_weapon_stop_on_terrain_hit",
+      "default": false
     },
     {
       "code": "weapon_rendering_offset",

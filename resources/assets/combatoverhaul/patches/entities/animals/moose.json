@@ -5,6 +5,20 @@
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
+      "code": "CombatOverhaul:ShowStatsBehavior",
+      "entriesByType": {
+        "*-male": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "12", "3", "Blunt"]],
+        "*-female": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "9", "3", "Blunt"]],
+        "*": []
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/hooved/moose-adult",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
       "code": "CombatOverhaul:EntityColliders",
       "elementsByType": {
         "*": {
@@ -150,6 +164,6 @@
     "file": "game:entities/animal/mammal/hooved/moose-adult",
     "op": "replace",
     "path": "/server/behaviors/10/aitasks/0/damageByType",
-    "value": {"*-male-adult": 10, "*-female-adult": 9, "*-baby": 0.1}
+    "value": {"*-male": 12, "*-female": 9}
   }
 ]
