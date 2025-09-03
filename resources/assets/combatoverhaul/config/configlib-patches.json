@@ -74,6 +74,56 @@
         "2/value/damageModel/Zones/3/DamageMultiplier": "player_model_face_damage",
         "2/value/damageModel/Zones/4-8/DamageMultiplier": "player_model_arms_damage",
         "2/value/damageModel/Zones/8-12/DamageMultiplier": "player_model_legs_damage"
+      },
+      "combatoverhaul:patches/entities/lore/bowtorn.json": {
+        "8/value/SeekingRangeByType/*-surface": "bowtorn_maxrange_surface + 5",
+        "8/value/FiringRangeMaxByType/*-surface": "bowtorn_maxrange_surface",
+        "8/value/ProjectileSpeedByType/*-surface": "bowtorn_projectile_velocity_surface",
+        "9/value/*-surface": "(bowtorn_maxrange_surface - 14) / 2 + 14",
+        "10/value/*-surface": "bowtorn_maxrange_surface - ((bowtorn_maxrange_surface - 14) / 2 + 14)",
+        "11/value/*-surface": "bowtorn_maxrange_surface * 1.2",
+        "12/value/*-surface": "bowtorn_maxrange_surface * 1.2",
+        "13/value/*-surface": "bowtorn_maxrange_surface * 2",
+        "8/value/SeekingRangeByType/*-deep": "bowtorn_maxrange_deep + 5",
+        "8/value/FiringRangeMaxByType/*-deep": "bowtorn_maxrange_deep",
+        "8/value/ProjectileSpeedByType/*-deep": "bowtorn_projectile_velocity_deep",
+        "9/value/*-deep": "(bowtorn_maxrange_deep - 14) / 2 + 14",
+        "10/value/*-deep": "bowtorn_maxrange_deep - ((bowtorn_maxrange_deep - 14) / 2 + 14)",
+        "11/value/*-deep": "bowtorn_maxrange_deep * 1.2",
+        "12/value/*-deep": "bowtorn_maxrange_deep * 1.2",
+        "13/value/*-deep": "bowtorn_maxrange_deep * 2",
+        "8/value/SeekingRangeByType/*-tainted": "bowtorn_maxrange_tainted + 5",
+        "8/value/FiringRangeMaxByType/*-tainted": "bowtorn_maxrange_tainted",
+        "8/value/ProjectileSpeedByType/*-tainted": "bowtorn_projectile_velocity_tainted",
+        "9/value/*-tainted": "(bowtorn_maxrange_tainted - 14) / 2 + 14",
+        "10/value/*-tainted": "bowtorn_maxrange_tainted - ((bowtorn_maxrange_tainted - 14) / 2 + 14)",
+        "11/value/*-tainted": "bowtorn_maxrange_tainted * 1.2",
+        "12/value/*-tainted": "bowtorn_maxrange_tainted * 1.2",
+        "13/value/*-tainted": "bowtorn_maxrange_tainted * 2",
+        "8/value/SeekingRangeByType/*-corrupt": "bowtorn_maxrange_corrupt + 5",
+        "8/value/FiringRangeMaxByType/*-corrupt": "bowtorn_maxrange_corrupt",
+        "8/value/ProjectileSpeedByType/*-corrupt": "bowtorn_projectile_velocity_corrupt",
+        "9/value/*-corrupt": "(bowtorn_maxrange_corrupt - 14) / 2 + 14",
+        "10/value/*-corrupt": "bowtorn_maxrange_corrupt - ((bowtorn_maxrange_corrupt - 14) / 2 + 14)",
+        "11/value/*-corrupt": "bowtorn_maxrange_corrupt * 1.2",
+        "12/value/*-corrupt": "bowtorn_maxrange_corrupt * 1.2",
+        "13/value/*-corrupt": "bowtorn_maxrange_corrupt * 2",
+        "8/value/SeekingRangeByType/*-nightmare": "bowtorn_maxrange_nightmare + 5",
+        "8/value/FiringRangeMaxByType/*-nightmare": "bowtorn_maxrange_nightmare",
+        "8/value/ProjectileSpeedByType/*-nightmare": "bowtorn_projectile_velocity_nightmare",
+        "9/value/*-nightmare": "(bowtorn_maxrange_nightmare - 14) / 2 + 14",
+        "10/value/*-nightmare": "bowtorn_maxrange_nightmare - ((bowtorn_maxrange_nightmare - 14) / 2 + 14)",
+        "11/value/*-nightmare": "bowtorn_maxrange_nightmare * 1.2",
+        "12/value/*-nightmare": "bowtorn_maxrange_nightmare * 1.2",
+        "13/value/*-nightmare": "bowtorn_maxrange_nightmare * 2",
+        "8/value/SeekingRangeByType/*-gearfoot": "bowtorn_maxrange_gearfoot + 5",
+        "8/value/FiringRangeMaxByType/*-gearfoot": "bowtorn_maxrange_gearfoot",
+        "8/value/ProjectileSpeedByType/*-gearfoot": "bowtorn_projectile_velocity_gearfoot",
+        "9/value/*-gearfoot": "(bowtorn_maxrange_gearfoot - 14) / 2 + 14",
+        "10/value/*-gearfoot": "bowtorn_maxrange_gearfoot - ((bowtorn_maxrange_gearfoot - 14) / 2 + 14)",
+        "11/value/*-gearfoot": "bowtorn_maxrange_gearfoot * 1.2",
+        "12/value/*-gearfoot": "bowtorn_maxrange_gearfoot * 1.2",
+        "13/value/*-gearfoot": "bowtorn_maxrange_gearfoot * 2"
       }
     }
   },
@@ -424,6 +474,135 @@
       "range": {
         "min": 0.0,
         "max": 5.0
+      }
+    },
+    {
+      "type": "separator",
+      "title": "combatoverhaul:setting-title-entities"
+    },
+    {
+      "type": "separator",
+      "title": "combatoverhaul:setting-title-bowtorns",
+      "collapsible": true
+    },
+    {
+      "code": "bowtorn_maxrange_surface",
+      "type": "integer",
+      "ingui": "combatoverhaul:setting-bowtorn_maxrange_surface",
+      "default": 25,
+      "range": {
+        "min": 15,
+        "max": 300
+      }
+    },
+    {
+      "code": "bowtorn_maxrange_deep",
+      "type": "integer",
+      "ingui": "combatoverhaul:setting-bowtorn_maxrange_deep",
+      "default": 30,
+      "range": {
+        "min": 15,
+        "max": 300
+      }
+    },
+    {
+      "code": "bowtorn_maxrange_tainted",
+      "type": "integer",
+      "ingui": "combatoverhaul:setting-bowtorn_maxrange_tainted",
+      "default": 37,
+      "range": {
+        "min": 15,
+        "max": 300
+      }
+    },
+    {
+      "code": "bowtorn_maxrange_corrupt",
+      "type": "integer",
+      "ingui": "combatoverhaul:setting-bowtorn_maxrange_corrupt",
+      "default": 45,
+      "range": {
+        "min": 15,
+        "max": 300
+      }
+    },
+    {
+      "code": "bowtorn_maxrange_nightmare",
+      "type": "integer",
+      "ingui": "combatoverhaul:setting-bowtorn_maxrange_nightmare",
+      "default": 53,
+      "range": {
+        "min": 15,
+        "max": 300
+      }
+    },
+    {
+      "code": "bowtorn_maxrange_gearfoot",
+      "type": "integer",
+      "ingui": "combatoverhaul:setting-bowtorn_maxrange_gearfoot",
+      "default": 90,
+      "range": {
+        "min": 15,
+        "max": 300
+      }
+    },
+    {
+      "code": "bowtorn_projectile_velocity_surface",
+      "type": "integer",
+      "ingui": "combatoverhaul:setting-bowtorn_projectile_velocity_surface",
+      "default": 40,
+      "range": {
+        "min": 10,
+        "max": 300
+      }
+    },
+    {
+      "code": "bowtorn_projectile_velocity_deep",
+      "type": "integer",
+      "ingui": "combatoverhaul:setting-bowtorn_projectile_velocity_deep",
+      "default": 48,
+      "range": {
+        "min": 10,
+        "max": 300
+      }
+    },
+    {
+      "code": "bowtorn_projectile_velocity_tainted",
+      "type": "integer",
+      "ingui": "combatoverhaul:setting-bowtorn_projectile_velocity_tainted",
+      "default": 56,
+      "range": {
+        "min": 10,
+        "max": 300
+      }
+    },
+    {
+      "code": "bowtorn_projectile_velocity_corrupt",
+      "type": "integer",
+      "ingui": "combatoverhaul:setting-bowtorn_projectile_velocity_corrupt",
+      "default": 64,
+      "range": {
+        "min": 10,
+        "max": 300
+      }
+    },
+    {
+      "code": "bowtorn_projectile_velocity_nightmare",
+      "type": "integer",
+      "ingui": "combatoverhaul:setting-bowtorn_projectile_velocity_nightmare",
+      "default": 72,
+      "range": {
+        "min": 10,
+        "max": 300
+      }
+    },
+    {
+      "code": "bowtorn_projectile_velocity_gearfoot",
+      "type": "integer",
+      "ingui": "combatoverhaul:setting-bowtorn_projectile_velocity_gearfoot",
+      "default": 100,
+      "range": {
+        "min": 10,
+        "max": 300
       }
     }
   ]

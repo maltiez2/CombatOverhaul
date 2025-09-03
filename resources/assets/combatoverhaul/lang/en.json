@@ -86,6 +86,8 @@
   "setting-title-melee-settings": "Melee",
   "setting-title-logs-settings": "Damage log (no world reload required)",
   "setting-title-player-settings": "Player damage model",
+  "setting-title-entities": "Entities settings",
+  "setting-title-bowtorns": "Bowtorns",
   "setting-directions_cursor_transparency": "Directions selection cursor transparency",
   "setting-directions_cursor_scale": "Directions selection cursor scale",
   "setting-directions_inertia": "Directions cursor inertia",
@@ -131,5 +133,17 @@
   "setting-player_model_face_damage": "Player face damage multiplier",
   "setting-player_model_arms_damage": "Player arms damage multiplier",
   "setting-player_model_legs_damage": "Player legs damage multiplier",
-  "setting-modify_vanilla_classes-comment": "Works only in singleplayer"
+  "setting-modify_vanilla_classes-comment": "Works only in singleplayer",
+  "setting-bowtorn_maxrange_surface": "Surface bowtorn max range",
+  "setting-bowtorn_projectile_velocity_surface": "Surface bowtorn projectile velocity",
+  "setting-bowtorn_maxrange_deep": "Deep bowtorn max range",
+  "setting-bowtorn_projectile_velocity_deep": "Deep bowtorn projectile velocity",
+  "setting-bowtorn_maxrange_tainted": "Tainted bowtorn max range",
+  "setting-bowtorn_projectile_velocity_tainted": "Tainted bowtorn projectile velocity",
+  "setting-bowtorn_maxrange_corrupt": "Corrupt bowtorn max range",
+  "setting-bowtorn_projectile_velocity_corrupt": "Corrupt bowtorn projectile velocity",
+  "setting-bowtorn_maxrange_nightmare": "Nightmare bowtorn max range",
+  "setting-bowtorn_projectile_velocity_nightmare": "Nightmare bowtorn projectile velocity",
+  "setting-bowtorn_maxrange_gearfoot": "Gearfoot bowtorn max range",
+  "setting-bowtorn_projectile_velocity_gearfoot": "Gearfoot bowtorn projectile velocity"
 }

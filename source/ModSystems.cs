@@ -30,9 +30,12 @@ public sealed class CombatOverhaulAdditionalSystem : ModSystem
 
     public override void AssetsFinalize(ICoreAPI api)
     {
-        ArmorAutoPatcher.Patch(api);
+        if (api.Side == EnumAppSide.Server)
+        {
+            ArmorAutoPatcher.Patch(api);
+        }
 
-        if (api is ICoreClientAPI clientApi)
+        if  (api is ICoreClientAPI clientApi)
         {
             CheckStatusClientSide(clientApi);
         }
