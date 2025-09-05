@@ -1,0 +1,36 @@
+﻿{
+  "code": "arrow",
+  "class": "Item",
+  "tags": ["projectile"],
+  "variantgroups": [{"code": "material", "states": ["bowtorn"]}],
+  "behaviors": [
+    {
+      "name": "CombatOverhaul:Projectile",
+      "properties": {
+        "stats": {
+          "AdditionalDurabilityCost": 0,
+          "CollisionRadius": 0.2,
+          "PenetrationDistance": 0.1,
+          "DamageStats": {"DamageType": "PiercingAttack", "Damage": 1},
+          "DamageTierBonus": 0,
+          "SpeedThreshold": 0.3,
+          "Knockback": 0.5,
+          "EntityCode": "combatoverhaul:arrow-{material}",
+          "HitSound": "game:sounds/player/projectilehit",
+          "DurabilityDamage": 0,
+          "DropChance": 1,
+          "CanBeCollected": false
+        }
+      }
+    }
+  ],
+  "maxstacksize": 64,
+  "storageFlags": 513,
+  "shape": {"base": "combatoverhaul:ammo/arrows/{material}"},
+  "creativeinventory": {"general": ["*"], "items": ["*"], "tools": ["*"], "combatoverhaul": ["*"]},
+  "guiTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -18, "y": -39, "z": -145}, "origin": {"x": 1.1, "y": -0.38, "z": 0}, "scale": 1.45},
+  "fpHandTransform": {"translation": {"x": 0.35, "y": 0, "z": 0}, "rotation": {"x": 87, "y": 90, "z": -30}, "scale": 1.14},
+  "tpHandTransform": {"translation": {"x": -1.05, "y": -0.4599, "z": -0.87}, "rotation": {"x": 0, "y": 2, "z": 3}, "scale": 0.55},
+  "groundTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": -0.03, "z": 0.5}, "scale": 2.64},
+  "attributes": {"handbook": {"groupBy": ["arrow-*"]}}
+}

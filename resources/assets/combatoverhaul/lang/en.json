@@ -135,15 +135,15 @@
   "setting-player_model_legs_damage": "Player legs damage multiplier",
   "setting-modify_vanilla_classes-comment": "Works only in singleplayer",
   "setting-bowtorn_maxrange_surface": "Surface bowtorn max range",
-  "setting-bowtorn_projectile_velocity_surface": "Surface bowtorn projectile velocity",
+  "setting-bowtorn_projectile_velocity_surface": "Surface bowtorn projectile speed",
   "setting-bowtorn_maxrange_deep": "Deep bowtorn max range",
-  "setting-bowtorn_projectile_velocity_deep": "Deep bowtorn projectile velocity",
+  "setting-bowtorn_projectile_velocity_deep": "Deep bowtorn projectile speed",
   "setting-bowtorn_maxrange_tainted": "Tainted bowtorn max range",
-  "setting-bowtorn_projectile_velocity_tainted": "Tainted bowtorn projectile velocity",
+  "setting-bowtorn_projectile_velocity_tainted": "Tainted bowtorn projectile speed",
   "setting-bowtorn_maxrange_corrupt": "Corrupt bowtorn max range",
-  "setting-bowtorn_projectile_velocity_corrupt": "Corrupt bowtorn projectile velocity",
+  "setting-bowtorn_projectile_velocity_corrupt": "Corrupt bowtorn projectile speed",
   "setting-bowtorn_maxrange_nightmare": "Nightmare bowtorn max range",
-  "setting-bowtorn_projectile_velocity_nightmare": "Nightmare bowtorn projectile velocity",
+  "setting-bowtorn_projectile_velocity_nightmare": "Nightmare bowtorn projectile speed",
   "setting-bowtorn_maxrange_gearfoot": "Gearfoot bowtorn max range",
-  "setting-bowtorn_projectile_velocity_gearfoot": "Gearfoot bowtorn projectile velocity"
+  "setting-bowtorn_projectile_velocity_gearfoot": "Gearfoot bowtorn projectile speed"
 }

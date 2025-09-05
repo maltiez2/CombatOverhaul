@@ -49,8 +49,8 @@
       "*-ruined": {"base": "game:item/tool/spear/ruined/{type}"}
     },
     "texturesByType": {"@spear-generic-(chert|granite|andesite|basalt|obsidian|peridotite)": {"head": {"base": "game:block/stone/rock/{material}1"}}},
-    "behaviors": [{"code": "CombatOverhaul:ProjectilePhysics", "groundDragFactor": 1, "airDragFactor": 3, "gravityFactor": 2}, {"code": "interpolateposition"}]
+    "behaviors": [{"code": "CombatOverhaul:ProjectilePhysics", "groundDragFactor": 1, "airDragFactor": 3, "gravityFactor": 3}, {"code": "interpolateposition"}]
   },
-  "server": {"behaviors": [{"code": "CombatOverhaul:ProjectilePhysics", "groundDragFactor": 1, "airDragFactor": 3, "gravityFactor": 2}, {"code": "despawn", "minSeconds": 600}]},
+  "server": {"behaviors": [{"code": "CombatOverhaul:ProjectilePhysics", "groundDragFactor": 1, "airDragFactor": 3, "gravityFactor": 3}, {"code": "despawn", "minSeconds": 600}]},
   "sounds": {}
 }

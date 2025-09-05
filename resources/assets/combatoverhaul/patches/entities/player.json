@@ -74,5 +74,46 @@
         ]
       }
     }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/humanoid/player",
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:PlayerDamageModel",
+      "secondChanceCooldownSec": 300,
+      "secondChanceAvailable": true,
+      "bodyParts": {
+        "LowerTorso": "Torso",
+        "UpperTorso": "Torso",
+        "Head": "Head",
+        "Neck": "Neck",
+        "UpperArmR": "RightArm",
+        "UpperArmL": "LeftArm",
+        "LowerArmR": "RightHand",
+        "LowerArmL": "LeftHand",
+        "UpperFootL": "LeftLeg",
+        "UpperFootR": "RightLeg",
+        "LowerFootL": "LeftFoot",
+        "LowerFootR": "RightFoot"
+      },
+      "damageModel": {
+        "Zones": [
+          {"Zone": "Torso", "Coverage": 100, "Top": 90, "Bottom": 90, "Left": 180, "Right": 180, "DamageMultiplier": 1},
+          {"Zone": "Head", "Coverage": 60, "Top": 90, "Bottom": 15, "Left": 180, "Right": 180, "DamageMultiplier": 2},
+          {"Zone": "Neck", "Coverage": 5, "Top": 30, "Bottom": 15, "Left": 180, "Right": 180, "DamageMultiplier": 2},
+          {"Zone": "Face", "Coverage": 10, "Top": 60, "Bottom": 60, "Left": 60, "Right": 60, "DamageMultiplier": 1.5},
+          {"Zone": "LeftArm", "Coverage": 15, "Top": 90, "Bottom": 90, "Left": 180, "Right": 0, "DamageMultiplier": 0.5},
+          {"Zone": "RightArm", "Coverage": 15, "Top": 90, "Bottom": 90, "Left": 0, "Right": 180, "DamageMultiplier": 0.5},
+          {"Zone": "LeftHand", "Coverage": 15, "Top": 90, "Bottom": 90, "Left": 180, "Right": 0, "DamageMultiplier": 0.5},
+          {"Zone": "RightHand", "Coverage": 15, "Top": 90, "Bottom": 90, "Left": 0, "Right": 180, "DamageMultiplier": 0.5},
+          {"Zone": "LeftLeg", "Coverage": 15, "Top": 60, "Bottom": 90, "Left": 180, "Right": 0, "DamageMultiplier": 0.5},
+          {"Zone": "RightLeg", "Coverage": 15, "Top": 60, "Bottom": 90, "Left": 0, "Right": 180, "DamageMultiplier": 0.5},
+          {"Zone": "LeftFoot", "Coverage": 15, "Top": 60, "Bottom": 90, "Left": 180, "Right": 0, "DamageMultiplier": 0.5},
+          {"Zone": "RightFoot", "Coverage": 15, "Top": 60, "Bottom": 90, "Left": 0, "Right": 180, "DamageMultiplier": 0.5}
+        ]
+      }
+    }
   }
 ]

@@ -246,7 +246,7 @@
     "op": "replace",
     "path": "/server/behaviors/8/aitasks/5",
     "value": {
-      "code": "turretmode-r",
+      "code": "CombatOverhaul:TurretMode",
       "ExecutionChance": 1,
       "Priority": 1.5,
       "PriorityForCancel": 3.5,
@@ -258,12 +258,20 @@
       "SneakRangeReduction": 0.5,
       "DrawSound": "game:sounds/creature/bowtorn/draw",
       "ReloadSound": "game:sounds/creature/bowtorn/reload",
+      "ShootSound": "game:sounds/creature/bowtorn/release",
+      "SoundRange": 60,
       "ProjectileCode": "bowtornprojectile",
       "ProjectileItem": "arrow-bone",
-      "ProjectileDamageByType": {"*-surface": 2, "*-deep": 2.5, "*-tainted": 3, "*-corrupt": 3.5, "*-nightmare": 4, "*-gearfoot": 4.5},
-      "ProjectileDamageTierByType": {"*-surface": 2, "*-deep": 3, "*-tainted": 4, "*-corrupt": 6, "*-nightmare": 8, "*-gearfoot": 9},
-      "ProjectileDamageTypeByType": {"*": "PiercingAttack"},
-      "ProjectileSpeedByType": {"*-surface": 40, "*-deep": 48, "*-tainted": 56, "*-corrupt": 64, "*-nightmare": 72, "*-gearfoot": 100}
+      "ProjectileDamageMultiplierByType": {"*-surface": 2, "*-deep": 2, "*-tainted": 2, "*-corrupt": 2, "*-nightmare": 2, "*-gearfoot": 2},
+      "ProjectileDamageTierByType": {"*-surface": 3, "*-deep": 4, "*-tainted": 5, "*-corrupt": 6, "*-nightmare": 8, "*-gearfoot": 9},
+      "ProjectileSpeedByType": {"*-surface": 40, "*-deep": 48, "*-tainted": 56, "*-corrupt": 64, "*-nightmare": 72, "*-gearfoot": 100},
+      "projectileStack": {"type": "item", "code": "combatoverhaul:arrow-bowtorn"},
+      "ProjectilesNumber": 1,
+      "YawDispersionDeg": 0.6,
+      "PitchDispersionDeg": 0.6,
+      "MaxYawDispersionDeg": 10,
+      "MaxPitchDispersionDeg": 10,
+      "DispersionReductionRate": 0.4
     }
   },
   {
