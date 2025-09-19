@@ -23,7 +23,9 @@
           "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
           "Directions": [45, 45, 45, 45],
           "Sound": "game:sounds/held/shieldblock-wood-heavy",
-          "BlockTier": {"BluntAttack": 4, "SlashingAttack": 4, "PiercingAttack": 4}
+          "BlockTier": {"BluntAttack": 4, "SlashingAttack": 4, "PiercingAttack": 4},
+          "StaggerTimeMs": 500,
+          "StaggerTier": 2
         },
         "Block": {
           "Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
@@ -49,7 +51,9 @@
           "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
           "Directions": [45, 45, 45, 45],
           "Sound": "game:sounds/held/shieldblock-wood-heavy",
-          "BlockTier": {"BluntAttack": 5, "SlashingAttack": 5, "PiercingAttack": 5}
+          "BlockTier": {"BluntAttack": 5, "SlashingAttack": 5, "PiercingAttack": 5},
+          "StaggerTimeMs": 1000,
+          "StaggerTier": 3
         },
         "Block": {
           "Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
@@ -67,7 +71,9 @@
               "DamageByType": {"*": {"DamageType": "BluntAttack", "Tier": 0, "Damage": 1}},
               "Knockback": 2,
               "DurabilityDamage": 1,
-              "Collider": [-0.3, -0.3, 0.2, 0.39999998, -0.3, 0.2]
+              "Collider": [-0.3, -0.3, 0.2, 0.39999998, -0.3, 0.2],
+              "StaggerTimeMs": 500,
+              "StaggerTier": 2
             }
           ]
         },
@@ -90,7 +96,9 @@
           "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
           "Directions": [45, 45, 45, 45],
           "Sound": "game:sounds/held/shieldblock-wood-heavy",
-          "BlockTier": {"BluntAttack": 6, "SlashingAttack": 6, "PiercingAttack": 6}
+          "BlockTier": {"BluntAttack": 6, "SlashingAttack": 6, "PiercingAttack": 6},
+          "StaggerTimeMs": 1000,
+          "StaggerTier": 3
         },
         "Block": {
           "Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
@@ -108,7 +116,9 @@
               "DamageByType": {"*": {"DamageType": "BluntAttack", "Tier": 0, "Damage": 1}},
               "Knockback": 2,
               "DurabilityDamage": 1,
-              "Collider": [-0.3, -0.3, 0.2, 0.39999998, -0.3, 0.2]
+              "Collider": [-0.3, -0.3, 0.2, 0.39999998, -0.3, 0.2],
+              "StaggerTimeMs": 500,
+              "StaggerTier": 2
             }
           ]
         },
@@ -131,7 +141,9 @@
           "Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
           "Directions": [90, 90, 90, 90],
           "Sound": "game:sounds/held/shieldblock-metal-heavy",
-          "BlockTier": {"BluntAttack": 7, "SlashingAttack": 7, "PiercingAttack": 7}
+          "BlockTier": {"BluntAttack": 7, "SlashingAttack": 7, "PiercingAttack": 7},
+          "StaggerTimeMs": 1000,
+          "StaggerTier": 4
         },
         "Block": {
           "Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
@@ -149,7 +161,9 @@
               "DamageByType": {"*": {"DamageType": "BluntAttack", "Tier": 0, "Damage": 1}},
               "Knockback": 2,
               "DurabilityDamage": 1,
-              "Collider": [-0.3, -0.3, 0.2, 0.39999998, -0.3, 0.2]
+              "Collider": [-0.3, -0.3, 0.2, 0.39999998, -0.3, 0.2],
+              "StaggerTimeMs": 500,
+              "StaggerTier": 3
             }
           ]
         },
@@ -172,7 +186,9 @@
           "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
           "Directions": [90, 90, 90, 90],
           "Sound": "game:sounds/held/shieldblock-metal-heavy",
-          "BlockTier": {"BluntAttack": 7, "SlashingAttack": 7, "PiercingAttack": 7}
+          "BlockTier": {"BluntAttack": 7, "SlashingAttack": 7, "PiercingAttack": 7},
+          "StaggerTimeMs": 1000,
+          "StaggerTier": 4
         },
         "Block": {
           "Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
@@ -190,7 +206,9 @@
               "DamageByType": {"*": {"DamageType": "BluntAttack", "Tier": 0, "Damage": 1}},
               "Knockback": 2,
               "DurabilityDamage": 1,
-              "Collider": [-0.3, -0.3, 0.2, 0.39999998, -0.3, 0.2]
+              "Collider": [-0.3, -0.3, 0.2, 0.39999998, -0.3, 0.2],
+              "StaggerTimeMs": 500,
+              "StaggerTier": 3
             }
           ]
         },

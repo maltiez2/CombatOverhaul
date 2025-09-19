@@ -11,6 +11,16 @@
         "FOVMultiplier": 1,
         "BobbingAmplitude": 1,
         "Elements": {"ItemAnchor": [0, 0, 0, 0, 0, 14], "LowerArmR": [0, 0, 0, 0, 0, -63], "UpperArmR": [0, 0, 0, 5, -11, -32]}
+      },
+      {
+        "EasingTime": 3000,
+        "EasingFunction": "Sin",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {"ItemAnchor": [0, 0, 0, 0, 0, 14], "LowerArmR": [0, 0, 0, 0, 0, -63], "UpperArmR": [0, 0, 0, 5, -11, -32]}
       }
     ],
     "ItemKeyFrames": [],

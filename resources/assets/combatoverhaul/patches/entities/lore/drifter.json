@@ -210,5 +210,25 @@
       "sound": "creature/drifter-hit",
       "soundStartMs": 800
     }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/drifter",
+    "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:Stagger",
+      "taskConfig": {
+        "code": "CombatOverhaul:Stagger",
+        "Priority": 10,
+        "priorityForCancel": 10,
+        "ExecutionChance": 0,
+        "MinCooldownMs": 100,
+        "MaxCooldownMs": 100,
+        "Animation": "standdespair",
+        "Sound": "creature/drifter-hit",
+        "MaxDurationMs": 2000
+      }
+    }
   }
 ]

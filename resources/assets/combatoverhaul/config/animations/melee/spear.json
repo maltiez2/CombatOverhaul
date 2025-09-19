@@ -12,6 +12,17 @@
         "FOVMultiplier": 1,
         "BobbingAmplitude": 1,
         "Elements": {"ItemAnchor": [11.1, 0, 0, 0, 0, 17], "LowerArmR": [0, 0, 0, 0, 0, -62], "UpperArmR": [0, 0, 0, 8, 8, 37]}
+      },
+      {
+        "EasingTime": 3000,
+        "EasingFunction": "Sin",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": false,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {"ItemAnchor": [11.1, 0, 0, 0, 0, 17], "LowerArmR": [0, 0, 0, 0, 0, -62], "UpperArmR": [0, 0, 0, 8, 8, 37]}
       }
     ],
     "ItemKeyFrames": [],
@@ -63,6 +74,24 @@
           "LowerArmL": [0, 0, 0, 15, 0, -24],
           "UpperArmL": [3.8, -0.1, 0, -22, -58, -94]
         }
+      },
+      {
+        "EasingTime": 3000,
+        "EasingFunction": "Sin",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": false,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {
+          "ItemAnchor": [0, 0, 0, 0, 6, 24],
+          "LowerArmR": [0, 0, 0, 0, 0, -86],
+          "UpperArmR": [1.6, -1.6, 0, 10, 0, 66],
+          "ItemAnchorL": [0, 0, 0, 0, 0, 0],
+          "LowerArmL": [0, 0, 0, 15, 0, -24],
+          "UpperArmL": [3.8, -0.1, 0, -22, -58, -94]
+        }
       }
     ],
     "ItemKeyFrames": [],
@@ -73,6 +102,107 @@
     "ItemAnimationEnd": 0
   },
   "spear-idle-2h": {
+    "Hold": true,
+    "PlayerKeyFrames": [
+      {
+        "EasingTime": 300,
+        "EasingFunction": "Sin",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {
+          "ItemAnchor": [0, 0, 0, 0, 24, -15],
+          "LowerArmR": [0, 0, 0, 0, 0, -41],
+          "UpperArmR": [0, 0, 0, 2, 19, -4],
+          "ItemAnchorL": [0, 0, 0, 0, 0, 0],
+          "LowerArmL": [0, 0, 0, 0, 0, -63],
+          "UpperArmL": [0, 0, 0, -8, 20, -59]
+        }
+      }
+    ],
+    "ItemKeyFrames": [],
+    "SoundFrames": [],
+    "ParticlesFrames": [],
+    "CallbackFrames": [],
+    "ItemAnimationStart": 0,
+    "ItemAnimationEnd": 0
+  },
+  "spear-walk-1h": {
+    "Hold": true,
+    "PlayerKeyFrames": [
+      {
+        "EasingTime": 300,
+        "EasingFunction": "Sin",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": false,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {"ItemAnchor": [11.1, 0, 0, 0, 0, 17], "LowerArmR": [0, 0, 0, 0, 0, -62], "UpperArmR": [0, 0, 0, 8, 8, 37]}
+      }
+    ],
+    "ItemKeyFrames": [],
+    "SoundFrames": [],
+    "ParticlesFrames": [],
+    "CallbackFrames": [],
+    "ItemAnimationStart": 0,
+    "ItemAnimationEnd": 0
+  },
+  "spear-run-1h": {
+    "Hold": true,
+    "PlayerKeyFrames": [
+      {
+        "EasingTime": 300,
+        "EasingFunction": "Sin",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": false,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {"ItemAnchor": [0, -0.9, 0, 0, 0, -62], "LowerArmR": [0, 0, 0, 0, 0, -42], "UpperArmR": [0, 0, 0, 0, 0, -29]}
+      }
+    ],
+    "ItemKeyFrames": [],
+    "SoundFrames": [],
+    "ParticlesFrames": [],
+    "CallbackFrames": [],
+    "ItemAnimationStart": 0,
+    "ItemAnimationEnd": 0
+  },
+  "spear-walk-2h": {
+    "Hold": true,
+    "PlayerKeyFrames": [
+      {
+        "EasingTime": 300,
+        "EasingFunction": "Sin",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": false,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {
+          "ItemAnchor": [0, 0, 0, 0, 6, 24],
+          "LowerArmR": [0, 0, 0, 0, 0, -86],
+          "UpperArmR": [1.6, -1.6, 0, 10, 0, 66],
+          "ItemAnchorL": [0, 0, 0, 0, 0, 0],
+          "LowerArmL": [0, 0, 0, 15, 0, -24],
+          "UpperArmL": [3.8, -0.1, 0, -22, -58, -94]
+        }
+      }
+    ],
+    "ItemKeyFrames": [],
+    "SoundFrames": [],
+    "ParticlesFrames": [],
+    "CallbackFrames": [],
+    "ItemAnimationStart": 0,
+    "ItemAnimationEnd": 0
+  },
+  "spear-run-2h": {
     "Hold": true,
     "PlayerKeyFrames": [
       {

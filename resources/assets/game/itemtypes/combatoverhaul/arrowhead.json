@@ -1,5 +1,6 @@
 ﻿{
   "code": "arrowhead",
+  "enabled": false,
   "variantgroups": [{"code": "material", "states": ["obsidian"]}],
   "shapeByType": {"*": {"base": "item/tool/arrowhead-stone"}},
   "texturesByType": {"*-obsidian": {"material": {"base": "block/stone/rock/{material}1"}}},
