@@ -7,11 +7,11 @@
     "value": {
       "code": "CombatOverhaul:ShowStatsBehavior",
       "entriesByType": {
-        "*-black-*": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "10", "4", "Shlashing"]],
-        "*-brown-*": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "16", "5", "Shlashing"]],
-        "*-sun-*": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "6", "4", "Shlashing"]],
-        "*-panda-*": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "10", "4", "Shlashing"]],
-        "*-polar-*": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "16", "5", "Shlashing"]],
+        "*-black-*": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "10", "4", "Slashing"]],
+        "*-brown-*": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "16", "5", "Slashing"]],
+        "*-sun-*": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "6", "4", "Slashing"]],
+        "*-panda-*": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "10", "4", "Slashing"]],
+        "*-polar-*": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "16", "5", "Slashing"]],
         "*": []
       }
     }

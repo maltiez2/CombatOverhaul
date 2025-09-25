@@ -369,6 +369,16 @@
       }
     },
     {
+      "code": "global_attack_cooldown_ms",
+      "type": "integer",
+      "ingui": "combatoverhaul:setting-global_attack_cooldown_ms",
+      "default": 1000,
+      "range": {
+        "min": 0,
+        "max": 5000
+      }
+    },
+    {
       "code": "melee_weapon_stop_on_terrain_hit",
       "type": "boolean",
       "ingui": "combatoverhaul:setting-melee_weapon_stop_on_terrain_hit",

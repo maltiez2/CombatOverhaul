@@ -106,6 +106,7 @@
   "setting-spears_aiming_difficulty": "Spears aiming difficulty",
   "setting-spears_thrown_distance": "Spears throwing distance",
   "setting-melee_weapons_damage_multiplier": "Melee weapons damage multiplier",
+  "setting-global_attack_cooldown_ms": "Global attack cooldown for melee weapons",
   "setting-melee_weapon_stop_on_terrain_hit": "Stop melee attack on hitting terrain",
   "setting-bows_damage_multiplier": "Bows damage multiplier",
   "setting-spears_directional_attacks": "Spears directional attack animations",

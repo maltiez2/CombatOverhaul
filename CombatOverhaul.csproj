@@ -3,7 +3,7 @@
   <PropertyGroup>
     <ModName>Combat Overhaul</ModName>
     <ModType>code</ModType>
-    <ModVersion>0.9.4</ModVersion>
+    <ModVersion>0.9.5</ModVersion>
     <ModId>combatoverhaul</ModId>
     <Description></Description>
     <Side>universal</Side>
@@ -30,7 +30,7 @@
   <!-- Dependencies -->
   <ItemGroup>
     <Dependencies Include="overhaullib">
-      <Version>1.9.1</Version>
+      <Version>1.11.0</Version>
     </Dependencies>
   </ItemGroup>
 
