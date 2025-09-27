@@ -46,7 +46,9 @@
           "Directions": [60, 60, 60, 60],
           "Sound": "game:sounds/held/shieldblock-metal-heavy",
           "BlockTier": {"BluntAttack": 9, "SlashingAttack": 9, "PiercingAttack": 9},
-          "CanBlockProjectiles": false
+          "CanBlockProjectiles": false,
+          "StaggerTier": 6,
+          "StaggerTimeMs": 3000
         },
         "BlockCooldownMs": 300,
         "BlockAnimation": "combatoverhaul:sword-short-parry",
@@ -76,7 +78,9 @@
           "Directions": [60, 60, 60, 60],
           "Sound": "game:sounds/held/shieldblock-metal-heavy",
           "BlockTier": {"BluntAttack": 9, "SlashingAttack": 9, "PiercingAttack": 9},
-          "CanBlockProjectiles": false
+          "CanBlockProjectiles": false,
+          "StaggerTier": 6,
+          "StaggerTimeMs": 3000
         },
         "BlockCooldownMs": 300,
         "BlockAnimation": "combatoverhaul:sword-short-parry",

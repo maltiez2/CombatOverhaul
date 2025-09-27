@@ -3,6 +3,13 @@
     "side": "Server",
     "file": "game:entities/lore/drifter",
     "op": "add",
+    "path": "/client/animations/-",
+    "value": {"code": "stagger", "animation": "stagger", "animationSpeed": 1, "weight": 1000, "blendMode": "AddAverage", "EaseInSpeed": 1000000000, "EaseOutSpeed": 1}
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/drifter",
+    "op": "add",
     "path": "/client/behaviors/-",
     "value": {
       "code": "CombatOverhaul:ShowStatsBehavior",
@@ -157,7 +164,7 @@
     "side": "Server",
     "file": "game:entities/lore/drifter",
     "op": "replace",
-    "path": "/server/behaviors/8/aitasks/3",
+    "path": "/server/behaviors/8/aitasks/2",
     "value": {
       "code": "meleeattack",
       "entityCodes": ["player"],
@@ -172,9 +179,9 @@
         "*-nightmare": "PiercingAttack",
         "*-double-headed": "PiercingAttack"
       },
-      "mincooldown": 500,
+      "mincooldown": 800,
       "maxcooldown": 1750,
-      "damagePlayerAtMs": 800,
+      "damagePlayerAtMs": 500,
       "attackDurationMs": 2000,
       "animation": "standattackslash",
       "animationSpeed": 1.5,
@@ -201,9 +208,9 @@
         "*-nightmare": "BluntAttack",
         "*-double-headed": "BluntAttack"
       },
-      "mincooldown": 500,
+      "mincooldown": 800,
       "maxcooldown": 1750,
-      "damagePlayerAtMs": 800,
+      "damagePlayerAtMs": 500,
       "attackDurationMs": 2000,
       "animationByType": {"*-tainted": "standattackslash", "*": "standattackpunch"},
       "animationSpeed": 1.5,
@@ -218,16 +225,17 @@
     "path": "/server/behaviors/-",
     "value": {
       "code": "CombatOverhaul:Stagger",
+      "resistanceTierByType": {"*-normal": 0, "*-deep": 1, "*-tainted": 2, "*-corrupt": 3, "*-nightmare": 4, "*-double-headed": 5},
       "taskConfig": {
         "code": "CombatOverhaul:Stagger",
         "Priority": 10,
         "priorityForCancel": 10,
         "ExecutionChance": 0,
-        "MinCooldownMs": 100,
-        "MaxCooldownMs": 100,
-        "Animation": "standdespair",
+        "MinCooldownMs": 0,
+        "MaxCooldownMs": 0,
+        "animation": "stagger",
         "Sound": "creature/drifter-hit",
-        "MaxDurationMs": 2000
+        "MaxDurationMs": 5000
       }
     }
   }

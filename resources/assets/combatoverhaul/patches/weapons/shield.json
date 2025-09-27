@@ -24,8 +24,8 @@
           "Directions": [45, 45, 45, 45],
           "Sound": "game:sounds/held/shieldblock-wood-heavy",
           "BlockTier": {"BluntAttack": 4, "SlashingAttack": 4, "PiercingAttack": 4},
-          "StaggerTimeMs": 500,
-          "StaggerTier": 2
+          "StaggerTier": 4,
+          "StaggerTimeMs": 2000
         },
         "Block": {
           "Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
@@ -52,8 +52,8 @@
           "Directions": [45, 45, 45, 45],
           "Sound": "game:sounds/held/shieldblock-wood-heavy",
           "BlockTier": {"BluntAttack": 5, "SlashingAttack": 5, "PiercingAttack": 5},
-          "StaggerTimeMs": 1000,
-          "StaggerTier": 3
+          "StaggerTier": 5,
+          "StaggerTimeMs": 2000
         },
         "Block": {
           "Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
@@ -97,8 +97,8 @@
           "Directions": [45, 45, 45, 45],
           "Sound": "game:sounds/held/shieldblock-wood-heavy",
           "BlockTier": {"BluntAttack": 6, "SlashingAttack": 6, "PiercingAttack": 6},
-          "StaggerTimeMs": 1000,
-          "StaggerTier": 3
+          "StaggerTier": 4,
+          "StaggerTimeMs": 2000
         },
         "Block": {
           "Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
@@ -142,8 +142,8 @@
           "Directions": [90, 90, 90, 90],
           "Sound": "game:sounds/held/shieldblock-metal-heavy",
           "BlockTier": {"BluntAttack": 7, "SlashingAttack": 7, "PiercingAttack": 7},
-          "StaggerTimeMs": 1000,
-          "StaggerTier": 4
+          "StaggerTier": 5,
+          "StaggerTimeMs": 2000
         },
         "Block": {
           "Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
@@ -187,8 +187,8 @@
           "Directions": [90, 90, 90, 90],
           "Sound": "game:sounds/held/shieldblock-metal-heavy",
           "BlockTier": {"BluntAttack": 7, "SlashingAttack": 7, "PiercingAttack": 7},
-          "StaggerTimeMs": 1000,
-          "StaggerTier": 4
+          "StaggerTier": 6,
+          "StaggerTimeMs": 3000
         },
         "Block": {
           "Zones": ["Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg"],
