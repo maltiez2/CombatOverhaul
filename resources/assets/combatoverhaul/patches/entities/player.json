@@ -43,6 +43,7 @@
       "code": "CombatOverhaul:PlayerDamageModel",
       "secondChanceCooldownSec": 300,
       "secondChanceAvailable": true,
+      "secondChanceGracePeriodSec": 8,
       "bodyParts": {
         "LowerTorso": "Torso",
         "UpperTorso": "Torso",
@@ -84,6 +85,7 @@
       "code": "CombatOverhaul:PlayerDamageModel",
       "secondChanceCooldownSec": 300,
       "secondChanceAvailable": true,
+      "secondChanceGracePeriodSec": 8,
       "bodyParts": {
         "LowerTorso": "Torso",
         "UpperTorso": "Torso",

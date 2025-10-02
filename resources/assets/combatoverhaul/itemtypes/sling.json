@@ -45,7 +45,7 @@
     "SwingAnimationSpeed": 1,
     "MinSwingSpeed": 0.5,
     "MaxSwingSpeed": 1,
-    "SwingSpeedPerSwing": 0.101,
+    "SwingSpeedPerSwing": 0.15,
     "Zeroing": 1,
     "ScreenShakeStrength": 0.2,
     "TwoHanded": false,
@@ -64,7 +64,7 @@
       "VerticalLimit": 0.25,
       "VerticalOffset": -0.05
     },
-    "DispersionMOA": [120, 30]
+    "DispersionMOA": [90, 30]
   },
   "guiTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 55, "y": 5, "z": 54}, "origin": {"x": 0.38, "y": 0, "z": 0.04}, "scale": 2.45},
   "groundTransform": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0.3, "y": -0.05, "z": 0}, "scale": 4.8},
