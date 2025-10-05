@@ -7,18 +7,18 @@
     "value": {
       "code": "CombatOverhaul:ShowStatsBehavior",
       "entriesByType": {
-        "*-surface": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "4", "1", "Slashing"]],
-        "*-deep": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "7", "1", "Slashing"]],
-        "*-tainted": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "10", "2", "Slashing"]],
-        "*-corrupt": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "15", "2", "Slashing"]],
+        "*-surface": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "8", "1", "Slashing"]],
+        "*-deep": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "12", "1", "Slashing"]],
+        "*-tainted": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "16", "2", "Slashing"]],
+        "*-corrupt": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "20", "2", "Slashing"]],
         "*-nightmare": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "20", "3", "Slashing"]],
-        "*-stilt": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "25", "3", "Slashing"]],
-        "*-deepsplit": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "30", "4", "Slashing"]],
+        "*-stilt": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "24", "4", "Slashing"]],
+        "*-deepsplit": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "30", "5", "Slashing"]],
         "*-bellhead": [
           ["Vulnerable to {0} damage", "Blunt"],
           ["Bell part of this monster is resistant to damage."],
           ["Attacks:"],
-          ["  {0} ({1} tier) of {2} damage", "30", "5", "Blunt"]
+          ["  {0} ({1} tier) of {2} damage", "35", "6", "Blunt"]
         ],
         "*": []
       }
@@ -133,14 +133,14 @@
     "file": "game:entities/lore/shiver",
     "op": "replace",
     "path": "/server/behaviors/8/aitasks/2/damageTierByType",
-    "value": {"*-surface": 1, "*-deep": 1, "*-tainted": 2, "*-corrupt": 2, "*-nightmare": 3, "*-stilt": 3, "*-deepsplit": 4, "*-bellhead": 5}
+    "value": {"*-surface": 1, "*-deep": 1, "*-tainted": 2, "*-corrupt": 2, "*-nightmare": 3, "*-stilt": 4, "*-deepsplit": 5, "*-bellhead": 6}
   },
   {
     "side": "Server",
     "file": "game:entities/lore/shiver",
     "op": "replace",
     "path": "/server/behaviors/8/aitasks/2/damageByType",
-    "value": {"*-surface": 4, "*-deep": 7, "*-tainted": 10, "*-corrupt": 15, "*-nightmare": 20, "*-stilt": 25, "*-deepsplit": 30, "*-bellhead": 30}
+    "value": {"*-surface": 8, "*-deep": 12, "*-tainted": 16, "*-corrupt": 20, "*-nightmare": 20, "*-stilt": 24, "*-deepsplit": 30, "*-bellhead": 30}
   },
   {
     "side": "Server",

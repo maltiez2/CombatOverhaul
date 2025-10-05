@@ -7,11 +7,11 @@
     "value": {
       "code": "CombatOverhaul:ShowStatsBehavior",
       "entriesByType": {
-        "*-black-*": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "10", "4", "Slashing"]],
-        "*-brown-*": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "16", "5", "Slashing"]],
-        "*-sun-*": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "6", "4", "Slashing"]],
-        "*-panda-*": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "10", "4", "Slashing"]],
-        "*-polar-*": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "16", "5", "Slashing"]],
+        "*-sun-*": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "6", "2", "Slashing"]],
+        "*-black-*": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "10", "2", "Slashing"]],
+        "*-panda-*": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "10", "2", "Slashing"]],
+        "*-brown-*": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "14", "3", "Slashing"]],
+        "*-polar-*": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "16", "4", "Slashing"]],
         "*": []
       }
     }
@@ -101,7 +101,7 @@
     "file": "game:entities/animal/mammal/bear-adult",
     "op": "add",
     "path": "/server/behaviors/9/aitasks/0/damageTierByType",
-    "value": {"*-black-*": 4, "*-brown-*": 5, "*-sun-*": 4, "*-panda-*": 4, "*-polar-*": 5}
+    "value": {"*-black-*": 2, "*-brown-*": 3, "*-sun-*": 2, "*-panda-*": 2, "*-polar-*": 4}
   },
   {"side": "Server", "file": "game:entities/animal/mammal/bear-adult", "op": "remove", "path": "/server/behaviors/9/aitasks/0/damageTier"},
   {
@@ -109,7 +109,7 @@
     "file": "game:entities/animal/mammal/bear-adult",
     "op": "add",
     "path": "/server/behaviors/9/aitasks/3/damageTierByType",
-    "value": {"*-black-*": 4, "*-brown-*": 5, "*-sun-*": 4, "*-panda-*": 4, "*-polar-*": 5}
+    "value": {"*-black-*": 2, "*-brown-*": 3, "*-sun-*": 2, "*-panda-*": 2, "*-polar-*": 4}
   },
   {"side": "Server", "file": "game:entities/animal/mammal/bear-adult", "op": "remove", "path": "/server/behaviors/9/aitasks/3/damageTier"},
   {
@@ -117,7 +117,7 @@
     "file": "game:entities/animal/mammal/bear-adult",
     "op": "replace",
     "path": "/server/behaviors/9/aitasks/0/damageByType",
-    "value": {"*-black-*": 10, "*-brown-*": 16, "*-sun-*": 6, "*-panda-*": 10, "*-polar-*": 16}
+    "value": {"*-black-*": 10, "*-brown-*": 14, "*-sun-*": 6, "*-panda-*": 10, "*-polar-*": 16}
   },
   {"side": "Server", "file": "game:entities/animal/mammal/bear-adult", "op": "remove", "path": "/server/behaviors/9/aitasks/0/damage"},
   {
@@ -125,7 +125,7 @@
     "file": "game:entities/animal/mammal/bear-adult",
     "op": "replace",
     "path": "/server/behaviors/9/aitasks/3/damageByType",
-    "value": {"*-black-*": 10, "*-brown-*": 16, "*-sun-*": 6, "*-panda-*": 10, "*-polar-*": 16}
+    "value": {"*-black-*": 10, "*-brown-*": 14, "*-sun-*": 6, "*-panda-*": 10, "*-polar-*": 16}
   },
   {"side": "Server", "file": "game:entities/animal/mammal/bear-adult", "op": "remove", "path": "/server/behaviors/9/aitasks/3/damage"},
   {"side": "Server", "file": "game:entities/animal/mammal/bear-adult", "op": "replace", "path": "/server/behaviors/9/aitasks/0/damageType", "value": "SlashingAttack"},

@@ -10,38 +10,38 @@
         "*-surface": [
           ["Vulnerable to {0} damage", "Blunt"],
           ["Attacks:"],
-          ["  {0} ({1} tier) of {2} ranged damage", "2", "2", "Piercing"],
+          ["  {0} ({1} tier) of {2} ranged damage", "2", "3", "Piercing"],
           ["  {0} ({1} tier) of {2} damage", "2", "1", "Piercing"]
         ],
         "*-deep": [
           ["Vulnerable to {0} damage", "Blunt"],
           ["Attacks:"],
-          ["  {0} ({1} tier) of {2} ranged damage", "2.5", "3", "Piercing"],
+          ["  {0} ({1} tier) of {2} ranged damage", "3", "4", "Piercing"],
           ["  {0} ({1} tier) of {2} damage", "3", "1", "Piercing"]
         ],
         "*-tainted": [
           ["Vulnerable to {0} damage", "Blunt"],
           ["Attacks:"],
-          ["  {0} ({1} tier) of {2} ranged damage", "3", "4", "Piercing"],
+          ["  {0} ({1} tier) of {2} ranged damage", "4", "5", "Piercing"],
           ["  {0} ({1} tier) of {2} damage", "4", "2", "Piercing"]
         ],
         "*-corrupt": [
           ["Vulnerable to {0} damage", "Blunt"],
           ["Attacks:"],
-          ["  {0} ({1} tier) of {2} ranged damage", "3.5", "6", "Piercing"],
+          ["  {0} ({1} tier) of {2} ranged damage", "5", "6", "Piercing"],
           ["  {0} ({1} tier) of {2} damage", "5", "3", "Piercing"]
         ],
         "*-nightmare": [
           ["Vulnerable to {0} damage", "Blunt"],
           ["Armor parts of this monster is resistant to damage."],
           ["Attacks:"],
-          ["  {0} ({1} tier) of {2} ranged damage", "4", "8", "Piercing"],
+          ["  {0} ({1} tier) of {2} ranged damage", "5", "8", "Piercing"],
           ["  {0} ({1} tier) of {2} damage", "6", "4", "Piercing"]
         ],
         "*-gearfoot": [
           ["Vulnerable to {0} damage", "Blunt"],
           ["Attacks:"],
-          ["  {0} ({1} tier) of {2} ranged damage", "4.5", "9", "Piercing"],
+          ["  {0} ({1} tier) of {2} ranged damage", "6", "9", "Piercing"],
           ["  {0} ({1} tier) of {2} damage", "7", "5", "Piercing"]
         ],
         "*": []
@@ -250,8 +250,8 @@
       "ExecutionChance": 1,
       "Priority": 1.5,
       "PriorityForCancel": 3.5,
-      "SeekingRangeByType": {"*-surface": 30, "*-deep": 30, "*-tainted": 45, "*-corrupt": 60, "*-nightmare": 75, "*-gearfoot": 90},
-      "FiringRangeMaxByType": {"*-surface": 25, "*-deep": 30, "*-tainted": 37, "*-corrupt": 45, "*-nightmare": 53, "*-gearfoot": 90},
+      "SeekingRangeByType": {"*-surface": 40, "*-deep": 50, "*-tainted": 60, "*-corrupt": 70, "*-nightmare": 80, "*-gearfoot": 150},
+      "FiringRangeMaxByType": {"*-surface": 40, "*-deep": 50, "*-tainted": 60, "*-corrupt": 70, "*-nightmare": 80, "*-gearfoot": 120},
       "entityCodes": ["player"],
       "EntityTags": [["player"]],
       "SeekingRangeAffectedByPlayerStat": false,
@@ -262,16 +262,16 @@
       "SoundRange": 60,
       "ProjectileCode": "bowtornprojectile",
       "ProjectileItem": "arrow-bone",
-      "ProjectileDamageMultiplierByType": {"*-surface": 2, "*-deep": 2, "*-tainted": 2, "*-corrupt": 2, "*-nightmare": 2, "*-gearfoot": 2},
+      "ProjectileDamageMultiplierByType": {"*-surface": 2, "*-deep": 3, "*-tainted": 4, "*-corrupt": 5, "*-nightmare": 5, "*-gearfoot": 6},
       "ProjectileDamageTierByType": {"*-surface": 3, "*-deep": 4, "*-tainted": 5, "*-corrupt": 6, "*-nightmare": 8, "*-gearfoot": 9},
-      "ProjectileSpeedByType": {"*-surface": 40, "*-deep": 48, "*-tainted": 56, "*-corrupt": 64, "*-nightmare": 72, "*-gearfoot": 100},
+      "ProjectileSpeedByType": {"*-surface": 40, "*-deep": 48, "*-tainted": 56, "*-corrupt": 64, "*-nightmare": 72, "*-gearfoot": 120},
       "projectileStack": {"type": "item", "code": "combatoverhaul:arrow-bowtorn"},
       "ProjectilesNumber": 1,
       "YawDispersionDeg": 0.6,
       "PitchDispersionDeg": 0.6,
       "MaxYawDispersionDeg": 10,
       "MaxPitchDispersionDeg": 10,
-      "DispersionReductionRate": 0.4
+      "DispersionReductionRate": 0.5
     }
   },
   {

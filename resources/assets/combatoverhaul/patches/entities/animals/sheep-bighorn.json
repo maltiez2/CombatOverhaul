@@ -7,8 +7,8 @@
     "value": {
       "code": "CombatOverhaul:ShowStatsBehavior",
       "entriesByType": {
-        "*-male": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "7.5", "2", "Blunt"]],
-        "*-female": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "6", "2", "Blunt"]],
+        "*-male": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "6", "2", "Blunt"]],
+        "*-female": [["Vulnerable to {0} damage", "Piercing"], ["Attacks:<br/>  {0} ({1} tier) of {2} damage", "4", "2", "Blunt"]],
         "*": []
       }
     }
@@ -176,6 +176,6 @@
     "file": "game:entities/animal/mammal/hooved/sheep-adult",
     "op": "replace",
     "path": "/server/behaviors/10/aitasks/0/damageByType",
-    "value": {"*-female": 6, "*": 7.5}
+    "value": {"*-female": 4, "*": 6}
   }
 ]

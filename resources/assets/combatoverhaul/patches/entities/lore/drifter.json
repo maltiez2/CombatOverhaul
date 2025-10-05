@@ -17,43 +17,37 @@
         "*-normal": [
           ["Vulnerable to {0} damage", "Blunt"],
           ["Attacks:"],
-          ["  {0} ({1} tier) of {2} damage", "2", "1", "Blunt"],
-          ["  {0} ({1} tier) of {2} damage", "2", "1", "Blunt"],
+          ["  {0} ({1} tier) of {2} damage", "6", "1", "Blunt"],
           ["  {0} ({1} tier) of {2} ranged damage", "1", "0", "Blunt"]
         ],
         "*-deep": [
           ["Vulnerable to {0} damage", "Blunt"],
           ["Attacks:"],
-          ["  {0} ({1} tier) of {2} damage", "3", "2", "Blunt"],
-          ["  {0} ({1} tier) of {2} damage", "3", "2", "Blunt"],
+          ["  {0} ({1} tier) of {2} damage", "8", "2", "Blunt"],
           ["  {0} ({1} tier) of {2} ranged damage", "1", "0", "Blunt"]
         ],
         "*-tainted": [
           ["Vulnerable to {0} damage", "Blunt"],
           ["Attacks:"],
-          ["  {0} ({1} tier) of {2} damage", "5", "3", "Piercing"],
-          ["  {0} ({1} tier) of {2} damage", "5", "3", "Piercing"],
+          ["  {0} ({1} tier) of {2} damage", "10", "3", "Blunt"],
           ["  {0} ({1} tier) of {2} ranged damage", "1", "0", "Blunt"]
         ],
         "*-corrupt": [
           ["Vulnerable to {0} damage", "Blunt"],
           ["Attacks:"],
-          ["  {0} ({1} tier) of {2} damage", "8", "4", "Piercing"],
-          ["  {0} ({1} tier) of {2} damage", "8", "4", "Blunt"],
+          ["  {0} ({1} tier) of {2} damage", "12", "4", "Blunt"],
           ["  {0} ({1} tier) of {2} ranged damage", "1", "0", "Blunt"]
         ],
         "*-nightmare": [
           ["Vulnerable to {0} damage", "Blunt"],
           ["Attacks:"],
-          ["  {0} ({1} tier) of {2} damage", "11", "5", "Piercing"],
-          ["  {0} ({1} tier) of {2} damage", "11", "5", "Blunt"],
+          ["  {0} ({1} tier) of {2} damage", "14", "6", "Blunt"],
           ["  {0} ({1} tier) of {2} ranged damage", "1", "0", "Blunt"]
         ],
         "*-double-headed": [
           ["Vulnerable to {0} damage", "Blunt"],
           ["Attacks:"],
-          ["  {0} ({1} tier) of {2} damage", "15", "6", "Piercing"],
-          ["  {0} ({1} tier) of {2} damage", "15", "6", "Blunt"],
+          ["  {0} ({1} tier) of {2} damage", "16", "7", "Blunt"],
           ["  {0} ({1} tier) of {2} ranged damage", "1", "0", "Blunt"]
         ],
         "*": []
@@ -169,15 +163,15 @@
       "code": "meleeattack",
       "entityCodes": ["player"],
       "priority": 2,
-      "damageByType": {"*-normal": 2, "*-deep": 3, "*-tainted": 5, "*-corrupt": 8, "*-nightmare": 11, "*-double-headed": 15},
-      "damageTierByType": {"*-normal": 1, "*-deep": 2, "*-tainted": 3, "*-corrupt": 4, "*-nightmare": 5, "*-double-headed": 6},
+      "damageByType": {"*-normal": 6, "*-deep": 8, "*-tainted": 10, "*-corrupt": 12, "*-nightmare": 14, "*-double-headed": 16},
+      "damageTierByType": {"*-normal": 1, "*-deep": 2, "*-tainted": 3, "*-corrupt": 4, "*-nightmare": 6, "*-double-headed": 7},
       "damageTypeByType": {
         "*-normal": "BluntAttack",
         "*-deep": "BluntAttack",
-        "*-tainted": "PiercingAttack",
-        "*-corrupt": "PiercingAttack",
-        "*-nightmare": "PiercingAttack",
-        "*-double-headed": "PiercingAttack"
+        "*-tainted": "BluntAttack",
+        "*-corrupt": "BluntAttack",
+        "*-nightmare": "BluntAttack",
+        "*-double-headed": "BluntAttack"
       },
       "mincooldown": 800,
       "maxcooldown": 1750,
@@ -198,12 +192,12 @@
       "code": "meleeattack",
       "entityCodes": ["player"],
       "priority": 2,
-      "damageByType": {"*-normal": 2, "*-deep": 3, "*-tainted": 5, "*-corrupt": 8, "*-nightmare": 11, "*-double-headed": 15},
-      "damageTierByType": {"*-normal": 1, "*-deep": 2, "*-tainted": 3, "*-corrupt": 4, "*-nightmare": 5, "*-double-headed": 6},
+      "damageByType": {"*-normal": 6, "*-deep": 8, "*-tainted": 10, "*-corrupt": 12, "*-nightmare": 14, "*-double-headed": 16},
+      "damageTierByType": {"*-normal": 1, "*-deep": 2, "*-tainted": 3, "*-corrupt": 4, "*-nightmare": 6, "*-double-headed": 7},
       "damageTypeByType": {
         "*-normal": "BluntAttack",
         "*-deep": "BluntAttack",
-        "*-tainted": "PiercingAttack",
+        "*-tainted": "BluntAttack",
         "*-corrupt": "BluntAttack",
         "*-nightmare": "BluntAttack",
         "*-double-headed": "BluntAttack"

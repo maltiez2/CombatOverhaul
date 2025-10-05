@@ -5,6 +5,7 @@ using CombatOverhaul.DamageSystems;
 using CombatOverhaul.Integration;
 using CombatOverhaul.source;
 using CombatOverhaul.Utils;
+using System.Diagnostics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;

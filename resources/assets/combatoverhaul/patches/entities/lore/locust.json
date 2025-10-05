@@ -7,9 +7,9 @@
     "value": {
       "code": "CombatOverhaul:ShowStatsBehavior",
       "entriesByType": {
-        "*-bronze": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "2", "2", "Piercing"]],
+        "*-bronze": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "2", "3", "Piercing"]],
         "*-corrupt": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "4", "5", "Piercing"]],
-        "*-corrupt-sawblade": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "8", "8", "Slashing"]],
+        "*-corrupt-sawblade": [["Vulnerable to {0} damage", "Blunt"], ["Attacks:"], ["  {0} ({1} tier) of {2} damage", "8", "7", "Slashing"]],
         "*": []
       }
     }
@@ -120,7 +120,7 @@
       "entityCodes": ["player"],
       "priority": 3,
       "damageByType": {"*-bronze": 2, "*-corrupt": 4, "*-corrupt-sawblade": 8},
-      "damageTierByType": {"*-bronze": 2, "*-corrupt": 5, "*-corrupt-sawblade": 8},
+      "damageTierByType": {"*-bronze": 3, "*-corrupt": 5, "*-corrupt-sawblade": 7},
       "mincooldown": 1500,
       "maxcooldown": 1500,
       "damageTypeByType": {"*-bronze": "PiercingAttack", "*-corrupt": "PiercingAttack", "*-corrupt-sawblade": "SlashingAttack"},
