@@ -112,9 +112,9 @@
     },
     "FlatReduction": {},
     "PlayerStats": {
-      "walkspeed": -0.01,
-      "manipulationSpeed": -0.0,
-      "steadyAim": -0.03,
+      "walkspeed": -0.0,
+      "manipulationSpeed": -0.01,
+      "steadyAim": -0.02,
       "healingeffectivness": -0.09,
       "hungerrate": 0.03
     }
@@ -134,7 +134,7 @@
     },
     "FlatReduction": {},
     "PlayerStats": {
-      "walkspeed": -0.04,
+      "walkspeed": -0.01,
       "manipulationSpeed": -0.0,
       "steadyAim": -0.0,
       "healingeffectivness": -0.06,
@@ -434,7 +434,7 @@
     "Resists": {
       "PiercingAttack": 4.0,
       "SlashingAttack": 4.0,
-      "BluntAttack": 4.0
+      "BluntAttack": 1.0
     },
     "FlatReduction": {},
     "PlayerStats": {
@@ -457,7 +457,7 @@
     "Resists": {
       "PiercingAttack": 4.0,
       "SlashingAttack": 4.0,
-      "BluntAttack": 4.0
+      "BluntAttack": 1.0
     },
     "FlatReduction": {},
     "PlayerStats": {
@@ -479,7 +479,7 @@
     "Resists": {
       "PiercingAttack": 4.0,
       "SlashingAttack": 4.0,
-      "BluntAttack": 4.0
+      "BluntAttack": 1.0
     },
     "FlatReduction": {},
     "PlayerStats": {
@@ -641,7 +641,7 @@
     "Resists": {
       "PiercingAttack": 6.0,
       "SlashingAttack": 4.0,
-      "BluntAttack": 5.0
+      "BluntAttack": 2.0
     },
     "FlatReduction": {},
     "PlayerStats": {
@@ -664,7 +664,7 @@
     "Resists": {
       "PiercingAttack": 6.0,
       "SlashingAttack": 4.0,
-      "BluntAttack": 5.0
+      "BluntAttack": 2.0
     },
     "FlatReduction": {},
     "PlayerStats": {
@@ -686,7 +686,7 @@
     "Resists": {
       "PiercingAttack": 6.0,
       "SlashingAttack": 4.0,
-      "BluntAttack": 5.0
+      "BluntAttack": 2.0
     },
     "FlatReduction": {},
     "PlayerStats": {
@@ -783,7 +783,7 @@
     "Resists": {
       "PiercingAttack": 5.0,
       "SlashingAttack": 5.0,
-      "BluntAttack": 5.0
+      "BluntAttack": 3.0
     },
     "FlatReduction": {},
     "PlayerStats": {
@@ -806,7 +806,7 @@
     "Resists": {
       "PiercingAttack": 5.0,
       "SlashingAttack": 5.0,
-      "BluntAttack": 5.0
+      "BluntAttack": 3.0
     },
     "FlatReduction": {},
     "PlayerStats": {
@@ -828,7 +828,7 @@
     "Resists": {
       "PiercingAttack": 5.0,
       "SlashingAttack": 5.0,
-      "BluntAttack": 5.0
+      "BluntAttack": 3.0
     },
     "FlatReduction": {},
     "PlayerStats": {
@@ -990,7 +990,7 @@
     "Resists": {
       "PiercingAttack": 7.0,
       "SlashingAttack": 5.0,
-      "BluntAttack": 6.0
+      "BluntAttack": 4.0
     },
     "FlatReduction": {},
     "PlayerStats": {
@@ -1013,7 +1013,7 @@
     "Resists": {
       "PiercingAttack": 7.0,
       "SlashingAttack": 5.0,
-      "BluntAttack": 6.0
+      "BluntAttack": 4.0
     },
     "FlatReduction": {},
     "PlayerStats": {
@@ -1035,7 +1035,7 @@
     "Resists": {
       "PiercingAttack": 7.0,
       "SlashingAttack": 5.0,
-      "BluntAttack": 6.0
+      "BluntAttack": 4.0
     },
     "FlatReduction": {},
     "PlayerStats": {
@@ -1058,7 +1058,7 @@
     "Resists": {
       "PiercingAttack": 6.0,
       "SlashingAttack": 6.0,
-      "BluntAttack": 6.0
+      "BluntAttack": 5.0
     },
     "FlatReduction": {},
     "PlayerStats": {
@@ -1081,7 +1081,7 @@
     "Resists": {
       "PiercingAttack": 6.0,
       "SlashingAttack": 6.0,
-      "BluntAttack": 6.0
+      "BluntAttack": 5.0
     },
     "FlatReduction": {},
     "PlayerStats": {
@@ -1103,7 +1103,7 @@
     "Resists": {
       "PiercingAttack": 6.0,
       "SlashingAttack": 6.0,
-      "BluntAttack": 6.0
+      "BluntAttack": 5.0
     },
     "FlatReduction": {},
     "PlayerStats": {
@@ -1265,7 +1265,7 @@
     "Resists": {
       "PiercingAttack": 8.0,
       "SlashingAttack": 6.0,
-      "BluntAttack": 7.0
+      "BluntAttack": 6.0
     },
     "FlatReduction": {},
     "PlayerStats": {
@@ -1288,7 +1288,7 @@
     "Resists": {
       "PiercingAttack": 8.0,
       "SlashingAttack": 6.0,
-      "BluntAttack": 7.0
+      "BluntAttack": 6.0
     },
     "FlatReduction": {},
     "PlayerStats": {
@@ -1310,7 +1310,7 @@
     "Resists": {
       "PiercingAttack": 8.0,
       "SlashingAttack": 6.0,
-      "BluntAttack": 7.0
+      "BluntAttack": 6.0
     },
     "FlatReduction": {},
     "PlayerStats": {
