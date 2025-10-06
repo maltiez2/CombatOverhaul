@@ -47,6 +47,9 @@
   "item-creature-spear-*": "spear",
   "item-creature-slingbullet-*": "sling bullet",
 
+  "item-sewingkit-armor-sewing": "Armorer sewing kit",
+  "item-sewingkit-armor-tailor": "Armorer tailor kit",
+
   "game:item-spear-generic-iron": "Iron spear",
   "game:item-spear-generic-meteoriciron": "Meteoric iron spear",
   "game:item-spear-generic-steel": "Steel spear",

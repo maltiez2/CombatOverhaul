@@ -1,0 +1,44 @@
+[
+	{
+		"ingredientPattern": "AAB,AA_",
+		"ingredients": {
+			"A": { "type": "item", "code": "game:flaxtwine", "quantity": 1 },
+			"B": { "type": "item", "code": "game:metalnailsandstrips-iron", "quantity": 1 }
+		},
+		"width": 3,
+		"height": 2,
+		"output": { "type": "item", "code": "combatoverhaul:sewingkit-armor-sewing", "quantity": 1  }
+	},
+	{
+		"ingredientPattern": "AAB,AA_",
+		"ingredients": {
+			"A": { "type": "item", "code": "game:flaxtwine", "quantity": 1 },
+			"B": { "type": "item", "code": "game:metalnailsandstrips-*bronze", "quantity": 1 }
+		},
+		"width": 3,
+		"height": 2,
+		"requiresTrait": "clothier",
+		"output": { "type": "item", "code": "combatoverhaul:sewingkit-armor-sewing", "quantity": 1  }
+	},
+	{
+		"ingredientPattern": "AAB,AA_",
+		"ingredients": {
+			"A": { "type": "item", "code": "game:flaxtwine", "quantity": 1 },
+			"B": { "type": "item", "code": "game:metalnailsandstrips-steel", "quantity": 1 }
+		},
+		"width": 3,
+		"height": 2,
+		"output": { "type": "item", "code": "combatoverhaul:sewingkit-armor-tailor", "quantity": 1  }
+	},
+	{
+		"ingredientPattern": "AAB,AA_",
+		"ingredients": {
+			"A": { "type": "item", "code": "game:flaxtwine", "quantity": 1 },
+			"B": { "type": "item", "code": "game:metalnailsandstrips-meteoriciron", "quantity": 1 }
+		},
+		"width": 3,
+		"height": 2,
+		"requiresTrait": "clothier",
+		"output": { "type": "item", "code": "combatoverhaul:sewingkit-armor-tailor", "quantity": 1  }
+	}
+]

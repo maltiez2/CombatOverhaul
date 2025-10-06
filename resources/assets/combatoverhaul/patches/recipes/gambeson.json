@@ -1,0 +1,11 @@
+﻿[
+  {"file": "game:recipes/grid/armor/gambeson", "op": "add", "path": "/0/enabled", "value": false},
+  {"file": "game:recipes/grid/armor/gambeson", "op": "add", "path": "/1/enabled", "value": false},
+  {"file": "game:recipes/grid/armor/gambeson", "op": "add", "path": "/2/enabled", "value": false},
+  {"file": "game:recipes/grid/armor/tailoredgambeson", "op": "replace", "path": "/0/ingredients/S/code", "value": "combatoverhaul:sewingkit-armor-tailor"},
+  {"file": "game:recipes/grid/armor/tailoredgambeson", "op": "replace", "path": "/1/ingredients/S/code", "value": "combatoverhaul:sewingkit-armor-tailor"},
+  {"file": "game:recipes/grid/armor/tailoredgambeson", "op": "replace", "path": "/2/ingredients/S/code", "value": "combatoverhaul:sewingkit-armor-tailor"},
+  {"file": "game:recipes/grid/armor/tailoredgambeson", "op": "replace", "path": "/0/requiresTrait", "value": null},
+  {"file": "game:recipes/grid/armor/tailoredgambeson", "op": "replace", "path": "/1/requiresTrait", "value": null},
+  {"file": "game:recipes/grid/armor/tailoredgambeson", "op": "replace", "path": "/2/requiresTrait", "value": null}
+]
