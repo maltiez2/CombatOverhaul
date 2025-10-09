@@ -20,5 +20,6 @@
       "*-obsidian"
     ]
   },
-  {"file": "game:itemtypes/tool/arrow", "op": "replace", "path": "/creativeinventory", "value": {}}
+  {"file": "game:itemtypes/tool/arrow", "op": "replace", "path": "/creativeinventory", "value": {}},
+  {"file": "game:itemtypes/tool/arrow", "op": "remove", "path": "/texturesByType/*"}
 ]

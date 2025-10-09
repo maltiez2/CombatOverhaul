@@ -30,7 +30,7 @@
       ]
     }
   ],
-  "skipVariants": ["spear-generic-ruined", "spear-generic-scrap"],
+  "skipVariants": ["spear-generic-ruined"],
   "allowedVariants": ["spear-generic-*", "spear-scrap-scrap", "spear-boar-ruined", "spear-voulge-ruined", "spear-fork-ruined", "spear-ranseur-ruined"],
   "SelectionBoxSize": {"x": 0.2, "y": 0.2},
   "CollisionBoxSize": {"x": 0.01, "y": 0.01},

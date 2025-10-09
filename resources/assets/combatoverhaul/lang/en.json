@@ -19,6 +19,8 @@
   "game:trait-tremblingAim": "<font color=\"#ff8484\">• Trembling aim</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
   "game:trait-clumsyHands": "<font color=\"#ff8484\">• Clumsy hands</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
   "game:trait-canParryProjectiles": "<font color=\"#84ff84\">• Unnatural reflexes</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
+  "game:trait-thickSkull": "<font color=\"#84ff84\">• Thick skull</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
+  "game:trait-legDay": "<font color=\"#ff8484\">• Leg day</font> <font color=\"#eeee84\">(Combat Overhaul)</font> ",
 
   "game:traitdesc-canParryProjectiles": "Can parry projectiles with melee weapons",
   
@@ -42,6 +44,11 @@
   "game:charattribute-bowsProficiency--0.3": "-30% bows draw speed",
   "game:charattribute-crossbowsProficiency--0.3": "-30% crossbows reload speed",
   "game:charattribute-firearmsProficiency--0.3": "-30% firearms reload speed",
+  "game:charattribute-playerHeadDamageFactor--0.5": "-50% damage received to head",
+  "game:charattribute-playerFaceDamageFactor--0.5": "-50% damage received to face",
+  "game:charattribute-playerLegsDamageFactor-1": "+100% damage received to legs",
+  "game:charattribute-playerFeetDamageFactor-1": "+100% damage received to feet",
+  "game:charattribute-jumpHeightMul-0.25": "+25% jump height",
 
   "item-creature-arrow-*": "arrow",
   "item-creature-spear-*": "spear",

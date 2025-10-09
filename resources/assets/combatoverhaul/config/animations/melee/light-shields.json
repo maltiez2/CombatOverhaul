@@ -28,7 +28,7 @@
     "ItemKeyFrames": [],
     "SoundFrames": [],
     "ParticlesFrames": [],
-    "CallbackFrames": [{"Code": "startParry", "DurationFraction": 0.2}, {"Code": "stopParry", "DurationFraction": 1}],
+    "CallbackFrames": [{"Code": "startParry", "DurationFraction": 0}, {"Code": "stopParry", "DurationFraction": 1}],
     "ItemAnimationStart": 0,
     "ItemAnimationEnd": 0
   },

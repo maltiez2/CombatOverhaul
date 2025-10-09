@@ -16,5 +16,7 @@
   {"code": "tremblingAim", "type": "negative", "attributes": {"steadyAim": -0.3}},
   {"code": "armorWalkSpeedAffectedness", "type": "positive", "attributes": {"armorWalkSpeedAffectedness": -0.5}},
   {"code": "clumsyHands", "type": "negative", "attributes": {"bowsProficiency": -0.3, "crossbowsProficiency": -0.3, "firearmsProficiency": -0.3}},
-  {"code": "canParryProjectiles", "type": "positive", "attributes": {}}
+  {"code": "canParryProjectiles", "type": "positive", "attributes": {}},
+  {"code": "thickSkull", "type": "positive", "attributes": {"playerHeadDamageFactor": -0.5, "playerFaceDamageFactor": -0.5}},
+  {"code": "legDay", "type": "negative", "attributes": {"playerLegsDamageFactor": 1.0, "playerFeetDamageFactor": 1.0, "jumpHeightMul": 0.25}}
 ]

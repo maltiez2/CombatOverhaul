@@ -1,0 +1,8 @@
+﻿[
+  {
+    "op": "add",
+    "path": "/selling/list/-",
+    "value": {"code": "combatoverhaul:sling-linen", "type": "item", "stacksize": 1, "stock": {"avg": 3, "var": 2}, "price": {"avg": 2, "var": 1}},
+    "file": "game:config/tradelists/trader-survivalgoods.json"
+  }
+]

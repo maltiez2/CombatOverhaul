@@ -16,7 +16,7 @@
     "file": "game:config/characterclasses",
     "op": "addeach",
     "path": "/2/traits/-",
-    "value": ["javelinsProficiency", "slingsProficiency", "macesProficiency", "clubsProficiency", "axesProficiency"]
+    "value": ["javelinsProficiency", "slingsProficiency", "macesProficiency", "clubsProficiency", "axesProficiency", "thickSkull"]
   },
   {
     "enabled": true,
@@ -30,7 +30,7 @@
     "file": "game:config/characterclasses",
     "op": "addeach",
     "path": "/4/traits/-",
-    "value": ["oneHandedSwordsProficiency", "twoHandedSwordsProficiency", "tremblingAim", "clumsyHands", "canParryProjectiles"]
+    "value": ["oneHandedSwordsProficiency", "twoHandedSwordsProficiency", "tremblingAim", "clumsyHands", "canParryProjectiles", "legDay"]
   },
   {"enabled": true, "file": "game:config/characterclasses", "op": "addeach", "path": "/5/traits/-", "value": ["tremblingAim"]}
 ]
