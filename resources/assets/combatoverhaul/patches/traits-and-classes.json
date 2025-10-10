@@ -23,7 +23,7 @@
     "file": "game:config/characterclasses",
     "op": "addeach",
     "path": "/3/traits/-",
-    "value": ["crossbowsProficiency", "firearmsProficiency", "quarterstaffProficiency"]
+    "value": ["crossbowsProficiency", "firearmsProficiency", "quarterstaffProficiency", "bigHead"]
   },
   {
     "enabled": true,
@@ -32,5 +32,5 @@
     "path": "/4/traits/-",
     "value": ["oneHandedSwordsProficiency", "twoHandedSwordsProficiency", "tremblingAim", "clumsyHands", "canParryProjectiles", "legDay"]
   },
-  {"enabled": true, "file": "game:config/characterclasses", "op": "addeach", "path": "/5/traits/-", "value": ["tremblingAim"]}
+  {"enabled": false, "file": "game:config/characterclasses", "op": "addeach", "path": "/5/traits/-", "value": ["tremblingAim"]}
 ]
