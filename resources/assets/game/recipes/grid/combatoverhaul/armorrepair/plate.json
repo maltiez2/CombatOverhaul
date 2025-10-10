@@ -1,0 +1,47 @@
+[
+	{
+		"ingredientPattern": "B,P",
+		"recipeGroup": 2,
+		"ingredients": {
+			"B": { "type": "item", "code": "armor-head-plate-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"] },
+			"P": { "type": "item", "code": "metalplate-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"] }
+		},
+		"width": 1,
+		"height": 2,
+		"shapeless": true,
+		"copyAttributesFrom": "B",
+		"averageDurability": false,
+		"name": "plate helmet repair",
+		"output": { "type": "item", "code": "armor-head-plate-{metal}"  }
+	},
+	{
+		"ingredientPattern": "B,P",
+		"recipeGroup": 2,
+		"ingredients": {
+			"B": { "type": "item", "code": "armor-body-plate-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"] },
+			"P": { "type": "item", "code": "metalplate-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"] }
+		},
+		"width": 1,
+		"height": 2,
+		"shapeless": true,
+		"copyAttributesFrom": "B",
+		"averageDurability": false,
+		"name": "plate body armor repair",
+		"output": { "type": "item", "code": "armor-body-plate-{metal}"  }
+	},
+	{
+		"ingredientPattern": "B,P",
+		"recipeGroup": 2,
+		"ingredients": {
+			"B": { "type": "item", "code": "armor-legs-plate-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"] },
+			"P": { "type": "item", "code": "metalplate-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"] }
+		},
+		"width": 1,
+		"height": 2,
+		"shapeless": true,
+		"copyAttributesFrom": "B",
+		"averageDurability": false,
+		"name": "plate leg armor repair",
+		"output": { "type": "item", "code": "armor-legs-plate-{metal}"  }
+	}
+]

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <ModName>Combat Overhaul</ModName>
     <ModType>code</ModType>
-    <ModVersion>0.10.7</ModVersion>
+    <ModVersion>0.10.8</ModVersion>
     <ModId>combatoverhaul</ModId>
     <Description></Description>
     <Side>universal</Side>
@@ -14,15 +14,6 @@
   <!-- Authors -->
   <ItemGroup>
     <ModInfoAuthors Include="Maltiez" />
-  </ItemGroup>
-
-  <!-- Translators -->
-  <ItemGroup>
-    <ModInfoTranslators Include="Gabriel Flame - Ukrainian" />
-    <ModInfoTranslators Include="Ouk - Czech" />
-    <ModInfoTranslators Include="Nikolashka - Russian" />
-    <ModInfoTranslators Include="Pawelot - Polish" />
-    <ModInfoTranslators Include="Wailwolf - French" />
   </ItemGroup>
 
   <!-- Dependencies -->
@@ -84,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="resources\assets\combatoverhaul\shapes\weapons\slings\" />
+    <Folder Include="resources\assets\game\recipes\grid\combatoverhaul\armorrepair\" />
   </ItemGroup>
 
   <!-- Forces rebuild -->

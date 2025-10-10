@@ -1,0 +1,47 @@
+[
+	{
+		"ingredientPattern": "B,S",
+		"recipeGroup": 2,
+		"ingredients": {
+			"B": { "type": "item", "code": "armor-head-scale-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel"] },
+			"S": { "type": "item", "code": "metalscale-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel"] }
+		},
+		"width": 1,
+		"height": 2,
+		"shapeless": true,
+		"copyAttributesFrom": "B",
+		"averageDurability": false,
+		"name": "scale helmet repair",
+		"output": { "type": "item", "code": "armor-head-scale-{metal}"  }
+	},
+	{
+		"ingredientPattern": "B,S",
+		"recipeGroup": 2,
+		"ingredients": {
+			"B": { "type": "item", "code": "armor-body-scale-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel"] },
+			"S": { "type": "item", "code": "metalscale-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel"] }
+		},
+		"width": 1,
+		"height": 2,
+		"shapeless": true,
+		"copyAttributesFrom": "B",
+		"averageDurability": false,
+		"name": "scale body armor repair",
+		"output": { "type": "item", "code": "armor-body-scale-{metal}"  }
+	},
+	{
+		"ingredientPattern": "B,S",
+		"recipeGroup": 2,
+		"ingredients": {
+			"B": { "type": "item", "code": "armor-legs-scale-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel"] },
+			"S": { "type": "item", "code": "metalscale-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel"] }
+		},
+		"width": 1,
+		"height": 2,
+		"shapeless": true,
+		"copyAttributesFrom": "B",
+		"averageDurability": false,
+		"name": "scale leg armor repair",
+		"output": { "type": "item", "code": "armor-legs-scale-{metal}"  }
+	}
+]

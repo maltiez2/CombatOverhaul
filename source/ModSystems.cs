@@ -5,7 +5,6 @@ using CombatOverhaul.DamageSystems;
 using CombatOverhaul.Integration;
 using CombatOverhaul.source;
 using CombatOverhaul.Utils;
-using System.Diagnostics;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -73,17 +72,17 @@ public sealed class CombatOverhaulAdditionalSystem : ModSystem
         if (immersiveFirstPersonMode)
         {
             LoggerUtil.Error(api, this, $"Immersive first person mode is enabled. It is not supported. Turn this setting off.");
-            AnnoyPlayer(api, "(Combat Overhaul) Immersive first person mode is enabled. It is not supported. Turn this setting off to prevent this message.", () => api.Settings.Bool["immersiveFpMode"]);
+            AnnoyPlayer(api, "(Combat Overhaul) Immersive first person mode is enabled. It is not supported. Turn this setting off to prevent this message.", () => false);// api.Settings.Bool["immersiveFpMode"]);
         }
 
         api.World.RegisterCallback(_ =>
         {
             EntityPlayer? player = api.World.Player.Entity;
-            
+
             bool hasFirstPersonAnimationsBehavior = player?.GetBehavior<FirstPersonAnimationsBehavior>() != null;
             if (!hasFirstPersonAnimationsBehavior && player != null)
             {
-                string behaviorsList = player.Properties.Server.Behaviors.Select(behavior => behavior.GetType().Name).Aggregate((a, b) => $"{a}\n{b}") ?? "";
+                string behaviorsList = player.Properties.Client.Behaviors.Select(behavior => behavior.GetType().Name).Aggregate((a, b) => $"{a}\n{b}") ?? "";
                 string message = $"Was not able to find 'FirstPersonAnimationsBehavior'. Some other mod altered players behavior in a way that break other mods.\nList of current player client entity behaviors:\n{behaviorsList}";
                 LoggerUtil.Error(api, this, message);
                 api.TriggerIngameError(this, "error", $"Error in Combat Overhaul mod, report to mod author in discord with client-main and server-main logs.");
@@ -92,12 +91,12 @@ public sealed class CombatOverhaulAdditionalSystem : ModSystem
             bool hasThirdPersonAnimationsBehavior = player?.GetBehavior<ThirdPersonAnimationsBehavior>() != null;
             if (!hasThirdPersonAnimationsBehavior && player != null)
             {
-                string behaviorsList = player.Properties.Server.Behaviors.Select(behavior => behavior.GetType().Name).Aggregate((a, b) => $"{a}\n{b}") ?? "";
+                string behaviorsList = player.Properties.Client.Behaviors.Select(behavior => behavior.GetType().Name).Aggregate((a, b) => $"{a}\n{b}") ?? "";
                 string message = $"Was not able to find 'ThirdPersonAnimationsBehavior'. Some other mod altered players behavior in a way that break other mods.\nList of current player client entity behaviors:\n{behaviorsList}";
                 LoggerUtil.Error(api, this, message);
                 api.TriggerIngameError(this, "error", $"Error in Combat Overhaul mod, report to mod author in discord with client-main and server-main logs.");
             }
-        }, 60000);
+        }, 30000);
     }
     private void CheckStatusServerSide(ICoreServerAPI api)
     {
@@ -124,7 +123,7 @@ public sealed class CombatOverhaulAdditionalSystem : ModSystem
                 string message = $"Was not able to find 'CollidersEntityBehavior'. Some other mod altered players behavior in a way that break other mods.\nList of current player server entity behaviors:\n{behaviorsList}\n";
                 LoggerUtil.Error(api, this, message);
             }
-        }, 60000);
+        }, 30000);
     }
 
     private static InventoryBase? GetGearInventory(Entity entity)
