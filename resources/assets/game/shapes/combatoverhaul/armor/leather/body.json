@@ -1,5 +1,6 @@
 {
 	"editor": {
+		"backDropShape": "E:/Programs/VSModelCreator/skeleton-skullful",
 		"allAngles": true,
 		"entityTextureMode": true
 	},
@@ -364,7 +365,6 @@
 					"name": "ArmorLowerTorsoStrap2",
 					"from": [ 1.5, 4.2, -0.05 ],
 					"to": [ 4.5, 4.7, 6.95 ],
-					
 					"uv": [ 46.0, 20.5 ],
 					"rotationOrigin": [ 1.5, 4.2, 0.5 ],
 					"faces": {

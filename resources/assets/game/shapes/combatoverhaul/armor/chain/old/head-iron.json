@@ -1,5 +1,6 @@
 {
 	"editor": {
+		"backDropShape": "E:/Programs/VSModelCreator/skeleton-skullful",
 		"allAngles": true,
 		"entityTextureMode": true
 	},
@@ -8,7 +9,7 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"material": "entity/humanoid/serapharmor/chain/bismuthbronze"
+		"material": "entity/humanoid/serapharmor/chain/iron"
 	},
 	"elements": [
 		{
@@ -45,33 +46,48 @@
 					"children": [
 						{
 							"name": "ArmorHelmetNasal",
-							"from": [ 0.0, -1.0, 2.5 ],
+							"from": [ 0.0, -1.5, 2.5 ],
 							"to": [ 0.5, 0.0, 3.6 ],
 							"unwrapMode": 1,
 							"uv": [ 32.5, 35.5 ],
 							"rotationOrigin": [ 0.5, 0.0, 2.5 ],
 							"rotationZ": -6.0,
 							"faces": {
-								"north": { "texture": "#material", "uv": [ 32.5, 35.5, 33.0, 36.5 ] },
-								"south": { "texture": "#material", "uv": [ 34.0, 35.5, 34.5, 36.5 ] },
-								"west": { "texture": "#material", "uv": [ 33.0, 35.5, 34.0, 36.5 ] },
-								"down": { "texture": "#material", "uv": [ 32.5, 36.5, 33.0, 37.5 ] }
+								"north": { "texture": "#material", "uv": [ 32.5, 35.5, 33.0, 37.0 ] },
+								"south": { "texture": "#material", "uv": [ 34.0, 35.5, 34.5, 37.0 ] },
+								"west": { "texture": "#material", "uv": [ 33.0, 35.5, 34.0, 37.0 ] },
+								"down": { "texture": "#material", "uv": [ 32.5, 37.0, 33.0, 38.0 ] }
 							}
 						}
 					]
 				},
 				{
+					"name": "ArmorHelmetTop",
+					"from": [ 0.5, 4.38, 0.5 ],
+					"to": [ 5.2, 5.18, 5.6 ],
+					"unwrapMode": 1,
+					"uv": [ 31.0, 30.0 ],
+					"rotationOrigin": [ 0.5, 4.5, 0.5 ],
+					"faces": {
+						"north": { "texture": "#material", "uv": [ 36.0, 35.0, 40.5, 35.5 ] },
+						"east": { "texture": "#material", "uv": [ 31.0, 35.0, 36.0, 35.5 ] },
+						"south": { "texture": "#material", "uv": [ 47.5, 35.0, 52.0, 35.5 ] },
+						"west": { "texture": "#material", "uv": [ 41.5, 35.0, 46.5, 35.5 ] },
+						"up": { "texture": "#material", "uv": [ 36.0, 30.0, 40.5, 35.0 ], "rotation": 180 }
+					}
+				},
+				{
 					"name": "ArmorHelmetFace2",
 					"from": [ -0.32, 0.0, 0.0 ],
-					"to": [ 0.0, 2.54, 6.1 ],
+					"to": [ 0.0, 2.04, 6.1 ],
 					"unwrapMode": 1,
 					"autoUnwrap": false,
 					"uv": [ 18.0, 28.5 ],
 					"rotationOrigin": [ -0.5, 0.0, 0.0 ],
 					"faces": {
-						"north": { "texture": "#material", "uv": [ 57.0, 59.0, 57.5, 61.5 ] },
-						"south": { "texture": "#material", "uv": [ 63.5, 59.0, 64.0, 61.5 ] },
-						"west": { "texture": "#material", "uv": [ 57.5, 59.0, 63.5, 61.5 ] },
+						"north": { "texture": "#material", "uv": [ 57.0, 59.5, 57.5, 61.5 ] },
+						"south": { "texture": "#material", "uv": [ 63.5, 59.5, 64.0, 61.5 ] },
+						"west": { "texture": "#material", "uv": [ 57.5, 59.5, 63.5, 61.5 ] },
 						"up": { "texture": "#material", "uv": [ 57.5, 59.5, 63.5, 60.0 ], "rotation": 90 },
 						"down": { "texture": "#material", "uv": [ 57.5, 61.5, 63.5, 62.0 ], "rotation": 90 }
 					}
