@@ -165,18 +165,18 @@
     "blade-scrap-scrap": {"base": "item/tool/blade/{metal}"}
   },
   "durabilitybytype": {
-    "blade-scrap-scrap": 190,
-    "blade-falx-copper": 250,
-    "blade-falx-tinbronze": 450,
-    "blade-falx-bismuthbronze": 530,
-    "blade-falx-blackbronze": 600,
-    "blade-falx-iron": 850,
-    "blade-falx-meteoriciron": 1100,
-    "blade-falx-steel": 2125,
-    "blade-falx-gold": 2125,
-    "blade-falx-silver": 2125,
-    "blade-blackguard-iron": 1100,
-    "blade-forlorn-iron": 650
+    "blade-scrap-scrap": 150,
+    "blade-falx-copper": 300,
+    "blade-falx-tinbronze": 550,
+    "blade-falx-bismuthbronze": 600,
+    "blade-falx-blackbronze": 650,
+    "blade-falx-iron": 600,
+    "blade-falx-meteoriciron": 750,
+    "blade-falx-steel": 1250,
+    "blade-falx-gold": 1250,
+    "blade-falx-silver": 1250,
+    "blade-blackguard-iron": 750,
+    "blade-forlorn-iron": 750
   },
   "creativeinventory": {"general": ["*"], "items": ["*"], "tools": ["*"], "combatoverhaul": ["*"]},
   "guiTransformByType": {

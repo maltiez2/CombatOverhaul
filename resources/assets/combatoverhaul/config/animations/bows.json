@@ -2875,7 +2875,7 @@
         "SwitchArms": true,
         "PitchFollow": true,
         "PitchDontFollow": false,
-        "FOVMultiplier": 0.95,
+        "FOVMultiplier": 1,
         "BobbingAmplitude": 0.7,
         "Elements": {
           "ItemAnchor": [0, 0, 0, 0, 0, 0],
@@ -3442,7 +3442,7 @@
         "SwitchArms": true,
         "PitchFollow": true,
         "PitchDontFollow": false,
-        "FOVMultiplier": 0.95,
+        "FOVMultiplier": 1,
         "BobbingAmplitude": 0.7,
         "Elements": {
           "ItemAnchor": [0, 0, 0, 0, 0, 0],
@@ -3462,7 +3462,7 @@
         "SwitchArms": true,
         "PitchFollow": true,
         "PitchDontFollow": false,
-        "FOVMultiplier": 0.95,
+        "FOVMultiplier": 1,
         "BobbingAmplitude": 0.7,
         "Elements": {
           "ItemAnchor": [0, 0, 0, 0, 0, 0],
@@ -4008,7 +4008,7 @@
         "SwitchArms": true,
         "PitchFollow": true,
         "PitchDontFollow": false,
-        "FOVMultiplier": 0.95,
+        "FOVMultiplier": 1,
         "BobbingAmplitude": 0.7,
         "Elements": {
           "ItemAnchor": [0, 0, 0, 0, 0, 0],

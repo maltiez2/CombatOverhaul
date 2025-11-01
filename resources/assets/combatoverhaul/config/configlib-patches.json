@@ -131,7 +131,12 @@
         "11/value/*-gearfoot": "bowtorn_maxrange_gearfoot * 1.2",
         "12/value/*-gearfoot": "bowtorn_maxrange_gearfoot * 1.2",
         "13/value/*-gearfoot": "bowtorn_maxrange_gearfoot * 2"
-      }
+      },
+      "combatoverhaul:config/animations/bows.json": {
+        "@@bow-draw-*/PlayerKeyFrames/1/FOVMultiplier": "(bow_fov_effect) ? clamp(1 - (1 - value) * bow_fov_multiplier, 0.01, 1) : 1",
+        "@@bow-draw-short-*/PlayerKeyFrames/1/FOVMultiplier": "(bow_fov_effect) ? clamp(1 - (1 - value) * bow_fov_multiplier, 0.01, 1) : 1",
+        "@@bow-release-*/PlayerKeyFrames/0/FOVMultiplier": "(bow_fov_effect) ? clamp(1 - (1 - value) * bow_fov_multiplier, 0.01, 1) : 1"
+      },
     }
   },
   "constants": {
@@ -252,6 +257,14 @@
       }
     },
     {
+      "code": "bow_fov_effect",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-bow_fov_effect",
+      "comment": "combatoverhaul:setting-comment-bow_fov_effect",
+      "clientSide": true,
+      "default": true
+    },
+    {
       "code": "vanilla_actions_while_blocking",
       "type": "boolean",
       "ingui": "combatoverhaul:setting-vanilla_actions_while_blocking",
@@ -285,6 +298,16 @@
       "range": {
         "min": 0.0,
         "max": 2.0
+      }
+    },
+    {
+      "code": "bow_fov_multiplier",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-bow_fov_multiplier",
+      "default": 1.0,
+      "range": {
+        "min": 0.0,
+        "max": 5.0
       }
     },
     {

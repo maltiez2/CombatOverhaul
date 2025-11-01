@@ -1,0 +1,20 @@
+﻿[
+  {"file": "game:recipes/smithing/chain", "op": "addmerge", "path": "/output", "value": {"quantity": 4}},
+  {"file": "game:recipes/grid/metalbit", "op": "replace", "path": "/3/output/quantity", "value": 10},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-copper/smeltedStack/stacksize", "value": 1},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-brass/smeltedStack/stacksize", "value": 1},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-tinbronze/smeltedStack/stacksize", "value": 1},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-bismuthbronze/smeltedStack/stacksize", "value": 1},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-blackbronze/smeltedStack/stacksize", "value": 1},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-iron/smeltedStack/stacksize", "value": 1},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-gold/smeltedStack/stacksize", "value": 1},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-lead/smeltedStack/stacksize", "value": 1},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-tin/smeltedStack/stacksize", "value": 1},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-chromium/smeltedStack/stacksize", "value": 1},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-platinum/smeltedStack/stacksize", "value": 1},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-titanium/smeltedStack/stacksize", "value": 1},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-zinc/smeltedStack/stacksize", "value": 1},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-silver/smeltedStack/stacksize", "value": 1},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-bismuth/smeltedStack/stacksize", "value": 1},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-molybdochalkos/smeltedStack/stacksize", "value": 1}
+]
