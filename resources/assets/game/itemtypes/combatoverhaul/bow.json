@@ -33,6 +33,9 @@
       "*-long": {"translation": {"x": 0.5, "y": 0.6, "z": 0.3}, "rotation": {"x": 9, "y": 180, "z": 88}, "origin": {"x": 0, "y": 0, "z": 0.5}},
       "*-recurve": {"translation": {"x": 0.5, "y": 0.35, "z": 0.3}, "rotation": {"x": 9, "y": 180, "z": 88}, "origin": {"x": 0, "y": 0, "z": 0.5}}
     },
+    "handbook": {
+      "groupBy": ["sling-*"]
+    },
     "ArrowWildcard": "*arrow-*",
     "ArrowTransform": {"translation": {"x": -3, "y": 0.3, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 1}, "scale": 0.75},
     "ArrowDamageMultiplierByType": {"*-crude": 0.8, "*-simple": 1, "*-long": 1.8, "*-recurve": 1.3},
