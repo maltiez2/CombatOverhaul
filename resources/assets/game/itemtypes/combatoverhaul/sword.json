@@ -20,6 +20,9 @@
       "*-falx-*": {"translation": {"x": 0.95, "y": 0.5, "z": 0.9}, "rotation": {"x": 0, "y": 180, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}},
       "*-scrap-*": {"translation": {"x": 0.2, "y": 0.85}, "rotation": {"y": 180, "z": 1}, "scale": 1.66}
     },
+    "handbook": {
+      "groupBy": ["blade-*"]
+    },
     "ProficiencyStat": "oneHandedSwordsProficiency",
     "RenderingOffset": false,
     "OneHandedStanceByType": {

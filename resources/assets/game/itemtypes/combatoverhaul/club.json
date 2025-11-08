@@ -11,6 +11,9 @@
     "toolrackTransform": {"translation": {"x": -0.9, "y": 0.6, "z": -0.1}, "rotation": {"x": 0, "y": 0, "z": -2}, "origin": {"x": 0, "y": 0, "z": 0}},
     "ProficiencyStatByType": {"*-scrapmace-*": "macesProficiency", "*": "clubsProficiency"},
     "RenderingOffset": false,
+    "handbook": {
+      "groupBy": ["club-*"]
+    },
     "OneHanded": {
       "AttackDirectionsType": "TopBottom",
       "InitialStance": "Top",
