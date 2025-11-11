@@ -108,21 +108,29 @@ public sealed class CombatOverhaulAdditionalSystem : ModSystem
                 .OfType<EntityPlayer>()
                 .FirstOrDefault((EntityPlayer?)null);
 
-            bool hasPlayerDamageModelBehavior = player?.GetBehavior<PlayerDamageModelBehavior>() != null;
-            if (!hasPlayerDamageModelBehavior && player != null)
+            try
             {
-                string behaviorsList = player.Properties.Server.Behaviors.Select(behavior => behavior.GetType().Name).Aggregate((a, b) => $"{a}\n{b}") ?? "";
-                string message = $"Was not able to find 'PlayerDamageModelBehavior'. Some other mod altered players behavior in a way that break other mods.\nList of current player server entity behaviors:\n{behaviorsList}\n";
-                LoggerUtil.Error(api, this, message);
-            }
+                bool hasPlayerDamageModelBehavior = player?.GetBehavior<PlayerDamageModelBehavior>() != null;
+                if (!hasPlayerDamageModelBehavior && player != null)
+                {
+                    string behaviorsList = player.Properties.Server.Behaviors.Select(behavior => behavior.GetType().Name).Aggregate((a, b) => $"{a}\n{b}") ?? "";
+                    string message = $"Was not able to find 'PlayerDamageModelBehavior'. Some other mod altered players behavior in a way that break other mods.\nList of current player server entity behaviors:\n{behaviorsList}\n";
+                    LoggerUtil.Error(api, this, message);
+                }
 
-            bool hasCollidersEntityBehavior = player?.GetBehavior<CollidersEntityBehavior>() != null;
-            if (!hasCollidersEntityBehavior && player != null)
-            {
-                string behaviorsList = player.Properties.Server.Behaviors.Select(behavior => behavior.GetType().Name).Aggregate((a, b) => $"{a}\n{b}") ?? "";
-                string message = $"Was not able to find 'CollidersEntityBehavior'. Some other mod altered players behavior in a way that break other mods.\nList of current player server entity behaviors:\n{behaviorsList}\n";
-                LoggerUtil.Error(api, this, message);
+                bool hasCollidersEntityBehavior = player?.GetBehavior<CollidersEntityBehavior>() != null;
+                if (!hasCollidersEntityBehavior && player != null)
+                {
+                    string behaviorsList = player.Properties.Server.Behaviors.Select(behavior => behavior.GetType().Name).Aggregate((a, b) => $"{a}\n{b}") ?? "";
+                    string message = $"Was not able to find 'CollidersEntityBehavior'. Some other mod altered players behavior in a way that break other mods.\nList of current player server entity behaviors:\n{behaviorsList}\n";
+                    LoggerUtil.Error(api, this, message);
+                }
             }
+            catch (Exception ex)
+            {
+                // Why the fuck I have to put every single vanilla method under try catch so it does not crash the game with random null ref!?
+            }
+            
         }, 30000);
     }
 
