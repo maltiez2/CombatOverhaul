@@ -12,14 +12,14 @@
             "Zones": ["Head", "Neck", "Face"],
             "Resists": {"PiercingAttack": 2, "SlashingAttack": 3, "BluntAttack": 3},
             "FlatReduction": {},
-            "PlayerStats": {"walkspeed": 0, "manipulationSpeed": -0.1, "steadyAim": -0.05, "healingeffectivness": -0.09, "hungerrate": 0.09}
+            "PlayerStats": {"walkspeed": 0, "manipulationSpeed": -0.05, "steadyAim": -0.1, "healingeffectivness": -0.09, "hungerrate": 0.09}
           },
           "@armor-body-hide-bear-(polar|brown)": {
             "Layers": ["Outer"],
             "Zones": ["Torso", "Arms", "Hands"],
             "Resists": {"PiercingAttack": 2, "SlashingAttack": 3, "BluntAttack": 3},
             "FlatReduction": {},
-            "PlayerStats": {"walkspeed": -0.05, "manipulationSpeed": -0.3, "steadyAim": -0.2, "healingeffectivness": -0.09, "hungerrate": 0.09}
+            "PlayerStats": {"walkspeed": -0.05, "manipulationSpeed": -0.2, "steadyAim": -0.3, "healingeffectivness": -0.09, "hungerrate": 0.09}
           },
           "@armor-legs-hide-bear-(polar|brown)": {
             "Layers": ["Outer"],
@@ -33,14 +33,14 @@
             "Zones": ["Head", "Neck", "Face"],
             "Resists": {"PiercingAttack": 1, "SlashingAttack": 2, "BluntAttack": 2},
             "FlatReduction": {},
-            "PlayerStats": {"walkspeed": 0, "manipulationSpeed": -0.1, "steadyAim": -0.05, "healingeffectivness": -0.09, "hungerrate": 0.09}
+            "PlayerStats": {"walkspeed": 0, "manipulationSpeed": -0.05, "steadyAim": -0.1, "healingeffectivness": -0.09, "hungerrate": 0.09}
           },
           "@armor-body-hide-bear-(panda|sun|black)": {
             "Layers": ["Outer"],
             "Zones": ["Torso", "Arms", "Hands"],
             "Resists": {"PiercingAttack": 1, "SlashingAttack": 2, "BluntAttack": 2},
             "FlatReduction": {},
-            "PlayerStats": {"walkspeed": -0.05, "manipulationSpeed": -0.3, "steadyAim": -0.2, "healingeffectivness": -0.09, "hungerrate": 0.09}
+            "PlayerStats": {"walkspeed": -0.05, "manipulationSpeed": -0.2, "steadyAim": -0.3, "healingeffectivness": -0.09, "hungerrate": 0.09}
           },
           "@armor-legs-hide-bear-(panda|sun|black)": {
             "Layers": ["Outer"],

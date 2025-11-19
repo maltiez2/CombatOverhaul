@@ -1,9 +1,10 @@
 [
 	{
-		"ingredientPattern": "_T_,T_T",
+		"ingredientPattern": "_M_,T_T",
 		"recipeGroup": 1,
 		"ingredients": {
-			"T": { "type": "item", "code": "metalchain-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"], "quantity": 1 }
+			"T": { "type": "item", "code": "metalchain-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"], "quantity": 1 },
+			"M": { "type": "item", "code": "metalchain-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"], "quantity": 2 }
 		},
 		"width": 3,
 		"height": 2,
@@ -11,10 +12,11 @@
 		"output": { "type": "item", "code": "armor-head-chain-{metal}"  }
 	},
 	{
-		"ingredientPattern": "T_T,TTT,TTT",
+		"ingredientPattern": "T_T,MMM,TMT",
 		"recipeGroup": 1,
 		"ingredients": {
-			"T": { "type": "item", "code": "metalchain-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"], "quantity": 1 }
+			"T": { "type": "item", "code": "metalchain-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"], "quantity": 1 },
+			"M": { "type": "item", "code": "metalchain-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"], "quantity": 2 }
 		},
 		"width": 3,
 		"height": 3,
@@ -22,13 +24,14 @@
 		"output": { "type": "item", "code": "armor-body-chain-{metal}"  }
 	},
 	{
-		"ingredientPattern": "TTT,T_T",
+		"ingredientPattern": "TMT,T_T,T_T",
 		"recipeGroup": 1,
 		"ingredients": {
-			"T": { "type": "item", "code": "metalchain-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"], "quantity": 1 }
+			"T": { "type": "item", "code": "metalchain-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"], "quantity": 1 },
+			"M": { "type": "item", "code": "metalchain-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"], "quantity": 2 }
 		},
 		"width": 3,
-		"height": 2,
+		"height": 3,
 		"name": "chain leg armor",
 		"output": { "type": "item", "code": "armor-legs-chain-{metal}"  }
 	}
