@@ -9,6 +9,9 @@
   "attributes": {
     "groundStorageTransform": {"translation": {"x": 0.6, "y": 1.6, "z": 0.7}, "rotation": {"x": 16, "y": -9, "z": -90}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 0.6},
     "toolrackTransform": {"translation": {"x": -0.9, "y": 0.6, "z": -0.1}, "rotation": {"x": 0, "y": 0, "z": -2}, "origin": {"x": 0, "y": 0, "z": 0}},
+    "handbook": {
+      "groupBy": ["club-*"]
+    },
     "ProficiencyStat": "macesProficiency",
     "RenderingOffset": false,
     "OneHandedStance": {
