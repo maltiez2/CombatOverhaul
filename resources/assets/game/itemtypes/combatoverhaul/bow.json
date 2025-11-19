@@ -1,4 +1,4 @@
-﻿{
+{
   "code": "bow",
   "class": "CombatOverhaul:Bow",
   "tags": ["weapon", "weapon-ranged", "bow"],
@@ -32,9 +32,6 @@
       "*-simple": {"translation": {"x": 0.5, "y": 0.35, "z": 0.35}, "rotation": {"x": 9, "y": 180, "z": 88}, "origin": {"x": 0, "y": 0, "z": 0.5}},
       "*-long": {"translation": {"x": 0.5, "y": 0.6, "z": 0.3}, "rotation": {"x": 9, "y": 180, "z": 88}, "origin": {"x": 0, "y": 0, "z": 0.5}},
       "*-recurve": {"translation": {"x": 0.5, "y": 0.35, "z": 0.3}, "rotation": {"x": 9, "y": 180, "z": 88}, "origin": {"x": 0, "y": 0, "z": 0.5}}
-    },
-    "handbook": {
-      "groupBy": ["bow-*"]
     },
     "ArrowWildcard": "*arrow-*",
     "ArrowTransform": {"translation": {"x": -3, "y": 0.3, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 1}, "scale": 0.75},
