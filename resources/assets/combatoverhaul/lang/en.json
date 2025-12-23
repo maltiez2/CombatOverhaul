@@ -104,6 +104,7 @@
   "setting-title-player-settings": "Player damage model",
   "setting-title-entities": "Entities settings",
   "setting-title-bowtorns": "Bowtorns",
+  "setting-flip_direction_after_attack": "Flip attack direction after attack",
   "setting-directions_cursor_transparency": "Directions selection cursor transparency",
   "setting-directions_cursor_scale": "Directions selection cursor scale",
   "setting-directions_inertia": "Directions cursor inertia",

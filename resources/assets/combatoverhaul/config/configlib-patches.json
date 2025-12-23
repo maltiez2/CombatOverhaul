@@ -182,6 +182,13 @@
       ]
     },
     {
+      "code": "flip_direction_after_attack",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-flip_direction_after_attack",
+      "clientSide": true,
+      "default": true
+    },
+    {
       "code": "directions_invert",
       "type": "boolean",
       "ingui": "combatoverhaul:setting-directions_invert",
