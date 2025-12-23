@@ -79,7 +79,8 @@
         "LimbsDamageMultiplier": 0.5,
         "HeadDamageMultiplier": 1,
         "CriticalDamageMultiplier": 3,
-        "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 3, "PiercingAttack": 5}
+        "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 3, "PiercingAttack": 5},
+        "HitSounds": {"Resistant": {"Code": "game:sounds/held/shieldblock-metal-light"}}
       }
     }
   },
@@ -95,7 +96,8 @@
         "LimbsDamageMultiplier": 0.5,
         "HeadDamageMultiplier": 1,
         "CriticalDamageMultiplier": 3,
-        "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 3, "PiercingAttack": 5}
+        "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 3, "PiercingAttack": 5},
+        "HitSounds": {"Resistant": {"Code": "game:sounds/held/shieldblock-metal-light"}}
       }
     }
   },

@@ -107,9 +107,9 @@
               "*-steel": {"DamageType": "PiercingAttack", "Tier": 6, "Damage": 5},
               "*": {"DamageType": "PiercingAttack", "Tier": 1, "Damage": 2.5}
             },
-            "Knockback": 0.8,
+            "Knockback": 0,
             "DurabilityDamage": 1,
-            "Collider": [0, 0, 0.5, 1.2, 0, 0.5]
+            "Collider": [0.4, 0, 0.5, 1.2, 0, 0.5]
           }
         ]
       },
@@ -118,10 +118,10 @@
         "StopOnEntityHit": false,
         "CollideWithTerrain": true,
         "MaxReach": 9,
-        "DamageTypes": [{"Damage": {"DamageType": "BluntAttack", "Tier": 0, "Damage": 1}, "Knockback": 1, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, -2.5, 0, 0.5]}]
+        "DamageTypes": [{"Damage": {"DamageType": "BluntAttack", "Tier": 0, "Damage": 0.1}, "Knockback": 1, "DurabilityDamage": 1, "Collider": [-2.5, 0, 0.5, 0.5, 0, 0.5]}]
       },
       "AttackHitSound": "game:sounds/thud",
-      "HandleHitSound": "game:sounds/thud",
+      "HandleHitSound": "game:sounds/held/shieldblock-wood-light",
       "AttackDirectionsType": "None",
       "AttackAnimation": {"Main": ["combatoverhaul:spear-thrust-1h"]},
       "ReadyAnimation": "combatoverhaul:spear-ready-1h",
@@ -159,9 +159,10 @@
               "*-steel": {"DamageType": "PiercingAttack", "Tier": 6, "Damage": 6},
               "*": {"DamageType": "PiercingAttack", "Tier": 1, "Damage": 3.5}
             },
-            "Knockback": 1,
+            "Knockback": 0,
             "DurabilityDamage": 1,
-            "Collider": [0, 0, 0.5, 1.2, 0, 0.5]
+            "PushTier": 9,
+            "Collider": [0.4, 0, 0.5, 1.2, 0, 0.5]
           }
         ]
       },
@@ -170,10 +171,10 @@
         "StopOnEntityHit": false,
         "CollideWithTerrain": true,
         "MaxReach": 9,
-        "DamageTypes": [{"Damage": {"DamageType": "BluntAttack", "Tier": 0, "Damage": 0}, "Knockback": 0, "DurabilityDamage": 0, "Collider": [0, 0, 0.5, -2.5, 0, 0.5]}]
+        "DamageTypes": [{"Damage": {"DamageType": "BluntAttack", "Tier": 0, "Damage": 0.1}, "Knockback": 2, "DurabilityDamage": 1, "Collider": [-2.5, 0, 0.5, 0.5, 0, 0.5]}]
       },
       "AttackHitSound": "game:sounds/thud",
-      "HandleHitSound": "game:sounds/thud",
+      "HandleHitSound": "game:sounds/held/shieldblock-wood-light",
       "AttackDirectionsType": "None",
       "AttackAnimation": {"Main": ["combatoverhaul:spear-thrust-2h-1", "combatoverhaul:spear-thrust-2h-2", "combatoverhaul:spear-thrust-2h-3"]},
       "ReadyAnimation": "combatoverhaul:spear-ready-2h",

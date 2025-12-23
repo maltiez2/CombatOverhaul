@@ -326,5 +326,19 @@
     "op": "replace",
     "path": "/server/behaviors/0",
     "value": {"code": "passivephysics", "groundDragFactor": 1, "airDragFactor": 0, "gravityFactor": 1}
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/bowtorn",
+    "op": "replace",
+    "path": "/server/behaviors/2/currenthealthByType",
+    "value": {"*-surface": 8, "*-deep": 12, "*-tainted": 16, "*-corrupt": 20, "*-nightmare": 24, "*-gearfoot": 28}
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/bowtorn",
+    "op": "replace",
+    "path": "/server/behaviors/2/maxhealthByType",
+    "value": {"*-surface": 8, "*-deep": 12, "*-tainted": 16, "*-corrupt": 20, "*-nightmare": 24, "*-gearfoot": 28}
   }
 ]

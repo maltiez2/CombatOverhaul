@@ -99,7 +99,8 @@
           "*-stilt": {"BluntAttack": 0, "SlashingAttack": 7, "PiercingAttack": 8},
           "*-bellhead": {"BluntAttack": 0, "SlashingAttack": 7, "PiercingAttack": 8},
           "*-deepsplit": {"BluntAttack": 0, "SlashingAttack": 7, "PiercingAttack": 8}
-        }
+        },
+        "HitSounds": {"Resistant": {"Code": "game:sounds/held/shieldblock-metal-light"}}
       }
     }
   },
@@ -124,7 +125,8 @@
           "*-stilt": {"BluntAttack": 0, "SlashingAttack": 7, "PiercingAttack": 8},
           "*-bellhead": {"BluntAttack": 0, "SlashingAttack": 7, "PiercingAttack": 8},
           "*-deepsplit": {"BluntAttack": 0, "SlashingAttack": 7, "PiercingAttack": 8}
-        }
+        },
+        "HitSounds": {"Resistant": {"Code": "game:sounds/held/shieldblock-metal-light"}}
       }
     }
   },
@@ -163,5 +165,19 @@
   {"side": "Server", "file": "game:entities/lore/shiver", "op": "replace", "path": "/server/behaviors/8/aitasks/2/animation", "value": "bite-withwindup"},
   {"side": "Server", "file": "game:entities/lore/shiver", "op": "replace", "path": "/server/behaviors/2/currenthealthByType/*-deep", "value": 16},
   {"side": "Server", "file": "game:entities/lore/shiver", "op": "replace", "path": "/server/behaviors/2/maxhealthByType/*-deep", "value": 16},
-  {"side": "Server", "file": "game:entities/lore/shiver", "op": "replace", "path": "/hitboxSize/x", "value": 1.9}
+  {"side": "Server", "file": "game:entities/lore/shiver", "op": "replace", "path": "/hitboxSize/x", "value": 1.9},
+  {
+    "side": "Server",
+    "file": "game:entities/lore/shiver",
+    "op": "replace",
+    "path": "/server/behaviors/2/currenthealthByType",
+    "value": {"*-surface": 14, "*-deep": 18, "*-tainted": 22, "*-corrupt": 26, "*-nightmare": 30, "*-stilt": 34, "*-deepsplit": 38, "*-bellhead": 42}
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/shiver",
+    "op": "replace",
+    "path": "/server/behaviors/2/maxhealthByType",
+    "value": {"*-surface": 14, "*-deep": 18, "*-tainted": 22, "*-corrupt": 26, "*-nightmare": 30, "*-stilt": 34, "*-deepsplit": 38, "*-bellhead": 42}
+  }
 ]

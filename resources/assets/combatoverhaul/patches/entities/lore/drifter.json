@@ -232,5 +232,19 @@
         "MaxDurationMs": 5000
       }
     }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/drifter",
+    "op": "replace",
+    "path": "/server/behaviors/2/currenthealthByType",
+    "value": {"*-normal": 12, "*-deep": 16, "*-tainted": 20, "*-corrupt": 24, "*-nightmare": 28, "*-double-headed": 32}
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/drifter",
+    "op": "replace",
+    "path": "/server/behaviors/2/maxhealthByType",
+    "value": {"*-normal": 12, "*-deep": 16, "*-tainted": 20, "*-corrupt": 24, "*-nightmare": 28, "*-double-headed": 32}
   }
 ]

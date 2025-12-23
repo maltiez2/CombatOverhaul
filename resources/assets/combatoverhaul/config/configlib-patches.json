@@ -163,7 +163,8 @@
         "None",
         "Vanilla",
         "Fixed",
-        "Moving"
+        "Moving",
+        "MovingNone"
       ]
     },
     {
@@ -176,7 +177,8 @@
         "None",
         "Vanilla",
         "Fixed",
-        "Moving"
+        "Moving",
+        "MovingNone"
       ]
     },
     {
@@ -197,6 +199,7 @@
       "code": "directions_hotkeys_controls",
       "type": "boolean",
       "ingui": "combatoverhaul:setting-directions_hotkeys_controls",
+      "comment": "setting-comment-directions_hotkeys_controls",
       "clientSide": true,
       "default": false
     },
@@ -408,6 +411,12 @@
       "default": false
     },
     {
+      "code": "melee_weapon_ignore_terrain_behind",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-melee_weapon_ignore_terrain_behind",
+      "default": false
+    },
+    {
       "code": "weapon_rendering_offset",
       "type": "boolean",
       "ingui": "combatoverhaul:setting-weapon_rendering_offset",
@@ -438,6 +447,32 @@
       "ingui": "combatoverhaul:setting-print_player_hits",
       "comment": "Can causes lags in some cases",
       "default": true
+    },
+    {
+      "type": "separator",
+      "title": "combatoverhaul:setting-title-debug-particles-settings",
+      "collapsible": true
+    },
+    {
+      "code": "debug_hit_particles",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-debug_hit_particles",
+      "comment": "Spawn particles on melee hits",
+      "default": false
+    },
+    {
+      "code": "debug_weapon_trail_particles",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-debug_weapon_trail_particles",
+      "comment": "Draw melee weapon colliders as prticles",
+      "default": false
+    },
+    {
+      "code": "debug_projectiles_trails_particles",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-debug_projectiles_trails_particles",
+      "comment": "Spawn particle trails for projectiles",
+      "default": false
     },
     {
       "type": "separator",
