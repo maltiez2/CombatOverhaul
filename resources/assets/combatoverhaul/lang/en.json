@@ -42,6 +42,7 @@
   "game:charattribute-steadyAim--0.3": "30% more aim drift",
   "game:charattribute-armorWalkSpeedAffectedness--0.5": "walk speed penalty for wearing armor reduced by 50%",
   "game:charattribute-armorManipulationSpeedAffectedness--0.5": "manipulation speed penalty for wearing armor reduced by 50%",
+  "game:charattribute-armorHungerRateAffectedness--0.5": "hunger rate penalty for wearing armor reduced by 50%",
   "game:charattribute-bowsProficiency--0.3": "-30% bows draw speed",
   "game:charattribute-crossbowsProficiency--0.3": "-30% crossbows reload speed",
   "game:charattribute-firearmsProficiency--0.3": "-30% firearms reload speed",
@@ -57,7 +58,8 @@
   "item-creature-arrow-*": "arrow",
   "item-creature-spear-*": "spear",
   "item-creature-slingbullet-*": "sling bullet",
-
+  
+  "item-sewingkit-armor-improvised": "Armorer improvised kit",
   "item-sewingkit-armor-sewing": "Armorer sewing kit",
   "item-sewingkit-armor-tailor": "Armorer tailor kit",
 
@@ -82,6 +84,10 @@
   "item-quiver-waist-*": "Quiver",
   "item-slingpouch-waist-*": "Sling pouch",
   "item-saydak-waist-*": "Quiver with bow case",
+
+  "item-armor-head-jerkin-hide-*": "Hide jerkin helmet",
+	"item-armor-body-jerkin-hide-*": "Body hide jerkin",
+	"item-armor-legs-jerkin-hide-*": "Leg hide jerkin",
 
   "itemdesc-quiver-waist-*": "Can hold arrows",
   "itemdesc-slingpouch-waist-*": "Can hold sling bullets and sling. Press 'R' to select sling from pouch.",
@@ -150,6 +156,7 @@
   "setting-print_player_hits": "Print damage received by player",
   "setting-debug_hit_particles": "Melee hit particles",
   "setting-debug_weapon_trail_particles": "Melee weapon trail particles",
+  "setting-debug_weapon_trail_particles_size": "Melee weapon trail particles size",
   "setting-debug_projectiles_trails_particles": "Projectile trail particles",
   "setting-second_chance_available": "Second chance mechanics",
   "setting-second_chance_cooldown": "Second chance cooldown (seconds)",

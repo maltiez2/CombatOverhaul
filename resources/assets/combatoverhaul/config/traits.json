@@ -19,5 +19,6 @@
   {"code": "canParryProjectiles", "type": "positive", "attributes": {}},
   {"code": "thickSkull", "type": "positive", "attributes": {"playerHeadDamageFactor": -0.5, "playerFaceDamageFactor": -0.5}},
   {"code": "legDay", "type": "mixed", "attributes": {"playerLegsDamageFactor": 1.0, "playerFeetDamageFactor": 1.0, "jumpHeightMul": 0.25}},
-  {"code": "bigHead", "type": "mixed", "attributes": {"playerTorsoDamageFactor": -0.5, "playerHeadDamageFactor": 0.5, "playerFaceDamageFactor": 0.5}}
+  {"code": "bigHead", "type": "mixed", "attributes": {"playerTorsoDamageFactor": -0.5, "playerHeadDamageFactor": 0.5, "playerFaceDamageFactor": 0.5}},
+  {"code": "armorProficiency", "type": "mixed", "attributes": {"armorHungerRateAffectedness":  -0.5, "armorManipulationSpeedAffectedness": -0.5}}
 ]

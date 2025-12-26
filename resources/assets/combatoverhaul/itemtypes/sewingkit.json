@@ -1,6 +1,6 @@
 ﻿{
   "code": "sewingkit",
-  "variantgroups": [{"code": "type", "states": ["armor"]}, {"code": "subtype", "states": ["sewing", "tailor"]}],
+  "variantgroups": [{"code": "type", "states": ["armor"]}, {"code": "subtype", "states": ["improvised", "sewing", "tailor"]}],
   "shape": {"base": "combatoverhaul:{type}-{subtype}-kit"},
   "behaviors": [{"name": "GroundStorable", "properties": {"layout": "Quadrants", "collisionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.125, "z2": 1}}}],
   "attributes": {"clothingRepairStrength": 0.75, "displaycaseable": true, "shelvable": true},

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <ModName>Combat Overhaul</ModName>
     <ModType>code</ModType>
-    <ModVersion>0.11.1</ModVersion>
+    <ModVersion>0.11.6</ModVersion>
     <ModId>combatoverhaul</ModId>
     <Description></Description>
     <Side>universal</Side>
@@ -18,7 +18,7 @@
 
   <!-- Dependencies -->
   <ItemGroup>
-    <Dependencies Include="overhaullib" Version="1.16.1" />
+    <Dependencies Include="overhaullib" Version="1.16.8" />
   </ItemGroup>
 
   <!-- Project settings -->
@@ -74,7 +74,9 @@
     <Reference Include="$(ExternalLibDir)/**/*.dll" Private="false" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="resources\assets\combatoverhaul\shapes\armor\hide\" />
     <Folder Include="resources\assets\combatoverhaul\shapes\weapons\slings\" />
+    <Folder Include="resources\assets\combatoverhaul\textures\armor\" />
     <Folder Include="resources\assets\game\recipes\grid\combatoverhaul\armorrepair\" />
   </ItemGroup>
 

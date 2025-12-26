@@ -2,6 +2,27 @@
 	{
 		"ingredientPattern": "AAB,AA_",
 		"ingredients": {
+			"A": { "type": "item", "code": "game:flaxfibers", "quantity": 1 },
+			"B": { "type": "item", "code": "game:metalnailsandstrips-copper", "quantity": 1 }
+		},
+		"width": 3,
+		"height": 2,
+		"output": { "type": "item", "code": "combatoverhaul:sewingkit-armor-improvised", "quantity": 1  }
+	},
+	{
+		"ingredientPattern": "AAB,AA_",
+		"ingredients": {
+			"A": { "type": "item", "code": "game:flaxfibers", "quantity": 1 },
+			"B": { "type": "item", "code": "game:bone-tiny", "quantity": 1 }
+		},
+		"width": 3,
+		"height": 2,
+		"requiresTrait": "clothier",
+		"output": { "type": "item", "code": "combatoverhaul:sewingkit-armor-improvised", "quantity": 1  }
+	},
+	{
+		"ingredientPattern": "AAB,AA_",
+		"ingredients": {
 			"A": { "type": "item", "code": "game:flaxtwine", "quantity": 1 },
 			"B": { "type": "item", "code": "game:metalnailsandstrips-iron", "quantity": 1 }
 		},

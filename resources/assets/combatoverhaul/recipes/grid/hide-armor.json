@@ -1,0 +1,80 @@
+[
+  {
+    "ingredientPattern": "CPC,PKP",
+    "recipeGroup": 2,
+    "ingredients": {
+      "P": {"type": "item", "code": "game:hide-pelt-small", "quantity": 1},
+      "K": {"type": "item", "code": "combatoverhaul:sewingkit-armor-improvised", "quantity": 1},
+      "C": {"type": "item", "code": "game:cattailtops", "quantity": 16}
+    },
+    "width": 3,
+    "height": 2,
+    "name": "jerkin armor",
+    "output": {"type": "item", "code": "combatoverhaul:armor-head-jerkin-hide-plain"}
+  },
+  {
+    "ingredientPattern": "PKP,PCP,PCP",
+    "recipeGroup": 2,
+    "ingredients": {
+      "P": {"type": "item", "code": "game:hide-pelt-small", "quantity": 1},
+      "K": {"type": "item", "code": "combatoverhaul:sewingkit-armor-improvised", "quantity": 1},
+      "C": {"type": "item", "code": "game:cattailtops", "quantity": 16}
+    },
+    "width": 3,
+    "height": 3,
+    "name": "jerkin armor",
+    "output": {"type": "item", "code": "combatoverhaul:armor-body-jerkin-hide-plain"}
+  },
+  {
+    "ingredientPattern": "PPP,PKP,PCP",
+    "recipeGroup": 2,
+    "ingredients": {
+      "P": {"type": "item", "code": "game:hide-pelt-small", "quantity": 1},
+      "K": {"type": "item", "code": "combatoverhaul:sewingkit-armor-improvised", "quantity": 1},
+      "C": {"type": "item", "code": "game:cattailtops", "quantity": 16}
+    },
+    "width": 3,
+    "height": 3,
+    "name": "jerkin armor",
+    "output": {"type": "item", "code": "combatoverhaul:armor-legs-jerkin-hide-plain"}
+  },
+  {
+    "ingredientPattern": "_P_,CKC",
+    "recipeGroup": 2,
+    "ingredients": {
+      "P": {"type": "item", "code": "game:hide-pelt-medium", "quantity": 1},
+      "K": {"type": "item", "code": "combatoverhaul:sewingkit-armor-improvised", "quantity": 1},
+      "C": {"type": "item", "code": "game:cattailtops", "quantity": 16}
+    },
+    "width": 3,
+    "height": 2,
+    "name": "jerkin armor",
+    "output": {"type": "item", "code": "combatoverhaul:armor-head-jerkin-hide-plain"}
+  },
+  {
+    "ingredientPattern": "PKP,PCP",
+    "recipeGroup": 2,
+    "ingredients": {
+      "P": {"type": "item", "code": "game:hide-pelt-medium", "quantity": 1},
+      "K": {"type": "item", "code": "combatoverhaul:sewingkit-armor-improvised", "quantity": 1},
+      "C": {"type": "item", "code": "game:cattailtops", "quantity": 32}
+    },
+    "width": 3,
+    "height": 2,
+    "name": "jerkin armor",
+    "output": {"type": "item", "code": "combatoverhaul:armor-body-jerkin-hide-plain"}
+  },
+  {
+    "ingredientPattern": "CPC,PKP",
+    "recipeGroup": 2,
+    "ingredients": {
+      "P": {"type": "item", "code": "game:hide-pelt-medium", "quantity": 1},
+      "K": {"type": "item", "code": "combatoverhaul:sewingkit-armor-improvised", "quantity": 1},
+      "C": {"type": "item", "code": "game:cattailtops", "quantity": 8}
+    },
+    "width": 3,
+    "height": 2,
+    "name": "jerkin armor",
+    "output": {"type": "item", "code": "combatoverhaul:armor-legs-jerkin-hide-plain"}
+  }
+]

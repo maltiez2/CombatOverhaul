@@ -78,8 +78,8 @@
         "TorsoDamageMultiplier": 1,
         "LimbsDamageMultiplier": 0.5,
         "HeadDamageMultiplier": 1,
-        "CriticalDamageMultiplier": 3,
-        "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 3, "PiercingAttack": 5},
+        "CriticalDamageMultiplier": 1.5,
+        "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 3, "PiercingAttack": 4},
         "HitSounds": {"Resistant": {"Code": "game:sounds/held/shieldblock-metal-light"}}
       }
     }
@@ -95,12 +95,17 @@
         "TorsoDamageMultiplier": 1,
         "LimbsDamageMultiplier": 0.5,
         "HeadDamageMultiplier": 1,
-        "CriticalDamageMultiplier": 3,
-        "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 3, "PiercingAttack": 5},
+        "CriticalDamageMultiplier": 1.5,
+        "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 3, "PiercingAttack": 4},
         "HitSounds": {"Resistant": {"Code": "game:sounds/held/shieldblock-metal-light"}}
       }
     }
   },
   {"side": "Server", "file": "game:entities/lore/boss/eidolon-immobilized", "op": "replace", "path": "/server/behaviors/5/aitasks/0/damageTier", "value": 5},
-  {"side": "Server", "file": "game:entities/lore/boss/eidolon-immobilized", "op": "replace", "path": "/server/behaviors/5/aitasks/0/damage", "value": 16}
+  {"side": "Server", "file": "game:entities/lore/boss/eidolon-immobilized", "op": "replace", "path": "/server/behaviors/5/aitasks/0/damage", "value": 16},
+  {"side": "Server", "file": "game:entities/lore/boss/eidolon-immobilized", "op": "replace", "path": "/server/behaviors/3/currenthealth", "value": 300},
+  {"side": "Server", "file": "game:entities/lore/boss/eidolon-immobilized", "op": "replace", "path": "/server/behaviors/3/maxhealth", "value": 300},
+  {"side": "Server", "file": "game:entities/lore/boss/eidolon-immobilized", "op": "replace", "path": "/server/behaviors/5/aitasks/2/mincooldown", "value": 4000},
+  {"side": "Server", "file": "game:entities/lore/boss/eidolon-immobilized", "op": "replace", "path": "/server/behaviors/5/aitasks/2/maxcooldown", "value": 6000},
+  {"side": "Server", "file": "game:entities/lore/boss/eidolon-immobilized", "op": "replace", "path": "/server/behaviors/5/aitasks/1/projectileDamage", "value": 4}
 ]

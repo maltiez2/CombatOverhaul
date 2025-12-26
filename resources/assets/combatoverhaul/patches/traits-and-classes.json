@@ -1,7 +1,8 @@
 ﻿[
   {"enabled": true, "file": "game:config/traits", "op": "remove", "path": "/16/attributes/bowDrawingStrength"},
-  {"enabled": true, "file": "game:config/traits", "op": "addmerge", "path": "/9/attributes", "value": {"armorManipulationSpeedAffectedness": -0.5}},
   {"enabled": true, "file": "game:config/traits", "op": "replace", "path": "/9/attributes/armorWalkSpeedAffectedness", "value": -0.5},
+  {"enabled": true, "file": "game:config/traits", "op": "addmerge", "path": "/9/attributes", "value": {"armorManipulationSpeedAffectedness": -0.5}},
+  {"enabled": true, "file": "game:config/traits", "op": "addmerge", "path": "/9/attributes", "value": {"armorHungerRateAffectedness": -0.5}},
   {"enabled": true, "file": "game:config/characterclasses", "op": "remove", "path": "/1/traits/0"},
   {"enabled": true, "file": "game:config/characterclasses", "op": "remove", "path": "/4/traits/4"},
   {
