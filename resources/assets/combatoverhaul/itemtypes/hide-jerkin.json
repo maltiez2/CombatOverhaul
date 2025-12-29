@@ -22,7 +22,8 @@
         "*-legs-*": ["hideshoeL", "hideshoeR", "shoefluffL", "shoefluffR"]
       },
       "keepElementsByType": {"*-head-*": ["hair-covered"], "*-legs-*": ["showshoeR", "showshoeL"]}
-    }
+    },
+    "warmth": 1.5
   },
   "behaviors": [
     {

@@ -1,10 +1,10 @@
 [
   {
     "ingredientPattern": "CPC,PKP",
-    "recipeGroup": 2,
+    "recipeGroup": 1,
     "ingredients": {
       "P": {"type": "item", "code": "game:hide-pelt-small", "quantity": 1},
-      "K": {"type": "item", "code": "combatoverhaul:sewingkit-armor-improvised", "quantity": 1},
+      "K": {"type": "item", "code": "combatoverhaul:sewingkit-armor-improvised-*", "quantity": 1, "isTool": true, "toolDurabilityCost": 1},
       "C": {"type": "item", "code": "game:cattailtops", "quantity": 16}
     },
     "width": 3,
@@ -14,10 +14,10 @@
   },
   {
     "ingredientPattern": "PKP,PCP,PCP",
-    "recipeGroup": 2,
+    "recipeGroup": 1,
     "ingredients": {
       "P": {"type": "item", "code": "game:hide-pelt-small", "quantity": 1},
-      "K": {"type": "item", "code": "combatoverhaul:sewingkit-armor-improvised", "quantity": 1},
+      "K": {"type": "item", "code": "combatoverhaul:sewingkit-armor-improvised-*", "quantity": 1, "isTool": true, "toolDurabilityCost": 1},
       "C": {"type": "item", "code": "game:cattailtops", "quantity": 16}
     },
     "width": 3,
@@ -27,10 +27,10 @@
   },
   {
     "ingredientPattern": "PPP,PKP,PCP",
-    "recipeGroup": 2,
+    "recipeGroup": 1,
     "ingredients": {
       "P": {"type": "item", "code": "game:hide-pelt-small", "quantity": 1},
-      "K": {"type": "item", "code": "combatoverhaul:sewingkit-armor-improvised", "quantity": 1},
+      "K": {"type": "item", "code": "combatoverhaul:sewingkit-armor-improvised-*", "quantity": 1, "isTool": true, "toolDurabilityCost": 1},
       "C": {"type": "item", "code": "game:cattailtops", "quantity": 16}
     },
     "width": 3,
@@ -40,10 +40,10 @@
   },
   {
     "ingredientPattern": "_P_,CKC",
-    "recipeGroup": 2,
+    "recipeGroup": 1,
     "ingredients": {
       "P": {"type": "item", "code": "game:hide-pelt-medium", "quantity": 1},
-      "K": {"type": "item", "code": "combatoverhaul:sewingkit-armor-improvised", "quantity": 1},
+      "K": {"type": "item", "code": "combatoverhaul:sewingkit-armor-improvised-*", "quantity": 1, "isTool": true, "toolDurabilityCost": 1},
       "C": {"type": "item", "code": "game:cattailtops", "quantity": 16}
     },
     "width": 3,
@@ -53,10 +53,10 @@
   },
   {
     "ingredientPattern": "PKP,PCP",
-    "recipeGroup": 2,
+    "recipeGroup": 1,
     "ingredients": {
       "P": {"type": "item", "code": "game:hide-pelt-medium", "quantity": 1},
-      "K": {"type": "item", "code": "combatoverhaul:sewingkit-armor-improvised", "quantity": 1},
+      "K": {"type": "item", "code": "combatoverhaul:sewingkit-armor-improvised-*", "quantity": 1, "isTool": true, "toolDurabilityCost": 1},
       "C": {"type": "item", "code": "game:cattailtops", "quantity": 32}
     },
     "width": 3,
@@ -66,10 +66,10 @@
   },
   {
     "ingredientPattern": "CPC,PKP",
-    "recipeGroup": 2,
+    "recipeGroup": 1,
     "ingredients": {
       "P": {"type": "item", "code": "game:hide-pelt-medium", "quantity": 1},
-      "K": {"type": "item", "code": "combatoverhaul:sewingkit-armor-improvised", "quantity": 1},
+      "K": {"type": "item", "code": "combatoverhaul:sewingkit-armor-improvised-*", "quantity": 1, "isTool": true, "toolDurabilityCost": 1},
       "C": {"type": "item", "code": "game:cattailtops", "quantity": 8}
     },
     "width": 3,

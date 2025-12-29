@@ -1,0 +1,49 @@
+[
+
+	{
+		"ingredientPattern": "T,C",
+		"recipeGroup": 2,
+		"ingredients": {
+			"T": { "type": "item", "code": "game:armor-head-chain-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"] },
+			"C": { "type": "item", "code": "game:metalchain-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"] }
+		},
+		"width": 1,
+		"height": 2,
+		"shapeless": true,
+		"copyAttributesFrom": "T",
+		"averageDurability": false,
+		"name": "chain helmet repair",
+		"output": { "type": "item", "code": "game:armor-head-chain-{metal}"  }
+	},
+	{
+		"ingredientPattern": "T,C",
+		"recipeGroup": 2,
+		"ingredients": {
+			"T": { "type": "item", "code": "game:armor-body-chain-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"] },
+			"C": { "type": "item", "code": "game:metalchain-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"] }
+		},
+		"width": 1,
+		"height": 2,
+		"shapeless": true,
+		"copyAttributesFrom": "T",
+		"averageDurability": false,
+		"name": "chain body armor repair",
+		"output": { "type": "item", "code": "game:armor-body-chain-{metal}"  }
+	},
+	{
+		"ingredientPattern": "T,C",
+		"recipeGroup": 2,
+		"ingredients": {
+			"T": { "type": "item", "code": "game:armor-legs-chain-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"] },
+			"C": { "type": "item", "code": "game:metalchain-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"] }
+		},
+		"width": 1,
+		"height": 2,
+		"shapeless": true,
+		"copyAttributesFrom": "T",
+		"averageDurability": false,
+		"name": "chain leg armor repair",
+		"output": { "type": "item", "code": "game:armor-legs-chain-{metal}"  }
+	}
+	
+]

@@ -80,7 +80,7 @@
         "HeadDamageMultiplier": 1,
         "CriticalDamageMultiplier": 1.5,
         "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 3, "PiercingAttack": 4},
-        "HitSounds": {"Resistant": {"Code": "game:sounds/held/shieldblock-metal-light"}}
+        "HitSounds": {"Resistant": {"Code": "game:sounds/block/ceramichit"}}
       }
     }
   },
@@ -97,7 +97,7 @@
         "HeadDamageMultiplier": 1,
         "CriticalDamageMultiplier": 1.5,
         "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 3, "PiercingAttack": 4},
-        "HitSounds": {"Resistant": {"Code": "game:sounds/held/shieldblock-metal-light"}}
+        "HitSounds": {"Resistant": {"Code": "game:sounds/block/ceramichit"}}
       }
     }
   },

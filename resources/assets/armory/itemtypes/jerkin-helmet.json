@@ -1,0 +1,47 @@
+﻿{
+  "code": "armor",
+  "class": "CombatOverhaul:WearableArmor",
+  "variantgroups": [
+    {"code": "bodypart", "states": ["head"]},
+    {"code": "construction", "states": ["jerkin"]},
+    {"code": "material", "states": ["leather"]},
+    {"code": "subtype", "states": ["vanilla"]}
+  ],
+  "shapeByType": {"*": {"base": "combatoverhaul:armor/leather/jerkin-head"}},
+  "texturesByType": {"*-vanilla": {"seraph": {"base": "game:block/transparent"}, "material": {"base": "combatoverhaul:armor/leather-jerkin"}}},
+  "storageFlags": 128,
+  "attributes": {
+    "visibleDamageEffect": true,
+    "materialCount": 4,
+    "clothesCategory": "armorhead",
+    "attachableToEntity": {
+      "texturePrefixCode": "armor-{bodypart}-{construction}-{material}-{subtype}",
+      "disableElementsByType": {
+        "*-vanilla": ["hidehat", "Hood", "hoodupperover", "Hair tile upper part", "ponytailhigh", "ponytaillow", "Hair", "hair-uncovered", "sidehigh", "sidelow", "bangs"]
+      },
+      "keepElementsByType": {"*": []}
+    },
+    "warmth": 1
+  },
+  "behaviors": [
+    {
+      "name": "CombatOverhaul:Armor",
+      "properties": {
+        "Layers": ["Skin"],
+        "ZonesByType": {"*-vanilla": ["Head", "Neck", "Face"]},
+        "ResistsByType": {"*-leather-*": {"PiercingAttack": 0, "SlashingAttack": 0, "BluntAttack": 4}},
+        "FlatReduction": {},
+        "PlayerStatsByType": {"*-vanilla": {"walkspeed": 0, "manipulationSpeed": 0, "steadyAim": 0, "healingeffectivness": -0.09, "hungerrate": 0.03}}
+      }
+    }
+  ],
+  "durabilityByType": {"*-leather-*": 1800},
+  "creativeinventory": {"general": ["*"], "items": ["*"], "clothing": ["*"], "combatoverhaul": ["*"]},
+  "renderAlphaTest": 0.25,
+  "heldTpIdleAnimation": "holdunderarm",
+  "tpHandTransformByType": {
+    "*": {"translation": {"x": -0.82, "y": -2.2, "z": -0.5}, "rotation": {"x": 18, "y": 169, "z": 30}, "origin": {"x": 0.5, "y": 1.7, "z": 0.5}, "scale": 0.64}
+  },
+  "guiTransformByType": {"*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -26, "y": -46, "z": -180}, "origin": {"x": 0.6, "y": 1.72, "z": 0.5}, "scale": 2}},
+  "groundTransformByType": {"*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0.34, "y": 1.71, "z": 0.5}, "scale": 3.1}}
+}

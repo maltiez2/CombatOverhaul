@@ -7,7 +7,7 @@
 		},
 		"width": 3,
 		"height": 2,
-		"output": { "type": "item", "code": "combatoverhaul:sewingkit-armor-improvised", "quantity": 1  }
+		"output": { "type": "item", "code": "combatoverhaul:sewingkit-armor-improvised-copper", "quantity": 1  }
 	},
 	{
 		"ingredientPattern": "AAB,AA_",
@@ -18,7 +18,7 @@
 		"width": 3,
 		"height": 2,
 		"requiresTrait": "clothier",
-		"output": { "type": "item", "code": "combatoverhaul:sewingkit-armor-improvised", "quantity": 1  }
+		"output": { "type": "item", "code": "combatoverhaul:sewingkit-armor-improvised-bone", "quantity": 1  }
 	},
 	{
 		"ingredientPattern": "AAB,AA_",
@@ -28,18 +28,40 @@
 		},
 		"width": 3,
 		"height": 2,
-		"output": { "type": "item", "code": "combatoverhaul:sewingkit-armor-sewing", "quantity": 1  }
+		"output": { "type": "item", "code": "combatoverhaul:sewingkit-armor-sewing-iron", "quantity": 1  }
 	},
 	{
 		"ingredientPattern": "AAB,AA_",
 		"ingredients": {
 			"A": { "type": "item", "code": "game:flaxtwine", "quantity": 1 },
-			"B": { "type": "item", "code": "game:metalnailsandstrips-*bronze", "quantity": 1 }
+			"B": { "type": "item", "code": "game:metalnailsandstrips-tinbronze", "quantity": 1 }
 		},
 		"width": 3,
 		"height": 2,
 		"requiresTrait": "clothier",
-		"output": { "type": "item", "code": "combatoverhaul:sewingkit-armor-sewing", "quantity": 1  }
+		"output": { "type": "item", "code": "combatoverhaul:sewingkit-armor-sewing-tinbronze", "quantity": 1  }
+	},
+	{
+		"ingredientPattern": "AAB,AA_",
+		"ingredients": {
+			"A": { "type": "item", "code": "game:flaxtwine", "quantity": 1 },
+			"B": { "type": "item", "code": "game:metalnailsandstrips-blackbronze", "quantity": 1 }
+		},
+		"width": 3,
+		"height": 2,
+		"requiresTrait": "clothier",
+		"output": { "type": "item", "code": "combatoverhaul:sewingkit-armor-sewing-blackbronze", "quantity": 1  }
+	},
+	{
+		"ingredientPattern": "AAB,AA_",
+		"ingredients": {
+			"A": { "type": "item", "code": "game:flaxtwine", "quantity": 1 },
+			"B": { "type": "item", "code": "game:metalnailsandstrips-bismuthbronze", "quantity": 1 }
+		},
+		"width": 3,
+		"height": 2,
+		"requiresTrait": "clothier",
+		"output": { "type": "item", "code": "combatoverhaul:sewingkit-armor-sewing-bismuthbronze", "quantity": 1  }
 	},
 	{
 		"ingredientPattern": "AAB,AA_",
@@ -49,7 +71,7 @@
 		},
 		"width": 3,
 		"height": 2,
-		"output": { "type": "item", "code": "combatoverhaul:sewingkit-armor-tailor", "quantity": 1  }
+		"output": { "type": "item", "code": "combatoverhaul:sewingkit-armor-tailor-steel", "quantity": 1  }
 	},
 	{
 		"ingredientPattern": "AAB,AA_",
@@ -60,6 +82,6 @@
 		"width": 3,
 		"height": 2,
 		"requiresTrait": "clothier",
-		"output": { "type": "item", "code": "combatoverhaul:sewingkit-armor-tailor", "quantity": 1  }
+		"output": { "type": "item", "code": "combatoverhaul:sewingkit-armor-tailor-meteoriciron", "quantity": 1  }
 	}
 ]

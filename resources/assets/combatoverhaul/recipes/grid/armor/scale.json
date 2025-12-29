@@ -1,0 +1,41 @@
+[
+	{
+		"ingredientPattern": "STS,L_L",
+		"recipeGroup": 1,
+		"ingredients": {
+			"S": { "type": "item", "code": "game:metalscale-*", "name": "metal", "quantity": 2, "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel"] },
+			"T": { "type": "item", "code": "game:flaxtwine", "quantity": 1 },
+			"L": { "type": "item", "code": "game:leather-normal-plain" }
+		},
+		"width": 3,
+		"height": 2,
+		"name": "scale helmet",
+		"output": { "type": "item", "code": "game:armor-head-scale-{metal}"  }
+	},
+	{
+		"ingredientPattern": "SLS,SSS,TST",
+		"recipeGroup": 1,
+		"ingredients": {
+			"S": { "type": "item", "code": "game:metalscale-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel"] },
+			"T": { "type": "item", "code": "game:flaxtwine", "quantity": 1 },
+			"L": { "type": "item", "code": "game:leather-normal-plain", "quantity": 3 }
+		},
+		"width": 3,
+		"height": 3,
+		"name": "scale body armor",
+		"output": { "type": "item", "code": "game:armor-body-scale-{metal}"  }
+	},
+	{
+		"ingredientPattern": "SLS,STS",
+		"recipeGroup": 1,
+		"ingredients": {
+			"S": { "type": "item", "code": "game:metalscale-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel"] },
+			"T": { "type": "item", "code": "game:flaxtwine", "quantity": 1 },
+			"L": { "type": "item", "code": "game:leather-normal-plain", "quantity": 2 }
+		},
+		"width": 3,
+		"height": 2,
+		"name": "scale leg armor",
+		"output": { "type": "item", "code": "game:armor-legs-scale-{metal}"  }
+	}
+]

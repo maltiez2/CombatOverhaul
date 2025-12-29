@@ -2,6 +2,8 @@
   "game:tabname-combatoverhaul": "Combat Overhaul",
   "game:tabname-combatovherual-colors": "Combat Overhaul (Colored)",
 
+  "game:itemdesc-blade-falx-*": "Added serrations and the curve improves this sword ability to deal with thick hides and unnatural enemies, compared to regular sword of same material.\n\n<font color=\"#99c9f9\"><i>The creatures hide metal in their flesh and their blood flows like sludge. A simple sword will not do here.</i></font><br>",
+
   "game:trait-bowsProficiency": "<font color=\"#84ff84\">• Bows proficiency</font> ",
   "game:trait-crossbowsProficiency": "<font color=\"#84ff84\">• Crossbows proficiency</font> ",
   "game:trait-firearmsProficiency": "<font color=\"#84ff84\">• Firearms proficiency</font> ",
@@ -59,9 +61,9 @@
   "item-creature-spear-*": "spear",
   "item-creature-slingbullet-*": "sling bullet",
   
-  "item-sewingkit-armor-improvised": "Armorer improvised kit",
-  "item-sewingkit-armor-sewing": "Armorer sewing kit",
-  "item-sewingkit-armor-tailor": "Armorer tailor kit",
+  "item-sewingkit-armor-improvised-*": "Armorer improvised kit",
+  "item-sewingkit-armor-sewing-*": "Armorer sewing kit",
+  "item-sewingkit-armor-tailor-*": "Armorer tailor kit",
 
   "game:item-spear-generic-iron": "Iron spear",
   "game:item-spear-generic-meteoriciron": "Meteoric iron spear",

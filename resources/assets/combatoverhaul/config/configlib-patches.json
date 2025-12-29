@@ -158,7 +158,7 @@
       "type": "string",
       "ingui": "combatoverhaul:setting-bows_aiming_cursor_type",
       "clientSide": true,
-      "default": "Moving",
+      "default": "Fixed",
       "values": [
         "None",
         "Vanilla",
@@ -415,7 +415,7 @@
       "code": "melee_weapon_stop_on_terrain_hit",
       "type": "boolean",
       "ingui": "combatoverhaul:setting-melee_weapon_stop_on_terrain_hit",
-      "default": false
+      "default": true
     },
     {
       "code": "melee_weapon_ignore_terrain_behind",

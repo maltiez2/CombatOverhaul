@@ -1,0 +1,17 @@
+[
+  {
+		"ingredientPattern": "J,Q",
+		"recipeGroup": 2,
+		"ingredients": {
+			"J": { "type": "item", "code": "armory:armor-head-jerkin-leather-vanilla"  },
+			"Q": { "type": "item", "code": "game:leather-normal-plain" }
+		},
+		"width": 1,
+		"height": 2,
+		"shapeless": true,
+		"averageDurability": false,
+		"copyAttributesFrom": "J",
+		"name": "leather head jerkin repair",
+		"output": { "type": "item", "code": "armory:armor-head-jerkin-leather-vanilla"  }
+	}
+]

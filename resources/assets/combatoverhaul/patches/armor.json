@@ -642,42 +642,42 @@
             "Zones": ["Head", "Neck", "Face"],
             "Resists": {"PiercingAttack": 9, "SlashingAttack": 10, "BluntAttack": 6},
             "FlatReduction": {},
-            "PlayerStats": {"walkspeed": 0, "manipulationSpeed": -0.05, "steadyAim": -0.1, "healingeffectivness": -0.18, "hungerrate": 0.21}
+            "PlayerStats": {"walkspeed": 0, "manipulationSpeed": -0.05, "steadyAim": -0.1, "healingeffectivness": -0.12, "hungerrate": 0.14}
           },
           "armor-body-antique-forlorn-pristine": {
             "Layers": ["Outer", "Middle"],
             "Zones": ["Torso", "Arms", "Hands"],
             "Resists": {"PiercingAttack": 9, "SlashingAttack": 10, "BluntAttack": 6},
             "FlatReduction": {},
-            "PlayerStats": {"walkspeed": -0.05, "manipulationSpeed": -0.18, "steadyAim": -0.24, "healingeffectivness": -0.18, "hungerrate": 0.21}
+            "PlayerStats": {"walkspeed": -0.05, "manipulationSpeed": -0.18, "steadyAim": -0.24, "healingeffectivness": -0.12, "hungerrate": 0.14}
           },
           "armor-legs-antique-forlorn-pristine": {
             "Layers": ["Outer", "Middle"],
             "Zones": ["Legs", "Feet"],
             "Resists": {"PiercingAttack": 9, "SlashingAttack": 10, "BluntAttack": 6},
             "FlatReduction": {},
-            "PlayerStats": {"walkspeed": -0.18, "manipulationSpeed": 0, "steadyAim": 0, "healingeffectivness": -0.12, "hungerrate": 0.14}
+            "PlayerStats": {"walkspeed": -0.16, "manipulationSpeed": 0, "steadyAim": 0, "healingeffectivness": -0.8, "hungerrate": 0.8}
           },
           "armor-head-antique-forlorn-damaged": {
             "Layers": ["Outer", "Middle"],
             "Zones": ["Head", "Neck", "Face"],
             "Resists": {"PiercingAttack": 7, "SlashingAttack": 8, "BluntAttack": 4},
             "FlatReduction": {},
-            "PlayerStats": {"walkspeed": 0, "manipulationSpeed": -0.05, "steadyAim": -0.1, "healingeffectivness": -0.18, "hungerrate": 0.21}
+            "PlayerStats": {"walkspeed": 0, "manipulationSpeed": -0.05, "steadyAim": -0.1, "healingeffectivness": -0.15, "hungerrate": 0.18}
           },
           "armor-body-antique-forlorn-damaged": {
             "Layers": ["Outer", "Middle"],
             "Zones": ["Torso", "Arms", "Hands"],
             "Resists": {"PiercingAttack": 7, "SlashingAttack": 8, "BluntAttack": 4},
             "FlatReduction": {},
-            "PlayerStats": {"walkspeed": -0.05, "manipulationSpeed": -0.18, "steadyAim": -0.24, "healingeffectivness": -0.18, "hungerrate": 0.21}
+            "PlayerStats": {"walkspeed": -0.05, "manipulationSpeed": -0.18, "steadyAim": -0.24, "healingeffectivness": -0.15, "hungerrate": 0.18}
           },
           "armor-legs-antique-forlorn-damaged": {
             "Layers": ["Outer", "Middle"],
             "Zones": ["Legs", "Feet"],
             "Resists": {"PiercingAttack": 7, "SlashingAttack": 8, "BluntAttack": 4},
             "FlatReduction": {},
-            "PlayerStats": {"walkspeed": -0.18, "manipulationSpeed": 0, "steadyAim": 0, "healingeffectivness": -0.12, "hungerrate": 0.14}
+            "PlayerStats": {"walkspeed": -0.17, "manipulationSpeed": 0, "steadyAim": 0, "healingeffectivness": -0.1, "hungerrate": 0.11}
           },
           "armor-head-antique-forlorn-broken": {
             "Layers": ["Outer", "Middle"],
@@ -877,5 +877,11 @@
         }
       }
     ]
+  },
+  {
+    "file": "game:itemtypes/wearable/seraph/armor",
+    "op": "addMerge",
+    "path": "/attributes/warmthByType",
+    "value": {"*-jerkin-leather": 1, "*-tailored-*-linen": 1, "*-sewn-linen": 1}
   }
 ]
