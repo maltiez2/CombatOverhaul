@@ -656,7 +656,7 @@
             "Zones": ["Legs", "Feet"],
             "Resists": {"PiercingAttack": 9, "SlashingAttack": 10, "BluntAttack": 6},
             "FlatReduction": {},
-            "PlayerStats": {"walkspeed": -0.16, "manipulationSpeed": 0, "steadyAim": 0, "healingeffectivness": -0.8, "hungerrate": 0.8}
+            "PlayerStats": {"walkspeed": -0.16, "manipulationSpeed": 0, "steadyAim": 0, "healingeffectivness": -0.08, "hungerrate": 0.08}
           },
           "armor-head-antique-forlorn-damaged": {
             "Layers": ["Outer", "Middle"],
