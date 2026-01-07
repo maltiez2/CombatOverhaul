@@ -23,6 +23,9 @@
   "creativeinventory": {"general": ["*"], "items": ["*"], "tools": ["*"], "combatoverhaul": ["*"]},
   "attributes": {
     "toolrackTransform": {"translation": {"x": -0.35, "y": 0.73, "z": 0.1}, "rotation": {"x": 1, "y": 180, "z": 0}, "scale": 1.25},
+    "handbook": {
+      "groupBy": ["sling-*"]
+    },
     "BulletTransform": {
       "translation": {"X": 0, "Y": 0, "Z": 0, "R": 0, "G": 0, "B": 0},
       "rotation": {"X": 0, "Y": 0, "Z": 0, "R": 0, "G": 0, "B": 0},
