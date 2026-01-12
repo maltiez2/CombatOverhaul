@@ -1,0 +1,12 @@
+﻿[
+  {"enabled": true, "file": "game:config/traits", "op": "remove", "path": "/16/attributes/bowDrawingStrength"},
+  {"enabled": true, "file": "game:config/traits", "op": "remove", "path": "/17/attributes/meleeWeaponsDamage"},
+  {"enabled": true, "file": "game:config/traits", "op": "add", "path": "/17/attributes/meleeDamageTierBonusPiercingAttack", "value": -1},
+  {
+    "enabled": true,
+    "file": "game:config/characterclasses",
+    "op": "addeach",
+    "path": "/2/traits/-",
+    "value": ["javelinsProficiency", "slingsProficiency", "macesProficiency", "clubsProficiency", "axesProficiency", "thickSkull"]
+  }
+]

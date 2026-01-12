@@ -3,7 +3,7 @@
   <PropertyGroup>
     <ModName>Combat Overhaul</ModName>
     <ModType>code</ModType>
-    <ModVersion>0.12.3</ModVersion>
+    <ModVersion>0.13.1</ModVersion>
     <ModId>combatoverhaul</ModId>
     <Description></Description>
     <Side>universal</Side>
@@ -18,7 +18,7 @@
 
   <!-- Dependencies -->
   <ItemGroup>
-    <Dependencies Include="overhaullib" Version="1.16.13" />
+    <Dependencies Include="overhaullib" Version="1.19.0" />
   </ItemGroup>
 
   <!-- Project settings -->
@@ -77,6 +77,7 @@
     <Folder Include="resources\assets\armory\itemtypes\" />
     <Folder Include="resources\assets\combatoverhaul\shapes\armor\hide\" />
     <Folder Include="resources\assets\combatoverhaul\shapes\weapons\slings\" />
+    <Folder Include="resources\assets\combatoverhaul\textures\sloticons\" />
   </ItemGroup>
 
   <!-- Forces rebuild -->

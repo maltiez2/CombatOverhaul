@@ -215,7 +215,7 @@
       "type": "float",
       "ingui": "combatoverhaul:setting-directions_cursor_transparency",
       "clientSide": true,
-      "default": 1.0,
+      "default": 0.5,
       "range": {
         "min": 0.0,
         "max": 1.0
@@ -226,7 +226,7 @@
       "type": "float",
       "ingui": "combatoverhaul:setting-directions_cursor_scale",
       "clientSide": true,
-      "default": 1.0,
+      "default": 0.5,
       "range": {
         "min": 0.1,
         "max": 3.0
@@ -394,6 +394,17 @@
       "code": "melee_weapons_damage_multiplier",
       "type": "float",
       "ingui": "combatoverhaul:setting-melee_weapons_damage_multiplier",
+      "default": 1.0,
+      "logarithmic": true,
+      "range": {
+        "min": 0.2,
+        "max": 5.0
+      }
+    },
+    {
+      "code": "melee_weapon_attack_speed_multiplier",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-melee_weapon_attack_speed_multiplier",
       "default": 1.0,
       "logarithmic": true,
       "range": {

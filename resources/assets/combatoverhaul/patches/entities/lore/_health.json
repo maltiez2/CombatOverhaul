@@ -1,0 +1,60 @@
+﻿[
+  {
+    "side": "Server",
+    "file": "game:entities/lore/bowtorn",
+    "op": "replace",
+    "path": "/server/behaviors/2/currenthealthByType",
+    "value": {"*-surface": 8, "*-deep": 12, "*-tainted": 16, "*-corrupt": 20, "*-nightmare": 28, "*-gearfoot": 40}
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/bowtorn",
+    "op": "replace",
+    "path": "/server/behaviors/2/maxhealthByType",
+    "value": {"*-surface": 8, "*-deep": 12, "*-tainted": 16, "*-corrupt": 20, "*-nightmare": 28, "*-gearfoot": 40}
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/drifter",
+    "op": "replace",
+    "path": "/server/behaviors/2/currenthealthByType",
+    "value": {"*-normal": 8, "*-deep": 16, "*-tainted": 24, "*-corrupt": 32, "*-nightmare": 40, "*-double-headed": 48}
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/drifter",
+    "op": "replace",
+    "path": "/server/behaviors/2/maxhealthByType",
+    "value": {"*-normal": 8, "*-deep": 16, "*-tainted": 24, "*-corrupt": 32, "*-nightmare": 40, "*-double-headed": 48}
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/shiver",
+    "op": "replace",
+    "path": "/server/behaviors/2/currenthealthByType",
+    "value": {"*-surface": 12, "*-deep": 20, "*-tainted": 28, "*-corrupt": 36, "*-nightmare": 44, "*-stilt": 52, "*-deepsplit": 52, "*-bellhead": 60}
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/shiver",
+    "op": "replace",
+    "path": "/server/behaviors/2/maxhealthByType",
+    "value": {"*-surface": 12, "*-deep": 20, "*-tainted": 28, "*-corrupt": 36, "*-nightmare": 44, "*-stilt": 52, "*-deepsplit": 52, "*-bellhead": 60}
+  },
+  {"side": "Server", "file": "game:entities/lore/bell", "op": "add", "path": "/server/behaviors/2/currenthealth", "value": 64},
+  {"side": "Server", "file": "game:entities/lore/bell", "op": "add", "path": "/server/behaviors/2/maxhealth", "value": 64},
+  {
+    "side": "Server",
+    "file": "game:entities/lore/locust",
+    "op": "replace",
+    "path": "/server/behaviors/2/currenthealthByType",
+    "value": {"*-bronze": 4, "*-corrupt": 16, "*-corrupt-sawblade": 40}
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/locust",
+    "op": "replace",
+    "path": "/server/behaviors/2/maxhealthByType",
+    "value": {"*-bronze": 4, "*-corrupt": 16, "*-corrupt-sawblade": 40}
+  }
+]

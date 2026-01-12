@@ -121,12 +121,12 @@
         "HeadDamageMultiplier": 1.25,
         "CriticalDamageMultiplier": 2,
         "DefaultResistsByType": {
-          "*-normal": {"BluntAttack": 0, "SlashingAttack": 2, "PiercingAttack": 4},
-          "*-deep": {"BluntAttack": 0, "SlashingAttack": 3, "PiercingAttack": 5},
-          "*-tainted": {"BluntAttack": 0, "SlashingAttack": 4, "PiercingAttack": 6},
-          "*-corrupt": {"BluntAttack": 0, "SlashingAttack": 5, "PiercingAttack": 6},
-          "*-nightmare": {"BluntAttack": 0, "SlashingAttack": 6, "PiercingAttack": 7},
-          "*-double-headed": {"BluntAttack": 0, "SlashingAttack": 7, "PiercingAttack": 8}
+          "*-normal": {"BluntAttack": 1, "SlashingAttack": 2, "PiercingAttack": 4},
+          "*-deep": {"BluntAttack": 1, "SlashingAttack": 3, "PiercingAttack": 5},
+          "*-tainted": {"BluntAttack": 2, "SlashingAttack": 4, "PiercingAttack": 6},
+          "*-corrupt": {"BluntAttack": 2, "SlashingAttack": 5, "PiercingAttack": 6},
+          "*-nightmare": {"BluntAttack": 3, "SlashingAttack": 6, "PiercingAttack": 7},
+          "*-double-headed": {"BluntAttack": 3, "SlashingAttack": 7, "PiercingAttack": 8}
         }
       }
     }
@@ -144,12 +144,12 @@
         "HeadDamageMultiplier": 1.25,
         "CriticalDamageMultiplier": 2,
         "DefaultResistsByType": {
-          "*-normal": {"BluntAttack": 0, "SlashingAttack": 2, "PiercingAttack": 4},
-          "*-deep": {"BluntAttack": 0, "SlashingAttack": 3, "PiercingAttack": 5},
-          "*-tainted": {"BluntAttack": 0, "SlashingAttack": 4, "PiercingAttack": 6},
-          "*-corrupt": {"BluntAttack": 0, "SlashingAttack": 5, "PiercingAttack": 6},
-          "*-nightmare": {"BluntAttack": 0, "SlashingAttack": 6, "PiercingAttack": 7},
-          "*-double-headed": {"BluntAttack": 0, "SlashingAttack": 7, "PiercingAttack": 8}
+          "*-normal": {"BluntAttack": 1, "SlashingAttack": 2, "PiercingAttack": 4},
+          "*-deep": {"BluntAttack": 1, "SlashingAttack": 3, "PiercingAttack": 5},
+          "*-tainted": {"BluntAttack": 2, "SlashingAttack": 4, "PiercingAttack": 6},
+          "*-corrupt": {"BluntAttack": 2, "SlashingAttack": 5, "PiercingAttack": 6},
+          "*-nightmare": {"BluntAttack": 3, "SlashingAttack": 6, "PiercingAttack": 7},
+          "*-double-headed": {"BluntAttack": 3, "SlashingAttack": 7, "PiercingAttack": 8}
         }
       }
     }
@@ -232,19 +232,5 @@
         "MaxDurationMs": 5000
       }
     }
-  },
-  {
-    "side": "Server",
-    "file": "game:entities/lore/drifter",
-    "op": "replace",
-    "path": "/server/behaviors/2/currenthealthByType",
-    "value": {"*-normal": 12, "*-deep": 16, "*-tainted": 20, "*-corrupt": 24, "*-nightmare": 28, "*-double-headed": 32}
-  },
-  {
-    "side": "Server",
-    "file": "game:entities/lore/drifter",
-    "op": "replace",
-    "path": "/server/behaviors/2/maxhealthByType",
-    "value": {"*-normal": 12, "*-deep": 16, "*-tainted": 20, "*-corrupt": 24, "*-nightmare": 28, "*-double-headed": 32}
   }
 ]

@@ -1,0 +1,15 @@
+﻿[
+  {"enabled": true, "file": "game:config/traits", "op": "remove", "path": "/0/attributes/rangedWeaponsDamage"},
+  {"enabled": true, "file": "game:config/traits", "op": "remove", "path": "/0/attributes/rangedWeaponsAcc"},
+  {"enabled": true, "file": "game:config/traits", "op": "remove", "path": "/0/attributes/bowDrawingStrength"},
+  {"enabled": true, "file": "game:config/traits", "op": "add", "path": "/0/attributes/rangedDamageTierBonusSlashingAttack", "value": 1},
+  {"enabled": true, "file": "game:config/traits", "op": "remove", "path": "/14/attributes/meleeWeaponsDamage"},
+  {"enabled": true, "file": "game:config/traits", "op": "add", "path": "/14/attributes/meleeDamageTierBonusBluntAttack", "value": -1},
+  {
+    "enabled": true,
+    "file": "game:config/characterclasses",
+    "op": "addeach",
+    "path": "/1/traits/-",
+    "value": ["bowsProficiency", "crossbowsProficiency", "steadyAim", "spearsProficiency", "halberdsProficiency"]
+  }
+]

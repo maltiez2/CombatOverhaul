@@ -22,19 +22,19 @@
           "DamageStatsByType": {
             "*-flint": {"DamageType": "PiercingAttack", "Damage": 4},
             "*-obsidian": {"DamageType": "PiercingAttack", "Damage": 4},
-            "*-copper": {"DamageType": "PiercingAttack", "Damage": 4.5},
-            "*-*bronze": {"DamageType": "PiercingAttack", "Damage": 5},
-            "*-*iron": {"DamageType": "PiercingAttack", "Damage": 5.5},
-            "*-ornategold": {"DamageType": "PiercingAttack", "Damage": 5.5},
-            "*-ornatesilver": {"DamageType": "PiercingAttack", "Damage": 5.5},
+            "*-copper": {"DamageType": "PiercingAttack", "Damage": 4},
+            "*-*bronze": {"DamageType": "PiercingAttack", "Damage": 6},
+            "*-*iron": {"DamageType": "PiercingAttack", "Damage": 6},
+            "*-ornategold": {"DamageType": "PiercingAttack", "Damage": 6},
+            "*-ornatesilver": {"DamageType": "PiercingAttack", "Damage": 6},
             "*-steel": {"DamageType": "PiercingAttack", "Damage": 6},
-            "*": {"DamageType": "PiercingAttack", "Damage": 3.5}
+            "*": {"DamageType": "PiercingAttack", "Damage": 2}
           },
           "HitSound": "game:sounds/player/projectilehit",
           "SpeedThreshold": 0.3,
           "Knockback": 0.3,
           "EntityCode": "combatoverhaul:spear-generic-{material}",
-          "DurabilityDamage": 1,
+          "DurabilityDamage": 2,
           "DropChance": 1
         }
       }
@@ -96,16 +96,16 @@
         "DamageTypes": [
           {
             "DamageByType": {
-              "*-flint": {"DamageType": "PiercingAttack", "Tier": 1, "Damage": 3},
-              "*-obsidian": {"DamageType": "PiercingAttack", "Tier": 2, "Damage": 3},
-              "*-copper": {"DamageType": "PiercingAttack", "Tier": 2, "Damage": 3.5},
+              "*-flint": {"DamageType": "PiercingAttack", "Tier": 1, "Damage": 4},
+              "*-obsidian": {"DamageType": "PiercingAttack", "Tier": 2, "Damage": 4},
+              "*-copper": {"DamageType": "PiercingAttack", "Tier": 2, "Damage": 4},
               "*-*bronze": {"DamageType": "PiercingAttack", "Tier": 3, "Damage": 4},
-              "*-iron": {"DamageType": "PiercingAttack", "Tier": 4, "Damage": 4.5},
-              "*-ornategold": {"DamageType": "PiercingAttack", "Tier": 4, "Damage": 4.5},
-              "*-ornatesilver": {"DamageType": "PiercingAttack", "Tier": 4, "Damage": 4.5},
-              "*-meteoriciron": {"DamageType": "PiercingAttack", "Tier": 5, "Damage": 4.5},
-              "*-steel": {"DamageType": "PiercingAttack", "Tier": 6, "Damage": 5},
-              "*": {"DamageType": "PiercingAttack", "Tier": 1, "Damage": 2.5}
+              "*-iron": {"DamageType": "PiercingAttack", "Tier": 4, "Damage": 4},
+              "*-ornategold": {"DamageType": "PiercingAttack", "Tier": 4, "Damage": 4},
+              "*-ornatesilver": {"DamageType": "PiercingAttack", "Tier": 4, "Damage": 4},
+              "*-meteoriciron": {"DamageType": "PiercingAttack", "Tier": 5, "Damage": 4},
+              "*-steel": {"DamageType": "PiercingAttack", "Tier": 6, "Damage": 4},
+              "*": {"DamageType": "PiercingAttack", "Tier": 1, "Damage": 2}
             },
             "Knockback": 0,
             "DurabilityDamage": 1,
@@ -118,7 +118,7 @@
         "StopOnEntityHit": false,
         "CollideWithTerrain": true,
         "MaxReach": 9,
-        "DamageTypes": [{"Damage": {"DamageType": "BluntAttack", "Tier": 0, "Damage": 0.1}, "Knockback": 1, "DurabilityDamage": 1, "Collider": [-2.5, 0, 0.5, 0.5, 0, 0.5]}]
+        "DamageTypes": [{"Damage": {"DamageType": "BluntAttack", "Tier": 1, "Damage": 1}, "Knockback": 1, "DurabilityDamage": 1, "Collider": [-2.5, 0, 0.5, 0.5, 0, 0.5]}]
       },
       "AttackHitSound": "game:sounds/thud",
       "HandleHitSound": "game:sounds/held/shieldblock-wood-light",
@@ -148,16 +148,16 @@
         "DamageTypes": [
           {
             "DamageByType": {
-              "*-flint": {"DamageType": "PiercingAttack", "Tier": 1, "Damage": 4},
-              "*-obsidian": {"DamageType": "PiercingAttack", "Tier": 2, "Damage": 4},
-              "*-copper": {"DamageType": "PiercingAttack", "Tier": 2, "Damage": 4.5},
-              "*-*bronze": {"DamageType": "PiercingAttack", "Tier": 3, "Damage": 5},
-              "*-iron": {"DamageType": "PiercingAttack", "Tier": 4, "Damage": 5.5},
-              "*-ornategold": {"DamageType": "PiercingAttack", "Tier": 4, "Damage": 5.5},
-              "*-ornatesilver": {"DamageType": "PiercingAttack", "Tier": 4, "Damage": 5.5},
-              "*-meteoriciron": {"DamageType": "PiercingAttack", "Tier": 5, "Damage": 5.5},
+              "*-flint": {"DamageType": "PiercingAttack", "Tier": 1, "Damage": 6},
+              "*-obsidian": {"DamageType": "PiercingAttack", "Tier": 2, "Damage": 6},
+              "*-copper": {"DamageType": "PiercingAttack", "Tier": 2, "Damage": 6},
+              "*-*bronze": {"DamageType": "PiercingAttack", "Tier": 3, "Damage": 6},
+              "*-iron": {"DamageType": "PiercingAttack", "Tier": 4, "Damage": 6},
+              "*-ornategold": {"DamageType": "PiercingAttack", "Tier": 4, "Damage": 6},
+              "*-ornatesilver": {"DamageType": "PiercingAttack", "Tier": 4, "Damage": 6},
+              "*-meteoriciron": {"DamageType": "PiercingAttack", "Tier": 5, "Damage": 6},
               "*-steel": {"DamageType": "PiercingAttack", "Tier": 6, "Damage": 6},
-              "*": {"DamageType": "PiercingAttack", "Tier": 1, "Damage": 3.5}
+              "*": {"DamageType": "PiercingAttack", "Tier": 1, "Damage": 4}
             },
             "Knockback": 0,
             "DurabilityDamage": 1,
@@ -171,7 +171,7 @@
         "StopOnEntityHit": false,
         "CollideWithTerrain": true,
         "MaxReach": 9,
-        "DamageTypes": [{"Damage": {"DamageType": "BluntAttack", "Tier": 0, "Damage": 0.1}, "Knockback": 2, "DurabilityDamage": 1, "Collider": [-2.5, 0, 0.5, 0.5, 0, 0.5]}]
+        "DamageTypes": [{"Damage": {"DamageType": "BluntAttack", "Tier": 1, "Damage": 1}, "Knockback": 2, "DurabilityDamage": 1, "Collider": [-2.5, 0, 0.5, 0.5, 0, 0.5]}]
       },
       "AttackHitSound": "game:sounds/thud",
       "HandleHitSound": "game:sounds/held/shieldblock-wood-light",
@@ -201,16 +201,16 @@
         "VerticalOffset": -0.05
       },
       "DamageStrengthByType": {
-        "*-flint": 2,
-        "*-obsidian": 3,
-        "*-copper": 3,
+        "*-flint": 1,
+        "*-obsidian": 1,
+        "*-copper": 2,
         "*-*bronze": 3,
         "*-iron": 4,
         "*-ornategold": 4,
         "*-ornatesilver": 4,
-        "*-meteoriciron": 4.5,
-        "*-steel": 5,
-        "*": 2
+        "*-meteoriciron": 5,
+        "*-steel": 6,
+        "*": 1
       },
       "Knockback": 1,
       "DurabilityDamage": 1,

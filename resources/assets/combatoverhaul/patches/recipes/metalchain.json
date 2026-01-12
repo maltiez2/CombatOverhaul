@@ -16,5 +16,21 @@
   {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-zinc/smeltedStack/stacksize", "value": 1},
   {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-silver/smeltedStack/stacksize", "value": 1},
   {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-bismuth/smeltedStack/stacksize", "value": 1},
-  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-molybdochalkos/smeltedStack/stacksize", "value": 1}
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-molybdochalkos/smeltedStack/stacksize", "value": 1},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-copper/smeltedRatio", "value": 4},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-brass/smeltedRatio", "value": 4},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-tinbronze/smeltedRatio", "value": 4},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-bismuthbronze/smeltedRatio", "value": 4},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-blackbronze/smeltedRatio", "value": 4},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-iron/smeltedRatio", "value": 4},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-gold/smeltedRatio", "value": 4},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-lead/smeltedRatio", "value": 4},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-tin/smeltedRatio", "value": 4},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-chromium/smeltedRatio", "value": 4},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-platinum/smeltedRatio", "value": 4},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-titanium/smeltedRatio", "value": 4},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-zinc/smeltedRatio", "value": 4},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-silver/smeltedRatio", "value": 4},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-bismuth/smeltedRatio", "value": 4},
+  {"file": "game:itemtypes/resource/metalchain", "op": "add", "path": "/combustiblePropsByType/metalchain-molybdochalkos/smeltedRatio", "value": 4}
 ]

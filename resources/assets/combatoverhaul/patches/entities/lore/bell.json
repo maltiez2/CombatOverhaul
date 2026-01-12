@@ -53,7 +53,7 @@
         "HeadDamageMultiplier": 1,
         "CriticalDamageMultiplier": 5,
         "ResistantDamageMultiplier": 0.2,
-        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 6, "PiercingAttack": 7},
+        "DefaultResists": {"BluntAttack": 3, "SlashingAttack": 6, "PiercingAttack": 7},
         "HitSounds": {"Resistant": {"Code": "game:sounds/held/shieldblock-metal-light"}}
       }
     }
@@ -71,11 +71,9 @@
         "HeadDamageMultiplier": 1,
         "CriticalDamageMultiplier": 5,
         "ResistantDamageMultiplier": 0.2,
-        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 6, "PiercingAttack": 7},
+        "DefaultResists": {"BluntAttack": 3, "SlashingAttack": 6, "PiercingAttack": 7},
         "HitSounds": {"Resistant": {"Code": "game:sounds/held/shieldblock-metal-light"}}
       }
     }
-  },
-  {"side": "Server", "file": "game:entities/lore/bell", "op": "add", "path": "/server/behaviors/2/currenthealth", "value": 40},
-  {"side": "Server", "file": "game:entities/lore/bell", "op": "add", "path": "/server/behaviors/2/maxhealth", "value": 40}
+  }
 ]

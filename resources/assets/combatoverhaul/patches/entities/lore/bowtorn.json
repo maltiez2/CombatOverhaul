@@ -179,12 +179,12 @@
         "HeadDamageMultiplier": 1.25,
         "CriticalDamageMultiplier": 2,
         "DefaultResistsByType": {
-          "*-surface": {"BluntAttack": 0, "SlashingAttack": 2, "PiercingAttack": 3},
-          "*-deep": {"BluntAttack": 0, "SlashingAttack": 3, "PiercingAttack": 4},
-          "*-tainted": {"BluntAttack": 0, "SlashingAttack": 4, "PiercingAttack": 5},
-          "*-corrupt": {"BluntAttack": 0, "SlashingAttack": 5, "PiercingAttack": 6},
-          "*-nightmare": {"BluntAttack": 0, "SlashingAttack": 6, "PiercingAttack": 7},
-          "*-gearfoot": {"BluntAttack": 0, "SlashingAttack": 7, "PiercingAttack": 8}
+          "*-surface": {"BluntAttack": 1, "SlashingAttack": 2, "PiercingAttack": 3},
+          "*-deep": {"BluntAttack": 1, "SlashingAttack": 3, "PiercingAttack": 4},
+          "*-tainted": {"BluntAttack": 2, "SlashingAttack": 4, "PiercingAttack": 5},
+          "*-corrupt": {"BluntAttack": 2, "SlashingAttack": 5, "PiercingAttack": 6},
+          "*-nightmare": {"BluntAttack": 3, "SlashingAttack": 6, "PiercingAttack": 7},
+          "*-gearfoot": {"BluntAttack": 3, "SlashingAttack": 7, "PiercingAttack": 8}
         }
       }
     }
@@ -202,12 +202,12 @@
         "HeadDamageMultiplier": 1.25,
         "CriticalDamageMultiplier": 2,
         "DefaultResistsByType": {
-          "*-surface": {"BluntAttack": 0, "SlashingAttack": 2, "PiercingAttack": 3},
-          "*-deep": {"BluntAttack": 0, "SlashingAttack": 3, "PiercingAttack": 4},
-          "*-tainted": {"BluntAttack": 0, "SlashingAttack": 4, "PiercingAttack": 5},
-          "*-corrupt": {"BluntAttack": 0, "SlashingAttack": 5, "PiercingAttack": 6},
-          "*-nightmare": {"BluntAttack": 0, "SlashingAttack": 6, "PiercingAttack": 7},
-          "*-gearfoot": {"BluntAttack": 0, "SlashingAttack": 7, "PiercingAttack": 8}
+          "*-surface": {"BluntAttack": 1, "SlashingAttack": 2, "PiercingAttack": 3},
+          "*-deep": {"BluntAttack": 1, "SlashingAttack": 3, "PiercingAttack": 4},
+          "*-tainted": {"BluntAttack": 2, "SlashingAttack": 4, "PiercingAttack": 5},
+          "*-corrupt": {"BluntAttack": 2, "SlashingAttack": 5, "PiercingAttack": 6},
+          "*-nightmare": {"BluntAttack": 3, "SlashingAttack": 6, "PiercingAttack": 7},
+          "*-gearfoot": {"BluntAttack": 3, "SlashingAttack": 7, "PiercingAttack": 8}
         }
       }
     }
@@ -326,19 +326,5 @@
     "op": "replace",
     "path": "/server/behaviors/0",
     "value": {"code": "passivephysics", "groundDragFactor": 1, "airDragFactor": 0, "gravityFactor": 1}
-  },
-  {
-    "side": "Server",
-    "file": "game:entities/lore/bowtorn",
-    "op": "replace",
-    "path": "/server/behaviors/2/currenthealthByType",
-    "value": {"*-surface": 8, "*-deep": 12, "*-tainted": 16, "*-corrupt": 20, "*-nightmare": 24, "*-gearfoot": 28}
-  },
-  {
-    "side": "Server",
-    "file": "game:entities/lore/bowtorn",
-    "op": "replace",
-    "path": "/server/behaviors/2/maxhealthByType",
-    "value": {"*-surface": 8, "*-deep": 12, "*-tainted": 16, "*-corrupt": 20, "*-nightmare": 24, "*-gearfoot": 28}
   }
 ]

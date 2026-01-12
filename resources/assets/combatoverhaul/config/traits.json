@@ -1,7 +1,7 @@
 [
   {"code": "bowsProficiency", "type": "positive", "attributes": {"bowsProficiency": 0.5}},
-  {"code": "crossbowsProficiency", "type": "positive", "attributes": {"crossbowsProficiency": 0.5}},
-  {"code": "firearmsProficiency", "type": "positive", "attributes": {"firearmsProficiency": 0.5}},
+  {"code": "crossbowsProficiency", "type": "positive", "attributes": {"crossbowsProficiency": 0.3}},
+  {"code": "firearmsProficiency", "type": "positive", "attributes": {"firearmsProficiency": 0.3}},
   {"code": "oneHandedSwordsProficiency", "type": "positive", "attributes": {"oneHandedSwordsProficiency": 0.3}},
   {"code": "twoHandedSwordsProficiency", "type": "positive", "attributes": {"twoHandedSwordsProficiency": 0.3}},
   {"code": "spearsProficiency", "type": "positive", "attributes": {"spearsProficiency": 0.3}},
@@ -19,6 +19,9 @@
   {"code": "canParryProjectiles", "type": "positive", "attributes": {}},
   {"code": "thickSkull", "type": "positive", "attributes": {"playerHeadDamageFactor": -0.5, "playerFaceDamageFactor": -0.5}},
   {"code": "legDay", "type": "mixed", "attributes": {"playerLegsDamageFactor": 1.0, "playerFeetDamageFactor": 1.0, "jumpHeightMul": 0.25}},
-  {"code": "bigHead", "type": "mixed", "attributes": {"playerTorsoDamageFactor": -0.5, "playerHeadDamageFactor": 0.5, "playerFaceDamageFactor": 0.5}},
-  {"code": "armorProficiency", "type": "mixed", "attributes": {"armorHungerRateAffectedness":  -0.5, "armorManipulationSpeedAffectedness": -0.5}}
+  {"code": "bigHead", "type": "mixed", "attributes": {"playerHeadDamageFactor": 0.5, "playerFaceDamageFactor": 0.5}},
+  {"code": "armorProficiency", "type": "mixed", "attributes": {"armorHungerRateAffectedness":  -0.5, "armorManipulationSpeedAffectedness": -0.5}},
+  {"code": "frightenedOfMelee", "type": "mixed", "attributes": {"meleeDamageTierBonusSlashingAttack": -1}},
+  {"code": "meleeExpert", "type": "mixed", "attributes": {"meleeDamageTierBonusSlashingAttack": 1}},
+  {"code": "selfDefence", "type": "mixed", "attributes": {"rangedDamageTierBonusPiercingAttack": 1, "crossbowsProficiency": 0.3}}
 ]

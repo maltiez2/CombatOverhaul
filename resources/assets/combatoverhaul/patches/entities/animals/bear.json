@@ -61,15 +61,15 @@
       "code": "CombatOverhaul:EntityDamageModel",
       "damageModel": {
         "TorsoDamageMultiplier": 1,
-        "LimbsDamageMultiplier": 0.75,
-        "HeadDamageMultiplier": 1.5,
-        "CriticalDamageMultiplier": 4,
+        "LimbsDamageMultiplier": 0.5,
+        "HeadDamageMultiplier": 1.25,
+        "CriticalDamageMultiplier": 2,
         "DefaultResistsByType": {
-          "*-black-*": {"BluntAttack": 7, "SlashingAttack": 5, "PiercingAttack": 0},
-          "*-sun-*": {"BluntAttack": 7, "SlashingAttack": 5, "PiercingAttack": 0},
-          "*-panda-*": {"BluntAttack": 7, "SlashingAttack": 5, "PiercingAttack": 0},
-          "*-brown-*": {"BluntAttack": 8, "SlashingAttack": 6, "PiercingAttack": 0},
-          "*-polar-*": {"BluntAttack": 8, "SlashingAttack": 6, "PiercingAttack": 0}
+          "*-black-*": {"BluntAttack": 7, "SlashingAttack": 5, "PiercingAttack": 2},
+          "*-sun-*": {"BluntAttack": 7, "SlashingAttack": 5, "PiercingAttack": 2},
+          "*-panda-*": {"BluntAttack": 7, "SlashingAttack": 5, "PiercingAttack": 2},
+          "*-brown-*": {"BluntAttack": 8, "SlashingAttack": 6, "PiercingAttack": 3},
+          "*-polar-*": {"BluntAttack": 8, "SlashingAttack": 6, "PiercingAttack": 3}
         }
       }
     }
@@ -83,15 +83,15 @@
       "code": "CombatOverhaul:EntityDamageModel",
       "damageModel": {
         "TorsoDamageMultiplier": 1,
-        "LimbsDamageMultiplier": 0.75,
-        "HeadDamageMultiplier": 1.5,
-        "CriticalDamageMultiplier": 4,
+        "LimbsDamageMultiplier": 0.5,
+        "HeadDamageMultiplier": 1.25,
+        "CriticalDamageMultiplier": 2,
         "DefaultResistsByType": {
-          "*-black-*": {"BluntAttack": 7, "SlashingAttack": 5, "PiercingAttack": 0},
-          "*-sun-*": {"BluntAttack": 7, "SlashingAttack": 5, "PiercingAttack": 0},
-          "*-panda-*": {"BluntAttack": 7, "SlashingAttack": 5, "PiercingAttack": 0},
-          "*-brown-*": {"BluntAttack": 8, "SlashingAttack": 6, "PiercingAttack": 0},
-          "*-polar-*": {"BluntAttack": 8, "SlashingAttack": 6, "PiercingAttack": 0}
+          "*-black-*": {"BluntAttack": 7, "SlashingAttack": 5, "PiercingAttack": 2},
+          "*-sun-*": {"BluntAttack": 7, "SlashingAttack": 5, "PiercingAttack": 2},
+          "*-panda-*": {"BluntAttack": 7, "SlashingAttack": 5, "PiercingAttack": 2},
+          "*-brown-*": {"BluntAttack": 8, "SlashingAttack": 6, "PiercingAttack": 3},
+          "*-polar-*": {"BluntAttack": 8, "SlashingAttack": 6, "PiercingAttack": 3}
         }
       }
     }

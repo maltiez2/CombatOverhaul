@@ -111,9 +111,9 @@
       "damageModel": {
         "TorsoDamageMultiplier": 1,
         "LimbsDamageMultiplier": 1,
-        "HeadDamageMultiplier": 1.5,
-        "CriticalDamageMultiplier": 2,
-        "DefaultResists": {"BluntAttack": 3, "SlashingAttack": 4, "PiercingAttack": 5}
+        "HeadDamageMultiplier": 2,
+        "CriticalDamageMultiplier": 3,
+        "DefaultResists": {"BluntAttack": 4, "SlashingAttack": 5, "PiercingAttack": 6}
       }
     }
   },
@@ -127,9 +127,9 @@
       "damageModel": {
         "TorsoDamageMultiplier": 1,
         "LimbsDamageMultiplier": 1,
-        "HeadDamageMultiplier": 1.5,
-        "CriticalDamageMultiplier": 2,
-        "DefaultResists": {"BluntAttack": 3, "SlashingAttack": 4, "PiercingAttack": 5}
+        "HeadDamageMultiplier": 2,
+        "CriticalDamageMultiplier": 3,
+        "DefaultResists": {"BluntAttack": 4, "SlashingAttack": 5, "PiercingAttack": 6}
       }
     }
   },
@@ -139,6 +139,6 @@
   {"side": "Server", "file": "game:entities/lore/boss/erel", "op": "add", "path": "/server/behaviors/7/aitasks/2/damageTier", "value": 5},
   {"side": "Server", "file": "game:entities/lore/boss/erel", "op": "replace", "path": "/server/behaviors/7/aitasks/2/damageType", "value": "SlashingAttack"},
   {"side": "Server", "file": "game:entities/lore/boss/erel", "op": "replace", "path": "/server/behaviors/7/aitasks/2/damage", "value": 15},
-  {"side": "Server", "file": "game:entities/lore/boss/erel", "op": "replace", "path": "/server/behaviors/2/health", "value": 500},
-  {"side": "Server", "file": "game:entities/lore/boss/erel", "op": "replace", "path": "/server/behaviors/2/maxhealth", "value": 500}
+  {"side": "Server", "file": "game:entities/lore/boss/erel", "op": "replace", "path": "/server/behaviors/2/health", "value": 250},
+  {"side": "Server", "file": "game:entities/lore/boss/erel", "op": "replace", "path": "/server/behaviors/2/maxhealth", "value": 250}
 ]
