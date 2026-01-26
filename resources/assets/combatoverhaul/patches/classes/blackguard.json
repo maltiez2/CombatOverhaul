@@ -9,6 +9,6 @@
     "file": "game:config/characterclasses",
     "op": "addeach",
     "path": "/4/traits/-",
-    "value": ["meleeExpert", "oneHandedSwordsProficiency", "twoHandedSwordsProficiency", "tremblingAim", "clumsyHands", "canParryProjectiles", "legDay"]
+    "value": ["meleeExpert", "oneHandedSwordsProficiency", "twoHandedSwordsProficiency", "poleaxeProficiency", "tremblingAim", "clumsyHands", "canParryProjectiles", "legDay"]
   }
 ]

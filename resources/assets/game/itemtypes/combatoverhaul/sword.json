@@ -20,7 +20,7 @@
       "*-falx-*": {"translation": {"x": 0.95, "y": 0.5, "z": 0.9}, "rotation": {"x": 0, "y": 180, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}},
       "*-scrap-*": {"translation": {"x": 0.2, "y": 0.85}, "rotation": {"y": 180, "z": 1}, "scale": 1.66}
     },
-    "ProficiencyStat": "oneHandedSwordsProficiency",
+    "ProficiencyStats": ["meleeProficiency", "knightlyProficiency", "oneHandedSwordsProficiency"],
     "RenderingOffset": false,
     "OneHandedStanceByType": {
       "*-forlorn-*": {
@@ -29,7 +29,6 @@
         "CanBlock": false,
         "CanSprint": true,
         "SpeedPenalty": 0,
-        "AttackCooldownMs": 0,
         "Attack": {
           "StopOnTerrainHit": false,
           "StopOnEntityHit": true,
@@ -50,7 +49,8 @@
           "StaggerTier": 6,
           "StaggerTimeMs": 3000
         },
-        "BlockCooldownMs": 300,
+        "ParryCooldownMs": 600,
+        "BlockCooldownMs": 0,
         "BlockAnimation": "combatoverhaul:sword-short-parry",
         "ReadyAnimation": "combatoverhaul:sword-falx-ready",
         "IdleAnimation": "combatoverhaul:sword-falx-idle"
@@ -61,7 +61,6 @@
         "CanBlock": false,
         "CanSprint": true,
         "SpeedPenalty": 0,
-        "AttackCooldownMs": 0,
         "Attack": {
           "StopOnTerrainHit": false,
           "StopOnEntityHit": true,
@@ -82,7 +81,8 @@
           "StaggerTier": 6,
           "StaggerTimeMs": 3000
         },
-        "BlockCooldownMs": 300,
+        "ParryCooldownMs": 600,
+        "BlockCooldownMs": 0,
         "BlockAnimation": "combatoverhaul:sword-short-parry",
         "ReadyAnimation": "combatoverhaul:sword-falx-ready",
         "IdleAnimation": "combatoverhaul:sword-falx-idle"
@@ -93,7 +93,6 @@
         "CanBlock": false,
         "CanSprint": true,
         "SpeedPenalty": 0,
-        "AttackCooldownMs": 0,
         "Attack": {
           "StopOnTerrainHit": false,
           "StopOnEntityHit": true,

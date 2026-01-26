@@ -34,7 +34,7 @@
     "BulletDamageMultiplier": 1,
     "BulletDamageTier": 1,
     "BulletVelocity": 1,
-    "ProficiencyStat": "slingsProficiency",
+    "ProficiencyStats": ["rangedProficiency", "slingsProficiency"],
     "ReadyAnimation": "combatoverhaul:sling-ready",
     "IdleAnimation": "combatoverhaul:sling-idle",
     "LoadAnimation": "combatoverhaul:sling-load",

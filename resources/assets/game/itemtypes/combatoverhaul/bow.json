@@ -38,7 +38,7 @@
     "ArrowDamageMultiplierByType": {"*-crude": 1, "*-simple": 1.5, "*-long": 3, "*-recurve": 2},
     "ArrowDamageTierByType": {"*-crude": 1, "*-simple": 2, "*-long": 4, "*-recurve": 4},
     "ArrowVelocityByType": {"*-crude": 1.2, "*-simple": 1.5, "*-long": 2.4, "*-recurve": 1.95},
-    "ProficiencyStat": "bowsProficiency",
+    "ProficiencyStats": ["rangedProficiency", "bowsProficiency"],
     "ReadyAnimation": "combatoverhaul:bow-ready",
     "IdleAnimation": "combatoverhaul:bow-idle",
     "WalkAnimation": "combatoverhaul:bow-walk",

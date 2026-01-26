@@ -9,6 +9,7 @@
   {"code": "macesProficiency", "type": "positive", "attributes": {"macesProficiency": 0.3}},
   {"code": "clubsProficiency", "type": "positive", "attributes": {"clubsProficiency": 0.3}},
   {"code": "halberdsProficiency", "type": "positive", "attributes": {"halberdsProficiency": 0.3}},
+  {"code": "poleaxeProficiency", "type": "positive", "attributes": {"poleaxeProficiency": 0.3}},
   {"code": "axesProficiency", "type": "positive", "attributes": {"axesProficiency": 0.3}},
   {"code": "quarterstaffProficiency", "type": "positive", "attributes": {"quarterstaffProficiency": 0.3}},
   {"code": "slingsProficiency", "type": "positive", "attributes": {"slingsProficiency": 0.3}},
