@@ -4,8 +4,8 @@
 		"ingredientPattern": "LTL,P_P",
 		"recipeGroup": 1,
 		"ingredients": {
-			"P": { "type": "item", "code": "game:metalplate-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"] },
-			"T": { "type": "item", "code": "game:metalplate-*", "name": "metal", "quantity": 2, "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"] },
+			"P": { "type": "item", "code": "game:metalplate-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel"] },
+			"T": { "type": "item", "code": "game:metalplate-*", "name": "metal", "quantity": 2, "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel"] },
 			"L": { "type": "item", "code": "game:leather-normal-plain" }
 		},
 		"width": 3,
@@ -18,7 +18,7 @@
 		"ingredientPattern": "PLP,PPP,PPP",
 		"recipeGroup": 1,
 		"ingredients": {
-			"P": { "type": "item", "code": "game:metalplate-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"] },
+			"P": { "type": "item", "code": "game:metalplate-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel"] },
 			"L": { "type": "item", "code": "game:leather-normal-plain", "quantity": 5 }
 		},
 		"width": 3,
@@ -31,7 +31,7 @@
 		"ingredientPattern": "PPP,PLP",
 		"recipeGroup": 1,
 		"ingredients": {
-			"P": { "type": "item", "code": "game:metalplate-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel", "gold", "silver"] },
+			"P": { "type": "item", "code": "game:metalplate-*", "name": "metal", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze", "iron", "meteoriciron", "steel"] },
 			"L": { "type": "item", "code": "game:leather-normal-plain", "quantity": 3 }
 		},
 		"width": 3,

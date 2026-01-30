@@ -514,21 +514,21 @@
           "armor-head-plate-gold": {
             "Layers": ["Outer"],
             "Zones": ["Head", "Neck", "Face"],
-            "Resists": {"PiercingAttack": 6, "SlashingAttack": 4, "BluntAttack": 5},
+            "Resists": {"PiercingAttack": 9, "SlashingAttack": 7, "BluntAttack": 8},
             "FlatReduction": {},
             "PlayerStats": {"walkspeed": 0, "manipulationSpeed": -0.05, "steadyAim": -0.1, "healingeffectivness": -0.09, "hungerrate": 0.12}
           },
           "armor-body-plate-gold": {
             "Layers": ["Outer"],
             "Zones": ["Torso", "Arms", "Hands"],
-            "Resists": {"PiercingAttack": 6, "SlashingAttack": 4, "BluntAttack": 5},
+            "Resists": {"PiercingAttack": 9, "SlashingAttack": 7, "BluntAttack": 8},
             "FlatReduction": {},
             "PlayerStats": {"walkspeed": -0.05, "manipulationSpeed": -0.2, "steadyAim": -0.3, "healingeffectivness": -0.09, "hungerrate": 0.12}
           },
           "armor-legs-plate-gold": {
             "Layers": ["Outer"],
             "Zones": ["Legs", "Feet"],
-            "Resists": {"PiercingAttack": 6, "SlashingAttack": 4, "BluntAttack": 5},
+            "Resists": {"PiercingAttack": 9, "SlashingAttack": 7, "BluntAttack": 8},
             "FlatReduction": {},
             "PlayerStats": {"walkspeed": -0.2, "manipulationSpeed": 0, "steadyAim": 0, "healingeffectivness": -0.06, "hungerrate": 0.08}
           },
@@ -556,21 +556,21 @@
           "armor-head-plate-silver": {
             "Layers": ["Outer"],
             "Zones": ["Head", "Neck", "Face"],
-            "Resists": {"PiercingAttack": 6, "SlashingAttack": 4, "BluntAttack": 5},
+            "Resists": {"PiercingAttack": 9, "SlashingAttack": 7, "BluntAttack": 8},
             "FlatReduction": {},
             "PlayerStats": {"walkspeed": 0, "manipulationSpeed": -0.05, "steadyAim": -0.1, "healingeffectivness": -0.09, "hungerrate": 0.12}
           },
           "armor-body-plate-silver": {
             "Layers": ["Outer"],
             "Zones": ["Torso", "Arms", "Hands"],
-            "Resists": {"PiercingAttack": 6, "SlashingAttack": 4, "BluntAttack": 5},
+            "Resists": {"PiercingAttack": 9, "SlashingAttack": 7, "BluntAttack": 8},
             "FlatReduction": {},
             "PlayerStats": {"walkspeed": -0.05, "manipulationSpeed": -0.2, "steadyAim": -0.3, "healingeffectivness": -0.09, "hungerrate": 0.12}
           },
           "armor-legs-plate-silver": {
             "Layers": ["Outer"],
             "Zones": ["Legs", "Feet"],
-            "Resists": {"PiercingAttack": 6, "SlashingAttack": 4, "BluntAttack": 5},
+            "Resists": {"PiercingAttack": 9, "SlashingAttack": 7, "BluntAttack": 8},
             "FlatReduction": {},
             "PlayerStats": {"walkspeed": -0.2, "manipulationSpeed": 0, "steadyAim": 0, "healingeffectivness": -0.06, "hungerrate": 0.08}
           },
@@ -744,8 +744,8 @@
       "armor-head-scale-iron": 2800,
       "armor-head-scale-meteoriciron": 3400,
       "armor-head-scale-steel": 7000,
-      "armor-head-plate-gold": 800,
-      "armor-head-plate-silver": 2000,
+      "armor-head-plate-gold": 11000,
+      "armor-head-plate-silver": 11000,
       "armor-head-plate-copper": 1000,
       "armor-head-plate-tinbronze": 2000,
       "armor-head-plate-bismuthbronze": 1800,
@@ -792,8 +792,8 @@
       "armor-body-scale-iron": 8400,
       "armor-body-scale-meteoriciron": 10200,
       "armor-body-scale-steel": 21000,
-      "armor-body-plate-gold": 2400,
-      "armor-body-plate-silver": 6000,
+      "armor-body-plate-gold": 33000,
+      "armor-body-plate-silver": 33000,
       "armor-body-plate-copper": 3000,
       "armor-body-plate-tinbronze": 6000,
       "armor-body-plate-bismuthbronze": 5400,
@@ -840,8 +840,8 @@
       "armor-legs-scale-iron": 5600,
       "armor-legs-scale-meteoriciron": 6800,
       "armor-legs-scale-steel": 14000,
-      "armor-legs-plate-gold": 1600,
-      "armor-legs-plate-silver": 4000,
+      "armor-legs-plate-gold": 22000,
+      "armor-legs-plate-silver": 22000,
       "armor-legs-plate-copper": 2000,
       "armor-legs-plate-tinbronze": 4000,
       "armor-legs-plate-bismuthbronze": 3600,
