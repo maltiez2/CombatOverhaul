@@ -179,6 +179,7 @@
   "setting-debug_weapon_trail_particles": "Melee weapon trail particles",
   "setting-debug_weapon_trail_particles_size": "Melee weapon trail particles size",
   "setting-debug_projectiles_trails_particles": "Projectile trail particles",
+  "setting-debug_block_angles_particles": "Block angles particles",
   "setting-second_chance_available": "Second chance mechanics",
   "setting-second_chance_cooldown": "Second chance cooldown (seconds)",
   "setting-player_model_torso_damage": "Player torso damage multiplier",

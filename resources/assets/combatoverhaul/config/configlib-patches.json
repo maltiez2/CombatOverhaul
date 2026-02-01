@@ -504,6 +504,13 @@
       "default": false
     },
     {
+      "code": "debug_block_angles_particles",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-debug_block_angles_particles",
+      "comment": "Spawn particles indicating block angles and if an entity is in block angle range",
+      "default": false
+    },
+    {
       "type": "separator",
       "title": "combatoverhaul:setting-title-player-settings",
       "collapsible": true
