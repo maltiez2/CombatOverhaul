@@ -8,7 +8,7 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"forlornhopeWIP": "entity/humanoid/serapharmor/forlorn/forlorn-pristine"
+		"forlornhopeWIP": "game:entity/humanoid/serapharmor/forlorn/forlorn-pristine"
 	},
 	"elements": [
 		{

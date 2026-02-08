@@ -8,7 +8,7 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"leather": "entity/humanoid/serapharmor/jerkin/leather"
+		"leather": "game:entity/humanoid/serapharmor/jerkin/leather"
 	},
 	"elements": [
 		{

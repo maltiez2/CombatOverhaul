@@ -9,7 +9,7 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"material": "entity/humanoid/serapharmor/sewn/linen"
+		"material": "game:entity/humanoid/serapharmor/sewn/linen"
 	},
 	"elements": [
 		{

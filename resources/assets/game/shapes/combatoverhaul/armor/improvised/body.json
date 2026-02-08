@@ -6,7 +6,7 @@
 	"textureWidth": 64,
 	"textureHeight": 64,
 	"textures": {
-		"wood": "entity/humanoid/serapharmor/improvised/wood"
+		"wood": "game:entity/humanoid/serapharmor/improvised/wood"
 	},
 	"elements": [
 		{

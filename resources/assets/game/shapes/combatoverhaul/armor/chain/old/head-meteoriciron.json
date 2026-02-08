@@ -8,8 +8,8 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"material": "entity/humanoid/serapharmor/chain/iron",
-		"meteoric": "entity/humanoid/serapharmor/chain/meteoriciron"
+		"material": "game:entity/humanoid/serapharmor/chain/iron",
+		"meteoric": "game:entity/humanoid/serapharmor/chain/meteoriciron"
 	},
 	"elements": [
 		{

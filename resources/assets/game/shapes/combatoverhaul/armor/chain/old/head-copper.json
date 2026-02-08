@@ -8,7 +8,7 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"copper": "entity/humanoid/serapharmor/chain/copper"
+		"copper": "game:entity/humanoid/serapharmor/chain/copper"
 	},
 	"elements": [
 		{

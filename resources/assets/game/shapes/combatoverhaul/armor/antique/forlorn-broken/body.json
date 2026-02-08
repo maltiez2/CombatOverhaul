@@ -8,7 +8,7 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"forlornhope-destroyed": "entity/humanoid/serapharmor/forlorn/forlorn-broken"
+		"forlornhope-destroyed": "game:entity/humanoid/serapharmor/forlorn/forlorn-broken"
 	},
 	"elements": [
 		{

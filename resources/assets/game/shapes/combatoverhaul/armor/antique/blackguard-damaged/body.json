@@ -8,7 +8,7 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"blackguard-damaged": "entity/humanoid/serapharmor/blackguard/blackguard-damaged"
+		"blackguard-damaged": "game:entity/humanoid/serapharmor/blackguard/blackguard-damaged"
 	},
 	"elements": [
 		{

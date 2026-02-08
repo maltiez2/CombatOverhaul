@@ -8,7 +8,7 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"meteoric": "entity/humanoid/serapharmor/brigandine/meteoriciron"
+		"meteoric": "game:entity/humanoid/serapharmor/brigandine/meteoriciron"
 	},
 	"elements": [
 		{

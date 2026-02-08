@@ -8,7 +8,7 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"meteoric": "entity/humanoid/serapharmor/scale/meteoriciron"
+		"meteoric": "game:entity/humanoid/serapharmor/scale/meteoriciron"
 	},
 	"elements": [
 		{

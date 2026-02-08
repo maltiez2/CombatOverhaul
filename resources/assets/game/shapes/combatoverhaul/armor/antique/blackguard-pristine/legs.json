@@ -8,7 +8,7 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"blackguard": "entity/humanoid/serapharmor/blackguard/blackguard-pristine"
+		"blackguard": "game:entity/humanoid/serapharmor/blackguard/blackguard-pristine"
 	},
 	"elements": [
 		{

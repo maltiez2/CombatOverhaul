@@ -24,7 +24,7 @@
       }
     }
   ],
-  "maxstacksize": 64,
+  "maxstacksize": 16,
   "storageFlags": 513,
   "shape": {"base": "combatoverhaul:ammo/arrows/{material}"},
   "creativeinventory": {"general": ["*"], "items": ["*"], "tools": ["*"], "combatoverhaul": ["*"]},

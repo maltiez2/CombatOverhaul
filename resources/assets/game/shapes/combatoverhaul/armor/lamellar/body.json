@@ -6,7 +6,7 @@
 	"textureWidth": 64,
 	"textureHeight": 64,
 	"textures": {
-		"material": "entity/humanoid/serapharmor/lamellar/bismuthbronze"
+		"material": "game:entity/humanoid/serapharmor/lamellar/bismuthbronze"
 	},
 	"elements": [
 		{

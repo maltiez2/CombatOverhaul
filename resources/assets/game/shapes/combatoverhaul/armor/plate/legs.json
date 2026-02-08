@@ -6,7 +6,7 @@
 	"textureWidth": 64,
 	"textureHeight": 64,
 	"textures": {
-		"material": "entity/humanoid/serapharmor/plate/iron"
+		"material": "game:entity/humanoid/serapharmor/plate/iron"
 	},
 	"elements": [
 		{

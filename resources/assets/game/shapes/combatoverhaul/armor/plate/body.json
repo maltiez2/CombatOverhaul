@@ -7,7 +7,7 @@
 	"textureHeight": 64,
 	"textureSizes": {},
 	"textures": {
-		"material": "entity/humanoid/serapharmor/plate/tinbronze"
+		"material": "game:entity/humanoid/serapharmor/plate/tinbronze"
 	},
 	"elements": [
 		{

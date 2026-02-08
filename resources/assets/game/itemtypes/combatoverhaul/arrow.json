@@ -93,7 +93,7 @@
       }
     }
   ],
-  "maxstacksize": 64,
+  "maxstacksize": 16,
   "storageFlags": 513,
   "shapeByType": {
     "*-crude": {"base": "combatoverhaul:ammo/arrows/crude"},

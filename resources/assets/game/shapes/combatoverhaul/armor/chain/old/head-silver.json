@@ -8,7 +8,7 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"silver": "entity/humanoid/serapharmor/chain/silver"
+		"silver": "game:entity/humanoid/serapharmor/chain/silver"
 	},
 	"elements": [
 		{

@@ -8,7 +8,7 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"material": "entity/humanoid/serapharmor/sewn/leather"
+		"material": "game:entity/humanoid/serapharmor/sewn/leather"
 	},
 	"elements": [
 		{

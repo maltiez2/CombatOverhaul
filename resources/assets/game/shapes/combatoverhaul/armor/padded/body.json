@@ -8,7 +8,7 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"linen": "entity/humanoid/serapharmor/padded/linen"
+		"linen": "game:entity/humanoid/serapharmor/padded/linen"
 	},
 	"elements": [
 		{

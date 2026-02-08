@@ -8,7 +8,7 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"material": "entity/humanoid/serapharmor/scale/bismuthbronze"
+		"material": "game:entity/humanoid/serapharmor/scale/bismuthbronze"
 	},
 	"elements": [
 		{

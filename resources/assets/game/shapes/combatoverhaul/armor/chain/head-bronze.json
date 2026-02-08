@@ -8,7 +8,7 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"material": "entity/humanoid/serapharmor/chain/bismuthbronze"
+		"material": "game:entity/humanoid/serapharmor/chain/bismuthbronze"
 	},
 	"elements": [
 		{

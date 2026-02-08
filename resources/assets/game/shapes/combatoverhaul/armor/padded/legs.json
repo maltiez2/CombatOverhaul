@@ -6,7 +6,7 @@
 	"textureWidth": 64,
 	"textureHeight": 64,
 	"textures": {
-		"linen": "entity/humanoid/serapharmor/padded/linen"
+		"linen": "game:entity/humanoid/serapharmor/padded/linen"
 	},
 	"elements": [
 		{

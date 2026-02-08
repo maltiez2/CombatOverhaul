@@ -8,7 +8,7 @@
 	"textureSizes": {
 	},
 	"textures": {
-		"forlornhope-damaged": "entity/humanoid/serapharmor/forlorn/forlorn-damaged"
+		"forlornhope-damaged": "game:entity/humanoid/serapharmor/forlorn/forlorn-damaged"
 	},
 	"elements": [
 		{
