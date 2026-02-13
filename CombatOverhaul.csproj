@@ -3,7 +3,7 @@
   <PropertyGroup>
     <ModName>Combat Overhaul</ModName>
     <ModType>code</ModType>
-    <ModVersion>0.15.5</ModVersion>
+    <ModVersion>0.16.1</ModVersion>
     <ModId>combatoverhaul</ModId>
     <Description></Description>
     <Side>universal</Side>
@@ -19,6 +19,7 @@
   <!-- Dependencies -->
   <ItemGroup>
     <Dependencies Include="overhaullib" Version="1.20.2" />
+    <Dependencies Include="jsonpatcheslib" Version="1.2.0" />
   </ItemGroup>
 
   <!-- Project settings -->
@@ -61,6 +62,7 @@
   <ItemGroup>
     <AssetsToFormat Include="$(AssetsDir)\$(ModId)\blocktypes" />
     <AssetsToFormat Include="$(AssetsDir)\$(ModId)\itemtypes" />
+    <AssetsToFormat Include="$(AssetsDir)\$(ModId)\jsonpatches" />
     <AssetsToFormat Include="$(AssetsDir)\$(ModId)\patches" />
     <AssetsToFormat Include="$(AssetsDir)\$(ModId)\entities" />
     <AssetsToFormat Include="$(AssetsDir)\$(ModId)\config\animations" />
@@ -76,8 +78,10 @@
   <ItemGroup>
     <Folder Include="resources\assets\armory\itemtypes\" />
     <Folder Include="resources\assets\combatoverhaul\shapes\armor\hide\" />
+    <Folder Include="resources\assets\combatoverhaul\shapes\weapons\ruined\" />
     <Folder Include="resources\assets\combatoverhaul\shapes\weapons\slings\" />
     <Folder Include="resources\assets\combatoverhaul\textures\sloticons\" />
+    <Folder Include="resources\assets\game\itemtypes\combatoverhaul\ruined\" />
   </ItemGroup>
 
   <!-- Forces rebuild -->
