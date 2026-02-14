@@ -124,6 +124,7 @@
   "setting-title-server-side": "Server side settings",
   "setting-title-bow-settings": "Bows",
   "setting-title-spears-settings": "Spears",
+  "setting-title-ranged-settings": "Ranged",
   "setting-title-melee-settings": "Melee",
   "setting-title-logs-settings": "Damage log (no world reload required)",
   "setting-title-debug-particles-settings": "Debug particle settings (no world reload required)",
@@ -200,5 +201,6 @@
   "setting-bowtorn_maxrange_nightmare": "Nightmare bowtorn max range",
   "setting-bowtorn_projectile_velocity_nightmare": "Nightmare bowtorn projectile speed",
   "setting-bowtorn_maxrange_gearfoot": "Gearfoot bowtorn max range",
-  "setting-bowtorn_projectile_velocity_gearfoot": "Gearfoot bowtorn projectile speed"
+  "setting-bowtorn_projectile_velocity_gearfoot": "Gearfoot bowtorn projectile speed",
+  "setting-ranged_weapons_damage_support": "'rangedWeaponDamage' stat applied to CO weapons"
 }

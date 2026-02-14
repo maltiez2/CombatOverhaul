@@ -387,6 +387,17 @@
     },
     {
       "type": "separator",
+      "title": "combatoverhaul:setting-title-ranged-settings",
+      "collapsible": true
+    },
+    {
+      "code": "ranged_weapons_damage_support",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-ranged_weapons_damage_support",
+      "default": true
+    },
+    {
+      "type": "separator",
       "title": "combatoverhaul:setting-title-melee-settings",
       "collapsible": true
     },
