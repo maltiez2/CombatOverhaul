@@ -68,12 +68,12 @@ public sealed class CombatOverhaulAdditionalSystem : ModSystem
             LoggerUtil.Error(api, this, $"Gear inventory class was replaced by some other mod, with {className}");
         }
 
-        bool immersiveFirstPersonMode = api.Settings.Bool["immersiveFpMode"];
+        /*bool immersiveFirstPersonMode = api.Settings.Bool["immersiveFpMode"];
         if (immersiveFirstPersonMode)
         {
             LoggerUtil.Error(api, this, $"Immersive first person mode is enabled. It is not supported. Turn this setting off.");
             AnnoyPlayer(api, "(Combat Overhaul) Immersive first person mode is enabled. It is not supported. Turn this setting off to prevent this message.", () => false);// api.Settings.Bool["immersiveFpMode"]);
-        }
+        }*/
 
         api.World.RegisterCallback(_ =>
         {
