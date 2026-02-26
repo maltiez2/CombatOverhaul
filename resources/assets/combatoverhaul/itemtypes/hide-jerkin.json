@@ -34,8 +34,8 @@
         "ResistsByType": {"*-hide-*": {"PiercingAttack": 0, "SlashingAttack": 0, "BluntAttack": 2}},
         "FlatReduction": {},
         "PlayerStatsByType": {
-          "*-head-*": {"walkspeed": 0, "manipulationSpeed": 0, "steadyAim": -0.01, "healingeffectivness": -0.09, "hungerrate": 0.03},
-          "*-body-*": {"walkspeed": 0, "manipulationSpeed": -0.01, "steadyAim": -0.01, "healingeffectivness": -0.09, "hungerrate": 0.03},
+          "*-head-*": {"walkspeed": 0, "manipulationSpeed": 0, "steadyAim": 0, "healingeffectivness": -0.09, "hungerrate": 0.03},
+          "*-body-*": {"walkspeed": 0, "manipulationSpeed": -0.01, "steadyAim": -0.02, "healingeffectivness": -0.09, "hungerrate": 0.03},
           "*-legs-*": {"walkspeed": -0.01, "manipulationSpeed": 0, "steadyAim": 0, "healingeffectivness": -0.09, "hungerrate": 0.02}
         }
       }

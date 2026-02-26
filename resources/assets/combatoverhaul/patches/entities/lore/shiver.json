@@ -100,7 +100,8 @@
           "*-bellhead": {"BluntAttack": 3, "SlashingAttack": 7, "PiercingAttack": 8},
           "*-deepsplit": {"BluntAttack": 3, "SlashingAttack": 7, "PiercingAttack": 8}
         },
-        "HitSounds": {"Resistant": {"Code": "game:sounds/held/shieldblock-metal-light"}}
+        "HitSounds": {"Resistant": {"Code": "game:sounds/held/shieldblock-metal-light"}},
+        "HitParticles": {"Resistant": "combatoverhaul:sparkles-yellow-white"}
       }
     }
   },
@@ -126,7 +127,8 @@
           "*-bellhead": {"BluntAttack": 3, "SlashingAttack": 7, "PiercingAttack": 8},
           "*-deepsplit": {"BluntAttack": 3, "SlashingAttack": 7, "PiercingAttack": 8}
         },
-        "HitSounds": {"Resistant": {"Code": "game:sounds/held/shieldblock-metal-light"}}
+        "HitSounds": {"Resistant": {"Code": "game:sounds/held/shieldblock-metal-light"}},
+        "HitParticles": {"Resistant": "combatoverhaul:sparkles-yellow-white"}
       }
     }
   },

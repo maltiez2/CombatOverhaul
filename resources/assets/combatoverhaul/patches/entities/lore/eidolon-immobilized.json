@@ -80,7 +80,8 @@
         "HeadDamageMultiplier": 1,
         "CriticalDamageMultiplier": 1.5,
         "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 3, "PiercingAttack": 4},
-        "HitSounds": {"Resistant": {"Code": "game:sounds/block/ceramichit"}}
+        "HitSounds": {"Resistant": {"Code": "game:sounds/block/ceramichit"}},
+        "HitParticles": {"Head": "combatoverhaul:sparkles-red", "Critical": "combatoverhaul:sparkles-cyan", "Resistant": "combatoverhaul:sparkles-yellow-white"}
       }
     }
   },
@@ -97,7 +98,8 @@
         "HeadDamageMultiplier": 1,
         "CriticalDamageMultiplier": 1.5,
         "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 3, "PiercingAttack": 4},
-        "HitSounds": {"Resistant": {"Code": "game:sounds/block/ceramichit"}}
+        "HitSounds": {"Resistant": {"Code": "game:sounds/block/ceramichit"}},
+        "HitParticles": {"Head": "combatoverhaul:sparkles-red", "Critical": "combatoverhaul:sparkles-cyan", "Resistant": "combatoverhaul:sparkles-yellow-white"}
       }
     }
   },
