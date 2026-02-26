@@ -1,5 +1,6 @@
 ﻿[
   {
+    "enabled": false,
     "side": "Server",
     "file": "game:entities/lore/shiver",
     "op": "add",

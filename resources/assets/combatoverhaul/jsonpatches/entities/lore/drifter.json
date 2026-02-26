@@ -1,12 +1,6 @@
 ﻿[
   {
-    "side": "Server",
-    "file": "game:entities/lore/drifter",
-    "op": "add",
-    "path": "/client/animations/-",
-    "value": {"code": "stagger", "animation": "stagger", "animationSpeed": 1, "weight": 1000, "blendMode": "AddAverage", "EaseInSpeed": 1000000000, "EaseOutSpeed": 1}
-  },
-  {
+    "enabled": false,
     "side": "Server",
     "file": "game:entities/lore/drifter",
     "op": "add",
@@ -53,6 +47,13 @@
         "*": []
       }
     }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/lore/drifter",
+    "op": "add",
+    "path": "/client/animations/-",
+    "value": {"code": "stagger", "animation": "stagger", "animationSpeed": 1, "weight": 1000, "blendMode": "AddAverage", "EaseInSpeed": 1000000000, "EaseOutSpeed": 1}
   },
   {
     "side": "Server",

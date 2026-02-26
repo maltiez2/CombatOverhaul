@@ -1,8 +1,14 @@
 ﻿[
-  {"file": "@@game:recipes/grid/armor/(chain|plate|scale|brigandine|gambeson|tailoredgambeson|jerkin)", "op": "addmerge", "path": "/-", "value": {"enabled": false}},
-  {"file": "@@game:recipes/grid/armorrepair/(chain|plate|scale|brigandine)", "op": "addmerge", "path": "/-", "value": {"enabled": false}},
-  {"file": "game:recipes/smithing/chain", "op": "addmerge", "path": "/output", "value": {"quantity": 4}},
-  {"file": "game:recipes/grid/metalbit", "op": "replace", "path": "/3/output/quantity", "value": 10},
-  {"file": "game:itemtypes/resource/metalchain", "op": "addmerge", "path": "/combustiblePropsByType/@@metalchain-*/smeltedStack", "value": {"stacksize": 1}},
-  {"file": "game:itemtypes/resource/metalchain", "op": "addmerge", "path": "/combustiblePropsByType/@@metalchain-*", "value": {"smeltedRatio": 4}}
+  {
+    "side": "server",
+    "file": "@@game:recipes/grid/armor/(chain|plate|scale|brigandine|gambeson|tailoredgambeson|jerkin)",
+    "op": "addmerge",
+    "path": "/-",
+    "value": {"enabled": false}
+  },
+  {"side": "server", "file": "@@game:recipes/grid/armorrepair/(chain|plate|scale|brigandine)", "op": "addmerge", "path": "/-", "value": {"enabled": false}},
+  {"side": "server", "file": "game:recipes/smithing/chain", "op": "addmerge", "path": "/output", "value": {"quantity": 4}},
+  {"side": "server", "file": "game:recipes/grid/metalbit", "op": "replace", "path": "/3/output/quantity", "value": 10},
+  {"side": "server", "file": "game:itemtypes/resource/metalchain", "op": "addmerge", "path": "/combustiblePropsByType/@@metalchain-*/smeltedStack", "value": {"stacksize": 1}},
+  {"side": "server", "file": "game:itemtypes/resource/metalchain", "op": "addmerge", "path": "/combustiblePropsByType/@@metalchain-*", "value": {"smeltedRatio": 4}}
 ]

@@ -1,7 +1,8 @@
 ﻿[
   {
+    "enabled": false,
     "side": "Server",
-    "file": "game:entities/animal/mammal/hyena-adult",
+    "file": "game:entities/animal/mammal/wolf-adult",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
@@ -11,16 +12,16 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/animal/mammal/hyena-adult",
+    "file": "game:entities/animal/mammal/wolf-adult",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
       "elements": {
-        "Torso": ["R back leg", "L back leg", "R front leg", "L front leg", "neck", "Body", "abdomen"],
-        "Head": ["head", "mouth"],
-        "Arm": ["L front feet", "R front feet"],
-        "Leg": ["L back feet", "R back feet"],
+        "Torso": ["Neck", "Chest", "Midsection", "Rear", "L Shoulder", "R Shoulder", "L Haunch", "R Haunch"],
+        "Head": ["Head", "Nose", "L Jowl", "R Jowl"],
+        "Arm": ["L ArmUp", "L ArmMid", "L ArmLow", "R ArmUp", "R ArmMid", "R ArmLow"],
+        "Leg": ["L LegUp", "L LegLow", "R LegUp", "R LegLow"],
         "Critical": [],
         "Resistant": []
       }
@@ -28,16 +29,16 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/animal/mammal/hyena-adult",
+    "file": "game:entities/animal/mammal/wolf-adult",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
       "elements": {
-        "Torso": ["R back leg", "L back leg", "R front leg", "L front leg", "neck", "Body", "abdomen"],
-        "Head": ["head", "mouth"],
-        "Arm": ["L front feet", "R front feet"],
-        "Leg": ["L back feet", "R back feet"],
+        "Torso": ["Neck", "Chest", "Midsection", "Rear", "L Shoulder", "R Shoulder", "L Haunch", "R Haunch"],
+        "Head": ["Head", "Nose", "L Jowl", "R Jowl"],
+        "Arm": ["L ArmUp", "L ArmMid", "L ArmLow", "R ArmUp", "R ArmMid", "R ArmLow"],
+        "Leg": ["L LegUp", "L LegLow", "R LegUp", "R LegLow"],
         "Critical": [],
         "Resistant": []
       }
@@ -45,9 +46,26 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/animal/mammal/hyena-baby",
+    "file": "game:entities/animal/mammal/wolf-baby",
     "op": "add",
     "path": "/client/behaviors/-",
+    "value": {
+      "code": "CombatOverhaul:EntityColliders",
+      "elements": {
+        "Torso": ["neck", "body", "abdomen"],
+        "Head": ["head", "mouth"],
+        "Arm": ["L front leg", "L front feet", "R front leg", "R front feet"],
+        "Leg": ["L back leg", "L back feet", "R back leg", "R back feet"],
+        "Critical": [],
+        "Resistant": []
+      }
+    }
+  },
+  {
+    "side": "Server",
+    "file": "game:entities/animal/mammal/wolf-baby",
+    "op": "add",
+    "path": "/server/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityColliders",
       "elements": {
@@ -62,24 +80,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/animal/mammal/hyena-baby",
-    "op": "add",
-    "path": "/server/behaviors/-",
-    "value": {
-      "code": "CombatOverhaul:EntityColliders",
-      "elements": {
-        "Torso": ["neck", "body"],
-        "Head": ["head", "mouth up"],
-        "Arm": ["L front leg", "L front feet", "R front leg", "R front feet"],
-        "Leg": ["L back leg", "L back feet", "R back leg", "R back feet"],
-        "Critical": [],
-        "Resistant": []
-      }
-    }
-  },
-  {
-    "side": "Server",
-    "file": "game:entities/animal/mammal/hyena-adult",
+    "file": "game:entities/animal/mammal/wolf-adult",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
@@ -95,7 +96,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/animal/mammal/hyena-adult",
+    "file": "game:entities/animal/mammal/wolf-adult",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
@@ -111,7 +112,7 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/animal/mammal/hyena-baby",
+    "file": "game:entities/animal/mammal/wolf-baby",
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
@@ -121,13 +122,13 @@
         "LimbsDamageMultiplier": 0.75,
         "HeadDamageMultiplier": 1.5,
         "CriticalDamageMultiplier": 4,
-        "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 1, "PiercingAttack": 0}
+        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}
       }
     }
   },
   {
     "side": "Server",
-    "file": "game:entities/animal/mammal/hyena-baby",
+    "file": "game:entities/animal/mammal/wolf-baby",
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
@@ -137,11 +138,18 @@
         "LimbsDamageMultiplier": 0.75,
         "HeadDamageMultiplier": 1.5,
         "CriticalDamageMultiplier": 4,
-        "DefaultResists": {"BluntAttack": 2, "SlashingAttack": 1, "PiercingAttack": 0}
+        "DefaultResists": {"BluntAttack": 0, "SlashingAttack": 0, "PiercingAttack": 0}
       }
     }
   },
-  {"side": "Server", "file": "game:entities/animal/mammal/hyena-adult", "op": "replace", "path": "/server/behaviors/11/aitasks/1/damageType", "value": "SlashingAttack"},
-  {"side": "Server", "file": "game:entities/animal/mammal/hyena-adult", "op": "add", "path": "/server/behaviors/11/aitasks/1/damageTier", "value": 2},
-  {"side": "Server", "file": "game:entities/animal/mammal/hyena-adult", "op": "replace", "path": "/server/behaviors/11/aitasks/1/damage", "value": 8}
+  {"side": "Server", "file": "game:entities/animal/mammal/wolf-adult", "op": "replace", "path": "/server/behaviors/10/aitasks/0/damage", "value": 8},
+  {"side": "Server", "file": "game:entities/animal/mammal/wolf-adult", "op": "replace", "path": "/server/behaviors/10/aitasks/1/damage", "value": 8},
+  {"side": "Server", "file": "game:entities/animal/mammal/wolf-adult", "op": "replace", "path": "/server/behaviors/10/aitasks/2/damage", "value": 8},
+  {"side": "Server", "file": "game:entities/animal/mammal/wolf-adult", "op": "replace", "path": "/server/behaviors/10/aitasks/0/damageTier", "value": 2},
+  {"side": "Server", "file": "game:entities/animal/mammal/wolf-adult", "op": "replace", "path": "/server/behaviors/10/aitasks/1/damageTier", "value": 2},
+  {"side": "Server", "file": "game:entities/animal/mammal/wolf-adult", "op": "replace", "path": "/server/behaviors/10/aitasks/2/damageTier", "value": 2},
+  {"side": "Server", "file": "game:entities/animal/mammal/wolf-adult", "op": "replace", "path": "/server/behaviors/10/aitasks/0/damageType", "value": "SlashingAttack"},
+  {"side": "Server", "file": "game:entities/animal/mammal/wolf-adult", "op": "replace", "path": "/server/behaviors/10/aitasks/1/damageType", "value": "SlashingAttack"},
+  {"side": "Server", "file": "game:entities/animal/mammal/wolf-adult", "op": "replace", "path": "/server/behaviors/10/aitasks/2/damageType", "value": "SlashingAttack"},
+  {"side": "Server", "file": "game:entities/animal/mammal/wolf-adult", "op": "replace", "path": "/hitboxSize/x", "value": 1.9}
 ]

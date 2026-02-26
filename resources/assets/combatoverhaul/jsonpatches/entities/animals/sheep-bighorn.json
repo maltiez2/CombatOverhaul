@@ -1,5 +1,6 @@
 ﻿[
   {
+    "enabled": false,
     "side": "Server",
     "file": "game:entities/animal/mammal/hooved/sheep-adult",
     "op": "add",
@@ -15,7 +16,7 @@
   },
   {"side": "Server", "file": "game:entities/animal/mammal/hooved/sheep-adult", "op": "add", "path": "/client/behaviors/-", "value": {"code": "CombatOverhaul:EntityColliders"}},
   {"side": "Server", "file": "game:entities/animal/mammal/hooved/sheep-adult", "op": "add", "path": "/server/behaviors/-", "value": {"code": "CombatOverhaul:EntityColliders"}},
-  {"side": "Server", "file": "game:entities/animal/mammal/hooved/sheep-adult", "op": "addMerge", "path": "/behaviorConfigs", "value": {}},
+  {"side": "Server", "file": "game:entities/animal/mammal/hooved/sheep-adult", "op": "add", "path": "/behaviorConfigs", "value": {}},
   {
     "side": "Server",
     "file": "game:entities/animal/mammal/hooved/sheep-adult",
@@ -71,7 +72,7 @@
   },
   {"side": "Server", "file": "game:entities/animal/mammal/hooved/sheep-baby", "op": "add", "path": "/client/behaviors/-", "value": {"code": "CombatOverhaul:EntityColliders"}},
   {"side": "Server", "file": "game:entities/animal/mammal/hooved/sheep-baby", "op": "add", "path": "/server/behaviors/-", "value": {"code": "CombatOverhaul:EntityColliders"}},
-  {"side": "Server", "file": "game:entities/animal/mammal/hooved/sheep-baby", "op": "addMerge", "path": "/behaviorConfigs", "value": {}},
+  {"side": "Server", "file": "game:entities/animal/mammal/hooved/sheep-baby", "op": "add", "path": "/behaviorConfigs", "value": {}},
   {
     "side": "Server",
     "file": "game:entities/animal/mammal/hooved/sheep-baby",

@@ -19,11 +19,17 @@
       "game:itemtypes/combatoverhaul/sword.json": {
         "attributes/RenderingOffset": "not(weapon_rendering_offset)"
       },
-      "combatoverhaul:patches/entities/player.json": {
+      "combatoverhaul:jsonpatches/entities/player.json": {
         "2/value/secondChanceAvailable": "second_chance_available"
       },
       "game:itemtypes/combatoverhaul/bow.json": {
         "attributes/TwoHanded": "bow_two_handed"
+      },
+      "@@combatoverhaul:jsonpatches/entities/animals/(bear|deer|fox|gazelle|goat|hyena|moose|pig-wild|raccoon|sheep-bighorn|wolf).json": {
+        "0/enabled": "not(short_entity_info)"
+      },
+      "@@combatoverhaul:jsonpatches/entities/lore/(bell|bowtorn|drifter|locust|shiver).json": {
+        "0/enabled": "not(short_entity_info)"
       }
     },
     "number": {
@@ -61,7 +67,7 @@
       "game:itemtypes/combatoverhaul/scrap/mace.json": {
         "attributes/OneHandedStance/Attack/DamageTypesByType/@@*/0/Damage/Damage": "value * melee_weapons_damage_multiplier"
       },
-      "combatoverhaul:patches/entities/player.json": {
+      "combatoverhaul:jsonpatches/entities/player.json": {
         "2/value/secondChanceCooldownSec": "second_chance_cooldown",
         "2/value/damageModel/Zones/0/DamageMultiplier": "player_model_torso_damage",
         "2/value/damageModel/Zones/1/DamageMultiplier": "player_model_head_damage",
@@ -77,7 +83,7 @@
         "3/value/damageModel/Zones/4-8/DamageMultiplier": "player_model_arms_damage",
         "3/value/damageModel/Zones/8-12/DamageMultiplier": "player_model_legs_damage"
       },
-      "combatoverhaul:patches/entities/lore/bowtorn.json": {
+      "combatoverhaul:jsonpatches/entities/lore/bowtorn.json": {
         "8/value/SeekingRangeByType/*-surface": "bowtorn_maxrange_surface + 5",
         "8/value/FiringRangeMaxByType/*-surface": "bowtorn_maxrange_surface",
         "8/value/ProjectileSpeedByType/*-surface": "bowtorn_projectile_velocity_surface",
@@ -464,6 +470,13 @@
       "type": "separator",
       "title": "combatoverhaul:setting-title-logs-settings",
       "collapsible": true
+    },
+    {
+      "code": "short_entity_info",
+      "type": "boolean",
+      "ingui": "combatoverhaul:setting-short_entity_info",
+      "comment": "Requires wolrd reload",
+      "default": true
     },
     {
       "code": "print_range_hits",
