@@ -9,15 +9,9 @@
         "behaviors/1/properties/stats/HitSound": "(arrow_ping_sound_on_hit) ? value : empty_string"
       }
     },
-    "other":  {
-      "game:itemtypes/combatoverhaul/spear.json": {
-        "attributes/TwoHandedStance/AttackDirectionsType": "(spears_directional_attacks) ? spear_directions_two : spear_directions_none",
-        "attributes/TwoHandedStance/AttackAnimation": "(spears_directional_attacks) ? spear_directions_two_animations : spear_directions_none_animations"
-      }
-    },
     "boolean": {
       "game:itemtypes/combatoverhaul/spear.json": {
-        "attributes/RenderingOffset": "not(weapon_rendering_offset)"
+        "attributes/Modes/@@*/RenderingOffset": "not(weapon_rendering_offset)"
       },
       "game:itemtypes/combatoverhaul/club.json": {
         "attributes/RenderingOffset": "not(weapon_rendering_offset)"
@@ -41,14 +35,15 @@
       },
       "game:itemtypes/combatoverhaul/bow.json": {
         "attributes/AimingByType/@@*/AimDifficulty": "bow_aiming_difficulty",
+        "attributes/ReloadAnimationSpeed": "bows_reload_speed_multiplier",
         "attributes/ArrowDamageMultiplierByType/@@*": "value * bows_damage_multiplier",
         "attributes/ScreenShakeStrengthByType/@@*": "value * bow_screenshake"
       },
       "game:itemtypes/combatoverhaul/spear.json": {
-        "attributes/ThrowAttack/Aiming/AimDifficulty": "spears_aiming_difficulty",
+        "attributes/Modes/@@*/ThrowAttack/Aiming/AimDifficulty": "spears_aiming_difficulty",
         "behaviors/1/properties/stats/DamageStatsByType/@@*/Damage": "value * spears_range_damage_multiplier",
-        "attributes/OneHandedStance/Attack/DamageTypes/0/DamageByType/@@*/Damage": "value * melee_weapons_damage_multiplier",
-        "attributes/TwoHandedStance/Attack/DamageTypes/0/DamageByType/@@*/Damage": "value * melee_weapons_damage_multiplier"
+        "attributes/Modes/@@*/OneHandedStance/Attack/DamageTypes/0/DamageByType/@@*/Damage": "value * melee_weapons_damage_multiplier",
+        "attributes/Modes/@@*/TwoHandedStance/Attack/DamageTypes/0/DamageByType/@@*/Damage": "value * melee_weapons_damage_multiplier"
       },
       "game:itemtypes/combatoverhaul/scrap/spear.json": {
         "attributes/ThrowAttack/Aiming/AimDifficulty": "spears_aiming_difficulty",
@@ -142,11 +137,7 @@
   "constants": {
     "empty_string": "",
     "vanilla_axe": "ItemAxe",
-    "vanilla_item": "Item",
-    "spear_directions_none": "None",
-    "spear_directions_two": "TopBottom",
-    "spear_directions_none_animations": {"Main": ["combatoverhaul:spear-thrust-2h-1", "combatoverhaul:spear-thrust-2h-2", "combatoverhaul:spear-thrust-2h-3"]},
-    "spear_directions_two_animations": {"Top": ["combatoverhaul:spear-thrust-2h-top"], "Bottom": ["combatoverhaul:spear-thrust-2h-bottom"]}
+    "vanilla_item": "Item"
   },
   "settings": [
     {
@@ -335,6 +326,17 @@
       "logarithmic": true,
       "range": {
         "min": 0.2,
+        "max": 5.0
+      }
+    },
+    {
+      "code": "bows_reload_speed_multiplier",
+      "type": "float",
+      "ingui": "combatoverhaul:setting-bows_reload_speed_multiplier",
+      "default": 1.0,
+      "logarithmic": true,
+      "range": {
+        "min": 0.5,
         "max": 5.0
       }
     },

@@ -28,29 +28,42 @@
         "CanParry": true,
         "CanBlock": false,
         "CanSprint": true,
+        "CanRiposte": true,
         "SpeedPenalty": 0,
         "Attack": {
           "StopOnTerrainHit": false,
           "StopOnEntityHit": true,
           "CollideWithTerrain": true,
+          "HitOnlyOneEntity": true,
           "MaxReach": 9,
           "DamageTypes": [
             {"DamageByType": {"*": {"DamageType": "SlashingAttack", "Tier": 5, "Damage": 4}}, "Knockback": 1, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.3, 0, 0.5]}
           ]
         },
-        "AttackHitSound": "game:sounds/thud",
-        "AttackAnimation": {"Main": ["combatoverhaul:sword-forlorn-thrust-1", "combatoverhaul:sword-forlorn-thrust-2", "combatoverhaul:sword-forlorn-thrust-3"]},
+        "Riposte": {
+          "StopOnTerrainHit": false,
+          "StopOnEntityHit": true,
+          "CollideWithTerrain": true,
+          "HitOnlyOneEntity": true,
+          "MaxReach": 9,
+          "DamageTypes": [
+            {"DamageByType": {"*": {"DamageType": "SlashingAttack", "Tier": 5, "Damage": 8}}, "Knockback": 1, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 2.3, 0, 0.5]}
+          ]
+        },
         "Parry": {
           "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
-          "Directions": [60, 60, 60, 60],
+          "Directions": [30, 30, 30, 30],
           "Sound": "game:sounds/held/shieldblock-metal-heavy",
-          "BlockTier": {"BluntAttack": 9, "SlashingAttack": 9, "PiercingAttack": 9},
+          "BlockTier": {"BluntAttack": 7, "SlashingAttack": 7, "PiercingAttack": 7},
           "CanBlockProjectiles": false,
           "StaggerTier": 6,
           "StaggerTimeMs": 3000
         },
         "ParryCooldownMs": 600,
         "BlockCooldownMs": 0,
+        "AttackHitSound": "game:sounds/thud",
+        "AttackAnimation": {"Main": ["combatoverhaul:sword-forlorn-thrust-1", "combatoverhaul:sword-forlorn-thrust-2", "combatoverhaul:sword-forlorn-thrust-3"]},
+        "RiposteAnimation": "combatoverhaul:sword-forlorn-riposte",
         "BlockAnimation": "combatoverhaul:sword-short-parry",
         "ReadyAnimation": "combatoverhaul:sword-falx-ready",
         "IdleAnimation": "combatoverhaul:sword-falx-idle"
@@ -60,29 +73,42 @@
         "CanParry": true,
         "CanBlock": false,
         "CanSprint": true,
+        "CanRiposte": true,
         "SpeedPenalty": 0,
         "Attack": {
           "StopOnTerrainHit": false,
           "StopOnEntityHit": true,
           "CollideWithTerrain": true,
+          "HitOnlyOneEntity": true,
           "MaxReach": 9,
           "DamageTypes": [
             {"DamageByType": {"*": {"DamageType": "SlashingAttack", "Tier": 4, "Damage": 4}}, "Knockback": 1, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.8, 0, 0.5]}
           ]
         },
-        "AttackHitSound": "game:sounds/thud",
-        "AttackAnimation": {"Main": ["combatoverhaul:sword-blackguard-thrust-1", "combatoverhaul:sword-blackguard-thrust-2", "combatoverhaul:sword-blackguard-thrust-3"]},
+        "Riposte": {
+          "StopOnTerrainHit": false,
+          "StopOnEntityHit": true,
+          "CollideWithTerrain": true,
+          "HitOnlyOneEntity": true,
+          "MaxReach": 9,
+          "DamageTypes": [
+            {"DamageByType": {"*": {"DamageType": "SlashingAttack", "Tier": 4, "Damage": 8}}, "Knockback": 0, "DurabilityDamage": 1, "Collider": [0, 0, 0.5, 1.8, 0, 0.5]}
+          ]
+        },
         "Parry": {
           "Zones": ["Head", "Face", "Neck", "Torso", "LeftArm", "RightArm", "LeftHand", "RightHand", "LeftLeg", "RightLeg", "LeftFoot", "RightFoot"],
-          "Directions": [60, 60, 60, 60],
+          "Directions": [30, 30, 30, 30],
           "Sound": "game:sounds/held/shieldblock-metal-heavy",
-          "BlockTier": {"BluntAttack": 9, "SlashingAttack": 9, "PiercingAttack": 9},
+          "BlockTier": {"BluntAttack": 7, "SlashingAttack": 7, "PiercingAttack": 7},
           "CanBlockProjectiles": false,
           "StaggerTier": 6,
           "StaggerTimeMs": 3000
         },
         "ParryCooldownMs": 600,
         "BlockCooldownMs": 0,
+        "AttackHitSound": "game:sounds/thud",
+        "AttackAnimation": {"Main": ["combatoverhaul:sword-blackguard-thrust-1", "combatoverhaul:sword-blackguard-thrust-2", "combatoverhaul:sword-blackguard-thrust-3"]},
+        "RiposteAnimation": "combatoverhaul:sword-blackguard-riposte",
         "BlockAnimation": "combatoverhaul:sword-short-parry",
         "ReadyAnimation": "combatoverhaul:sword-falx-ready",
         "IdleAnimation": "combatoverhaul:sword-falx-idle"
@@ -182,7 +208,7 @@
     "blade-blackguard-iron": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -89, "y": 47, "z": 23}, "origin": {"x": 0.65, "y": 1.1, "z": 0.46}, "scale": 2.45},
     "blade-forlorn-iron": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -89, "y": 47, "z": 44}, "origin": {"x": 0.6, "y": 0.4, "z": 0.47}, "scale": 2.7},
     "*-scrap-*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -94, "y": 47, "z": 44}, "origin": {"x": 0.73, "y": 0, "z": 0.48}, "scale": 2.2},
-    "*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -53, "y": 118, "z": -5}, "origin": {"x": 0.65, "y": 0.1, "z": 0.37}, "scale": 1.65}
+    "*": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": -53, "y": 118, "z": -6}, "origin": {"x": 0.65, "y": 0, "z": 0.31}, "scale": 1.42}
   },
   "groundTransformByType": {
     "blade-blackguard-iron": {"translation": {"x": 0, "y": 0, "z": 0}, "rotation": {"x": 0, "y": 0, "z": 0}, "origin": {"x": 0.5, "y": 0, "z": 0.5}, "scale": 3.4},

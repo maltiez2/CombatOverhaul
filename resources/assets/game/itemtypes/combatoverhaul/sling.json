@@ -9,20 +9,12 @@
   "tool": "sling",
   "behaviors": [
     {"name": "CombatOverhaul:AnimatableAttachable", "properties": {"animated-shape": "combatoverhaul:weapons/slings/sling"}},
-    {
-      "name": "GroundStorable",
-      "properties": {
-        "layout": "WallHalves",
-        "wallOffY": 0,
-        "sprintKey": true,
-        "selectionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.1, "z2": 1},
-        "collisionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 0, "y2": 0, "z2": 0}
-      }
-    }
+    {"name": "GroundStorable", "properties": {"layout": "Quadrants", "collisionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.125, "z2": 1}}}
   ],
   "creativeinventory": {"general": ["*"], "items": ["*"], "tools": ["*"], "combatoverhaul": ["*"]},
   "attributes": {
-    "toolrackTransform": {"translation": {"x": -0.35, "y": 0.73, "z": 0.1}, "rotation": {"x": 1, "y": 180, "z": 0}, "scale": 1.25},
+    "toolrackTransform": {"translation": {"x": 0.8, "y": 0.6, "z": 0.6}, "rotation": {"x": 1, "y": 180, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}, "scale": 1.5},
+    "groundStorageTransform": {"translation": {"x": 0.2, "y": 0.04, "z": 0.6}, "rotation": {"x": 0, "y": 30, "z": 0}, "origin": {"x": 0, "y": 0, "z": 0}},
     "BulletTransform": {
       "translation": {"X": 0, "Y": 0, "Z": 0, "R": 0, "G": 0, "B": 0},
       "rotation": {"X": 0, "Y": 0, "Z": 0, "R": 0, "G": 0, "B": 0},

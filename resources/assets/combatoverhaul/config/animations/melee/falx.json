@@ -236,6 +236,134 @@
     "ItemAnimationStart": 0,
     "ItemAnimationEnd": 0
   },
+  "sword-forlorn-riposte": {
+    "Hold": false,
+    "PlayerKeyFrames": [
+      {
+        "EasingTime": 200,
+        "EasingFunction": "EaseOutSine",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": true,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 0.6,
+        "Elements": {"ItemAnchor": [0, 0, 0, 0, 0, 54], "LowerArmR": [0, 0, 0, 0, -13, -17], "UpperArmR": [0, 0.8, 0, -47.4, 8.6, -53]}
+      },
+      {
+        "EasingTime": 500,
+        "EasingFunction": "EaseInExpo",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": true,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 0.6,
+        "Elements": {"ItemAnchor": [0, 0, 0, 0, 0, 83], "LowerArmR": [0, 0, 0, 0, 0, 0], "UpperArmR": [0, -2.3, 0, -51.4, -0.4, -87]}
+      },
+      {
+        "EasingTime": 700,
+        "EasingFunction": "EaseInSine",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": true,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 0.6,
+        "Elements": {"ItemAnchor": [0, 0, 0, 0, 33, 85], "LowerArmR": [0, 0, 0, 0, 11, 0], "UpperArmR": [0, -2.3, 0, 7.6, -4.4, -94]}
+      },
+      {
+        "EasingTime": 900,
+        "EasingFunction": "CosShifted",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": true,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 0.6,
+        "Elements": {"ItemAnchor": [0, 0, 0, 0, 0, 59], "LowerArmR": [0, 0, 0, 0, 0, -68], "UpperArmR": [0, -1.6, 0, 13, -1.8, -18.2]}
+      }
+    ],
+    "ItemKeyFrames": [],
+    "SoundFrames": [
+      {
+        "Code": ["game:sounds/player/strike1", "game:sounds/player/strike2"],
+        "DurationFraction": 0.11111111,
+        "RandomizePitch": true,
+        "Range": 16,
+        "Volume": 0.5,
+        "Synchronize": true
+      }
+    ],
+    "ParticlesFrames": [],
+    "CallbackFrames": [{"Code": "start", "DurationFraction": 0.22222222}, {"Code": "stop", "DurationFraction": 0.7777778}],
+    "ItemAnimationStart": 0,
+    "ItemAnimationEnd": 0
+  },
+  "sword-blackguard-riposte": {
+    "Hold": false,
+    "PlayerKeyFrames": [
+      {
+        "EasingTime": 100,
+        "EasingFunction": "EaseOutSine",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": true,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {"ItemAnchor": [0, 0, 0, 0, -2, 3], "LowerArmR": [0, 0, 0, 0, 58, 0], "UpperArmR": [1.6, -0.8, 0, 96.6, -57.1, -61.1]}
+      },
+      {
+        "EasingTime": 300,
+        "EasingFunction": "Skip",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": true,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {"ItemAnchor": [0, 0, 0, 0, 0, -3], "LowerArmR": [0, 0, 0, 0, 72, -16], "UpperArmR": [2.4, -0.8, 0, 87.6, -42.1, -112.1]}
+      },
+      {
+        "EasingTime": 500,
+        "EasingFunction": "EaseOutExpo",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": true,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {"ItemAnchor": [0, 0, 0, 0, -4, -5], "LowerArmR": [0, 0, 0, 0, 80, 3], "UpperArmR": [2.4, -0.4, 1.2, 87.6, -18.1, -114.1]}
+      },
+      {
+        "EasingTime": 900,
+        "EasingFunction": "EaseOutSine",
+        "DetachedAnchor": false,
+        "SwitchArms": false,
+        "PitchFollow": true,
+        "PitchDontFollow": false,
+        "FOVMultiplier": 1,
+        "BobbingAmplitude": 1,
+        "Elements": {"ItemAnchor": [0, 0, 0, 0, 0, 50], "LowerArmR": [0, 0, 0, 0, 80, 0], "UpperArmR": [2.4, -0.8, 0, 87.6, -50.1, -73.1]}
+      }
+    ],
+    "ItemKeyFrames": [],
+    "SoundFrames": [
+      {
+        "Code": ["game:sounds/player/strike1", "game:sounds/player/strike2"],
+        "DurationFraction": 0.083333336,
+        "RandomizePitch": true,
+        "Range": 16,
+        "Volume": 0.5,
+        "Synchronize": true
+      }
+    ],
+    "ParticlesFrames": [],
+    "CallbackFrames": [{"Code": "start", "DurationFraction": 0.11111111}, {"Code": "stop", "DurationFraction": 0.6666667}, {"Code": "ready", "DurationFraction": 0.8333333}],
+    "ItemAnimationStart": 0,
+    "ItemAnimationEnd": 0
+  },
   "sword-blackguard-thrust-1": {
     "Hold": false,
     "PlayerKeyFrames": [

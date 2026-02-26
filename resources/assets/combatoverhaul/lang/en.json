@@ -159,6 +159,7 @@
   "setting-melee_weapon_stop_on_terrain_hit": "Stop melee attack on hitting terrain",
   "setting-melee_weapon_ignore_terrain_behind": "Melee weapons ingore terrain behind player",
   "setting-bows_damage_multiplier": "Bows damage multiplier",
+  "setting-bows_reload_speed_multiplier": "Bows reload speed",
   "setting-spears_directional_attacks": "Spears directional attack animations",
   "setting-spears_range_damage_multiplier": "Spears thrown damage multiplier",
   "setting-shields_protection_zones": "Shields protection zones",
