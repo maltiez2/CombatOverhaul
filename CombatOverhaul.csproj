@@ -3,7 +3,7 @@
   <PropertyGroup>
     <ModName>Combat Overhaul</ModName>
     <ModType>code</ModType>
-    <ModVersion>0.16.15</ModVersion>
+    <ModVersion>0.16.16</ModVersion>
     <ModId>combatoverhaul</ModId>
     <Description></Description>
     <Side>universal</Side>
@@ -80,6 +80,7 @@
     <Folder Include="resources\assets\combatoverhaul\shapes\armor\hide\" />
     <Folder Include="resources\assets\combatoverhaul\shapes\weapons\ruined\" />
     <Folder Include="resources\assets\combatoverhaul\shapes\weapons\slings\" />
+    <Folder Include="resources\assets\combatoverhaul\shapes\weapons\spears\attached\" />
     <Folder Include="resources\assets\combatoverhaul\textures\sloticons\" />
     <Folder Include="resources\assets\game\itemtypes\combatoverhaul\ruined\" />
   </ItemGroup>
