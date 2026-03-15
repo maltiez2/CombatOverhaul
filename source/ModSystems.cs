@@ -1,6 +1,6 @@
-﻿using CombatOverhaul.Animations;
+﻿using AnimationsLib;
+using CollidersLib;
 using CombatOverhaul.Armor;
-using CombatOverhaul.Colliders;
 using CombatOverhaul.DamageSystems;
 using CombatOverhaul.Integration;
 using CombatOverhaul.source;

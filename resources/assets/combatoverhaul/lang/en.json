@@ -73,7 +73,12 @@
   "game:charattribute-meleeDamageTierBonusBluntAttack-1": "+1 damage tier for melee attacks dealing blunt damage",
   "game:charattribute-meleeDamageTierBonusPiercingAttack-1": "+1 damage tier for melee attacks dealing piercing damage",
   "game:charattribute-meleeDamageTierBonusSlashingAttack-1": "+1 damage tier for melee attacks dealing slashing damage",
-  
+
+  // Technically the new model is a reflex bow, not recurve
+  "game:item-bow-recurve": "Reflex bow",
+	"game:item-bowstave-recurve-raw": "Raw reflex bowstave",
+	"game:item-bowstave-recurve-dry": "Dry reflex bowstave",
+  "game:traitdesc-bowyer": "Exclusive craftable <a href=\"handbooksearch://crude bow or crude arrow or reflex bow \">bows and arrows</a>",
 
   "item-creature-arrow-*": "arrow",
   "item-creature-spear-*": "spear",

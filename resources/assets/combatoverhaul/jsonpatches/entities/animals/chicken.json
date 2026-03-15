@@ -29,22 +29,6 @@
   },
   {
     "side": "Server",
-    "file": "game:entities/animal/bird/chicken-baby",
-    "op": "add",
-    "path": "/client/behaviors/-",
-    "value": {"code": "CombatOverhaul:EntityColliders", "elements": {"Torso": ["body"], "Head": ["head"], "Arm": [], "Leg": [], "Critical": [], "Resistant": []}},
-    "defaultPenetrationResistance": 0
-  },
-  {
-    "side": "Server",
-    "file": "game:entities/animal/bird/chicken-baby",
-    "op": "add",
-    "path": "/server/behaviors/-",
-    "value": {"code": "CombatOverhaul:EntityColliders", "elements": {"Torso": ["body"], "Head": ["head"], "Arm": [], "Leg": [], "Critical": [], "Resistant": []}},
-    "defaultPenetrationResistance": 0
-  },
-  {
-    "side": "Server",
     "file": "game:entities/animal/bird/chicken-adult",
     "op": "add",
     "path": "/server/behaviors/-",

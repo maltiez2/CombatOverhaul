@@ -21,42 +21,6 @@
     "side": "Server",
     "file": "game:entities/animal/mammal/bear-adult",
     "op": "add",
-    "path": "/client/behaviors/-",
-    "value": {
-      "code": "CombatOverhaul:EntityColliders",
-      "elements": {
-        "Torso": ["shoulders", "body", "abdomen"],
-        "Head": ["neck", "head", "cheeks", "mouth"],
-        "Arm": ["L front leg", "L front leg3", "L front foot", "R front leg", "R front feet", "R front paw"],
-        "Leg": ["L back leg", "L back feet", "R back feet", "R back leg", "L back paw", "R back paw"],
-        "Critical": [],
-        "Resistant": []
-      },
-      "defaultPenetrationResistance": 9
-    }
-  },
-  {
-    "side": "Server",
-    "file": "game:entities/animal/mammal/bear-adult",
-    "op": "add",
-    "path": "/server/behaviors/-",
-    "value": {
-      "code": "CombatOverhaul:EntityColliders",
-      "elements": {
-        "Torso": ["shoulders", "body", "abdomen"],
-        "Head": ["neck", "head", "cheeks", "mouth"],
-        "Arm": ["L front leg", "L front leg3", "L front foot", "R front leg", "R front feet", "R front paw"],
-        "Leg": ["L back leg", "L back feet", "R back feet", "R back leg", "L back paw", "R back paw"],
-        "Critical": [],
-        "Resistant": []
-      },
-      "defaultPenetrationResistance": 9
-    }
-  },
-  {
-    "side": "Server",
-    "file": "game:entities/animal/mammal/bear-adult",
-    "op": "add",
     "path": "/server/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityDamageModel",

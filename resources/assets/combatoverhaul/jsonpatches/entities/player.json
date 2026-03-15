@@ -3,41 +3,6 @@
     "side": "Server",
     "file": "game:entities/humanoid/player",
     "op": "add",
-    "path": "/client/behaviors/-",
-    "value": {
-      "code": "CombatOverhaul:EntityColliders",
-      "elements": {
-        "Torso": ["LowerTorso", "UpperTorso"],
-        "Head": ["Head"],
-        "Arm": ["UpperArmR", "UpperArmL", "LowerArmR", "LowerArmL"],
-        "Leg": ["UpperFootL", "UpperFootR", "LowerFootL", "LowerFootR"],
-        "Critical": ["Neck"]
-      },
-      "defaultPenetrationResistance": 6,
-      "penetrationResistances": {"LowerTorso": 9, "UpperTorso": 9, "Head": 9}
-    }
-  },
-  {
-    "side": "Server",
-    "file": "game:entities/humanoid/player",
-    "op": "add",
-    "path": "/server/behaviors/-",
-    "value": {
-      "code": "CombatOverhaul:EntityColliders",
-      "elements": {
-        "Torso": ["LowerTorso", "UpperTorso"],
-        "Head": ["Head"],
-        "Arm": ["UpperArmR", "UpperArmL", "LowerArmR", "LowerArmL"],
-        "Leg": ["UpperFootL", "UpperFootR", "LowerFootL", "LowerFootR"],
-        "Critical": ["Neck"]
-      },
-      "penetrationResistances": {"LowerTorso": 9, "UpperTorso": 9, "Head": 9}
-    }
-  },
-  {
-    "side": "Server",
-    "file": "game:entities/humanoid/player",
-    "op": "add",
     "path": "/server/behaviors/-",
     "value": {
       "code": "CombatOverhaul:PlayerDamageModel",

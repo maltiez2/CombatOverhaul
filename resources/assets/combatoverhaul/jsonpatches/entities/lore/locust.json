@@ -19,62 +19,6 @@
     "side": "Server",
     "file": "game:entities/lore/locust",
     "op": "add",
-    "path": "/client/behaviors/-",
-    "value": {
-      "code": "CombatOverhaul:EntityColliders",
-      "elementsByType": {
-        "*-corrupt-sawblade": {
-          "Torso": [],
-          "Head": ["body"],
-          "Arm": ["segment 1", "segment 2", "segment 3", "segment 5", "segment 6", "sawblade base"],
-          "Leg": ["leg extention 21", "leg extention 18", "leg extention 15", "leg extention 5", "leg extention 3", "leg extention 1"],
-          "Critical": [],
-          "Resistant": []
-        },
-        "*": {
-          "Torso": ["abdomen"],
-          "Head": ["body"],
-          "Arm": [],
-          "Leg": ["leg extention 21", "leg extention 18", "leg extention 15", "leg extention 5", "leg extention 3", "leg extention 1"],
-          "Critical": [],
-          "Resistant": []
-        }
-      },
-      "defaultPenetrationResistance": 3
-    }
-  },
-  {
-    "side": "Server",
-    "file": "game:entities/lore/locust",
-    "op": "add",
-    "path": "/server/behaviors/-",
-    "value": {
-      "code": "CombatOverhaul:EntityColliders",
-      "elementsByType": {
-        "*-corrupt-sawblade": {
-          "Torso": [],
-          "Head": ["body"],
-          "Arm": ["segment 1", "segment 2", "segment 3", "segment 5", "segment 6", "sawblade base"],
-          "Leg": ["leg extention 21", "leg extention 18", "leg extention 15", "leg extention 5", "leg extention 3", "leg extention 1"],
-          "Critical": [],
-          "Resistant": []
-        },
-        "*": {
-          "Torso": ["abdomen"],
-          "Head": ["body"],
-          "Arm": [],
-          "Leg": ["leg extention 21", "leg extention 18", "leg extention 15", "leg extention 5", "leg extention 3", "leg extention 1"],
-          "Critical": [],
-          "Resistant": []
-        }
-      },
-      "defaultPenetrationResistance": 3
-    }
-  },
-  {
-    "side": "Server",
-    "file": "game:entities/lore/locust",
-    "op": "add",
     "path": "/server/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityDamageModel",

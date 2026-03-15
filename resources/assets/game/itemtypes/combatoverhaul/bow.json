@@ -8,7 +8,7 @@
   "durabilityByType": {"*-crude": 180, "*-simple": 240, "*-long": 750, "*-recurve": 600},
   "tool": "bow",
   "behaviors": [
-    {"name": "CombatOverhaul:AnimatableAttachable", "properties": {"animated-shape": "combatoverhaul:weapons/bows/{type}"}},
+    {"name": "AnimationsLib:AnimatableAttachable", "properties": {"animated-shape": "combatoverhaul:weapons/bows/{type}"}},
     {
       "name": "GroundStorable",
       "properties": {

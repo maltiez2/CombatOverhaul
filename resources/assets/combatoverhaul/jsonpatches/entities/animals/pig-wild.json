@@ -18,60 +18,6 @@
     "side": "Server",
     "file": "game:entities/animal/mammal/hooved/pig-adult",
     "op": "add",
-    "path": "/client/behaviors/-",
-    "value": {
-      "code": "CombatOverhaul:EntityColliders",
-      "elements": {
-        "Torso": ["body", "L back leg", "R back leg"],
-        "Head": ["neck", "head", "cheeks"],
-        "Arm": ["R front feet", "L front feet"],
-        "Leg": ["L back feet", "R back feet"],
-        "Critical": [],
-        "Resistant": []
-      }
-    }
-  },
-  {
-    "side": "Server",
-    "file": "game:entities/animal/mammal/hooved/pig-adult",
-    "op": "add",
-    "path": "/server/behaviors/-",
-    "value": {
-      "code": "CombatOverhaul:EntityColliders",
-      "elements": {
-        "Torso": ["body", "L back leg", "R back leg"],
-        "Head": ["neck", "head", "cheeks"],
-        "Arm": ["R front feet", "L front feet"],
-        "Leg": ["L back feet", "R back feet"],
-        "Critical": [],
-        "Resistant": []
-      }
-    }
-  },
-  {
-    "side": "Server",
-    "file": "game:entities/animal/mammal/hooved/pig-baby",
-    "op": "add",
-    "path": "/client/behaviors/-",
-    "value": {
-      "code": "CombatOverhaul:EntityColliders",
-      "elements": {"Torso": ["body"], "Head": ["head", "nose"], "Arm": ["R front feet", "L front feet"], "Leg": ["L back feet", "R back feet"], "Critical": [], "Resistant": []}
-    }
-  },
-  {
-    "side": "Server",
-    "file": "game:entities/animal/mammal/hooved/pig-baby",
-    "op": "add",
-    "path": "/server/behaviors/-",
-    "value": {
-      "code": "CombatOverhaul:EntityColliders",
-      "elements": {"Torso": ["body"], "Head": ["head", "nose"], "Arm": ["R front feet", "L front feet"], "Leg": ["L back feet", "R back feet"], "Critical": [], "Resistant": []}
-    }
-  },
-  {
-    "side": "Server",
-    "file": "game:entities/animal/mammal/hooved/pig-adult",
-    "op": "add",
     "path": "/server/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityDamageModel",

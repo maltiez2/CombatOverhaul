@@ -59,60 +59,6 @@
     "side": "Server",
     "file": "game:entities/lore/drifter",
     "op": "add",
-    "path": "/client/behaviors/-",
-    "value": {
-      "code": "CombatOverhaul:EntityColliders",
-      "elementsByType": {
-        "*-double-headed": {
-          "Torso": ["Body", "Abdomen", "Kupris"],
-          "Head": ["Extra neck", "Extra head", "Neck 1", "Head 1", "Neck 2", "Head 2"],
-          "Arm": ["L shoulder", "L upper arm", "L lower arm", "R shoulder", "R upper arm", "R lower arm"],
-          "Leg": ["L thigh", "L feet", "R thigh", "R feet"],
-          "Critical": [],
-          "Resistant": []
-        },
-        "*": {
-          "Torso": ["Body", "Abdomen", "Kupris"],
-          "Head": ["Neck", "Head"],
-          "Arm": ["L shoulder", "L upper arm", "L lower arm", "R shoulder", "R upper arm", "R lower arm"],
-          "Leg": ["L thigh", "L feet", "R thigh", "R feet"],
-          "Critical": [],
-          "Resistant": []
-        }
-      }
-    }
-  },
-  {
-    "side": "Server",
-    "file": "game:entities/lore/drifter",
-    "op": "add",
-    "path": "/server/behaviors/-",
-    "value": {
-      "code": "CombatOverhaul:EntityColliders",
-      "elementsByType": {
-        "*-double-headed": {
-          "Torso": ["Body", "Abdomen", "Kupris"],
-          "Head": ["Extra neck", "Extra head", "Neck 1", "Head 1", "Neck 2", "Head 2"],
-          "Arm": ["L shoulder", "L upper arm", "L lower arm", "R shoulder", "R upper arm", "R lower arm"],
-          "Leg": ["L thigh", "L feet", "R thigh", "R feet"],
-          "Critical": [],
-          "Resistant": []
-        },
-        "*": {
-          "Torso": ["Body", "Abdomen", "Kupris"],
-          "Head": ["Neck", "Head"],
-          "Arm": ["L shoulder", "L upper arm", "L lower arm", "R shoulder", "R upper arm", "R lower arm"],
-          "Leg": ["L thigh", "L feet", "R thigh", "R feet"],
-          "Critical": [],
-          "Resistant": []
-        }
-      }
-    }
-  },
-  {
-    "side": "Server",
-    "file": "game:entities/lore/drifter",
-    "op": "add",
     "path": "/server/behaviors/-",
     "value": {
       "code": "CombatOverhaul:EntityDamageModel",
