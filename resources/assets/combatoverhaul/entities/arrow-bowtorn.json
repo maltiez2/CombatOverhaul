@@ -12,6 +12,12 @@
     "texturesByType": {"*": {}},
     "behaviors": [{"code": "CombatOverhaul:ProjectilePhysics", "groundDragFactor": 1, "airDragFactor": 0, "gravityFactor": 1}, {"code": "interpolateposition"}]
   },
-  "server": {"behaviors": [{"code": "CombatOverhaul:ProjectilePhysics", "groundDragFactor": 1, "airDragFactor": 0, "gravityFactor": 1}, {"code": "despawn", "minSeconds": 60}]},
+  "server": {
+    "behaviors": [
+      {"code": "CombatOverhaul:ProjectilePhysics", "groundDragFactor": 1, "airDragFactor": 0, "gravityFactor": 1},
+      {"code": "despawn", "minSeconds": 60},
+      {"code": "CollidersLib:ProjectileColliderServer", "radius": "0.05"}
+    ]
+  },
   "sounds": {}
 }

@@ -1,6 +1,5 @@
 ﻿{
   "code": "spear",
-  "class": "CombatOverhaul:MeleeWeapon",
   "tags": ["weapon", "weapon-melee", "weapon-ranged", "projectile", "spear", "polearm", "onehanded", "twohanded"],
   "behaviors": [
     {
@@ -28,6 +27,10 @@
           "DropChance": 1
         }
       }
+    },
+    {
+      "name": "CollidersLib:ItemCollidersClient",
+      "properties": {"colliders": [{"Position": [0.4, 0, 0.5], "Direction": [0.8, 0, 0], "Radius": 0.1}, {"Position": [-2.5, 0, 0.5], "Direction": [3, 0, 0], "Radius": 0.1}]}
     }
   ],
   "variantgroups": [{"code": "type", "states": ["scrap"]}, {"code": "material", "states": ["scrap"]}],

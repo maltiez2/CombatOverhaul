@@ -1,6 +1,5 @@
 ﻿{
   "code": "blade",
-  "class": "CombatOverhaul:MeleeWeapon",
   "tags": ["weapon", "weapon-melee", "sword", "onehanded"],
   "variantgroups": [
     {"code": "type", "states": ["scrap", "falx", "blackguard", "forlorn"]},
@@ -179,6 +178,10 @@
         "selectionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.1, "z2": 1},
         "collisionBox": {"x1": 0, "y1": 0, "z1": 0, "x2": 0, "y2": 0, "z2": 0}
       }
+    },
+    {
+      "name": "CollidersLib:ItemCollidersClient",
+      "properties": {"colliders": [{"Position": [0.4, 0, 0.5], "Direction": [0.8, 0, 0], "Radius": 0.1}, {"Position": [-2.5, 0, 0.5], "Direction": [3, 0, 0], "Radius": 0.1}]}
     }
   ],
   "skipVariants": ["blade-falx-scrap"],

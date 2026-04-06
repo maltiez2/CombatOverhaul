@@ -18,6 +18,12 @@
     },
     "behaviors": [{"code": "CombatOverhaul:ProjectilePhysics", "groundDragFactor": 1, "airDragFactor": 1, "gravityFactor": 1}, {"code": "interpolateposition"}]
   },
-  "server": {"behaviors": [{"code": "CombatOverhaul:ProjectilePhysics", "groundDragFactor": 1, "airDragFactor": 1, "gravityFactor": 1}, {"code": "despawn", "minSeconds": 0}]},
+  "server": {
+    "behaviors": [
+      {"code": "CombatOverhaul:ProjectilePhysics", "groundDragFactor": 1, "airDragFactor": 1, "gravityFactor": 1},
+      {"code": "despawn", "minSeconds": 0},
+      {"code": "CollidersLib:ProjectileColliderServer", "radius": "0.05"}
+    ]
+  },
   "sounds": {}
 }
